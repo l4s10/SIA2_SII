@@ -16,8 +16,10 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('auth.login');
 });
-
+//rutas para articulos
 Route::resource('articulos','App\Http\Controllers\ArticuloController');
+//rutas para materiales
+Route::resource('materiales','App\Http\Controllers\MaterialController');
 
 Route::middleware([
     'auth:sanctum',

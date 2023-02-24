@@ -253,7 +253,7 @@ return [
     */
 
     'use_route_url' => false,
-    'dashboard_url' => 'home',
+    'dashboard_url' => 'materiales',
     'logout_url' => 'logout',
     'login_url' => 'login',
     'register_url' => 'register',
@@ -323,6 +323,13 @@ return [
             'text'        => 'Vehiculos',
             'url'         => 'articulos',
             'icon'        => 'fas fa-fw fa-car',
+            'label'       => 'CRUD',
+            'label_color' => 'warning',
+        ],
+        [
+            'text'        => 'Materiales',
+            'url'         => 'materiales',
+            'icon'        => 'far fa-fw fa-pencil',
             'label'       => 'CRUD',
             'label_color' => 'warning',
         ],
