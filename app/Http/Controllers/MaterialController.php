@@ -9,6 +9,10 @@ use App\Models\Material;
 
 class MaterialController extends Controller
 {
+    // Esta funcion protege nuestro controlador para que solo las personas logueadas puedan entrar
+    public function __construct(){
+        $this->middleware('auth');
+    }
     /**
      * Display a listing of the resource.
      */
