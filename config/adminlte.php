@@ -321,7 +321,7 @@ return [
         ],
         [
             'text'        => 'Vehiculos',
-            'url'         => 'articulos',
+            'url'         => 'vehiculos',
             'icon'        => 'fas fa-fw fa-car',
             'label'       => 'CRUD',
             'label_color' => 'warning',
@@ -329,7 +329,7 @@ return [
         [
             'text'        => 'Materiales',
             'url'         => 'materiales',
-            'icon'        => 'far fa-fw fa-pencil',
+            'icon'        => 'fas fa-fw fa-paperclip',
             'label'       => 'CRUD',
             'label_color' => 'warning',
         ],
