@@ -294,7 +294,7 @@ return [
         [
             'type'         => 'navbar-search',
             'text'         => false,
-            'topnav_right' => true,
+            'topnav_right' => false,
         ],
         [
             'type'         => 'fullscreen-widget',

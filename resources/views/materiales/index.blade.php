@@ -23,7 +23,7 @@
                 <tr>
                     <!-- <td>{{ $material->ID_MATERIAL }}</td> -->
                     <td>{{ $material->NOMBRE_MATERIAL }}</td>
-                    <td>{{ $material->TIPO_MATERIAL }}</td>
+                    <td>{{ $material-> TIPO_MATERIAL }}</td>
                     <td>
                         <form action="{{ route('materiales.destroy',$material->ID_MATERIAL) }}" method="POST">
                             @csrf

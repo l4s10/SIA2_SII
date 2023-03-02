@@ -44,6 +44,7 @@ class MaterialController extends Controller
         // $materiales->CANTIDAD = 0;
         //Una vez seteados, guardamos con la siguiente instruccion.
         // $materiales->save();
+
         $data = $request->except('_token');
         Material::create($data);
         return  redirect('/materiales');

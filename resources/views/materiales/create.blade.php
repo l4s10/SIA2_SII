@@ -13,9 +13,19 @@
             <label for="" class="form-label">Nombre Material</label>
             <input id="NOMBRE_MATERIAL" name="NOMBRE_MATERIAL" type="text" class="form-control" tabindex="2">
         </div>
-        <div class="mb-3">
+        <!-- <div class="mb-3">
             <label for="" class="form-label">Tipo Material</label>
             <input id="TIPO_MATERIAL" name="TIPO_MATERIAL" type="text" class="form-control" tabindex="3">
+        </div> -->
+
+        <div class="mb-3">
+            <label for="" class="form-label">Tipo de material</label>
+            <select id="TIPO_MATERIAL" name="TIPO_MATERIAL" class="form-control">
+                <option value="ASEO">ASEO</option>
+                <option value="ESCRITORIO">ESCRITORIO</option>
+                <option value="COMPUTACION">COMPUTACION</option>
+                <option value="ELECTRODOMESTICOS">ELECTRODOMESTICOS</option>
+            </select>
         </div>
 
         <a href="/materiales" class="btn btn-secondary" tabindex="5">Cancelar</a>
