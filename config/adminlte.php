@@ -312,26 +312,96 @@ return [
             'can'  => 'manage-blog',
         ],
         ['header' => 'Módulos'],
+        // [
+        //     'text'        => 'Artículos',
+        //     'url'         => '#',
+        //     'icon'        => 'far fa-fw fa-file',
+        //     'label'       => 'CRUD',
+        //     'label_color' => 'danger',
+        //     'submenu' => [
+        //         [
+        //             'text'    => 'Administrar Items',
+        //             'url'     => '#',
+        //             'submenu' => [
+        //                 [
+        //                     'text'    => 'Visualizar Items',
+        //                     'url'     => 'materiales',
+        //                 ],
+        //                 [
+        //                     'text'    => 'Ingresar Items',
+        //                     'url'     => 'materiales/create',
+        //                 ],
+        //             ],
+        //         ],
+        //         [
+        //             'text'    => 'Solicitudes Items',
+        //             'url'     => '#',
+        //             'submenu' => [
+        //                 [
+        //                     'text'    => 'level_two',
+        //                     'url'     => '#',
+        //                     'submenu' => [
+        //                         [
+        //                             'text' => 'level_three',
+        //                             'url'  => '#',
+        //                         ],
+        //                         [
+        //                             'text' => 'level_three',
+        //                             'url'  => '#',
+        //                         ],
+        //                     ],
+        //                 ],
+        //             ],
+        //         ],
+        //     ],
+        // ],
         [
-            'text'        => 'Artículos',
-            'url'         => 'articulos',
-            'icon'        => 'far fa-fw fa-file',
-            'label'       => 'CRUD',
-            'label_color' => 'warning',
-        ],
-        [
-            'text'        => 'Vehiculos',
+            'text'        => 'Vehículos',
             'url'         => 'vehiculos',
             'icon'        => 'fas fa-fw fa-car',
-            'label'       => 'CRUD',
-            'label_color' => 'warning',
+            // 'label'       => 'CRUD',
+            // 'label_color' => 'danger',
         ],
         [
             'text'        => 'Materiales',
             'url'         => 'materiales',
             'icon'        => 'fas fa-fw fa-paperclip',
-            'label'       => 'CRUD',
-            'label_color' => 'warning',
+            // 'label'       => 'CRUD',
+            // 'label_color' => 'danger',
+            'submenu' => [
+                [
+                    'text'    => 'Administrar',
+                    'url'     => '#',
+                    'submenu' => [
+                        [
+                            'text'    => 'Visualizar Materiales',
+                            'url'     => 'materiales',
+                            'icon'    => 'fas fa-fw fa-eye',
+                        ],
+                        [
+                            'text'    => 'Ingresar Materiales',
+                            'url'     => 'materiales/create',
+                            'icon'    => 'fas fa-fw fa-plus',
+                        ],
+                    ],
+                ],
+                [
+                    'text'    => 'Solicitudes',
+                    'url'     => '#',
+                    'submenu' => [
+                        [
+                            'text'    => 'Visualizar Solicitudes',
+                            'url'     => '#',
+                            'icon'    => 'fas fa-fw fa-eye',
+                        ],
+                        [
+                            'text'    => 'Solicitar Materiales',
+                            'url'     => '#',
+                            'icon'    => 'fas fa-fw fa-plus',
+                        ],
+                    ],
+                ],
+            ],
         ],
         ['header' => 'Configuración de la cuenta'],
         [
@@ -382,22 +452,22 @@ return [
                 ],
             ],
         ],
-        ['header' => 'labels'],
-        [
-            'text'       => 'important',
-            'icon_color' => 'red',
-            'url'        => '#',
-        ],
-        [
-            'text'       => 'warning',
-            'icon_color' => 'yellow',
-            'url'        => '#',
-        ],
-        [
-            'text'       => 'information',
-            'icon_color' => 'cyan',
-            'url'        => '#',
-        ],
+        // ['header' => 'labels'],
+        // [
+        //     'text'       => 'important',
+        //     'icon_color' => 'red',
+        //     'url'        => '#',
+        // ],
+        // [
+        //     'text'       => 'warning',
+        //     'icon_color' => 'yellow',
+        //     'url'        => '#',
+        // ],
+        // [
+        //     'text'       => 'information',
+        //     'icon_color' => 'cyan',
+        //     'url'        => '#',
+        // ],
     ],
 
     /*

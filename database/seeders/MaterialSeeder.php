@@ -18,7 +18,6 @@ class MaterialSeeder extends Seeder
             'NOMBRE_MATERIAL' => 'Material 1',
             'TIPO_MATERIAL' => 'Tipo 1',
         ]);
-        
         Material::create([
             'NOMBRE_MATERIAL' => 'Material 2',
             'TIPO_MATERIAL' => 'Tipo 2',

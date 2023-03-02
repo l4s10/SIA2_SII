@@ -41,6 +41,7 @@ class MaterialController extends Controller
         // $materiales->ID_MATERIAL = $request->get('ID_MATERIAL');
         // $materiales->NOMBRE_MATERIAL = $request->get('NOMBRE_MATERIAL');
         // $materiales->TIPO_MATERIAL = $request->get('TIPO_MATERIAL');
+        // $materiales->CANTIDAD = 0;
         //Una vez seteados, guardamos con la siguiente instruccion.
         // $materiales->save();
         $data = $request->except('_token');

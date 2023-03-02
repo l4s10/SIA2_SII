@@ -1,6 +1,6 @@
 @extends('adminlte::page')
 
-@section('title', 'CRUD con laravel 10')
+@section('title', 'Materiales')
 
 @section('content_header')
     <h1>Listado de materiales</h1>
@@ -8,11 +8,11 @@
 
 @section('content')
 <!-- en el href, hacemos referencia dentro de la carpeta de vistas -->
-    <a href="materiales/create" class="btn btn-primary mb-3">CREAR</a>
+    <!-- <a href="materiales/create" class="btn btn-primary mb-3">CREAR</a> -->
     <table id="materiales" class="table table-bordered shadow-lg mt-4" style="width:100%">
         <thead class="bg-primary text-white">
             <tr>
-                <th scope="col">ID</th>
+                <!-- <th scope="col">ID</th> -->
                 <th scope="col">Nombre material</th>
                 <th scope="col">Tipo material</th>
                 <th scope="col">Acciones</th>
@@ -21,7 +21,7 @@
         <tbody>
             @foreach($materiales as $material)
                 <tr>
-                    <td>{{ $material->ID_MATERIAL }}</td>
+                    <!-- <td>{{ $material->ID_MATERIAL }}</td> -->
                     <td>{{ $material->NOMBRE_MATERIAL }}</td>
                     <td>{{ $material->TIPO_MATERIAL }}</td>
                     <td>

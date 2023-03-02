@@ -1,9 +1,9 @@
 @extends('adminlte::page')
 
-@section('title', 'CRUD con laravel 10')
+@section('title', 'Ingreso de Materiales')
 
 @section('content_header')
-    <h1>Crear Artículo</h1>
+    <h1>Ingresar Material</h1>
 @stop
 
 @section('content')

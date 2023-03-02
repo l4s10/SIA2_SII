@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('TIPO_MATERIAL', 128)->nullable();
             $table->timestamps();
         });
+        
     }
 
     /**
