@@ -15,8 +15,13 @@
             <input id="NOMBRE_MATERIAL" name="NOMBRE_MATERIAL" type="text" class="form-control" value="{{$material->NOMBRE_MATERIAL}}">
         </div>
         <div class="mb-3">
-            <label for="" class="form-label">Tipo Material</label>
-            <input id="TIPO_MATERIAL" name="TIPO_MATERIAL" type="text" class="form-control" value="{{$material->TIPO_MATERIAL}}">
+            <label for="" class="form-label">Tipo de material</label>
+            <select id="TIPO_MATERIAL" name="TIPO_MATERIAL" class="form-control">
+                <option value="ASEO">ASEO</option>
+                <option value="ESCRITORIO">ESCRITORIO</option>
+                <option value="COMPUTACION">COMPUTACION</option>
+                <option value="ELECTRODOMESTICOS">ELECTRODOMESTICOS</option>
+            </select>
         </div>
         <a href="/materiales" class="btn btn-secondary" tabindex="5">Cancelar</a>
         <button type="submit" class="btn btn-primary" tabindex="4">Guardar</button>
