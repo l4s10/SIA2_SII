@@ -17,10 +17,11 @@ Route::get('/', function () {
     return view('auth.login');
 });
 
-//rutas para articulos
+//Rutas para articulos (TEST de CRUD)
 Route::resource('articulos','App\Http\Controllers\ArticuloController');
-//rutas para materiales
+//Rutas para materiales (MODULOS)
 Route::resource('materiales','App\Http\Controllers\MaterialController');
+//Rutas para materiales (SOLICITUDES)
 //rutas para vehiculos
 Route::resource('vehiculos','App\Http\Controllers\VehiculoController');
 
