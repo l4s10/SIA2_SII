@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 
 //Importamos el modelo de Material
 use App\Models\Material;
+use App\Models\TipoMaterial;
 
 class MaterialController extends Controller
 {
@@ -28,7 +29,8 @@ class MaterialController extends Controller
      */
     public function create()
     {
-        return view('materiales.create');
+        $tipos = TipoMaterial::all();
+        return view('materiales.create',compact('tipos'));
     }
 
     /**

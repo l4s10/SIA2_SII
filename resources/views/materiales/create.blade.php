@@ -21,10 +21,13 @@
         <div class="mb-3">
             <label for="" class="form-label">Tipo de material</label>
             <select id="TIPO_MATERIAL" name="TIPO_MATERIAL" class="form-control">
-                <option value="ASEO">ASEO</option>
+                <!-- <option value="ASEO">ASEO</option>
                 <option value="ESCRITORIO">ESCRITORIO</option>
                 <option value="COMPUTACION">COMPUTACION</option>
-                <option value="ELECTRODOMESTICOS">ELECTRODOMESTICOS</option>
+                <option value="ELECTRODOMESTICOS">ELECTRODOMESTICOS</option> -->
+                @foreach($tipos as $tipo)
+                    <option value="{{$tipo->TIPO_MATERIAL}}">{{$tipo->TIPO_MATERIAL}}</option>
+                @endforeach
             </select>
         </div>
 
