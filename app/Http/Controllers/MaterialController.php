@@ -86,10 +86,6 @@ class MaterialController extends Controller
         $material = Material::find($id);
         $material->delete();
 
-        if (Material::count() === 0) {
-            Material::truncate();
-        }
-
         return redirect('/materiales');
     }
 }

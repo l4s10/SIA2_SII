@@ -11,10 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('materiales', function (Blueprint $table) {
-            $table->id('ID_MATERIAL');
-            $table->string('TIPO_MATERIAL')->references('TIPO_MATERIAL')->on('tipo_material');
-            $table->string('NOMBRE_MATERIAL', 128)->nullable();
+        Schema::create('tipo_material', function (Blueprint $table) {
+            $table->id('ID_TIPO_MAT');
+            $table->string('TIPO_MATERIAL',128);
             $table->timestamps();
         });
     }
@@ -24,6 +23,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('materiales');
+        Schema::dropIfExists('tipo_material');
     }
 };

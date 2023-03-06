@@ -13,6 +13,9 @@ return new class extends Migration
     {
         Schema::create('solicitud_materiales', function (Blueprint $table) {
             $table->id();
+            //Importando campos de solicitud de materiales
+            
+            //Fechas de creacion y modificación
             $table->timestamps();
         });
     }

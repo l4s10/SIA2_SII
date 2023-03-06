@@ -21,6 +21,8 @@ Route::get('/', function () {
 Route::resource('articulos','App\Http\Controllers\ArticuloController');
 //Rutas para materiales (MODULOS)
 Route::resource('materiales','App\Http\Controllers\MaterialController');
+//Rutas para tipos de materiales.
+Route::resource('tipomaterial','App\Http\Controllers\TipoMaterialController');
 //Rutas para materiales (SOLICITUDES)
 //rutas para vehiculos
 Route::resource('vehiculos','App\Http\Controllers\VehiculoController');

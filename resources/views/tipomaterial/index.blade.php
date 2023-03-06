@@ -1,9 +1,9 @@
 @extends('adminlte::page')
 
-@section('title', 'Materiales')
+@section('title', 'Tipo material')
 
 @section('content_header')
-    <h1>Listado de materiales</h1>
+    <h1>Listado tipo material</h1>
 @stop
 
 @section('content')
@@ -13,22 +13,21 @@
         <thead class="bg-primary text-white">
             <tr>
                 <!-- <th scope="col">ID</th> -->
-                <th scope="col">Nombre material</th>
+                <th scope="col">ID</th>
                 <th scope="col">Tipo material</th>
                 <th scope="col">Acciones</th>
             </tr>
         </thead>
         <tbody>
-            @foreach($materiales as $material)
+            @foreach($tipos as $tipo)
                 <tr>
-                    <!-- <td>{{ $material->ID_MATERIAL }}</td> -->
-                    <td>{{ $material->NOMBRE_MATERIAL }}</td>
-                    <td>{{ $material-> TIPO_MATERIAL}}</td>
+                    <td>{{ $tipo->ID_TIPO_MAT }}</td>
+                    <td>{{ $tipo->TIPO_MATERIAL }}</td>
                     <td>
-                        <form action="{{ route('materiales.destroy',$material->ID_MATERIAL) }}" method="POST">
+                        <form action="{{ route('tipomaterial.destroy',$tipo->ID_TIPO_MAT) }}" method="POST">
                             @csrf
                             @method('DELETE')
-                            <a href="/materiales/{{$material->ID_MATERIAL}}/edit" class="btn btn-info">Editar</a>
+                            <a href="/tipomaterial/{{$tipo->ID_TIPO_MAT}}/edit" class="btn btn-info">Editar</a>
                             <button type="submit" class="btn btn-danger">Borrar</button>
                         </form>
                     </td>
