@@ -364,95 +364,119 @@ return [
         ],
         [
             'text'        => 'Materiales',
-            'url'         => 'materiales',
+            'url'         => '#',
             'icon'        => 'fas fa-fw fa-paperclip',
             // 'label'       => 'CRUD',
             // 'label_color' => 'danger',
-            'submenu' => [
-                [
-                    'text'    => 'Administrar',
+        ],
+        [
+            'text'        => 'Equipos',
+            'url'         => '#',
+            'icon'        => 'fas fa-fw fa-desktop',
+            // 'label'       => 'CRUD',
+            // 'label_color' => 'danger',
+        ],
+        [
+            'text'        => 'Formularios',
+            'url'         => '#',
+            'icon'        => 'fas fa-fw fa-pencil-alt',
+            // 'label'       => 'CRUD',
+            // 'label_color' => 'danger',
+        ],
+        [
+            'text'        => 'Salas',
+            'url'         => '#',
+            'icon'        => 'fas fa-fw fa-building',
+            // 'label'       => 'CRUD',
+            // 'label_color' => 'danger',
+        ],
+        // [
+        //     'text'        => 'Materiales',
+        //     'url'         => 'materiales',
+        //     'icon'        => 'fas fa-fw fa-paperclip',
+        //     // 'label'       => 'CRUD',
+        //     // 'label_color' => 'danger',
+        //     'submenu' => [
+        //         [
+        //             'text'    => 'Inventario',
+        //             'url'     => '#',
+        //             'submenu' => [
+        //                 [
+        //                     'text'    => 'Ver Materiales',
+        //                     'url'     => 'materiales',
+        //                     'icon'    => 'fas fa-fw fa-eye',
+        //                 ],
+        //                 [
+        //                     'text'    => 'Agregar Materiales',
+        //                     'url'     => 'materiales/create',
+        //                     'icon'    => 'fas fa-fw fa-plus',
+        //                 ],
+        //                 [
+        //                     'text'    => 'Tipos Materiales',
+        //                     'url'     => 'tipomaterial',
+        //                     'icon'    => 'fas fa-fw fa-eye',
+        //                 ],
+        //                 [
+        //                     'text'    => 'Agregar Tipos',
+        //                     'url'     => 'tipomaterial/create',
+        //                     'icon'    => 'fas fa-fw fa-plus',
+        //                 ],
+        //             ],
+        //         ],
+        //         [
+        //             'text'    => 'Solicitudes',
+        //             'url'     => '#',
+        //             'submenu' => [
+        //                 [
+        //                     'text'    => 'Visualizar Solicitudes',
+        //                     'url'     => '#',
+        //                     'icon'    => 'fas fa-fw fa-eye',
+        //                 ],
+        //                 [
+        //                     'text'    => 'Solicitar Materiales',
+        //                     'url'     => '#',
+        //                     'icon'    => 'fas fa-fw fa-plus',
+        //                 ],
+        //             ],
+        //         ],
+        //     ],
+        // ],
+        // ['header' => 'Inventario'],
+        [
+            'text'    => 'Inventario',
                     'url'     => '#',
+                    'icon'    =>'fas fa-fw fa-boxes',
                     'submenu' => [
                         [
-                            'text'    => 'Visualizar Materiales',
+                            'text'    => 'Ver Materiales',
                             'url'     => 'materiales',
                             'icon'    => 'fas fa-fw fa-eye',
                         ],
                         [
-                            'text'    => 'Ingresar Materiales',
+                            'text'    => 'Agregar Materiales',
                             'url'     => 'materiales/create',
                             'icon'    => 'fas fa-fw fa-plus',
                         ],
-                    ],
-                ],
-                [
-                    'text'    => 'Solicitudes',
-                    'url'     => '#',
-                    'submenu' => [
                         [
-                            'text'    => 'Visualizar Solicitudes',
-                            'url'     => '#',
+                            'text'    => 'Tipos Materiales',
+                            'url'     => 'tipomaterial',
                             'icon'    => 'fas fa-fw fa-eye',
                         ],
                         [
-                            'text'    => 'Solicitar Materiales',
-                            'url'     => '#',
+                            'text'    => 'Agregar Tipos',
+                            'url'     => 'tipomaterial/create',
                             'icon'    => 'fas fa-fw fa-plus',
                         ],
                     ],
-                ],
-            ],
         ],
-        ['header' => 'Configuración de la cuenta'],
+        ['header' => 'Módulos Administrador'],
         [
-            'text' => 'Perfil de Usuario',
-            'url'  => 'user/profile',
-            'icon' => 'fas fa-fw fa-user',
+            'text'        => 'Administrar Usuarios',
+            'url'         => '#',
+            'icon'        => 'fas fa-fw fa-users',
+            // 'label'       => 'CRUD',
+            // 'label_color' => 'danger',
         ],
-        [
-            'text' => 'change_password',
-            'url'  => 'user/settings',
-            'icon' => 'fas fa-fw fa-lock',
-        ],
-        [
-            'text'    => 'multilevel',
-            'icon'    => 'fas fa-fw fa-share',
-            'submenu' => [
-                [
-                    'text' => 'level_one',
-                    'url'  => '#',
-                ],
-                [
-                    'text'    => 'level_one',
-                    'url'     => '#',
-                    'submenu' => [
-                        [
-                            'text' => 'level_two',
-                            'url'  => '#',
-                        ],
-                        [
-                            'text'    => 'level_two',
-                            'url'     => '#',
-                            'submenu' => [
-                                [
-                                    'text' => 'level_three',
-                                    'url'  => '#',
-                                ],
-                                [
-                                    'text' => 'level_three',
-                                    'url'  => '#',
-                                ],
-                            ],
-                        ],
-                    ],
-                ],
-                [
-                    'text' => 'level_one',
-                    'url'  => '#',
-                ],
-            ],
-        ],
-        // ['header' => 'labels'],
         // [
         //     'text'       => 'important',
         //     'icon_color' => 'red',

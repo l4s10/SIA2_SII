@@ -24,6 +24,7 @@ Route::resource('materiales','App\Http\Controllers\MaterialController');
 //Rutas para tipos de materiales.
 Route::resource('tipomaterial','App\Http\Controllers\TipoMaterialController');
 //Rutas para materiales (SOLICITUDES)
+Route::resource('solicitudmateriales','App\Http\Controllers\SolicitudMaterialesController');
 //rutas para vehiculos
 Route::resource('vehiculos','App\Http\Controllers\VehiculoController');
 
