@@ -2,17 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\SolicitudMateriales;
 use Illuminate\Http\Request;
+use App\Models\SolicitudMateriales;
 
-class SolicitudMaterialesContoller extends Controller
+class SolMatController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        //
+        return view('solicitudmateriales.index');
     }
 
     /**
@@ -34,7 +34,7 @@ class SolicitudMaterialesContoller extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(SolicitudMateriales $solicitudMateriales)
+    public function show(string $id)
     {
         //
     }
@@ -42,7 +42,7 @@ class SolicitudMaterialesContoller extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(SolicitudMateriales $solicitudMateriales)
+    public function edit(string $id)
     {
         //
     }
@@ -50,7 +50,7 @@ class SolicitudMaterialesContoller extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, SolicitudMateriales $solicitudMateriales)
+    public function update(Request $request, string $id)
     {
         //
     }
@@ -58,7 +58,7 @@ class SolicitudMaterialesContoller extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(SolicitudMateriales $solicitudMateriales)
+    public function destroy(string $id)
     {
         //
     }
