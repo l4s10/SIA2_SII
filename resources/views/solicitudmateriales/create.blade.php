@@ -45,7 +45,7 @@
     </div>
     {!! Form::submit('Guardar', ['class' => 'btn btn-primary']) !!}
     {!! Form::close() !!}
-    
+    <!-- AQUI SE EDITA EL FORMULARIO -->
 @stop
 
 @section('css')
