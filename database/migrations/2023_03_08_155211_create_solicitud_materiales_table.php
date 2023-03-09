@@ -12,17 +12,14 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('solicitud_materiales', function (Blueprint $table) {
-            //Importando campos de solicitud de materiales
             $table->id('ID_SOLICITUD');
-            $table->string('NOMBRE_SOLICITANTE', 128);
+            $table->string('NOMBRE_SOLICITANTE',128);
             $table->string('RUT', 20);
             $table->string('DEPTO', 128);
             $table->string('EMAIL', 128);
-            $table->string('TIPO_MAT_SOL',128);
+            $table->integer('TIPO_MAT_SOL');
             $table->text('MATERIAL_SOL');
             $table->string('ESTADO_SOL', 20)->default('pendiente');
-            $table->timestamps();
-            //Fechas de creacion y modificación
             $table->timestamps();
         });
     }

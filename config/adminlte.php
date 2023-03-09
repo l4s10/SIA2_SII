@@ -368,6 +368,18 @@ return [
             'icon'        => 'fas fa-fw fa-paperclip',
             // 'label'       => 'CRUD',
             // 'label_color' => 'danger',
+            'submenu' => [
+                [
+                    'text'    => 'Ver Solicitudes',
+                    'url'     => 'solmaterial',
+                    'icon'    => 'fas fa-fw fa-eye',
+                ],
+                [
+                    'text'    => 'Solicitar',
+                    'url'     => 'solmaterial/create',
+                    'icon'    => 'fas fa-fw fa-plus',
+                ],
+            ],
         ],
         [
             'text'        => 'Equipos',
@@ -390,58 +402,7 @@ return [
             // 'label'       => 'CRUD',
             // 'label_color' => 'danger',
         ],
-        // [
-        //     'text'        => 'Materiales',
-        //     'url'         => 'materiales',
-        //     'icon'        => 'fas fa-fw fa-paperclip',
-        //     // 'label'       => 'CRUD',
-        //     // 'label_color' => 'danger',
-        //     'submenu' => [
-        //         [
-        //             'text'    => 'Inventario',
-        //             'url'     => '#',
-        //             'submenu' => [
-        //                 [
-        //                     'text'    => 'Ver Materiales',
-        //                     'url'     => 'materiales',
-        //                     'icon'    => 'fas fa-fw fa-eye',
-        //                 ],
-        //                 [
-        //                     'text'    => 'Agregar Materiales',
-        //                     'url'     => 'materiales/create',
-        //                     'icon'    => 'fas fa-fw fa-plus',
-        //                 ],
-        //                 [
-        //                     'text'    => 'Tipos Materiales',
-        //                     'url'     => 'tipomaterial',
-        //                     'icon'    => 'fas fa-fw fa-eye',
-        //                 ],
-        //                 [
-        //                     'text'    => 'Agregar Tipos',
-        //                     'url'     => 'tipomaterial/create',
-        //                     'icon'    => 'fas fa-fw fa-plus',
-        //                 ],
-        //             ],
-        //         ],
-        //         [
-        //             'text'    => 'Solicitudes',
-        //             'url'     => '#',
-        //             'submenu' => [
-        //                 [
-        //                     'text'    => 'Visualizar Solicitudes',
-        //                     'url'     => '#',
-        //                     'icon'    => 'fas fa-fw fa-eye',
-        //                 ],
-        //                 [
-        //                     'text'    => 'Solicitar Materiales',
-        //                     'url'     => '#',
-        //                     'icon'    => 'fas fa-fw fa-plus',
-        //                 ],
-        //             ],
-        //         ],
-        //     ],
-        // ],
-        // ['header' => 'Inventario'],
+        
         [
             'text'    => 'Inventario',
                     'url'     => '#',
