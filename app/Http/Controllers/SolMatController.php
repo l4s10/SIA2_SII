@@ -7,12 +7,19 @@ use App\Models\SolicitudMateriales;
 
 class SolMatController extends Controller
 {
+    //Funcion para acceder a las rutas SOLO SI los usuarios estan logueados
+    public function __cosntruct(){
+        $this->middleware('auth');
+        //Tambien aqui podremos agregar que roles son los que pueden ingresar
+    }
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        return view('solicitudmateriales.index');
+        //Obtenemos todos los datos de la tabla de solicitudes para mostrarlas en el index
+        $sol_materiales = SolicitudMateriales::all();
+        return view('solicitudmateriales.index',compact('sol_materiales'));
     }
 
     /**
