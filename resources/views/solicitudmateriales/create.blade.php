@@ -10,41 +10,33 @@
 
 @section('content')
     <!-- COLOCA AQUI EL FORMULARIO QUE CREES -->
-    {!! Form::open(['url' => 'guardar-solicitud']) !!}
-    <div class="form-group">
-        {!! Form::label('id_solicitud', 'ID Solicitud') !!}
-        {!! Form::text('id_solicitud', null, ['class' => 'form-control']) !!}
-    </div>
-    <div class="form-group">
-        {!! Form::label('nombre_solicitante', 'Nombre del Solicitante') !!}
-        {!! Form::text('nombre_solicitante', null, ['class' => 'form-control']) !!}
-    </div>
-    <div class="form-group">
-        {!! Form::label('rut', 'RUT') !!}
-        {!! Form::text('rut', null, ['class' => 'form-control']) !!}
-    </div>
-    <div class="form-group">
-        {!! Form::label('depto', 'Departamento') !!}
-        {!! Form::text('depto', null, ['class' => 'form-control']) !!}
-    </div>
-    <div class="form-group">
-        {!! Form::label('email', 'Correo Electrónico') !!}
-        {!! Form::email('email', null, ['class' => 'form-control']) !!}
-    </div>
-    <div class="form-group">
-        {!! Form::label('tipo_mat_sol', 'Tipo de Material Solicitado') !!}
-        {!! Form::text('tipo_mat_sol', null, ['class' => 'form-control']) !!}
-    </div>
-    <div class="form-group">
-        {!! Form::label('material_sol', 'Material Solicitado') !!}
-        {!! Form::text('material_sol', null, ['class' => 'form-control']) !!}
-    </div>
-    <div class="form-group">
-        {!! Form::label('estado_sol', 'Estado de la Solicitud') !!}
-        {!! Form::select('estado_sol', ['Pendiente', 'Aprobado', 'Rechazado'], null, ['class' => 'form-control']) !!}
-    </div>
-    {!! Form::submit('Guardar', ['class' => 'btn btn-primary']) !!}
-    {!! Form::close() !!}
+    <form>
+        <label for="id_solicitud">ID de Solicitud:</label>
+        <input type="text" id="id_solicitud" name="id_solicitud"><br><br>
+
+        <label for="nombre_solicitante">Nombre del Solicitante:</label>
+        <input type="text" id="nombre_solicitante" name="nombre_solicitante"><br><br>
+
+        <label for="rut">RUT:</label>
+        <input type="text" id="rut" name="rut"><br><br>
+
+        <label for="depto">Departamento:</label>
+        <input type="text" id="depto" name="depto"><br><br>
+
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email"><br><br>
+
+        <label for="tipo_mat_sol">Tipo de Material Solicitado:</label>
+        <input type="text" id="tipo_mat_sol" name="tipo_mat_sol"><br><br>
+
+        <label for="material_sol">Material Solicitado:</label>
+        <input type="text" id="material_sol" name="material_sol"><br><br>
+
+        <label for="estado_sol">Estado de la Solicitud:</label>
+        <input type="text" id="estado_sol" name="estado_sol"><br><br>
+
+        <input type="submit" value="Enviar">
+</form>
     <!-- AQUI SE EDITA EL FORMULARIO -->
 @stop
 
