@@ -11,29 +11,33 @@
 @section('content')
     <!-- COLOCA AQUI EL FORMULARIO QUE CREES -->
     <form>
-        <label for="id_solicitud">ID de Solicitud:</label>
-        <input type="text" id="id_solicitud" name="id_solicitud"><br><br>
+        <div class="mb-3">
+            <label for="ID_SOLICITUD" class="form-label">ID de Solicitud:</label>
+            <input type="text" id="ID_SOLICITUD" name="ID_SOLICITUD" class="form-control" tabindex="2">
+        </div>
 
-        <label for="nombre_solicitante">Nombre del Solicitante:</label>
-        <input type="text" id="nombre_solicitante" name="nombre_solicitante"><br><br>
+        <div class="mb-3">
+            <label for="NOMBRE_SOLICITANTE" class="form-label">Nombre del Solicitante:</label>
+            <input type="text" id="NOMBRE_SOLICITANTE" name="NOMBRE_SOLICITANTE" class="form-control">
+        </div>
+        <div>
+            <label for="RUT" class="form-label">RUT:</label>
+            <input type="text" id="RUT" name="RUT" class="form-control">
+        </div>
+        <label for="DEPTO">Departamento:</label>
+        <input type="text" id="DEPTO" name="DEPTO"><br><br>
 
-        <label for="rut">RUT:</label>
-        <input type="text" id="rut" name="rut"><br><br>
+        <label for="EMAIL">Email:</label>
+        <input type="email" id="EMAIL" name="EMAIL"><br><br>
 
-        <label for="depto">Departamento:</label>
-        <input type="text" id="depto" name="depto"><br><br>
+        <label for="TIPO_MAT_SOL">Tipo de Material Solicitado:</label>
+        <input type="text" id="TIPO_MAT_SOL" name="TIPO_MAT_SOL"><br><br>
 
-        <label for="email">Email:</label>
-        <input type="email" id="email" name="email"><br><br>
+        <label for="MATERIAL_SOL">Material Solicitado:</label>
+        <input type="textarea" id="MATERIAL_SOL" name="MATERIAL_SOL"><br><br>
 
-        <label for="tipo_mat_sol">Tipo de Material Solicitado:</label>
-        <input type="text" id="tipo_mat_sol" name="tipo_mat_sol"><br><br>
-
-        <label for="material_sol">Material Solicitado:</label>
-        <input type="text" id="material_sol" name="material_sol"><br><br>
-
-        <label for="estado_sol">Estado de la Solicitud:</label>
-        <input type="text" id="estado_sol" name="estado_sol"><br><br>
+        <label for="ESTADO_SOL">Estado de la Solicitud:</label>
+        <input type="text" id="ESTADO_SOL" name="ESTADO_SOL"><br><br>
 
         <input type="submit" value="Enviar">
 </form>
