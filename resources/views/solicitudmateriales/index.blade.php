@@ -16,6 +16,11 @@
                 <th scope="col">Nombre Solicitante</th>
                 <th scope="col">Rut</th>
                 <th scope="col">Departamento</th>
+                <th scope="col">Email</th>
+                <th scope="col">Tipo Solcitado</th>
+                <th scope="col">Materiales</th>
+                <th scope="col">Estado Solicitud</th>
+                <th scope="col">Fecha de Ingreso</th>
                 <th scope="col">Acciones</th>
             </tr>
         </thead>
@@ -25,12 +30,18 @@
                     <td>{{ $sol_material->NOMBRE_SOLICITANTE }}</td>
                     <td>{{ $sol_material->RUT}}</td>
                     <td>{{ $sol_material->DEPTO}}</td>
+                    <td>{{ $sol_material->EMAIL}}</td>
+                    <td>{{ $sol_material->TIPO_MAT_SOL}}</td>
+                    <td>{{ $sol_material->MATERIAL_SOL}}</td>
+                    <td>{{ $sol_material->ESTADO_SOL}}</td>
+                    <td>{{ $sol_material->created_at}}</td>
+
 
                     <td>
-                        <form action="{{ route('solicitudmateriales.destroy',$sol_material->ID_SOLICITUD) }}" method="POST">
+                        <form action="{{ route('solmaterial.destroy',$sol_material->ID_SOLICITUD) }}" method="POST">
                             @csrf
                             @method('DELETE')
-                            <a href="/solmateriales/{{$sol_material->ID_SOLICITUD}}/edit" class="btn btn-info">Editar</a>
+                            <a href="/solmaterial/{{$sol_material->ID_SOLICITUD}}/edit" class="btn btn-info">Editar</a>
                             <button type="submit" class="btn btn-danger">Borrar</button>
                         </form>
                     </td>

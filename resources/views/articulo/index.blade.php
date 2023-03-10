@@ -7,6 +7,19 @@
 @stop
 
 @section('content')
+    @if(session('success'))
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <strong>Éxito!</strong> {{ session('success') }}
+            <button type="button" class="btn-close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        </div>
+    @endif
+
+    @if(session('error'))
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <strong>Error!</strong> {{ session('error') }}
+            <button type="button" class="btn btn-close" data-dismiss="alert" aria-label="Close"></button>
+        </div>
+    @endif
     <a href="articulos/create" class="btn btn-primary mb-3">CREAR</a>
     <table id="articulos" class="table table-bordered shadow-lg mt-4" style="width:100%">
         <thead class="bg-primary text-white">
@@ -60,5 +73,20 @@
                 });
             });
         </script>
+
+    @if (session('success'))
+        <script>
+            $(function() {
+                $('.alert-success').fadeIn().delay(5000).fadeOut();
+            });
+        </script>
+    @elseif (session('error'))
+        <script>
+            $(function() {
+                $('.alert-danger').fadeIn().delay(5000).fadeOut();
+            });
+        </script>
+    @endif
+
 
 @stop

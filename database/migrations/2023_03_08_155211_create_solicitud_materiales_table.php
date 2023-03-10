@@ -15,11 +15,13 @@ return new class extends Migration
             $table->id('ID_SOLICITUD');
             $table->string('NOMBRE_SOLICITANTE',128);
             $table->string('RUT', 20);
+            //agregar refetrencias a tabla DEPARTAMENTOS
             $table->string('DEPTO', 128);
             $table->string('EMAIL', 128);
-            $table->integer('TIPO_MAT_SOL');
+            $table->string('TIPO_MAT_SOL')->references('TIPO_MATERIAL')->on('tipo_material');
             $table->text('MATERIAL_SOL');
-            $table->string('ESTADO_SOL', 20)->default('pendiente');
+            //agregar referencias a  tabla ESTADOS SOLCITUD
+            $table->string('ESTADO_SOL', 20)->default('INGRESADO');
             $table->timestamps();
         });
     }

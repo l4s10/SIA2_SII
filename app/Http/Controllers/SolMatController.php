@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\SolicitudMateriales;
+use App\Models\TipoMaterial;
+use App\Models\Material;
 
 class SolMatController extends Controller
 {
@@ -27,7 +29,9 @@ class SolMatController extends Controller
      */
     public function create()
     {
-        return view('solicitudmateriales.create');
+        $tipos = TipoMaterial::all();
+        $materiales = Material::all();
+        return view('solicitudmateriales.create',compact('tipos','materiales'));
     }
 
     /**
@@ -35,7 +39,9 @@ class SolMatController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = $request->except('_token');
+        SolicitudMateriales::create($data);
+        return redirect('/solmaterial');
     }
 
     /**
@@ -51,7 +57,8 @@ class SolMatController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $solicitud = SolicitudMateriales::find($id);
+        return view('solicitudmateriales.edit')->with('solicitud',$solicitud);
     }
 
     /**
@@ -67,6 +74,8 @@ class SolMatController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $solicitud = SolicitudMateriales::find($id);
+        $solicitud -> delete();
+        return redirect('/solmaterial');
     }
 }
