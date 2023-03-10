@@ -39,6 +39,14 @@ class SolMatController extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate([
+            'NOMBRE_SOLICITANTE' => 'required',
+            'RUT' => 'required',
+            'DEPTO' => 'required',
+            'EMAIL' => 'required|email',
+            'TIPO_MAT_SOL' => 'required',
+            'MATERIAL_SOL' => 'required',
+        ]);
         $data = $request->except('_token');
         SolicitudMateriales::create($data);
         return redirect('/solmaterial');

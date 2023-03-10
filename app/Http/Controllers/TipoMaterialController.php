@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\TipoMaterial;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 
 class TipoMaterialController extends Controller
 {
@@ -35,8 +36,27 @@ class TipoMaterialController extends Controller
      */
     public function store(Request $request)
     {
+        //Especificamos la regla de los campos y los mensajes de validaciones
+        $rules = [
+            'TIPO_MATERIAL' => ['required','string','max:255',Rule::unique('tipo_material')],
+        ];
+        //Mensajes de feedback para usuario
+        $messages = [
+            'TIPO_MATERIAL.required' => 'El campo Nombre es obligatorio.',
+            'TIPO_MATERIAL.unique' => 'Este tipo de material ya existe',
+        ];
+        //Validamos la request con las reglas y devolviendo los mensajes especificados anteriormente
+        $request->validate($rules,$messages);
+
         $data = $request->except('_token');
-        TipoMaterial::create($data);
+        // TipoMaterial::create($data);
+        // return redirect('/tipomaterial')->with('success','El tipo de material se ha creado correctamente.');
+        try{
+            TipoMaterial::create($data);
+            session()->flash('success','Tipo de material creado existosamente');
+        }catch(\Exception $e){
+            session()->flash('error','Error al crear tipo de material');
+        }
         return redirect('/tipomaterial');
     }
 

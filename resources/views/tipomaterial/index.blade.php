@@ -9,6 +9,16 @@
 @section('content')
 <!-- en el href, hacemos referencia dentro de la carpeta de vistas -->
     <!-- <a href="materiales/create" class="btn btn-primary mb-3">CREAR</a> -->
+    @if(session('success'))
+        <div class="alert alert-success">
+            {{ session('success') }}
+        </div>
+    @endif
+    @if(session('error'))
+        <div class="alert alert-danger">
+            {{ session('error') }}
+        </div>
+    @endif
     <table id="materiales" class="table table-bordered shadow-lg mt-4" style="width:100%">
         <thead class="bg-primary text-white">
             <tr>
