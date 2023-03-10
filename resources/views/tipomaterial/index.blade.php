@@ -10,10 +10,13 @@
 <!-- en el href, hacemos referencia dentro de la carpeta de vistas -->
     <!-- <a href="materiales/create" class="btn btn-primary mb-3">CREAR</a> -->
     @if(session('success'))
-        <div class="alert alert-success">
-            {{ session('success') }}
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+        {{ session('success') }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
         </div>
     @endif
+
+
     @if(session('error'))
         <div class="alert alert-danger">
             {{ session('error') }}
@@ -53,6 +56,7 @@
 @stop
 
 @section('js')
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/js/bootstrap.bundle.min.js"></script>
     <!-- Agregando funciones de paginacion, busqueda, etc -->
     <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
         <script src="https://cdn.datatables.net/1.13.2/js/jquery.dataTables.min.js"></script>
