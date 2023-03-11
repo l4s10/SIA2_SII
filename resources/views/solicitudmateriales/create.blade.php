@@ -1,11 +1,11 @@
 @extends('adminlte::page')
 
 <!-- TITULO DE LA PESTAÑA -->
-@section('title', 'Solicitar Material')
+@section('title', 'Solicitar Materiales')
 
 <!-- CABECERA DE LA PAGINA -->
 @section('content_header')
-    <h1>Solicitud Material</h1>
+    <h1>Solicitar Materiales</h1>
 @stop
 
 @section('content')

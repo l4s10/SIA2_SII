@@ -11,7 +11,7 @@
         @csrf
         <div class="mb-3">
             <label for="" class="form-label">Nombre Tipo</label>
-            <input id="TIPO_MATERIAL" name="TIPO_MATERIAL" type="text" class="form-control @error('TIPO_MATERIAL') is-invalid @enderror" value="{{old('TIPO_MATERIAL')}}" tabindex="2">
+            <input id="TIPO_MATERIAL" name="TIPO_MATERIAL" type="text" class="form-control @error('TIPO_MATERIAL') is-invalid @enderror" value="{{old('TIPO_MATERIAL')}}" placeholder="Ej: ASEO" tabindex="2">
             @error('TIPO_MATERIAL')
                 <div class="invalid-feedback">{{$message}}</div>
             @enderror

@@ -11,15 +11,16 @@
     <!-- <a href="materiales/create" class="btn btn-primary mb-3">CREAR</a> -->
     @if(session('success'))
         <div class="alert alert-success alert-dismissible fade show" role="alert">
-        {{ session('success') }}
+        <strong>Exito! </strong>{{ session('success') }}
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
         </div>
     @endif
 
 
     @if(session('error'))
-        <div class="alert alert-danger">
+        <div class="alert alert-danger alert-dissmissible fade show" role="alert">
             {{ session('error') }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
         </div>
     @endif
     <table id="materiales" class="table table-bordered shadow-lg mt-4" style="width:100%">
