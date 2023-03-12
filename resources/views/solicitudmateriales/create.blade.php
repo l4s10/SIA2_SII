@@ -13,23 +13,43 @@
     <form action="/solmaterial" method="POST">
         @csrf
         <div class="mb-3">
-            <label for="NOMBRE_SOLICITANTE" class="form-label">Nombre del solicitante:</label>
-            <input type="text" id="NOMBRE_SOLICITANTE" name="NOMBRE_SOLICITANTE" class="form-control">
+        <label for="NOMBRE_SOLICITANTE" class="form-label">Nombre del solicitante:</label>
+        <input type="text" id="NOMBRE_SOLICITANTE" name="NOMBRE_SOLICITANTE" class="form-control{{ $errors->has('NOMBRE_SOLICITANTE') ? ' is-invalid' : '' }}" value="{{ old('NOMBRE_SOLICITANTE') }}">
+        @if ($errors->has('NOMBRE_SOLICITANTE'))
+            <div class="invalid-feedback">
+                {{ $errors->first('NOMBRE_SOLICITANTE') }}
+            </div>
+        @endif
         </div>
 
         <div class="mb-3">
             <label for="RUT" class="form-label">RUT:</label>
-            <input type="text" id="RUT" name="RUT" class="form-control">
+            <input type="text" id="RUT" name="RUT" class="form-control{{ $errors->has('RUT') ? ' is-invalid' : '' }}" value="{{ old('RUT') }}">
+            @if ($errors->has('RUT'))
+                <div class="invalid-feedback">
+                    {{ $errors->first('RUT') }}
+                </div>
+            @endif
         </div>
 
         <div class="mb-3">
             <label for="DEPTO" class="form-label">Departamento:</label>
-            <input type="text" id="DEPTO" name="DEPTO" class="form-control">
+            <input type="text" id="DEPTO" name="DEPTO" class="form-control{{ $errors->has('DEPTO') ? ' is-invalid' : '' }}" value="{{ old('DEPTO') }}">
+            @if ($errors->has('DEPTO'))
+                <div class="invalid-feedback">
+                    {{ $errors->first('DEPTO') }}
+                </div>
+            @endif
         </div>
 
         <div class="mb-3">
             <label for="EMAIL" class="form-label">Email:</label>
-            <input type="email" id="EMAIL" name="EMAIL" class="form-control">
+            <input type="email" id="EMAIL" name="EMAIL" class="form-control{{ $errors->has('EMAIL') ? ' is-invalid' : '' }}" value="{{ old('EMAIL') }}">
+            @if ($errors->has('EMAIL'))
+                <div class="invalid-feedback">
+                    {{ $errors->first('EMAIL') }}
+                </div>
+            @endif
         </div>
 
         <div class="mb-3">
@@ -52,7 +72,6 @@
 
         <div class="mb-3">
             <label for="ESTADO_SOL" class="form-label">Estado de la Solicitud:</label>
-            <!-- <input type="text" id="ESTADO_SOL" name="ESTADO_SOL" class="form-control" value="INGRESADO" disabled> -->
             <select id="ESTADO-SOL" name="TIPO_MAT_SOL" class="form-control" disabled>
                 <option value="INGRESADO" selected>Ingresado</option>
                 <option value="EN REVISION">En revisión</option>
@@ -106,6 +125,7 @@
 @stop
 
 @section('js')
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/js/bootstrap.bundle.min.js"></script>
     <!-- Agregar script para filtrar la lista de materiales según el tipo seleccionado -->
     <script>
         function filterMaterials(selectedType) {

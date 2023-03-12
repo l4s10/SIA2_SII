@@ -39,16 +39,36 @@ class SolMatController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'NOMBRE_SOLICITANTE' => 'required',
-            'RUT' => 'required',
-            'DEPTO' => 'required',
+        $rules = [
+            'NOMBRE_SOLICITANTE' => 'required|string|max:255',
+            'RUT' => 'required|alpha_num|min:7|max:10',
+            'DEPTO' => 'required|string|max:255',
             'EMAIL' => 'required|email',
-            'TIPO_MAT_SOL' => 'required',
-            'MATERIAL_SOL' => 'required',
-        ]);
+        ];
+
+        $messages = [
+            'NOMBRE_SOLICITANTE.required' => 'El campo Nombre del solicitante es obligatorio.',
+            'NOMBRE_SOLICITANTE.string' => 'El campo Nombre del solicitante debe ser una cadena de caracteres.',
+            'NOMBRE_SOLICITANTE.max' => 'El campo Nombre del solicitante no puede tener más de 255 caracteres.',
+            'RUT.required' => 'El campo RUT es obligatorio.',
+            'RUT.alpha_num' => 'El campo RUT solo debe contener letras y números.',
+            'RUT.min' => 'El campo RUT debe tener al menos 7 caracteres.',
+            'RUT.max' => 'El campo RUT no puede tener más de 10 caracteres.',
+            'DEPTO.required' => 'El campo Departamento es obligatorio.',
+            'DEPTO.string' => 'El campo Departamento debe ser una cadena de caracteres.',
+            'DEPTO.max' => 'El campo Departamento no puede tener más de 255 caracteres.',
+            'EMAIL.required' => 'El campo Email es obligatorio.',
+            'EMAIL.email' => 'El campo Email debe ser una dirección de correo electrónico válida.',
+        ];
+        $request->validate($rules, $messages);
+
         $data = $request->except('_token');
-        SolicitudMateriales::create($data);
+        try{
+            SolicitudMateriales::create($data);
+            session()->flash('success','La solicitud de materiales ha sido enviada exitosamente');
+        }catch(\Exception $e){
+            session()->flash('error','Error al crear la solicitud');
+        }
         return redirect('/solmaterial');
     }
 

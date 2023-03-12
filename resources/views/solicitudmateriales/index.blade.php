@@ -7,9 +7,21 @@
 @stop
 
 @section('content')
-<!-- en el href, hacemos referencia dentro de la carpeta de vistas -->
-    <!-- <a href="materiales/create" class="btn btn-primary mb-3">CREAR</a> -->
-    <table id="materiales" class="table table-bordered mt-4" style="width:100vh; white-space:nowrap;">
+    <!-- Contenedores para los mensajes -->
+    @if(session('success'))
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+        <strong>Exito! </strong>{{ session('success') }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        </div>
+    @endif
+    @if(session('error'))
+        <div class="alert alert-danger alert-dissmissible fade show" role="alert">
+            {{ session('error') }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        </div>
+    @endif
+
+    <table id="materiales" class="table table-bordered mt-4" style="width:100%;">
             <thead class="bg-primary text-white">
                 <tr>
                     <!-- <th scope="col">ID</th> -->
@@ -39,7 +51,7 @@
                             <form action="{{ route('solmaterial.destroy',$sol_material->ID_SOLICITUD) }}" method="POST">
                                 @csrf
                                 @method('DELETE')
-                                <a href="/solmaterial/{{$sol_material->ID_SOLICITUD}}/edit" class="btn btn-info">Editar</a>
+                                <a href="/solmaterial/{{$sol_material->ID_SOLICITUD}}/edit" class="btn btn-info">Administrar</a>
                                 <button type="submit" class="btn btn-danger">Borrar</button>
                             </form>
                         </td>
@@ -64,8 +76,7 @@
         <script>
             $(document).ready(function () {
                 $('#materiales').DataTable({
-                    "lengthMenu": [[5,10, 50, -1], [5, 10, 50, "All"]],
-                    "scrollX": true
+                    "lengthMenu": [[5,10, 50, -1], [5, 10, 50, "All"]]
                 });
             });
         </script>
