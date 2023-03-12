@@ -21,7 +21,7 @@
         </div>
     @endif
 
-    <table id="materiales" class="table table-responsive table-bordered mt-4" style="width:100%;">
+    <table id="materiales" class="table table-responsive table-bordered mt-4" style="width:100%; white-space:nowrap;">
             <thead class="bg-primary text-white">
                 <tr>
                     <!-- <th scope="col">ID</th> -->
