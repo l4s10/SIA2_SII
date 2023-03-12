@@ -21,7 +21,7 @@
         </div>
     @endif
 
-    <table id="materiales" class="table table-bordered mt-4" style="width:100%;">
+    <table id="materiales" class="table table-responsive table-bordered mt-4" style="width:100%;">
             <thead class="bg-primary text-white">
                 <tr>
                     <!-- <th scope="col">ID</th> -->
@@ -67,6 +67,7 @@
 @stop
 
 @section('js')
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/js/bootstrap.bundle.min.js"></script>
     <!-- Agregando funciones de paginacion, busqueda, etc -->
     <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
         <script src="https://cdn.datatables.net/1.13.2/js/jquery.dataTables.min.js"></script>
