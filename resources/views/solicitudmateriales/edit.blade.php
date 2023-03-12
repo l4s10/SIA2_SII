@@ -10,11 +10,12 @@
 
 @section('content')
     <!-- COLOCA AQUI EL FORMULARIO QUE CREES -->
-    <form action="/solmaterial" method="POST">
+    <form action="/solmaterial/{{$solicitud->ID_SOLICITUD}}" method="POST">
         @csrf
+        @method('PUT')
         <div class="mb-3">
         <label for="NOMBRE_SOLICITANTE" class="form-label">Nombre del solicitante:</label>
-        <input type="text" id="NOMBRE_SOLICITANTE" name="NOMBRE_SOLICITANTE" class="form-control{{ $errors->has('NOMBRE_SOLICITANTE') ? ' is-invalid' : '' }}" value="{{ old('NOMBRE_SOLICITANTE') }}">
+        <input type="text" id="NOMBRE_SOLICITANTE" name="NOMBRE_SOLICITANTE" class="form-control{{ $errors->has('NOMBRE_SOLICITANTE') ? ' is-invalid' : '' }}" value="{{ $solicitud->NOMBRE_SOLICITANTE }}">
         @if ($errors->has('NOMBRE_SOLICITANTE'))
             <div class="invalid-feedback">
                 {{ $errors->first('NOMBRE_SOLICITANTE') }}
@@ -24,7 +25,7 @@
 
         <div class="mb-3">
             <label for="RUT" class="form-label">RUT:</label>
-            <input type="text" id="RUT" name="RUT" class="form-control{{ $errors->has('RUT') ? ' is-invalid' : '' }}" value="{{ old('RUT') }}">
+            <input type="text" id="RUT" name="RUT" class="form-control{{ $errors->has('RUT') ? ' is-invalid' : '' }}" value="{{ $solicitud->RUT }}">
             @if ($errors->has('RUT'))
                 <div class="invalid-feedback">
                     {{ $errors->first('RUT') }}
@@ -34,7 +35,7 @@
 
         <div class="mb-3">
             <label for="DEPTO" class="form-label">Departamento:</label>
-            <input type="text" id="DEPTO" name="DEPTO" class="form-control{{ $errors->has('DEPTO') ? ' is-invalid' : '' }}" value="{{ old('DEPTO') }}">
+            <input type="text" id="DEPTO" name="DEPTO" class="form-control{{ $errors->has('DEPTO') ? ' is-invalid' : '' }}" value="{{ $solicitud->DEPTO }}">
             @if ($errors->has('DEPTO'))
                 <div class="invalid-feedback">
                     {{ $errors->first('DEPTO') }}
@@ -44,7 +45,7 @@
 
         <div class="mb-3">
             <label for="EMAIL" class="form-label">Email:</label>
-            <input type="email" id="EMAIL" name="EMAIL" class="form-control{{ $errors->has('EMAIL') ? ' is-invalid' : '' }}" value="{{ old('EMAIL') }}">
+            <input type="email" id="EMAIL" name="EMAIL" class="form-control{{ $errors->has('EMAIL') ? ' is-invalid' : '' }}" value="{{ $solicitud->EMAIL }}">
             @if ($errors->has('EMAIL'))
                 <div class="invalid-feedback">
                     {{ $errors->first('EMAIL') }}
@@ -56,27 +57,31 @@
             <label for="TIPO_MAT_SOL" class="form-label">Tipo de material a solicitar:</label>
             <select id="TIPO_MAT_SOL" name="TIPO_MAT_SOL" class="form-control" onchange="filterMaterials(this.value)">
                 @foreach($tipos as $tipo)
-                    <option value="{{$tipo->TIPO_MATERIAL}}">{{$tipo->TIPO_MATERIAL}}</option>
+                    @if($solicitud->TIPO_MAT_SOL == $tipo->TIPO_MATERIAL)
+                        <option value="{{$tipo->TIPO_MATERIAL}}" selected>{{$tipo->TIPO_MATERIAL}}</option>
+                    @else
+                        <option value="{{$tipo->TIPO_MATERIAL}}">{{$tipo->TIPO_MATERIAL}}</option>
+                    @endif
                 @endforeach
-                <option value="Todos" selected>Todos</option>
+                <option value="Todos">Todos</option>
             </select>
         </div>
 
         <div class="mb-3">
             <label for="MATERIAL_SOL" class="form-label">Material Solicitado:</label>
             <!-- Agregar botón para abrir modal -->
-            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalMateriales" >Seleccionar materiales</button>
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalMateriales">Seleccionar materiales</button>
 
-            <textarea id="MATERIAL_SOL" name="MATERIAL_SOL" class="form-control" style="height:40%;"></textarea>
+            <textarea id="MATERIAL_SOL" name="MATERIAL_SOL" class="form-control" style="height:40%;">{{$solicitud->MATERIAL_SOL}}</textarea>
         </div>
 
         <div class="mb-3">
             <label for="ESTADO_SOL" class="form-label">Estado de la Solicitud:</label>
-            <select id="ESTADO-SOL" name="TIPO_MAT_SOL" class="form-control" disabled>
-                <option value="INGRESADO" selected>Ingresado</option>
-                <option value="EN REVISION">En revisión</option>
-                <option value="ACEPTADO">Aceptado</option>
-                <option value="RECHAZADO">Rechazado</option>
+            <select id="ESTADO-SOL" name="ESTADO_SOL" class="form-control">
+                <option value="INGRESADO">INGRESADO</option>
+                <option value="EN REVISION" selected>EN REVISION</option>
+                <option value="ACEPTADO">APROBADO</option>
+                <option value="RECHAZADO">RECHAZADO</option>
             </select>
         </div>
 

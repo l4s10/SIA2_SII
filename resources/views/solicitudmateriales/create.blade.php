@@ -14,7 +14,7 @@
         @csrf
         <div class="mb-3">
         <label for="NOMBRE_SOLICITANTE" class="form-label">Nombre del solicitante:</label>
-        <input type="text" id="NOMBRE_SOLICITANTE" name="NOMBRE_SOLICITANTE" class="form-control{{ $errors->has('NOMBRE_SOLICITANTE') ? ' is-invalid' : '' }}" value="{{ old('NOMBRE_SOLICITANTE') }}">
+        <input type="text" id="NOMBRE_SOLICITANTE" name="NOMBRE_SOLICITANTE" class="form-control{{ $errors->has('NOMBRE_SOLICITANTE') ? ' is-invalid' : '' }}" value="{{ old('NOMBRE_SOLICITANTE') }}" placeholder="Ej: ANDRES RODRIGO SUAREZ MATAMALA">
         @if ($errors->has('NOMBRE_SOLICITANTE'))
             <div class="invalid-feedback">
                 {{ $errors->first('NOMBRE_SOLICITANTE') }}
@@ -24,7 +24,7 @@
 
         <div class="mb-3">
             <label for="RUT" class="form-label">RUT:</label>
-            <input type="text" id="RUT" name="RUT" class="form-control{{ $errors->has('RUT') ? ' is-invalid' : '' }}" value="{{ old('RUT') }}">
+            <input type="text" id="RUT" name="RUT" class="form-control{{ $errors->has('RUT') ? ' is-invalid' : '' }}" value="{{ old('RUT') }}" placeholder="Sin puntos con guión (Ej: 16738235-5)">
             @if ($errors->has('RUT'))
                 <div class="invalid-feedback">
                     {{ $errors->first('RUT') }}
@@ -34,7 +34,7 @@
 
         <div class="mb-3">
             <label for="DEPTO" class="form-label">Departamento:</label>
-            <input type="text" id="DEPTO" name="DEPTO" class="form-control{{ $errors->has('DEPTO') ? ' is-invalid' : '' }}" value="{{ old('DEPTO') }}">
+            <input type="text" id="DEPTO" name="DEPTO" class="form-control{{ $errors->has('DEPTO') ? ' is-invalid' : '' }}" value="{{ old('DEPTO') }}" placeholder="Ej: ADMINISTRACION">
             @if ($errors->has('DEPTO'))
                 <div class="invalid-feedback">
                     {{ $errors->first('DEPTO') }}
@@ -44,7 +44,7 @@
 
         <div class="mb-3">
             <label for="EMAIL" class="form-label">Email:</label>
-            <input type="email" id="EMAIL" name="EMAIL" class="form-control{{ $errors->has('EMAIL') ? ' is-invalid' : '' }}" value="{{ old('EMAIL') }}">
+            <input type="email" id="EMAIL" name="EMAIL" class="form-control{{ $errors->has('EMAIL') ? ' is-invalid' : '' }}" value="{{ old('EMAIL') }}" placeholder="Ej: someone@example.com">
             @if ($errors->has('EMAIL'))
                 <div class="invalid-feedback">
                     {{ $errors->first('EMAIL') }}
@@ -67,7 +67,7 @@
             <!-- Agregar botón para abrir modal -->
             <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalMateriales" >Seleccionar materiales</button>
 
-            <textarea id="MATERIAL_SOL" name="MATERIAL_SOL" class="form-control" style="height:40%;"></textarea>
+            <textarea id="MATERIAL_SOL" name="MATERIAL_SOL" class="form-control" style="height:40%;" placeholder="NOMBRE MATERIAL (CANTIDAD)"></textarea>
         </div>
 
         <div class="mb-3">
