@@ -160,6 +160,6 @@
         window.onload = function() {
             loadAllMaterials();
         };
-</script>
+    </script>
 @stop
 

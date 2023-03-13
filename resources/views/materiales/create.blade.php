@@ -11,20 +11,17 @@
         @csrf
         <div class="mb-3">
             <label for="" class="form-label">Nombre Material</label>
-            <input id="NOMBRE_MATERIAL" name="NOMBRE_MATERIAL" type="text" class="form-control" tabindex="2">
+            <input id="NOMBRE_MATERIAL" name="NOMBRE_MATERIAL" type="text" class="form-control{{$errors->has('NOMBRE_MATERIAL') ? ' is-invalid' : '' }}">
+            @if($errors->has('NOMBRE_MATERIAL'))
+            <div class="invalid-feedback">
+                {{$errors->first('NOMBRE_MATERIAL')}}
+            </div>
+            @endif
         </div>
-        <!-- <div class="mb-3">
-            <label for="" class="form-label">Tipo Material</label>
-            <input id="TIPO_MATERIAL" name="TIPO_MATERIAL" type="text" class="form-control" tabindex="3">
-        </div> -->
 
         <div class="mb-3">
             <label for="" class="form-label">Tipo de material</label>
             <select id="TIPO_MATERIAL" name="TIPO_MATERIAL" class="form-control">
-                <!-- <option value="ASEO">ASEO</option>
-                <option value="ESCRITORIO">ESCRITORIO</option>
-                <option value="COMPUTACION">COMPUTACION</option>
-                <option value="ELECTRODOMESTICOS">ELECTRODOMESTICOS</option> -->
                 @foreach($tipos as $tipo)
                     <option value="{{$tipo->TIPO_MATERIAL}}">{{$tipo->TIPO_MATERIAL}}</option>
                 @endforeach

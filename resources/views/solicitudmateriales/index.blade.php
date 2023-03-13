@@ -8,19 +8,19 @@
 
 @section('content')
     <!-- Contenedores para los mensajes -->
-    <div class="container">
-        @if(session('success'))
+    @if(session('success'))
             <div class="alert alert-success alert-dismissible fade show" role="alert">
             <strong>Exito! </strong>{{ session('success') }}
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
             </div>
-        @endif
-        @if(session('error'))
+    @endif
+    @if(session('error'))
             <div class="alert alert-danger alert-dissmissible fade show" role="alert">
                 {{ session('error') }}
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
             </div>
-        @endif
+    @endif
+    <div class="container">
         <table id="materiales" class="table table-responsive table-bordered mt-4" style="width:100%; white-space:nowrap;">
                 <thead class="bg-primary text-white">
                     <tr>
@@ -81,8 +81,5 @@
                 "lengthMenu": [[5,10, 50, -1], [5, 10, 50, "All"]]
             });
         });
-    </script>
-    <script>
-        
     </script>
 @stop

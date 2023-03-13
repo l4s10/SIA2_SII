@@ -38,12 +38,13 @@ class TipoMaterialController extends Controller
     {
         //Especificamos la regla de los campos y los mensajes de validaciones
         $rules = [
-            'TIPO_MATERIAL' => ['required','string','max:255',Rule::unique('tipo_material')],
+            'TIPO_MATERIAL' => ['required', 'regex:/^[A-Za-z\s]+$/', 'max:255', Rule::unique('tipo_material')],
         ];
         //Mensajes de feedback para usuario
         $messages = [
             'TIPO_MATERIAL.required' => 'El campo Nombre es obligatorio.',
-            'TIPO_MATERIAL.unique' => 'Este tipo de material ya existe',
+            'TIPO_MATERIAL.unique' => 'Este tipo de material ya existe.',
+            'TIPO_MATERIAL.regex' => 'El campo Nombre solo puede contener letras y espacios.',
         ];
         //Validamos la request con las reglas y devolviendo los mensajes especificados anteriormente
         $request->validate($rules,$messages);
@@ -73,7 +74,12 @@ class TipoMaterialController extends Controller
      */
     public function edit(string $id)
     {
-        $tipo = TipoMaterial::find($id);
+        try{
+            $tipo = TipoMaterial::find($id);
+        }catch(\Exception $e){
+            session()->flash('error','Error al acceder al tipo de material seleccionado');
+            return redirect('/tipomaterial');
+        }
         return view('tipomaterial.edit')->with('tipo',$tipo);
     }
 
@@ -83,7 +89,24 @@ class TipoMaterialController extends Controller
     public function update(Request $request, string $id)
     {
         $tipo = TipoMaterial::find($id);
-        $tipo->update($request->all());
+        //Especificamos la regla de los campos y los mensajes de validaciones
+        $rules = [
+            'TIPO_MATERIAL' => ['required', 'regex:/^[A-Za-z\s]+$/', 'max:255', Rule::unique('tipo_material')],
+        ];
+        //Mensajes de feedback para usuario
+        $messages = [
+            'TIPO_MATERIAL.required' => 'El campo Nombre es obligatorio.',
+            'TIPO_MATERIAL.unique' => 'Este tipo de material ya existe.',
+            'TIPO_MATERIAL.regex' => 'El campo Nombre solo puede contener letras y espacios.',
+        ];
+        //validamos la request
+        $request->validate($rules,$messages);
+        try{
+            $tipo->update($request->all());
+            session()->flash('success','El tipo de material ha sido modificado exitosamente!.');
+        }catch(\Exception $e){
+            session()->flash('error','Error al modificar el tipo de material');
+        }
         return redirect('/tipomaterial');
     }
 
@@ -93,7 +116,12 @@ class TipoMaterialController extends Controller
     public function destroy(string $id)
     {
         $tipo = TipoMaterial::find($id);
-        $tipo->delete();
+        try{
+            $tipo->delete();
+            session()->flash('success','El tipo de material ha sido eliminado exitosamente');
+        }catch(\Exception $e){
+            session()->flash('error','Error al eliminar el tipo de material');
+        }
         return redirect('/tipomaterial');
     }
 }

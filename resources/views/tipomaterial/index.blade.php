@@ -27,7 +27,6 @@
         <thead class="bg-primary text-white">
             <tr>
                 <!-- <th scope="col">ID</th> -->
-                <th scope="col">ID</th>
                 <th scope="col">Tipo material</th>
                 <th scope="col">Acciones</th>
             </tr>
@@ -35,7 +34,6 @@
         <tbody>
             @foreach($tipos as $tipo)
                 <tr>
-                    <td>{{ $tipo->ID_TIPO_MAT }}</td>
                     <td>{{ $tipo->TIPO_MATERIAL }}</td>
                     <td>
                         <form action="{{ route('tipomaterial.destroy',$tipo->ID_TIPO_MAT) }}" method="POST">
