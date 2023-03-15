@@ -9,7 +9,13 @@ class Material extends Model
 {
     use HasFactory;
     protected $table = 'materiales';
-    protected $fillable = ['NOMBRE_MATERIAL', 'TIPO_MATERIAL'];
+    protected $fillable = ['ID_MATERIAL','NOMBRE_MATERIAL','ID_TIPO_MAT','STOCK'];
     // Se cambia el ID predefinico por el nombre del ID de la tabla.
     protected $primaryKey = 'ID_MATERIAL';
+
+    public function tipoMaterial()
+    {
+    return $this->belongsTo(TipoMaterial::class, 'ID_TIPO_MAT');
+    }
+
 }

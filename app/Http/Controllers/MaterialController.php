@@ -40,25 +40,42 @@ class MaterialController extends Controller
      */
     public function store(Request $request)
     {
-        //Especificamos las reglas del campo
+        // Especificamos las reglas del campo
         $rules = [
-            'NOMBRE_MATERIAL' => ['required','string','max:255',Rule::unique('materiales')],
+            'NOMBRE_MATERIAL' => ['required', 'string', 'max:255', Rule::unique('materiales')],
+            'ID_TIPO_MAT' => ['required'],
+            'STOCK' => ['required', 'numeric'],
         ];
+
+        // Especificamos los mensajes personalizados de validación
         $messages = [
             'NOMBRE_MATERIAL.required' => 'El campo Nombre material es obligatorio',
             'NOMBRE_MATERIAL.unique' => 'Este material ya existe',
             'NOMBRE_MATERIAL.string' => 'El campo Nombre material debe ser una cadena de texto',
+            'ID_TIPO_MAT.required' => 'Debe seleccionar un tipo de material',
+            'STOCK.required' => 'El campo STOCK es requerido',
+            'STOCK.numeric' => 'El campo STOCK debe ser numérico',
         ];
-        $request->validate($rules,$messages);
-        $data = $request->except('_token');
-        try{
-            Material::create($data);
-            session()->flash('success','El material fue creado exitosamente!.');
-        }catch(\Exception $e){
-            session()->flash('error','Error al crear el tipo de material');
+
+        // Validamos los datos recibidos del formulario
+        $request->validate($rules, $messages);
+
+        // Creamos el nuevo material
+        try {
+            $material = new Material();
+            $material->NOMBRE_MATERIAL = $request->NOMBRE_MATERIAL;
+            $material->ID_TIPO_MAT = $request->ID_TIPO_MAT;
+            $material->STOCK = $request->STOCK;
+            $material->save();
+            session()->flash('success', 'El material fue creado exitosamente');
+        } catch (\Exception $e) {
+            session()->flash('error', 'Error al crear el material');
         }
-        return  redirect('/materiales');
+
+        // Redirigimos al listado de materiales
+        return redirect('/materiales');
     }
+
 
     /**
      * Display the specified resource.
@@ -84,25 +101,40 @@ class MaterialController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //Especificamos las reglas del campo
+        // Especificamos las reglas de validación para los campos
         $rules = [
-            'NOMBRE_MATERIAL' => ['required','string','max:255',Rule::unique('materiales')],
+            'NOMBRE_MATERIAL' => ['required', 'string', 'max:255', Rule::unique('materiales')->ignore($id,'ID_MATERIAL')],
+            'ID_TIPO_MAT' => ['required'],
+            'STOCK' => ['required', 'numeric'],
         ];
         $messages = [
             'NOMBRE_MATERIAL.required' => 'El campo Nombre material es obligatorio',
             'NOMBRE_MATERIAL.unique' => 'Este material ya existe',
             'NOMBRE_MATERIAL.string' => 'El campo Nombre material debe ser una cadena de texto',
+            'ID_TIPO_MAT.required' => 'El campo Tipo de material es obligatorio',
+            'STOCK.required' => 'El campo Stock es requerido',
+            'STOCK.numeric' => 'El campo Stock debe ser numérico',
         ];
-        $request->validate($rules,$messages);
-        try{
+
+        // Validamos los campos
+        // $request->merge(['ID_TIPO_MAT' => $request->ID_TIPO_MAT]);
+        $request->validate($rules, $messages);
+
+        try {
             $material = Material::find($id);
-            $material->update($request->all());
-            session()->flash('success','El material fue modificado exitosamente');
-        }catch(\Exception $e){
-            session()->flash('error','Error al modificar el material seleccionado');
+            $material->fill([
+                'NOMBRE_MATERIAL' => $request->input('NOMBRE_MATERIAL'),
+                'ID_TIPO_MAT' => $request->input('ID_TIPO_MAT'),
+                'STOCK' => $request->input('STOCK'),
+            ]);
+            $material->save();
+            session()->flash('success', 'El material fue modificado exitosamente');
+        } catch(\Exception $e) {
+            session()->flash('error', 'Error al modificar el material seleccionado: ' . $e->getMessage());
         }
         return redirect('/materiales');
     }
+
 
     /**
      * Remove the specified resource from storage.

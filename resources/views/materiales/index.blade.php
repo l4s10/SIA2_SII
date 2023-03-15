@@ -25,6 +25,7 @@
                 <!-- <th scope="col">ID</th> -->
                 <th scope="col">Nombre material</th>
                 <th scope="col">Tipo material</th>
+                <th scope="col">Stock</th>
                 <th scope="col">Acciones</th>
             </tr>
         </thead>
@@ -32,7 +33,8 @@
             @foreach($materiales as $material)
                 <tr>
                     <td>{{ $material->NOMBRE_MATERIAL }}</td>
-                    <td>{{ $material-> TIPO_MATERIAL}}</td>
+                    <td>{{ $material->tipoMaterial->TIPO_MATERIAL }}</td>
+                    <td>{{$material->STOCK}} </td>
                     <td>
                         <form action="{{ route('materiales.destroy',$material->ID_MATERIAL) }}" method="POST">
                             @csrf

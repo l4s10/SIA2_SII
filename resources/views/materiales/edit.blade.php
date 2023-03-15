@@ -20,16 +20,27 @@
             @endif
         </div>
         <div class="mb-3">
-            <label for="" class="form-label">Tipo de material</label>
-            <select id="TIPO_MATERIAL" name="TIPO_MATERIAL" class="form-control">
+            <label for="ID_TIPO_MAT" class="form-label">Tipo de material</label>
+            <select id="ID_TIPO_MAT" name="ID_TIPO_MAT" class="form-control @error('ID_TIPO_MAT') is-invalid @enderror">
                 @foreach($tipos as $tipo)
-                    @if($material->TIPO_MATERIAL == $tipo->TIPO_MATERIAL)
-                        <option value="{{$tipo->TIPO_MATERIAL}}" selected>{{$tipo->TIPO_MATERIAL}}</option>
+                    @if($material->ID_TIPO_MAT == $tipo->ID_TIPO_MAT)
+                        <option value="{{$tipo->ID_TIPO_MAT}}" selected>{{$tipo->TIPO_MATERIAL}}</option>
                     @else
-                        <option value="{{$tipo->TIPO_MATERIAL}}">{{$tipo->TIPO_MATERIAL}}</option>
+                        <option value="{{$tipo->ID_TIPO_MAT}}">{{$tipo->TIPO_MATERIAL}}</option>
                     @endif
                 @endforeach
             </select>
+            @error('ID_TIPO_MAT')
+                <div class="invalid-feedback">{{ $message }}</div>
+            @enderror
+        </div>
+        
+        <div class="form-group">
+            <label for="STOCK">Stock:</label>
+            <input type="number" class="form-control" id="STOCK" name="STOCK" value="{{ old('STOCK', $material->STOCK ?? '') }}" required>
+            @error('stock')
+                <div class="text-danger">{{ $message }}</div>
+            @enderror
         </div>
         <a href="/materiales" class="btn btn-secondary" tabindex="5">Cancelar</a>
         <button type="submit" class="btn btn-primary" tabindex="4">Guardar</button>

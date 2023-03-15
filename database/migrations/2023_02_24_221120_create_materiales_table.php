@@ -12,9 +12,10 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('materiales', function (Blueprint $table) {
-            $table->id('ID_MATERIAL');
-            $table->string('TIPO_MATERIAL')->references('TIPO_MATERIAL')->on('tipo_material');
+            $table->increments('ID_MATERIAL');
+            $table->integer('ID_TIPO_MAT')->unsigned()->references('ID_TIPO_MAT')->on('tipo_material')->onDelete('cascade');
             $table->string('NOMBRE_MATERIAL', 128)->nullable();
+            $table->integer('STOCK');
             $table->timestamps();
         });
     }
