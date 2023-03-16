@@ -24,12 +24,10 @@
         <table id="materiales" class="table table-responsive table-bordered mt-4" style="width:100%; white-space:nowrap;">
                 <thead class="bg-primary text-white">
                     <tr>
-                        <!-- <th scope="col">ID</th> -->
                         <th scope="col">Solicitante</th>
                         <th scope="col">Rut</th>
                         <th scope="col">Departamento</th>
                         <th scope="col">Email</th>
-                        <th scope="col">Tipo</th>
                         <th scope="col">Materiales</th>
                         <th scope="col">Estado</th>
                         <th scope="col">Ingreso</th>
@@ -43,7 +41,6 @@
                             <td>{{ $sol_material->RUT }}</td>
                             <td>{{ $sol_material->DEPTO}}</td>
                             <td>{{ $sol_material->EMAIL}}</td>
-                            <td>{{ $sol_material->TIPO_MAT_SOL}}</td>
                             <td>{{ $sol_material->MATERIAL_SOL}}</td>
                             <td>{{ $sol_material->ESTADO_SOL}}</td>
                             <td>{{ $sol_material->created_at}}</td>

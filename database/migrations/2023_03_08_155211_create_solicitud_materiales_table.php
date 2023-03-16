@@ -18,7 +18,6 @@ return new class extends Migration
             //agregar refetrencias a tabla DEPARTAMENTOS
             $table->string('DEPTO', 128);
             $table->string('EMAIL', 128);
-            $table->string('TIPO_MAT_SOL')->references('TIPO_MATERIAL')->on('tipo_material');
             $table->text('MATERIAL_SOL');
             //agregar referencias a  tabla ESTADOS SOLCITUD
             $table->string('ESTADO_SOL', 20)->default('INGRESADO');

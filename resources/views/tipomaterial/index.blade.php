@@ -7,7 +7,8 @@
 @stop
 
 @section('content')
-<!-- en el href, hacemos referencia dentro de la carpeta de vistas -->
+   <div class="container">
+     <!-- en el href, hacemos referencia dentro de la carpeta de vistas -->
     <!-- <a href="materiales/create" class="btn btn-primary mb-3">CREAR</a> -->
     @if(session('success'))
         <div class="alert alert-success alert-dismissible fade show" role="alert">
@@ -23,30 +24,33 @@
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
         </div>
     @endif
-    <table id="materiales" class="table table-bordered shadow-lg mt-4" style="width:100%">
-        <thead class="bg-primary text-white">
-            <tr>
-                <!-- <th scope="col">ID</th> -->
-                <th scope="col">Tipo material</th>
-                <th scope="col">Acciones</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach($tipos as $tipo)
-                <tr>
-                    <td>{{ $tipo->TIPO_MATERIAL }}</td>
-                    <td>
-                        <form action="{{ route('tipomaterial.destroy',$tipo->ID_TIPO_MAT) }}" method="POST">
-                            @csrf
-                            @method('DELETE')
-                            <a href="/tipomaterial/{{$tipo->ID_TIPO_MAT}}/edit" class="btn btn-info">Editar</a>
-                            <button type="submit" class="btn btn-danger">Borrar</button>
-                        </form>
-                    </td>
-                </tr>
-            @endforeach
-        </tbody>
-    </table>
+        <div class="table-responsive">
+            <table id="materiales" class="table table-bordered mt-4">
+                <thead class="bg-primary text-white">
+                    <tr>
+                        <!-- <th scope="col">ID</th> -->
+                        <th scope="col">Tipo material</th>
+                        <th scope="col">Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach($tipos as $tipo)
+                        <tr>
+                            <td>{{ $tipo->TIPO_MATERIAL }}</td>
+                            <td>
+                                <form action="{{ route('tipomaterial.destroy',$tipo->ID_TIPO_MAT) }}" method="POST">
+                                    @csrf
+                                    @method('DELETE')
+                                    <a href="/tipomaterial/{{$tipo->ID_TIPO_MAT}}/edit" class="btn btn-info">Editar</a>
+                                    <button type="submit" class="btn btn-danger">Borrar</button>
+                                </form>
+                            </td>
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
+   </div>
 @stop
 
 @section('css')

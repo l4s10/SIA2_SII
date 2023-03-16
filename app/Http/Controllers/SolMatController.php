@@ -106,7 +106,7 @@ class SolMatController extends Controller
         $solicitud = SolicitudMateriales::find($id);
 
         $rules = [
-            'NOMBRE_SOLICITANTE' => ['required', 'string', 'max:255', 'regex:/^[A-Za-z\s]+$/'],
+            'NOMBRE_SOLICITANTE' => ['required', 'string', 'max:255', 'regex:/^[A-Za-zñÑ\s]+$/u'],
             'RUT' => 'required|regex:/^[0-9.-]+$/|min:7|max:12',
             'DEPTO' => ['required', 'string', 'max:255', 'regex:/^[A-Za-z\s]+$/'],
             'EMAIL' => 'required|email',

@@ -7,46 +7,50 @@
 @stop
 
 @section('content')
-    @if(session('success'))
-            <div class="alert alert-success alert-dismissible fade show" role="alert">
-            <strong>Exito! </strong>{{ session('success') }}
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-            </div>
-    @endif
-    @if(session('error'))
-            <div class="alert alert-danger alert-dissmissible fade show" role="alert">
-                {{ session('error') }}
+    <div class="container">
+        @if(session('success'))
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                <strong>Exito! </strong>{{ session('success') }}
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-            </div>
-    @endif
-    <table id="materiales" class="table table-bordered shadow-lg mt-4" style="width:100%">
-        <thead class="bg-primary text-white">
-            <tr>
-                <!-- <th scope="col">ID</th> -->
-                <th scope="col">Nombre material</th>
-                <th scope="col">Tipo material</th>
-                <th scope="col">Stock</th>
-                <th scope="col">Acciones</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach($materiales as $material)
-                <tr>
-                    <td>{{ $material->NOMBRE_MATERIAL }}</td>
-                    <td>{{ $material->tipoMaterial->TIPO_MATERIAL }}</td>
-                    <td>{{$material->STOCK}} </td>
-                    <td>
-                        <form action="{{ route('materiales.destroy',$material->ID_MATERIAL) }}" method="POST">
-                            @csrf
-                            @method('DELETE')
-                            <a href="/materiales/{{$material->ID_MATERIAL}}/edit" class="btn btn-info">Editar</a>
-                            <button type="submit" class="btn btn-danger">Borrar</button>
-                        </form>
-                    </td>
-                </tr>
-            @endforeach
-        </tbody>
-    </table>
+                </div>
+        @endif
+        @if(session('error'))
+                <div class="alert alert-danger alert-dissmissible fade show" role="alert">
+                    {{ session('error') }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                </div>
+        @endif
+        <div class="table-responsive">
+            <table id="materiales" class="table table-bordered mt-4" style="width:100%">
+                <thead class="bg-primary text-white">
+                    <tr>
+                        <!-- <th scope="col">ID</th> -->
+                        <th scope="col">Nombre material</th>
+                        <th scope="col">Tipo material</th>
+                        <th scope="col">Stock</th>
+                        <th scope="col">Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach($materiales as $material)
+                        <tr>
+                            <td>{{ $material->NOMBRE_MATERIAL }}</td>
+                            <td>{{ $material->tipoMaterial->TIPO_MATERIAL }}</td>
+                            <td>{{$material->STOCK}} </td>
+                            <td>
+                                <form action="{{ route('materiales.destroy',$material->ID_MATERIAL) }}" method="POST">
+                                    @csrf
+                                    @method('DELETE')
+                                    <a href="/materiales/{{$material->ID_MATERIAL}}/edit" class="btn btn-info">Editar</a>
+                                    <button type="submit" class="btn btn-danger">Borrar</button>
+                                </form>
+                            </td>
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
+    </div>
 @stop
 
 @section('css')
