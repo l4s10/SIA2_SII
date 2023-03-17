@@ -41,8 +41,8 @@
                                 <form action="{{ route('tipomaterial.destroy',$tipo->ID_TIPO_MAT) }}" method="POST">
                                     @csrf
                                     @method('DELETE')
-                                    <a href="/tipomaterial/{{$tipo->ID_TIPO_MAT}}/edit" class="btn btn-info">Editar</a>
-                                    <button type="submit" class="btn btn-danger">Borrar</button>
+                                    <a href="/tipomaterial/{{$tipo->ID_TIPO_MAT}}/edit" class="btn btn-info"><i class="fa-solid fa-pen-to-square"></i> Editar</a>
+                                    <button type="submit" class="btn btn-danger"><i class="fa-solid fa-trash"></i> Borrar</button>
                                 </form>
                             </td>
                         </tr>
@@ -59,6 +59,8 @@
 @stop
 
 @section('js')
+    <!-- CONEXION FONT-AWESOME CON TOOLKIT -->
+    <script src="https://kit.fontawesome.com/742a59c628.js" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/js/bootstrap.bundle.min.js"></script>
     <!-- Agregando funciones de paginacion, busqueda, etc -->
     <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
