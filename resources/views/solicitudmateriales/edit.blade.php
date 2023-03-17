@@ -1,11 +1,11 @@
 @extends('adminlte::page')
 
 <!-- TITULO DE LA PESTAÑA -->
-@section('title', 'Solicitar Materiales')
+@section('title', 'Revisar Solicitud')
 
 <!-- CABECERA DE LA PAGINA -->
 @section('content_header')
-    <h1>Solicitar Materiales</h1>
+    <h1>Revisar Solicitud de {{$solicitud->NOMBRE_SOLICITANTE}}</h1>
 @stop
 
 @section('content')
@@ -77,7 +77,6 @@
                         <th scope="col">Nombre material</th>
                         <th scope="col">Tipo material</th>
                         <th scope="col">Stock</th>
-                        <th scope="col">Acciones</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -86,10 +85,6 @@
                         <td>{{ $material->NOMBRE_MATERIAL }}</td>
                         <td>{{ $material->tipoMaterial->TIPO_MATERIAL }}</td>
                         <td>{{ $material->STOCK}}</td>
-                        <td>
-                            <button type="button" class="btn btn-info btn-agregar" data-nombre="{{ $material->NOMBRE_MATERIAL }}" data-tipo="{{ $material->tipoMaterial->TIPO_MATERIAL }}"><i class="fa-solid fa-cart-plus"></i></button>
-                            <button type="button" class="btn btn-danger btn-eliminar" data-nombre="{{ $material->NOMBRE_MATERIAL }}"><i class="fa-solid fa-trash"></i></button>
-                        </td>
                     </tr>
                     @endforeach
                 </tbody>
