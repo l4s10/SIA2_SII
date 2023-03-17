@@ -74,7 +74,7 @@ class SolMatController extends Controller
             SolicitudMateriales::create($data);
             session()->flash('success','La solicitud de materiales ha sido enviada exitosamente');
         }catch(\Exception $e){
-            session()->flash('error','Error al crear la solicitud');
+            session()->flash('error','Error al crear la solicitud' . $e->getMessage());
         }
         return redirect('/solmaterial');
     }

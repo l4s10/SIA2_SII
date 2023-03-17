@@ -21,7 +21,7 @@
                 </div>
         @endif
         <div class="table-responsive">
-            <table id="materiales" class="table table-bordered mt-4" style="width:100%">
+            <table id="materiales" class="table table-bordered mt-4">
                 <thead class="bg-primary text-white">
                     <tr>
                         <!-- <th scope="col">ID</th> -->
@@ -41,8 +41,8 @@
                                 <form action="{{ route('materiales.destroy',$material->ID_MATERIAL) }}" method="POST">
                                     @csrf
                                     @method('DELETE')
-                                    <a href="/materiales/{{$material->ID_MATERIAL}}/edit" class="btn btn-info">Editar</a>
-                                    <button type="submit" class="btn btn-danger">Borrar</button>
+                                    <a href="/materiales/{{$material->ID_MATERIAL}}/edit" class="btn btn-info"><i class="fa-solid fa-pen-to-square"></i> Editar</a>
+                                    <button type="submit" class="btn btn-danger"><i class="fa-solid fa-trash"></i> Borrar</button>
                                 </form>
                             </td>
                         </tr>
@@ -59,7 +59,10 @@
 @stop
 
 @section('js')
+    <!-- Bootstrap 5 -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/js/bootstrap.bundle.min.js"></script>
+    <!-- CONEXION FONT-AWESOME CON TOOLKIT -->
+    <script src="https://kit.fontawesome.com/742a59c628.js" crossorigin="anonymous"></script>
     <!-- Agregando funciones de paginacion, busqueda, etc -->
     <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
     <script src="https://cdn.datatables.net/1.13.2/js/jquery.dataTables.min.js"></script>

@@ -9,6 +9,6 @@ class SolicitudMateriales extends Model
 {
     use HasFactory;
     protected $table='solicitud_materiales';
-    protected $fillable= ['NOMBRE_SOLICITANTE','RUT','DEPTO','EMAIL','MATERIAL_SOL','ESTADO_SOL'];
+    protected $fillable= ['NOMBRE_SOLICITANTE','RUT','DEPTO','EMAIL','MATERIAL_SOL','OBSERVACIONES','ESTADO_SOL'];
     protected $primaryKey= 'ID_SOLICITUD';
 }

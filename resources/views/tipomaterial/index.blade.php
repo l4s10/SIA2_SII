@@ -7,8 +7,8 @@
 @stop
 
 @section('content')
-   <div class="container">
-     <!-- en el href, hacemos referencia dentro de la carpeta de vistas -->
+<div class="container">
+    <!-- en el href, hacemos referencia dentro de la carpeta de vistas -->
     <!-- <a href="materiales/create" class="btn btn-primary mb-3">CREAR</a> -->
     @if(session('success'))
         <div class="alert alert-success alert-dismissible fade show" role="alert">
@@ -50,7 +50,7 @@
                 </tbody>
             </table>
         </div>
-   </div>
+</div>
 @stop
 
 @section('css')

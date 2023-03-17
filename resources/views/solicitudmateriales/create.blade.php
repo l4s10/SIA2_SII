@@ -61,7 +61,7 @@
 
         <div class="mb-3">
             <label for="ESTADO_SOL" class="form-label">Estado de la Solicitud:</label>
-            <select id="ESTADO-SOL" name="TIPO_MAT_SOL" class="form-control" disabled>
+            <select id="ESTADO_SOL" name="ESTADO_SOL" class="form-control" disabled>
                 <option value="INGRESADO" selected>Ingresado</option>
                 <option value="EN REVISION">En revisión</option>
                 <option value="ACEPTADO">Aceptado</option>
@@ -93,9 +93,16 @@
                 </tbody>
             </table>
         </div>
+        <!-- Checkout de materiales solicitados -->
         <div class="mb-6" style="padding: 1%;">
-            <!-- Agrega este textarea -->
-            <textarea id="MATERIAL_SOL" name="MATERIAL_SOL" rows="5" class="form-control" placeholder="Artículos en el carrito" readonly></textarea>
+            <div class="mb-3">
+                <label for="MATERIAL_SOL" class="form-label">Checkout:</label>
+                <textarea id="MATERIAL_SOL" name="MATERIAL_SOL" rows="5" class="form-control" placeholder="Artículos en el carrito" readonly></textarea>
+            </div>
+            <div class="mb-3">
+                <label for="OBSERVACIONES" class="form-label">Observaciones:</label>
+                <textarea id="OBSERVACIONES" name="OBSERVACIONES" class="form-control" placeholder="Solo el encargado puede ingresar observaciones" readonly>No existen observaciones por ahora</textarea>
+            </div>
         </div>
         <!-- Botones de envio -->
         <div class="mb-6" style="padding: 1%;">
@@ -125,7 +132,7 @@
                 </div>
             </div>
         </div>
-</form>
+        </form>
     </div>
 @stop
 

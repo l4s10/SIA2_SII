@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('DEPTO', 128);
             $table->string('EMAIL', 128);
             $table->text('MATERIAL_SOL');
+            $table->text('OBSERVACIONES')->default('No existen observaciones');
             //agregar referencias a  tabla ESTADOS SOLCITUD
             $table->string('ESTADO_SOL', 20)->default('INGRESADO');
             $table->timestamps();
