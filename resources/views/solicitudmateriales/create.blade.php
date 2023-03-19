@@ -100,8 +100,8 @@
                 <textarea id="MATERIAL_SOL" name="MATERIAL_SOL" rows="5" class="form-control" placeholder="Artículos en el carrito" readonly></textarea>
             </div>
             <div class="mb-3">
-                <label for="OBSERVACIONES" class="form-label">Observaciones:</label>
-                <textarea id="OBSERVACIONES" name="OBSERVACIONES" class="form-control" placeholder="Solo el encargado puede ingresar observaciones" readonly>No existen observaciones por ahora</textarea>
+                <label for="OBSERVACIONES" class="form-label" hidden>Observaciones:</label>
+                <textarea id="OBSERVACIONES" name="OBSERVACIONES" class="form-control" placeholder="Solo el encargado puede ingresar observaciones" readonly hidden>No existen observaciones por ahora</textarea>
             </div>
         </div>
         <!-- Botones de envio -->
@@ -164,7 +164,7 @@
     <script>
         $(document).ready(function() {
         // Capturar clic en botón "Agregar al carrito"
-        $('.btn-agregar').click(function() {
+        $(document).on('click', '.btn-agregar', function() {
             // Obtener valores de los atributos "data" del botón
             var nombreMaterial = $(this).data('nombre');
             var tipoMaterial = $(this).data('tipo');
@@ -177,7 +177,9 @@
             $(this).prop('disabled', true);
         });
 
-        $('.btn-eliminar').click(function() {
+
+        // Capturar clic en botón "Eliminar"
+            $(document).on('click', '.btn-eliminar', function() {
             var nombreMaterial = $(this).data('nombre');
             // Eliminar el artículo del carrito
             var carritoTextarea = $('#MATERIAL_SOL');
@@ -189,6 +191,7 @@
             // Habilitar el botón "Agregar al carrito" correspondiente
             $('.btn-agregar[data-nombre="' + nombreMaterial + '"]').prop('disabled', false);
         });
+
 
 
 

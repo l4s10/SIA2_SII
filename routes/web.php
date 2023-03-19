@@ -16,6 +16,13 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('auth.login');
 });
+//Rutas para testear vistas
+Route::get('/repyman', function(){
+    return view('repyman.index');
+});
+// Route::get('/repyman/reparaciones',function(){
+//     return view('repyman.reparaciones.index');
+// });
 
 //Rutas para articulos (TEST de CRUD)
 Route::resource('articulos','App\Http\Controllers\ArticuloController');
@@ -25,6 +32,9 @@ Route::resource('materiales','App\Http\Controllers\MaterialController');
 Route::resource('tipomaterial','App\Http\Controllers\TipoMaterialController');
 //Rutas para materiales (SOLICITUDES)
 Route::resource('solmaterial','App\Http\Controllers\SolMatController');
+//Rutas para reparaciones
+Route::resource('reparaciones','App\Http\Controllers\RelFunRepGeneralController');
+//Rutas para mantenciones
 //rutas para vehiculos
 Route::resource('vehiculos','App\Http\Controllers\VehiculoController');
 

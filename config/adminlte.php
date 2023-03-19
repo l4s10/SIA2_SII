@@ -312,49 +312,6 @@ return [
             'can'  => 'manage-blog',
         ],
         ['header' => 'Módulos'],
-        // [
-        //     'text'        => 'Artículos',
-        //     'url'         => '#',
-        //     'icon'        => 'far fa-fw fa-file',
-        //     'label'       => 'CRUD',
-        //     'label_color' => 'danger',
-        //     'submenu' => [
-        //         [
-        //             'text'    => 'Administrar Items',
-        //             'url'     => '#',
-        //             'submenu' => [
-        //                 [
-        //                     'text'    => 'Visualizar Items',
-        //                     'url'     => 'materiales',
-        //                 ],
-        //                 [
-        //                     'text'    => 'Ingresar Items',
-        //                     'url'     => 'materiales/create',
-        //                 ],
-        //             ],
-        //         ],
-        //         [
-        //             'text'    => 'Solicitudes Items',
-        //             'url'     => '#',
-        //             'submenu' => [
-        //                 [
-        //                     'text'    => 'level_two',
-        //                     'url'     => '#',
-        //                     'submenu' => [
-        //                         [
-        //                             'text' => 'level_three',
-        //                             'url'  => '#',
-        //                         ],
-        //                         [
-        //                             'text' => 'level_three',
-        //                             'url'  => '#',
-        //                         ],
-        //                     ],
-        //                 ],
-        //             ],
-        //         ],
-        //     ],
-        // ],
         [
             'text'        => 'Vehículos',
             'url'         => 'vehiculos',
@@ -382,6 +339,11 @@ return [
             ],
         ],
         [
+            'text'        => 'Reparaciones y Mantenciones',
+            'url'         => 'repyman',
+            'icon'        => 'fas fa-fw fa-solid fa-wrench',
+        ],
+        [
             'text'        => 'Equipos',
             'url'         => '#',
             'icon'        => 'fas fa-fw fa-desktop',
@@ -399,10 +361,7 @@ return [
             'text'        => 'Salas',
             'url'         => '#',
             'icon'        => 'fas fa-fw fa-building',
-            // 'label'       => 'CRUD',
-            // 'label_color' => 'danger',
         ],
-        
         [
             'text'    => 'Inventario',
                     'url'     => '#',
