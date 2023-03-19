@@ -17,7 +17,7 @@
                 <div class="col-md-6">
                     <div class="mb-3">
                     <label for="NOMBRE_SOLICITANTE" class="form-label">Nombre del solicitante:</label>
-                    <input type="text" id="NOMBRE_SOLICITANTE" name="NOMBRE_SOLICITANTE" class="form-control{{ $errors->has('NOMBRE_SOLICITANTE') ? ' is-invalid' : '' }}" value="{{ old('NOMBRE_SOLICITANTE') }}" placeholder="Ej: ANDRES RODRIGO SUAREZ MATAMALA">
+                    <input type="text" id="NOMBRE_SOLICITANTE" name="NOMBRE_SOLICITANTE" class="form-control{{ $errors->has('NOMBRE_SOLICITANTE') ? ' is-invalid' : '' }}" value="{{ auth()->user()->name }}" placeholder="Ej: ANDRES RODRIGO SUAREZ MATAMALA">
                     @if ($errors->has('NOMBRE_SOLICITANTE'))
                     <div class="invalid-feedback">
                         {{ $errors->first('NOMBRE_SOLICITANTE') }}
