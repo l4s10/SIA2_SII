@@ -17,7 +17,7 @@
                 <div class="col-md-6">
                     <div class="mb-3">
                     <label for="NOMBRE_SOLICITANTE" class="form-label">Nombre del solicitante:</label>
-                    <input type="text" id="NOMBRE_SOLICITANTE" name="NOMBRE_SOLICITANTE" class="form-control{{ $errors->has('NOMBRE_SOLICITANTE') ? ' is-invalid' : '' }}" value="{{ auth()->user()->name }}" placeholder="Ej: ANDRES RODRIGO SUAREZ MATAMALA">
+                    <input type="text" id="NOMBRE_SOLICITANTE" name="NOMBRE_SOLICITANTE" class="form-control{{ $errors->has('NOMBRE_SOLICITANTE') ? ' is-invalid' : '' }}" value="{{ auth()->user()->name }}" placeholder="Ej: ANDRES RODRIGO SUAREZ MATAMALA" readonly>
                     @if ($errors->has('NOMBRE_SOLICITANTE'))
                     <div class="invalid-feedback">
                         {{ $errors->first('NOMBRE_SOLICITANTE') }}
@@ -49,7 +49,7 @@
 
                     <div class="mb-3">
                     <label for="EMAIL" class="form-label">Email:</label>
-                    <input type="email" id="EMAIL" name="EMAIL" class="form-control{{ $errors->has('EMAIL') ? ' is-invalid' : '' }}" value="{{ old('EMAIL') }}" placeholder="Ej: someone@example.com">
+                    <input type="email" id="EMAIL" name="EMAIL" class="form-control{{ $errors->has('EMAIL') ? ' is-invalid' : '' }}" value="{{ auth()->user()->email }}" placeholder="Ej: someone@example.com" readonly>
                     @if ($errors->has('EMAIL'))
                     <div class="invalid-feedback">
                         {{ $errors->first('EMAIL') }}
@@ -122,8 +122,8 @@
                     <div class="modal-body">
                         <p id="nombre-material"></p>
                         <p id="tipo-material"></p>
-                        <label for="cantidad">Cantidad:</label>
-                        <input type="number" id="cantidad" name="cantidad" min="1" value="1">
+                        <label class="form-label" for="cantidad">Cantidad:</label>
+                        <input class="form-control" type="number" id="cantidad" name="cantidad" min="1" value="1">
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal" id="btn-cerrar-pie-modal">Cerrar</button>

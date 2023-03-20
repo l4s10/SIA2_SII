@@ -8,12 +8,13 @@
 
 @section('content')
     <div class="container">
-        <form action="/pruebasJorge" method="POST">
+        <form action="{{route('reparaciones.index')}}" method="POST">
+            @csrf
             <div class="row">
                 <div class="col-md-6">
                     <div class="mb-3">
                         <label for="NOMBRE_SOLICITANTE" class="form-label"><i class="fa-solid fa-user"></i> Nombre del solicitante:</label>
-                        <input type="text" id="NOMBRE_SOLICITANTE" name="NOMBRE_SOLICITANTE" class="form-control{{ $errors->has('NOMBRE_SOLICITANTE') ? ' is-invalid' : '' }}" value="{{ old('NOMBRE_SOLICITANTE') }}" placeholder="Ej: ANDRES RODRIGO SUAREZ MATAMALA">
+                        <input type="text" id="NOMBRE_SOLICITANTE" name="NOMBRE_SOLICITANTE" class="form-control{{ $errors->has('NOMBRE_SOLICITANTE') ? ' is-invalid' : '' }}" value="{{ auth()->user()->name }}" placeholder="Ej: ANDRES RODRIGO SUAREZ MATAMALA" readonly>
                         @if ($errors->has('NOMBRE_SOLICITANTE'))
                         <div class="invalid-feedback">
                             {{ $errors->first('NOMBRE_SOLICITANTE') }}
@@ -45,7 +46,7 @@
 
                     <div class="mb-3">
                         <label for="EMAIL" class="form-label"><i class="fa-solid fa-envelope"></i> Email:</label>
-                        <input type="email" id="EMAIL" name="EMAIL" class="form-control{{ $errors->has('EMAIL') ? ' is-invalid' : '' }}" value="{{ old('EMAIL') }}" placeholder="Ej: demo@demo.cl">
+                        <input type="email" id="EMAIL" name="EMAIL" class="form-control{{ $errors->has('EMAIL') ? ' is-invalid' : '' }}" value="{{ auth()->user()->email }}" placeholder="Ej: demo@demo.cl" readonly>
                         @if ($errors->has('EMAIL'))
                         <div class="invalid-feedback">
                             {{ $errors->first('EMAIL') }}
@@ -55,12 +56,16 @@
                 </div>
             </div>
             <div class="mb-3">
-                <label for="ESTADO_SOL" class="form-label"><i class="fa-sharp fa-solid fa-building-flag"></i> Area Solicitada:</label>
-                <select id="ESTADO_SOL" name="ESTADO_SOL" class="form-control">
-                    <option value="OFICINA" selected>Oficina</option>
+                <label for="ID_TIPO_REP_GENERAL" class="form-label"><i class="fa-sharp fa-solid fa-building-flag"></i> Area Solicitada:</label>
+                <select id="ID_TIPO_REP_GENERAL" name="ID_TIPO_REP_GENERAL" class="form-control">
+                    {{-- <option value="OFICINA" selected>Oficina</option>
                     <option value="MUEBLES">Muebles</option>
                     <option value="INFRAESTRUCTURA">Infraestructura</option>
-                    <option value="VEHICULOS">Vehiculos</option>
+                    <option value="VEHICULOS">Vehiculos</option> --}}
+                    <option value="" selected>--SELECCIONE UNA OPCION--</option>
+                    @foreach ($tipos_rep as $tipo_rep)
+                        <option value="{{$tipo_rep->ID_TIPO_REP_GENERAL}}">{{$tipo_rep->TIPO_REP}}</option>
+                    @endforeach
                 </select>
             </div>
             <div class="mb-3">
@@ -69,18 +74,23 @@
             </div>
             <div class="mb-6">
                 <div class="mb-3">
-                    <label for="OBSERVACIONES" class="form-label" hidden><i class="fa-solid fa-comments"></i> Observaciones:</label>
-                    <textarea class="form-control" aria-label="With textarea" hidden></textarea>
+                    <label for="OBSERV_REP_INM" class="form-label" hidden><i class="fa-solid fa-comments"></i> Observaciones:</label>
+                    <textarea id="OBSERV_REP_INM" name="OBSERV_REP_INM" class="form-control" aria-label="With textarea" hidden>No existen observaciones por ahora.</textarea>
                 </div>
             </div>
             <div class="mb-3">
-                <label for="ESTADO_SOL" class="form-label"><i class="fa-solid fa-file-circle-check"></i> Estado de la Solicitud:</label>
-                <select id="ESTADO_SOL" name="ESTADO_SOL" class="form-control" disabled>
+                <label for="ESTADO_REP_INM" class="form-label"><i class="fa-solid fa-file-circle-check"></i> Estado de la Solicitud:</label>
+                <select id="ESTADO_REP_INM" name="ESTADO_REP_INM" class="form-control" disabled>
                     <option value="INGRESADO" selected>Ingresado</option>
                     <option value="EN REVISION">En revisión</option>
                     <option value="ACEPTADO">Aceptado</option>
                     <option value="RECHAZADO">Rechazado</option>
                 </select>
+            </div>
+            <!-- Botones de envio -->
+            <div class="mb-6" style="padding: 1%;">
+                <a href="/repyman" class="btn btn-secondary" tabindex="5"><i class="fa-solid fa-hand-point-left"></i> Cancelar</a>
+                <button type="submit" class="btn btn-primary" tabindex="4"><i class="fa-sharp fa-solid fa-paper-plane"></i> Enviar Solicitud</button>
             </div>
         </form>
     </div>

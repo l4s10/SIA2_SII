@@ -13,12 +13,14 @@ class RelFunRepGeneral extends Model
     protected $primaryKey = 'ID_REP_INM';
     protected $fillable = [
         'ID_USUARIO',
-        'TIPO_REPARACION_REP_GEN',
-        'REP_SOL',
-        'FECHA_CREACION_REP_INM',
+        // 'TIPO_REPARACION_REP_GEN',
+        'NOMBRE_SOLICITANTE',
+        'RUT',
+        'DEPTO',
+        'EMAIL',
         'ESTADO_REP_INM',
-        'FECHA_MODIFICACION_REP_INM',
-        'MODIFICADO_POR_REP_INM',
+        'REP_SOL',
+        'ESTADO_REP_INM',
         'OBSERV_REP_INM',
         'ID_TIPO_REP_GENERAL'
     ];

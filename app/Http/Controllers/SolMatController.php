@@ -157,6 +157,7 @@ class SolMatController extends Controller
         return redirect('/solmaterial');
     }
 
+    //-----FUNCION QUE NOS PERMITE FORMATEAR EL RUT CON  PUNTOS Y GUIÓN.------
     public function formatRut($rut) {
         $rut = preg_replace('/[^0-9kK]/', '', $rut); // Remueve todos los caracteres excepto los números y la letra K
         $dv = substr($rut, -1); // Obtiene el dígito verificador
