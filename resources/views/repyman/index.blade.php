@@ -41,8 +41,8 @@
                 <p class="card-text">Este módulo permite a los funcionarios reportar problemas en los <strong>vehículos</strong>. Los funcionarios deberán proporcionar información detallada y el equipo encargado del mantenimiento o soporte técnico tomará las medidas para solucionar el problema.</p>
             </div>
             <div class="card-footer">
-                <a class="btn btn-primary" href="/repyman/reparaciones"><i class="fa-solid fa-car-side"></i> Solicitar</a>
-                <a class="btn btn-primary" href="{{route('articulos.create')}}"><i class="fa-solid fa-eye"></i> Solicitudes</a>
+                <a class="btn btn-primary" href="{{route('repvehiculos.create')}}"><i class="fa-solid fa-car-side"></i> Solicitar</a>
+                <a class="btn btn-primary" href="{{route('repvehiculos.index')}}"><i class="fa-solid fa-eye"></i> Solicitudes</a>
             </div>
         </div>
     </div>

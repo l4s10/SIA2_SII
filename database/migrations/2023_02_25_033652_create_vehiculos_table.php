@@ -14,8 +14,9 @@ return new class extends Migration
     public function up()
     {
         Schema::create('vehiculos', function (Blueprint $table) {
-            $table->string('PATENTE_VEHICULO',7)->primary();
-            $table->string('TIPO_VEHICULO', 128)->nullable();
+            $table->increments('ID_VEHICULO');
+            $table->string('PATENTE_VEHICULO',7);
+            $table->string('ID_TIPO_VEH', 128)->references('ID_TIPO_VEH')->on('tipo_vehiculo');
             $table->string('MARCA', 128)->nullable();
             $table->string('MODELO_VEHICULO', 128)->nullable();
             $table->string('ANO_VEHICULO', 128)->nullable();

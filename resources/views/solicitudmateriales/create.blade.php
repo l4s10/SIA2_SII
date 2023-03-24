@@ -96,7 +96,7 @@
         <!-- Checkout de materiales solicitados -->
         <div class="mb-6" style="padding: 1%;">
             <div class="mb-3">
-                <label for="MATERIAL_SOL" class="form-label">Checkout:</label>
+                <label for="MATERIAL_SOL" class="form-label">Resumen:</label>
                 <textarea id="MATERIAL_SOL" name="MATERIAL_SOL" rows="5" class="form-control" placeholder="Artículos en el carrito" readonly></textarea>
             </div>
             <div class="mb-3">

@@ -358,7 +358,7 @@ return [
             // 'label_color' => 'danger',
         ],
         [
-            'text'        => 'Salas',
+            'text'        => 'Reservas (Salas y Bodegas)',
             'url'         => '#',
             'icon'        => 'fas fa-fw fa-building',
         ],
@@ -388,6 +388,11 @@ return [
                             'icon'    => 'fas fa-fw fa-plus',
                         ],
                     ],
+        ],
+        [
+            'text'        => 'Reportes',
+            'url'         => '#',
+            'icon'        => 'fas fa-fw fa-solid fa-chart-simple',
         ],
         ['header' => 'Módulos Administrador'],
         [

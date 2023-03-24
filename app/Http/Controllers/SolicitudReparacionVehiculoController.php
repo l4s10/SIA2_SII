@@ -1,21 +1,29 @@
 <?php
 
 namespace App\Http\Controllers;
-
-use App\Models\RelFunRepGeneral;
+//Importamos modelos que usaremos para las solcitudes
+use App\Models\TipoServicio;
+use App\Models\TipoVehiculo;
+use App\Models\Vehiculo;
+use App\Models\SolicitudReparacionVehiculo;
 use Illuminate\Http\Request;
-//Agregamos el modelo de tipo de reparacion (para el desplegable)
-use App\Models\TipoReparacion;
 
-class RelFunRepGeneralController extends Controller
+class SolicitudReparacionVehiculoController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
+    //Funcion para acceder a las rutas SOLO SI los usuarios estan logueados
+    public function __construct(){
+        $this->middleware('auth');
+        //Tambien aqui podremos agregar que roles son los que pueden ingresar
+    }
+
     public function index()
     {
-        $sol_reparaciones = RelFunRepGeneral::all();
-        return view('repyman.rep_inm.index',compact('sol_reparaciones'));
+        $sol_rep_veh = SolicitudReparacionVehiculo::all();
+        $tipos_servicio = TipoServicio::all();
+        return view('repyman.rep_veh.index',compact('sol_rep_veh','tipos_servicio'));
     }
 
     /**
@@ -23,8 +31,11 @@ class RelFunRepGeneralController extends Controller
      */
     public function create()
     {
-        $tipos_rep = TipoReparacion::all();
-        return view('repyman.rep_inm.create',compact('tipos_rep'));
+        //Listar tipos de servicio y tipo de auto?
+        $tipos_servicio = TipoServicio::all();
+        $tipo_vehiculos = TipoVehiculo::all();
+        $vehiculos = Vehiculo::all();
+        return view('repyman.rep_veh.create',compact('tipos_servicio','tipo_vehiculos','vehiculos'));
     }
 
     /**
@@ -66,10 +77,10 @@ class RelFunRepGeneralController extends Controller
         //Guardar en BDD.
 
         try{
-            RelFunRepGeneral::create($data);
-            session()->flash('success','La solicitud de reparacion ha sido enviada exitosamente.');
+            SolicitudReparacionVehiculo::create($data);
+            session()->flash('success','La solicitud se ha enviado exitosamente!.');
         }catch(\Exception $e){
-            session()->flash('error','Error al crear la solicitud, vuelva a intentarlo más tarde.');
+            session()->flash('error','Error al enviar la solicitud, vuelva a intentarlo mas tarde'. $e->getMessage());
         }
         return redirect('/repyman');
     }
@@ -77,10 +88,9 @@ class RelFunRepGeneralController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show($id)
+    public function show(SolicitudReparacionVehiculo $solicitudReparacionVehiculo)
     {
-        $sol_reparacion = RelFunRepGeneral::find($id);
-        return view('repyman.rep_inm.show',compact('sol_reparacion'));
+        //
     }
 
     /**
@@ -88,9 +98,11 @@ class RelFunRepGeneralController extends Controller
      */
     public function edit(string $id)
     {
-        $reparacion = RelFunRepGeneral::find($id);
-        $tipos_rep = TipoReparacion::all();
-        return view('repyman.rep_inm.edit',compact('reparacion','tipos_rep'));
+        $solicitud = SolicitudReparacionVehiculo::find($id);
+        $tipos_servicio = TipoServicio::all();
+        $tipo_vehiculos = TipoVehiculo::all();
+        $vehiculos = Vehiculo::all();
+        return view('repyman.rep_veh.edit',compact('solicitud','tipos_servicio','tipo_vehiculos','vehiculos'));
     }
 
     /**
@@ -98,14 +110,14 @@ class RelFunRepGeneralController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        $solicitud_reparacion = RelFunRepGeneral::find($id);
-
+        $solicitud = SolicitudReparacionVehiculo::find($id);
         //Definimos las reglas de los campos y los mensajes de error para cada uno de ellos.
         $rules = [
             'NOMBRE_SOLICITANTE' => ['required', 'string', 'max:255', 'regex:/^[A-Za-zñÑ\s]+$/u'],
             'RUT' => 'required|regex:/^[0-9.-]+$/|min:7|max:12',
             'DEPTO' => ['required', 'string', 'max:255', 'regex:/^[A-Za-z\s]+$/'],
             'EMAIL' => 'required|email',
+
         ];
 
         $messages = [
@@ -123,6 +135,8 @@ class RelFunRepGeneralController extends Controller
             'DEPTO.regex' => 'El campo Departamento solo puede contener letras y espacios.',
             'EMAIL.required' => 'El campo Email es obligatorio.',
             'EMAIL.email' => 'El campo Email debe ser una dirección de correo electrónico válida.',
+
+
         ];
         //Funcion que valida nuestros datos enviados en el formulario en base a las reglas.
         $request->validate($rules, $messages);
@@ -132,12 +146,11 @@ class RelFunRepGeneralController extends Controller
         $rut = intval(str_replace(['.', '-'], '', $data['RUT']));
         $data['RUT'] = $this->formatRut($rut);
         //Guardar en BDD.
-
         try{
-            $solicitud_reparacion->update($request->all());
+            $solicitud->update($request->all());
             session()->flash('success','La solicitud de reparacion ha sido modificada exitosamente.');
         }catch(\Exception $e){
-            session()->flash('error','Error al crear la solicitud, vuelva a intentarlo más tarde.');
+            session()->flash('error','Error al crear la solicitud, vuelva a intentarlo más tarde.' . $e->getMessage());
         }
         return redirect('/repyman');
     }
@@ -145,16 +158,9 @@ class RelFunRepGeneralController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(SolicitudReparacionVehiculo $solicitudReparacionVehiculo)
     {
-        $request = RelFunRepGeneral::find($id);
-        try{
-            $request->delete();
-            session()->flash('success','La solicitud de reparación se eliminó exitosamente');
-        }catch(\Exception $e){
-            session()->flash('error','Error al eliminar la solicitud seleccionada.');
-        }
-        return redirect('/reparaciones');
+        //
     }
     //-----FUNCION QUE NOS PERMITE FORMATEAR EL RUT CON  PUNTOS Y GUIÓN.------
     public function formatRut($rut) {

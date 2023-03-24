@@ -81,12 +81,12 @@ class VehiculoController extends Controller
     public function destroy(string $id)
     {
         $vehiculo = Vehiculo::find($id);
-        $vehiculo->delete();
-
-        if (Vehiculo::count() === 0) {
-            Vehiculo::truncate();
+        try{
+            $vehiculo->delete();
+            session()->flash('success','El vehículo se eliminó exitosamente');
+        }catch(\Exception $e){
+            session()->flash('error','Error al eliminar el vehiculo seleccionada');
         }
-
         return redirect('/vehiculos');
     }
 }

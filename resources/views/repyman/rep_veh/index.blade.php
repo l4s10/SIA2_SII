@@ -1,9 +1,9 @@
 @extends('adminlte::page')
 
-@section('title', 'Tipo material')
+@section('title', 'Solicitudes')
 
 @section('content_header')
-    <h1>Listado tipo material</h1>
+    <h1>Solicitudes de Reparaciones y Mantenciones</h1>
 @stop
 
 @section('content')
@@ -25,23 +25,32 @@
         </div>
     @endif
         <div class="table-responsive">
-            <table id="materiales" class="table table-bordered mt-4">
+            <table id="solicitudes" class="table table-bordered mt-4">
                 <thead class="bg-primary text-white">
                     <tr>
-                        <!-- <th scope="col">ID</th> -->
-                        <th scope="col">Tipo material</th>
-                        <th scope="col">Acciones</th>
+                        <th>Solicitante</th>
+                        <th>Rut</th>
+                        <th>Departamento</th>
+                        <th>Email</th>
+                        <th>Fecha</th>
+                        <th>Estado</th>
+                        <th>Acciones</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach($tipos as $tipo)
+                    @foreach($sol_rep_veh as $solicitud)
                         <tr>
-                            <td>{{ $tipo->TIPO_MATERIAL }}</td>
+                            <td>{{$solicitud->NOMBRE_SOLICITANTE }}</td>
+                            <td>{{$solicitud->RUT}}</td>
+                            <td>{{$solicitud->DEPTO}}</td>
+                            <td>{{$solicitud->EMAIL}}</td>
+                            <td>{{ $solicitud->created_at->tz('America/Santiago')->format('d/m/Y H:i:s') }}</td>
+                            <td>{{$solicitud->ESTADO_SOL_REP_VEH}}</td>
                             <td>
-                                <form action="{{ route('tipomaterial.destroy',$tipo->ID_TIPO_MAT) }}" method="POST">
+                                <form action="{{ route('repvehiculos.destroy',$solicitud->ID_SOL_REP_VEH) }}" method="POST">
                                     @csrf
                                     @method('DELETE')
-                                    <a href="/tipomaterial/{{$tipo->ID_TIPO_MAT}}/edit" class="btn btn-info"><i class="fa-solid fa-pen-to-square"></i> Editar</a>
+                                    <a href="/repvehiculos/{{$solicitud->ID_SOL_REP_VEH}}/edit" class="btn btn-info"><i class="fa-solid fa-pen-to-square"></i> Editar</a>
                                     <button type="submit" class="btn btn-danger"><i class="fa-solid fa-trash"></i> Borrar</button>
                                 </form>
                             </td>
@@ -70,7 +79,7 @@
         <!-- Para inicializar -->
         <script>
             $(document).ready(function () {
-                $('#materiales').DataTable({
+                $('#solicitudes').DataTable({
                     "lengthMenu": [[5,10, 50, -1], [5, 10, 50, "All"]]
                 });
             });

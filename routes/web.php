@@ -34,7 +34,8 @@ Route::resource('tipomaterial','App\Http\Controllers\TipoMaterialController');
 Route::resource('solmaterial','App\Http\Controllers\SolMatController');
 //Rutas para reparaciones
 Route::resource('reparaciones','App\Http\Controllers\RelFunRepGeneralController');
-//Rutas para mantenciones
+//Rutas para reparaciones y mantenciones vehiculares
+Route::resource('repvehiculos','App\Http\Controllers\SolicitudReparacionVehiculoController');
 //rutas para vehiculos
 Route::resource('vehiculos','App\Http\Controllers\VehiculoController');
 

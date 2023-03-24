@@ -11,7 +11,7 @@ class Vehiculo extends Model
 
     protected $fillable = [
         'PATENTE_VEHICULO',
-        'TIPO_VEHICULO',
+        'ID_TIPO_VEH',
         'MARCA',
         'MODELO_VEHICULO',
         'ANO_VEHICULO',
@@ -19,7 +19,11 @@ class Vehiculo extends Model
         'ESTADO_VEHICULO',
     ];
     // Cambiamos el valor por defecto de id al nombre que tenga en la base de datos
-    protected $primaryKey = 'PATENTE_VEHICULO';
+    protected $primaryKey = 'ID_VEHICULO';
     //Si nuestra llave primaria NO ES NUMERICO y es STRING, debemos cambiar el valor de $keytype...
-    protected $keyType = 'string';
+    // protected $keyType = 'string';
+    public function tipoVehiculo()
+    {
+        return $this->belongsTo(TipoVehiculo::class, 'ID_TIPO_VEH');
+    }
 }

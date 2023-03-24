@@ -7,43 +7,60 @@
 @stop
 
 @section('content')
-<!-- en el href, hacemos referencia dentro de la carpeta de vistas -->
-    <a href="vehiculos/create" class="btn btn-primary mb-3">Ingresar nuevo vehículo</a>
-    <table id="vehiculos" class="table table-bordered shadow-lg mt-4" style="width:100%">
-        <thead class="bg-primary text-white">
-            <tr>
-                <th scope="col">Patente</th>
-                <th scope="col">Tipo</th>
-                <th scope="col">Marca</th>
-                <th scope="col">Modelo</th>
-                <th scope="col">Año</th>
-                <th scope="col">Unidad</th>
-                <th scope="col">Estado</th>
-                <th scope="col">Acciones</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach($vehiculos as $vehiculo)
-                <tr>
-                    <td>{{ $vehiculo->PATENTE_VEHICULO }}</td>
-                    <td>{{ $vehiculo->TIPO_VEHICULO }}</td>
-                    <td>{{ $vehiculo->MARCA }}</td>
-                    <td>{{ $vehiculo->MODELO_VEHICULO }}</td>
-                    <td>{{ $vehiculo->ANO_VEHICULO }}</td>
-                    <td>{{ $vehiculo->UNIDAD_VEHICULO }}</td>
-                    <td>{{ $vehiculo->ESTADO_VEHICULO }}</td>
-                    <td>
-                        <form action="{{ route('vehiculos.destroy',$vehiculo->PATENTE_VEHICULO) }}" method="POST">
-                            @csrf
-                            @method('DELETE')
-                            <a href="/vehiculos/{{$vehiculo->PATENTE_VEHICULO}}/edit" class="btn btn-info">Editar</a>
-                            <button type="submit" class="btn btn-danger">Borrar</button>
-                        </form>
-                    </td>
-                </tr>
-            @endforeach
-        </tbody>
-    </table>
+    <div class="container">
+        <!-- Contenedores para los mensajes -->
+        @if(session('success'))
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+        <strong>Exito! </strong>{{ session('success') }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        </div>
+        @endif
+        @if(session('error'))
+            <div class="alert alert-danger alert-dissmissible fade show" role="alert">
+                {{ session('error') }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            </div>
+        @endif
+        <div class="table-responsive">
+            <!-- en el href, hacemos referencia dentro de la carpeta de vistas -->
+            {{-- <a href="vehiculos/create" class="btn btn-primary mb-3">Ingresar nuevo vehículo</a> --}}
+            <table id="vehiculos" class="table table-bordered mt-4" style="width:100%; white-space:nowrap;">
+                <thead class="bg-primary text-white">
+                    <tr>
+                        <th scope="col">Patente</th>
+                        <th scope="col">Tipo</th>
+                        <th scope="col">Marca</th>
+                        <th scope="col">Modelo</th>
+                        <th scope="col">Año</th>
+                        <th scope="col">Unidad</th>
+                        <th scope="col">Estado</th>
+                        <th scope="col">Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach($vehiculos as $vehiculo)
+                        <tr>
+                            <td>{{ $vehiculo->PATENTE_VEHICULO }}</td>
+                            <td>{{ $vehiculo->tipoVehiculo->TIPO_VEHICULO }}</td>
+                            <td>{{ $vehiculo->MARCA }}</td>
+                            <td>{{ $vehiculo->MODELO_VEHICULO }}</td>
+                            <td>{{ $vehiculo->ANO_VEHICULO }}</td>
+                            <td>{{ $vehiculo->UNIDAD_VEHICULO }}</td>
+                            <td>{{ $vehiculo->ESTADO_VEHICULO }}</td>
+                            <td>
+                                <form action="{{ route('vehiculos.destroy',$vehiculo->ID_VEHICULO) }}" method="POST">
+                                    @csrf
+                                    @method('DELETE')
+                                    <a href="/vehiculos/{{$vehiculo->ID_VEHICULO}}/edit" class="btn btn-info">Editar</a>
+                                    <button type="submit" class="btn btn-danger">Borrar</button>
+                                </form>
+                            </td>
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
+    </div>
 @stop
 
 @section('css')
@@ -52,6 +69,8 @@
 @stop
 
 @section('js')
+    <!-- CONEXION CON BOOTSTRAP -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/js/bootstrap.bundle.min.js"></script>
     <!-- Agregando funciones de paginacion, busqueda, etc -->
     <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
         <script src="https://cdn.datatables.net/1.13.2/js/jquery.dataTables.min.js"></script>

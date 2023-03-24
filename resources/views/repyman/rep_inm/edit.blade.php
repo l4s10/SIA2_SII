@@ -3,18 +3,19 @@
 @section('title', 'Solicitudes Inmuebles')
 
 @section('content_header')
-    <h1>Solicitud de Reparación para Inmuebles</h1>
+    <h1>Revisar solicitud n° {{$reparacion->ID_REP_INM}}</h1>
 @stop
 
 @section('content')
     <div class="container">
-        <form action="{{route('reparaciones.index')}}" method="POST">
+        <form action="/reparaciones/{{$reparacion->ID_REP_INM}}" method="POST">
             @csrf
+            @method('PUT')
             <div class="row">
                 <div class="col-md-6">
                     <div class="mb-3">
                         <label for="NOMBRE_SOLICITANTE" class="form-label"><i class="fa-solid fa-user"></i> Nombre del solicitante:</label>
-                        <input type="text" id="NOMBRE_SOLICITANTE" name="NOMBRE_SOLICITANTE" class="form-control{{ $errors->has('NOMBRE_SOLICITANTE') ? ' is-invalid' : '' }}" value="{{ auth()->user()->name }}" placeholder="Ej: ANDRES RODRIGO SUAREZ MATAMALA" readonly>
+                        <input type="text" id="NOMBRE_SOLICITANTE" name="NOMBRE_SOLICITANTE" class="form-control{{ $errors->has('NOMBRE_SOLICITANTE') ? ' is-invalid' : '' }}" value="{{ $reparacion->NOMBRE_SOLICITANTE }}" placeholder="Ej: ANDRES RODRIGO SUAREZ MATAMALA">
                         @if ($errors->has('NOMBRE_SOLICITANTE'))
                         <div class="invalid-feedback">
                             {{ $errors->first('NOMBRE_SOLICITANTE') }}
@@ -24,7 +25,7 @@
 
                     <div class="mb-3">
                         <label for="RUT" class="form-label"><i class="fa-solid fa-id-card"></i> RUT:</label>
-                        <input type="text" id="RUT" name="RUT" class="form-control{{ $errors->has('RUT') ? ' is-invalid' : '' }}" value="{{ old('RUT') }}" placeholder="Sin puntos con guión (Ej: 16738235-5)">
+                        <input type="text" id="RUT" name="RUT" class="form-control{{ $errors->has('RUT') ? ' is-invalid' : '' }}" value="{{ $reparacion->RUT }}" placeholder="Sin puntos con guión (Ej: 16738235-5)">
                         @if ($errors->has('RUT'))
                         <div class="invalid-feedback">
                             {{ $errors->first('RUT') }}
@@ -36,7 +37,7 @@
                 <div class="col-md-6">
                     <div class="mb-3">
                         <label for="DEPTO" class="form-label"><i class="fa-solid fa-building-user"></i> Departamento:</label>
-                        <input type="text" id="DEPTO" name="DEPTO" class="form-control{{ $errors->has('DEPTO') ? ' is-invalid' : '' }}" value="{{ old('DEPTO') }}" placeholder="Ej: ADMINISTRACION">
+                        <input type="text" id="DEPTO" name="DEPTO" class="form-control{{ $errors->has('DEPTO') ? ' is-invalid' : '' }}" value="{{ $reparacion->DEPTO }}" placeholder="Ej: ADMINISTRACION">
                         @if ($errors->has('DEPTO'))
                         <div class="invalid-feedback">
                             {{ $errors->first('DEPTO') }}
@@ -46,7 +47,7 @@
 
                     <div class="mb-3">
                         <label for="EMAIL" class="form-label"><i class="fa-solid fa-envelope"></i> Email:</label>
-                        <input type="email" id="EMAIL" name="EMAIL" class="form-control{{ $errors->has('EMAIL') ? ' is-invalid' : '' }}" value="{{ auth()->user()->email }}" placeholder="Ej: demo@demo.cl" readonly>
+                        <input type="email" id="EMAIL" name="EMAIL" class="form-control{{ $errors->has('EMAIL') ? ' is-invalid' : '' }}" value="{{ $reparacion->EMAIL }}" placeholder="Ej: demo@demo.cl">
                         @if ($errors->has('EMAIL'))
                         <div class="invalid-feedback">
                             {{ $errors->first('EMAIL') }}
@@ -64,25 +65,28 @@
                     <option value="VEHICULOS">Vehiculos</option> --}}
                     <option value="" selected>--SELECCIONE UNA OPCION--</option>
                     @foreach ($tipos_rep as $tipo_rep)
+                        @if ($reparacion->ID_TIPO_REP_GENERAL == $tipo_rep->ID_TIPO_REP_GENERAL)
+                        <option value="{{$tipo_rep->ID_TIPO_REP_GENERAL}}" selected>{{$tipo_rep->TIPO_REP}}</option>
+                        @endif
                         <option value="{{$tipo_rep->ID_TIPO_REP_GENERAL}}">{{$tipo_rep->TIPO_REP}}</option>
                     @endforeach
                 </select>
             </div>
             <div class="mb-3">
                 <label for="REP_SOL" class="form-label"><i class="fa-solid fa-comments"></i> Solicitud:</label>
-                <textarea id="REP_SOL" name="REP_SOL" class="form-control" aria-label="With textarea" placeholder="Describa el problema con el inmueble (MÁX 1000 CARACTERES)"></textarea>
+                <textarea id="REP_SOL" name="REP_SOL" class="form-control" aria-label="With textarea" placeholder="Describa el problema con el inmueble (MÁX 1000 CARACTERES)">{{ $reparacion->REP_SOL}}</textarea>
             </div>
             <div class="mb-6">
                 <div class="mb-3">
-                    <label for="OBSERV_REP_INM" class="form-label" hidden><i class="fa-solid fa-comments"></i> Observaciones:</label>
-                    <textarea id="OBSERV_REP_INM" name="OBSERV_REP_INM" class="form-control" aria-label="With textarea" hidden>No existen observaciones por ahora.</textarea>
+                    <label for="OBSERV_REP_INM" class="form-label"><i class="fa-solid fa-comments"></i> Observaciones:</label>
+                    <textarea id="OBSERV_REP_INM" name="OBSERV_REP_INM" class="form-control" aria-label="With textarea" placeholder="Escriba aquí sus observaciones">{{$reparacion->OBSERV_REP_INM}}</textarea>
                 </div>
             </div>
             <div class="mb-3">
                 <label for="ESTADO_REP_INM" class="form-label"><i class="fa-solid fa-file-circle-check"></i> Estado de la Solicitud:</label>
-                <select id="ESTADO_REP_INM" name="ESTADO_REP_INM" class="form-control" disabled>
-                    <option value="INGRESADO" selected>Ingresado</option>
-                    <option value="EN REVISION">En revisión</option>
+                <select id="ESTADO_REP_INM" name="ESTADO_REP_INM" class="form-control">
+                    <option value="INGRESADO" >Ingresado</option>
+                    <option value="EN REVISION" selected>En revisión</option>
                     <option value="ACEPTADO">Aceptado</option>
                     <option value="RECHAZADO">Rechazado</option>
                 </select>
