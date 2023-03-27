@@ -20,7 +20,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
             </div>
     @endif
-    <div class="">
+    <div class="container-fluid">
         <div class="table-responsive">
             <table id="materiales" class="table text-justify table-bordered mt-4 mx-auto" style="white-space: nowrap;">
                     <thead class="bg-primary text-white">
@@ -29,10 +29,10 @@
                             <th scope="col">Rut</th>
                             <th scope="col">Departamento</th>
                             <th scope="col">Email</th>
-                            <th scope="col">Materiales</th>
+                            {{-- <th scope="col">Materiales</th> --}}
                             <th scope="col">Estado</th>
                             <th scope="col">Fecha Ingreso</th>
-                            <th scope="col">Observaciones</th>
+                            {{-- <th scope="col">Observaciones</th> --}}
                             <th scope="col">Acciones</th>
                         </tr>
                     </thead>
@@ -43,15 +43,16 @@
                                 <td>{{ $sol_material->RUT }}</td>
                                 <td>{{ $sol_material->DEPTO}}</td>
                                 <td>{{ $sol_material->EMAIL}}</td>
-                                <td>{{ $sol_material->MATERIAL_SOL}}</td>
+                                {{-- <td>{{ $sol_material->MATERIAL_SOL}}</td> --}}
                                 <td>{{ $sol_material->ESTADO_SOL}}</td>
                                 <!-- Carbon sirve para parsear datos, esta es una instancia de carbon -->
                                 <td>{{ $sol_material->created_at->tz('America/Santiago')->format('d/m/Y H:i:s') }}</td>
-                                <td>{{ $sol_material->OBSERVACIONES}}</td>
+                                {{-- <td>{{ $sol_material->OBSERVACIONES}}</td> --}}
                                 <td>
                                     <form action="{{ route('solmaterial.destroy',$sol_material->ID_SOLICITUD) }}" method="POST">
                                         @csrf
                                         @method('DELETE')
+                                        <a href="{{ route('solmaterial.show',$sol_material->ID_SOLICITUD) }}" class="btn btn-secondary"><i class="fa-regular fa-eye"></i> Ver detalles</a>
                                         <a href="/solmaterial/{{$sol_material->ID_SOLICITUD}}/edit" class="btn btn-info"><i class="fa-regular fa-clipboard"></i> Revisar</a>
                                         <button type="submit" class="btn btn-danger"><i class="fa-solid fa-trash"></i> Borrar</button>
                                     </form>
@@ -84,6 +85,8 @@
         $(document).ready(function () {
             $('#materiales').DataTable({
                 "lengthMenu": [[5,10, 50, -1], [5, 10, 50, "All"]],
+                "responsive":true,
+                "order": [[5, "desc"]] // La columna 5 contiene la fecha de creación
             });
         });
     </script>

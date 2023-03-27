@@ -352,7 +352,7 @@ return [
         ],
         [
             'text'        => 'Formularios',
-            'url'         => '#',
+            'url'         => 'formularios',
             'icon'        => 'fas fa-fw fa-pencil-alt',
             // 'label'       => 'CRUD',
             // 'label_color' => 'danger',

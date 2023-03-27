@@ -38,6 +38,8 @@ Route::resource('reparaciones','App\Http\Controllers\RelFunRepGeneralController'
 Route::resource('repvehiculos','App\Http\Controllers\SolicitudReparacionVehiculoController');
 //rutas para vehiculos
 Route::resource('vehiculos','App\Http\Controllers\VehiculoController');
+//Rutas para formularios
+Route::resource('formularios','App\Http\Controllers\FormularioController');
 
 Route::middleware([
     'auth:sanctum',

@@ -84,7 +84,8 @@ class SolMatController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $sol_material = SolicitudMateriales::find($id);
+        return view('solicitudmateriales.show', compact('sol_material'));
     }
 
     /**
