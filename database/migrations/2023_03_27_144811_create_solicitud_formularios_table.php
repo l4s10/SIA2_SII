@@ -21,11 +21,10 @@ return new class extends Migration
             $table->string('DEPTO', 128);
             $table->string('EMAIL', 128);
             //--------FORMULARIO DE SOLICITUD
-            $table->integer('ID_FORMULARIO');
+            $table->integer('ID_FORMULARIO')->nullable();
             $table->text('FORM_SOL')->nullable();
-            $table->integer('CANT_FORM_SOL')->nullable();
-            $table->string('ESTADO_SOL_FORM')->nullable();
-            $table->text('OBSERV_SOL_FORM');
+            $table->string('ESTADO_SOL_FORM')->default('INGRESADO');
+            $table->text('OBSERV_SOL_FORM')->nullable();
             $table->string('MODIFICADO_POR_SOL_FORM',128)->nullable();
             $table->timestamps();
         });

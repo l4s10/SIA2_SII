@@ -8,7 +8,7 @@
 
 @section('content')
     <div class="container">
-        <form action="route('formulariosSol.store')" method="POST">
+        <form action="/formulariosSol" method="POST">
             @csrf
             <div class="row">
                     <div class="col-md-6">
