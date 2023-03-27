@@ -22,7 +22,7 @@
     @endif
     <div class="container-fluid">
         <div class="table-responsive">
-            <table id="materiales" class="table text-justify table-bordered mt-4 mx-auto" style="white-space: nowrap;">
+            <table id="materiales" class="table text-justify table-bordered mt-4 mx-auto" style="white-space:nowrap;">
                     <thead class="bg-primary text-white">
                         <tr>
                             <th scope="col">Solicitante</th>

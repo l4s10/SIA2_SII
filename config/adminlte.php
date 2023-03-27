@@ -14,7 +14,7 @@ return [
     |
     */
 
-    'title' => 'AdminLTE 3',
+    'title' => 'SIA 2',
     'title_prefix' => '',
     'title_postfix' => '',
 
@@ -298,20 +298,20 @@ return [
         ],
         [
             'type'         => 'fullscreen-widget',
-            'topnav_right' => true,
+            'topnav_right' => false,
         ],
 
         // Sidebar items:
         [
             'type' => 'sidebar-menu-search',
-            'text' => 'search',
+            'text' => 'Buscar módulos',
         ],
         [
             'text' => 'blog',
             'url'  => 'admin/blog',
             'can'  => 'manage-blog',
         ],
-        ['header' => 'Módulos'],
+        ['header' => 'Módulos Funcionario'],
         [
             'text'        => 'Vehículos',
             'url'         => 'vehiculos',

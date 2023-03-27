@@ -229,8 +229,8 @@
             // Actualizar textarea con los artículos en el carrito
             var carritoTextarea = $('#MATERIAL_SOL');
             var carritoActual = carritoTextarea.val();
-            var nuevoArticulo = cantidad + ' unidad(es) de "' + nombreMaterial + '" de tipo "' + tipoMaterial + '"';
-            var nuevoCarrito = carritoActual + '\n- ' + nuevoArticulo;
+            var nuevoArticulo = cantidad + ' unidad(es) de "' + nombreMaterial + '" de tipo "' + tipoMaterial + '\n';
+            var nuevoCarrito = carritoActual + '- ' + nuevoArticulo;
             carritoTextarea.val(nuevoCarrito);
         });
         });

@@ -23,9 +23,9 @@
                 <p>Pedido: {{ $sol_material->MATERIAL_SOL}}</p>
                 <p>Observaciones: {{ $sol_material->OBSERVACIONES }}</p>
             </div>
-            <div class="card-footer">
-                <a href="{{ route('solmaterial.edit', $sol_material->ID_SOLICITUD) }}" class="btn btn-primary"><i class="fa-regular fa-clipboard"></i> Revisar</a>
+            <div class="card-footer text-center">
                 <a href="{{ route('solmaterial.index') }}" class="btn btn-secondary"><i class="fa-solid fa-arrow-left"></i> Volver</a>
+                <a href="{{ route('solmaterial.edit', $sol_material->ID_SOLICITUD) }}" class="btn btn-primary"><i class="fa-regular fa-clipboard"></i> Revisar</a>
             </div>
         </div>
     </div>
