@@ -11,7 +11,7 @@
     @csrf
 
     <div class="mb-3">
-        <label for="NOMBRE_MATERIAL" class="form-label">Nombre del material</label>
+        <label for="NOMBRE_MATERIAL" class="form-label"><i class="fa-solid fa-book-bookmark"></i> Nombre del material:</label>
         <input type="text" class="form-control{{ $errors->has('NOMBRE_MATERIAL') ? ' is-invalid' : '' }}" id="NOMBRE_MATERIAL" name="NOMBRE_MATERIAL" value="{{ old('NOMBRE_MATERIAL') }}" required>
         @if ($errors->has('NOMBRE_MATERIAL'))
             <div class="invalid-feedback">
@@ -21,9 +21,9 @@
     </div>
 
     <div class="mb-3">
-        <label for="ID_TIPO_MAT" class="form-label">Tipo de material</label>
+        <label for="ID_TIPO_MAT" class="form-label"><i class="fa-solid fa-person-chalkboard"></i> Tipo de material:</label>
         <select class="form-control{{ $errors->has('ID_TIPO_MAT') ? ' is-invalid' : '' }}" aria-label="Seleccione un tipo de material" id="ID_TIPO_MAT" name="ID_TIPO_MAT" required>
-            <option value="">Seleccione un tipo de material</option>
+            <option value="">--Seleccione un tipo de material--</option>
             @foreach($tipos as $tipo)
                 <option value="{{ $tipo->ID_TIPO_MAT }}" {{ old('ID_TIPO_MAT') == $tipo->ID_TIPO_MAT ? 'selected' : '' }}>
                     {{ $tipo->TIPO_MATERIAL }}
@@ -38,7 +38,7 @@
     </div>
 
     <div class="mb-3">
-        <label for="STOCK" class="form-label">Stock</label>
+        <label for="STOCK" class="form-label"><i class="fa-solid fa-person-shelter"></i> Stock:</label>
         <input type="number" class="form-control{{ $errors->has('STOCK') ? ' is-invalid' : '' }}" id="STOCK" name="STOCK" value="{{ old('STOCK') }}" required>
         @if ($errors->has('STOCK'))
             <div class="invalid-feedback">
@@ -57,4 +57,6 @@
 @stop
 
 @section('js')
+    <!-- CONEXION FONT-AWESOME CON TOOLKIT -->
+    <script src="https://kit.fontawesome.com/742a59c628.js" crossorigin="anonymous"></script>
 @stop

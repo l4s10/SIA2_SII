@@ -59,11 +59,7 @@
             <div class="mb-3">
                 <label for="ID_TIPO_REP_GENERAL" class="form-label"><i class="fa-sharp fa-solid fa-building-flag"></i> Area Solicitada:</label>
                 <select id="ID_TIPO_REP_GENERAL" name="ID_TIPO_REP_GENERAL" class="form-control">
-                    {{-- <option value="OFICINA" selected>Oficina</option>
-                    <option value="MUEBLES">Muebles</option>
-                    <option value="INFRAESTRUCTURA">Infraestructura</option>
-                    <option value="VEHICULOS">Vehiculos</option> --}}
-                    <option value="" selected>--SELECCIONE UNA OPCION--</option>
+                    <option value="">--SELECCIONE UNA OPCION--</option>
                     @foreach ($tipos_rep as $tipo_rep)
                         @if ($reparacion->ID_TIPO_REP_GENERAL == $tipo_rep->ID_TIPO_REP_GENERAL)
                         <option value="{{$tipo_rep->ID_TIPO_REP_GENERAL}}" selected>{{$tipo_rep->TIPO_REP}}</option>

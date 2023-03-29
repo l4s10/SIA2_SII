@@ -356,6 +356,23 @@ return [
             'icon'        => 'fas fa-fw fa-pencil-alt',
             // 'label'       => 'CRUD',
             // 'label_color' => 'danger',
+            'submenu' => [
+                [
+                    'text'    => 'Ver Formularios',
+                    'url'     => 'formularios',
+                    'icon'    => 'fas fa-fw fa-eye',
+                ],
+                [
+                    'text'    => 'Ver Solicitudes',
+                    'url'     => 'formulariosSol',
+                    'icon'    => 'fas fa-fw fa-eye',
+                ],
+                [
+                    'text'    => 'Solicitar',
+                    'url'     => 'formulariosSol/create',
+                    'icon'    => 'fas fa-fw fa-plus',
+                ],
+            ],
         ],
         [
             'text'        => 'Reservas (Salas y Bodegas)',

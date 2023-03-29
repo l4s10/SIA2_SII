@@ -7,10 +7,10 @@ use Illuminate\Http\Request;
 
 class FormularioController extends Controller
 {
-    //Validar inicio de sesión
-    //Esta funcion protege nuestro controlador para que solo las personas logueadas puedan entrar
+    //Funcion para acceder a las rutas SOLO SI los usuarios estan logueados
     public function __construct(){
         $this->middleware('auth');
+        //Tambien aqui podremos agregar que roles son los que pueden ingresar
     }
     /**
      * Display a listing of the resource.

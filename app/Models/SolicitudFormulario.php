@@ -17,6 +17,7 @@ class SolicitudFormulario extends Model
         'EMAIL',
         'FORM_SOL',
         'CANT_FORM_SOL',
+        'ESTADO_SOL_FORM',
         'OBSERV_SOL_FORM',
         'MODIFICADO_POR_SOL_FORM'
     ];

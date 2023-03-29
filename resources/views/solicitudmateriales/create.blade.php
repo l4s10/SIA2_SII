@@ -16,7 +16,7 @@
             <div class="row">
                 <div class="col-md-6">
                     <div class="mb-3">
-                    <label for="NOMBRE_SOLICITANTE" class="form-label">Nombre del solicitante:</label>
+                    <label for="NOMBRE_SOLICITANTE" class="form-label"><i class="fa-solid fa-user"></i> Nombre del solicitante:</label>
                     <input type="text" id="NOMBRE_SOLICITANTE" name="NOMBRE_SOLICITANTE" class="form-control{{ $errors->has('NOMBRE_SOLICITANTE') ? ' is-invalid' : '' }}" value="{{ auth()->user()->name }}" placeholder="Ej: ANDRES RODRIGO SUAREZ MATAMALA" readonly>
                     @if ($errors->has('NOMBRE_SOLICITANTE'))
                     <div class="invalid-feedback">
@@ -26,7 +26,7 @@
                     </div>
 
                     <div class="mb-3">
-                    <label for="RUT" class="form-label">RUT:</label>
+                    <label for="RUT" class="form-label"><i class="fa-solid fa-id-card"></i> RUT:</label>
                     <input type="text" id="RUT" name="RUT" class="form-control{{ $errors->has('RUT') ? ' is-invalid' : '' }}" value="{{ old('RUT') }}" placeholder="Sin puntos con guión (Ej: 16738235-5)">
                     @if ($errors->has('RUT'))
                     <div class="invalid-feedback">
@@ -38,7 +38,7 @@
 
                 <div class="col-md-6">
                     <div class="mb-3">
-                    <label for="DEPTO" class="form-label">Departamento:</label>
+                    <label for="DEPTO" class="form-label"><i class="fa-solid fa-building-user"></i> Departamento:</label>
                     <input type="text" id="DEPTO" name="DEPTO" class="form-control{{ $errors->has('DEPTO') ? ' is-invalid' : '' }}" value="{{ old('DEPTO') }}" placeholder="Ej: ADMINISTRACION">
                     @if ($errors->has('DEPTO'))
                     <div class="invalid-feedback">
@@ -48,7 +48,7 @@
                     </div>
 
                     <div class="mb-3">
-                    <label for="EMAIL" class="form-label">Email:</label>
+                    <label for="EMAIL" class="form-label"><i class="fa-solid fa-envelope"></i> Email:</label>
                     <input type="email" id="EMAIL" name="EMAIL" class="form-control{{ $errors->has('EMAIL') ? ' is-invalid' : '' }}" value="{{ auth()->user()->email }}" placeholder="Ej: someone@example.com" readonly>
                     @if ($errors->has('EMAIL'))
                     <div class="invalid-feedback">
@@ -60,7 +60,7 @@
         </div>
 
         <div class="mb-3">
-            <label for="ESTADO_SOL" class="form-label">Estado de la Solicitud:</label>
+            <label for="ESTADO_SOL" class="form-label"><i class="fa-solid fa-file-circle-check"></i> Estado de la Solicitud:</label>
             <select id="ESTADO_SOL" name="ESTADO_SOL" class="form-control" disabled>
                 <option value="INGRESADO" selected>Ingresado</option>
                 <option value="EN REVISION">En revisión</option>
@@ -96,12 +96,12 @@
         <!-- Checkout de materiales solicitados -->
         <div class="mb-6" style="padding: 1%;">
             <div class="mb-3">
-                <label for="MATERIAL_SOL" class="form-label">Resumen:</label>
+                <label for="MATERIAL_SOL" class="form-label"><i class="fa-solid fa-file-circle-question"></i> Checkout:</label>
                 <textarea id="MATERIAL_SOL" name="MATERIAL_SOL" rows="5" class="form-control" placeholder="Artículos en el carrito" readonly></textarea>
             </div>
-            <div class="mb-3">
-                <label for="OBSERVACIONES" class="form-label" hidden>Observaciones:</label>
-                <textarea id="OBSERVACIONES" name="OBSERVACIONES" class="form-control" placeholder="Solo el encargado puede ingresar observaciones" readonly hidden>No existen observaciones por ahora</textarea>
+            <div class="mb-3" hidden>
+                <label for="OBSERVACIONES" class="form-label"><i class="fa-solid fa-comments"></i> Observaciones:</label>
+                <textarea id="OBSERVACIONES" name="OBSERVACIONES" class="form-control" placeholder="Solo el encargado puede ingresar observaciones" readonly>No existen observaciones por ahora</textarea>
             </div>
         </div>
         <!-- Botones de envio -->

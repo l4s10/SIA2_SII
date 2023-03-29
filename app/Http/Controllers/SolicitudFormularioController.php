@@ -8,6 +8,11 @@ use Illuminate\Http\Request;
 
 class SolicitudFormularioController extends Controller
 {
+    //Funcion para acceder a las rutas SOLO SI los usuarios estan logueados
+    public function __construct(){
+        $this->middleware('auth');
+        //Tambien aqui podremos agregar que roles son los que pueden ingresar
+    }
     /**
      * Display a listing of the resource.
      */
@@ -22,6 +27,7 @@ class SolicitudFormularioController extends Controller
      */
     public function create()
     {
+        //Listamos la tabla conectada para las opciones del carrito de compra.
         $formularios = Formulario::all();
         return view('solicitudformularios.create',compact('formularios'));
     }
@@ -67,39 +73,89 @@ class SolicitudFormularioController extends Controller
         }catch(\Exception $e){
             session()->flash('error','Error al enviar la solicitud, vuelva a enviarlo más tarde.');
         }
-        return redirect('/formularios');
+        return redirect('/formulariosSol');
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(SolicitudFormulario $solicitudFormulario)
+    public function show($id)
     {
-        //
+        //Buscamos el registro que se quiere visualizar
+        $solicitud = SolicitudFormulario::find($id);
+        return view('solicitudformularios.show',compact('solicitud'));
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(SolicitudFormulario $solicitudFormulario)
+    public function edit(string $id)
     {
-        //
+        //Buscamos el registro que se quiere editar
+        $solicitud = SolicitudFormulario::find($id);
+        $formularios = Formulario::all();
+        return view('solicitudformularios.edit',compact('solicitud','formularios'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, SolicitudFormulario $solicitudFormulario)
+    public function update(Request $request, string $id)
     {
-        //
+        //Buscamos la solicitud
+        $solicitud = SolicitudFormulario::find($id);
+        //Definincion de expresiones regulares
+        $rules = [
+            'NOMBRE_SOLICITANTE' => ['required', 'string', 'max:255', 'regex:/^[A-Za-zñÑ\s]+$/u'],
+            'RUT' => 'required|regex:/^[0-9.-]+$/|min:7|max:12',
+            'DEPTO' => ['required', 'string', 'max:255', 'regex:/^[A-Za-z\s]+$/'],
+            'EMAIL' => 'required|email',
+        ];
+
+        $messages = [
+            'NOMBRE_SOLICITANTE.required' => 'El campo Nombre del solicitante es obligatorio.',
+            'NOMBRE_SOLICITANTE.string' => 'El campo Nombre del solicitante debe ser una cadena de caracteres.',
+            'NOMBRE_SOLICITANTE.max' => 'El campo Nombre del solicitante no puede tener más de 255 caracteres.',
+            'NOMBRE_SOLICITANTE.regex' => 'El campo Nombre del solicitante solo puede contener letras y espacios.',
+            'RUT.required' => 'El campo RUT es obligatorio.',
+            'RUT.regex' => 'El campo RUT solo debe contener números, puntos y guiones.',
+            'RUT.min' => 'El campo RUT debe tener al menos 7 caracteres.',
+            'RUT.max' => 'El campo RUT no puede tener más de 12 caracteres.',
+            'DEPTO.required' => 'El campo Departamento es obligatorio.',
+            'DEPTO.string' => 'El campo Departamento debe ser una cadena de caracteres.',
+            'DEPTO.max' => 'El campo Departamento no puede tener más de 255 caracteres.',
+            'DEPTO.regex' => 'El campo Departamento solo puede contener letras y espacios.',
+            'EMAIL.required' => 'El campo Email es obligatorio.',
+            'EMAIL.email' => 'El campo Email debe ser una dirección de correo electrónico válida.',
+        ];
+        $request->validate($rules,$messages);
+        $data = $request->except('_token');
+        //Funcion para formatear rut
+        $rut = intval(str_replace(['.', '-'], '', $request['RUT']));
+        $data['RUT'] = $this->formatRut($rut);
+        //Guardar cambios en la bdd
+        try{
+            $solicitud->update($request->all());
+            session()->flash('success','La solicitud de formulario ha sido modificada exitosamente.');
+        }catch(\Exception $e){
+            session()->flash('error','Error al modificar la solicitud, vuelva a intentarlo más tarde.');
+        }
+        return redirect('/formulariosSol');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(SolicitudFormulario $solicitudFormulario)
+    public function destroy(string $id)
     {
-        //
+        $request = SolicitudFormulario::find($id);
+        try{
+            $request->delete();
+            session()->flash('success','La solicitud de fomrulario se eliminó exitosamente');
+        }catch(\Exception $e){
+            session()->flash('error','Error al eliminar la solicitud, vuelva a intentarlo mas tarde.');
+        }
+        return view('/formularios');
     }
     //-----FUNCION QUE NOS PERMITE FORMATEAR EL RUT CON  PUNTOS Y GUIÓN.------
     public function formatRut($rut) {

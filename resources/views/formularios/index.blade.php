@@ -75,12 +75,7 @@
         $(document).ready(function () {
             $('#formularios').DataTable({
                 "lengthMenu": [[5,10, 50, -1], [5, 10, 50, "All"]],
-                "columnDefs": [
-                    {
-                        "targets": 2,
-                        "width": "20%"
-                    }
-                ]
+                
             });
         });
     </script>
