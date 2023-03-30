@@ -74,7 +74,7 @@
                 {{-- PARA PATENTE --}}
                 <div class="mb-3">
                     <label for="PATENTE_VEHICULO" class="form-label"><i class="fa-solid fa-car-on"></i> Información del vehiculo:</label>
-                    <select id="PATENTE_VEHICULO" name="PATENTE_VEHICULO" class="form-control">
+                    <select id="PATENTE_VEHICULO" name="PATENTE_VEHICULO" class="form-control{{ $errors->has('PATENTE_VEHICULO') ? ' is-invalid' : '' }}">
                         <option value="">-- Seleccione el vehículo con problemas --</option>
                         @foreach ($vehiculos->groupBy('UNIDAD_VEHICULO') as $grupo => $autos)
                             <optgroup label="{{ $grupo }}">
@@ -86,13 +86,18 @@
                             </optgroup>
                         @endforeach
                     </select>
+                    @if ($errors->has('PATENTE_VEHICULO'))
+                        <div class="invalid-feedback">
+                            {{ $errors->first('PATENTE_VEHICULO') }}
+                        </div>
+                    @endif
                 </div>
 
 
                 {{-- TIPO SERVICIO --}}
                 <div class="mb-3">
-                    <label for="ID_TIPO_SERVICIO" class="form-label"><i class="fa-solid fa-shop-lock"></i> Tipo de reparacion:</label>
-                    <select id="ID_TIPO_SERVICIO" name="ID_TIPO_SERVICIO" class="form-control">
+                    <label for="ID_TIPO_SERVICIO" class="form-label"><i class="fa-solid fa-shop-lock"></i> Tipo de reparación:</label>
+                    <select id="ID_TIPO_SERVICIO" name="ID_TIPO_SERVICIO" class="form-control {{ $errors->has('ID_TIPO_SERVICIO') ? 'is-invalid' : '' }}">
                         <option value="">-- Seleccione --</option>
                         @foreach ($tipos_servicio as $tipo_servicio)
                             @if ($solicitud->ID_TIPO_SERVICIO == $tipo_servicio->ID_TIPO_SERVICIO)
@@ -102,25 +107,35 @@
                             @endif
                         @endforeach
                     </select>
+                    @if ($errors->has('ID_TIPO_SERVICIO'))
+                        <div class="invalid-feedback">
+                            {{ $errors->first('ID_TIPO_SERVICIO') }}
+                        </div>
+                    @endif
                 </div>
             </div>
 
-            <div class="col-12" style="padding: 1%;">
+            <div class="col-12">
                 <!-- Campos FECHA_INICIO_REP_VEH y FECHA_TERMINO_REP_VEH -->
-                <div class="form-group">
-                    <label for="FECHA_INICIO_REP_VEH">Fecha de Inicio</label>
-                    <input type="text" id="FECHA_INICIO_REP_VEH" name="FECHA_INICIO_REP_VEH" class="form-control flatpickr" placeholder="Ingrese fecha de inicio" data-input required value="{{$solicitud->FECHA_INICIO_REP_VEH}}">
-                    @if ($errors->has('FECHA_INICIO_REP_VEH'))
-                        <div class="alert alert-danger">{{ $errors->first('FECHA_INICIO_REP_VEH') }}</div>
-                    @endif
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label for="FECHA_INICIO_REP_VEH"><i class="fa-solid fa-calendar"></i> Fecha de Inicio:</label>
+                        <input type="text" id="FECHA_INICIO_REP_VEH" name="FECHA_INICIO_REP_VEH" class="form-control flatpickr @if($errors->has('FECHA_INICIO_REP_VEH')) is-invalid @endif" placeholder="Ingrese fecha de inicio" data-input required value="{{$solicitud->FECHA_INICIO_REP_VEH}}">
+                        @if ($errors->has('FECHA_INICIO_REP_VEH'))
+                            <div class="invalid-feedback">{{ $errors->first('FECHA_INICIO_REP_VEH') }}</div>
+                        @endif
+                    </div>
+
+                    <div class="form-group col-md-6">
+                        <label for="FECHA_TERMINO_REP_VEH"><i class="fa-solid fa-calendar"></i> Fecha de Término:</label>
+                        <input type="text" id="FECHA_TERMINO_REP_VEH" name="FECHA_TERMINO_REP_VEH" class="form-control flatpickr @if($errors->has('FECHA_TERMINO_REP_VEH')) is-invalid @endif" placeholder="Ingrese fecha de término" data-input required value="{{$solicitud->FECHA_TERMINO_REP_VEH}}">
+                        @if ($errors->has('FECHA_TERMINO_REP_VEH'))
+                            <div class="invalid-feedback">{{ $errors->first('FECHA_TERMINO_REP_VEH') }}</div>
+                        @endif
+                    </div>
                 </div>
-                <div class="form-group">
-                    <label for="FECHA_TERMINO_REP_VEH">Fecha de Término</label>
-                    <input type="text" id="FECHA_TERMINO_REP_VEH" name="FECHA_TERMINO_REP_VEH" class="form-control flatpickr" placeholder="Ingrese fecha de término" data-input required value="{{$solicitud->FECHA_TERMINO_REP_VEH}}">
-                    @if ($errors->has('FECHA_TERMINO_REP_VEH'))
-                        <div class="alert alert-danger">{{ $errors->first('FECHA_TERMINO_REP_VEH') }}</div>
-                    @endif
-                </div>
+
+
                 <div class="mb-3">
                     <label for="DETALLE_REPARACION_REP_VEH" class="form-label"><i class="fa-solid fa-location-pin-lock"></i> Motivo de reparación:</label>
                     <textarea id="DETALLE_REPARACION_REP_VEH" name="DETALLE_REPARACION_REP_VEH" class="form-control" aria-label="With textarea" placeholder="Indique aquí que problemas tiene el vehículo">{{$solicitud->DETALLE_REPARACION_REP_VEH}}</textarea>
@@ -163,26 +178,31 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/js/bootstrap.bundle.min.js"></script>
     <!-- Incluir archivos JS -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/locales/bootstrap-datepicker.es.min.js"></script>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css" rel="stylesheet" />
-
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/es.js"></script>
+
     <script>
         $(function () {
             $('#FECHA_INICIO_REP_VEH').flatpickr({
                 enableTime: true,
-                dateFormat: 'Y-m-d H:i:S',
+                dateFormat: 'Y-m-d H:i',
                 locale: 'es',
                 minDate: 'today',
+                showClearButton: true,
+                defaultHour: 8 // Agregamos una hora predeterminada
             });
 
             $('#FECHA_TERMINO_REP_VEH').flatpickr({
                 enableTime: true,
-                dateFormat: 'Y-m-d H:i:S',
+                dateFormat: 'Y-m-d H:i',
                 locale: 'es',
                 minDate: 'today',
+                showClearButton: true,
+                defaultHour: 8 // Agregamos una hora predeterminada
             });
-            });
-        </script>
+
+             // Agregamos la siguiente línea para cambiar el fondo del campo
+            $('#FECHA_INICIO_REP_VEH, #FECHA_TERMINO_REP_VEH').css('background-color', 'white');
+        });
+    </script>
 @stop

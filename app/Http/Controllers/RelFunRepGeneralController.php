@@ -43,6 +43,8 @@ class RelFunRepGeneralController extends Controller
             'RUT' => 'required|regex:/^[0-9.-]+$/|min:7|max:12',
             'DEPTO' => ['required', 'string', 'max:255', 'regex:/^[A-Za-z\s]+$/'],
             'EMAIL' => 'required|email',
+            'ID_TIPO_REP_GENERAL' => 'required',
+            'REP_SOL' => 'required|max:1000',
         ];
 
         $messages = [
@@ -60,6 +62,10 @@ class RelFunRepGeneralController extends Controller
             'DEPTO.regex' => 'El campo Departamento solo puede contener letras y espacios.',
             'EMAIL.required' => 'El campo Email es obligatorio.',
             'EMAIL.email' => 'El campo Email debe ser una dirección de correo electrónico válida.',
+            'ID_TIPO_REP_GENERAL.required' => 'El campo "Area Solicitada" es obligatorio.',
+            'REP_SOL.required' => 'El campo "Solicitud" es obligatorio.',
+            'REP_SOL.max' => 'El campo "Solicitud" no debe exceder los 1000 caracteres.',
+    
         ];
         //Funcion que valida nuestros datos enviados en el formulario en base a las reglas.
         $request->validate($rules, $messages);
@@ -111,6 +117,8 @@ class RelFunRepGeneralController extends Controller
             'RUT' => 'required|regex:/^[0-9.-]+$/|min:7|max:12',
             'DEPTO' => ['required', 'string', 'max:255', 'regex:/^[A-Za-z\s]+$/'],
             'EMAIL' => 'required|email',
+            'ID_TIPO_REP_GENERAL' => 'required',
+            'REP_SOL' => 'required|max:1000',
         ];
 
         $messages = [
@@ -128,6 +136,9 @@ class RelFunRepGeneralController extends Controller
             'DEPTO.regex' => 'El campo Departamento solo puede contener letras y espacios.',
             'EMAIL.required' => 'El campo Email es obligatorio.',
             'EMAIL.email' => 'El campo Email debe ser una dirección de correo electrónico válida.',
+            'ID_TIPO_REP_GENERAL.required' => 'El campo "Area Solicitada" es obligatorio.',
+            'REP_SOL.required' => 'El campo "Solicitud" es obligatorio.',
+            'REP_SOL.max' => 'El campo "Solicitud" no debe exceder los 1000 caracteres.',
         ];
         //Funcion que valida nuestros datos enviados en el formulario en base a las reglas.
         $request->validate($rules, $messages);

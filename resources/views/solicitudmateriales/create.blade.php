@@ -10,7 +10,7 @@
 
 @section('content')
     <!-- COLOCA AQUI EL FORMULARIO QUE CREES -->
-    <div class="container">
+    <div class="container-fluid">
         <form action="/solmaterial" method="POST">
             @csrf
             <div class="row">
@@ -59,7 +59,7 @@
             </div>
         </div>
 
-        <div class="mb-3">
+        <div class="form-group">
             <label for="ESTADO_SOL" class="form-label"><i class="fa-solid fa-file-circle-check"></i> Estado de la Solicitud:</label>
             <select id="ESTADO_SOL" name="ESTADO_SOL" class="form-control" disabled>
                 <option value="INGRESADO" selected>Ingresado</option>
@@ -69,37 +69,39 @@
             </select>
         </div>
 
-
         <div class="table-responsive">
             <table id="materiales" class="table table-bordered mt-4">
                 <thead class="bg-primary text-white">
                     <tr>
-                        <th scope="col">Nombre material</th>
-                        <th scope="col">Tipo material</th>
+                        <th scope="col">Nombre Material</th>
+                        <th scope="col">Tipo Material</th>
                         <th scope="col">Acciones</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach($materiales as $material)
-                    <tr>
-                        <td>{{ $material->NOMBRE_MATERIAL }}</td>
-                        <td>{{ $material->tipoMaterial->TIPO_MATERIAL }}</td>
-                        <td>
-                            <button type="button" class="btn btn-info btn-agregar" data-nombre="{{ $material->NOMBRE_MATERIAL }}" data-tipo="{{ $material->tipoMaterial->TIPO_MATERIAL }}"><i class="fa-solid fa-cart-plus"></i></button>
-                            <button type="button" class="btn btn-danger btn-eliminar" data-nombre="{{ $material->NOMBRE_MATERIAL }}"><i class="fa-solid fa-trash"></i></button>
-                        </td>
-                    </tr>
+                    @foreach ($materiales as $material)
+                        <tr>
+                            <td>{{ $material->NOMBRE_MATERIAL }}</td>
+                            <td>{{ $material->tipoMaterial->TIPO_MATERIAL }}</td>
+                            <td>
+                                <button type="button" class="btn btn-info btn-agregar" data-nombre="{{ $material->NOMBRE_MATERIAL }}" data-tipo="{{ $material->tipoMaterial->TIPO_MATERIAL }}"><i class="fa-solid fa-cart-plus"></i></button>
+                                <button type="button" class="btn btn-danger btn-eliminar" data-nombre="{{ $material->NOMBRE_MATERIAL }}"><i class="fa-solid fa-trash"></i></button>
+                            </td>
+                        </tr>
                     @endforeach
                 </tbody>
             </table>
         </div>
         <!-- Checkout de materiales solicitados -->
-        <div class="mb-6" style="padding: 1%;">
+        <div class="form-group">
             <div class="mb-3">
-                <label for="MATERIAL_SOL" class="form-label"><i class="fa-solid fa-file-circle-question"></i> Checkout:</label>
-                <textarea id="MATERIAL_SOL" name="MATERIAL_SOL" rows="5" class="form-control" placeholder="Artículos en el carrito" readonly></textarea>
+                <label for="MATERIAL_SOL" class="form-label"><i class="fa-solid fa-cart-shopping"></i> Carrito:</label>
+                <textarea id="MATERIAL_SOL" name="MATERIAL_SOL" rows="3" class="form-control @if($errors->has('MATERIAL_SOL')) is-invalid @endif" placeholder="Artículos en el carrito (Máx 1000 caracteres)" readonly required></textarea>
+                @if($errors->has('MATERIAL_SOL'))
+                    <div class="invalid-feedback">{{$errors->first('MATERIAL_SOL')}}</div>
+                @endif
             </div>
-            <div class="mb-3" hidden>
+            <div class="form-group" hidden>
                 <label for="OBSERVACIONES" class="form-label"><i class="fa-solid fa-comments"></i> Observaciones:</label>
                 <textarea id="OBSERVACIONES" name="OBSERVACIONES" class="form-control" placeholder="Solo el encargado puede ingresar observaciones" readonly>No existen observaciones por ahora</textarea>
             </div>
@@ -157,6 +159,7 @@
             $('#materiales').DataTable({
                 "lengthMenu": [[5,10, 50, -1], [5, 10, 50, "All"]]
             });
+            $('.dataTables_wrapper').css('overflow', 'hidden');
         });
     </script>
 
@@ -232,6 +235,7 @@
             var nuevoArticulo = cantidad + ' unidad(es) de "' + nombreMaterial + '" de tipo "' + tipoMaterial + '\n';
             var nuevoCarrito = carritoActual + '- ' + nuevoArticulo;
             carritoTextarea.val(nuevoCarrito);
+            $('#cantidad').val(1);
         });
         });
     </script>

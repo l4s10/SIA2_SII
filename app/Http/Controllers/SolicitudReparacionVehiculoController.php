@@ -7,6 +7,7 @@ use App\Models\TipoVehiculo;
 use App\Models\Vehiculo;
 use App\Models\SolicitudReparacionVehiculo;
 use Illuminate\Http\Request;
+use Carbon\Carbon;
 
 class SolicitudReparacionVehiculoController extends Controller
 {
@@ -49,6 +50,9 @@ class SolicitudReparacionVehiculoController extends Controller
             'RUT' => 'required|regex:/^[0-9.-]+$/|min:7|max:12',
             'DEPTO' => ['required', 'string', 'max:255', 'regex:/^[A-Za-z\s]+$/'],
             'EMAIL' => 'required|email',
+            'PATENTE_VEHICULO' => 'required',
+            'ID_TIPO_SERVICIO' => 'required',
+            'DETALLE_REPARACION_REP_VEH' => 'required|max:1000',
         ];
 
         $messages = [
@@ -66,6 +70,10 @@ class SolicitudReparacionVehiculoController extends Controller
             'DEPTO.regex' => 'El campo Departamento solo puede contener letras y espacios.',
             'EMAIL.required' => 'El campo Email es obligatorio.',
             'EMAIL.email' => 'El campo Email debe ser una dirección de correo electrónico válida.',
+            'PATENTE_VEHICULO.required' => 'La patente del vehículo es obligatoria',
+            'ID_TIPO_SERVICIO.required' => 'El tipo de Servicio es obligatorio',
+            'DETALLE_REPARACION_REP_VEH.required' => 'El motivo de reparación es obligatorio',
+            'DETALLE_REPARACION_REP_VEH.max' => 'El campo Motivo de Reparación no debe superar los 1000 caracteres',
         ];
         //Funcion que valida nuestros datos enviados en el formulario en base a las reglas.
         $request->validate($rules, $messages);
@@ -117,7 +125,11 @@ class SolicitudReparacionVehiculoController extends Controller
             'RUT' => 'required|regex:/^[0-9.-]+$/|min:7|max:12',
             'DEPTO' => ['required', 'string', 'max:255', 'regex:/^[A-Za-z\s]+$/'],
             'EMAIL' => 'required|email',
-
+            'PATENTE_VEHICULO' => 'required',
+            'ID_TIPO_SERVICIO' => 'required',
+            'DETALLE_REPARACION_REP_VEH' => 'required|max:1000',
+            'FECHA_INICIO_REP_VEH' => 'required|date',
+            'FECHA_TERMINO_REP_VEH' => 'required|date|after_or_equal:FECHA_INICIO_REP_VEH',
         ];
 
         $messages = [
@@ -135,8 +147,15 @@ class SolicitudReparacionVehiculoController extends Controller
             'DEPTO.regex' => 'El campo Departamento solo puede contener letras y espacios.',
             'EMAIL.required' => 'El campo Email es obligatorio.',
             'EMAIL.email' => 'El campo Email debe ser una dirección de correo electrónico válida.',
-
-
+            'PATENTE_VEHICULO.required' => 'El campo Patente del Vehículo es obligatorio',
+            'ID_TIPO_SERVICIO.required' => 'El campo Tipo de Servicio es obligatorio',
+            'DETALLE_REPARACION_REP_VEH.required' => 'El campo Motivo de Reparación es obligatorio',
+            'DETALLE_REPARACION_REP_VEH.max' => 'El campo Motivo de Reparación no debe superar los 1000 caracteres',
+            'FECHA_INICIO_REP_VEH.required' => 'La fecha de inicio es obligatoria.',
+            'FECHA_INICIO_REP_VEH.date' => 'La fecha de inicio no es válida.',
+            'FECHA_TERMINO_REP_VEH.required' => 'La fecha de término es obligatoria.',
+            'FECHA_TERMINO_REP_VEH.date' => 'La fecha de término no es válida.',
+            'FECHA_TERMINO_REP_VEH.after_or_equal' => 'La fecha de término debe ser igual o posterior a la fecha de inicio.',
         ];
         //Funcion que valida nuestros datos enviados en el formulario en base a las reglas.
         $request->validate($rules, $messages);

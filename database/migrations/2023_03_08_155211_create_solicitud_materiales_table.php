@@ -22,6 +22,7 @@ return new class extends Migration
             $table->text('OBSERVACIONES')->default('No existen observaciones');
             //agregar referencias a  tabla ESTADOS SOLCITUD
             $table->string('ESTADO_SOL', 20)->default('INGRESADO');
+            $table->string('MODIFICADO_POR')->nullable();
             $table->timestamps();
         });
     }

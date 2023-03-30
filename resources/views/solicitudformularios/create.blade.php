@@ -56,7 +56,7 @@
                     </div>
             </div>
             <div class="form-group">
-                <label for="ESTADO_SOL_FORM" class="form-label">Estado de la Solicitud:</label>
+                <label for="ESTADO_SOL_FORM" class="form-label"><i class="fa-solid fa-file-circle-question"></i> Estado de la Solicitud:</label>
                 <select id="ESTADO_SOL_FORM" name="ESTADO_SOL_FORM" class="form-control" disabled>
                     <option value="INGRESADO" selected>Ingresado</option>
                     <option value="EN REVISION">En revisión</option>
@@ -89,8 +89,11 @@
                 </table>
             </div>
             <div class="form-group">
-                <label for="FORM_SOL">Carrito:</label>
-                <textarea class="form-control" id="FORM_SOL" name="FORM_SOL" rows="3" readonly></textarea>
+                <label for="FORM_SOL"><i class="fa-solid fa-cart-shopping"></i> Carrito:</label>
+                <textarea class="form-control @if($errors->has('FORM_SOL')) is-invalid @endif" id="FORM_SOL" name="FORM_SOL" rows="3" placeholder="Artículos en el carrito (Máx 1000 caracteres)" readonly required></textarea>
+                @if($errors->has('FORM_SOL'))
+                    <div class="invalid-feedback">{{$errors->first('FORM_SOL')}}</div>
+                @endif
             </div>
             <div class="form-group" hidden>
                 <label class="form-label" for="OBSERV_SOL_FORM">Observaciones:</label>

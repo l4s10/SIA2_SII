@@ -22,6 +22,7 @@
                 <p>Fecha de ingreso: {{ $sol_material->created_at->tz('America/Santiago')->format('d/m/Y H:i:s') }}</p>
                 <p>Pedido: {{ $sol_material->MATERIAL_SOL}}</p>
                 <p>Observaciones: {{ $sol_material->OBSERVACIONES }}</p>
+                <p>Revisado por: {{$sol_material->MODIFICADO_POR}}</p>
             </div>
             <div class="card-footer text-center">
                 <a href="{{ route('solmaterial.index') }}" class="btn btn-secondary"><i class="fa-solid fa-arrow-left"></i> Volver</a>

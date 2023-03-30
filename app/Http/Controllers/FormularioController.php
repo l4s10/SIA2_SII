@@ -26,7 +26,7 @@ class FormularioController extends Controller
      */
     public function create()
     {
-        //
+        return view('formularios.create');
     }
 
     /**
@@ -34,7 +34,26 @@ class FormularioController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        //Definimos las reglas para los campos
+        $rules = [
+            'NOMBRE_FORMULARIO' => 'required|unique:formularios,NOMBRE_FORMULARIO|regex:/^[a-zA-Z0-9\s]+$/',
+            'TIPO_FORMULARIO' => 'required',
+        ];
+        $messages = [
+            'NOMBRE_FORMULARIO.required' => 'El nombre del formulario es obligatorio.',
+            'NOMBRE_FORMULARIO.unique' => 'Este nombre del formulario ya ha sido registrado.',
+            'NOMBRE_FORMULARIO.regex' => 'El nombre del formulario solo puede contener letras y números.',
+            'TIPO_FORMULARIO.required' => 'El tipo de formulario es obligatorio.',
+        ];
+        $request->validate($rules,$messages);
+        $data = $request->except('_token');
+        try{
+            Formulario::create($data);
+            session()->flash('success','El formulario ha sido creado existosamente.');
+        }catch(\Exception $e){
+            session()->flash('error','Error al crear el formulario, vuelva a intentarlo más tarde'  . $e->getMessage());
+        }
+        return redirect('/formularios');
     }
 
     /**
@@ -64,8 +83,15 @@ class FormularioController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Formulario $formulario)
+    public function destroy(string $id)
     {
-        //
+        $request = Formulario::find($id);
+        try{
+            $request->delete();
+            session()->flash('success','El formulario ha sido eliminado exitosamente');
+        }catch(\Exception $e){
+            session()->flash('error', 'Error al eliminar el formulario seleccionado, vuelva a intentarlo mas tarde');
+        }
+        return redirect('/formularios');
     }
 }

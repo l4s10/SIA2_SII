@@ -12,4 +12,5 @@ class Formulario extends Model
     protected $table = 'formularios';
     protected $primaryKey = 'ID_FORMULARIO';
     protected $fillable = ['NOMBRE_FORMULARIO','TIPO_FORMULARIO'];
+    public $timestamps = false;
 }

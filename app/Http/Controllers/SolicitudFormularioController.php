@@ -43,6 +43,7 @@ class SolicitudFormularioController extends Controller
             'RUT' => 'required|regex:/^[0-9.-]+$/|min:7|max:12',
             'DEPTO' => ['required', 'string', 'max:255', 'regex:/^[A-Za-z\s]+$/'],
             'EMAIL' => 'required|email',
+            'FORM_SOL' => ['required', 'string', 'max:1000'],
         ];
 
         $messages = [
@@ -60,6 +61,8 @@ class SolicitudFormularioController extends Controller
             'DEPTO.regex' => 'El campo Departamento solo puede contener letras y espacios.',
             'EMAIL.required' => 'El campo Email es obligatorio.',
             'EMAIL.email' => 'El campo Email debe ser una dirección de correo electrónico válida.',
+            'FORM_SOL.required' => 'El carrito debe contener formularios.',
+            'FORM_SOL.max' => 'El carrito no debe exceder los 1000 caracteres.',
         ];
         $request->validate($rules,$messages);
         $data = $request->except('_token');
@@ -110,6 +113,7 @@ class SolicitudFormularioController extends Controller
             'RUT' => 'required|regex:/^[0-9.-]+$/|min:7|max:12',
             'DEPTO' => ['required', 'string', 'max:255', 'regex:/^[A-Za-z\s]+$/'],
             'EMAIL' => 'required|email',
+            'FORM_SOL' => ['required', 'string', 'max:1000'],
         ];
 
         $messages = [
@@ -127,6 +131,8 @@ class SolicitudFormularioController extends Controller
             'DEPTO.regex' => 'El campo Departamento solo puede contener letras y espacios.',
             'EMAIL.required' => 'El campo Email es obligatorio.',
             'EMAIL.email' => 'El campo Email debe ser una dirección de correo electrónico válida.',
+            'FORM_SOL.required' => 'El carrito debe contener formularios.',
+            'FORM_SOL.max' => 'El carrito no debe exceder los 1000 caracteres.',
         ];
         $request->validate($rules,$messages);
         $data = $request->except('_token');

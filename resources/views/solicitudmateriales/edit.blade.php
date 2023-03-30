@@ -5,7 +5,7 @@
 
 <!-- CABECERA DE LA PAGINA -->
 @section('content_header')
-    <h1>Revisar Solicitud de {{$solicitud->NOMBRE_SOLICITANTE}}</h1>
+    <h1>Revisar solicitud N°{{$solicitud->ID_SOLICITUD}}</h1>
 @stop
 
 @section('content')
@@ -74,30 +74,37 @@
             <table id="materiales" class="table table-bordered mt-4">
                 <thead class="bg-primary text-white">
                     <tr>
-                        <th scope="col">Nombre material</th>
-                        <th scope="col">Tipo material</th>
+                        <th scope="col">Nombre Material</th>
+                        <th scope="col">Tipo Material</th>
                         <th scope="col">Stock</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach($materiales as $material)
-                    <tr>
-                        <td>{{ $material->NOMBRE_MATERIAL }}</td>
-                        <td>{{ $material->tipoMaterial->TIPO_MATERIAL }}</td>
-                        <td>{{ $material->STOCK}}</td>
-                    </tr>
+                    @foreach ($materiales as $material)
+                        <tr>
+                            <td>{{ $material->NOMBRE_MATERIAL }}</td>
+                            <td>{{ $material->tipoMaterial->TIPO_MATERIAL }}</td>
+                            <td>{{ $material->STOCK }}</td>
+                        </tr>
                     @endforeach
                 </tbody>
             </table>
         </div>
         <div class="mb-6" style="padding: 1%;">
             <div class="mb-3">
-                <label for="MATERIAL_SOL" class="form-label">Checkout:</label>
-                <textarea id="MATERIAL_SOL" name="MATERIAL_SOL" rows="5" class="form-control" placeholder="Artículos en el carrito" readonly>{{$solicitud->MATERIAL_SOL}}</textarea>
+                <label for="MATERIAL_SOL" class="form-label"><i class="fa-solid fa-file-circle-question"></i> Checkout:</label>
+                <textarea id="MATERIAL_SOL" name="MATERIAL_SOL" rows="5" class="form-control @if($errors->has('MATERIAL_SOL')) is-invalid @endif" placeholder="Artículos en el carrito (Máx 1000 caracteres)" readonly required>{{$solicitud->MATERIAL_SOL}}</textarea>
+                @if($errors->has('MATERIAL_SOL'))
+                    <div class="invalid-feedback">{{$errors->first('MATERIAL_SOL')}}</div>
+                @endif
             </div>
             <div class="mb-3">
                 <label for="OBSERVACIONES" class="form-label">Observaciones:</label>
                 <textarea id="OBSERVACIONES" name="OBSERVACIONES" class="form-control" placeholder="Solo el encargado puede ingresar observaciones">{{$solicitud->OBSERVACIONES}}</textarea>
+            </div>
+            <div class="mb-3" hidden>
+                <label for="MODIFICADO_POR" class="form-label">Revisado por:</label>
+                <input type="text" id="MODIFICADO_POR" name="MODIFICADO_POR" value="{{ auth()->user()->name}}">
             </div>
         </div>
         <!-- Botones de envio -->
