@@ -42,6 +42,8 @@ Route::resource('vehiculos','App\Http\Controllers\VehiculoController');
 Route::resource('formularios','App\Http\Controllers\FormularioController');
 //Rutas para solicitar formularios
 Route::resource('formulariosSol','App\Http\Controllers\SolicitudFormularioController');
+//Rutas para tipos de equipos
+Route::resource('tipoequipos','App\Http\Controllers\TipoEquiposController');
 
 Route::middleware([
     'auth:sanctum',

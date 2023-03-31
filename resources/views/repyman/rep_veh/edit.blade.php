@@ -98,7 +98,7 @@
                 <div class="mb-3">
                     <label for="ID_TIPO_SERVICIO" class="form-label"><i class="fa-solid fa-shop-lock"></i> Tipo de reparación:</label>
                     <select id="ID_TIPO_SERVICIO" name="ID_TIPO_SERVICIO" class="form-control {{ $errors->has('ID_TIPO_SERVICIO') ? 'is-invalid' : '' }}">
-                        <option value="">-- Seleccione --</option>
+                        <option value="">-- Seleccione un tipo --</option>
                         @foreach ($tipos_servicio as $tipo_servicio)
                             @if ($solicitud->ID_TIPO_SERVICIO == $tipo_servicio->ID_TIPO_SERVICIO)
                             <option value="{{$tipo_servicio->ID_TIPO_SERVICIO}}" selected>{{$tipo_servicio->TIPO_SERVICIO}}</option>
