@@ -363,6 +363,11 @@ return [
                     'icon'    => 'fas fa-fw fa-eye',
                 ],
                 [
+                    'text'    => 'Agregar Formularios',
+                    'url'     => 'formularios/create',
+                    'icon'    => 'fas fa-fw fa-plus',
+                ],
+                [
                     'text'    => 'Ver Solicitudes',
                     'url'     => 'formulariosSol',
                     'icon'    => 'fas fa-fw fa-eye',

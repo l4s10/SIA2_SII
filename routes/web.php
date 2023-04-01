@@ -26,11 +26,11 @@ Route::get('/repyman', function(){
 
 //Rutas para articulos (TEST de CRUD)
 Route::resource('articulos','App\Http\Controllers\ArticuloController');
-//Rutas para materiales (MODULOS)
+//Rutas para materiales
 Route::resource('materiales','App\Http\Controllers\MaterialController');
 //Rutas para tipos de materiales.
 Route::resource('tipomaterial','App\Http\Controllers\TipoMaterialController');
-//Rutas para materiales (SOLICITUDES)
+//Rutas para solicitud de materiales
 Route::resource('solmaterial','App\Http\Controllers\SolMatController');
 //Rutas para reparaciones
 Route::resource('reparaciones','App\Http\Controllers\RelFunRepGeneralController');
@@ -44,6 +44,7 @@ Route::resource('formularios','App\Http\Controllers\FormularioController');
 Route::resource('formulariosSol','App\Http\Controllers\SolicitudFormularioController');
 //Rutas para tipos de equipos
 Route::resource('tipoequipos','App\Http\Controllers\TipoEquiposController');
+//Rutas para equipos
 
 Route::middleware([
     'auth:sanctum',

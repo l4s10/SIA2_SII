@@ -51,7 +51,7 @@ class FormularioController extends Controller
             Formulario::create($data);
             session()->flash('success','El formulario ha sido creado existosamente.');
         }catch(\Exception $e){
-            session()->flash('error','Error al crear el formulario, vuelva a intentarlo más tarde'  . $e->getMessage());
+            session()->flash('error','Error al crear el formulario, vuelva a intentarlo más tarde');
         }
         return redirect('/formularios');
     }
