@@ -11,7 +11,7 @@ class SolicitudEquipos extends Model
 
     protected $table = 'solicitud_equipos';
 
-    protected $primaryKey = 'ID_SOL_EQUIPO';
+    protected $primaryKey = 'ID_SOL_EQUIPOS';
 
     protected $fillable = [
         'NOMBRE_SOLICITANTE',

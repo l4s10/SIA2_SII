@@ -46,7 +46,7 @@
                                 {{-- <td>{{ $sol_material->MATERIAL_SOL}}</td> --}}
                                 <td>{{ $sol_material->ESTADO_SOL}}</td>
                                 <!-- Carbon sirve para parsear datos, esta es una instancia de carbon -->
-                                <td>{{ $sol_material->created_at->tz('America/Santiago')->format('d/m/Y H:i:s') }}</td>
+                                <td>{{ $sol_material->created_at->tz('America/Santiago')->format('d/m/Y H:i') }}</td>
                                 {{-- <td>{{ $sol_material->OBSERVACIONES}}</td> --}}
                                 <td>
                                     <form action="{{ route('solmaterial.destroy',$sol_material->ID_SOLICITUD) }}" method="POST">

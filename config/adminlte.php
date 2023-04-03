@@ -347,8 +347,18 @@ return [
             'text'        => 'Equipos',
             'url'         => '#',
             'icon'        => 'fas fa-fw fa-desktop',
-            // 'label'       => 'CRUD',
-            // 'label_color' => 'danger',
+            'submenu' => [
+                [
+                    'text'    => 'Ver Solicitudes',
+                    'url'     => 'solequipos',
+                    'icon'    => 'fas fa-fw fa-eye',
+                ],
+                [
+                    'text'    => 'Solicitar',
+                    'url'     => 'solequipos/create',
+                    'icon'    => 'fas fa-fw fa-plus',
+                ],
+            ],
         ],
         [
             'text'        => 'Formularios',
@@ -405,8 +415,18 @@ return [
                             'icon'    => 'fas fa-fw fa-eye',
                         ],
                         [
-                            'text'    => 'Agregar Tipos',
+                            'text'    => 'Agregar Tipo Material',
                             'url'     => 'tipomaterial/create',
+                            'icon'    => 'fas fa-fw fa-plus',
+                        ],
+                        [
+                            'text'    => 'Ver Equipos',
+                            'url'     => 'formularios',
+                            'icon'    => 'fas fa-fw fa-eye',
+                        ],
+                        [
+                            'text'    => 'Agregar Equipos',
+                            'url'     => 'formularios/create',
                             'icon'    => 'fas fa-fw fa-plus',
                         ],
                     ],

@@ -7,7 +7,7 @@
 @stop
 
 @section('content')
-<div class="container">
+<div class="container-fluid">
     <!-- en el href, hacemos referencia dentro de la carpeta de vistas -->
     <!-- <a href="materiales/create" class="btn btn-primary mb-3">CREAR</a> -->
     @if(session('success'))
@@ -44,7 +44,7 @@
                             <td>{{ $solicitud->DEPTO }}</td>
                             <td>{{ $solicitud->EMAIL }}</td>
                             <!-- Carbon sirve para parsear datos, esta es una instancia de carbon -->
-                            <td>{{ $solicitud->created_at->tz('America/Santiago')->format('d/m/Y H:i:s') }}</td>
+                            <td>{{ $solicitud->created_at->tz('America/Santiago')->format('d/m/Y H:i') }}</td>
 
                             <td style="text-align:center;">
                                 <form action="{{ route('formulariosSol.destroy',$solicitud->ID_SOL_FORM) }}" method="POST">

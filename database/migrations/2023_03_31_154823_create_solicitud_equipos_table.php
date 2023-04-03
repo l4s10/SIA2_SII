@@ -25,7 +25,7 @@ return new class extends Migration
             $table->date('FECHA_SOL_EQUIPO')->nullable();
             $table->string('HORA_INICIO_SOL_EQUIPO', 128)->nullable();
             $table->string('HORA_TERM_SOL_EQUIPO', 128)->nullable();
-            $table->string('ESTADO_SOL_EQUIPO', 128)->nullable();
+            $table->string('ESTADO_SOL_EQUIPO', 128)->default('INGRESADO');
             $table->string('EQUIPO_A_ASIGNAR', 128)->nullable();
             $table->string('MODIFICADO_POR_SOL_EQUIPO', 128)->nullable();
             $table->text('OBSERV_SOL_EQUIPO')->nullable();

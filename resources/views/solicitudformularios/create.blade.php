@@ -24,7 +24,7 @@
 
                         <div class="mb-3">
                             <label for="RUT" class="form-label"><i class="fa-solid fa-id-card"></i> RUT:</label>
-                            <input type="text" id="RUT" name="RUT" class="form-control{{ $errors->has('RUT') ? ' is-invalid' : '' }}" value="{{ old('RUT') }}" placeholder="Sin puntos con guion (Ej: 16738235-5)">
+                            <input type="text" id="RUT" name="RUT" class="form-control{{ $errors->has('RUT') ? ' is-invalid' : '' }}" value="{{ old('RUT') }}" placeholder="Sin puntos con guion (Ej: 12345678-9)">
                             @if ($errors->has('RUT'))
                             <div class="invalid-feedback">
                                 {{ $errors->first('RUT') }}

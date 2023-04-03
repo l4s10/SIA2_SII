@@ -10,7 +10,7 @@
 
 @section('content')
     <!-- COLOCA AQUI EL FORMULARIO QUE CREES -->
-    <div class="container-fluid">
+    <div class="container">
         <form action="/solmaterial" method="POST">
             @csrf
             <div class="row">
@@ -27,7 +27,7 @@
 
                     <div class="mb-3">
                     <label for="RUT" class="form-label"><i class="fa-solid fa-id-card"></i> RUT:</label>
-                    <input type="text" id="RUT" name="RUT" class="form-control{{ $errors->has('RUT') ? ' is-invalid' : '' }}" value="{{ old('RUT') }}" placeholder="Sin puntos con guión (Ej: 16738235-5)">
+                    <input type="text" id="RUT" name="RUT" class="form-control{{ $errors->has('RUT') ? ' is-invalid' : '' }}" value="{{ old('RUT') }}" placeholder="Sin puntos con guión (Ej: 12345678-9)">
                     @if ($errors->has('RUT'))
                     <div class="invalid-feedback">
                         {{ $errors->first('RUT') }}
