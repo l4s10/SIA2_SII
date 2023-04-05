@@ -1,13 +1,17 @@
 <?php
 
+namespace Database\Seeders;
+
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
-class TipoMaterialSeeder extends Seeder
+class MaterialTipoSeeder extends Seeder
 {
-    public function run()
-    {
+    /**
+     * Run the database seeds.
+     */
+    public function run(){
         DB::table('tipo_material')->insert([
             ['ID_TIPO_MAT' => 1, 'TIPO_MATERIAL' => 'ASEO'],
             ['ID_TIPO_MAT' => 2, 'TIPO_MATERIAL' => 'ESCRITORIO'],

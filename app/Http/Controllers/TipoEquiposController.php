@@ -25,7 +25,7 @@ class TipoEquiposController extends Controller
      */
     public function create()
     {
-        //
+        return view('tipoequipos.create');
     }
 
     /**
@@ -63,8 +63,15 @@ class TipoEquiposController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(TipoEquipo $tipoEquipo)
+    public function destroy(string $id)
     {
-        //
+        $request = TipoEquipo::find($id);
+        try{
+            $request->delete();
+            session()->flash('success','El tipo de equipo se eliminó exitosamente');
+        }catch(\Exception $e){
+            session()->flash('error','Error al eliminar el tipo seleccionado.');
+        }
+        return redirect('/tipoequipos');
     }
 }

@@ -45,6 +45,7 @@ Route::resource('formulariosSol','App\Http\Controllers\SolicitudFormularioContro
 //Rutas para tipos de equipos
 Route::resource('tipoequipos','App\Http\Controllers\TipoEquiposController');
 //Rutas para equipos
+Route::resource('equipos','App\Http\Controllers\EquipoController');
 //Rutas para solicitudes de equipos
 Route::resource('solequipos','App\Http\Controllers\SolicitudEquiposController');
 
