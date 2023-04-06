@@ -20,6 +20,7 @@ Route::get('/', function () {
 Route::get('/repyman', function(){
     return view('repyman.index');
 });
+//Dashboard para modulo reserva salas y visitas a bodega
 Route::get('/reservas', function(){
     return view('reservas.dashboard');
 });
@@ -51,6 +52,10 @@ Route::resource('tipoequipos','App\Http\Controllers\TipoEquiposController');
 Route::resource('equipos','App\Http\Controllers\EquipoController');
 //Rutas para solicitudes de equipos
 Route::resource('solequipos','App\Http\Controllers\SolicitudEquiposController');
+//Rutas categoría salas
+//Rutas salas
+//Rutas para solicitudes de salas y bodegas
+
 
 Route::middleware([
     'auth:sanctum',
