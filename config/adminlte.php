@@ -420,6 +420,16 @@ return [
                             'icon'    => 'fas fa-fw fa-plus',
                         ],
                         [
+                            'text'    => 'Ver Equipos',
+                            'url'     => 'equipos',
+                            'icon'    => 'fas fa-fw fa-eye',
+                        ],
+                        [
+                            'text'    => 'Agregar Equipo',
+                            'url'     => 'equipos/create',
+                            'icon'    => 'fas fa-fw fa-plus',
+                        ],
+                        [
                             'text'    => 'Ver Tipo Equipos',
                             'url'     => 'tipoequipos',
                             'icon'    => 'fas fa-fw fa-eye',

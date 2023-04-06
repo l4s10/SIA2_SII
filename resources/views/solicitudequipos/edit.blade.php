@@ -123,7 +123,7 @@
                     <option value="" selected>--Seleccione el equipo a asignar--</option>
                     @foreach($equipos as $equipo)
                         @if($equipo->ID_TIPO_EQUIPOS == $solicitud->ID_TIPO_EQUIPOS)
-                            <option value="{{ $equipo->ID_EQUIPO }}">{{ $equipo->MODELO_EQUIPO }}</option>
+                            <option value="{{ $equipo->ID_EQUIPO }}">{{ $equipo->MODELO_EQUIPO }} {{$equipo->MARCA_EQUIPO}}</option>
                         @endif
                     @endforeach
                 </select>
@@ -205,7 +205,7 @@
                 $('#EQUIPO_A_ASIGNAR').append('<option value="" selected>--Seleccione el equipo a asignar--</option>');
                 @foreach($equipos as $equipo)
                     if({{$equipo->ID_TIPO_EQUIPOS}} == tipoEquipoId) {
-                        $('#EQUIPO_A_ASIGNAR').append('<option value="{{$equipo->ID_EQUIPO}}">{{$equipo->MODELO_EQUIPO}}</option>');
+                        $('#EQUIPO_A_ASIGNAR').append('<option value="{{$equipo->ID_EQUIPO}}">{{$equipo->MODELO_EQUIPO}} {{$equipo->MARCA_EQUIPO}}</option>');
                     }
                 @endforeach
             });

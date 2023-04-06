@@ -33,7 +33,22 @@ class TipoEquiposController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $rules=[
+            'TIPO_EQUIPO' => 'required|unique|string'
+        ];
+        $messages=[
+            'TIPO_EQUIPO.required' => 'El tipo de equipo es requerido',
+            'TIPO_EQUIPO.unique' => 'El tipo de equipo ya existe',
+            'TIPO_EQUIPO.string' => 'El tipo de equipo debe ser un campo de texto'
+        ];
+        $request->validate($rules,$messages);
+        try{
+            TipoEquipo::create($request);
+            session()->flash('success','El tipo de equipo se ha creado exitosamente.');
+        }catch(\Exception $e){
+            session()->flash('Error','Hubo un error al crear el tipo de equipo, vuelva a intentarlo mas tarde');
+        }
+        return redirect('/tipoequipos');
     }
 
     /**
@@ -47,17 +62,33 @@ class TipoEquiposController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(TipoEquipo $tipoEquipo)
+    public function edit(string $id)
     {
-        //
+        $solicitud = TipoEquipo::find($id);
+        return view('tipoequipos.edit',compact('solicitud'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, TipoEquipo $tipoEquipo)
-    {
-        //
+    public function update(Request $request, string $id){
+        $solicitud = TipoEquipo::find($id);
+        $rules=[
+            'TIPO_EQUIPO' => 'required|unique:tipo_equipos,TIPO_EQUIPO|string',
+        ];
+        $messages=[
+            'TIPO_EQUIPO.required' => 'El tipo de equipo es requerido',
+            'TIPO_EQUIPO.unique' => 'El tipo de equipo ya existe',
+            'TIPO_EQUIPO.string' => 'El tipo de equipo debe ser un campo de texto'
+        ];
+        $request->validate($rules,$messages);
+        try{
+            $solicitud->update($request->all());
+            session()->flash('success','El tipo de equipo se ha creado exitosamente.');
+        }catch(\Exception $e){
+            session()->flash('Error','Hubo un error al crear el tipo de equipo, vuelva a intentarlo mas tarde');
+        }
+        return redirect('/tipoequipos');
     }
 
     /**

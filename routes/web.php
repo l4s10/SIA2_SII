@@ -20,6 +20,9 @@ Route::get('/', function () {
 Route::get('/repyman', function(){
     return view('repyman.index');
 });
+Route::get('/reservas', function(){
+    return view('reservas.dashboard');
+});
 // Route::get('/repyman/reparaciones',function(){
 //     return view('repyman.reparaciones.index');
 // });

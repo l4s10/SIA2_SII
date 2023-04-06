@@ -16,5 +16,9 @@ class Equipo extends Model
         'ESTADO_EQUIPO',
         'ID_TIPO_EQUIPOS'
     ];
-    public $timestaps = false;
+    public $timestamps = false;
+    public function tipoEquipo()
+    {
+        return $this->belongsTo(TipoEquipo::class, 'ID_TIPO_EQUIPOS');
+    }
 }

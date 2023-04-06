@@ -76,7 +76,8 @@ class EquipoController extends Controller
     {
         try {
             $equipo = Equipo::findOrFail($id);
-            return view('equipos.edit', compact('equipo'));
+            $tipos = TipoEquipo::all();
+            return view('equipos.edit', compact('equipo','tipos'));
         } catch (\Exception $e) {
             session()->flash('error', 'El equipo que desea editar no existe.');
             return redirect('/equipos');
