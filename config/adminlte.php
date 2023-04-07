@@ -391,7 +391,7 @@ return [
         ],
         [
             'text'        => 'Reservas (Salas y Bodegas)',
-            'url'         => '#',
+            'url'         => 'reservas',
             'icon'        => 'fas fa-fw fa-building',
         ],
         [
