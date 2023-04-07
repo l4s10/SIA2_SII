@@ -20,12 +20,6 @@ Route::get('/', function () {
 Route::get('/repyman', function(){
     return view('repyman.index');
 });
-Route::get('/reservas', function(){
-    return view('reservas.dashboard');
-});
-// Route::get('/repyman/reparaciones',function(){
-//     return view('repyman.reparaciones.index');
-// });
 
 //Rutas para articulos (TEST de CRUD)
 Route::resource('articulos','App\Http\Controllers\ArticuloController');
