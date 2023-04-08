@@ -12,8 +12,14 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('salas', function (Blueprint $table) {
-            $table->id();
-            $table->timestamps();
+            $table->integer('ID_SALA');
+            $table->string('NOMBRE_SALA', 128)->nullable();
+            $table->integer('CAPACIDAD_PERSONAS')->nullable();
+            $table->string('ESTADO_SALA', 128)->nullable();
+            $table->integer('ID_CATEGORIA_SALA')->references('ID_CATEGORIA_SALA')->on('categorias_salas');
+            $table->engine = 'InnoDB';
+            $table->charset = 'utf8';
+            $table->collation = 'utf8_spanish_ci';
         });
     }
 

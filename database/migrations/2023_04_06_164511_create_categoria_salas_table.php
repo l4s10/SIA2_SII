@@ -12,8 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('categoria_salas', function (Blueprint $table) {
-            $table->id();
-            $table->timestamps();
+            $table->increments('ID_CATEGORIA_SALA');
+            $table->string('CATEGORIA_SALA',128);
         });
     }
 
