@@ -51,6 +51,7 @@ Route::resource('solequipos','App\Http\Controllers\SolicitudEquiposController');
 //Rutas categoría salas
 Route::resource('categoriasalas','App\Http\Controllers\CategoriaSalaController');
 //Rutas salas
+Route::resource('salas','App\Http\Controllers\SalaController');
 //Rutas para solicitudes de salas y bodegas
 
 
