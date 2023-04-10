@@ -59,19 +59,27 @@
             <div class="row">
                 <div class="col-md-6 mb-3">
                     <label for="ID_CATEGORIA_SALA" class="form-label"><i class="fa-solid fa-person-shelter"></i> Tipo de solicitud</label>
-                    <select id="ID_CATEGORIA_SALA" name="ID_CATEGORIA_SALA" class="form-control" >
-                        <option value="" selected>--Seleccione el tipo de solicitud--</option>
-                        @foreach ($categorias as $categoria)
-                            <option value="{{$categoria->ID_CATEGORIA_SALA}}" @if ($categoria->ID_CATEGORIA_SALA == $solicitud->ID_CATEGORIA_SALA) selected @endif>{{$categoria->CATEGORIA_SALA}}</option>
+                <select id="ID_CATEGORIA_SALA" name="ID_CATEGORIA_SALA" class="form-control" disabled>
+                    <option value="" selected>--Seleccione el tipo de solicitud--</option>
+                    @foreach ($categorias as $categoria)
+                        <option value="{{$categoria->ID_CATEGORIA_SALA}}" @if ($categoria->ID_CATEGORIA_SALA == $solicitud->ID_CATEGORIA_SALA) selected @endif>{{$categoria->CATEGORIA_SALA}}</option>
+                    @endforeach
+                </select>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label for="ID_TIPO_EQUIPOS">¿Necesita equipo?</label>
+                    <select name="ID_TIPO_EQUIPOS" id="ID_TIPO_EQUIPOS" class="form-control" disabled>
+                        <option value="">--No necesita equipo--</option>
+                        @foreach ($tipos as $tipo)
+                            <option value="{{$tipo->ID_TIPO_EQUIPOS}}" @if ($tipo->ID_TIPO_EQUIPOS == $solicitud->ID_TIPO_EQUIPOS) selected @endif>{{$tipo->TIPO_EQUIPO}}</option>
                         @endforeach
                     </select>
                 </div>
-                <div class="col-md-6 mb-3">
-                    <label for="CANT_PERSONAS_SOL_SALAS" class="form-label"><i class="fa-solid fa-people-line"></i> Cantidad de personas:</label>
-                    <input type="number" class="form-control" id="CANT_PERSONAS_SOL_SALAS" name="CANT_PERSONAS_SOL_SALAS" placeholder="Escriba la cantidad de personas para el uso de la sala" min="1" max="100" value="{{$solicitud->CANT_PERSONAS_SOL_SALAS}}">
-                </div>
             </div>
-            
+            <div class="form-group">
+                <label for="CANT_PERSONAS_SOL_SALAS" class="form-label"><i class="fa-solid fa-people-line"></i> Cantidad de personas:</label>
+                <input type="number" class="form-control" id="CANT_PERSONAS_SOL_SALAS" name="CANT_PERSONAS_SOL_SALAS" placeholder="Escriba la cantidad de personas para el uso de la sala" min="1" max="100" value="{{$solicitud->CANT_PERSONAS_SOL_SALAS}}">
+            </div>
             {{--**LISTO**--}}
             <div class="mb-3">
                 <label for="MOTIVO_SOL_SALA" class="form-label"><i class="fa-solid fa-file-pen"></i> Motivo de reserva:</label>
@@ -112,21 +120,31 @@
                     <option value="RECHAZADO">Rechazado</option>
                 </select>
             </div>
-            {{-- Tipo Equipos --}}
             {{-- CAMPOS NIVEL 2 --}}
-            {{-- Equipo a asignar (si se necesita) --}}
             {{-- Sala a asignar (depende de ID_CATEGORIA_SALA) --}}
             <div class="mb-3">
-                <label for="SALA_A_ASIGNAR" class="form-label"><i class="fa-solid fa-person-shelter"></i> Sala:</label>
+                <label for="SALA_A_ASIGNAR" class="form-label"><i class="fa-solid fa-person-shelter"></i> Sala/Bodega a asignar:</label>
                 <select id="SALA_A_ASIGNAR" name="SALA_A_ASIGNAR" class="form-control">
                     <option value="" selected>--Seleccione una sala--</option>
                     @foreach ($salas as $sala)
                         @if ($sala->ESTADO_SALA == 'DISPONIBLE' && $sala->ID_CATEGORIA_SALA == $solicitud->ID_CATEGORIA_SALA)
-                            <option value="{{ $sala->NOMBRE_SALA }}">{{ $sala->NOMBRE_SALA }} ({{ $sala->CAPACIDAD_PERSONAS }} personas)</option>
+                            <option value="{{ $sala->NOMBRE_SALA }}" @if ($solicitud->SALA_A_ASIGNAR == $sala->NOMBRE_SALA) selected @endif>{{ $sala->NOMBRE_SALA }} ({{ $sala->CAPACIDAD_PERSONAS }} personas)</option>
                         @endif
                     @endforeach
                 </select>
-            </div>            
+            </div>
+            {{-- Equipo a asignar (si se necesita) --}}
+            <div class="mb-3">
+                <label for="EQUIPO_SALA" class="form-label"><i class="fa-solid fa-person-shelter"></i> Data/Equipo a asignar:</label>
+                <select id="EQUIPO_SALA" name="EQUIPO_SALA" class="form-control">
+                    <option value="" selected>--N/A--</option>
+                    @foreach ($equipos as $equipo)
+                        @if ($equipo->ESTADO_EQUIPO == 'DISPONIBLE' && $equipo->ID_TIPO_EQUIPOS == $solicitud->ID_TIPO_EQUIPOS)
+                            <option value="{{ $equipo->MODELO_EQUIPO }}" @if ($solicitud->EQUIPO_SALA == $equipo->MODELO_EQUIPO) selected @endif>{{ $equipo->MODELO_EQUIPO }}</option>
+                        @endif
+                    @endforeach
+                </select>
+            </div>
             {{-- Observaciones --}}
             <div class="mb-3">
                 <label for="OBSERV_SOL_SALA" class="form-label"><i class="fa-solid fa-file-pen"></i> Observaciones:</label>

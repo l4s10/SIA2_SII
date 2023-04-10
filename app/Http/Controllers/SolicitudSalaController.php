@@ -7,6 +7,7 @@ use App\Models\SolicitudSala;
 use App\Models\Sala;
 use App\Models\CategoriaSala;
 use App\Models\Equipo;
+use App\Models\TipoEquipo;
 //Para formatear fechas
 use Carbon\Carbon;
 
@@ -31,7 +32,8 @@ class SolicitudSalaController extends Controller
     public function create()
     {
         $categorias = CategoriaSala::all();
-        return view('reservasalas.create',compact('categorias'));
+        $tipos = TipoEquipo::all();
+        return view('reservasalas.create',compact('categorias','tipos'));
     }
 
     /**
@@ -92,7 +94,8 @@ class SolicitudSalaController extends Controller
         $equipos = Equipo::all();
         $salas = Sala::all();
         $categorias = CategoriaSala::all();
-        return view('reservasalas.edit',compact('solicitud','equipos','salas','categorias'));
+        $tipos = TipoEquipo::all();
+        return view('reservasalas.edit',compact('solicitud','equipos','salas','categorias','tipos'));
     }
 
     /**

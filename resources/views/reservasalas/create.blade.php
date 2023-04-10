@@ -56,15 +56,27 @@
                 </div>
             </div>
             {{--**LISTO**--}}
-            <div class="mb-3">
-                <label for="ID_CATEGORIA_SALA" class="form-label"><i class="fa-solid fa-person-shelter"></i> Tipo de solicitud</label>
-                <select id="ID_CATEGORIA_SALA" name="ID_CATEGORIA_SALA" class="form-control">
-                <option value="" selected>--Seleccione el tipo de solicitud--</option>
-                @foreach ($categorias as $categoria)
-                    <option value="{{$categoria->ID_CATEGORIA_SALA}}">{{$categoria->CATEGORIA_SALA}}</option>
-                @endforeach
-                </select>
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label for="ID_CATEGORIA_SALA" class="form-label"><i class="fa-solid fa-person-shelter"></i> Tipo de solicitud</label>
+                    <select id="ID_CATEGORIA_SALA" name="ID_CATEGORIA_SALA" class="form-control">
+                        <option value="" selected>--Seleccione el tipo de solicitud--</option>
+                        @foreach ($categorias as $categoria)
+                            <option value="{{$categoria->ID_CATEGORIA_SALA}}">{{$categoria->CATEGORIA_SALA}}</option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label for="ID_TIPO_EQUIPOS">¿Necesita equipo?</label>
+                    <select name="ID_TIPO_EQUIPOS" id="ID_TIPO_EQUIPOS" class="form-control">
+                        <option value="">--No necesita equipo--</option>
+                        @foreach ($tipos as $tipo)
+                            <option value="{{$tipo->ID_TIPO_EQUIPOS}}">{{$tipo->TIPO_EQUIPO}}</option>
+                        @endforeach
+                    </select>
+                </div>
             </div>
+
             {{--**LISTO**--}}
             <div class="mb-3">
                 <label for="MOTIVO_SOL_SALA" class="form-label"><i class="fa-solid fa-file-pen"></i> Motivo de reserva:</label>
