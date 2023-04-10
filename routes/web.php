@@ -53,6 +53,7 @@ Route::resource('categoriasalas','App\Http\Controllers\CategoriaSalaController')
 //Rutas salas
 Route::resource('salas','App\Http\Controllers\SalaController');
 //Rutas para solicitudes de salas y bodegas
+Route::resource('reservas','App\Http\Controllers\SolicitudSalaController');
 
 
 Route::middleware([

@@ -71,7 +71,7 @@ class SolicitudEquiposController extends Controller
             SolicitudEquipos::create($data);
             session()->flash('success','La solicitud de equipo ha sido enviada exitosamente.');
         }catch(\Exception $e){
-            session()->flash('error','Error al enviar la solicitud, vuelva a enviarlo más tarde.' . $e->getMessage());
+            session()->flash('error','Error al enviar la solicitud, vuelva a enviarlo más tarde.');
         }
         return redirect('/solequipos');
     }
