@@ -18,6 +18,7 @@
                 <p>Rut: {{ $solicitud->RUT }}</p>
                 <p>Departamento: {{ $solicitud->DEPTO }}</p>
                 <p>Email: {{ $solicitud->EMAIL }}</p>
+                <p>Tipo de solicitud: {{ $solicitud->categoriaSala->CATEGORIA_SALA}}</p>
                 <p>Estado: {{ $solicitud->ESTADO_SOL_SALA }}</p>
                 <p>Fecha de ingreso: {{ $solicitud->created_at->tz('America/Santiago')->format('d/m/Y H:i') }}</p>
                 <p>Fecha solicitada: {{ \Carbon\Carbon::parse($solicitud->FECHA_SOL_SALA)->format('d/m/Y') }} desde {{$solicitud->HORA_INICIO_SOL_SALA}} hasta las {{$solicitud->HORA_TERM_SOL_SALA}}</p>

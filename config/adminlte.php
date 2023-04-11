@@ -391,8 +391,20 @@ return [
         ],
         [
             'text'        => 'Reservas (Salas y Bodegas)',
-            'url'         => 'reservas',
+            'url'         => '#',
             'icon'        => 'fas fa-fw fa-building',
+            'submenu' => [
+                [
+                    'text'    => 'Ver Reservas',
+                    'url'     => 'reservas',
+                    'icon'    => 'fas fa-fw fa-eye',
+                ],
+                [
+                    'text'    => 'Solicitar Reserva',
+                    'url'     => 'reservas/create',
+                    'icon'    => 'fas fa-fw fa-plus',
+                ],
+            ],
         ],
         [
             'text'    => 'Inventario',
@@ -437,6 +449,16 @@ return [
                         [
                             'text'    => 'Agregar Tipo Equipo',
                             'url'     => 'tipoequipos/create',
+                            'icon'    => 'fas fa-fw fa-plus',
+                        ],
+                        [
+                            'text'    => 'Ver Sala/Bodega',
+                            'url'     => 'categoriasalas',
+                            'icon'    => 'fas fa-fw fa-eye',
+                        ],
+                        [
+                            'text'    => 'Agregar Sala/bodega',
+                            'url'     => 'categoriasalas/create',
                             'icon'    => 'fas fa-fw fa-plus',
                         ],
                     ],

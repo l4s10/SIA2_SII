@@ -32,6 +32,10 @@ class SolicitudSala extends Model
     {
         return $this->belongsTo(Sala::class, 'ID_SALA');
     }
+    public function categoriaSala()
+    {
+        return $this->belongsTo(CategoriaSala::class, 'ID_CATEGORIA_SALA');
+    }
     public function tipoEquipo(){
         return $this->belongsTo(TipoEquipo::class, 'ID_TIPO_EQUIPOS');
     }

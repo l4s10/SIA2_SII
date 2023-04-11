@@ -3,7 +3,7 @@
 @section('title', 'Solicitar reserva')
 
 @section('content_header')
-    <h1>Solicitud de salas y bodegas</h1>
+    <h1>Solicitar sala o bodega</h1>
 @stop
 
 @section('content')

@@ -3,7 +3,7 @@
 @section('title', 'Solicitar Reparación Vehicular')
 
 @section('content_header')
-    <h1>Solicitud Reparación Vehicular</h1>
+    <h1>Solicitud Reparación/Mantención Vehicular</h1>
 @stop
 
 @section('content')

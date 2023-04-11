@@ -3,7 +3,7 @@
 @section('title', 'Solicitudes')
 
 @section('content_header')
-    <h1>Solicitudes de Reparaciones y Mantenciones</h1>
+    <h1>Solicitudes de Reparaciones y Mantenciones (Vehículos)</h1>
 @stop
 
 @section('content')
@@ -78,7 +78,8 @@
         <script>
             $(document).ready(function () {
                 $('#solicitudes').DataTable({
-                    "lengthMenu": [[5,10, 50, -1], [5, 10, 50, "All"]]
+                    "lengthMenu": [[5,10, 50, -1], [5, 10, 50, "All"]],
+                    "order": [[4, "desc"]]
                 });
             });
         </script>

@@ -3,7 +3,7 @@
 @section('title', 'Solicitudes Inmbuebles')
 
 @section('content_header')
-    <h1 class="title">Solicitudes de reparaciones</h1>
+    <h1 class="title">Solicitudes de reparaciones (Inmuebles)</h1>
 @stop
 
 @section('content')
@@ -89,6 +89,7 @@
         $(document).ready(function () {
             $('#solicitudes').DataTable({
                 "lengthMenu": [[5,10, 50, -1], [5, 10, 50, "All"]],
+                "order": [[4, "desc"]]
             });
         });
     </script>

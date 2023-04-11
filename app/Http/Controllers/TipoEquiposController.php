@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\TipoEquipo;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 
 class TipoEquiposController extends Controller
 {
@@ -33,17 +34,21 @@ class TipoEquiposController extends Controller
      */
     public function store(Request $request)
     {
-        $rules=[
-            'TIPO_EQUIPO' => 'required|unique|string'
+        $rules = [
+            'TIPO_EQUIPO' => [
+                'required',
+                'string',
+                Rule::unique('tipo_equipos')
+            ]
         ];
-        $messages=[
-            'TIPO_EQUIPO.required' => 'El tipo de equipo es requerido',
-            'TIPO_EQUIPO.unique' => 'El tipo de equipo ya existe',
-            'TIPO_EQUIPO.string' => 'El tipo de equipo debe ser un campo de texto'
+        $messages = [
+            'TIPO_EQUIPO.required' => 'El campo tipo de equipo es obligatorio',
+            'TIPO_EQUIPO.string' => 'El campo tipo de equipo debe ser una cadena',
+            'TIPO_EQUIPO.unique' => 'El campo tipo de equipo ya existe'
         ];
         $request->validate($rules,$messages);
         try{
-            TipoEquipo::create($request);
+            TipoEquipo::create($request->all());
             session()->flash('success','El tipo de equipo se ha creado exitosamente.');
         }catch(\Exception $e){
             session()->flash('Error','Hubo un error al crear el tipo de equipo, vuelva a intentarlo mas tarde');
