@@ -7,19 +7,21 @@
 @stop
 
 @section('content')
-    <form action="/tipomaterial" method="POST">
-        @csrf
-        <div class="mb-3">
-            <label for="" class="form-label"><i class="fa-solid fa-person-chalkboard"></i> Nombre Tipo:</label>
-            <input id="TIPO_MATERIAL" name="TIPO_MATERIAL" type="text" class="form-control @error('TIPO_MATERIAL') is-invalid @enderror" value="{{old('TIPO_MATERIAL')}}" placeholder="Ej: ASEO" tabindex="2">
-            @error('TIPO_MATERIAL')
-                <div class="invalid-feedback">{{$message}}</div>
-            @enderror
-        </div>
+    <div class="container">
+        <form action="/tipomaterial" method="POST">
+            @csrf
+            <div class="mb-3">
+                <label for="" class="form-label"><i class="fa-solid fa-person-chalkboard"></i> Nombre Tipo:</label>
+                <input id="TIPO_MATERIAL" name="TIPO_MATERIAL" type="text" class="form-control @error('TIPO_MATERIAL') is-invalid @enderror" value="{{old('TIPO_MATERIAL')}}" placeholder="Ej: ASEO" tabindex="2">
+                @error('TIPO_MATERIAL')
+                    <div class="invalid-feedback">{{$message}}</div>
+                @enderror
+            </div>
 
-        <a href="/tipomaterial" class="btn btn-secondary" tabindex="5">Cancelar</a>
-        <button type="submit" class="btn btn-primary" tabindex="4">Guardar</button>
-    </form>
+            <a href="{{route('tipomaterial.index')}}" class="btn btn-secondary" tabindex="5"><i class="fa-solid fa-hand-point-left"></i> Cancelar</a>
+            <button type="submit" class="btn btn-primary" tabindex="4"><i class="fa-solid fa-floppy-disk"></i> Guardar tipo</button>
+        </form>
+    </div>
 @stop
 
 @section('css')

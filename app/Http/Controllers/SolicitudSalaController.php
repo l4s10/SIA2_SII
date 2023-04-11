@@ -135,7 +135,6 @@ class SolicitudSalaController extends Controller
             'ID_TIPO_EQUIPOS.exists' => 'El campo ID_TIPO_EQUIPOS no existe en la tabla tipo_equipos.'
         ];
         $request->validate($rules,$messages);
-        $data = $request->except('_token');
         $fecha = Carbon::createFromFormat('d-m-Y', $request['FECHA_SOL_SALA'])->format('Y-m-d');
         $request['FECHA_SOL_SALA'] = $fecha;
         $rut = intval(str_replace(['.', '-'], '', $request['RUT']));
@@ -144,7 +143,7 @@ class SolicitudSalaController extends Controller
             $solicitud->update($request->all());
             session()->flash('success','La solicitud se ha modificado exitosamente');
         }catch(\Exception $e){
-            session()->flash('error','Hubo un error al modificar la solicitud, vuelva a intentarlo más tarde.' . $e->getMessage());
+            session()->flash('error','Hubo un error al modificar la solicitud, vuelva a intentarlo más tarde.');
         }
         return redirect(route('reservas.index'));
     }

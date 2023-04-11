@@ -20,7 +20,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
             </div>
     @endif
-    <div class="container">
+    <div class="container-fluid">
         <div class="table-responsive">
             <table id="solicitudes" class="table table-bordered mt-4">
                     <thead class="bg-primary text-white">
@@ -51,7 +51,7 @@
                                 <td>{{ $sol_reparacion->ESTADO_REP_INM}}</td>
                                 <td>{{ $sol_reparacion->OBSERV_REP_INM}}</td> --}}
                                 <!-- Carbon sirve para parsear datos, esta es una instancia de carbon -->
-                                <td>{{ $sol_reparacion->created_at->tz('America/Santiago')->format('d/m/Y H:i:s') }}</td>
+                                <td>{{ $sol_reparacion->created_at->tz('America/Santiago')->format('d/m/Y H:i') }}</td>
                                 <td>
                                     <form action="{{ route('reparaciones.destroy',$sol_reparacion->ID_REP_INM) }}" method="POST">
                                         @csrf

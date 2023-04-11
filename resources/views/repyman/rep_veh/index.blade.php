@@ -7,23 +7,21 @@
 @stop
 
 @section('content')
-<div class="container">
-    <!-- en el href, hacemos referencia dentro de la carpeta de vistas -->
-    <!-- <a href="materiales/create" class="btn btn-primary mb-3">CREAR</a> -->
-    @if(session('success'))
-        <div class="alert alert-success alert-dismissible fade show" role="alert">
-        <strong>Exito! </strong>{{ session('success') }}
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        </div>
-    @endif
-
-
-    @if(session('error'))
-        <div class="alert alert-danger alert-dissmissible fade show" role="alert">
-            {{ session('error') }}
+<div class="container-fluid">
+        @if(session('success'))
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <strong>Exito! </strong>{{ session('success') }}
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        </div>
-    @endif
+            </div>
+        @endif
+
+
+        @if(session('error'))
+            <div class="alert alert-danger alert-dissmissible fade show" role="alert">
+                {{ session('error') }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            </div>
+        @endif
         <div class="table-responsive">
             <table id="solicitudes" class="table table-bordered mt-4">
                 <thead class="bg-primary text-white">
@@ -44,7 +42,7 @@
                             <td>{{$solicitud->RUT}}</td>
                             <td>{{$solicitud->DEPTO}}</td>
                             <td>{{$solicitud->EMAIL}}</td>
-                            <td>{{ $solicitud->created_at->tz('America/Santiago')->format('d/m/Y H:i:s') }}</td>
+                            <td>{{ $solicitud->created_at->tz('America/Santiago')->format('d/m/Y H:i') }}</td>
                             <td>{{$solicitud->ESTADO_SOL_REP_VEH}}</td>
                             <td>
                                 <form action="{{ route('repvehiculos.destroy',$solicitud->ID_SOL_REP_VEH) }}" method="POST">
@@ -59,7 +57,7 @@
                 </tbody>
             </table>
         </div>
-</div>
+    </div>
 @stop
 
 @section('css')

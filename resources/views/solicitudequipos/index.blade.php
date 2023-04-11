@@ -48,7 +48,7 @@
                                 <form action="{{ route('solequipos.destroy',$solicitud->ID_SOL_EQUIPOS) }}" method="POST">
                                     @csrf
                                     @method('DELETE')
-                                    <a href="{{ route('solequipos.show',$solicitud->ID_SOL_EQUIPOS) }}" class="btn btn-secondary"><i class="fa-regular fa-eye"></i> Ver</a>
+                                    <a href="{{ route('solequipos.show',$solicitud->ID_SOL_EQUIPOS) }}" class="btn btn-primary"><i class="fa-regular fa-eye"></i> Ver</a>
                                     <a href="/solequipos/{{$solicitud->ID_SOL_EQUIPOS}}/edit" class="btn btn-info"><i class="fa-solid fa-pen-to-square"></i> Editar</a>
                                     <button type="submit" class="btn btn-danger"><i class="fa-solid fa-trash"></i> Borrar</button>
                                 </form>

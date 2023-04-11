@@ -3,7 +3,7 @@
 @section('title', 'Ingreso de Tipos')
 
 @section('content_header')
-    <h1>Ingresar Tipos</h1>
+    <h1>Ingresar tipo equipo</h1>
 @stop
 
 @section('content')
@@ -17,8 +17,8 @@
                     <div class="invalid-feedback">{{$message}}</div>
                 @enderror
             </div>
-            <a href="/tipoequipos" class="btn btn-secondary" tabindex="5">Cancelar</a>
-            <button type="submit" class="btn btn-primary" tabindex="4">Guardar</button>
+            <a href="{{route('tipoequipos.index')}}" class="btn btn-secondary" tabindex="5"><i class="fa-solid fa-hand-point-left"></i> Cancelar</a>
+            <button type="submit" class="btn btn-primary" tabindex="4"><i class="fa-solid fa-floppy-disk"></i> Guardar tipo</button>
         </form>
     </div>
 @stop

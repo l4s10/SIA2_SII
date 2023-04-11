@@ -20,21 +20,21 @@
                 </select>
             </div>
             <div class="form-group">
-                <label for="MARCA_EQUIPO" class="form-label">Marca:</label>
+                <label for="MARCA_EQUIPO" class="form-label"><i class="fa-solid fa-question"></i> Marca:</label>
                 <input type="text" class="form-control @error('MARCA_EQUIPO') is-invalid @enderror" name="MARCA_EQUIPO" id="MARCA_EQUIPO" value="{{old('MARCA_EQUIPO')}}" placeholder="Ej: LENOVO" tabindex="2">
                 @error('MARCA_EQUIPO')
                     <div class="invalid-feedback">{{$message}}</div>
                 @enderror
             </div>
             <div class="form-group">
-                <label for="MODELO_EQUIPO" class="form-label">Modelo:</label>
+                <label for="MODELO_EQUIPO" class="form-label"><i class="fa-solid fa-desktop"></i> Modelo:</label>
                 <input type="text" class="form-control @error('MODELO_EQUIPO') is-invalid @enderror" name="MODELO_EQUIPO" id="MODELO_EQUIPO" value="{{old('MODELO_EQUIPO')}}" placeholder="GENERALMENTE ESTA EN LA BASE DEL EQUIPO" tabindex="2">
                 @error('MODELO_EQUIPO')
                     <div class="invalid-feedback">{{$message}}</div>
                 @enderror
             </div>
             <div class="form-group">
-                <label for="ESTADO_EQUIPO" class="form-label">Estado:</label>
+                <label for="ESTADO_EQUIPO" class="form-label"><i class="fa-solid fa-file-circle-question"></i> Estado:</label>
                 <select name="ESTADO_EQUIPO" id="ESTADO_EQUIPO" class="form-control @error('ESTADO_EQUIPO') is-invalid @enderror">
                     <option value="" selected>--Seleccione--</option>
                     <option value="DISPONIBLE">DISPONIBLE</option>
@@ -45,8 +45,8 @@
                 @enderror
             </div>
 
-            <a href="/tipoequipos" class="btn btn-secondary" tabindex="5">Cancelar</a>
-            <button type="submit" class="btn btn-primary" tabindex="4">Guardar</button>
+            <a href="{{route('equipos.index')}}" class="btn btn-secondary" tabindex="5"><i class="fa-solid fa-hand-point-left"></i> Cancelar</a>
+            <button type="submit" class="btn btn-primary" tabindex="4"><i class="fa-solid fa-floppy-disk"></i> Guardar tipo</button>
         </form>
     </div>
 @stop

@@ -53,7 +53,7 @@ class FormularioController extends Controller
         }catch(\Exception $e){
             session()->flash('error','Error al crear el formulario, vuelva a intentarlo más tarde');
         }
-        return redirect('/formularios');
+        return redirect(route('formularios.index'));
     }
 
     /**
@@ -67,17 +67,36 @@ class FormularioController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Formulario $formulario)
+    public function edit(string $id)
     {
-        //
+        $formulario = Formulario::find($id);
+        return view('formularios.edit',compact('formulario'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Formulario $formulario)
+    public function update(Request $request, string $id)
     {
-        //
+        $formulario = Formulario::find($id);
+        $rules = [
+            'NOMBRE_FORMULARIO' => 'required|unique:formularios,NOMBRE_FORMULARIO|regex:/^[a-zA-Z0-9\s]+$/',
+            'TIPO_FORMULARIO' => 'required',
+        ];
+        $messages = [
+            'NOMBRE_FORMULARIO.required' => 'El nombre del formulario es obligatorio.',
+            'NOMBRE_FORMULARIO.unique' => 'Este nombre del formulario ya ha sido registrado.',
+            'NOMBRE_FORMULARIO.regex' => 'El nombre del formulario solo puede contener letras y números.',
+            'TIPO_FORMULARIO.required' => 'El tipo de formulario es obligatorio.',
+        ];
+        $request->validate($rules,$messages);
+        try{
+            $formulario->update($request->all());
+            session()->flash('success','El formulario se ha modificado exitosamente');
+        }catch(\Exception $e){
+            session()->flash('error','Hubo un error al modificar el formulario, vuelva a intentarlo más tarde.');
+        }
+        return redirect(route('formularios.index'));
     }
 
     /**
@@ -92,6 +111,6 @@ class FormularioController extends Controller
         }catch(\Exception $e){
             session()->flash('error', 'Error al eliminar el formulario seleccionado, vuelva a intentarlo mas tarde');
         }
-        return redirect('/formularios');
+        return redirect(route('formularios.index'));
     }
 }
