@@ -90,6 +90,42 @@
             @enderror
         </div>
 
+        {{-- Rut field --}}
+        <div class="input-group mb-3">
+            <input type="text" name="rut" class="form-control @error('rut') is-invalid @enderror"
+                value="{{ old('rut') }}" placeholder="{{ __('Rut') }}" autofocus>
+
+            <div class="input-group-append">
+                <div class="input-group-text">
+                    <span class="fas fa-address-card"></span>
+                </div>
+            </div>
+
+            @error('rut')
+                <span class="invalid-feedback" role="alert">
+                    <strong>{{ $message }}</strong>
+                </span>
+            @enderror
+        </div>
+
+        {{-- Depto field --}}
+        <div class="input-group mb-3">
+            <input type="text" name="depto" class="form-control @error('depto') is-invalid @enderror"
+                value="{{ old('depto') }}" placeholder="{{ __('Depto') }}" autofocus>
+
+            <div class="input-group-append">
+                <div class="input-group-text">
+                    <span class="fas fa-building"></span>
+                </div>
+            </div>
+
+            @error('depto')
+                <span class="invalid-feedback" role="alert">
+                    <strong>{{ $message }}</strong>
+                </span>
+            @enderror
+        </div>
+
         {{-- Register button --}}
         <button type="submit" class="btn btn-block {{ config('adminlte.classes_auth_btn', 'btn-flat btn-primary') }}">
             <span class="fas fa-user-plus"></span>

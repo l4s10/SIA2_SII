@@ -27,7 +27,7 @@
 
                     <div class="mb-3">
                     <label for="RUT" class="form-label"><i class="fa-solid fa-id-card"></i> RUT:</label>
-                    <input type="text" id="RUT" name="RUT" class="form-control{{ $errors->has('RUT') ? ' is-invalid' : '' }}" value="{{ old('RUT') }}" placeholder="Sin puntos con guión (Ej: 12345678-9)">
+                    <input type="text" id="RUT" name="RUT" class="form-control{{ $errors->has('RUT') ? ' is-invalid' : '' }}" value="{{ auth()->user()->rut }}" placeholder="Sin puntos con guión (Ej: 12345678-9)" readonly>
                     @if ($errors->has('RUT'))
                     <div class="invalid-feedback">
                         {{ $errors->first('RUT') }}
@@ -39,7 +39,7 @@
                 <div class="col-md-6">
                     <div class="mb-3">
                     <label for="DEPTO" class="form-label"><i class="fa-solid fa-building-user"></i> Departamento:</label>
-                    <input type="text" id="DEPTO" name="DEPTO" class="form-control{{ $errors->has('DEPTO') ? ' is-invalid' : '' }}" value="{{ old('DEPTO') }}" placeholder="Ej: ADMINISTRACION">
+                    <input type="text" id="DEPTO" name="DEPTO" class="form-control{{ $errors->has('DEPTO') ? ' is-invalid' : '' }}" value="{{ auth()->user()->depto }}" placeholder="Ej: ADMINISTRACION" readonly>
                     @if ($errors->has('DEPTO'))
                     <div class="invalid-feedback">
                         {{ $errors->first('DEPTO') }}
