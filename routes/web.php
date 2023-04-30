@@ -54,7 +54,8 @@ Route::resource('categoriasalas','App\Http\Controllers\CategoriaSalaController')
 Route::resource('salas','App\Http\Controllers\SalaController');
 //Rutas para solicitudes de salas y bodegas
 Route::resource('reservas','App\Http\Controllers\SolicitudSalaController');
-
+//Rutas para Funcionarios (usuarios)
+Route::resource('funcionarios','App\Http\Controllers\UserController');
 
 Route::middleware([
     'auth:sanctum',

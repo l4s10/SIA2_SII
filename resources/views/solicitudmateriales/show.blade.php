@@ -33,8 +33,4 @@
 @stop
 
 @section('js')
-    <!-- Bootstrap 5 -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/js/bootstrap.bundle.min.js"></script>
-    <!-- CONEXION FONT-AWESOME CON TOOLKIT -->
-    <script src="https://kit.fontawesome.com/742a59c628.js" crossorigin="anonymous"></script>
 @stop

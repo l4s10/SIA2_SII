@@ -62,10 +62,12 @@
         <div class="mb-3">
             <label for="ESTADO_SOL" class="form-label"><i class="fa-solid fa-file-circle-check"></i> Estado de la Solicitud:</label>
             <select id="ESTADO_SOL" name="ESTADO_SOL" class="form-control">
-                <option value="INGRESADO">Ingresado</option>
-                <option value="EN REVISION" selected>En revisión</option>
-                <option value="ACEPTADO">Aceptado</option>
-                <option value="RECHAZADO">Rechazado</option>
+                <option value="INGRESADO">🟠 Ingresado</option>
+                <option value="EN REVISION"selected>🟡 En revisión</option>
+                <option value="ACEPTADO">🟢 Aceptado</option>
+                <option value="EN ESPERA">⚪ En espera</option>
+                <option value="RECHAZADO">🔴 Rechazado</option>
+                <option value="TERMINADO">⚫ Terminado</option>
             </select>
         </div>
 
@@ -141,24 +143,26 @@
 
 @section('css')
     <link rel="stylesheet" href="/css/admin_custom.css">
+    {{-- <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4/dt-1.11.3/r-2.2.9/datatables.min.css"/> --}}
 @stop
 
 @section('js')
     <!-- Bootstrap 5 -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/js/bootstrap.bundle.min.js"></script>
-    <!-- CONEXION FONT-AWESOME CON TOOLKIT -->
-    <script src="https://kit.fontawesome.com/742a59c628.js" crossorigin="anonymous"></script>
-    <!-- Funcionamiento tablas -->
-    <!-- Agregando funciones de paginacion, busqueda, etc -->
-    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
-    <script src="https://cdn.datatables.net/1.13.2/js/jquery.dataTables.min.js"></script>
-    <script src="https://cdn.datatables.net/1.13.2/js/dataTables.bootstrap5.min.js"></script>
+    {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/js/bootstrap.bundle.min.js"></script> --}}
+    <!-- Bibliotecas JS y CSS de DataTables -->
+    {{-- <script type="text/javascript" src="https://cdn.datatables.net/v/bs4/dt-1.11.3/r-2.2.9/datatables.min.js"></script> --}}
 
     <!-- Para inicializar -->
     <script>
         $(document).ready(function () {
             $('#materiales').DataTable({
-                "lengthMenu": [[5,10, 50, -1], [5, 10, 50, "All"]]
+                "lengthMenu": [[5,10, 50, -1], [5, 10, 50, "All"]],
+                "columnDefs": [
+                    { "orderable": false, "targets": 2 } // La séptima columna no es ordenable
+                ],
+                "language": {
+                    "url": "https://cdn.datatables.net/plug-ins/1.11.3/i18n/es_es.json"
+                },
             });
         });
     </script>

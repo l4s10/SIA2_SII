@@ -72,7 +72,7 @@
         <meta name="msapplication-TileColor" content="#ffffff">
         <meta name="msapplication-TileImage" content="{{ asset('favicon/ms-icon-144x144.png') }}">
     @endif
-
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4/dt-1.11.3/r-2.2.9/datatables.min.css"/>
 </head>
 
 <body class="@yield('classes_body')" @yield('body_data')>
@@ -105,6 +105,11 @@
     {{-- Custom Scripts --}}
     @yield('adminlte_js')
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/js/bootstrap.bundle.min.js"></script>
+    <!-- CONEXION FONT-AWESOME CON TOOLKIT -->
+    <script src="https://kit.fontawesome.com/742a59c628.js" crossorigin="anonymous"></script>
+    <!-- Bibliotecas JS y CSS de DataTables -->
+    <script type="text/javascript" src="https://cdn.datatables.net/v/bs4/dt-1.11.3/r-2.2.9/datatables.min.js"></script>
 </body>
 
 </html>
