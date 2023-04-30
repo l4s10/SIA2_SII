@@ -6,9 +6,24 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
+use Spatie\Permission\Models\Role;
 
 class UserController extends Controller
 {
+    public function __construct()
+    {
+        //*La persona debe de haber iniciado sesion */
+        $this->middleware('auth');
+        //*Solo entrarán los admin maestro */
+        $this->middleware(function ($request, $next) {
+            $adminMaestro = Role::findByName('ADMINISTRADOR_MAESTRO');
+            if (Auth::check() && Auth::user()->hasRole($adminMaestro)) {
+                return $next($request);
+            }
+            abort(403, 'Acción no autorizada');
+        });
+    }
     /**
      * Display a listing of the resource.
      */
@@ -23,7 +38,8 @@ class UserController extends Controller
      */
     public function create()
     {
-        return view('funcionarios.create');
+        $roles = Role::all();
+        return view('funcionarios.create',compact('roles'));
     }
 
     /**
@@ -54,7 +70,7 @@ class UserController extends Controller
                 'sexo' => 'required|string|max:1',
             ];
             $request->validate($rules, User::$messages);
-            User::create([
+            $user = User::create([
                 'name' => $request->name,
                 'email' => $request->email,
                 'password' => Hash::make($request->password),
@@ -75,9 +91,10 @@ class UserController extends Controller
                 'anexo' => $request->anexo,
                 'sexo' => $request->sexo,
             ]);
+            $user->assignRole($request->role);
             session()->flash('success','El funcionario fue agregado exitosamente.');
         }catch(\Exception $e){
-            session()->flash('error','Hubo un error al agregar al funcionario. Vuelva a intentarlo mas tarde.');
+            session()->flash('error','Hubo un error al agregar al funcionario. Vuelva a intentarlo mas tarde.' .$e->getMessage());
         }
         return redirect(route('funcionarios.index'));
     }
@@ -120,6 +137,7 @@ class UserController extends Controller
     public function update(Request $request, string $id)
     {
         $funcionario = User::find($id);
+        //reglas de validacion de campos
         $rules = [
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users,email,' .$funcionario->id,
@@ -141,16 +159,25 @@ class UserController extends Controller
             'anexo' => 'required|string|max:255',
             'sexo' => 'required|string|max:1',
         ];
-        try{
+        try {
             $request->validate($rules, User::$messages);
             $data = array_filter($request->all(), 'strlen');
             $funcionario->update($data);
-            if($request->password){
+            //En caso de que se decida actualizar la contraseña
+            if ($request->password) {
                 $funcionario->update(['password' => bcrypt($request->password)]);
             }
-            session()->flash('success','Funcionario actualizado correctamente.');
-        }catch(\Exception $e){
-            session()->flash('error','Error al actualizar el funcionario, vuelva a intentarlo más tarde.' . $e->getMessage());
+            // Asignación de rol
+            $rolSeleccionado = $request->input('rol');
+            if ($rolSeleccionado) {
+                $rol = Role::findById($rolSeleccionado);
+                if (!$funcionario->hasRole($rol)) {
+                    $funcionario->assignRole($rol);
+                }
+            }
+            session()->flash('success', 'Funcionario actualizado correctamente.');
+        } catch(\Exception $e) {
+            session()->flash('error', 'Error al actualizar el funcionario, vuelva a intentarlo más tarde.' . $e->getMessage());
         }
         return redirect(route('funcionarios.index'));
     }

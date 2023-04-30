@@ -24,8 +24,6 @@ Route::get('/repyman', function(){
 Route::get('/reservas', function(){
     return view('reservasalas.index');
 });
-//Rutas para articulos (TEST de CRUD)
-Route::resource('articulos','App\Http\Controllers\ArticuloController');
 //Rutas para materiales
 Route::resource('materiales','App\Http\Controllers\MaterialController');
 //Rutas para tipos de materiales.

@@ -161,7 +161,7 @@
                 {{-- Fecha de nacimiento field --}}
                 <div class="form-group">
                     <label for="fecha_nacimiento">Fecha de nacimiento</label>
-                    <input type="date" name="fecha_nacimiento" class="form-control @error('fecha_nacimiento') is-invalid @enderror"
+                    <input type="date" id="fecha_nacimiento" name="fecha_nacimiento" class="form-control @error('fecha_nacimiento') is-invalid @enderror"
                         value="{{ $funcionario->fecha_nacimiento }}" placeholder="{{ __('Fecha de Nacimiento') }}" required autofocus>
 
                     @error('fecha_nacimiento')
@@ -175,7 +175,7 @@
                 {{-- Fecha de ingreso a la empresa field --}}
                 <div class="form-group">
                     <label for="fecha_ingreso">Fecha ingreso</label>
-                    <input type="date" name="fecha_ingreso" class="form-control @error('fecha_ingreso') is-invalid @enderror"
+                    <input type="date" id="fecha_ingreso" name="fecha_ingreso" class="form-control @error('fecha_ingreso') is-invalid @enderror"
                         value="{{ $funcionario->fecha_ingreso }}" placeholder="{{ __('Fecha de Ingreso a la Empresa') }}" required autofocus>
 
                     @error('fecha_ingreso')
@@ -189,7 +189,7 @@
                 {{-- Fecha de asimilación a planta field --}}
                 <div class="form-group">
                     <label for="fecha_asim_planta">Fecha asim planta</label>
-                    <input type="date" name="fecha_asim_planta" class="form-control @error('fecha_asim_planta') is-invalid @enderror"
+                    <input type="date" id="fecha_asim_planta" name="fecha_asim_planta" class="form-control @error('fecha_asim_planta') is-invalid @enderror"
                         value="{{ $funcionario->fecha_asim_planta }}" placeholder="{{ __('Fecha de Asimilación a Planta') }}" required autofocus>
 
                     @error('fecha_asim_planta')
@@ -302,4 +302,43 @@
         </div>
     </form>
 </div>
+@endsection
+
+@section('css')
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+@endsection
+
+@section('js')
+    <!-- Incluir archivos JS flatpicker-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/es.js"></script>
+    <script>
+        $(function () {
+            $('#fecha_nacimiento').flatpickr({
+                locale: 'es',
+                minDate: "1950-01-01",
+                dateFormat: "Y-m-d",
+                altFormat: "d-m-Y",
+                altInput: true,
+                allowInput: true,
+            });
+            $('#fecha_ingreso').flatpickr({
+                locale: 'es',
+                minDate: "1950-01-01",
+                dateFormat: "Y-m-d",
+                altFormat: "d-m-Y",
+                altInput: true,
+                allowInput: true,
+            });
+            $('#fecha_asim_planta').flatpickr({
+                locale: 'es',
+                minDate: "1950-01-01",
+                dateFormat: "Y-m-d",
+                altFormat: "d-m-Y",
+                altInput: true,
+                allowInput: true,
+            });
+        });
+    </script>
 @endsection

@@ -3,6 +3,8 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+
+use App\Models\TipoReparacion;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -12,11 +14,19 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // \App\Models\User::factory(10)->create();
-
-        // \App\Models\User::factory()->create([
-        //     'name' => 'Test User',
-        //     'email' => 'test@example.com',
-        // ]);
+        $this->call([
+            RolesAndPermissionsSeeder::class,
+            FuncionariosSeeder::class,
+            //*Llamar primero a los tipos de objetos*/
+            MaterialTipoSeeder::class,
+            TipoEquiposSeeder::class,
+            TipoReparacionSeeder::class,
+            TipoServicioSeeder::class,
+            TipoVehiculoSeeder::class,
+            //*LLamamos a los componentes */
+            MaterialSeeder::class,
+            FormularioSeeder::class,
+            EquipoSeeder::class,
+        ]);
     }
 }

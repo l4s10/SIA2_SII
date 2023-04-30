@@ -24,9 +24,10 @@
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
             </div>
         @endif
+        <a href="{{route('funcionarios.create')}}" class="btn btn-sia-primary"> Ingresar nuevo funcionario</a>
         <div class="table-reponsive">
             <table id="funcionarios" class="table table-bordered mt-4">
-                <thead class="bg-primary text-white">
+                <thead class="bg-sia-primary">
                     <tr>
                         <th scope="col">Nombre</th>
                         <th scope="col">Rut</th>
@@ -45,7 +46,7 @@
                             <td>{{$funcionario->depto}}</td>
                             <td>(AQUI VA EL ROL)</td>
                             <td>
-                                <a href="{{route('funcionarios.show',$funcionario->id)}}" class="btn btn-primary btn-block" >Administrar</a>
+                                <a href="{{route('funcionarios.show',$funcionario->id)}}" class="btn btn-sia-primary btn-block" >Administrar</a>
                             </td>
                         </tr>
                     @endforeach
@@ -53,6 +54,11 @@
             </table>
         </div>
     </div>
+@endsection
+
+@section('css')
+    {{-- Probando colores personalizados --}}
+    <link rel="stylesheet" href="{{asset('vendor/adminlte/dist/css/custom.css')}}">
 @endsection
 
 @section('js')

@@ -471,7 +471,7 @@ return [
         ['header' => 'Módulos Administrador'],
         [
             'text'        => 'Administrar Usuarios',
-            'url'         => '#',
+            'url'         => '/funcionarios',
             'icon'        => 'fas fa-fw fa-users',
             // 'label'       => 'CRUD',
             // 'label_color' => 'danger',
