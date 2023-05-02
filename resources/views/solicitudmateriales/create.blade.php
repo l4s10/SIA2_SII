@@ -145,6 +145,8 @@
 @section('js')
     <!-- Bootstrap 5 -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/js/bootstrap.bundle.min.js"></script>
+    {{-- Alertas --}}
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <!-- CONEXION FONT-AWESOME CON TOOLKIT -->
     {{-- <script src="https://kit.fontawesome.com/742a59c628.js" crossorigin="anonymous"></script> --}}
     <!-- Funcionamiento tablas -->
@@ -225,8 +227,15 @@
             var nombreMaterial = $('#nombre-material').text().split(': ')[1];
             var tipoMaterial = $('#tipo-material').text().split(': ')[1];
             var cantidad = $('#cantidad').val();
-            // Enviar información al carrito (aquí puedes hacer una petición AJAX)
-            alert('Se agregó ' + cantidad + ' unidades de "' + nombreMaterial + '" de tipo "' + tipoMaterial + '" al carrito.');
+            // Enviar información al carrito
+            // alert('Se agregó ' + cantidad + ' unidades de "' + nombreMaterial + '" de tipo "' + tipoMaterial + '" al carrito.');
+            Swal.fire({
+                icon: 'success',
+                title: '¡Éxito!',
+                text: 'Se agregó ' + cantidad + ' unidades de "' + nombreMaterial + '" de tipo "' + tipoMaterial + '" al carrito.',
+                confirmButtonColor: '#0064A0',
+            });
+
             // Cerrar modal
             $('#modal-carrito').modal('hide');
             // Obtener valores del modal

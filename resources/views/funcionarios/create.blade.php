@@ -205,7 +205,18 @@
                     </div>
                 </div>
             </div>
+            {{-- Funcion field --}}
+            <div class="form-group">
+                <label for="calidad_juridica">Función</label>
+                <input type="text" name="calidad_juridica" class="form-control @error('calidad_juridica') is-invalid @enderror"
+                    value="{{ old('calidad_juridica') }}" placeholder="{{ __('Calidad jurídica') }}" required autofocus>
 
+                @error('funcion')
+                    <span class="invalid-feedback" role="alert">
+                        <strong>{{ $message }}</strong>
+                    </span>
+                @enderror
+            </div>
             <div class="row">
                 <div class="col">
                     {{-- Funcion field --}}

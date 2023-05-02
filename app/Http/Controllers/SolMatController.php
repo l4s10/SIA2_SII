@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\SolicitudMateriales;
 use App\Models\TipoMaterial;
 use App\Models\Material;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class SolMatController extends Controller
 {
@@ -73,11 +74,11 @@ class SolMatController extends Controller
         $rut = intval(str_replace(['.', '-'], '', $data['RUT']));
         $data['RUT'] = $this->formatRut($rut);
 
-        try{
+        try {
             SolicitudMateriales::create($data);
-            session()->flash('success','La solicitud de materiales ha sido enviada exitosamente');
-        }catch(\Exception $e){
-            session()->flash('error','Error al crear la solicitud');
+            session()->flash('success', 'La solicitud de materiales ha sido enviada exitosamente');
+        } catch (\Exception $e) {
+            session()->flash('error', 'Error al crear la solicitud');
         }
         return redirect('/solmaterial');
     }

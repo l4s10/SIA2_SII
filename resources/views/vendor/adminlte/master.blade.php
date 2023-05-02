@@ -110,6 +110,8 @@
     <script src="https://kit.fontawesome.com/742a59c628.js" crossorigin="anonymous"></script>
     <!-- Bibliotecas JS y CSS de DataTables -->
     <script type="text/javascript" src="https://cdn.datatables.net/v/bs4/dt-1.11.3/r-2.2.9/datatables.min.js"></script>
+    {{-- Alertas --}}
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </body>
 
 </html>

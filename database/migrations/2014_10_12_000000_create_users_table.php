@@ -27,6 +27,7 @@ return new class extends Migration
             $table->date('fecha_nacimiento')->nullable();
             $table->date('fecha_ingreso')->nullable();
             $table->date('fecha_asim_planta')->nullable();
+            $table->string('calidad_juridica')->nullable();
             $table->string('funcion')->nullable();
             $table->string('profesion')->nullable();
             $table->string('area')->nullable();

@@ -10,22 +10,33 @@
 
 @section('content')
     <div class="container">
-        @if(session('success'))
-            <div class="alert alert-success alert-dismissible fade show" role="alert">
-                <strong>Exito! </strong>{{ session('success') }}
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-            </div>
-        @endif
+        @if (session('success'))
+        <script>
+            document.addEventListener('DOMContentLoaded', () => {
+                Swal.fire({
+                    icon: 'success',
+                    title: '{{ session('success') }}',
+                    confirmButtonText: 'OK',
+                    confirmButtonColor: '#0064A0'
+                });
+            });
+        </script>
+    @elseif (session('error'))
+        <script>
+            document.addEventListener('DOMContentLoaded', () => {
+                Swal.fire({
+                    icon: 'error',
+                    title: '{{ session('error') }}',
+                    confirmButtonText: 'OK',
+                    confirmButtonColor: '#0064A0'
+                });
+            });
+        </script>
+    @endif
 
 
-        @if(session('error'))
-            <div class="alert alert-danger alert-dissmissible fade show" role="alert">
-                {{ session('error') }}
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-            </div>
-        @endif
         <a href="{{route('funcionarios.create')}}" class="btn btn-sia-primary"> Ingresar nuevo funcionario</a>
-        <div class="table-reponsive">
+        <div class="table">
             <table id="funcionarios" class="table table-bordered mt-4">
                 <thead class="bg-sia-primary">
                     <tr>
@@ -44,7 +55,7 @@
                             <td>{{$funcionario->rut}}</td>
                             <td>{{$funcionario->email}}</td>
                             <td>{{$funcionario->depto}}</td>
-                            <td>(AQUI VA EL ROL)</td>
+                            <td>{{ $funcionario->getRoleNames()->implode(', ') }}</td>
                             <td>
                                 <a href="{{route('funcionarios.show',$funcionario->id)}}" class="btn btn-sia-primary btn-block" >Administrar</a>
                             </td>

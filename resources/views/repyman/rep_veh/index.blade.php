@@ -79,7 +79,14 @@
             $(document).ready(function () {
                 $('#solicitudes').DataTable({
                     "lengthMenu": [[5,10, 50, -1], [5, 10, 50, "All"]],
-                    "order": [[4, "desc"]]
+                    "responsive": true,
+                    "order": [[4, "desc"]], // La columna 5 contiene la fecha de creación
+                    "columnDefs": [
+                        { "orderable": false, "targets": 6 } // La séptima columna no es ordenable
+                    ],
+                    "language": {
+                        "url": "https://cdn.datatables.net/plug-ins/1.11.3/i18n/es_es.json"
+                    },
                 });
             });
         </script>

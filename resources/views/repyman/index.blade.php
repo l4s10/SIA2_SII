@@ -8,22 +8,31 @@
 
 @section('content')
 <div class="container">
-    <!-- en el href, hacemos referencia dentro de la carpeta de vistas -->
-    <!-- <a href="materiales/create" class="btn btn-primary mb-3">CREAR</a> -->
-    @if(session('success'))
-        <div class="alert alert-success alert-dismissible fade show" role="alert">
-        <strong>Exito! </strong>{{ session('success') }}
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        </div>
+    @if (session('success'))
+        <script>
+            document.addEventListener('DOMContentLoaded', () => {
+                Swal.fire({
+                    icon: 'success',
+                    title: '{{ session('success') }}',
+                    confirmButtonText: 'OK',
+                    confirmButtonColor: '#0064A0'
+                });
+            });
+        </script>
+    @elseif (session('error'))
+        <script>
+            document.addEventListener('DOMContentLoaded', () => {
+                Swal.fire({
+                    icon: 'error',
+                    title: '{{ session('error') }}',
+                    confirmButtonText: 'OK',
+                    confirmButtonColor: '#0064A0'
+                });
+            });
+        </script>
     @endif
 
 
-    @if(session('error'))
-        <div class="alert alert-danger alert-dissmissible fade show" role="alert">
-            {{ session('error') }}
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        </div>
-    @endif
     <div class="container-fluid d-flex justify-content-center align-items-center flex-column">
         <div class="card text-bg-primary mb-3 mx-auto col-sm-12 col-md-6" style="max-width: 100%; text-align: justify;">
             <div class="card-header">Módulo Muebles e Inmuebles</div>

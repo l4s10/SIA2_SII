@@ -86,6 +86,12 @@
                 </div>
             </div>
             <div class="form-group row">
+                <label for="calidad_juridica" class="col-sm-2 col-form-label">{{ __('Calidad jurídica') }}</label>
+                <div class="col-sm-10">
+                    <p class="form-control-plaintext">{{ $funcionario->calidad_juridica }}</p>
+                </div>
+            </div>
+            <div class="form-group row">
                 <label for="funcion" class="col-sm-2 col-form-label">{{ __('Función') }}</label>
                 <div class="col-sm-10">
                     <p class="form-control-plaintext">{{ $funcionario->funcion }}</p>

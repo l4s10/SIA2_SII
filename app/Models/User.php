@@ -39,6 +39,7 @@ class User extends Authenticatable
         'fecha_nacimiento',
         'fecha_ingreso',
         'fecha_asim_planta',
+        'calidad_juridica',
         'funcion',
         'profesion',
         'area',
@@ -91,6 +92,9 @@ class User extends Authenticatable
         'fecha_ingreso.date' => 'El campo fecha de ingreso debe ser una fecha válida.',
 
         'fecha_asim_planta.date' => 'El campo fecha de asimilación a planta debe ser una fecha válida.',
+
+        'calidad_juridica.string' => 'El campo función debe ser un texto.',
+        'calidad_juridica.max' => 'El campo función no puede ser mayor a :max caracteres.',
 
         'funcion.string' => 'El campo función debe ser un texto.',
         'funcion.max' => 'El campo función no puede ser mayor a :max caracteres.',

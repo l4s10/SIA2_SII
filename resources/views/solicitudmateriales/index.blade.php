@@ -1,5 +1,4 @@
 @extends('adminlte::page')
-
 @section('title', 'Solicitudes Materiales')
 
 @section('content_header')
@@ -7,19 +6,31 @@
 @stop
 
 @section('content')
-    <!-- Contenedores para los mensajes -->
-    @if(session('success'))
-            <div class="alert alert-success alert-dismissible fade show" role="alert">
-            <strong>Exito! </strong>{{ session('success') }}
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-            </div>
+    @if (session('success'))
+        <script>
+            document.addEventListener('DOMContentLoaded', () => {
+                Swal.fire({
+                    icon: 'success',
+                    title: '{{ session('success') }}',
+                    confirmButtonText: 'OK',
+                    confirmButtonColor: '#0064A0'
+                });
+            });
+        </script>
+    @elseif (session('error'))
+        <script>
+            document.addEventListener('DOMContentLoaded', () => {
+                Swal.fire({
+                    icon: 'error',
+                    title: '{{ session('error') }}',
+                    confirmButtonText: 'OK',
+                    confirmButtonColor: '#0064A0'
+                });
+            });
+        </script>
     @endif
-    @if(session('error'))
-            <div class="alert alert-danger alert-dissmissible fade show" role="alert">
-                {{ session('error') }}
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-            </div>
-    @endif
+
+
     <div class="container-fluid">
         <div class="table-responsive">
             <table id="materiales" class="table text-justify table-bordered mt-4 mx-auto" style="white-space:nowrap;">
@@ -53,8 +64,10 @@
                                         @csrf
                                         @method('DELETE')
                                         <a href="{{ route('solmaterial.show',$sol_material->ID_SOLICITUD) }}" class="btn btn-primary"><i class="fa-regular fa-eye"></i> Ver</a>
+                                        @can('Nivel 2','Nivel 3')
                                         <a href="/solmaterial/{{$sol_material->ID_SOLICITUD}}/edit" class="btn btn-info"><i class="fa-regular fa-clipboard"></i> Revisar</a>
                                         <button type="submit" class="btn btn-danger"><i class="fa-solid fa-trash"></i> Borrar</button>
+                                        @endcan
                                     </form>
                                 </td>
                             </tr>
@@ -67,23 +80,9 @@
 
 @section('css')
     <link rel="stylesheet" href="/css/admin_custom.css">
-    {{-- <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4/dt-1.11.3/r-2.2.9/datatables.min.css"/> --}}
 @stop
 
 @section('js')
-    <!-- Bootstrap 5 -->
-    {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/js/bootstrap.bundle.min.js"></script> --}}
-    <!-- CONEXION FONT-AWESOME CON TOOLKIT -->
-    {{-- <script src="https://kit.fontawesome.com/742a59c628.js" crossorigin="anonymous"></script> --}}
-    <!-- Agregando funciones de paginacion, busqueda, etc -->
-    {{-- <script src="https://code.jquery.com/jquery-3.5.1.js"></script> --}}
-    {{--
-    <script src="https://cdn.datatables.net/1.13.2/js/jquery.dataTables.min.js"></script>
-    <script src="https://cdn.datatables.net/1.13.2/js/dataTables.bootstrap5.min.js"></script> --}}
-
-    <!-- Bibliotecas JS y CSS de DataTables -->
-    {{-- <script type="text/javascript" src="https://cdn.datatables.net/v/bs4/dt-1.11.3/r-2.2.9/datatables.min.js"></script> --}}
-    <!-- Para inicializar -->
     <script>
         $(document).ready(function () {
             $('#materiales').DataTable({

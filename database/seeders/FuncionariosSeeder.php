@@ -29,6 +29,7 @@ class FuncionariosSeeder extends Seeder
                 'fecha_nacimiento' => '2001-02-20',
                 'fecha_ingreso' => '2023-02-28',
                 'fecha_asim_planta' => '2023-02-28',
+                'calidad_juridica' => 'TESTT',
                 'funcion' => 'Jefe de proyecto',
                 'profesion' => 'Ingeniero Informatico',
                 'area' => 'Informatica',

@@ -15,7 +15,7 @@ return [
     |
     */
 
-    'name' => env('APP_NAME', 'Laravel'),
+    'name' => env('APP_NAME', 'SIA2'),
 
     /*
     |--------------------------------------------------------------------------
@@ -199,6 +199,8 @@ return [
 
         //*Laravel spatie permissions */
         Spatie\Permission\PermissionServiceProvider::class,
+        //*Alertas de sweetalert*/
+        RealRashid\SweetAlert\SweetAlertServiceProvider::class,
     ],
 
     /*
@@ -214,6 +216,7 @@ return [
 
     'aliases' => Facade::defaultAliases()->merge([
         // 'ExampleClass' => App\Example\ExampleClass::class,
+        'Alert' => RealRashid\SweetAlert\Facades\Alert::class,
     ])->toArray(),
 
 ];
