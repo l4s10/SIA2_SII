@@ -14,10 +14,10 @@
             @csrf
             @method('PUT')
             <div class="row">
-                <div class="col-md-6">
+                <div class="col-md-6" >
                     <div class="mb-3">
                     <label for="NOMBRE_SOLICITANTE" class="form-label"><i class="fa-solid fa-user"></i> Nombre del solicitante:</label>
-                    <input type="text" id="NOMBRE_SOLICITANTE" name="NOMBRE_SOLICITANTE" class="form-control{{ $errors->has('NOMBRE_SOLICITANTE') ? ' is-invalid' : '' }}" value="{{$solicitud->NOMBRE_SOLICITANTE}}" placeholder="Ej: ANDRES RODRIGO SUAREZ MATAMALA" >
+                    <input type="text" id="NOMBRE_SOLICITANTE" name="NOMBRE_SOLICITANTE" class="form-control{{ $errors->has('NOMBRE_SOLICITANTE') ? ' is-invalid' : '' }}" value="{{$solicitud->NOMBRE_SOLICITANTE}}" placeholder="Ej: ANDRES RODRIGO SUAREZ MATAMALA" @can('Nivel 2')@readonly(true) @endcan>
                     @if ($errors->has('NOMBRE_SOLICITANTE'))
                     <div class="invalid-feedback">
                         {{ $errors->first('NOMBRE_SOLICITANTE') }}
@@ -27,7 +27,7 @@
 
                     <div class="mb-3">
                     <label for="RUT" class="form-label"><i class="fa-solid fa-id-card"></i> RUT:</label>
-                    <input type="text" id="RUT" name="RUT" class="form-control{{ $errors->has('RUT') ? ' is-invalid' : '' }}" value="{{ $solicitud->RUT }}" placeholder="Sin puntos con guión (Ej: 16738235-5)">
+                    <input type="text" id="RUT" name="RUT" class="form-control{{ $errors->has('RUT') ? ' is-invalid' : '' }}" value="{{ $solicitud->RUT }}" placeholder="Sin puntos con guión (Ej: 16738235-5)" @can('Nivel 2')@readonly(true) @endcan>
                     @if ($errors->has('RUT'))
                     <div class="invalid-feedback">
                         {{ $errors->first('RUT') }}
@@ -39,7 +39,7 @@
                 <div class="col-md-6">
                     <div class="mb-3">
                     <label for="DEPTO" class="form-label"><i class="fa-solid fa-building-user"></i> Departamento:</label>
-                    <input type="text" id="DEPTO" name="DEPTO" class="form-control{{ $errors->has('DEPTO') ? ' is-invalid' : '' }}" value="{{ $solicitud->DEPTO }}" placeholder="Ej: ADMINISTRACION">
+                    <input type="text" id="DEPTO" name="DEPTO" class="form-control{{ $errors->has('DEPTO') ? ' is-invalid' : '' }}" value="{{ $solicitud->DEPTO }}" placeholder="Ej: ADMINISTRACION" @can('Nivel 2')@readonly(true) @endcan>
                     @if ($errors->has('DEPTO'))
                     <div class="invalid-feedback">
                         {{ $errors->first('DEPTO') }}
@@ -49,7 +49,7 @@
 
                     <div class="mb-3">
                     <label for="EMAIL" class="form-label"><i class="fa-solid fa-envelope"></i> Email:</label>
-                    <input type="email" id="EMAIL" name="EMAIL" class="form-control{{ $errors->has('EMAIL') ? ' is-invalid' : '' }}" value="{{ $solicitud->EMAIL }}" placeholder="Ej: someone@example.com">
+                    <input type="email" id="EMAIL" name="EMAIL" class="form-control{{ $errors->has('EMAIL') ? ' is-invalid' : '' }}" value="{{ $solicitud->EMAIL }}" placeholder="Ej: someone@example.com" @can('Nivel 2')@readonly(true) @endcan>
                     @if ($errors->has('EMAIL'))
                     <div class="invalid-feedback">
                         {{ $errors->first('EMAIL') }}

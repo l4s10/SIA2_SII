@@ -26,7 +26,9 @@
             </div>
             <div class="card-footer text-center">
                 <a href="{{ route('solmaterial.index') }}" class="btn btn-secondary"><i class="fa-solid fa-arrow-left"></i> Volver</a>
-                <a href="{{ route('solmaterial.edit', $sol_material->ID_SOLICITUD) }}" class="btn btn-primary"><i class="fa-regular fa-clipboard"></i> Revisar</a>
+                @can('Nivel 2')
+                    <a href="{{ route('solmaterial.edit', $sol_material->ID_SOLICITUD) }}" class="btn btn-primary"><i class="fa-regular fa-clipboard"></i> Revisar</a>
+                @endcan
             </div>
         </div>
     </div>
