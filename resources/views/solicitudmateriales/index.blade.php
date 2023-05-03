@@ -54,8 +54,8 @@
                                 <td>{{ $sol_material->RUT }}</td>
                                 <td>{{ $sol_material->DEPTO}}</td>
                                 <td>{{ $sol_material->EMAIL}}</td>
-                                {{-- <td>{{ $sol_material->MATERIAL_SOL}}</td> --}}
-                                <td>{{ $sol_material->ESTADO_SOL}}</td>
+                                <!-- Cambio de colores a los estados -->
+                                <td class="estado-{{ strtolower(str_replace(' ', '-', $sol_material->ESTADO_SOL)) }}">{{ $sol_material->ESTADO_SOL }}</td>
                                 <!-- Carbon sirve para parsear datos, esta es una instancia de carbon -->
                                 <td>{{ $sol_material->created_at->tz('America/Santiago')->format('d/m/Y H:i') }}</td>
                                 {{-- <td>{{ $sol_material->OBSERVACIONES}}</td> --}}
@@ -66,8 +66,11 @@
                                         <a href="{{ route('solmaterial.show',$sol_material->ID_SOLICITUD) }}" class="btn btn-primary"><i class="fa-regular fa-eye"></i> Ver</a>
                                         @can('Nivel 2','Nivel 3')
                                         <a href="/solmaterial/{{$sol_material->ID_SOLICITUD}}/edit" class="btn btn-info"><i class="fa-regular fa-clipboard"></i> Revisar</a>
-                                        <button type="submit" class="btn btn-danger"><i class="fa-solid fa-trash"></i> Borrar</button>
                                         @endcan
+                                        @role(
+                                        'ADMINISTRADOR_MAESTRO')
+                                            <button type="submit" class="btn btn-danger"><i class="fa-solid fa-trash"></i> Borrar</button>
+                                        @endrole
                                     </form>
                                 </td>
                             </tr>
@@ -80,6 +83,26 @@
 
 @section('css')
     <link rel="stylesheet" href="/css/admin_custom.css">
+    <style>
+        .estado-en-revision {
+            color: #adad03e1;
+        }
+        .estado-aceptado {
+            color: #00FF00;
+        }
+        .estado-en-espera {
+            color: #afafaf;
+        }
+        .estado-rechazado {
+            color: #FF0000;
+        }
+        .estado-terminado {
+            color: #000000;
+        }
+        .estado-ingresado {
+            color: #FFA500;
+        }
+    </style>
 @stop
 
 @section('js')

@@ -152,7 +152,9 @@
                 locale: 'es',
                 minDate: "today",
                 showClearButton: true,
-                defaultHour: 8 // Agregamos una hora predeterminada
+                defaultHour: 8, // Agregamos una hora predeterminada
+                mode: "multiple" // Permitimos la selección de múltiples fechas
+
             });
             $('#HORA_INICIO_SOL_SALA').flatpickr({
                 enableTime: true,

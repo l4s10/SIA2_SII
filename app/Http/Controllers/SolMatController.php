@@ -6,14 +6,16 @@ use Illuminate\Http\Request;
 use App\Models\SolicitudMateriales;
 use App\Models\TipoMaterial;
 use App\Models\Material;
-use RealRashid\SweetAlert\Facades\Alert;
 
 class SolMatController extends Controller
 {
     //Funcion para acceder a las rutas SOLO SI los usuarios estan logueados
     public function __construct(){
-        $this->middleware('auth');
-        //Tambien aqui podremos agregar que roles son los que pueden ingresar
+        // $this->middleware('auth');
+        $this->middleware('checkUserPermission:Nivel 1', ['only' => ['index', 'show', 'create']]);
+        $this->middleware('checkUserPermission:Nivel 2', ['only' => ['store', 'edit', 'update']]);
+        $this->middleware('checkUserPermission:Nivel 3', ['only' => ['destroy']]);
+
     }
     /**
      * Display a listing of the resource.
