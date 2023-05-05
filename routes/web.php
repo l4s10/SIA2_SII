@@ -54,6 +54,8 @@ Route::resource('salas','App\Http\Controllers\SalaController');
 Route::resource('reservas','App\Http\Controllers\SolicitudSalaController');
 //Rutas para Funcionarios (usuarios)
 Route::resource('funcionarios','App\Http\Controllers\UserController');
+//Controlador de stock
+Route::post('/actualizar-stock-general', [StockController::class, 'actualizarStockGeneral']);
 
 Route::middleware([
     'auth:sanctum',

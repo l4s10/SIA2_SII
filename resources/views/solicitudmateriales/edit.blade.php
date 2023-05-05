@@ -70,7 +70,7 @@
                 <option value="TERMINADO">⚫ Terminado</option>
             </select>
         </div>
-
+        <button id="btn-restar-general" type="button" class="btn btn-primary mt-3">Restar general</button>
         <!-- Carrito de compras -->
         <div class="table-responsive">
             <table id="materiales" class="table table-bordered mt-4">
@@ -79,6 +79,8 @@
                         <th scope="col">Nombre Material</th>
                         <th scope="col">Tipo Material</th>
                         <th scope="col">Stock</th>
+                        <th scope="col">Cantidad aprobada</th>
+                        <th scope="col">Acción</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -87,6 +89,12 @@
                             <td>{{ $material->NOMBRE_MATERIAL }}</td>
                             <td>{{ $material->tipoMaterial->TIPO_MATERIAL }}</td>
                             <td>{{ $material->STOCK }}</td>
+                            <td>
+                                <input type="number" class="form-control cantidad-restar" data-id="{{ $material->ID_MATERIAL }}" min="0" max="{{ $material->STOCK }}" value="0">
+                            </td>
+                            <td>
+                                <button class="btn btn-primary btn-restar" data-id="{{ $material->ID_MATERIAL }}">Restar</button>
+                            </td>
                         </tr>
                     @endforeach
                 </tbody>
@@ -240,6 +248,54 @@
         });
     </script>
 
+    {{-- RESTAR DINAMICAMENTE --}}
+    <script>
+        $(document).ready(function() {
+        // ... (código existente)
 
+        // Controlador de eventos para el botón "Restar general"
+        $('#btn-restar-general').click(function() {
+            // Crear un arreglo para almacenar las actualizaciones de stock
+            var actualizacionesStock = [];
+
+            // Iterar sobre todos los inputs de cantidad a restar
+            $('.cantidad-restar').each(function() {
+                var producto_id = $(this).data('id');
+                var cantidad = $(this).val();
+
+                actualizacionesStock.push({
+                    producto_id: producto_id,
+                    cantidad: cantidad,
+                });
+            });
+
+            // Realizar una solicitud AJAX para actualizar el stock en la base de datos
+            $.ajax({
+                url: '/actualizar-stock-general', // Reemplaza esto con la ruta de tu aplicación Laravel
+                method: 'POST',
+                data: {
+                    actualizacionesStock: actualizacionesStock,
+                    _token: $('meta[name="csrf-token"]').attr('content'), // Incluir token CSRF para proteger tu aplicación Laravel
+                },
+                success: function(response) {
+                    console.log('Stock actualizado correctamente.');
+
+                    // Actualizar el stock en la tabla para cada fila
+                    response.stockActualizado.forEach(function(stockItem) {
+                        var celdaStock = $('input.cantidad-restar[data-id="' + stockItem.producto_id + '"]').closest('tr').find('td').eq(2);
+                        celdaStock.text(stockItem.stockNuevo);
+                    });
+
+                    // Restablecer las cantidades a restar
+                    $('.cantidad-restar').val(1);
+                },
+                error: function(jqXHR, textStatus, errorThrown) {
+                    console.error('Error al actualizar el stock:', errorThrown);
+                }
+            });
+        });
+    });
+
+    </script>
 @stop
 
