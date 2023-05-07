@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\InventoryController;
 
 /*
 |--------------------------------------------------------------------------
@@ -54,8 +55,8 @@ Route::resource('salas','App\Http\Controllers\SalaController');
 Route::resource('reservas','App\Http\Controllers\SolicitudSalaController');
 //Rutas para Funcionarios (usuarios)
 Route::resource('funcionarios','App\Http\Controllers\UserController');
-//Controlador de stock
-Route::post('/actualizar-stock-general', [StockController::class, 'actualizarStockGeneral']);
+
+Route::post('/update-stock', [InventoryController::class, 'updateStock'])->name('update-stock');
 
 Route::middleware([
     'auth:sanctum',

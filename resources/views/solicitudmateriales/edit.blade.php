@@ -62,15 +62,15 @@
         <div class="mb-3">
             <label for="ESTADO_SOL" class="form-label"><i class="fa-solid fa-file-circle-check"></i> Estado de la Solicitud:</label>
             <select id="ESTADO_SOL" name="ESTADO_SOL" class="form-control">
-                <option value="INGRESADO">🟠 Ingresado</option>
-                <option value="EN REVISION"selected>🟡 En revisión</option>
-                <option value="ACEPTADO">🟢 Aceptado</option>
-                <option value="EN ESPERA">⚪ En espera</option>
-                <option value="RECHAZADO">🔴 Rechazado</option>
-                <option value="TERMINADO">⚫ Terminado</option>
+                <option value="INGRESADO" @if ($solicitud->ESTADO_SOL == 'INGRESADO') selected @endif>🟠 Ingresado</option>
+                <option value="EN REVISION" @if ($solicitud->ESTADO_SOL == 'EN REVISION') selected @endif>🟡 En revisión</option>
+                <option value="ACEPTADO" @if ($solicitud->ESTADO_SOL == 'ACEPTADO') selected @endif>🟢 Aceptado</option>
+                <option value="EN ESPERA" @if ($solicitud->ESTADO_SOL == 'EN ESPERA') selected @endif>⚪ En espera</option>
+                <option value="RECHAZADO" @if ($solicitud->ESTADO_SOL == 'RECHAZADO') selected @endif>🔴 Rechazado</option>
+                <option value="TERMINADO" @if ($solicitud->ESTADO_SOL == 'TERMINADO') selected @endif>⚫ Terminado</option>
             </select>
         </div>
-        <button id="btn-restar-general" type="button" class="btn btn-primary mt-3">Restar general</button>
+
         <!-- Carrito de compras -->
         <div class="table-responsive">
             <table id="materiales" class="table table-bordered mt-4">
@@ -90,7 +90,7 @@
                             <td>{{ $material->tipoMaterial->TIPO_MATERIAL }}</td>
                             <td>{{ $material->STOCK }}</td>
                             <td>
-                                <input type="number" class="form-control cantidad-restar" data-id="{{ $material->ID_MATERIAL }}" min="0" max="{{ $material->STOCK }}" value="0">
+                                <input type="number" type="button" class="form-control cantidad-restar" data-id="{{ $material->ID_MATERIAL }}" min="0" max="{{ $material->STOCK }}" value="0">
                             </td>
                             <td>
                                 <button class="btn btn-primary btn-restar" data-id="{{ $material->ID_MATERIAL }}">Restar</button>
@@ -121,6 +121,7 @@
         <div class="mb-6" style="padding: 1%;">
             <a href="/solmaterial" class="btn btn-secondary" tabindex="5"><i class="fa-solid fa-hand-point-left"></i> Cancelar</a>
             <button type="submit" class="btn btn-primary" tabindex="4"><i class="fa-sharp fa-solid fa-paper-plane"></i> Enviar Cambios</button>
+            <button id="btn-restar-general" type="submit" class="btn btn-info"><i class="fa-sharp fa-solid fa-paper-plane"></i> Autorizar cantidad y enviar</button>
         </div>
 
         <div class="modal fade" id="modal-carrito" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -151,15 +152,9 @@
 
 @section('css')
     <link rel="stylesheet" href="/css/admin_custom.css">
-    {{-- <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4/dt-1.11.3/r-2.2.9/datatables.min.css"/> --}}
 @stop
 
 @section('js')
-    <!-- Bootstrap 5 -->
-    {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/js/bootstrap.bundle.min.js"></script> --}}
-    <!-- Bibliotecas JS y CSS de DataTables -->
-    {{-- <script type="text/javascript" src="https://cdn.datatables.net/v/bs4/dt-1.11.3/r-2.2.9/datatables.min.js"></script> --}}
-
     <!-- Para inicializar -->
     <script>
         $(document).ready(function () {
@@ -248,54 +243,91 @@
         });
     </script>
 
-    {{-- RESTAR DINAMICAMENTE --}}
+    <!-- RESTAR DINAMICAMENTE -->
     <script>
         $(document).ready(function() {
-        // ... (código existente)
-
         // Controlador de eventos para el botón "Restar general"
         $('#btn-restar-general').click(function() {
-            // Crear un arreglo para almacenar las actualizaciones de stock
-            var actualizacionesStock = [];
+            // Recorrer todos los botones "Restar" de la tabla
+            $('.btn-restar').each(function() {
+                // Disparar el evento click en cada botón "Restar"
+                $(this).trigger('click');
+            });
 
-            // Iterar sobre todos los inputs de cantidad a restar
-            $('.cantidad-restar').each(function() {
-                var producto_id = $(this).data('id');
-                var cantidad = $(this).val();
+            // Cambiar el valor del select "ESTADO_SOL" a "TERMINADO"
+            $('#ESTADO_SOL').val('TERMINADO');
+        });
 
-                actualizacionesStock.push({
-                    producto_id: producto_id,
-                    cantidad: cantidad,
+
+    // Controlador de eventos para el botón "Restar"
+    $('.btn-restar').click(function() {
+        // Obtener el ID del material
+        var materialId = $(this).data('id');
+
+        // Obtener el input de cantidad a restar
+        var cantidadRestarInput = $('.cantidad-restar[data-id="' + materialId + '"]');
+
+        // Obtener la cantidad a restar
+        var cantidadRestar = parseInt(cantidadRestarInput.val());
+
+        // Hacer una llamada AJAX a la ruta "update-stock"
+        $.ajax({
+            url: '{{ route('update-stock') }}',
+            type: 'POST',
+            data: {
+                materialId: materialId,
+                cantidadRestar: cantidadRestar,
+                _token: '{{ csrf_token() }}'
+            },
+            dataType: 'json',
+            success: function(response) {
+                // Actualizar el stock en la tabla
+                var stockCell = $('.btn-restar[data-id="' + materialId + '"]').closest('tr').find('td:nth-child(3)');
+                stockCell.text(response.nuevoStock);
+
+                // Actualizar el total del stock en la tabla
+                var totalStock = 0;
+                $('.stock-cell').each(function() {
+                    totalStock += parseInt($(this).text());
                 });
-            });
+                $('.total-stock').text(totalStock);
 
-            // Realizar una solicitud AJAX para actualizar el stock en la base de datos
-            $.ajax({
-                url: '/actualizar-stock-general', // Reemplaza esto con la ruta de tu aplicación Laravel
-                method: 'POST',
-                data: {
-                    actualizacionesStock: actualizacionesStock,
-                    _token: $('meta[name="csrf-token"]').attr('content'), // Incluir token CSRF para proteger tu aplicación Laravel
-                },
-                success: function(response) {
-                    console.log('Stock actualizado correctamente.');
-
-                    // Actualizar el stock en la tabla para cada fila
-                    response.stockActualizado.forEach(function(stockItem) {
-                        var celdaStock = $('input.cantidad-restar[data-id="' + stockItem.producto_id + '"]').closest('tr').find('td').eq(2);
-                        celdaStock.text(stockItem.stockNuevo);
-                    });
-
-                    // Restablecer las cantidades a restar
-                    $('.cantidad-restar').val(1);
-                },
-                error: function(jqXHR, textStatus, errorThrown) {
-                    console.error('Error al actualizar el stock:', errorThrown);
-                }
-            });
+                // Restablecer la cantidad a restar a cero
+                cantidadRestarInput.val(0);
+            },
+            error: function() {
+                alert('Error al actualizar el inventario');
+            }
         });
     });
 
+    // Controlador de eventos para el input "Cantidad a restar"
+    $('.cantidad-restar').on('input', function() {
+        // Obtener el ID del material
+        var materialId = $(this).data('id');
+
+        // Obtener la cantidad a restar
+        var cantidadRestar = parseInt($(this).val());
+
+        // Obtener el stock actual del material
+        var stockActual = parseInt($('.btn-restar[data-id="' + materialId + '"]').closest('tr').find('td:nth-child(3)').text());
+
+        // Validar que la cantidad a restar no sea mayor que el stock actual
+        if (cantidadRestar > stockActual) {
+            // Mostrar un mensaje de error
+            $(this).addClass('is-invalid');
+            $(this).siblings('.invalid-feedback').html('La cantidad a restar no puede ser mayor que el stock actual');
+            $(this).siblings('.btn-restar').prop('disabled', true);
+        } else {
+            // Ocultar el mensaje de error
+            $(this).removeClass('is-invalid');
+            $(this).siblings('.invalid-feedback').html('');
+            $(this).siblings('.btn-restar').prop('disabled', false);
+        }
+    });
+});
+
     </script>
+
 @stop
 
