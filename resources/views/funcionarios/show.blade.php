@@ -16,7 +16,7 @@
             <div class="form-group row">
                 <label for="name" class="col-sm-2 col-form-label">{{ __('Nombre completo') }}</label>
                 <div class="col-sm-10">
-                    <p class="form-control-plaintext">{{ $funcionario->name }}</p>
+                    <p class="form-control-plaintext">{{ $funcionario->NOMBRES }} {{$funcionario->APELLIDOS}}</p>
                 </div>
             </div>
             <div class="form-group row">
@@ -28,103 +28,79 @@
             <div class="form-group row">
                 <label for="rut" class="col-sm-2 col-form-label">{{ __('RUT') }}</label>
                 <div class="col-sm-10">
-                    <p class="form-control-plaintext">{{ $funcionario->rut }}</p>
+                    <p class="form-control-plaintext">{{ $funcionario->RUT }}</p>
                 </div>
             </div>
             <div class="form-group row">
                 <label for="depto" class="col-sm-2 col-form-label">{{ __('Departamento') }}</label>
                 <div class="col-sm-10">
-                    <p class="form-control-plaintext">{{ $funcionario->depto }}</p>
+                    <p class="form-control-plaintext">{{ $funcionario->departamento->DEPARTAMENTO }}</p>
                 </div>
             </div>
             <div class="form-group row">
                 <label for="region" class="col-sm-2 col-form-label">{{ __('Región') }}</label>
                 <div class="col-sm-10">
-                    <p class="form-control-plaintext">{{ $funcionario->region }}</p>
+                    <p class="form-control-plaintext">{{ $funcionario->region->REGION }}</p>
                 </div>
             </div>
             <div class="form-group row">
                 <label for="ubicacion" class="col-sm-2 col-form-label">{{ __('Ubicación') }}</label>
                 <div class="col-sm-10">
-                    <p class="form-control-plaintext">{{ $funcionario->ubicacion }}</p>
+                    <p class="form-control-plaintext">{{ $funcionario->ubicacion->UBICACION }}</p>
                 </div>
             </div>
             <div class="form-group row">
                 <label for="grupo" class="col-sm-2 col-form-label">{{ __('Grupo') }}</label>
                 <div class="col-sm-10">
-                    <p class="form-control-plaintext">{{ $funcionario->grupo }}</p>
+                    <p class="form-control-plaintext">{{ $funcionario->grupo->GRUPO }}</p>
                 </div>
             </div>
             <div class="form-group row">
                 <label for="escalafon" class="col-sm-2 col-form-label">{{ __('Escalafon') }}</label>
                 <div class="col-sm-10">
-                    <p class="form-control-plaintext">{{ $funcionario->escalafon }}</p>
+                    <p class="form-control-plaintext">{{ $funcionario->escalafon->ESCALAFON }}</p>
                 </div>
             </div>
             <div class="form-group row">
                 <label for="grado" class="col-sm-2 col-form-label">{{ __('Grado') }}</label>
                 <div class="col-sm-10">
-                    <p class="form-control-plaintext">{{ $funcionario->grado }}</p>
+                    <p class="form-control-plaintext">{{ $funcionario->grado->GRADO }}</p>
                 </div>
             </div>
             <div class="form-group row">
                 <label for="fecha_nacimiento" class="col-sm-2 col-form-label">{{ __('Fecha de nacimiento') }}</label>
                 <div class="col-sm-10">
-                    <p class="form-control-plaintext">{{ $fechaNacimiento }}</p>
+                    <p class="form-control-plaintext">{{ $funcionario->FECHA_NAC }}</p>
                 </div>
             </div>
             <div class="form-group row">
                 <label for="fecha_ingreso" class="col-sm-2 col-form-label">{{ __('Fecha de ingreso') }}</label>
                 <div class="col-sm-10">
-                    <p class="form-control-plaintext">{{ $fechaIngreso }}</p>
-                </div>
-            </div>
-            <div class="form-group row">
-                <label for="fecha_asim_planta" class="col-sm-2 col-form-label">{{ __('Fecha asim planta') }}</label>
-                <div class="col-sm-10">
-                    <p class="form-control-plaintext">{{ $fechaAsimPlanta }}</p>
+                    <p class="form-control-plaintext">{{ $funcionario->FECHA_INGRESO }}</p>
                 </div>
             </div>
             <div class="form-group row">
                 <label for="calidad_juridica" class="col-sm-2 col-form-label">{{ __('Calidad jurídica') }}</label>
                 <div class="col-sm-10">
-                    <p class="form-control-plaintext">{{ $funcionario->calidad_juridica }}</p>
-                </div>
-            </div>
-            <div class="form-group row">
-                <label for="funcion" class="col-sm-2 col-form-label">{{ __('Función') }}</label>
-                <div class="col-sm-10">
-                    <p class="form-control-plaintext">{{ $funcionario->funcion }}</p>
-                </div>
-            </div>
-            <div class="form-group row">
-                <label for="profesion" class="col-sm-2 col-form-label">{{ __('Profesión') }}</label>
-                <div class="col-sm-10">
-                    <p class="form-control-plaintext">{{ $funcionario->profesion }}</p>
-                </div>
-            </div>
-            <div class="form-group row">
-                <label for="area" class="col-sm-2 col-form-label">{{ __('Area') }}</label>
-                <div class="col-sm-10">
-                    <p class="form-control-plaintext">{{ $funcionario->area }}</p>
+                    <p class="form-control-plaintext">{{ $funcionario->calidadJuridica->CALIDAD }}</p>
                 </div>
             </div>
             <div class="form-group row">
                 <label for="fono" class="col-sm-2 col-form-label">{{ __('Fono') }}</label>
                 <div class="col-sm-10">
-                    <p class="form-control-plaintext">{{ $funcionario->fono }}</p>
+                    <p class="form-control-plaintext">{{ $funcionario->FONO }}</p>
                 </div>
             </div>
             <div class="form-group row">
                 <label for="anexo" class="col-sm-2 col-form-label">{{ __('Anexo') }}</label>
                 <div class="col-sm-10">
-                    <p class="form-control-plaintext">{{ $funcionario->anexo }}</p>
+                    <p class="form-control-plaintext">{{ $funcionario->ANEXO }}</p>
                 </div>
             </div>
             <div class="form-group row">
                 <label for="sexo" class="col-sm-2 col-form-label">{{ __('Sexo') }}</label>
                 <div class="col-sm-10">
-                    <p class="form-control-plaintext">{{ $funcionario->sexo }}</p>
+                    <p class="form-control-plaintext">{{ $funcionario->sexo->SEXO }}</p>
                 </div>
             </div>
         </div>

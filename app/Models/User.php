@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Fortify\TwoFactorAuthenticatable;
-use Laravel\Jetstream\HasProfilePhoto;
+// use Laravel\Jetstream\HasProfilePhoto;
 use Laravel\Sanctum\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;
 
@@ -15,108 +15,78 @@ class User extends Authenticatable
 {
     use HasApiTokens;
     use HasFactory;
-    use HasProfilePhoto;
+    // use HasProfilePhoto;
     use Notifiable;
     use TwoFactorAuthenticatable;
     use HasRoles;
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array<int, string>
-     */
+    //*CAMPOS QUE RECIBE LA BDD*/
     protected $fillable = [
-        'name',
+        'NOMBRES',
+        'APELLIDOS',
         'email',
         'password',
-        'rut',
-        'depto',
-        'region',
-        'ubicacion',
-        'grupo',
-        'escalafon',
-        'grado',
-        'fecha_nacimiento',
-        'fecha_ingreso',
-        'fecha_asim_planta',
-        'calidad_juridica',
-        'funcion',
-        'profesion',
-        'area',
-        'fono',
-        'anexo',
-        'sexo',
+        'RUT',
+        'ID_DEPART',
+        'ID_REGION',
+        'ID_UBICACION',
+        'ID_GRUPO',
+        'ID_ESCALAFON',
+        'ID_GRADO',
+        'FECHA_NAC',
+        'FECHA_INGRESO',
+        'ID_CALIDAD_JURIDICA',
+        'FONO',
+        'ANEXO',
+        'ID_SEXO',
     ];
-
+    //*MENSAJES DE ERROR PARA EL FORMULARIO*/
     public static $messages = [
-        'name.required' => 'El campo nombre es obligatorio.',
-        'name.string' => 'El campo nombre debe ser un texto.',
-        'name.max' => 'El campo nombre no puede ser mayor a :max caracteres.',
-
-        'email.required' => 'El campo correo electrónico es obligatorio.',
-        'email.string' => 'El campo correo electrónico debe ser un texto.',
-        'email.email' => 'El campo correo electrónico debe ser una dirección de correo electrónico válida.',
-        'email.max' => 'El campo correo electrónico no puede ser mayor a :max caracteres.',
-        'email.unique' => 'El correo electrónico ya ha sido registrado.',
-
-        'password.required' => 'El campo contraseña es obligatorio.',
-        'password.string' => 'El campo contraseña debe ser un texto.',
-        'password.min' => 'El campo contraseña debe tener al menos :min caracteres.',
-
-        'rut.required' => 'El campo rut es obligatorio.',
-        'rut.string' => 'El campo rut debe ser un texto.',
-        'rut.max' => 'El campo rut no puede ser mayor a :max caracteres.',
-        'rut.unique' => 'El rut ya ha sido registrado.',
-
-        'depto.required' => 'El campo departamento es obligatorio.',
-        'depto.string' => 'El campo departamento debe ser un texto.',
-        'depto.max' => 'El campo departamento no puede ser mayor a :max caracteres.',
-
-        'region.string' => 'El campo región debe ser un texto.',
-        'region.max' => 'El campo región no puede ser mayor a :max caracteres.',
-
-        'ubicacion.string' => 'El campo ubicación debe ser un texto.',
-        'ubicacion.max' => 'El campo ubicación no puede ser mayor a :max caracteres.',
-
-        'grupo.string' => 'El campo grupo debe ser un texto.',
-        'grupo.max' => 'El campo grupo no puede ser mayor a :max caracteres.',
-
-        'escalafon.string' => 'El campo escalafón debe ser un texto.',
-        'escalafon.max' => 'El campo escalafón no puede ser mayor a :max caracteres.',
-
-        'grado.string' => 'El campo grado debe ser un texto.',
-        'grado.max' => 'El campo grado no puede ser mayor a :max caracteres.',
-
-        'fecha_nacimiento.date' => 'El campo fecha de nacimiento debe ser una fecha válida.',
-
-        'fecha_ingreso.date' => 'El campo fecha de ingreso debe ser una fecha válida.',
-
-        'fecha_asim_planta.date' => 'El campo fecha de asimilación a planta debe ser una fecha válida.',
-
-        'calidad_juridica.string' => 'El campo función debe ser un texto.',
-        'calidad_juridica.max' => 'El campo función no puede ser mayor a :max caracteres.',
-
-        'funcion.string' => 'El campo función debe ser un texto.',
-        'funcion.max' => 'El campo función no puede ser mayor a :max caracteres.',
-
-        'profesion.string' => 'El campo profesión debe ser un texto.',
-        'profesion.max' => 'El campo profesión no puede ser mayor a :max caracteres.',
-
-        'area.string' => 'El campo área debe ser un texto.',
-        'area.max' => 'El campo área no puede ser mayor a :max caracteres.',
-
-        'fono.string' => 'El campo fono debe ser un texto.',
-        'fono.max' => 'El campo fono no puede ser mayor a :max caracteres.',
-        'anexo.max' => 'El campo Anexo no puede tener más de :max caracteres',
-        'sexo.max' => 'El campo Sexo no puede tener más de :max caracter',
-
+        'NOMBRES.required' => 'El campo NOMBRES es obligatorio',
+        'NOMBRES.string' => 'El campo NOMBRES debe ser una cadena de texto',
+        'NOMBRES.max' => 'El campo NOMBRES no puede tener más de 255 caracteres',
+        'APELLIDOS.required' => 'El campo APELLIDOS es obligatorio',
+        'APELLIDOS.string' => 'El campo APELLIDOS debe ser una cadena de texto',
+        'APELLIDOS.max' => 'El campo APELLIDOS no puede tener más de 255 caracteres',
+        'email.required' => 'El campo correo electrónico es obligatorio',
+        'email.string' => 'El campo correo electrónico debe ser una cadena de texto',
+        'email.email' => 'El campo correo electrónico debe ser una dirección de correo electrónico válida',
+        'email.max' => 'El campo correo electrónico no puede tener más de 255 caracteres',
+        'email.unique' => 'El correo electrónico ya está registrado en el sistema',
+        'password.min' => 'La contraseña debe tener al menos 8 caracteres',
+        'password.confirmed' => 'Las contraseñas no coinciden',
+        'RUT.required' => 'El campo RUT es obligatorio',
+        'RUT.string' => 'El campo RUT debe ser una cadena de texto',
+        'RUT.max' => 'El campo RUT no puede tener más de 20 caracteres',
+        'RUT.unique' => 'El RUT ya está registrado en el sistema',
+        'ID_DEPART.required' => 'El campo ID_DEPART es obligatorio',
+        'ID_DEPART.numeric' => 'El campo ID_DEPART debe ser un dato numerico',
+        'ID_REGION.required' => 'El campo ID_REGION es obligatorio',
+        'ID_REGION.numeric' => 'El campo ID_REGION debe ser un dato numerico',
+        'ID_UBICACION.required' => 'El campo ID_UBICACION es obligatorio',
+        'ID_UBICACION.numeric' => 'El campo ID_UBICACION debe ser un dato numerico',
+        'ID_GRUPO.required' => 'El campo ID_GRUPO es obligatorio',
+        'ID_GRUPO.numeric' => 'El campo ID_GRUPO debe ser un dato numerico',
+        'ID_ESCALAFON.required' => 'El campo ESCALAFON es requerido',
+        'ID_ESCALAFON.numeric' => 'El campo ID_ESCALAFON debe ser un dato numerico',
+        'ID_GRADO.required' => 'El campo ID_GRADO es obligatorio',
+        'ID_GRADO.numeric' => 'El campo ID_GRADO debe ser un dato numerico',
+        'FECHA_NAC.required' => 'La fecha de nacimiento es obligatoria',
+        'FECHA_NAC.date' => 'La fecha de nacimiento debe ser una fecha válida',
+        'FECHA_INGRESO.required' => 'La fecha de ingreso es obligatoria',
+        'FECHA_INGRESO.date' => 'La fecha de ingreso debe ser una fecha válida',
+        'ID_CALIDAD_JURIDICA.required' => 'El ID de calidad jurídica es obligatorio',
+        'ID_CALIDAD_JURIDICA.numeric' => 'El ID de calidad jurídica debe ser un número',
+        'FONO.required' => 'El teléfono es obligatorio',
+        'FONO.string' => 'El teléfono debe ser una cadena de texto',
+        'FONO.max' => 'El teléfono no debe ser mayor que :max caracteres',
+        'ANEXO.required' => 'El anexo es obligatorio',
+        'ANEXO.string' => 'El anexo debe ser una cadena de texto',
+        'ANEXO.max' => 'El anexo no debe ser mayor que :max caracteres',
+        'ID_SEXO.required' => 'El ID de sexo es obligatorio',
+        'ID_SEXO.string' => 'El ID de sexo debe ser una cadena de texto',
+        'ID_SEXO.max' => 'El ID de sexo no debe ser mayor que :max caracteres',
     ];
-
-    /**
-     * The attributes that should be hidden for serialization.
-     *
-     * @var array<int, string>
-     */
     protected $hidden = [
         'password',
         'remember_token',
@@ -124,22 +94,50 @@ class User extends Authenticatable
         'two_factor_secret',
     ];
 
-    /**
-     * The attributes that should be cast.
-     *
-     * @var array<string, string>
-     */
-    // protected $casts = [
-    //     'email_verified_at' => 'datetime',
-    // ];
+    //*Obtener depto desde su ID*/
+    public function departamento()
+    {
+        return $this->belongsTo(Departamento::class, 'ID_DEPART');
+    }
 
-    /**
-     * The accessors to append to the model's array form.
-     *
-     * @var array<int, string>
-     */
-    // protected $appends = [
-    //     'profile_photo_url',
-    // ];
+    //*Obtener region a traves de la ID*/
+    public function region()
+    {
+        return $this->belongsTo(Region::class, 'ID_REGION');
+    }
+    //* Obtener la ubicación a través de la ID_UBICACION */
+    public function ubicacion()
+    {
+        return $this->belongsTo(Ubicacion::class, 'ID_UBICACION');
+    }
+
+    //* Obtener el grupo a través de la ID_GRUPO */
+    public function grupo()
+    {
+        return $this->belongsTo(Grupo::class, 'ID_GRUPO');
+    }
+
+    //* Obtener el escalafón a través de la ID_ESCALAFON */
+    public function escalafon()
+    {
+        return $this->belongsTo(Escalafon::class, 'ID_ESCALAFON');
+    }
+
+    //* Obtener el grado a través de la ID_GRADO */
+    public function grado()
+    {
+        return $this->belongsTo(Grado::class, 'ID_GRADO');
+    }
+
+    //* Obtener la calidad jurídica a través de la ID_CALIDAD_JURIDICA */
+    public function calidadJuridica()
+    {
+        return $this->belongsTo(CalidadJuridica::class, 'ID_CALIDAD_JURIDICA', 'ID_CALIDAD');
+    }
+    //* Obtener el sexo a través de la ID_SEXO */
+    public function sexo()
+    {
+        return $this->belongsTo(Sexo::class, 'ID_SEXO');
+    }
 
 }

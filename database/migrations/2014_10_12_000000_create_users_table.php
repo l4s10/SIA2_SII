@@ -12,31 +12,33 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('users', function (Blueprint $table) {
-            $table->id();//*como (ID_USUARIO)*/
-            $table->string('name');
-            $table->string('email')->unique();
-            $table->string('password');
-            $table->string('rut');
-            $table->string('depto');
+            $table->id();
+            $table->string('NOMBRES', 255);
+            $table->string('APELLIDOS', 255);
+            $table->string('email', 255)->unique();
+            $table->string('password')->nullable();
+            $table->string('RUT', 20)->unique();
+            $table->unsignedInteger('ID_DEPART');
+            $table->foreign('ID_DEPART')->references('ID_DEPART')->on('departamento');
+            $table->unsignedInteger('ID_REGION');
+            $table->foreign('ID_REGION')->references('ID_REGION')->on('region');
+            $table->unsignedInteger('ID_UBICACION');
+            $table->foreign('ID_UBICACION')->references('ID_UBICACION')->on('ubicacion');
+            $table->unsignedInteger('ID_GRUPO');
+            $table->foreign('ID_GRUPO')->references('ID_GRUPO')->on('grupo');
+            $table->unsignedInteger('ID_ESCALAFON');
+            $table->foreign('ID_ESCALAFON')->references('ID_ESCALAFON')->on('escalafon');
+            $table->unsignedInteger('ID_GRADO');
+            $table->foreign('ID_GRADO')->references('ID_GRADO')->on('grado');
+            $table->date('FECHA_NAC');
+            $table->date('FECHA_INGRESO');
+            $table->unsignedInteger('ID_CALIDAD_JURIDICA');
+            $table->foreign('ID_CALIDAD_JURIDICA')->references('ID_CALIDAD')->on('calidad_juridica');
+            $table->string('FONO', 255);
+            $table->string('ANEXO', 255);
+            $table->unsignedInteger('ID_SEXO');
+            $table->foreign('ID_SEXO')->references('ID_SEXO')->on('sexo');
             $table->rememberToken();
-            $table->string('region')->nullable();
-            $table->string('ubicacion')->nullable();
-            $table->string('grupo')->nullable();
-            $table->string('escalafon')->nullable();
-            $table->string('grado')->nullable();
-            $table->date('fecha_nacimiento')->nullable();
-            $table->date('fecha_ingreso')->nullable();
-            $table->date('fecha_asim_planta')->nullable();
-            $table->string('calidad_juridica')->nullable();
-            $table->string('funcion')->nullable();
-            $table->string('profesion')->nullable();
-            $table->string('area')->nullable();
-            $table->string('fono')->nullable();
-            $table->string('anexo')->nullable();
-            $table->string('sexo', 1)->nullable();
-            // $table->timestamp('email_verified_at')->nullable();
-            // $table->foreignId('current_team_id')->nullable();
-            // $table->string('profile_photo_path', 2048)->nullable();
             $table->timestamps();
         });
     }

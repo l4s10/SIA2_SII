@@ -17,10 +17,10 @@
     <form action="{{ $register_url }}" method="post">
         @csrf
 
-        {{-- Name field --}}
+        {{-- *CAMPO NOMBRES* --}}
         <div class="input-group mb-3">
-            <input type="text" name="name" class="form-control @error('name') is-invalid @enderror"
-                   value="{{ old('name') }}" placeholder="{{ __('adminlte::adminlte.full_name') }}" autofocus>
+            <input type="text" name="NOMBRES" class="form-control @error('NOMBRES') is-invalid @enderror"
+                value="{{ old('NOMBRES') }}" placeholder="{{ __('adminlte::adminlte.full_name') }}" autofocus>
 
             <div class="input-group-append">
                 <div class="input-group-text">
@@ -28,14 +28,30 @@
                 </div>
             </div>
 
-            @error('name')
+            @error('NOMBRES')
                 <span class="invalid-feedback" role="alert">
                     <strong>{{ $message }}</strong>
                 </span>
             @enderror
         </div>
+        {{-- *CAMPO APELLIDOS* --}}
+        <div class="input-group mb-3">
+            <input type="text" name="APELLIDOS" class="form-control @error('APELLIDOS') is-invalid @enderror"
+                value="{{ old('APELLIDOS') }}" placeholder="{{ __('adminlte::adminlte.last_name') }}">
 
-        {{-- Email field --}}
+            <div class="input-group-append">
+                <div class="input-group-text">
+                    <span class="fas fa-user {{ config('adminlte.classes_auth_icon', '') }}"></span>
+                </div>
+            </div>
+
+            @error('APELLIDOS')
+                <span class="invalid-feedback" role="alert">
+                    <strong>{{ $message }}</strong>
+                </span>
+            @enderror
+        </div>
+        {{-- *CAMPO EMAIL* --}}
         <div class="input-group mb-3">
             <input type="email" name="email" class="form-control @error('email') is-invalid @enderror"
                    value="{{ old('email') }}" placeholder="{{ __('adminlte::adminlte.email') }}">
@@ -90,23 +106,24 @@
             @enderror
         </div>
 
-        {{-- Rut field --}}
+        {{-- *CAMPO RUT* --}}
         <div class="input-group mb-3">
-            <input type="text" name="rut" class="form-control @error('rut') is-invalid @enderror"
-                value="{{ old('rut') }}" placeholder="{{ __('Rut') }}" autofocus>
+            <input type="text" name="RUT" class="form-control @error('RUT') is-invalid @enderror"
+                value="{{ old('RUT') }}" placeholder="{{ __('adminlte::adminlte.rut') }}">
 
             <div class="input-group-append">
                 <div class="input-group-text">
-                    <span class="fas fa-address-card"></span>
+                    <span class="fas fa-id-card {{ config('adminlte.classes_auth_icon', '') }}"></span>
                 </div>
             </div>
 
-            @error('rut')
+            @error('RUT')
                 <span class="invalid-feedback" role="alert">
                     <strong>{{ $message }}</strong>
                 </span>
             @enderror
         </div>
+
 
         {{-- Depto field --}}
         <div class="input-group mb-3">

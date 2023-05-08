@@ -58,7 +58,7 @@
                 </div>
             </div>
         </div>
-
+        {{-- *ESTADO DE SOLICITUD* --}}
         <div class="mb-3">
             <label for="ESTADO_SOL" class="form-label"><i class="fa-solid fa-file-circle-check"></i> Estado de la Solicitud:</label>
             <select id="ESTADO_SOL" name="ESTADO_SOL" class="form-control">
@@ -100,6 +100,7 @@
                 </tbody>
             </table>
         </div>
+        {{-- *CAMPO CHECKOUT* --}}
         <div class="mb-6" style="padding: 1%;">
             <div class="mb-3">
                 <label for="MATERIAL_SOL" class="form-label"><i class="fa-solid fa-file-circle-question"></i> Checkout:</label>
@@ -108,16 +109,18 @@
                     <div class="invalid-feedback">{{$errors->first('MATERIAL_SOL')}}</div>
                 @endif
             </div>
+            {{-- *CAMPO OBSERVACIONES* --}}
             <div class="mb-3">
                 <label for="OBSERVACIONES" class="form-label"><i class="fa-solid fa-comments"></i>  Observaciones:</label>
                 <textarea id="OBSERVACIONES" name="OBSERVACIONES" class="form-control" placeholder="Solo el encargado puede ingresar observaciones">{{$solicitud->OBSERVACIONES}}</textarea>
             </div>
+            {{-- *CAMPO ESCONDIDO QUE ALMACENA QUIEN REVISA SOLICITUD* --}}
             <div class="mb-3" hidden>
                 <label for="MODIFICADO_POR" class="form-label">Revisado por:</label>
                 <input type="text" id="MODIFICADO_POR" name="MODIFICADO_POR" value="{{ auth()->user()->name}}">
             </div>
         </div>
-        <!-- Botones de envio -->
+        {{-- *BOTONES DE ENVIO* --}}
         <div class="mb-6" style="padding: 1%;">
             <a href="/solmaterial" class="btn btn-secondary" tabindex="5"><i class="fa-solid fa-hand-point-left"></i> Cancelar</a>
             <button type="submit" class="btn btn-primary" tabindex="4"><i class="fa-sharp fa-solid fa-paper-plane"></i> Enviar Cambios</button>

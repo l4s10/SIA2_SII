@@ -9,6 +9,17 @@ use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Spatie\Permission\Models\Role;
 
+//*Importamos modelos de las tablas normalizadas para enviarlas a las vistas*/
+use App\Models\Departamento;
+use App\Models\Region;
+use App\Models\Ubicacion;
+use App\Models\Grupo;
+use App\Models\Escalafon;
+use App\Models\Grado;
+use App\Models\CalidadJuridica;
+use App\Models\Sexo;
+
+
 class UserController extends Controller
 {
     public function __construct()
@@ -39,7 +50,16 @@ class UserController extends Controller
     public function create()
     {
         $roles = Role::all();
-        return view('funcionarios.create',compact('roles'));
+        //*Recuperamos los datos y los enviamos*/
+        $departamentos = Departamento::all();
+        $regiones = Region::all();
+        $ubicaciones = Ubicacion::all();
+        $grupos = Grupo::all();
+        $escalafones = Escalafon::all();
+        $grados = Grado::all();
+        $calidadesJuridicas = CalidadJuridica::all();
+        $sexos = Sexo::all();
+        return view('funcionarios.create',compact('roles','departamentos','regiones','ubicaciones','grupos','escalafones','grados','calidadesJuridicas','sexos'));
     }
 
     /**
@@ -54,41 +74,38 @@ class UserController extends Controller
                 'email' => 'required|string|email|max:255|unique:users,email',
                 'password' => 'nullable|string|min:8|confirmed',
                 'RUT' => 'required|string|max:20|unique:users',
-                'ID_DEPART' => 'required|string|max:255',
-                'ID_REGION' => 'required|string|max:255',
-                'ID_UBICACION' => 'required|string|max:255',
-                'ID_GRUPO' => 'required|string|max:255',
-                'ID_ESCALAFON' => 'required|string|max:255',
-                'ID_GRADO' => 'required|string|max:255',
+                'ID_DEPART' => 'required|numeric',
+                'ID_REGION' => 'required|numeric',
+                'ID_UBICACION' => 'required|numeric',
+                'ID_GRUPO' => 'required|numeric',
+                'ID_ESCALAFON' => 'required|numeric',
+                'ID_GRADO' => 'required|numeric',
                 'FECHA_NAC' => 'required|date',
                 'FECHA_INGRESO' => 'required|date',
-                'ID_CALIDAD_JURIDICA' => 'required|string|max:255',
+                'ID_CALIDAD_JURIDICA' => 'required|numeric',
                 'FONO' => 'required|string|max:255',
                 'ANEXO' => 'required|string|max:255',
-                'ID_SEXO' => 'required|string|max:1',
+                'ID_SEXO' => 'required|numeric',
             ];
             $request->validate($rules, User::$messages);
             $user = User::create([
-                'name' => $request->name,
+                'NOMBRES' => $request->NOMBRES,
+                'APELLIDOS' => $request->APELLIDOS,
                 'email' => $request->email,
                 'password' => Hash::make($request->password),
-                'rut' => $request->rut,
-                'depto' => $request->depto,
-                'region' => $request->region,
-                'ubicacion' => $request->ubicacion,
-                'grupo' => $request->grupo,
-                'escalafon' => $request->escalafon,
-                'grado' => $request->grado,
-                'fecha_nacimiento' => $request->fecha_nacimiento,
-                'fecha_ingreso' => $request->fecha_ingreso,
-                'fecha_asim_planta' => $request->fecha_asim_planta,
-                'calidad_juridica' => $request->calidad_juridica,
-                'funcion' => $request->funcion,
-                'profesion' => $request->profesion,
-                'area' => $request->area,
-                'fono' => $request->fono,
-                'anexo' => $request->anexo,
-                'sexo' => $request->sexo,
+                'RUT' => $request->RUT,
+                'ID_DEPART' => $request->ID_DEPART,
+                'ID_REGION' => $request->ID_REGION,
+                'ID_UBICACION' => $request->ID_UBICACION,
+                'ID_GRUPO' => $request->ID_GRUPO,
+                'ID_ESCALAFON' => $request->ID_ESCALAFON,
+                'ID_GRADO' => $request->ID_GRADO,
+                'FECHA_NAC' => $request->FECHA_NAC,
+                'FECHA_INGRESO' => $request->FECHA_INGRESO,
+                'ID_CALIDAD_JURIDICA' => $request->ID_CALIDAD_JURIDICA,
+                'FONO' => $request->FONO,
+                'ANEXO' => $request->ANEXO,
+                'ID_SEXO' => $request->ID_SEXO,
             ]);
             $user->assignRole($request->role);
             session()->flash('success','El funcionario fue agregado exitosamente.');

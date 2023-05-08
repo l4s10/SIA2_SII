@@ -2,8 +2,8 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Hash;
 use App\Models\User;
 use Spatie\Permission\Models\Role;
 
@@ -14,36 +14,27 @@ class FuncionariosSeeder extends Seeder
      */
     public function run(): void
     {
-        $usuarios = [
-            [
-                'name' => 'FRANCISCO IGNACIO MUÑOZ VALDEBENITO',
-                'email' => 'franciscomunoz142@gmail.com',
-                'password' => bcrypt('12345678'),
-                'rut' => '16.738.235-5',
-                'depto' => 'ADMINISTRACION',
-                'region' => 'BIO-BIO',
-                'ubicacion' => 'CONCEPCION',
-                'grupo' => 'DATO PRUEBA',
-                'escalafon' => 'DATO PRUEBA',
-                'grado' => 'DATO DE PRUEBA',
-                'fecha_nacimiento' => '2001-02-20',
-                'fecha_ingreso' => '2023-02-28',
-                'fecha_asim_planta' => '2023-02-28',
-                'calidad_juridica' => 'TESTT',
-                'funcion' => 'Jefe de proyecto',
-                'profesion' => 'Ingeniero Informatico',
-                'area' => 'Informatica',
-                'fono' => '+56 9 8312 3550',
-                'anexo' => '+56 9 8312 3550',
-                'sexo' => 'M',
-            ],
-            // Agrega más datos de usuarios aquí
-        ];
+        $user = User::create([
+            'NOMBRES' => 'FRANCISCO IGNACIO',
+            'APELLIDOS' => 'MUÑOZ VALDEBENITO',
+            'email' => 'franciscomunoz142@gmail.com',
+            'password' => Hash::make('12345678'),
+            'RUT' => '16.738.235-5',
+            'ID_DEPART' => 1,
+            'ID_REGION' => 1,
+            'ID_UBICACION' => 1,
+            'ID_GRUPO' => 1,
+            'ID_ESCALAFON' => 1,
+            'ID_GRADO' => 1,
+            'FECHA_NAC' => '2001-02-20',
+            'FECHA_INGRESO' => '2023-02-28',
+            'ID_CALIDAD_JURIDICA' => 1,
+            'FONO' => '+56 9 8312 3550',
+            'ANEXO' => '+56 9 8312 3550',
+            'ID_SEXO' => 1
+        ]);
 
-        foreach ($usuarios as $usuario) {
-            $user = User::create($usuario);
-            $adminMaestro = Role::findByName('ADMINISTRADOR_MAESTRO');
-            $user->assignRole($adminMaestro);
-        }
+        $adminMaestro = Role::findByName('ADMINISTRADOR_MAESTRO');
+        $user->assignRole($adminMaestro);
     }
 }

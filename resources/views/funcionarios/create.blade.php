@@ -12,26 +12,25 @@
     <div class="container">
         <form action="{{route('funcionarios.store')}}" method="post">
             @csrf
-
+            {{-- *NOMBRES Y APELLIDOS* --}}
             <div class="row">
                 <div class="col">
                     <div class="form-group">
-                        <label for="name">Nombre completo</label>
-                        <input type="text" name="name" id="name" class="form-control" placeholder="Nombres y apellidos" value="{{ old('name') }}" required autofocus>
-
-                        @error('name')
+                        <label for="NOMBRES">Nombres</label>
+                        <input type="text" name="NOMBRES" id="NOMBRES" class="form-control @error('nombres') is-invalid @enderror" placeholder="Nombres" value="{{ old('NOMBRES') }}" required autofocus>
+                        @error('NOMBRES')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
                             </span>
                         @enderror
                     </div>
                 </div>
+
                 <div class="col">
                     <div class="form-group">
-                        <label for="email">Correo electrónico</label>
-                        <input type="email" name="email" id="email" class="form-control" placeholder="Correo electrónico" value="{{ old('email') }}" required>
-
-                        @error('email')
+                        <label for="APELLIDOS">Apellidos</label>
+                        <input type="text" name="APELLIDOS" id="APELLIDOS" class="form-control @error('APELLIDOS') is-invalid @enderror" placeholder="Apellidos" value="{{ old('APELLIDOS') }}" required autofocus>
+                        @error('APELLIDOS')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
                             </span>
@@ -39,7 +38,18 @@
                     </div>
                 </div>
             </div>
+            {{-- *CORREO ELECTRONICO* --}}
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" name="email" id="email" class="form-control @error('email') is-invalid @enderror" value="{{ old('email') }}" placeholder="example@sii.cl" required>
 
+                @error('email')
+                    <span class="invalid-feedback" role="alert">
+                        <strong>{{ $message }}</strong>
+                    </span>
+                @enderror
+            </div>
+            {{-- *Contraseña y cambiar contraseña* --}}
             <div class="row">
                 <div class="col">
                     <div class="form-group">
@@ -66,14 +76,14 @@
                     </div>
                 </div>
             </div>
-
+            {{-- *CAMPO RUT Y DEPTO* --}}
             <div class="row">
                 <div class="col">
                     <div class="form-group">
-                        <label for="rut">RUT</label>
-                        <input type="text" name="rut" id="rut" class="form-control" placeholder="RUT" value="{{ old('rut') }}" required>
+                        <label for="RUT">RUT</label>
+                        <input type="text" name="RUT" id="RUT" class="form-control" placeholder="RUT" value="{{ old('RUT') }}" required>
 
-                        @error('rut')
+                        @error('RUT')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
                             </span>
@@ -82,20 +92,36 @@
                 </div>
                 <div class="col">
                     <div class="form-group">
-                        <label for="depto">Departamento</label>
-                        <input type="text" name="depto" id="depto" class="form-control" placeholder="Departamento" value="{{ old('depto') }}" required>
+                        <label for="ID_DEPART">Departamento</label>
+                        <select name="ID_DEPART" id="ID_DEPART" class="form-control @error('ID_DEPART') is-invalid @enderror">
+                            <option value="" disabled selected>Seleccione un departamento</option>
+                            @foreach($departamentos as $departamento)
+                                <option value="{{ $departamento->ID_DEPART }}" {{ old('ID_DEPART') == $departamento->ID_DEPART ? 'selected' : '' }}>{{ $departamento->DEPARTAMENTO }}</option>
+                            @endforeach
+                        </select>
+                        @error('ID_DEPART')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                        @enderror
                     </div>
                 </div>
+
             </div>
 
             <div class="row">
-                <div class="col">{{-- Region field --}}
+                <div class="col">
+                    {{-- Region field --}}
                     <div class="form-group">
                         <label for="region">Región</label>
-                        <input type="text" name="region" class="form-control @error('region') is-invalid @enderror"
-                            value="{{ old('region') }}" placeholder="{{ __('Region') }}" required autofocus>
+                        <select name="ID_REGION" class="form-control @error('ID_REGION') is-invalid @enderror" required>
+                            <option value="" disabled>Seleccione una región</option>
+                            @foreach ($regiones as $region)
+                                <option value="{{ $region->ID_REGION }}" {{ old('ID_REGION') == $region->ID_REGION ? 'selected' : '' }}>{{ $region->REGION }}</option>
+                            @endforeach
+                        </select>
 
-                        @error('region')
+                        @error('ID_REGION')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
                             </span>
@@ -106,10 +132,14 @@
                     {{-- Ubicacion field --}}
                     <div class="form-group">
                         <label for="ubicacion">Ubicación</label>
-                        <input type="text" name="ubicacion" class="form-control @error('ubicacion') is-invalid @enderror"
-                            value="{{ old('ubicacion') }}" placeholder="{{ __('Ubicacion') }}" required autofocus>
+                        <select name="ID_UBICACION" class="form-control @error('ID_UBICACION') is-invalid @enderror" required>
+                            <option value="" disabled>Seleccione una ubicación</option>
+                            @foreach ($ubicaciones as $ubicacion)
+                                <option value="{{ $ubicacion->ID_UBICACION }}" {{ old('ID_UBICACION') == $ubicacion->ID_UBICACION ? 'selected' : '' }}>{{ $ubicacion->UBICACION }}</option>
+                            @endforeach
+                        </select>
 
-                        @error('ubicacion')
+                        @error('ID_UBICACION')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
                             </span>
@@ -118,15 +148,20 @@
                 </div>
             </div>
 
+
             <div class="row">
                 <div class="col">
-                    {{-- Grupo field --}}
+                    {{-- Grado field --}}
                     <div class="form-group">
-                        <label for="grupo">Grupo</label>
-                        <input type="text" name="grupo" class="form-control @error('grupo') is-invalid @enderror"
-                            value="{{ old('grupo') }}" placeholder="{{ __('Grupo') }}" required autofocus>
+                        <label for="ID_GRADO">Grado</label>
+                        <select name="ID_GRADO" class="form-control @error('ID_GRADO') is-invalid @enderror" required>
+                            <option value="" selected disabled>Seleccione un grado</option>
+                            @foreach($grados as $grado)
+                                <option value="{{ $grado->ID_GRADO }}">{{ $grado->GRADO }}</option>
+                            @endforeach
+                        </select>
 
-                        @error('grupo')
+                        @error('ID_GRADO')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
                             </span>
@@ -136,11 +171,53 @@
                 <div class="col">
                     {{-- Escalafon field --}}
                     <div class="form-group">
-                        <label for="escalafon">Escalafon</label>
-                        <input type="text" name="escalafon" class="form-control @error('escalafon') is-invalid @enderror"
-                            value="{{ old('escalafon') }}" placeholder="{{ __('Escalafon') }}" required autofocus>
+                        <label for="ID_ESCALAFON">Escalafon</label>
+                        <select name="ID_ESCALAFON" class="form-control @error('ID_ESCALAFON') is-invalid @enderror" required>
+                            <option value="" selected disabled>Seleccione un escalafon</option>
+                            @foreach($escalafones as $escalafon)
+                                <option value="{{ $escalafon->ID_ESCALAFON }}">{{ $escalafon->ESCALAFON }}</option>
+                            @endforeach
+                        </select>
 
-                        @error('escalafon')
+                        @error('ID_ESCALAFON')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                        @enderror
+                    </div>
+                </div>
+            </div>
+            {{-- GRUPO Y CALIDAD JURIDICA --}}
+            <div class="form-row">
+                <div class="col">
+                    {{-- Grupo field --}}
+                    <div class="form-group">
+                        <label for="ID_GRUPO">Grupo</label>
+                        <select name="ID_GRUPO" id="ID_GRUPO" class="form-control @error('ID_GRUPO') is-invalid @enderror" required autofocus>
+                            <option value="" disabled>Seleccione un grupo</option>
+                            @foreach ($grupos as $grupo)
+                                <option value="{{ $grupo->ID_GRUPO }}" {{ old('ID_GRUPO') == $grupo->ID_GRUPO ? 'selected' : '' }}>{{ $grupo->GRUPO }}</option>
+                            @endforeach
+                        </select>
+
+                        @error('ID_GRUPO')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                        @enderror
+                    </div>
+                </div>
+                <div class="col">
+                    {{-- CALIDAD JURIDICA --}}
+                    <div class="form-group">
+                        <label for="ID_CALIDAD_JURIDICA">Calidad Jurídica</label>
+                        <select name="ID_CALIDAD_JURIDICA" id="ID_CALIDAD_JURIDICA" class="form-control @error('ID_CALIDAD_JURIDICA') is-invalid @enderror">
+                            <option value="">Seleccionar</option>
+                            @foreach ($calidadesJuridicas as $calidadJuridica)
+                                <option value="{{ $calidadJuridica->ID_CALIDAD }}" {{ old('ID_CALIDAD_JURIDICA') == $calidadJuridica->ID_CALIDAD ? 'selected' : '' }}>{{ $calidadJuridica->CALIDAD }}</option>
+                            @endforeach
+                        </select>
+                        @error('ID_CALIDAD_JURIDICA')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
                             </span>
@@ -149,27 +226,16 @@
                 </div>
             </div>
 
-            {{-- Grado field --}}
-            <div class="form-group">
-                <label for="grado">Grado</label>
-                <input type="text" name="grado" class="form-control @error('grado') is-invalid @enderror"
-                    value="{{ old('grado') }}" placeholder="{{ __('Grado') }}" required autofocus>
-
-                @error('grado')
-                    <span class="invalid-feedback" role="alert">
-                        <strong>{{ $message }}</strong>
-                    </span>
-                @enderror
-            </div>
+            {{-- *FECHAS* --}}
             <div class="row">
                 <div class="col">
                     {{-- Fecha de nacimiento field --}}
                     <div class="form-group">
-                        <label for="fecha_nacimiento">Fecha de nacimiento</label>
-                        <input type="date" id="fecha_nacimiento" name="fecha_nacimiento" class="form-control @error('fecha_nacimiento') is-invalid @enderror"
-                            value="{{ old('fecha_nacimiento') }}" placeholder="{{ __('Fecha de Nacimiento') }}" required autofocus>
+                        <label for="FECHA_NAC">Fecha de nacimiento</label>
+                        <input type="date" id="FECHA_NAC" name="FECHA_NAC" class="form-control @error('FECHA_NAC') is-invalid @enderror"
+                            value="{{ old('FECHA_NAC') }}" placeholder="{{ __('Fecha de Nacimiento') }}" required autofocus>
 
-                        @error('fecha_nacimiento')
+                        @error('FECHA_NAC')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
                             </span>
@@ -179,25 +245,11 @@
                 <div class="col">
                     {{-- Fecha de ingreso a la empresa field --}}
                     <div class="form-group">
-                        <label for="fecha_ingreso">Fecha ingreso</label>
-                        <input type="date" id="fecha_ingreso" name="fecha_ingreso" class="form-control @error('fecha_ingreso') is-invalid @enderror"
-                            value="{{ old('fecha_ingreso') }}" placeholder="{{ __('Fecha de Ingreso a la Empresa') }}" required autofocus>
+                        <label for="FECHA_INGRESO">Fecha ingreso</label>
+                        <input type="date" id="FECHA_INGRESO" name="FECHA_INGRESO" class="form-control @error('FECHA_INGRESO') is-invalid @enderror"
+                            value="{{ old('FECHA_INGRESO') }}" placeholder="{{ __('Fecha de Ingreso a la Empresa') }}" required autofocus>
 
-                        @error('fecha_ingreso')
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
-                        @enderror
-                    </div>
-                </div>
-                <div class="col">
-                    {{-- Fecha de asimilación a planta field --}}
-                    <div class="form-group">
-                        <label for="fecha_asim_planta">Fecha asim planta</label>
-                        <input type="date" id="fecha_asim_planta" name="fecha_asim_planta" class="form-control @error('fecha_asim_planta') is-invalid @enderror"
-                            value="{{ old('fecha_asim_planta') }}" placeholder="{{ __('Fecha de Asimilación a Planta') }}" required autofocus>
-
-                        @error('fecha_asim_planta')
+                        @error('FECHA_INGRESO')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
                             </span>
@@ -205,72 +257,30 @@
                     </div>
                 </div>
             </div>
-            {{-- Funcion field --}}
-            <div class="form-group">
-                <label for="calidad_juridica">Función</label>
-                <input type="text" name="calidad_juridica" class="form-control @error('calidad_juridica') is-invalid @enderror"
-                    value="{{ old('calidad_juridica') }}" placeholder="{{ __('Calidad jurídica') }}" required autofocus>
-
-                @error('funcion')
-                    <span class="invalid-feedback" role="alert">
-                        <strong>{{ $message }}</strong>
-                    </span>
-                @enderror
-            </div>
+            {{-- *FONO Y ANEXO* --}}
             <div class="row">
-                <div class="col">
-                    {{-- Funcion field --}}
-                    <div class="form-group">
-                        <label for="funcion">Función</label>
-                        <input type="text" name="funcion" class="form-control @error('funcion') is-invalid @enderror"
-                            value="{{ old('funcion') }}" placeholder="{{ __('Funcion') }}" required autofocus>
-
-                        @error('funcion')
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
-                        @enderror
-                    </div>
-                </div>
-                <div class="col">
-                    {{-- Profesion field --}}
-                    <div class="form-group">
-                        <label for="profesion">Profesión</label>
-                        <input type="text" name="profesion" class="form-control @error('profesion') is-invalid @enderror"
-                            value="{{ old('profesion') }}" placeholder="{{ __('Profesion') }}" required autofocus>
-
-                        @error('profesion')
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
-                        @enderror
-                    </div>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col">
-                    {{-- Area field --}}
-                    <div class="form-group">
-                        <label for="area">Area</label>
-                        <input type="text" name="area" class="form-control @error('area') is-invalid @enderror"
-                            value="{{ old('area') }}" placeholder="{{ __('Area') }}" required autofocus>
-
-                        @error('area')
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
-                        @enderror
-                    </div>
-                </div>
                 <div class="col">
                     {{-- Fono field --}}
                     <div class="form-group">
-                        <label for="fono">Fono</label>
-                        <input type="text" name="fono" class="form-control @error('fono') is-invalid @enderror"
-                            value="{{ old('fono') }}" placeholder="{{ __('Fono') }}" required autofocus>
+                        <label for="FONO">Fono</label>
+                        <input type="text" name="FONO" class="form-control @error('FONO') is-invalid @enderror"
+                            value="{{ old('FONO') }}" placeholder="{{ __('Fono') }}" required autofocus>
 
-                        @error('fono')
+                        @error('FONO')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                        @enderror
+                    </div>
+                </div>
+                <div class="col">
+                    {{-- Anexo field --}}
+                    <div class="form-group">
+                        <label for="ANEXO">Anexo</label>
+                        <input type="text" name="ANEXO" class="form-control @error('ANEXO') is-invalid @enderror"
+                            value="{{ old('ANEXO') }}" placeholder="{{ __('Anexo') }}" required autofocus>
+
+                        @error('ANEXO')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
                             </span>
@@ -280,46 +290,35 @@
             </div>
 
             <div class="row">
-                <div class="col">
-                    {{-- Anexo field --}}
-                    <div class="form-group">
-                        <label for="anexo">Anexo</label>
-                        <input type="text" name="anexo" class="form-control @error('anexo') is-invalid @enderror"
-                            value="{{ old('anexo') }}" placeholder="{{ __('Anexo') }}" required autofocus>
 
-                        @error('anexo')
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
-                        @enderror
-                    </div>
-                </div>
                 <div class="col">
                     {{-- Sexo field --}}
                     <div class="form-group">
-                        <label for="sexo">Sexo</label>
-                        <select name="sexo" class="form-control @error('sexo') is-invalid @enderror" required>
-                            <option value="" disabled {{ old('sexo') ? '' : 'selected' }}>{{ __('Sexo') }}</option>
-                            <option value="M" {{ old('sexo') == 'M' ? 'selected' : '' }}>{{ __('Masculino') }}</option>
-                            <option value="F" {{ old('sexo') == 'F' ? 'selected' : '' }}>{{ __('Femenino') }}</option>
+                        <label for="ID_SEXO">Sexo</label>
+                        <select name="ID_SEXO" class="form-control @error('ID_SEXO') is-invalid @enderror" required>
+                            <option value="" disabled {{ old('ID_SEXO') ? '' : 'selected' }}>{{ __('Sexo') }}</option>
+                            @foreach ($sexos as $sexo)
+                                <option value="{{ $sexo->ID_SEXO }}" {{ old('ID_SEXO') == $sexo->ID_SEXO ? 'selected' : '' }}>{{ $sexo->SEXO }}</option>
+                            @endforeach
                         </select>
-
-                        @error('sexo')
+                        @error('ID_SEXO')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
                             </span>
                         @enderror
                     </div>
                 </div>
-            </div>
 
-            <div class="form-group">
-                <label for="role">Rol</label>
-                <select name="role" id="role" class="form-control">
-                    @foreach ($roles as $role)
-                        <option value="{{ $role->id }}">{{ $role->name }}</option>
-                    @endforeach
-                </select>
+                <div class="col">
+                    <div class="form-group">
+                        <label for="role">Rol</label>
+                        <select name="role" id="role" class="form-control">
+                            @foreach ($roles as $role)
+                                <option value="{{ $role->id }}">{{ $role->name }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                </div>
             </div>
 
             <div class="form-group">
@@ -342,7 +341,7 @@
     <script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/es.js"></script>
     <script>
         $(function () {
-            $('#fecha_nacimiento').flatpickr({
+            $('#FECHA_NAC').flatpickr({
                 locale: 'es',
                 minDate: "1950-01-01",
                 dateFormat: "Y-m-d",
@@ -350,7 +349,7 @@
                 altInput: true,
                 allowInput: true,
             });
-            $('#fecha_ingreso').flatpickr({
+            $('#FECHA_INGRESO').flatpickr({
                 locale: 'es',
                 minDate: "1950-01-01",
                 dateFormat: "Y-m-d",
