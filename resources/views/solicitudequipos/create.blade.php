@@ -11,49 +11,49 @@
         <form action="/solequipos" method="POST">
             @csrf
             <div class="row">
-                    <div class="col-md-6">
-                        <div class="mb-3">
-                            <label for="NOMBRE_SOLICITANTE" class="form-label"><i class="fa-solid fa-user"></i> Nombre del solicitante:</label>
-                            <input type="text" id="NOMBRE_SOLICITANTE" name="NOMBRE_SOLICITANTE" class="form-control{{ $errors->has('NOMBRE_SOLICITANTE') ? ' is-invalid' : '' }}" value="{{ auth()->user()->name }}" placeholder="Ej: ANDRES RODRIGO SUAREZ MATAMALA" readonly>
-                            @if ($errors->has('NOMBRE_SOLICITANTE'))
-                            <div class="invalid-feedback">
-                                {{ $errors->first('NOMBRE_SOLICITANTE') }}
-                            </div>
-                            @endif
-                        </div>
-
-                        <div class="mb-3">
-                            <label for="RUT" class="form-label"><i class="fa-solid fa-id-card"></i> RUT:</label>
-                            <input type="text" id="RUT" name="RUT" class="form-control{{ $errors->has('RUT') ? ' is-invalid' : '' }}" value="{{ old('RUT') }}" placeholder="Sin puntos con guion (Ej: 12345678-9)">
-                            @if ($errors->has('RUT'))
-                            <div class="invalid-feedback">
-                                {{ $errors->first('RUT') }}
-                            </div>
-                            @endif
-                        </div>
+                <div class="col-md-6">
+                    <div class="mb-3">
+                    <label for="NOMBRE_SOLICITANTE" class="form-label"><i class="fa-solid fa-user"></i> Nombre del solicitante:</label>
+                    <input type="text" id="NOMBRE_SOLICITANTE" name="NOMBRE_SOLICITANTE" class="form-control{{ $errors->has('NOMBRE_SOLICITANTE') ? ' is-invalid' : '' }}" value="{{ auth()->user()->NOMBRES }} {{auth()->user()->APELLIDOS}}" placeholder="Ej: ANDRES RODRIGO SUAREZ MATAMALA" readonly>
+                    @if ($errors->has('NOMBRE_SOLICITANTE'))
+                    <div class="invalid-feedback">
+                        {{ $errors->first('NOMBRE_SOLICITANTE') }}
+                    </div>
+                    @endif
                     </div>
 
-                    <div class="col-md-6">
-                        <div class="mb-3">
-                            <label for="DEPTO" class="form-label"><i class="fa-solid fa-building-user"></i> Departamento:</label>
-                            <input type="text" id="DEPTO" name="DEPTO" class="form-control{{ $errors->has('DEPTO') ? ' is-invalid' : '' }}" value="{{ old('DEPTO') }}" placeholder="Ej: ADMINISTRACION">
-                            @if ($errors->has('DEPTO'))
-                            <div class="invalid-feedback">
-                                {{ $errors->first('DEPTO') }}
-                            </div>
-                            @endif
-                        </div>
-
-                        <div class="mb-3">
-                            <label for="EMAIL" class="form-label"><i class="fa-solid fa-envelope"></i> Email:</label>
-                            <input type="email" id="EMAIL" name="EMAIL" class="form-control{{ $errors->has('EMAIL') ? ' is-invalid' : '' }}" value="{{ auth()->user()->email }}" placeholder="Ej: demo@demo.cl" readonly>
-                            @if ($errors->has('EMAIL'))
-                            <div class="invalid-feedback">
-                                {{ $errors->first('EMAIL') }}
-                            </div>
-                            @endif
-                        </div>
+                    <div class="mb-3">
+                    <label for="RUT" class="form-label"><i class="fa-solid fa-id-card"></i> RUT:</label>
+                    <input type="text" id="RUT" name="RUT" class="form-control{{ $errors->has('RUT') ? ' is-invalid' : '' }}" value="{{ auth()->user()->RUT }}" placeholder="Sin puntos con guión (Ej: 12345678-9)" readonly>
+                    @if ($errors->has('RUT'))
+                    <div class="invalid-feedback">
+                        {{ $errors->first('RUT') }}
                     </div>
+                    @endif
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="mb-3">
+                        <label for="DEPTO" class="form-label"><i class="fa-solid fa-building-user"></i> Departamento:</label>
+                        <input type="text" id="DEPTO" name="DEPTO" class="form-control{{ $errors->has('DEPTO') ? ' is-invalid' : '' }}" value="{{ auth()->user()->departamento->DEPARTAMENTO }}" placeholder="Ej: ADMINISTRACION" readonly>
+                        @if ($errors->has('DEPTO'))
+                        <div class="invalid-feedback">
+                            {{ $errors->first('DEPTO') }}
+                        </div>
+                        @endif
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="EMAIL" class="form-label"><i class="fa-solid fa-envelope"></i> Email:</label>
+                        <input type="email" id="EMAIL" name="EMAIL" class="form-control{{ $errors->has('EMAIL') ? ' is-invalid' : '' }}" value="{{ auth()->user()->email }}" placeholder="Ej: someone@example.com" readonly>
+                        @if ($errors->has('EMAIL'))
+                        <div class="invalid-feedback">
+                            {{ $errors->first('EMAIL') }}
+                        </div>
+                        @endif
+                    </div>
+                </div>
             </div>
             <div class="mb-3">
                 <label for="ID_TIPO_EQUIPOS" class="form-label"><i class="fa-solid fa-desktop"></i> Tipo de equipo:</label>
@@ -94,7 +94,7 @@
                         <div class="invalid-feedback">{{ $errors->first('HORA_INICIO_SOL_EQUIPO') }}</div>
                     @endif
                 </div>
-            
+
                 <div class="form-group col-md-6">
                     <label for="HORA_TERM_SOL_EQUIPO"><i class="fa-solid fa-clock"></i> Hora de Término:</label>
                     <input type="text" id="HORA_TERM_SOL_EQUIPO" name="HORA_TERM_SOL_EQUIPO" class="form-control flatpickr @if($errors->has('HORA_TERM_SOL_EQUIPO')) is-invalid @endif" placeholder="Ingrese hora de término" data-input required value="{{ old('HORA_TERM_SOL_EQUIPO') }}">
@@ -103,7 +103,7 @@
                     @endif
                 </div>
             </div>
-            
+
 
             <div class="mb-3">
                 <label for="ESTADO_SOL_EQUIPO" class="form-label"><i class="fa-solid fa-file-circle-check"></i> Estado de la Solicitud:</label>
