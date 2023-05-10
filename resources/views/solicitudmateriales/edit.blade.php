@@ -312,6 +312,7 @@
                     icon: 'warning',
                     title: 'Advertencia',
                     text: 'No se han autorizado cantidades para ningún material.',
+                    confirmButtonColor: '#E6500A',
                 });
                 return;
             }
