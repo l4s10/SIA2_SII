@@ -13,14 +13,16 @@ return new class extends Migration
     {
         Schema::create('solicitud_materiales', function (Blueprint $table) {
             $table->id('ID_SOLICITUD');
+            //*CAMPOS SOLICITANTE*/
+            $table->integer('ID_USUARIO')->unsigned()->references('id')->on('users');
             $table->string('NOMBRE_SOLICITANTE',128);
             $table->string('RUT', 20);
-            //agregar refetrencias a tabla DEPARTAMENTOS
             $table->string('DEPTO', 128);
             $table->string('EMAIL', 128);
+            //*CAMPOS PARA SERVICIOS*/
+            $table->date('FECHA_DESPACHO')->nullable();
             $table->text('MATERIAL_SOL');
             $table->text('OBSERVACIONES')->default('No existen observaciones');
-            //agregar referencias a  tabla ESTADOS SOLCITUD
             $table->string('ESTADO_SOL', 20)->default('INGRESADO');
             $table->string('MODIFICADO_POR')->nullable();
             $table->timestamps();

@@ -7,25 +7,33 @@ use App\Models\SolicitudMateriales;
 use App\Models\TipoMaterial;
 use App\Models\Material;
 
+use App\Http\Controllers\InventoryController; // Importa la clase InventoryController
+
 class SolMatController extends Controller
 {
     //Funcion para acceder a las rutas SOLO SI los usuarios estan logueados
     public function __construct(){
         // $this->middleware('auth');
-        $this->middleware('checkUserPermission:Nivel 1', ['only' => ['index', 'show', 'create']]);
-        $this->middleware('checkUserPermission:Nivel 2', ['only' => ['store', 'edit', 'update']]);
+        $this->middleware('checkUserPermission:Nivel 1', ['only' => ['index', 'show', 'create', 'store']]);
+        $this->middleware('checkUserPermission:Nivel 2', ['only' => ['edit', 'update']]);
         $this->middleware('checkUserPermission:Nivel 3', ['only' => ['destroy']]);
-
     }
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        //Obtenemos todos los datos de la tabla de solicitudes para mostrarlas en el index
-        $sol_materiales = SolicitudMateriales::all();
-        return view('solicitudmateriales.index',compact('sol_materiales'));
+        $user = auth()->user();
+
+        if ($user->hasAnyPermission(['Nivel 2', 'Nivel 3'])) {
+            $sol_materiales = SolicitudMateriales::all();
+        } else {
+            $sol_materiales = SolicitudMateriales::where('ID_USUARIO', $user->id)->get();
+        }
+
+        return view('solicitudmateriales.index', compact('sol_materiales'));
     }
+
 
     /**
      * Show the form for creating a new resource.
@@ -75,14 +83,13 @@ class SolMatController extends Controller
         // Formatear el RUT antes de almacenarlo en la base de datos
         $rut = intval(str_replace(['.', '-'], '', $data['RUT']));
         $data['RUT'] = $this->formatRut($rut);
-
         try {
             SolicitudMateriales::create($data);
             session()->flash('success', 'La solicitud de materiales ha sido enviada exitosamente');
         } catch (\Exception $e) {
-            session()->flash('error', 'Error al crear la solicitud');
+            session()->flash('error', 'Error al crear la solicitud' .$e->getMessage());
         }
-        return redirect('/solmaterial');
+        return redirect(route('solmaterial.index'));
     }
 
     /**
@@ -145,9 +152,16 @@ class SolMatController extends Controller
         $request['RUT'] = $this->formatRut($rut);
         try{
             $solicitud->update($request->all());
+            //verificamos si se clickeo el boton de autorizar las cantidades
+            $accion = $request->input('accion');
+            // Crea una instancia de InventoryController y llama al método updateStock
+            if ($accion === 'autorizar_cantidad') {
+                $inventoryController = new InventoryController();
+                $inventoryController->updateStock($request);
+            }
             session()->flash('success','Solicitud modificada exitosamente!.');
         }catch(\Exception $e){
-            session()->flash('error','Error al modificar la solicitud.');
+            session()->flash('error','Error al modificar la solicitud.' .$e->getMessage());
         }
         return redirect('/solmaterial');
     }

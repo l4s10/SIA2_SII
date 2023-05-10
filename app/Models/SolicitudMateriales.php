@@ -8,7 +8,18 @@ use Illuminate\Database\Eloquent\Model;
 class SolicitudMateriales extends Model
 {
     use HasFactory;
-    protected $table='solicitud_materiales';
-    protected $fillable= ['NOMBRE_SOLICITANTE','RUT','DEPTO','EMAIL','MATERIAL_SOL','OBSERVACIONES','ESTADO_SOL','MODIFICADO_POR'];
     protected $primaryKey= 'ID_SOLICITUD';
+    protected $table='solicitud_materiales';
+    protected $fillable= [
+        'ID_USUARIO',
+        'NOMBRE_SOLICITANTE',
+        'RUT',
+        'DEPTO',
+        'EMAIL',
+        'MATERIAL_SOL',
+        'FECHA_DESPACHO',
+        'OBSERVACIONES',
+        'ESTADO_SOL',
+        'MODIFICADO_POR'
+    ];
 }

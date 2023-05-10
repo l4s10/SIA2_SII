@@ -10,7 +10,7 @@
 
 @section('content')
     <div class="container">
-        <form action="/solmaterial/{{$solicitud->ID_SOLICITUD}}" method="POST">
+        <form id="form-solicitud" action="/solmaterial/{{$solicitud->ID_SOLICITUD}}" method="POST">
             @csrf
             @method('PUT')
             <div class="row">
@@ -80,21 +80,21 @@
                         <th scope="col">Tipo Material</th>
                         <th scope="col">Stock</th>
                         <th scope="col">Cantidad aprobada</th>
-                        <th scope="col">Acción</th>
+                        {{-- <th scope="col" hidden>Acción</th> --}}
                     </tr>
                 </thead>
                 <tbody>
                     @foreach ($materiales as $material)
                         <tr>
-                            <td>{{ $material->NOMBRE_MATERIAL }}</td>
+                            <td class="material-name">{{ $material->NOMBRE_MATERIAL }}</td>
                             <td>{{ $material->tipoMaterial->TIPO_MATERIAL }}</td>
                             <td>{{ $material->STOCK }}</td>
                             <td>
-                                <input type="number" type="button" class="form-control cantidad-restar" data-id="{{ $material->ID_MATERIAL }}" min="0" max="{{ $material->STOCK }}" value="0">
+                                <input type="number" type="button" class="form-control cantidad-restar cantidad-autorizada" data-id="{{ $material->ID_MATERIAL }}" min="0" max="{{ $material->STOCK }}" value="0" name="cantidad_autorizada[{{ $material->ID_MATERIAL }}]">
                             </td>
-                            <td>
-                                <button class="btn btn-primary btn-restar" data-id="{{ $material->ID_MATERIAL }}">Restar</button>
-                            </td>
+                            {{-- <td>
+                                <button class="btn btn-primary btn-restar" data-id="{{ $material->ID_MATERIAL }}" hidden>Restar</button>
+                            </td> --}}
                         </tr>
                     @endforeach
                 </tbody>
@@ -103,10 +103,18 @@
         {{-- *CAMPO CHECKOUT* --}}
         <div class="mb-6" style="padding: 1%;">
             <div class="mb-3">
-                <label for="MATERIAL_SOL" class="form-label"><i class="fa-solid fa-file-circle-question"></i> Checkout:</label>
+                <label for="MATERIAL_SOL" class="form-label"><i class="fa-solid fa-file-circle-question"></i> {{$solicitud->NOMBRE_SOLICITANTE}} está solicitando:</label>
                 <textarea id="MATERIAL_SOL" name="MATERIAL_SOL" rows="5" class="form-control @if($errors->has('MATERIAL_SOL')) is-invalid @endif" placeholder="Artículos en el carrito (Máx 1000 caracteres)" readonly required>{{$solicitud->MATERIAL_SOL}}</textarea>
                 @if($errors->has('MATERIAL_SOL'))
                     <div class="invalid-feedback">{{$errors->first('MATERIAL_SOL')}}</div>
+                @endif
+            </div>
+            {{-- *CAMPO FECHA DESPACHO* --}}
+            <div class="form-group">
+                <label for="FECHA_DESPACHO"><i class="fa-solid fa-calendar"></i> Fecha de despacho:</label>
+                <input type="text" id="FECHA_DESPACHO" name="FECHA_DESPACHO" class="form-control flatpickr @if($errors->has('FECHA_DESPACHO')) is-invalid @endif" placeholder="Ingrese fecha de despacho" data-input required value="{{ $solicitud->FECHA_DESPACHO}}">
+                @if ($errors->has('FECHA_DESPACHO'))
+                    <div class="invalid-feedback">{{ $errors->first('FECHA_DESPACHO') }}</div>
                 @endif
             </div>
             {{-- *CAMPO OBSERVACIONES* --}}
@@ -117,14 +125,16 @@
             {{-- *CAMPO ESCONDIDO QUE ALMACENA QUIEN REVISA SOLICITUD* --}}
             <div class="mb-3" hidden>
                 <label for="MODIFICADO_POR" class="form-label">Revisado por:</label>
-                <input type="text" id="MODIFICADO_POR" name="MODIFICADO_POR" value="{{ auth()->user()->name}}">
+                <input type="text" id="MODIFICADO_POR" name="MODIFICADO_POR" value="{{ auth()->user()->NOMBRES}} {{auth()->user()->APELLIDOS}}">
             </div>
         </div>
         {{-- *BOTONES DE ENVIO* --}}
         <div class="mb-6" style="padding: 1%;">
+            <!-- Campo oculto para almacenar qué botón se presionó -->
+            <input type="hidden" name="accion" value="">
             <a href="/solmaterial" class="btn btn-secondary" tabindex="5"><i class="fa-solid fa-hand-point-left"></i> Cancelar</a>
-            <button type="submit" class="btn btn-primary" tabindex="4"><i class="fa-sharp fa-solid fa-paper-plane"></i> Enviar Cambios</button>
-            <button id="btn-restar-general" type="submit" class="btn btn-info"><i class="fa-sharp fa-solid fa-paper-plane"></i> Autorizar cantidad y enviar</button>
+            <button id="btn-enviar-cambios" type="submit" class="btn btn-primary" tabindex="4"><i class="fa-sharp fa-solid fa-paper-plane"></i> Enviar Cambios</button>
+            <button id="btn-autorizar-cantidad" id="btn-restar-general" type="button" class="btn btn-info"><i class="fa-sharp fa-solid fa-paper-plane"></i> Autorizar cantidad y terminar</button>
         </div>
 
         <div class="modal fade" id="modal-carrito" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -155,9 +165,28 @@
 
 @section('css')
     <link rel="stylesheet" href="/css/admin_custom.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
 @stop
 
 @section('js')
+    <!-- Incluir archivos JS flatpicker-->
+    <!-- Incluir archivos JS flatpicker-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/es.js"></script>
+    {{-- PARA CAMPO DE FECHA DE DESPACHO --}}
+    <script>
+        $(function () {
+            $('#FECHA_DESPACHO').flatpickr({
+                dateFormat: 'Y-m-d',
+                altInput: true,
+                altFormat: 'd-m-Y',
+                locale: 'es',
+                minDate: "today",
+            });
+            $('#FECHA_DESPACHO').css('background-color', 'white');
+        });
+    </script>
     <!-- Para inicializar -->
     <script>
         $(document).ready(function () {
@@ -245,92 +274,68 @@
         });
         });
     </script>
-
-    <!-- RESTAR DINAMICAMENTE -->
+    {{-- PARA VERIFICAR BOTON PRESIONADO --}}
     <script>
-        $(document).ready(function() {
-        // Controlador de eventos para el botón "Restar general"
-        $('#btn-restar-general').click(function() {
-            // Recorrer todos los botones "Restar" de la tabla
-            $('.btn-restar').each(function() {
-                // Disparar el evento click en cada botón "Restar"
-                $(this).trigger('click');
+        document.getElementById('btn-enviar-cambios').addEventListener('click', function() {
+            document.getElementsByName('accion')[0].value = 'enviar_cambios';
+        });
+    </script>
+    {{-- PARA ENVIAR CANTIDADES A LA FUNCION ALMACENADA --}}
+    <script>
+        function generateSummary(element) {
+            let summary = '';
+            element.querySelectorAll('.cantidad-autorizada').forEach((input) => {
+                let cantidad = input.value;
+                if (parseInt(cantidad) > 0) {
+                    let materialName = input.closest('tr').querySelector('.material-name').textContent;
+                    summary += `- ${cantidad} unidad(es) de ${materialName}\n`;
+                }
             });
-
-            // Cambiar el valor del select "ESTADO_SOL" a "TERMINADO"
-            $('#ESTADO_SOL').val('TERMINADO');
-        });
-
-
-    // Controlador de eventos para el botón "Restar"
-    $('.btn-restar').click(function() {
-        // Obtener el ID del material
-        var materialId = $(this).data('id');
-
-        // Obtener el input de cantidad a restar
-        var cantidadRestarInput = $('.cantidad-restar[data-id="' + materialId + '"]');
-
-        // Obtener la cantidad a restar
-        var cantidadRestar = parseInt(cantidadRestarInput.val());
-
-        // Hacer una llamada AJAX a la ruta "update-stock"
-        $.ajax({
-            url: '{{ route('update-stock') }}',
-            type: 'POST',
-            data: {
-                materialId: materialId,
-                cantidadRestar: cantidadRestar,
-                _token: '{{ csrf_token() }}'
-            },
-            dataType: 'json',
-            success: function(response) {
-                // Actualizar el stock en la tabla
-                var stockCell = $('.btn-restar[data-id="' + materialId + '"]').closest('tr').find('td:nth-child(3)');
-                stockCell.text(response.nuevoStock);
-
-                // Actualizar el total del stock en la tabla
-                var totalStock = 0;
-                $('.stock-cell').each(function() {
-                    totalStock += parseInt($(this).text());
-                });
-                $('.total-stock').text(totalStock);
-
-                // Restablecer la cantidad a restar a cero
-                cantidadRestarInput.val(0);
-            },
-            error: function() {
-                alert('Error al actualizar el inventario');
-            }
-        });
-    });
-
-    // Controlador de eventos para el input "Cantidad a restar"
-    $('.cantidad-restar').on('input', function() {
-        // Obtener el ID del material
-        var materialId = $(this).data('id');
-
-        // Obtener la cantidad a restar
-        var cantidadRestar = parseInt($(this).val());
-
-        // Obtener el stock actual del material
-        var stockActual = parseInt($('.btn-restar[data-id="' + materialId + '"]').closest('tr').find('td:nth-child(3)').text());
-
-        // Validar que la cantidad a restar no sea mayor que el stock actual
-        if (cantidadRestar > stockActual) {
-            // Mostrar un mensaje de error
-            $(this).addClass('is-invalid');
-            $(this).siblings('.invalid-feedback').html('La cantidad a restar no puede ser mayor que el stock actual');
-            $(this).siblings('.btn-restar').prop('disabled', true);
-        } else {
-            // Ocultar el mensaje de error
-            $(this).removeClass('is-invalid');
-            $(this).siblings('.invalid-feedback').html('');
-            $(this).siblings('.btn-restar').prop('disabled', false);
+            return summary;
         }
-    });
-});
+
+
+        document.querySelectorAll('.cantidad-autorizada').forEach((input) => {
+            input.addEventListener('input', () => {
+                generateSummary(input.closest('table'));
+            });
+        });
+
+
+        document.getElementById('btn-autorizar-cantidad').addEventListener('click', (e) => {
+            e.preventDefault();
+
+            let tableElement = document.getElementById('materiales');
+            let summary = generateSummary(tableElement);
+            if (summary === '') {
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'Advertencia',
+                    text: 'No se han autorizado cantidades para ningún material.',
+                });
+                return;
+            }
+
+            Swal.fire({
+                icon: 'warning',
+                title: '¿Está seguro?',
+                html: `La acción de autorizar cantidades es irreversible ya que se descontarán del inventario. Por favor, confirme que desea autorizar las siguientes cantidades:<br>${summary.split('\n').map(line => `<span style="display: block;">${line}</span>`).join('')}`,
+                showCancelButton: true,
+                confirmButtonColor: '#0064A0',
+                cancelButtonColor: '#E6500A',
+                confirmButtonText: 'Sí, autorizar y terminar',
+                cancelButtonText: 'Cancelar'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // Cambia el valor del campo oculto 'accion' y envía el formulario
+                    document.getElementsByName('accion')[0].value = 'autorizar_cantidad';
+                    document.getElementById('form-solicitud').submit();
+                }
+            });
+        });
+
+
 
     </script>
-
 @stop
 
