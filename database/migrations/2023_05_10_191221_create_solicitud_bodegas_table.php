@@ -11,9 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('escalafon', function (Blueprint $table) {
-            $table->integer('ID_ESCALAFON')->unsigned()->primary();
-            $table->string('ESCALAFON', 128)->nullable();
+        Schema::create('solicitud_bodegas', function (Blueprint $table) {
+            $table->id();
+            $table->timestamps();
         });
     }
 
@@ -22,6 +22,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('escalafon');
+        Schema::dropIfExists('solicitud_bodegas');
     }
 };

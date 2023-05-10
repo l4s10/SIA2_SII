@@ -11,6 +11,39 @@ return new class extends Migration
      */
     public function up(): void
     {
+        Schema::create('departamento', function (Blueprint $table) {
+            $table->integer('ID_DEPART')->unsigned()->primary();
+            $table->string('DEPARTAMENTO', 128)->nullable();
+        });
+        Schema::create('region', function (Blueprint $table) {
+            $table->integer('ID_REGION')->unsigned()->primary();
+            $table->string('REGION', 128)->nullable();
+        });
+        Schema::create('ubicacion', function (Blueprint $table) {
+            $table->integer('ID_UBICACION')->unsigned()->primary();
+            $table->string('UBICACION', 128)->nullable();
+        });
+        Schema::create('grupo', function (Blueprint $table) {
+            $table->integer('ID_GRUPO')->unsigned()->primary();
+            $table->string('GRUPO', 128)->nullable();
+        });
+        Schema::create('escalafon', function (Blueprint $table) {
+            $table->integer('ID_ESCALAFON')->unsigned()->primary();
+            $table->string('ESCALAFON', 128)->nullable();
+        });
+        Schema::create('grado', function (Blueprint $table) {
+            $table->integer('ID_GRADO')->unsigned()->primary();
+            $table->integer('GRADO')->nullable();
+        });
+        Schema::create('calidad_juridica', function (Blueprint $table) {
+            $table->integer('ID_CALIDAD')->unsigned()->primary();
+            $table->string('CALIDAD', 128)->nullable();
+        });
+        Schema::create('sexo', function (Blueprint $table) {
+            $table->integer('ID_SEXO')->unsigned()->primary();
+            $table->string('SEXO', 128)->nullable();
+        });
+
         Schema::create('users', function (Blueprint $table) {
             $table->id();
             $table->string('NOMBRES', 255);
@@ -49,5 +82,13 @@ return new class extends Migration
     public function down(): void
     {
         Schema::dropIfExists('users');
+        Schema::dropIfExists('departamento');
+        Schema::dropIfExists('region');
+        Schema::dropIfExists('ubicacion');
+        Schema::dropIfExists('grupo');
+        Schema::dropIfExists('escalafon');
+        Schema::dropIfExists('grado');
+        Schema::dropIfExists('calidad_juridica');
+        Schema::dropIfExists('sexo');
     }
 };
