@@ -11,15 +11,26 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('solicitud_bodegas', function (Blueprint $table) {
-            $table->id();
-            //*Campos basicos solicitud con la informacion del solicituante y quien edita*/
+        Schema::create('rel_fun_bodegas', function (Blueprint $table) {
+            $table->increments('ID_SOL_BODEGA');
+            //*Campos basicos solicitud con la informacion del solicitante y quien edita*/
+            $table->integer('ID_USUARIO')->unsigned()->references('id')->on('users');
             $table->string('NOMBRE_SOLICITANTE',128);
             $table->string('RUT', 20);
             $table->string('DEPTO', 128);
             $table->string('EMAIL', 128);
             //*Aqui almacenamos el nombre de quien modifica el registro*/
-            $table->string('REVISADO_POR',128);
+            $table->string('MOTIVO_SOL_BODEGA', 1000)->nullable();
+            $table->date('FECHA_SOL_BODEGA')->nullable();
+            $table->date('FECHA_ASIG_BODEGA')->nullable();
+            $table->string('HORA_SOL_BODEGA', 128)->nullable();
+            $table->string('HORA_ASIG_BODEGA', 128)->nullable();
+            $table->string('BODEGA_PEDIDA', 128)->nullable();
+            $table->string('ESTADO_SOL_BODEGA', 128)->nullable();
+            $table->string('MODIFICADO_POR_SOL_BODEGA', 128)->nullable();
+            $table->string('OBSERV_SOL_BODEGA', 1000)->nullable();
+            //*referenciamos la categoria*/
+            $table->integer('ID_CATEGORIA_SALA')->unsigned()->references('ID_CATEGORIA_SALA')->on('categoria_salas');
             //*Para fechas de creacion y modificacion de algun registro*/
             $table->timestamps();
         });
@@ -30,6 +41,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('solicitud_bodegas');
+        Schema::dropIfExists('rel_fun_bodegas');
     }
 };

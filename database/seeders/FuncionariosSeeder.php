@@ -34,7 +34,7 @@ class FuncionariosSeeder extends Seeder
             'ID_SEXO' => 1
         ]);
 
-        $adminMaestro = Role::findByName('ADMINISTRADOR_MAESTRO');
+        $adminMaestro = Role::findByName('ADMINISTRADOR');
         $user->assignRole($adminMaestro);
     }
 }

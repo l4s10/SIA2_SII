@@ -8,9 +8,10 @@ use Illuminate\Database\Eloquent\Model;
 class SolicitudSala extends Model
 {
     use HasFactory;
-    protected $table = 'solicitud_salas';
+    protected $table = 'rel_fun_salas';
     protected $primaryKey = 'ID_SOL_SALA';
     protected $fillable = [
+        'ID_USUARIO',
         'NOMBRE_SOLICITANTE',
         'RUT',
         'DEPTO',
@@ -19,8 +20,10 @@ class SolicitudSala extends Model
         'MOTIVO_SOL_SALA',
         'CANT_PERSONAS_SOL_SALAS',
         'FECHA_SOL_SALA',
-        'HORA_INICIO_SOL_SALA',
-        'HORA_TERM_SOL_SALA',
+        'FECHA_ASIG_SALA',
+        'HORA_SOL_SALA',
+        'HORA_ASIG_SOL_SALA',
+        'SALA_PEDIDA',
         'SALA_A_ASIGNAR',
         'ESTADO_SOL_SALA',
         'MODIFICADO_POR_SOL_SALA',

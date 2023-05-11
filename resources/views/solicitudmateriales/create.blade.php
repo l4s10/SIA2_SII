@@ -15,7 +15,7 @@
             @csrf
             <div class="row">
                 <div class="col-md-6">
-                    <div class="mb-3">
+                    <div class="mb-3" hidden>
                         <label for="ID_USUARIO" class="form-label"><i class="fa-solid fa-user"></i> ID PERSONA:</label>
                         <input type="number" id="ID_USUARIO" name="ID_USUARIO" class="form-control{{ $errors->has('ID_USUARIO') ? ' is-invalid' : '' }}" value="{{ auth()->user()->id }}" placeholder="Ej: ANDRES RODRIGO SUAREZ MATAMALA">
                         @if ($errors->has('ID_USUARIO'))
@@ -156,13 +156,6 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/js/bootstrap.bundle.min.js"></script>
     {{-- Alertas --}}
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <!-- CONEXION FONT-AWESOME CON TOOLKIT -->
-    {{-- <script src="https://kit.fontawesome.com/742a59c628.js" crossorigin="anonymous"></script> --}}
-    <!-- Funcionamiento tablas -->
-    <!-- Agregando funciones de paginacion, busqueda, etc -->
-    {{-- <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
-    <script src="https://cdn.datatables.net/1.13.2/js/jquery.dataTables.min.js"></script>
-    <script src="https://cdn.datatables.net/1.13.2/js/dataTables.bootstrap5.min.js"></script> --}}
 
     <!-- Bibliotecas JS y CSS de DataTables -->
     <script type="text/javascript" src="https://cdn.datatables.net/v/bs4/dt-1.11.3/r-2.2.9/datatables.min.js"></script>
@@ -255,7 +248,7 @@
             // Actualizar textarea con los artículos en el carrito
             var carritoTextarea = $('#MATERIAL_SOL');
             var carritoActual = carritoTextarea.val();
-            var nuevoArticulo = cantidad + ' unidad(es) de "' + nombreMaterial + '" de tipo "' + tipoMaterial + '\n';
+            var nuevoArticulo = cantidad + ' unidad(es) de "' + nombreMaterial + '" de tipo "' + tipoMaterial + '"\n';
             var nuevoCarrito = carritoActual + '- ' + nuevoArticulo;
             carritoTextarea.val(nuevoCarrito);
             $('#cantidad').val(1);

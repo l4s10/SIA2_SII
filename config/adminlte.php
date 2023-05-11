@@ -306,18 +306,11 @@ return [
             'type' => 'sidebar-menu-search',
             'text' => 'Buscar módulos',
         ],
-        [
-            'text' => 'blog',
-            'url'  => 'admin/blog',
-            'can'  => 'manage-blog',
-        ],
         ['header' => 'Módulos Funcionario'],
         [
             'text'        => 'Vehículos',
             'url'         => 'vehiculos',
             'icon'        => 'fas fa-fw fa-car',
-            // 'label'       => 'CRUD',
-            // 'label_color' => 'danger',
         ],
         [
             'text'        => 'Materiales',
@@ -390,21 +383,9 @@ return [
             ],
         ],
         [
-            'text'        => 'Reservas (Salas y Bodegas)',
-            'url'         => '#',
+            'text'        => 'Reservas',
+            'url'         => 'reservas',
             'icon'        => 'fas fa-fw fa-building',
-            'submenu' => [
-                [
-                    'text'    => 'Ver Reservas',
-                    'url'     => 'reservas',
-                    'icon'    => 'fas fa-fw fa-eye',
-                ],
-                [
-                    'text'    => 'Solicitar Reserva',
-                    'url'     => 'reservas/create',
-                    'icon'    => 'fas fa-fw fa-plus',
-                ],
-            ],
         ],
         [
             'text'    => 'Inventario',
@@ -574,11 +555,11 @@ return [
             ],
         ],
         'Sweetalert2' => [
-            'active' => false,
+            'active' => true,
             'files' => [
                 [
                     'type' => 'js',
-                    'asset' => false,
+                    'asset' => true,
                     'location' => '//cdn.jsdelivr.net/npm/sweetalert2@8',
                 ],
             ],

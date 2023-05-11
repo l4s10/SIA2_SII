@@ -23,7 +23,7 @@ class SolicitudSalaController extends Controller
     public function index()
     {
         $solicitudes = SolicitudSala::all();
-        return view('reservasalas.index',compact('solicitudes'));
+        return view('reservas.reservasalas.index',compact('solicitudes'));
     }
 
     /**
@@ -33,7 +33,7 @@ class SolicitudSalaController extends Controller
     {
         $categorias = CategoriaSala::all();
         $tipos = TipoEquipo::all();
-        return view('reservasalas.create',compact('categorias','tipos'));
+        return view('reservas.reservasalas.create',compact('categorias','tipos'));
     }
 
     /**
@@ -73,7 +73,7 @@ class SolicitudSalaController extends Controller
         }catch(\Exception $e){
             session()->flash('error','Hubo un error al enviar la solicitud, vuelva a intentarlo más tarde.' . $e->getMessage());
         }
-        return redirect(route('reservas.index'));
+        return redirect(route('reserva.reservasalas.index'));
     }
 
     /**

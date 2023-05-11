@@ -15,20 +15,22 @@ class RolesAndPermissionsSeeder extends Seeder
     public function run(): void
     {
         //*Roles*/
-        $AdministradorNv3 = Role::create(['name' => 'ADMINISTRADOR_MAESTRO']);
-        $AdministradorNv2 = Role::create(['name' => 'ADMINISTRADOR']);
-        $Informatica = Role::create(['name' => 'INFORMATICA']);
-        $Funcionario = Role::create(['name' => 'FUNCIONARIO']);
+        $ADMINISTRADOR = Role::create(['name' => 'ADMINISTRADOR']);
+        $SERVICIOS = Role::create(['name' => 'SERVICIOS']);
+        $INFORMATICA = Role::create(['name' => 'INFORMATICA']);
+        $JURIDICO = Role::create(['name' => 'JURIDICO']);
+        $FUNCIONARIO = Role::create(['name' => 'FUNCIONARIO']);
 
-        //*permisos*/
+        //*Permisos*/
         $Nivel_1 = Permission::create(['name' => 'Nivel 1']);
         $Nivel_2 = Permission::create(['name' => 'Nivel 2']);
         $Nivel_3 = Permission::create(['name' => 'Nivel 3']);
 
         //*Asignacion de permisos*/
-        $AdministradorNv3->syncPermissions([$Nivel_1, $Nivel_2, $Nivel_3]);
-        $AdministradorNv2->syncPermissions([$Nivel_1, $Nivel_2]);
-        $Informatica->syncPermissions([$Nivel_1, $Nivel_2]);
-        $Funcionario->syncPermissions([$Nivel_1]);
+        $ADMINISTRADOR->syncPermissions([$Nivel_1, $Nivel_2, $Nivel_3]);
+        $SERVICIOS->syncPermissions([$Nivel_1, $Nivel_2]);
+        $INFORMATICA->syncPermissions([$Nivel_1, $Nivel_2]);
+        $JURIDICO->syncPermissions([$Nivel_1]);
+        $FUNCIONARIO->syncPermissions([$Nivel_1]);
     }
 }
