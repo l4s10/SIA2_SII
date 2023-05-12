@@ -1,6 +1,6 @@
 @extends('adminlte::page')
 
-@section('title', 'Solicitud de reparación')
+@section('title', 'Solicitud de sala')
 
 @section('content_header')
     <h1 class="title">Detalle de la solicitud</h1>
@@ -21,12 +21,12 @@
                 <p>Tipo de solicitud: {{ $solicitud->categoriaSala->CATEGORIA_SALA}}</p>
                 <p>Estado: {{ $solicitud->ESTADO_SOL_SALA }}</p>
                 <p>Fecha de ingreso: {{ $solicitud->created_at->tz('America/Santiago')->format('d/m/Y H:i') }}</p>
-                <p>Fecha solicitada: {{ \Carbon\Carbon::parse($solicitud->FECHA_SOL_SALA)->format('d/m/Y') }} desde {{$solicitud->HORA_INICIO_SOL_SALA}} hasta las {{$solicitud->HORA_TERM_SOL_SALA}}</p>
+                <p>Fecha solicitada: {{ $solicitud->FECHA_SOL_SALA }} </p>
                 <p>Motivo de la solicitud: {{$solicitud->MOTIVO_SOL_SALA}}</p>
             </div>
             <div class="card-footer text-center">
-                <a href="{{ route('reservas.index') }}" class="btn btn-secondary"><i class="fa-solid fa-hand-point-left"></i> Volver</a>
-                <a href="{{ route('reservas.edit', $solicitud->ID_SOL_SALA) }}" class="btn btn-primary"><i class="fa-regular fa-clipboard"></i> Revisar</a>
+                <a href="{{ route('solicitud.salas.index') }}" class="btn btn-secondary"><i class="fa-solid fa-hand-point-left"></i> Volver</a>
+                <a href="{{ route('solicitud.salas.edit', $solicitud->ID_SOL_SALA) }}" class="btn btn-primary"><i class="fa-regular fa-clipboard"></i> Revisar</a>
             </div>
         </div>
     </div>

@@ -51,8 +51,26 @@ Route::resource('solequipos','App\Http\Controllers\SolicitudEquiposController');
 Route::resource('categoriasalas','App\Http\Controllers\CategoriaSalaController');
 //Rutas salas
 Route::resource('salas','App\Http\Controllers\SalaController');
-//Rutas para solicitudes de salas y bodegas
-Route::resource('reserva/sala','App\Http\Controllers\SolicitudSalaController');
+// Rutas para el controlador SolicitudSalaController
+Route::resource('reserva/sala', 'App\Http\Controllers\SolicitudSalaController')->names([
+    'index' => 'solicitud.salas.index',
+    'create' => 'solicitud.salas.create',
+    'store' => 'solicitud.salas.store',
+    'show' => 'solicitud.salas.show',
+    'edit' => 'solicitud.salas.edit',
+    'update' => 'solicitud.salas.update',
+    'destroy' => 'solicitud.salas.destroy',
+]);
+// Rutas para el controlador SolicitudBodegasControler
+Route::resource('reserva/bodega', 'App\Http\Controllers\SolicitudBodegasController')->names([
+    'index' => 'solicitud.bodegas.index',
+    'create' => 'solicitud.bodegas.create',
+    'store' => 'solicitud.bodegas.store',
+    'show' => 'solicitud.bodegas.show',
+    'edit' => 'solicitud.bodegas.edit',
+    'update' => 'solicitud.bodegas.update',
+    'destroy' => 'solicitud.bodegas.destroy',
+]);
 //Rutas para Funcionarios (usuarios)
 Route::resource('funcionarios','App\Http\Controllers\UserController');
 

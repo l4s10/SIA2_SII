@@ -42,8 +42,8 @@
             <p class="card-text">Este módulo permite a los funcionarios solicitar <strong>Salas</strong>. Los funcionarios deberán proporcionar información detallada y el equipo encargado del soporte de salas te dara soporte técnico para llevar tu solicitud a realizarce.</p>
             </div>
             <div class="card-footer">
-                <a class="btn btn-primary" href="{{route('sala.index')}}"><i class="fa-solid fa-file-pen"></i> Solicitar</a>
-                <a class="btn btn-primary" href="{{route('sala.create')}}"><i class="fa-solid fa-eye"></i> Solicitudes</a>
+                <a class="btn btn-primary" href="{{route('solicitud.salas.create')}}"><i class="fa-solid fa-file-pen"></i> Solicitar</a>
+                <a class="btn btn-primary" href="{{route('solicitud.salas.index')}}"><i class="fa-solid fa-eye"></i> Solicitudes</a>
             </div>
         </div>
         <div class="card text-bg-primary mb-3 mx-auto col-sm-12 col-md-6" style="max-width: 100%; text-align: justify;">
@@ -52,8 +52,8 @@
             <p class="card-text">Este módulo permite a los funcionarios solicitar <strong>Bodegas</strong>. Los funcionarios deberán proporcionar información detallada y el equipo encargado del soporte de bodegas te dara técnico para llevar tu solicitud a realizarce.</p>
             </div>
             <div class="card-footer">
-                <a class="btn btn-primary" ><i class="fa-solid fa-car-side"></i> Solicitar</a>
-                <a class="btn btn-primary" ><i class="fa-solid fa-eye"></i> Solicitudes</a>
+                <a class="btn btn-primary" href="{{route('solicitud.bodegas.create')}}" ><i class="fa-solid fa-shop"></i></i> Solicitar</a>
+                <a class="btn btn-primary" href="{{route('solicitud.bodegas.index')}}" ><i class="fa-solid fa-eye"></i> Solicitudes</a>
             </div>
         </div>
     </div>

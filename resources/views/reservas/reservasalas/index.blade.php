@@ -1,6 +1,6 @@
 @extends('adminlte::page')
 
-@section('title', 'Solicitudes Salas y Bodegas')
+@section('title', 'Solicitudes Salas')
 
 @section('content_header')
     <h1 class="title">Solicitudes de Salas</h1>
@@ -57,11 +57,11 @@
                                 <!-- Carbon sirve para parsear datos, esta es una instancia de carbon -->
                                 <td>{{ $sol_sala->created_at->tz('America/Santiago')->format('d/m/Y H:i') }}</td>
                                 <td>
-                                    <form action="{{ route('reservas.destroy',$sol_sala->ID_SOL_SALA) }}" method="POST">
+                                    <form action="{{ route('solicitud.salas.destroy',$sol_sala->ID_SOL_SALA) }}" method="POST">
                                         @csrf
                                         @method('DELETE')
-                                        <a href="{{ route('reservas.show',$sol_sala->ID_SOL_SALA) }}" class="btn btn-primary"><i class="fa-regular fa-eye"></i> Ver</a>
-                                        <a href="/reservas/{{$sol_sala->ID_SOL_SALA}}/edit" class="btn btn-info"><i class="fa-regular fa-clipboard"></i> Revisar</a>
+                                        <a href="{{ route('solicitud.salas.show',$sol_sala->ID_SOL_SALA) }}" class="btn btn-primary"><i class="fa-regular fa-eye"></i> Ver</a>
+                                        <a href="{{route('solicitud.salas.edit',$sol_sala->ID_SOL_SALA)}}" class="btn btn-info"><i class="fa-regular fa-clipboard"></i> Revisar</a>
                                         <button type="submit" class="btn btn-danger"><i class="fa-solid fa-trash"></i> Borrar</button>
                                     </form>
                                 </td>

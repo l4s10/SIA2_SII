@@ -21,8 +21,8 @@ return new class extends Migration
             $table->string('EMAIL', 128);
             //*Aqui almacenamos el nombre de quien modifica el registro*/
             $table->string('MOTIVO_SOL_BODEGA', 1000)->nullable();
-            $table->date('FECHA_SOL_BODEGA')->nullable();
-            $table->date('FECHA_ASIG_BODEGA')->nullable();
+            $table->string('FECHA_SOL_BODEGA')->nullable();
+            $table->string('FECHA_ASIG_BODEGA')->nullable();
             $table->string('HORA_SOL_BODEGA', 128)->nullable();
             $table->string('HORA_ASIG_BODEGA', 128)->nullable();
             $table->string('BODEGA_PEDIDA', 128)->nullable();

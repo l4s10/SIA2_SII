@@ -20,7 +20,7 @@ class FuncionariosSeeder extends Seeder
             'email' => 'franciscomunoz142@gmail.com',
             'password' => Hash::make('12345678'),
             'RUT' => '16.738.235-5',
-            'ID_DEPART' => 1,
+            'ID_DEPART' => 2,
             'ID_REGION' => 1,
             'ID_UBICACION' => 1,
             'ID_GRUPO' => 1,

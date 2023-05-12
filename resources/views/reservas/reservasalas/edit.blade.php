@@ -8,7 +8,7 @@
 
 @section('content')
     <div class="container">
-        <form action="{{route('reservas.update',$solicitud->ID_SOL_SALA)}}" method="POST">
+        <form action="{{route('solicitud.salas.update',$solicitud->ID_SOL_SALA)}}" method="POST">
             @csrf
             @method('PUT')
             <div class="row">
@@ -56,19 +56,25 @@
                     </div>
                 </div>
             </div>
-            <div class="row">
-                <div class="col-md-6 mb-3">
+            {{--**REFERENCIAS**--}}
+            <div class="row" hidden>
+                <div class="col-md-6 mb-3" >
                     <label for="ID_CATEGORIA_SALA" class="form-label"><i class="fa-solid fa-person-shelter"></i> Tipo de solicitud</label>
-                <select id="ID_CATEGORIA_SALA" name="ID_CATEGORIA_SALA" class="form-control" disabled>
-                    <option value="" selected>--Seleccione el tipo de solicitud--</option>
-                    @foreach ($categorias as $categoria)
-                        <option value="{{$categoria->ID_CATEGORIA_SALA}}" @if ($categoria->ID_CATEGORIA_SALA == $solicitud->ID_CATEGORIA_SALA) selected @endif>{{$categoria->CATEGORIA_SALA}}</option>
-                    @endforeach
-                </select>
+                    <select id="ID_CATEGORIA_SALA" name="ID_CATEGORIA_SALA" class="form-control">
+                        <option value="">--Seleccione el tipo de solicitud--</option>
+                        @foreach ($categorias as $categoria)
+                            @if ($categoria->CATEGORIA_SALA == 'SALAS')
+                                <option value="{{$categoria->ID_CATEGORIA_SALA}}" selected>{{$categoria->CATEGORIA_SALA}}</option>
+                            @endif
+                        @endforeach
+                    </select>
                 </div>
+                <input type="text" name="ID_TIPO_EQUIPOS" value="1">
+            </div>
+            <div class="row" hidden>
                 <div class="col-md-6 mb-3">
                     <label for="ID_TIPO_EQUIPOS">¿Necesita equipo?</label>
-                    <select name="ID_TIPO_EQUIPOS" id="ID_TIPO_EQUIPOS" class="form-control" disabled>
+                    <select name="ID_TIPO_EQUIPOS" id="ID_TIPO_EQUIPOS" class="form-control" hidden>
                         <option value="">--No necesita equipo--</option>
                         @foreach ($tipos as $tipo)
                             <option value="{{$tipo->ID_TIPO_EQUIPOS}}" @if ($tipo->ID_TIPO_EQUIPOS == $solicitud->ID_TIPO_EQUIPOS) selected @endif>{{$tipo->TIPO_EQUIPO}}</option>
@@ -76,48 +82,66 @@
                     </select>
                 </div>
             </div>
+            {{-- *EQUIPOS SOLICITADOS* --}}
+            <div class="form-group">
+                <label for="EQUIPO_SALA">Equipos solicitados</label>
+                <input type="text" class="form-control" name="EQUIPO_SALA" value="{{$solicitud->EQUIPO_SALA}}" readonly>
+            </div>
+            {{-- *CANTIDAD PERSONAS* --}}
             <div class="form-group">
                 <label for="CANT_PERSONAS_SOL_SALAS" class="form-label"><i class="fa-solid fa-people-line"></i> Cantidad de personas:</label>
-                <input type="number" class="form-control" id="CANT_PERSONAS_SOL_SALAS" name="CANT_PERSONAS_SOL_SALAS" placeholder="Escriba la cantidad de personas para el uso de la sala" min="1" max="100" value="{{$solicitud->CANT_PERSONAS_SOL_SALAS}}">
+                <input type="number" class="form-control @error('CANT_PERSONAS_SOL_SALAS') is-invalid @enderror" id="CANT_PERSONAS_SOL_SALAS" name="CANT_PERSONAS_SOL_SALAS" placeholder="Escriba la cantidad de personas para el uso de la sala" min="1" max="100" value="{{$solicitud->CANT_PERSONAS_SOL_SALAS}}" readonly>
+                @error('CANT_PERSONAS_SOL_SALAS')
+                <div class="invalid-feedback">{{ $message }}</div>
+                @enderror
             </div>
             {{--**LISTO**--}}
             <div class="mb-3">
                 <label for="MOTIVO_SOL_SALA" class="form-label"><i class="fa-solid fa-file-pen"></i> Motivo de reserva:</label>
-                <textarea class="form-control" id="MOTIVO_SOL_SALA" name="MOTIVO_SOL_SALA" placeholder="Escriba el motivo de solicitud de reserva (En caso de ser bodegas especificar cual)" aria-label="With textarea">{{$solicitud->MOTIVO_SOL_SALA}}</textarea>
+                <textarea class="form-control @error('MOTIVO_SOL_SALA') is-invalid @enderror" id="MOTIVO_SOL_SALA" name="MOTIVO_SOL_SALA" placeholder="Escriba el motivo de solicitud de reserva (En caso de ser bodegas especificar cual)" aria-label="With textarea" readonly>{{$solicitud->MOTIVO_SOL_SALA}}</textarea>
+                @error('MOTIVO_SOL_SALA')
+                <div class="invalid-feedback">{{ $message }}</div>
+                @enderror
             </div>
-            {{-- FALTA SCRIPT --}}
+            {{-- *FECHA SOLICITADA* --}}
             <div class="form-group">
-                <label for="FECHA_SOL_SALA"><i class="fa-solid fa-calendar"></i> Fecha de Inicio:</label>
-                <input type="text" id="FECHA_SOL_SALA" name="FECHA_SOL_SALA" class="form-control flatpickr @if($errors->has('FECHA_SOL_SALA')) is-invalid @endif" placeholder="Ingrese fecha de inicio" data-input required value="{{ \Carbon\Carbon::parse($solicitud->FECHA_SOL_SALA)->format('d/m/Y') }}">
-                @if ($errors->has('FECHA_SOL_SALA'))
-                    <div class="invalid-feedback">{{ $errors->first('FECHA_SOL_SALA') }}</div>
-                @endif
-            </div>
-            {{-- hora de inicio y termino --}}
-            <div class="row">
-                <div class="form-group col-md-6">
-                    <label for="HORA_INICIO_SOL_SALA"><i class="fa-solid fa-clock"></i> Hora de Inicio:</label>
-                    <input type="text" id="HORA_INICIO_SOL_SALA" name="HORA_INICIO_SOL_SALA" class="form-control flatpickr @if($errors->has('HORA_INICIO_SOL_SALA')) is-invalid @endif" placeholder="Ingrese hora de inicio" data-input required value="{{ $solicitud->HORA_INICIO_SOL_SALA }}">
-                    @if ($errors->has('HORA_INICIO_SOL_SALA'))
-                        <div class="invalid-feedback">{{ $errors->first('HORA_INICIO_SOL_SALA') }}</div>
-                    @endif
+                <label for="FECHA_SOL_SALA"><i class="fa-solid fa-calendar"></i> Fecha solicitada:</label>
+                <div class="input-group">
+                    <input type="text" id="FECHA_SOL_SALA" name="FECHA_SOL_SALA" class="form-control @error('FECHA_SOL_SALA') is-invalid @enderror" placeholder="Ingrese la fecha" data-input required value="{{ $solicitud->FECHA_SOL_SALA }}" >
+                    {{-- *HORA SOLICITADA* --}}
+                    <input type="text" id="HORA_SOL_SALA" name="HORA_SOL_SALA" class="form-control flatpickr @error('HORA_SOL_SALA') is-invalid @enderror" placeholder="Seleccione la hora" data-input required value="{{ $solicitud->HORA_SOL_SALA }}">
                 </div>
-                <div class="form-group col-md-6">
-                    <label for="HORA_TERM_SOL_SALA"><i class="fa-solid fa-clock"></i> Hora de Término:</label>
-                    <input type="text" id="HORA_TERM_SOL_SALA" name="HORA_TERM_SOL_SALA" class="form-control flatpickr @if($errors->has('HORA_TERM_SOL_SALA')) is-invalid @endif" placeholder="Ingrese hora de término" data-input required value="{{ $solicitud->HORA_TERM_SOL_SALA }}">
-                        @if ($errors->has('HORA_TERM_SOL_SALA'))
-                            <div class="invalid-feedback">{{ $errors->first('HORA_TERM_SOL_SALA') }}</div>
-                        @endif
-                </div>
+                @error('FECHA_SOL_SALA')
+                <div class="invalid-feedback">{{ $message }}</div>
+                @enderror
+                @error('HORA_SOL_SALA')
+                <div class="invalid-feedback">{{ $message }}</div>
+                @enderror
             </div>
-            {{-- **LISTO** --}}
+            {{-- *FECHA ASIGNADA* --}}
+            <div class="form-group">
+                <label for="FECHA_ASIG_SALA"><i class="fa-solid fa-calendar"></i> Fecha asignada:</label>
+                <div class="input-group">
+                    <input type="text" id="FECHA_ASIG_SALA" name="FECHA_ASIG_SALA" class="form-control @error('FECHA_ASIG_SALA') is-invalid @enderror" placeholder="Asigne la fecha" data-input required value="{{ $solicitud->FECHA_ASIG_SALA }}">
+                    {{-- *HORA SOLICITADA* --}}
+                    <input type="text" id="HORA_ASIG_SOL_SALA" name="HORA_ASIG_SOL_SALA" class="form-control flatpickr @error('HORA_ASIG_SOL_SALA') is-invalid @enderror" placeholder="Asigne la hora" data-input required value="{{ $solicitud->HORA_ASIG_SOL_SALA }}">
+                    <button type="button" id="clearButton" class="btn btn-danger">Limpiar</button>
+                </div>
+                @error('FECHA_ASIG_SALA')
+                <div class="invalid-feedback">{{ $message }}</div>
+                @enderror
+                @error('HORA_ASIG_SOL_SALA')
+                <div class="invalid-feedback">{{ $message }}</div>
+                @enderror
+            </div>
+            {{-- **ESTADO SOLICITUD** --}}
             <div class="mb-3">
                 <label for="ESTADO_SOL_SALA" class="form-label"><i class="fa-solid fa-file-circle-check"></i> Estado de la Solicitud:</label>
                 <select id="ESTADO_SOL_SALA" name="ESTADO_SOL_SALA" class="form-control">
-                    <option value="INGRESADO">Ingresado</option>
-                    <option value="EN REVISION" selected>En revisión</option>
-                    <option value="ACEPTADO">Aceptado</option>
-                    <option value="RECHAZADO">Rechazado</option>
+                    <option value="INGRESADO" {{ $solicitud->ESTADO_SOL_SALA === 'INGRESADO' ? 'selected' : '' }}>Ingresado</option>
+                    <option value="EN REVISION" {{ $solicitud->ESTADO_SOL_SALA === 'EN REVISION' ? 'selected' : '' }}>En revisión</option>
+                    <option value="ACEPTADO" {{ $solicitud->ESTADO_SOL_SALA === 'ACEPTADO' ? 'selected' : '' }}>Aceptado</option>
+                    <option value="RECHAZADO" {{ $solicitud->ESTADO_SOL_SALA === 'RECHAZADO' ? 'selected' : '' }}>Rechazado</option>
                 </select>
             </div>
             {{-- CAMPOS NIVEL 2 --}}
@@ -133,18 +157,6 @@
                     @endforeach
                 </select>
             </div>
-            {{-- Equipo a asignar (si se necesita) --}}
-            <div class="mb-3">
-                <label for="EQUIPO_SALA" class="form-label"><i class="fa-solid fa-person-shelter"></i> Data/Equipo a asignar:</label>
-                <select id="EQUIPO_SALA" name="EQUIPO_SALA" class="form-control">
-                    <option value="" selected>--N/A--</option>
-                    @foreach ($equipos as $equipo)
-                        @if ($equipo->ESTADO_EQUIPO == 'DISPONIBLE' && $equipo->ID_TIPO_EQUIPOS == $solicitud->ID_TIPO_EQUIPOS)
-                            <option value="{{ $equipo->MODELO_EQUIPO }}" @if ($solicitud->EQUIPO_SALA == $equipo->MODELO_EQUIPO) selected @endif>{{ $equipo->MODELO_EQUIPO }}</option>
-                        @endif
-                    @endforeach
-                </select>
-            </div>
             {{-- Observaciones --}}
             <div class="mb-3">
                 <label for="OBSERV_SOL_SALA" class="form-label"><i class="fa-solid fa-file-pen"></i> Observaciones:</label>
@@ -153,7 +165,7 @@
             {{-- Modificado por --}}
             <div class="mb-3" hidden>
                 <label for="MODIFICADO_POR_SOL_SALA" class="form-label"><i class="fa-solid fa-user"></i> Modificado por:</label>
-                <input type="text" id="MODIFICADO_POR_SOL_SALA" name="MODIFICADO_POR_SOL_SALA" class="form-control{{ $errors->has('MODIFICADO_POR_SOL_SALA') ? ' is-invalid' : '' }}" value="{{ auth()->user()->name }}" placeholder="Ej: ANDRES RODRIGO SUAREZ MATAMALA">
+                <input type="text" id="MODIFICADO_POR_SOL_SALA" name="MODIFICADO_POR_SOL_SALA" class="form-control{{ $errors->has('MODIFICADO_POR_SOL_SALA') ? ' is-invalid' : '' }}" value="{{ auth()->user()->NOMBRES }} {{auth()->user()->APELLIDOS}}" placeholder="Ej: ANDRES RODRIGO SUAREZ MATAMALA">
                 @if ($errors->has('MODIFICADO_POR_SOL_SALA'))
                 <div class="invalid-feedback">
                     {{ $errors->first('MODIFICADO_POR_SOL_SALA') }}
@@ -162,8 +174,8 @@
             </div>
 
             <div class="mb-3">
-                <a href="{{route('reservas.index')}}" class="btn btn-secondary">Cancelar</a>
-                <button type="submit" class="btn btn-primary">Enviar Solicitud</button>
+                <a href="{{route('reservas.dashboard')}}" class="btn btn-secondary">Cancelar</a>
+                <button type="submit" class="btn btn-primary">Enviar Cambios</button>
             </div>
         </form>
     </div>
@@ -187,29 +199,52 @@
     <script>
         $(function () {
             $('#FECHA_SOL_SALA').flatpickr({
-                dateFormat: 'd-m-Y',
+                dateFormat: 'Y-m-d',
+                altFormat: 'd-m-Y',
+                altInput: true,
                 locale: 'es',
                 minDate: "today",
                 showClearButton: true,
-                defaultHour: 8 // Agregamos una hora predeterminada
+                mode: "range",
             });
-            $('#HORA_INICIO_SOL_SALA').flatpickr({
+
+            $('#HORA_SOL_SALA').flatpickr({
                 enableTime: true,
                 noCalendar: true,
-                dateFormat: 'H:i',
-                locale: 'es',
+                dateFormat: "H:i",
                 time_24hr: true,
-                defaultHour: 8 // Agregamos una hora predeterminadas
+                locale: "es",
+                placeholder: "Seleccione la hora",
             });
-            $('#HORA_TERM_SOL_SALA').flatpickr({
+            $('#FECHA_ASIG_SALA').flatpickr({
+                dateFormat: 'Y-m-d',
+                altFormat: 'd-m-Y',
+                altInput: true,
+                locale: 'es',
+                minDate: "today",
+                showClearButton: true,
+                mode: "multiple",
+                onReady: function(selectedDates, dateStr, instance) {
+                    $('#clearButton').on('click', function() {
+                        instance.clear();
+                    });
+                }
+            });
+
+            $('#HORA_ASIG_SOL_SALA').flatpickr({
                 enableTime: true,
                 noCalendar: true,
-                dateFormat: 'H:i',
-                locale: 'es',
+                dateFormat: "H:i",
                 time_24hr: true,
-                defaultHour: 9 // Agregamos una hora predeterminadas
+                locale: "es",
+                placeholder: "Seleccione la hora",
+                onReady: function(selectedDates, dateStr, instance) {
+                    $('#clearButton').on('click', function() {
+                        instance.clear();
+                    });
+                }
             });
-            $('#FECHA_SOL_SALA, #HORA_INICIO_SOL_SALA, #HORA_TERM_SOL_SALA').css('background-color', 'white');
         });
     </script>
+
 @stop

@@ -28,7 +28,7 @@ class UserController extends Controller
         $this->middleware('auth');
         //*Solo entrarán los admin maestro */
         $this->middleware(function ($request, $next) {
-            $adminMaestro = Role::findByName('ADMINISTRADOR_MAESTRO');
+            $adminMaestro = Role::findByName('ADMINISTRADOR');
             if (Auth::check() && Auth::user()->hasRole($adminMaestro)) {
                 return $next($request);
             }
