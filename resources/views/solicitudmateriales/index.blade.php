@@ -68,7 +68,7 @@
                                         <a href="/solmaterial/{{$sol_material->ID_SOLICITUD}}/edit" class="btn btn-info"><i class="fa-regular fa-clipboard"></i> Revisar</a>
                                         @endcan
                                         @role(
-                                        'ADMINISTRADOR_MAESTRO')
+                                        'ADMINISTRADOR')
                                             <button type="submit" class="btn btn-danger"><i class="fa-solid fa-trash"></i> Borrar</button>
                                         @endrole
                                     </form>

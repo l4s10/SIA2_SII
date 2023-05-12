@@ -71,6 +71,16 @@ Route::resource('reserva/bodega', 'App\Http\Controllers\SolicitudBodegasControll
     'update' => 'solicitud.bodegas.update',
     'destroy' => 'solicitud.bodegas.destroy',
 ]);
+//Rutas para solicitud vehiculos
+Route::resource('reserva/vehiculo', 'App\Http\Controllers\RelFunVeh')->names([
+    'index' => 'solicitud.vehiculos.index',
+    'create' => 'solicitud.vehiculos.create',
+    'store' => 'solicitud.vehiculos.store',
+    'show' => 'solicitud.vehiculos.show',
+    'edit' => 'solicitud.vehiculos.edit',
+    'update' => 'solicitud.vehiculos.update',
+    'destroy' => 'solicitud.vehiculos.destroy',
+]);
 //Rutas para Funcionarios (usuarios)
 Route::resource('funcionarios','App\Http\Controllers\UserController');
 

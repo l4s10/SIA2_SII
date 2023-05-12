@@ -111,7 +111,7 @@
             </div>
             {{-- *FECHA ASIGNADA* --}}
             <div class="form-group">
-                <label for="FECHA_ASIG_BODEGA"><i class="fa-solid fa-calendar"></i> Fecha solicitada:</label>
+                <label for="FECHA_ASIG_BODEGA"><i class="fa-solid fa-calendar"></i> Fecha y hora a asignar:</label>
                 <div class="input-group">
                     <input type="text" id="FECHA_ASIG_BODEGA" name="FECHA_ASIG_BODEGA" class="form-control @if($errors->has('FECHA_ASIG_BODEGA')) is-invalid @endif" placeholder="Ingrese la fecha" data-input required value="{{ $solicitud->FECHA_ASIG_BODEGA }}">
                     {{-- *HORA SOLICITADA* --}}
@@ -132,7 +132,7 @@
                     <option value="RECHAZADO" {{ $solicitud->ESTADO_SOL_BODEGA == 'RECHAZADO' ? 'selected' : '' }}>Rechazado</option>
                 </select>
             </div>
-            
+
             <div class="mb-3">
                 <a href="{{route('reservas.dashboard')}}" class="btn btn-secondary">Cancelar</a>
                 <button type="submit" class="btn btn-primary">Enviar Solicitud</button>

@@ -445,6 +445,11 @@ return [
                     ],
         ],
         [
+            'text'        => 'Directivos',
+            'url'         => '#',
+            'icon'        => 'fa-solid fa-user-tie',
+        ],
+        [
             'text'        => 'Reportes',
             'url'         => '#',
             'icon'        => 'fas fa-fw fa-solid fa-chart-simple',

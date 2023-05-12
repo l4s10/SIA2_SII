@@ -133,7 +133,7 @@
             <!-- Campo oculto para almacenar qué botón se presionó -->
             <input type="hidden" name="accion" value="">
             <a href="/solmaterial" class="btn btn-secondary" tabindex="5"><i class="fa-solid fa-hand-point-left"></i> Cancelar</a>
-            <button id="btn-enviar-cambios" type="submit" class="btn btn-primary" tabindex="4"><i class="fa-sharp fa-solid fa-paper-plane"></i> Enviar Cambios</button>
+            <button id="btn-enviar-cambios" type="submit" class="btn btn-primary" tabindex="4"><i class="fa-sharp fa-solid fa-paper-plane"></i> Guardar observaciones</button>
             <button id="btn-autorizar-cantidad" id="btn-restar-general" type="button" class="btn btn-info"><i class="fa-sharp fa-solid fa-paper-plane"></i> Autorizar cantidad y terminar</button>
         </div>
 
