@@ -41,9 +41,7 @@ class RelFunVeh extends Model
         'HORA_SALIDA_SOL_VEH' => 'nullable|max:128',
         'HORA_LLEGADA_SOL_VEH' => 'nullable|max:128',
         'NOMBRE_OCUPANTES' => 'nullable|max:1000',
-        'FECHA_CREACION_SOL_VEH' => 'nullable|date',
         'ESTADO_SOL_VEH' => 'nullable|max:128',
-        'FECHA_MODIFICACION_SOL_VEH' => 'nullable|date',
         'MODIFICADO_POR_SOL_VEH' => 'nullable|max:128',
         'OBSERV_SOL_VEH' => 'nullable|max:1000',
         'ID_TIPO_VEH' => 'required|exists:tipo_vehiculo,ID_TIPO_VEH'

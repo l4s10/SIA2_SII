@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string('DEPTO', 128);
             $table->string('EMAIL', 128);
             $table->integer('ID_USUARIO')->nullable()->references('id')->on('users');
-            
+
             $table->string('MOTIVO_SOL_VEH', 1000)->nullable();
             $table->string('CONDUCTOR', 128)->nullable();
             $table->date('FECHA_SALIDA_SOL_VEH')->nullable();
@@ -28,9 +28,7 @@ return new class extends Migration
             $table->string('HORA_SALIDA_SOL_VEH', 128)->nullable();
             $table->string('HORA_LLEGADA_SOL_VEH', 128)->nullable();
             $table->string('NOMBRE_OCUPANTES', 1000)->nullable();
-            $table->date('FECHA_CREACION_SOL_VEH')->nullable();
             $table->string('ESTADO_SOL_VEH', 128)->nullable();
-            $table->date('FECHA_MODIFICACION_SOL_VEH')->nullable();
             $table->string('MODIFICADO_POR_SOL_VEH', 128)->nullable();
             $table->string('OBSERV_SOL_VEH', 1000)->nullable();
             $table->integer('ID_TIPO_VEH')->nullable()->references('ID_TIPO_VEH')->on('tipo_vehiculo');
