@@ -21,6 +21,7 @@ class SolicitudBodegas extends Model
         'FECHA_ASIG_BODEGA',
         'HORA_SOL_BODEGA',
         'HORA_ASIG_BODEGA',
+        'HORA_TERM_ASIG_BODEGA',
         'BODEGA_PEDIDA',
         'ESTADO_SOL_BODEGA',
         'MODIFICADO_SOL_BODEGA',

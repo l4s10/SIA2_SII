@@ -25,6 +25,8 @@ return new class extends Migration
             $table->string('FECHA_ASIG_BODEGA')->nullable();
             $table->string('HORA_SOL_BODEGA', 128)->nullable();
             $table->string('HORA_ASIG_BODEGA', 128)->nullable();
+            $table->string('HORA_TERM_ASIG_BODEGA', 128)->nullable();
+
             $table->string('BODEGA_PEDIDA', 128)->nullable();
             $table->string('ESTADO_SOL_BODEGA', 128)->nullable();
             $table->string('MODIFICADO_POR_SOL_BODEGA', 128)->nullable();

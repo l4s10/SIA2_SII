@@ -18,11 +18,13 @@
                 <p>Rut: {{ $solicitud->RUT }}</p>
                 <p>Departamento: {{ $solicitud->DEPTO }}</p>
                 <p>Email: {{ $solicitud->EMAIL }}</p>
-                <p>Tipo de solicitud: {{ $solicitud->categoriaSala->CATEGORIA_SALA}}</p>
+                {{-- <p>Tipo de solicitud: {{ $solicitud->categoriaSala->CATEGORIA_SALA}}</p> --}}
                 <p>Estado: {{ $solicitud->ESTADO_SOL_SALA }}</p>
                 <p>Fecha de ingreso: {{ $solicitud->created_at->tz('America/Santiago')->format('d/m/Y H:i') }}</p>
-                <p>Fecha solicitada: {{ $solicitud->FECHA_SOL_SALA }} </p>
+                <p>Fecha solicitada: {{ $solicitud->FECHA_SOL_SALA }} desde las {{$solicitud->HORA_SOL_SALA}} hasta las {{$solicitud->HORA_TERM_SOL_SALA}}</p>
                 <p>Motivo de la solicitud: {{$solicitud->MOTIVO_SOL_SALA}}</p>
+                {{-- ocultar si esta vacio (PENDIENTE) --}}
+                <p>Fecha asignada: {{ $solicitud->FECHA_ASIG_SALA }} desde las {{$solicitud->HORA_ASIG_SOL_SALA}} hasta las {{$solicitud->HORA_TERM_ASIG_SALA}}</p>
             </div>
             <div class="card-footer text-center">
                 <a href="{{ route('solicitud.salas.index') }}" class="btn btn-secondary"><i class="fa-solid fa-hand-point-left"></i> Volver</a>

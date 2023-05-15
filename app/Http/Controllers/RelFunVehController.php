@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Models\RelFunVeh;
 use App\Models\Vehiculo;
 use App\Models\TipoVehiculo;
+use App\Models\User;
+use App\Models\Departamento;
 
 class RelFunVehController extends Controller
 {
@@ -27,7 +29,9 @@ class RelFunVehController extends Controller
         //*Crear solicitud
         $vehiculos = Vehiculo::all();
         $tipo_vehiculos = TipoVehiculo::all();
-        return view('rel_fun_veh.create', compact('vehiculos','tipo_vehiculos'));
+        $conductores = User::all();
+        $departamentos = Departamento::all();
+        return view('rel_fun_veh.create', compact('vehiculos','tipo_vehiculos','departamentos','conductores'));
     }
 
     /**
@@ -37,12 +41,12 @@ class RelFunVehController extends Controller
     {
         //*Guardar solicitud
         try{
-            $request->validate(RelFunVeh::$rules, RelFunVeh::$messages);
+            $request->validate(RelFunVeh::rules(), RelFunVeh::messages());
             $data = $request->except('_token');
             RelFunVeh::create($data);
             session()->flash('success','La solicitud se ha enviado exitosamente');
         }catch(\Exception $e){
-            session()->flash('error','Hubo un error al enviar la solicitud, vuelva a intentarlo mas tarde');
+            session()->flash('error','Hubo un error al enviar la solicitud, vuelva a intentarlo mas tarde' . $e->getMessage());
         }
         return redirect(route('solicitud.vehiculos.index'));
     }
@@ -69,8 +73,10 @@ class RelFunVehController extends Controller
         try{
             $vehiculos = Vehiculo::all();
             $tipo_vehiculos = TipoVehiculo::all();
+            $conductores = User::all();
+            $departamentos = Departamento::all();
             $solicitud = RelFunVeh::find($id);
-            return view('rel_fun_veh.edit',compact('solicitud','tipo_vehiculos','vehiculos'));
+            return view('rel_fun_veh.edit',compact('solicitud','tipo_vehiculos','vehiculos','conductores','departamentos'));
         }catch(\Exception $e){
             session()->flash('error','Hubo un error al cargar la solicitud, vuelva a intentarlo mas tarde');
             return redirect(route('solicitud.vehiculos.index'));
@@ -84,7 +90,7 @@ class RelFunVehController extends Controller
     {
         try{
             $solicitud = RelFunVeh::find($id);
-            $request->validate(RelFunVeh::$rules, RelFunVeh::$messages);
+            $request->validate(RelFunVeh::rules(), RelFunVeh::messages());
             //*ACTUALIZAR REGISTRO */
             $data = $request->except('_token');
             $solicitud->update($data);

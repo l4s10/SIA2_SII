@@ -1,5 +1,28 @@
+<?php
+    // Obtener los roles del usuario actual
+    $roles = auth()->user()->getRoleNames();
+
+    // Definir los colores por defecto para cada tipo de usuario
+    $colors = [
+        'ADMINISTRADOR' => 'navbar-primary',
+        'FUNCIONARIO' => 'navbar-warning',
+    ];
+    // Establecer el color en función de los roles del usuario actual
+    $color = null;
+    foreach ($roles as $role) {
+        if (isset($colors[$role])) {
+            $color = $colors[$role];
+            break;
+        }
+    };
+?>
 <nav class="main-header navbar
     {{ config('adminlte.classes_topnav_nav', 'navbar-expand') }}
+    @role('ADMINISTRADOR')
+        navbar-primary
+    @else
+        navbar-warning
+    @endrole
     {{ config('adminlte.classes_topnav', 'navbar-white navbar-light') }}">
 
     {{-- Navbar left links --}}
@@ -36,5 +59,14 @@
             @include('adminlte::partials.navbar.menu-item-right-sidebar-toggler')
         @endif
     </ul>
-
+    <style>
+        .navbar-primary {
+            background-color: #007bff; /* Cambia el color a azul */
+            color: #fff; /* Cambia el color del texto a blanco */
+        }
+        .navbar-warning {
+        background-color: #E6500A; /* Cambia el color a naranja */
+        color: #fff; /* Cambia el color del texto a negro */
+        }
+    </style>
 </nav>

@@ -15,6 +15,8 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         $this->call([
+            //*Llamamos campos normalizados, roles y permisos y finalmente a usuarios */
+            CamposUsuarioNormalizados::class,
             RolesAndPermissionsSeeder::class,
             FuncionariosSeeder::class,
             //*Llamar primero a los tipos de objetos*/

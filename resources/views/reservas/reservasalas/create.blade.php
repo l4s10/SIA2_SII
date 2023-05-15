@@ -118,8 +118,10 @@
                 <label for="FECHA_SOL_SALA"><i class="fa-solid fa-calendar"></i> Fecha solicitada:</label>
                 <div class="input-group">
                     <input type="date" id="FECHA_SOL_SALA" name="FECHA_SOL_SALA" class="form-control @if($errors->has('FECHA_SOL_SALA')) is-invalid @endif" placeholder="Ingrese la fecha" data-input required value="{{ old('FECHA_SOL_SALA') }}">
-                    {{-- *HORA SOLICITADA* --}}
-                    <input type="text" id="HORA_SOL_SALA" name="HORA_SOL_SALA" class="form-control flatpickr @if($errors->has('HORA_SOL_SALA')) is-invalid @endif" placeholder="Seleccione la hora" data-input required value="{{ old('HORA_SOL_SALA') }}">
+                    {{-- *HORA INICIO SOLICITADA* --}}
+                    <input type="text" id="HORA_SOL_SALA" name="HORA_SOL_SALA" class="form-control flatpickr @if($errors->has('HORA_SOL_SALA')) is-invalid @endif" placeholder="Seleccione la hora de inicio" data-input required value="{{ old('HORA_SOL_SALA') }}">
+                    {{-- Hora termino solicitada --}}
+                    <input type="text" id="HORA_TERM_SOL_SALA" name="HORA_TERM_SOL_SALA" class="form-control flatpickr @if($errors->has('HORA_TERM_SOL_SALA')) is-invalid @endif" placeholder="Seleccione la hora de término" data-input required value="{{ old('HORA_TERM_SOL_SALA') }}">
                     <button type="button" id="clearButton" class="btn btn-danger">Limpiar</button>
                 </div>
                 @if ($errors->has('FECHA_SOL_SALA'))
@@ -198,6 +200,19 @@
                 }
             });
             $('#HORA_SOL_SALA').flatpickr({
+                enableTime: true,
+                noCalendar: true,
+                dateFormat: "H:i",
+                time_24hr: true,
+                locale: "es",
+                placeholder: "Seleccione la hora",
+                onReady: function(selectedDates, dateStr, instance) {
+                    $('#clearButton').on('click', function() {
+                        instance.clear();
+                    });
+                }
+            });
+            $('#HORA_TERM_SOL_SALA').flatpickr({
                 enableTime: true,
                 noCalendar: true,
                 dateFormat: "H:i",

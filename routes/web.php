@@ -72,7 +72,7 @@ Route::resource('reserva/bodega', 'App\Http\Controllers\SolicitudBodegasControll
     'destroy' => 'solicitud.bodegas.destroy',
 ]);
 //**Rutas para solicitud vehiculos
-Route::resource('reserva/vehiculo', 'App\Http\Controllers\RelFunVeh')->names([
+Route::resource('reserva/vehiculo', 'App\Http\Controllers\RelFunVehController')->names([
     'index' => 'solicitud.vehiculos.index',
     'create' => 'solicitud.vehiculos.create',
     'store' => 'solicitud.vehiculos.store',

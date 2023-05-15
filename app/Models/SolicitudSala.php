@@ -22,7 +22,9 @@ class SolicitudSala extends Model
         'FECHA_SOL_SALA',
         'FECHA_ASIG_SALA',
         'HORA_SOL_SALA',
+        'HORA_TERM_SOL_SALA',
         'HORA_ASIG_SOL_SALA',
+        'HORA_TERM_ASIG_SALA',
         'SALA_PEDIDA',
         'SALA_A_ASIGNAR',
         'ESTADO_SOL_SALA',
@@ -69,7 +71,7 @@ class SolicitudSala extends Model
         'MODIFICADO_POR_SOL_SALA.max' => 'El campo Modificado Por no puede tener más de :max caracteres.',
         'OBSERV_SOL_SALA.max' => 'La observación de la solicitud no puede tener más de :max caracteres.',
     ];
-    
+
 
 
     public function sala()

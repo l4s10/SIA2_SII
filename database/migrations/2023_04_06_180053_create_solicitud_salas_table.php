@@ -25,7 +25,10 @@ return new class extends Migration
             $table->string('FECHA_SOL_SALA',128)->nullable();
             $table->string('FECHA_ASIG_SALA',128)->nullable();
             $table->string('HORA_SOL_SALA', 128)->nullable();
+            $table->string('HORA_TERM_SOL_SALA', 128)->nullable();
             $table->string('HORA_ASIG_SOL_SALA', 128)->nullable();
+            $table->string('HORA_TERM_ASIG_SALA', 128)->nullable();
+
             $table->string('SALA_PEDIDA', 128)->nullable();
             $table->string('SALA_A_ASIGNAR', 128)->nullable();
             $table->string('ESTADO_SOL_SALA', 128)->nullable();
