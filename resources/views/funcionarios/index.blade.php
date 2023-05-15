@@ -6,6 +6,16 @@
 <!-- CABECERA DE LA PAGINA -->
 @section('content_header')
     <h1>Lista de funcionarios</h1>
+    @role('ADMINISTRADOR')
+    <div class="alert alert-info" role="alert">
+    <div><strong>Bienvenido Administrador:</strong> Acceso total al modulo.<div>
+    </div>
+    @endrole
+    @role('INFORMATICA')
+    <div class="alert alert-info" role="alert">
+    <div><strong>Bienvenido Informatica:</strong> Aqui iria el texto donde le corresponde el rol INFORMATICA.<div>
+    </div>
+    @endrole
 @stop
 
 @section('content')

@@ -4,9 +4,31 @@
 
 @section('content_header')
     <h1>Menú Salas y Bodegas</h1>
+    @role('ADMINISTRADOR')
     <div class="alert alert-info" role="alert">
-    <div> <strong>Bienvenido Encargado de Informatica:</strong> El calendario presente muestra las fechas en donde se encuentran reservadas las Salas y Equipos para una mejor informacion de la disponibilidad de estos.<div>
+    <div><strong>Bienvenido Administrador:</strong> Acceso total al modulo.<div>
     </div>
+    @endrole
+    @role('SERVICIOS')
+    <div class="alert alert-info" role="alert">
+    <div><strong>Bienvenido Servicio:</strong> Aqui iria el texto donde le corresponde el rol SERVICIO.<div>
+    </div>
+    @endrole
+    @role('INFORMATICA')
+    <div class="alert alert-info" role="alert">
+    <div><strong>Bienvenido Informatica:</strong> Aqui iria el texto donde le corresponde el rol INFORMATICA.<div>
+    </div>
+    @endrole
+    @role('JURIDICO')
+    <div class="alert alert-info" role="alert">
+    <div><strong>Bienvenido Juridico:</strong> Aqui iria el texto donde le corresponde el rol JURIDICO.<div>
+    </div>
+    @endrole
+    @role('FUNCIONARIO')
+    <div class="alert alert-info" role="alert">
+    <div><strong>Bienvenido Funcionario:</strong> Aqui iria el texto donde le corresponde el rol FUNCIONARIO.<div>
+    </div>
+    @endrole
 @stop
 
 @section('content')
