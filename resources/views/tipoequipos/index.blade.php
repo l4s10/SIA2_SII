@@ -73,7 +73,7 @@
                                 <form action="{{ route('tipoequipos.destroy',$tipo->ID_TIPO_EQUIPOS) }}" method="POST">
                                     @csrf
                                     @method('DELETE')
-                                    <a href="/tipoequipos/{{$tipo->ID_TIPO_EQUIPOS}}/edit" class="btn btn-info"><i class="fa-solid fa-pen-to-square"></i> Editar</a>
+                                    <a href="{{route('tipoequipos.edit', $tipo->ID_TIPO_EQUIPOS)}}" class="btn btn-info"><i class="fa-solid fa-pen-to-square"></i> Editar</a>
                                     <button type="submit" class="btn btn-danger"><i class="fa-solid fa-trash"></i> Borrar</button>
                                 </form>
                             </td>

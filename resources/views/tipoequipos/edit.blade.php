@@ -8,7 +8,7 @@
 
 @section('content')
     <div class="container">
-        <form action="/tipoequipos/{{$solicitud->ID_TIPO_EQUIPOS}}" method="POST">
+        <form action="{{route('tipoequipos.update', $solicitud->ID_TIPO_EQUIPOS)}}" method="POST">
             @csrf
             @method('PUT')
             <div class="mb-3">

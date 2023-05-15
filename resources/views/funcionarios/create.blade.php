@@ -322,6 +322,7 @@
             </div>
 
             <div class="form-group">
+                <a href="{{route('funcionarios.index')}}" class="btn btn-secondary">Cancelar</a>
                 <button type="submit" class="btn btn-sia-primary">Crear usuario</button>
             </div>
         </form>

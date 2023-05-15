@@ -11,7 +11,7 @@
 @section('content')
     <!-- COLOCA AQUI EL FORMULARIO QUE CREES -->
     <div class="container">
-        <form action="/solmaterial" method="POST">
+        <form action="{{route('solmaterial.store')}}" method="POST">
             @csrf
             <div class="row">
                 <div class="col-md-6">
@@ -115,8 +115,8 @@
             </div>
         </div>
         <!-- Botones de envio -->
-        <div class="mb-6" style="padding: 1%;">
-            <a href="/solmaterial" class="btn btn-secondary" tabindex="5"><i class="fa-solid fa-hand-point-left"></i> Cancelar</a>
+        <div class="mb-6">
+            <a href="{{route('solmaterial.index')}}" class="btn btn-secondary" tabindex="5"><i class="fa-solid fa-hand-point-left"></i> Cancelar</a>
             <button type="submit" class="btn btn-primary" tabindex="4"><i class="fa-sharp fa-solid fa-paper-plane"></i> Enviar Solicitud</button>
         </div>
 

@@ -1,6 +1,6 @@
 @extends('adminlte::page')
 
-@section('title', 'CRUD con laravel 10')
+@section('title', 'Editar tipo')
 
 @section('content_header')
     <h1>Editar Tipo Material</h1>
@@ -8,7 +8,7 @@
 
 @section('content')
     <div class="container">
-        <form action="/tipomaterial/{{$tipo->ID_TIPO_MAT}}" method="POST">
+        <form action="{{route('tipomaterial.update',$tipo->ID_TIPO_MAT)}}" method="POST">
             @csrf
             @method('PUT')
             <div class="mb-3">

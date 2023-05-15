@@ -8,7 +8,7 @@
 
 @section('content')
     <div class="container">
-        <form action="/formulariosSol" method="POST">
+        <form action="{{route('formulariosSol.store')}}" method="POST">
             @csrf
             <div class="row">
                 <div class="col-md-6">
@@ -100,8 +100,8 @@
                 <textarea class="form-control" name="OBSERV_SOL_FORM" id="OBSERV_SOL_FORM" placeholder="Escriba sus observaciones" readonly></textarea>
             </div>
             <!-- Botones de envio -->
-            <div class="mb-6" style="padding: 1%;">
-                <a href="/formulariosSol" class="btn btn-secondary" tabindex="5"><i class="fa-solid fa-hand-point-left"></i> Cancelar</a>
+            <div class="mb-6">
+                <a href="{{route('formulariosSol.index')}}" class="btn btn-secondary" tabindex="5"><i class="fa-solid fa-hand-point-left"></i> Cancelar</a>
                 <button type="submit" class="btn btn-primary" tabindex="4"><i class="fa-sharp fa-solid fa-paper-plane"></i> Enviar Solicitud</button>
             </div>
         </form>

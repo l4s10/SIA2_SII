@@ -62,7 +62,7 @@
         @endif
     </div>
 
-    <a href="/salas" class="btn btn-secondary" tabindex="5">Cancelar</a>
+    <a href="{{route('salas.index')}}" class="btn btn-secondary" tabindex="5">Cancelar</a>
     <button type="submit" class="btn btn-primary">Guardar</button>
 </form>
 

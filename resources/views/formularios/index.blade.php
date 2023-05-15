@@ -76,7 +76,7 @@
                                 <form action="{{ route('formularios.destroy',$formulario->ID_FORMULARIO) }}" method="POST">
                                     @csrf
                                     @method('DELETE')
-                                    <a href="/formularios/{{$formulario->ID_FORMULARIO}}/edit" class="btn btn-info"><i class="fa-solid fa-pen-to-square"></i> Editar</a>
+                                    <a href="{{route('formularios.edit',$formulario->ID_FORMULARIO)}}" class="btn btn-info"><i class="fa-solid fa-pen-to-square"></i> Editar</a>
                                     <button type="submit" class="btn btn-danger"><i class="fa-solid fa-trash"></i> Borrar</button>
                                 </form>
                             </td>

@@ -8,7 +8,7 @@
 
 @section('content')
     <div class="container">
-        <form action="/solequipos" method="POST">
+        <form action="{{route('solequipos.store')}}" method="POST">
             @csrf
             <div class="row">
                 <div class="col-md-6">
@@ -114,7 +114,7 @@
                     <option value="RECHAZADO">Rechazado</option>
                 </select>
             </div>
-            <a href="/solequipos" class="btn btn-secondary" tabindex="5">Cancelar</a>
+            <a href="{{route('solequipos.index')}}" class="btn btn-secondary" tabindex="5">Cancelar</a>
             <button type="submit" class="btn btn-primary">Enviar solicitud</button>
         </form>
     </div>

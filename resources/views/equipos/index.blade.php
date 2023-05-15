@@ -80,7 +80,7 @@
                                 <form action="{{ route('equipos.destroy',$equipo->ID_EQUIPO) }}" method="POST">
                                     @csrf
                                     @method('DELETE')
-                                    <a href="/equipos/{{$equipo->ID_EQUIPO}}/edit" class="btn btn-info"><i class="fa-solid fa-pen-to-square"></i> Editar</a>
+                                    <a href="{{route('equipos.edit',$equipo->ID_EQUIPO)}}" class="btn btn-info"><i class="fa-solid fa-pen-to-square"></i> Editar</a>
                                     <button type="submit" class="btn btn-danger"><i class="fa-solid fa-trash"></i> Borrar</button>
                                 </form>
                             </td>

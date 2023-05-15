@@ -8,7 +8,7 @@
 
 @section('content')
     <div class="container">
-        <form action="/solequipos/{{$solicitud->ID_SOL_EQUIPOS}}" method="POST">
+        <form action="{{route('solequipos.update',$solicitud->ID_SOL_EQUIPOS)}}" method="POST">
             @csrf
             @method('PUT')
             <div class="row">
@@ -146,8 +146,8 @@
             </div>
 
             <!-- Botones de envio -->
-            <div class="mb-6" style="padding: 1%;">
-                <a href="/solequipos" class="btn btn-secondary" tabindex="5"><i class="fa-solid fa-hand-point-left"></i> Cancelar</a>
+            <div class="mb-6">
+                <a href="{{route('solequipos.index')}}" class="btn btn-secondary" tabindex="5"><i class="fa-solid fa-hand-point-left"></i> Cancelar</a>
                 <button type="submit" class="btn btn-primary" tabindex="4"><i class="fa-sharp fa-solid fa-paper-plane"></i> Enviar Cambios</button>
             </div>
         </form>

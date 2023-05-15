@@ -84,7 +84,7 @@
                                     @csrf
                                     @method('DELETE')
                                     <a href="{{ route('formulariosSol.show',$solicitud->ID_SOL_FORM) }}" class="btn btn-primary"><i class="fa-regular fa-eye"></i> Ver</a>
-                                    <a href="/formulariosSol/{{$solicitud->ID_SOL_FORM}}/edit" class="btn btn-info"><i class="fa-solid fa-pen-to-square"></i> Editar</a>
+                                    <a href="{{route('formulariosSol.edit',$solicitud->ID_SOL_FORM)}}" class="btn btn-info"><i class="fa-solid fa-pen-to-square"></i> Editar</a>
                                     <button type="submit" class="btn btn-danger"><i class="fa-solid fa-trash"></i> Borrar</button>
                                 </form>
                             </td>

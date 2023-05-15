@@ -8,7 +8,7 @@
 
 @section('content')
     <div class="container">
-        <form action="/tipoequipos" method="POST">
+        <form action="{{route('tipoequipos.store')}}" method="POST">
             @csrf
             <div class="form-group">
                 <label for="TIPO_EQUIPO" class="form-label"><i class="fa-solid fa-person-chalkboard"></i> Nombre Tipo:</label>

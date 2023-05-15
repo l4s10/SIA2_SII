@@ -8,7 +8,7 @@
 
 @section('content')
     <div class="container">
-        <form action="/formularios" method="POST">
+        <form action="{{route('formularios.store')}}" method="POST">
             @csrf
             <div class="mb-3">
                 <label for="NOMBRE_FORMULARIO" class="form-label"><i class="fa-solid fa-person-chalkboard"></i> Nombre Formulario:</label>

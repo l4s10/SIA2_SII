@@ -75,7 +75,7 @@
                                 <form action="{{ route('tipomaterial.destroy',$tipo->ID_TIPO_MAT) }}" method="POST">
                                     @csrf
                                     @method('DELETE')
-                                    <a href="/tipomaterial/{{$tipo->ID_TIPO_MAT}}/edit" class="btn btn-info"><i class="fa-solid fa-pen-to-square"></i> Editar</a>
+                                    <a href="{{route('tipomaterial.edit', $tipo->ID_TIPO_MAT)}}" class="btn btn-info"><i class="fa-solid fa-pen-to-square"></i> Editar</a>
                                     <button type="submit" class="btn btn-danger"><i class="fa-solid fa-trash"></i> Borrar</button>
                                 </form>
                             </td>

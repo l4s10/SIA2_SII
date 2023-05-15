@@ -48,7 +48,7 @@
                                 <form action="{{ route('categoriasalas.destroy',$categoria->ID_CATEGORIA_SALA) }}" method="POST">
                                     @csrf
                                     @method('DELETE')
-                                    <a href="/categoriasalas/{{$categoria->ID_CATEGORIA_SALA}}/edit" class="btn btn-info"><i class="fa-solid fa-pen-to-square"></i> Editar</a>
+                                    <a href="{{route('categoriasalas.edit',$categoria->ID_CATEGORIA_SALA)}}" class="btn btn-info"><i class="fa-solid fa-pen-to-square"></i> Editar</a>
                                     <button type="submit" class="btn btn-danger"><i class="fa-solid fa-trash"></i> Borrar</button>
                                 </form>
                             </td>

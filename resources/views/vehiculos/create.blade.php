@@ -3,11 +3,11 @@
 @section('title', 'CRUD con laravel 10')
 
 @section('content_header')
-    <h1>Crear Artículo</h1>
+    <h1>Ingresar vehiculo</h1>
 @stop
 
 @section('content')
-    <form action="/vehiculos" method="POST">
+    <form action="{{route('vehiculos.store')}}" method="POST">
         @csrf
         <div class="mb-3">
             <label for="" class="form-label">Patente</label>
@@ -38,7 +38,7 @@
             <input id="ESTADO_VEHICULO" name="ESTADO_VEHICULO" type="text" class="form-control" tabindex="7">
         </div>
 
-        <a href="/vehiculos" class="btn btn-secondary" tabindex="5">Cancelar</a>
+        <a href="{{route('vehiculos.index')}}" class="btn btn-secondary" tabindex="5">Cancelar</a>
         <button type="submit" class="btn btn-primary" tabindex="4">Guardar</button>
     </form>
 @stop
