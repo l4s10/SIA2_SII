@@ -313,6 +313,23 @@ return [
             'icon'        => 'fas fa-fw fa-car',
         ],
         [
+            'text'        => 'Solicitudes vehiculares',
+            'url'         => '#',
+            'icon'        => 'fas fa-fw fa-car',
+            'submenu' => [
+                [
+                    'text'    => 'Ver Solicitudes',
+                    'url'     => 'reserva/vehiculo',
+                    'icon'    => 'fas fa-fw fa-eye',
+                ],
+                [
+                    'text'    => 'Solicitar',
+                    'url'     => 'reserva/vehiculo/create',
+                    'icon'    => 'fas fa-fw fa-plus',
+                ],
+            ],
+        ],
+        [
             'text'        => 'Materiales',
             'url'         => '#',
             'icon'        => 'fas fa-fw fa-paperclip',
