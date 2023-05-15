@@ -73,7 +73,7 @@ class SolicitudEquiposController extends Controller
         }catch(\Exception $e){
             session()->flash('error','Error al enviar la solicitud, vuelva a enviarlo más tarde.');
         }
-        return redirect('/solequipos');
+        return redirect(route('solequipos.index'));
     }
 
     /**
@@ -133,7 +133,7 @@ class SolicitudEquiposController extends Controller
         }catch(\Exception $e){
             session()->flash('error','Error al modificar la solicitud seleccionada, intentelo más tarde.');
         }
-        return redirect('/solequipos');
+        return redirect(route('solequipos'));
     }
 
     /**
@@ -148,7 +148,7 @@ class SolicitudEquiposController extends Controller
         }catch(\Exception $e){
             session()->flash('error','Error al eliminar la solicitud seleccionada');
         }
-        return redirect('/reparaciones');
+        return redirect(route('solequipos'));
     }
     //-----FUNCION QUE NOS PERMITE FORMATEAR EL RUT CON  PUNTOS Y GUIÓN.------
     public function formatRut($rut) {

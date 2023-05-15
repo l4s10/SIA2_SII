@@ -7,18 +7,28 @@
 @stop
 
 @section('content')
-    <!-- Contenedores para los mensajes -->
-    @if(session('success'))
-            <div class="alert alert-success alert-dismissible fade show" role="alert">
-            <strong>Exito! </strong>{{ session('success') }}
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-            </div>
-    @endif
-    @if(session('error'))
-            <div class="alert alert-danger alert-dissmissible fade show" role="alert">
-                {{ session('error') }}
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-            </div>
+    @if (session('success'))
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            Swal.fire({
+                icon: 'success',
+                title: '{{ session('success') }}',
+                confirmButtonText: 'OK',
+                confirmButtonColor: '#0064A0'
+            });
+        });
+    </script>
+    @elseif (session('error'))
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            Swal.fire({
+                icon: 'error',
+                title: '{{ session('error') }}',
+                confirmButtonText: 'OK',
+                confirmButtonColor: '#0064A0'
+            });
+        });
+    </script>
     @endif
     <div class="container-fluid">
         <div class="table-responsive">
@@ -29,11 +39,6 @@
                             <th scope="col">Rut</th>
                             <th scope="col">Departamento</th>
                             <th scope="col">Email</th>
-                            {{-- Colocar campps de formulario --}}
-                            {{-- <th scope="col">Tipo reparación</th>
-                            <th scope="col">Detalle</th>
-                            <th scope="col">Estado</th>
-                            <th scope="col">Observaciones</th> --}}
                             <th scope="col">Fecha</th>
                             <th scope="col">Acciones</th>
                         </tr>
@@ -45,19 +50,13 @@
                                 <td>{{ $sol_reparacion->RUT }}</td>
                                 <td>{{ $sol_reparacion->DEPTO}}</td>
                                 <td>{{ $sol_reparacion->EMAIL}}</td>
-                                {{-- agregando campos de formulario --}}
-                                {{-- <td>{{ $sol_reparacion->ID_TIPO_REP_GENERAL}}</td>
-                                <td>{{ $sol_reparacion->REP_SOL}}</td>
-                                <td>{{ $sol_reparacion->ESTADO_REP_INM}}</td>
-                                <td>{{ $sol_reparacion->OBSERV_REP_INM}}</td> --}}
-                                <!-- Carbon sirve para parsear datos, esta es una instancia de carbon -->
                                 <td>{{ $sol_reparacion->created_at->tz('America/Santiago')->format('d/m/Y H:i') }}</td>
                                 <td>
                                     <form action="{{ route('reparaciones.destroy',$sol_reparacion->ID_REP_INM) }}" method="POST">
                                         @csrf
                                         @method('DELETE')
                                         <a href="{{ route('reparaciones.show', $sol_reparacion->ID_REP_INM) }}" class="btn btn-primary"><i class="fa-solid fa-eye"></i> Ver</a>
-                                        <a href="/reparaciones/{{$sol_reparacion->ID_REP_INM}}/edit" class="btn btn-info"><i class="fa-regular fa-clipboard"></i> Revisar</a>
+                                        <a href="{{route('reparaciones.edit', $sol_reparacion->ID_REP_INM)}}" class="btn btn-info"><i class="fa-regular fa-clipboard"></i> Revisar</a>
                                         <button type="submit" class="btn btn-danger"><i class="fa-solid fa-trash"></i> Borrar</button>
                                     </form>
                                 </td>

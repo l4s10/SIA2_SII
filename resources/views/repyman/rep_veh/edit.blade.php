@@ -155,8 +155,8 @@
                 </div>
             </div>
             <!-- Botones de envio -->
-            <div class="mb-6" style="padding: 1%;">
-                <a href="/repyman" class="btn btn-secondary" tabindex="5"><i class="fa-solid fa-hand-point-left"></i> Cancelar</a>
+            <div class="mb-6">
+                <a href="{{route('repvehiculos.index')}}" class="btn btn-secondary" tabindex="5"><i class="fa-solid fa-hand-point-left"></i> Cancelar</a>
                 <button type="submit" class="btn btn-primary" tabindex="4"><i class="fa-sharp fa-solid fa-paper-plane"></i> Enviar Solicitud</button>
             </div>
         </div>

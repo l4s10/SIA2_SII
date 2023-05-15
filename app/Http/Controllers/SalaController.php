@@ -62,7 +62,7 @@ class SalaController extends Controller
         }catch(\Exception $e){
             session()->flash('error','Error al crear la sala.'. $e->getMessage());
         }
-        return redirect('/salas');
+        return redirect(route('salas.index'));
     }
 
     /**
@@ -115,7 +115,7 @@ class SalaController extends Controller
         }catch(\Exception $e){
             session()->flash('error','Error al modificar la sala seleccionada');
         }
-        return redirect('/salas');
+        return redirect(route('salas.index'));
     }
 
     /**

@@ -53,7 +53,7 @@ class CategoriaSalaController extends Controller
         }catch(\Exception $e){
             session()->flash('error','Error al crear la categoria de sala');
         }
-        return redirect('/categoriasalas');
+        return redirect(route('categoriasalas.index'));
     }
 
     /**
@@ -99,7 +99,7 @@ class CategoriaSalaController extends Controller
         }catch(\Exception $e){
             session()->flash('error','Error al modificar la categoria seleccionada');
         }
-        return redirect('/categoriasalas');
+        return redirect(route('categoriasalas.index'));
     }
 
     /**
@@ -114,6 +114,6 @@ class CategoriaSalaController extends Controller
         }catch(\Exception $e){
             session()->flash('error','Error al eliminar la categoria seleccionada.');
         }
-        return redirect('/categoriasalas');
+        return redirect(route('categoriasalas.index'));
     }
 }

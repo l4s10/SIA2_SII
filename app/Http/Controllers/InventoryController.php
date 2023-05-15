@@ -10,15 +10,6 @@ class InventoryController extends Controller
 {
     public function updateStock(Request $request)
     {
-        // $materialId = $request->input('materialId');
-        // $cantidadRestar = $request->input('cantidadRestar');
-
-        // // Llama a la función almacenada en la base de datos
-        // $nuevoStock = DB::select('CALL actualizar_stock(?, ?)', [$materialId, $cantidadRestar]);
-
-        // return response()->json(['nuevoStock' => $nuevoStock]);
-        //-----------------------------------------------------------------
-        // Recupera el array de cantidades autorizadas
         $cantidades_autorizadas = $request->input('cantidad_autorizada');
 
         // Procesa cada cantidad autorizada

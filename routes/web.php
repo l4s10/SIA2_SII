@@ -20,7 +20,7 @@ Route::get('/', function () {
 //Rutas para testear vistas
 Route::get('/repyman', function(){
     return view('repyman.index');
-});
+})->name('repyman.index');
 //Dashboard para modulo reserva salas y visitas a bodega
 Route::get('/reservas', function(){
     return view('reservas.dashboard');

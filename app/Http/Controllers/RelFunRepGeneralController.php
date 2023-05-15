@@ -65,7 +65,7 @@ class RelFunRepGeneralController extends Controller
             'ID_TIPO_REP_GENERAL.required' => 'El campo "Area Solicitada" es obligatorio.',
             'REP_SOL.required' => 'El campo "Solicitud" es obligatorio.',
             'REP_SOL.max' => 'El campo "Solicitud" no debe exceder los 1000 caracteres.',
-    
+
         ];
         //Funcion que valida nuestros datos enviados en el formulario en base a las reglas.
         $request->validate($rules, $messages);
@@ -82,7 +82,7 @@ class RelFunRepGeneralController extends Controller
         }catch(\Exception $e){
             session()->flash('error','Error al crear la solicitud, vuelva a intentarlo más tarde.');
         }
-        return redirect('/repyman');
+        return redirect(route('repyman.index'));
     }
 
     /**
@@ -155,7 +155,7 @@ class RelFunRepGeneralController extends Controller
         }catch(\Exception $e){
             session()->flash('error','Error al crear la solicitud, vuelva a intentarlo más tarde.');
         }
-        return redirect('/repyman');
+        return redirect(route('repyman.index'));
     }
 
     /**
@@ -170,7 +170,7 @@ class RelFunRepGeneralController extends Controller
         }catch(\Exception $e){
             session()->flash('error','Error al eliminar la solicitud seleccionada.');
         }
-        return redirect('/reparaciones');
+        return redirect(route('reparaciones.index'));
     }
     //-----FUNCION QUE NOS PERMITE FORMATEAR EL RUT CON  PUNTOS Y GUIÓN.------
     public function formatRut($rut) {
