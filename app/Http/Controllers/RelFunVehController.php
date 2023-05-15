@@ -76,6 +76,7 @@ class RelFunVehController extends Controller
             $conductores = User::all();
             $departamentos = Departamento::all();
             $solicitud = RelFunVeh::find($id);
+            $autos = Vehiculo::all();
             return view('rel_fun_veh.edit',compact('solicitud','tipo_vehiculos','vehiculos','conductores','departamentos'));
         }catch(\Exception $e){
             session()->flash('error','Hubo un error al cargar la solicitud, vuelva a intentarlo mas tarde');

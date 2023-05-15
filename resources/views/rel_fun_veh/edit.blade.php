@@ -100,45 +100,83 @@
 
 
             <div class="mb-3">
-                <label for="MOTIVO_SOL_VEHICULO" class="form-label"><i class="fa-solid fa-file-pen"></i> Motivo de solicitud:</label>
-                <textarea id="MOTIVO_SOL_VEHICULO" name="MOTIVO_SOL_VEHICULO" class="form-control @error('MOTIVO_SOL_VEHICULO') is-invalid @enderror" aria-label="With textarea" rows="5" placeholder="Escriba el motivo de su solicitud (MÁX 1000 CARACTERES)">{{ old('MOTIVO_SOL_VEHICULO') }}</textarea>
-                @error('MOTIVO_SOL_VEHICULO')
+                <label for="MOTIVO_SOL_VEH" class="form-label"><i class="fa-solid fa-file-pen"></i> Motivo de solicitud:</label>
+                <textarea id="MOTIVO_SOL_VEH" name="MOTIVO_SOL_VEH" class="form-control @error('MOTIVO_SOL_VEH') is-invalid @enderror" aria-label="With textarea" rows="5" placeholder="Escriba el motivo de su solicitud (MÁX 1000 CARACTERES)">{{ $solicitud->MOTIVO_SOL_VEH }}</textarea>
+                @error('MOTIVO_SOL_VEH')
                     <div class="invalid-feedback">{{ $message }}</div>
                 @enderror
             </div>
 
             <div class="mb-3">
                 <label for="NOMBRE_OCUPANTES" class="form-label"><i class="fa-solid fa-users-line"></i> Ocupantes:</label>
-                <textarea id="NOMBRE_OCUPANTES" name="NOMBRE_OCUPANTES" class="form-control @error('NOMBRE_OCUPANTES') is-invalid @enderror" aria-label="With textarea" rows="5" placeholder="Nombre Nombre Apellido Apellido">{{ old('NOMBRE_OCUPANTES') }}</textarea>
+                <textarea id="NOMBRE_OCUPANTES" name="NOMBRE_OCUPANTES" class="form-control @error('NOMBRE_OCUPANTES') is-invalid @enderror" aria-label="With textarea" rows="5" placeholder="Nombre Nombre Apellido Apellido">{{ $solicitud->NOMBRE_OCUPANTES }}</textarea>
                 @error('NOMBRE_OCUPANTES')
                     <div class="invalid-feedback">{{ $message }}</div>
                 @enderror
             </div>
-
+            {{-- *FECHAS SOLICITADAS* --}}
             <div class="form-group">
                 <label for="FECHA_SALIDA_SOL_VEH"><i class="fa-solid fa-calendar"></i> Fecha de inicio y término:</label>
                 <div class="input-group">
-                    <input type="text" id="FECHA_SALIDA_SOL_VEH" name="FECHA_SALIDA_SOL_VEH" class="form-control @if($errors->has('FECHA_SALIDA_SOL_VEH')) is-invalid @endif" placeholder="Ingrese la fecha" data-input required value="{{ old('FECHA_SALIDA_SOL_VEH') }}">
+                    <input type="text" id="FECHA_SALIDA_SOL_VEH" name="FECHA_SALIDA_SOL_VEH" class="form-control @if($errors->has('FECHA_SALIDA_SOL_VEH')) is-invalid @endif" placeholder="Ingrese la fecha" data-input required value="{{ $solicitud->FECHA_SALIDA_SOL_VEH }}">
                     {{-- *HORA SOLICITADA* --}}
-                    <input type="text" id="HORA_SALIDA_SOL_VEH" name="HORA_SALIDA_SOL_VEH" class="form-control flatpickr @if($errors->has('HORA_SALIDA_SOL_VEH')) is-invalid @endif" placeholder="Seleccione la hora de salida" data-input required value="{{ old('HORA_SALIDA_SOL_VEH') }}">
-                    <input type="text" id="HORA_LLEGADA_SOL_VEH" name="HORA_LLEGADA_SOL_VEH" class="form-control flatpickr @if($errors->has('HORA_LLEGADA_SOL_VEH')) is-invalid @endif" placeholder="Seleccione la hora de llegada" data-input required value="{{ old('HORA_LLEGADA_SOL_VEH') }}">
+                    <input type="text" id="HORA_SALIDA_SOL_VEH" name="HORA_SALIDA_SOL_VEH" class="form-control flatpickr @if($errors->has('HORA_SALIDA_SOL_VEH')) is-invalid @endif" placeholder="Seleccione la hora de salida" data-input required value="{{ $solicitud->HORA_SALIDA_SOL_VEH }}">
+                    <input type="text" id="HORA_LLEGADA_SOL_VEH" name="HORA_LLEGADA_SOL_VEH" class="form-control flatpickr @if($errors->has('HORA_LLEGADA_SOL_VEH')) is-invalid @endif" placeholder="Seleccione la hora de llegada" data-input required value="{{ $solicitud->HORA_LLEGADA_SOL_VEH }}">
                     <button type="button" id="clearButton" class="btn btn-danger">Limpiar</button>
                 </div>
                 @if ($errors->has('FECHA_SOL_SALA'))
                     <div class="invalid-feedback">{{ $errors->first('FECHA_SOL_SALA') }}</div>
                 @endif
             </div>
-
+            {{-- *MODIFICADO POR* --}}
+            <div class="mb-3" hidden>
+                <label for="MODIFICADO_POR_SOL_VEH" class="form-label"><i class="fa-solid fa-user"></i> Modificado por:</label>
+                <input type="text" id="MODIFICADO_POR_SOL_VEH" name="MODIFICADO_POR_SOL_VEH" class="form-control{{ $errors->has('MODIFICADO_POR_SOL_VEH') ? ' is-invalid' : '' }}" value="{{ auth()->user()->NOMBRES}} {{auth()->user()->APELLIDOS}}" placeholder="Ej: ANDRES RODRIGO SUAREZ MATAMALA" readonly>
+                @if ($errors->has('MODIFICADO_POR_SOL_VEH'))
+                <div class="invalid-feedback">
+                    {{ $errors->first('MODIFICADO_POR') }}
+                </div>
+                @endif
+            </div>
+            {{-- *OBSERVACIONES* --}}
+            <div class="mb-3">
+                <label for="OBSERV_SOL_VEH" class="form-label"><i class="fa-solid fa-file-pen"></i> Observaciones:</label>
+                <textarea id="OBSERV_SOL_VEH" name="OBSERV_SOL_VEH" class="form-control @error('OBSERV_SOL_VEH') is-invalid @enderror" aria-label="With textarea" rows="5" placeholder="Escriba sus observaciones (MÁX 1000 CARACTERES)">{{ $solicitud->OBSERV_SOL_VEH }}</textarea>
+                @error('OBSERV_SOL_VEH')
+                    <div class="invalid-feedback">{{ $message }}</div>
+                @enderror
+            </div>
+            <div class="mb-3">
+                <label for="PATENTE_VEHICULO" class="form-label"><i class="fa-solid fa-car-on"></i> Asignar vehiculos:</label>
+                <select id="PATENTE_VEHICULO" name="PATENTE_VEHICULO" class="form-control @if($errors->has('PATENTE_VEHICULO')) is-invalid @endif">
+                    <option value="">-- Seleccione el vehículo a asignar --</option>
+                    @foreach ($vehiculos->groupBy('UNIDAD_VEHICULO') as $grupo => $autos)
+                        <optgroup label="{{ $grupo }}">
+                            @foreach ($autos as $auto)
+                                @if ($auto->tipoVehiculo->ID_TIPO_VEH === $solicitud->ID_TIPO_VEH)
+                                    <option value="{{ $auto->PATENTE_VEHICULO }}" @if ($auto->PATENTE_VEHICULO === $solicitud->PATENTE_VEHICULO) selected @endif>
+                                        {{ $auto->PATENTE_VEHICULO }} ({{ $auto->tipoVehiculo->TIPO_VEHICULO }})
+                                    </option>
+                                @endif
+                            @endforeach
+                        </optgroup>
+                    @endforeach
+                </select>
+                @if($errors->has('PATENTE_VEHICULO'))
+                    <div class="invalid-feedback">{{$errors->first('PATENTE_VEHICULO')}}</div>
+                @endif
+            </div>
+            {{-- **ESTADO SOLICITUD --}}
             <div class="mb-3">
                 <label for="ESTADO_SOL_VEH" class="form-label"><i class="fa-solid fa-file-circle-check"></i> Estado de la Solicitud:</label>
-                <select id="ESTADO_SOL_VEH" name="ESTADO_SOL_VEH" class="form-control" disabled>
-                    <option value="INGRESADO" selected>Ingresado</option>
-                    <option value="EN REVISION">En revisión</option>
-                    <option value="ACEPTADO">Aceptado</option>
-                    <option value="RECHAZADO">Rechazado</option>
+                <select id="ESTADO_SOL_VEH" name="ESTADO_SOL_VEH" class="form-control">
+                    <option value="INGRESADO" @if ($solicitud->ESTADO_SOL_VEH === 'INGRESADO') selected @endif>Ingresado</option>
+                    <option value="EN REVISION" @if ($solicitud->ESTADO_SOL_VEH === 'EN REVISION') selected @endif>En revisión</option>
+                    <option value="ACEPTADO" @if ($solicitud->ESTADO_SOL_VEH === 'ACEPTADO') selected @endif>Aceptado</option>
+                    <option value="RECHAZADO" @if ($solicitud->ESTADO_SOL_VEH === 'RECHAZADO') selected @endif>Rechazado</option>
                 </select>
             </div>
-            <a href="/solequipos" class="btn btn-secondary" tabindex="5">Cancelar</a>
+            <a href="{{route('solicitud.vehiculos.index')}}" class="btn btn-secondary" tabindex="5">Cancelar</a>
             <button type="submit" class="btn btn-primary">Enviar solicitud</button>
         </form>
     </div>
