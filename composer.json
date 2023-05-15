@@ -4,7 +4,7 @@
     "description": "The Laravel Framework.",
     "keywords": ["framework", "laravel"],
     "license": "MIT",
-    "version": "1.0.0",
+    "version": "1.1.5",
     "authors": [
         {
             "name": "Francisco Muñoz",
@@ -16,6 +16,10 @@
         },
         {
             "name": "Cristian Barriga",
+            "role": "Desarrollador"
+        },
+        {
+            "name": "Ricardo Flores",
             "role": "Desarrollador"
         }
     ],
