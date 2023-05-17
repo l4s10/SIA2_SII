@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\CategoriaSala;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\Auth;
+
 
 class CategoriaSalaController extends Controller
 {
@@ -12,8 +14,18 @@ class CategoriaSalaController extends Controller
      * Display a listing of the resource.
      */
     // Esta funcion protege nuestro controlador para que solo las personas logueadas puedan entrar
-    public function __construct(){
+    public function __construct()
+    {
         $this->middleware('auth');
+        $this->middleware(function ($request, $next) {
+            $user = Auth::user();
+
+            if ($user->hasRole('ADMINISTRADOR') || $user->hasRole('INFORMATICA')) {
+                return $next($request);
+            } else {
+                abort(403, 'Acceso no autorizado');
+            }
+        });
     }
     public function index()
     {

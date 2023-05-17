@@ -9,20 +9,47 @@ use Illuminate\Http\Request;
 //Para formatear fechas
 use Carbon\Carbon;
 
+use Illuminate\Support\Facades\Auth;
+
 class SolicitudEquiposController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     //Funcion para acceder a las rutas SOLO SI los usuarios estan logueados
-    public function __construct(){
+    public function __construct()
+    {
         $this->middleware('auth');
-        //Tambien aqui podremos agregar que roles son los que pueden ingresar
+        $this->middleware(function ($request, $next) {
+            $user = Auth::user();
+
+            if ($user->hasRole('ADMINISTRADOR')) {
+                return $next($request);
+            } elseif ($user->hasRole('INFORMATICA')) {
+                if ($request->route()->getActionMethod() === 'destroy') {
+                    abort(403, 'Acceso no autorizado');
+                }
+                return $next($request);
+            } else {
+                if ($request->route()->getActionMethod() !== 'index' && $request->route()->getActionMethod() !== 'create' && $request->route()->getActionMethod() !== 'store' && $request->route()->getActionMethod() !== 'show') {
+                    abort(403, 'Acceso no autorizado');
+                }
+                return $next($request);
+            }
+        });
     }
+
     public function index()
     {
-        $solicitudes = SolicitudEquipos::all();
-        return view('solicitudequipos.index',compact('solicitudes'));
+        $user = Auth::user();
+
+        if ($user->hasAnyRole(['ADMINISTRADOR', 'INFORMATICA'])) {
+            $solicitudes = SolicitudEquipos::all();
+        } else {
+            $solicitudes = SolicitudEquipos::where('ID_USUARIO', $user->id)->get();
+        }
+
+        return view('solicitudequipos.index', compact('solicitudes'));
     }
 
     /**

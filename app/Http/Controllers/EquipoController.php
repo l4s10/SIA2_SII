@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Equipo;
 use App\Models\TipoEquipo;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class EquipoController extends Controller
 {
@@ -12,9 +13,18 @@ class EquipoController extends Controller
      * Display a listing of the resource.
      */
     //Funcion para acceder a las rutas SOLO SI los usuarios estan logueados
-    public function __construct(){
+    public function __construct()
+    {
         $this->middleware('auth');
-        //Tambien aqui podremos agregar que roles son los que pueden ingresar
+        $this->middleware(function ($request, $next) {
+            $user = Auth::user();
+
+            if ($user->hasRole('ADMINISTRADOR') || $user->hasRole('INFORMATICA')) {
+                return $next($request);
+            } else {
+                abort(403, 'Acceso no autorizado');
+            }
+        });
     }
     public function index()
     {

@@ -6,26 +6,46 @@ use Illuminate\Http\Request;
 use App\Models\SolicitudMateriales;
 use App\Models\TipoMaterial;
 use App\Models\Material;
-
+use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\InventoryController; // Importa la clase InventoryController
 
 class SolMatController extends Controller
 {
     //Funcion para acceder a las rutas SOLO SI los usuarios estan logueados
-    public function __construct(){
-        // $this->middleware('auth');
-        $this->middleware('checkUserPermission:Nivel 1', ['only' => ['index', 'show', 'create', 'store']]);
-        $this->middleware('checkUserPermission:Nivel 2', ['only' => ['edit', 'update']]);
-        $this->middleware('checkUserPermission:Nivel 3', ['only' => ['destroy']]);
+    //En este caso ADMINISTRADOR (acceso total)
+    //SERVICIOS (permisos nivel 2)
+    //INFORMATICA (acceso SOLO a crear solicitudes propias y verlas)
+    //FUNCIONARIO (igual que INFORMATICA)
+    //JURIDICO (igual que INFORMATICA)
+    public function __construct()
+    {
+        $this->middleware('auth');
+        $this->middleware(function ($request, $next) {
+            $user = Auth::user();
+
+            if ($user->hasRole('ADMINISTRADOR')) {
+                return $next($request);
+            } elseif ($user->hasRole('SERVICIOS')) {
+                if ($request->route()->getActionMethod() === 'destroy') {
+                    abort(403, 'Acceso no autorizado');
+                }
+                return $next($request);
+            } else {
+                if ($request->route()->getActionMethod() !== 'index' && $request->route()->getActionMethod() !== 'create' && $request->route()->getActionMethod() !== 'store' && $request->route()->getActionMethod() !== 'show') {
+                    abort(403, 'Acceso no autorizado');
+                }
+                return $next($request);
+            }
+        });
     }
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $user = auth()->user();
+        $user = Auth::user();
 
-        if ($user->hasAnyPermission(['Nivel 2', 'Nivel 3'])) {
+        if ($user->hasAnyRole(['ADMINISTRADOR', 'SERVICIOS'])) {
             $sol_materiales = SolicitudMateriales::all();
         } else {
             $sol_materiales = SolicitudMateriales::where('ID_USUARIO', $user->id)->get();

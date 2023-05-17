@@ -29,6 +29,8 @@ class DatabaseSeeder extends Seeder
             MaterialSeeder::class,
             FormularioSeeder::class,
             EquipoSeeder::class,
+            CategoriaSalasSeeder::class,
+            VehiculosSeeder::class,
         ]);
     }
 }

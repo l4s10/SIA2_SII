@@ -7,15 +7,45 @@ use Illuminate\Http\Request;
 use App\Models\SolicitudBodegas;
 use App\Models\Sala;
 
+use Illuminate\Support\Facades\Auth;
+
 class SolicitudBodegasController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+        $this->middleware(function ($request, $next) {
+            $user = Auth::user();
+
+            if ($user->hasRole('ADMINISTRADOR')) {
+                return $next($request);
+            } elseif ($user->hasRole('INFORMATICA')) {
+                if ($request->route()->getActionMethod() === 'destroy') {
+                    abort(403, 'Acceso no autorizado');
+                }
+                return $next($request);
+            } else {
+                if ($request->route()->getActionMethod() !== 'index' && $request->route()->getActionMethod() !== 'create' && $request->route()->getActionMethod() !== 'store' && $request->route()->getActionMethod() !== 'show') {
+                    abort(403, 'Acceso no autorizado');
+                }
+                return $next($request);
+            }
+        });
+    }
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $solicitudes = SolicitudBodegas::all();
-        return view('reservas.reservabodegas.index',compact('solicitudes'));
+        $user = Auth::user();
+
+        if ($user->hasAnyRole(['ADMINISTRADOR', 'INFORMATICA'])) {
+            $solicitudes = SolicitudBodegas::all();
+        } else {
+            $solicitudes = SolicitudBodegas::where('ID_USUARIO', $user->id)->get();
+        }
+
+        return view('reservas.reservabodegas.index', compact('solicitudes'));
     }
 
     /**

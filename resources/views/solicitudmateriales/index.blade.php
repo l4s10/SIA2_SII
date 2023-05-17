@@ -90,11 +90,10 @@
                                         @csrf
                                         @method('DELETE')
                                         <a href="{{ route('solmaterial.show',$sol_material->ID_SOLICITUD) }}" class="btn btn-primary"><i class="fa-regular fa-eye"></i> Ver</a>
-                                        @can('Nivel 2','Nivel 3')
+                                        @role('ADMINISTRADOR|SERVICIOS')
                                         <a href="{{route('solmaterial.edit', $sol_material->ID_SOLICITUD)}}" class="btn btn-info"><i class="fa-regular fa-clipboard"></i> Revisar</a>
-                                        @endcan
-                                        @role(
-                                        'ADMINISTRADOR')
+                                        @endrole
+                                        @role('ADMINISTRADOR')
                                             <button type="submit" class="btn btn-danger"><i class="fa-solid fa-trash"></i> Borrar</button>
                                         @endrole
                                     </form>

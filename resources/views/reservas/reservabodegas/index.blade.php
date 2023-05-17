@@ -61,8 +61,12 @@
                                         @csrf
                                         @method('DELETE')
                                         <a href="{{ route('solicitud.bodegas.show',$sol_bodega->ID_SOL_BODEGA) }}" class="btn btn-primary"><i class="fa-regular fa-eye"></i> Ver</a>
+                                        @role('ADMINISTRADOR|INFORMATICA')
                                         <a href="{{route('solicitud.bodegas.edit',$sol_bodega->ID_SOL_BODEGA)}}" class="btn btn-info"><i class="fa-regular fa-clipboard"></i> Revisar</a>
+                                        @endrole
+                                        @role('ADMINISTRADOR')
                                         <button type="submit" class="btn btn-danger"><i class="fa-solid fa-trash"></i> Borrar</button>
+                                        @endrole
                                     </form>
                                 </td>
                             </tr>

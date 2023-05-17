@@ -81,7 +81,7 @@
             {{-- *SELECCIONAR BODEGA* --}}
             <div class="form-group">
                 <label for="BODEGA_PEDIDA" class="form-label"><i class="fa-solid fa-person-shelter"></i> Bodega a solicitar:</label>
-                <select id="BODEGA_PEDIDA" name="BODEGA_PEDIDA" class="form-control">
+                <select id="BODEGA_PEDIDA" name="BODEGA_PEDIDA" class="form-control" required>
                     <option value="" selected>--Seleccione una bodega--</option>
                     @foreach ($salas as $sala)
                         @if ($sala->categoriaSala->CATEGORIA_SALA == 'BODEGAS')
@@ -166,6 +166,22 @@
                 onReady: function(selectedDates, dateStr, instance) {
                     $('#clearButton').on('click', function() {
                         instance.clear();
+                    });
+                }
+            });
+            $('form').on('submit', function (e) {
+                var fecha = $('#FECHA_SOL_BODEGA').val();
+                var hora = $('#HORA_SOL_BODEGA').val();
+
+                if (!fecha || !hora) {
+                    e.preventDefault(); // Cancela el envío del formulario
+                    // Muestra un mensaje de error utilizando SweetAlert2
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: 'Por favor, complete todos los campos obligatorios.',
+                        confirmButtonColor: '#3085d6',
+                        confirmButtonText: 'Aceptar'
                     });
                 }
             });

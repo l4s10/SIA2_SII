@@ -9,12 +9,24 @@ use App\Models\Material;
 use App\Models\TipoMaterial;
 //Importamos paquete de validacion
 use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\Auth;
+
 
 class MaterialController extends Controller
 {
     // Esta funcion protege nuestro controlador para que solo las personas logueadas puedan entrar
-    public function __construct(){
+    public function __construct()
+    {
         $this->middleware('auth');
+        $this->middleware(function ($request, $next) {
+            $user = Auth::user();
+
+            if ($user->hasRole('ADMINISTRADOR') || $user->hasRole('SERVICIOS')) {
+                return $next($request);
+            } else {
+                abort(403, 'Acceso no autorizado');
+            }
+        });
     }
     /**
      * Display a listing of the resource.

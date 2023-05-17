@@ -106,28 +106,29 @@
             {{--**LISTO**--}}
             <div class="mb-3">
                 <label for="MOTIVO_SOL_SALA" class="form-label"><i class="fa-solid fa-file-pen"></i> Motivo de reserva:</label>
-                <textarea class="form-control" id="MOTIVO_SOL_SALA" name="MOTIVO_SOL_SALA" placeholder="Escriba el motivo de solicitud de reserva" aria-label="With textarea"></textarea>
+                <textarea class="form-control" id="MOTIVO_SOL_SALA" name="MOTIVO_SOL_SALA" placeholder="Escriba el motivo de solicitud de reserva" aria-label="With textarea" required></textarea>
             </div>
             {{--**LISTO**--}}
             <div class="mb-3">
                 <label for="CANT_PERSONAS_SOL_SALAS" class="form-label"><i class="fa-solid fa-people-line"></i> Cantidad de personas:</label>
-                <input type="number" class="form-control" id="CANT_PERSONAS_SOL_SALAS" name="CANT_PERSONAS_SOL_SALAS" placeholder="Escriba la cantidad de personas para el uso de la sala" min="1" max="100" value="1">
+                <input type="number" class="form-control" id="CANT_PERSONAS_SOL_SALAS" name="CANT_PERSONAS_SOL_SALAS" placeholder="Escriba la cantidad de personas para el uso de la sala" min="1" max="100" value="1" required>
             </div>
             {{-- *FECHA SOLICITADA* --}}
             <div class="form-group">
                 <label for="FECHA_SOL_SALA"><i class="fa-solid fa-calendar"></i> Fecha solicitada:</label>
                 <div class="input-group">
-                    <input type="date" id="FECHA_SOL_SALA" name="FECHA_SOL_SALA" class="form-control @if($errors->has('FECHA_SOL_SALA')) is-invalid @endif" placeholder="Ingrese la fecha" data-input required value="{{ old('FECHA_SOL_SALA') }}">
+                    <input type="text" id="FECHA_SOL_SALA" name="FECHA_SOL_SALA" class="form-control @if($errors->has('FECHA_SOL_SALA')) is-invalid @endif" placeholder="Ingrese la fecha" required value="{{ old('FECHA_SOL_SALA') }}">
                     {{-- *HORA INICIO SOLICITADA* --}}
-                    <input type="text" id="HORA_SOL_SALA" name="HORA_SOL_SALA" class="form-control flatpickr @if($errors->has('HORA_SOL_SALA')) is-invalid @endif" placeholder="Seleccione la hora de inicio" data-input required value="{{ old('HORA_SOL_SALA') }}">
+                    <input type="text" id="HORA_SOL_SALA" name="HORA_SOL_SALA" class="form-control @if($errors->has('HORA_SOL_SALA')) is-invalid @endif" placeholder="Seleccione la hora de inicio" required value="{{ old('HORA_SOL_SALA') }}">
                     {{-- Hora termino solicitada --}}
-                    <input type="text" id="HORA_TERM_SOL_SALA" name="HORA_TERM_SOL_SALA" class="form-control flatpickr @if($errors->has('HORA_TERM_SOL_SALA')) is-invalid @endif" placeholder="Seleccione la hora de término" data-input required value="{{ old('HORA_TERM_SOL_SALA') }}">
+                    <input type="text" id="HORA_TERM_SOL_SALA" name="HORA_TERM_SOL_SALA" class="form-control @if($errors->has('HORA_TERM_SOL_SALA')) is-invalid @endif" placeholder="Seleccione la hora de término" required value="{{ old('HORA_TERM_SOL_SALA') }}">
                     <button type="button" id="clearButton" class="btn btn-danger">Limpiar</button>
                 </div>
                 @if ($errors->has('FECHA_SOL_SALA'))
                     <div class="invalid-feedback">{{ $errors->first('FECHA_SOL_SALA') }}</div>
                 @endif
             </div>
+
             {{-- **LISTO** --}}
             <div class="mb-3" hidden>
                 <label for="ESTADO_SOL_SALA" class="form-label"><i class="fa-solid fa-file-circle-check"></i> Estado de la Solicitud:</label>
@@ -222,6 +223,23 @@
                 onReady: function(selectedDates, dateStr, instance) {
                     $('#clearButton').on('click', function() {
                         instance.clear();
+                    });
+                }
+            });
+            $('form').on('submit', function (e) {
+                var fecha = $('#FECHA_SOL_SALA').val();
+                var horaInicio = $('#HORA_SOL_SALA').val();
+                var horaTermino = $('#HORA_TERM_SOL_SALA').val();
+
+                if (!fecha || !horaInicio || !horaTermino) {
+                    e.preventDefault(); // Cancela el envío del formulario
+                    // Muestra un mensaje de error o realiza alguna acción adicional
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: 'Por favor, complete todos los campos obligatorios.',
+                        confirmButtonColor: '#3085d6',
+                        confirmButtonText: 'Aceptar'
                     });
                 }
             });

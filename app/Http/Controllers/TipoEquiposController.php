@@ -5,15 +5,25 @@ namespace App\Http\Controllers;
 use App\Models\TipoEquipo;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\Auth;
 
 class TipoEquiposController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function __construct(){
+    public function __construct()
+    {
         $this->middleware('auth');
+        $this->middleware(function ($request, $next) {
+            $user = Auth::user();
 
+            if ($user->hasRole('ADMINISTRADOR') || $user->hasRole('INFORMATICA')) {
+                return $next($request);
+            } else {
+                abort(403, 'Acceso no autorizado');
+            }
+        });
     }
     public function index()
     {

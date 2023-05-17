@@ -81,7 +81,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('users');
         Schema::dropIfExists('departamento');
         Schema::dropIfExists('region');
         Schema::dropIfExists('ubicacion');
@@ -90,5 +89,6 @@ return new class extends Migration
         Schema::dropIfExists('grado');
         Schema::dropIfExists('calidad_juridica');
         Schema::dropIfExists('sexo');
+        Schema::dropIfExists('users');
     }
 };
