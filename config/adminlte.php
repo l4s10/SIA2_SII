@@ -308,12 +308,7 @@ return [
         ],
         ['header' => 'Módulos Funcionario'],
         [
-            'text'        => 'Vehículos',
-            'url'         => 'vehiculos',
-            'icon'        => 'fas fa-fw fa-car',
-        ],
-        [
-            'text'        => 'Solicitudes vehiculares',
+            'text'        => 'Solicitud de vehículos',
             'url'         => '#',
             'icon'        => 'fas fa-fw fa-car',
             'submenu' => [
@@ -472,6 +467,11 @@ return [
             'icon'        => 'fas fa-fw fa-solid fa-chart-simple',
         ],
         ['header' => 'Módulos Administrador'],
+        [
+            'text'        => 'Administrar vehículos',
+            'url'         => 'vehiculos',
+            'icon'        => 'fas fa-fw fa-car',
+        ],
         [
             'text'        => 'Administrar Usuarios',
             'url'         => '/funcionarios',
