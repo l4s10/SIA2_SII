@@ -322,6 +322,12 @@ return [
                     'url'     => 'reserva/vehiculo/create',
                     'icon'    => 'fas fa-fw fa-plus',
                 ],
+                [
+                    'text'    => 'Autorizar',
+                    'url'     => 'reserva/vehiculo/edit',
+                    'icon'    => 'fa-solid fa-file-circle-check',
+                ],
+
             ],
         ],
         [
@@ -467,18 +473,35 @@ return [
             'icon'        => 'fas fa-fw fa-solid fa-chart-simple',
         ],
         ['header' => 'Módulos Administrador'],
+
         [
-            'text'        => 'Administrar vehículos',
-            'url'         => 'vehiculos',
-            'icon'        => 'fas fa-fw fa-car',
+            'text'        => 'Panel de control',
+            'url'         => '#',
+            'icon'        => 'fas fa-fw fa-gears',
+            'submenu' => [
+                [
+                    'text'        => 'Administrar Usuarios',
+                    'url'         => '/funcionarios',
+                    'icon'        => 'fas fa-fw fa-users',
+                ],
+                [
+                    'text'        => 'Administrar Vehiculos',
+                    'url'         => '/reserva/vehiculo',
+                    'icon'        => 'fas fa-fw fa-car',
+                ],
+                [
+                    'text'        => 'Administrar Regiones',
+                    'url'         => '/regiones',
+                    'icon'        => 'fas fa-fw fa-earth-americas',
+                ],
+                [
+                    'text'        => 'Administrar Comunas',
+                    'url'         => '/comunas',
+                    'icon'        => 'fas fa-fw fa-street-view',
+                ],
+            ]
         ],
-        [
-            'text'        => 'Administrar Usuarios',
-            'url'         => '/funcionarios',
-            'icon'        => 'fas fa-fw fa-users',
-            // 'label'       => 'CRUD',
-            // 'label_color' => 'danger',
-        ],
+
         // [
         //     'text'       => 'important',
         //     'icon_color' => 'red',

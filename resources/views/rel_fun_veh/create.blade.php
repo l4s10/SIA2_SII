@@ -108,6 +108,16 @@
                 @enderror
             </div>
 
+            <!--<div class="mb-3">
+                <label for="DEPTO" class="form-label"><i class="fa-solid fa-building-user"></i> Departamento:</label>
+                <select id="DEPTO" name="DEPTO" class="form-control">
+                    <option value="" selected>--Seleccione un departamento--</option>
+                    @foreach ($departamentos as $departamento)
+                        <option value="{{ $departamento->id }}">{{ $departamento->nombre }}</option>
+                    @endforeach
+                </select>
+            </div>-->
+
             <div class="form-group">
                 <label for="FECHA_SALIDA_SOL_VEH"><i class="fa-solid fa-calendar"></i> Fecha de inicio y término:</label>
                 <div class="input-group">
@@ -122,6 +132,69 @@
                 @endif
             </div>
 
+        <div class="row">
+                <div class="col-md-6">
+                    <div class="mb-3">
+                            <label for="ID_TIPO_VEH" class="form-label"><i class="fa-solid fa-map"></i> Comuna origen:</label>
+                            <select id="ID_TIPO_VEH" name="ID_TIPO_VEH" class="form-control @error('ID_TIPO_VEH') is-invalid @enderror" required>
+                                <option value="" selected>--Seleccione una comuna--</option>
+            
+                                @foreach ($tipo_vehiculos as $tipo_vehiculo)
+                                    <option value="{{ $tipo_vehiculo['ID_TIPO_VEH'] }}">{{ $tipo_vehiculo['TIPO_VEHICULO'] }}</option>
+                                @endforeach
+            
+                            </select>
+            
+                            @error('ID_TIPO_VEH')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="mb-3">
+                            <label for="ID_TIPO_VEH" class="form-label"><i class="fa-solid fa-map-location-dot"></i> Comuna destino:</label>
+                            <select id="ID_TIPO_VEH" name="ID_TIPO_VEH" class="form-control @error('ID_TIPO_VEH') is-invalid @enderror" required>
+                                <option value="" selected>--Seleccione una comuna--</option>
+            
+                                @foreach ($tipo_vehiculos as $tipo_vehiculo)
+                                    <option value="{{ $tipo_vehiculo['ID_TIPO_VEH'] }}">{{ $tipo_vehiculo['TIPO_VEHICULO'] }}</option>
+                                @endforeach
+            
+                            </select>
+            
+                            @error('ID_TIPO_VEH')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
+                </div>
+</div>
+<div class="row">
+    <div class="col-md-6">
+        <input type="text" name="ID_USUARIO" value="{{auth()->user()->id}}" hidden>
+        <div class="mb-3">
+            <!-- Solo acceso para conductores(nivel 1) y estado formulario por rendir(autorizado/rendir nivel 3) -->
+            <label for="NOMBRE_SOLICITANTE" class="form-label"><i class="fa-solid fa-caret-down"></i> Kilometraje al partir:</label>
+            <input type="text" id="NOMBRE_SOLICITANTE" name="NOMBRE_SOLICITANTE" class="form-control" placeholder="Ej: 99999" >
+            @if ($errors->has('NOMBRE_SOLICITANTE'))
+            <div class="invalid-feedback">
+                {{ $errors->first('NOMBRE_SOLICITANTE') }}
+            </div>
+            @endif
+        </div>
+    </div>
+
+    <div class="col-md-6">
+        <div class="mb-3">
+            <label for="EMAIL" class="form-label"><i class="fa-solid fa-caret-up"></i> Kilometraje al finalizar:</label>
+            <input type="email" id="EMAIL" name="EMAIL" class="form-control" placeholder="Ej: 100000" >
+            @if ($errors->has('EMAIL'))
+            <div class="invalid-feedback">
+                {{ $errors->first('EMAIL') }}
+            </div>
+            @endif
+        </div>
+    </div>
+</div>
             <div class="mb-3">
                 <label for="ESTADO_SOL_VEH" class="form-label"><i class="fa-solid fa-file-circle-check"></i> Estado de la Solicitud:</label>
                 <select id="ESTADO_SOL_VEH" name="ESTADO_SOL_VEH" class="form-control" disabled>
@@ -134,7 +207,7 @@
             <a href="/solequipos" class="btn btn-secondary" tabindex="5">Cancelar</a>
             <button type="submit" class="btn btn-primary">Enviar solicitud</button>
         </form>
-    </div>
+</div>
 @stop
 @section('css')
     <link rel="stylesheet" href="/css/admin_custom.css">
