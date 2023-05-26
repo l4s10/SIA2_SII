@@ -77,13 +77,16 @@
             {{-- *CAMPO CONDUCTOR* --}}
             <div class="mb-3">
                 <label for="CONDUCTOR" class="form-label"><i class="fa-solid fa-user-plus"></i> Seleccione conductor:</label>
-                <select id="CONDUCTOR" name="CONDUCTOR" class="form-control @error('CONDUCTOR') is-invalid @enderror" required>
-                    <option value="" selected>--Seleccione un(a) conductor(a)--</option>
-
+                <select id="CONDUCTOR" name="CONDUCTOR" class="form-control @if($errors->has('CONDUCTOR')) is-invalid @endif" required>
+                    <option value="">--Seleccione un(a) conductor(a)--</option>
+                    {{-- *CORRECCION DE FILTRO ARREGLADO, AHORA SOLO MUESTRA CONDUCTORES DEL MISMO DEPARTAMENTO* --}}
                     @foreach ($departamentos as $departamento)
                         <optgroup label="{{ $departamento->DEPARTAMENTO }}">
                             @foreach ($conductores as $conductor)
-                                @if ($conductor->departamento->DEPARTAMENTO === $departamento->DEPARTAMENTO)
+                                @php
+                                    $usuario = App\Models\User::find($solicitud->ID_USUARIO);
+                                @endphp
+                                @if ($conductor->departamento->DEPARTAMENTO === $departamento->DEPARTAMENTO && $conductor->departamento->ID_DEPART === $usuario->departamento->ID_DEPART)
                                     <option value="{{ $conductor->id }}" @if ($conductor->id == $solicitud->CONDUCTOR) selected @endif>
                                         {{ $conductor->NOMBRES }} {{ $conductor->APELLIDOS }}
                                     </option>
@@ -92,6 +95,7 @@
                         </optgroup>
                     @endforeach
                 </select>
+
 
                 @error('CONDUCTOR')
                     <div class="invalid-feedback">{{ $message }}</div>

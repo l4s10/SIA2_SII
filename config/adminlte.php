@@ -473,11 +473,31 @@ return [
         ],
         ['header' => 'Módulos Administrador'],
         [
-            'text'        => 'Administrar Usuarios',
-            'url'         => '/funcionarios',
-            'icon'        => 'fas fa-fw fa-users',
-            // 'label'       => 'CRUD',
-            // 'label_color' => 'danger',
+            'text'        => 'Panel de control',
+            'url'         => '#',
+            'icon'        => 'fas fa-fw fa-gears',
+            'submenu' => [
+                [
+                    'text'        => 'Administrar Usuarios',
+                    'url'         => '/funcionarios',
+                    'icon'        => 'fas fa-fw fa-users',
+                ],
+                [
+                    'text'        => 'Administrar Vehiculos',
+                    'url'         => '/reserva/vehiculo',
+                    'icon'        => 'fas fa-fw fa-car',
+                ],
+                [
+                    'text'        => 'Administrar Regiones',
+                    'url'         => '/regiones',
+                    'icon'        => 'fas fa-fw fa-earth-americas',
+                ],
+                [
+                    'text'        => 'Administrar Comunas',
+                    'url'         => '/comunas',
+                    'icon'        => 'fas fa-fw fa-street-view',
+                ],
+            ]
         ],
         // [
         //     'text'       => 'important',
