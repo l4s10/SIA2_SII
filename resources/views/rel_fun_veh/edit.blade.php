@@ -238,4 +238,62 @@
             });
         });
     </script>
+    {{-- *VEHICULOS CON REFRESCADO DINAMICO* --}}
+
+    {{-- *FUNCION PARA REFRESCAR DINAMICAMENTE EL FILTRO DE FUNCIONARIOS* --}}
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                var departamentosSelect = document.getElementById('departamentos');
+                var ocupanteSelect = document.getElementById('ocupante');
+                var agregarOcupanteBtn = document.getElementById('agregarOcupante');
+                var limpiarCampoBtn = document.getElementById('limpiarCampo');
+                var nombreOcupantesTextarea = document.getElementById('NOMBRE_OCUPANTES');
+
+                // Obtener las opciones correspondientes al departamento seleccionado al cargar la página
+                var usuarios = @json($conductores);
+                var departamentoSeleccionado = departamentosSelect.value;
+                var options = ocupanteSelect.options;
+
+                // Filtrar usuarios por departamento seleccionado al cargar la página
+                var usuariosFiltradosInicial = usuarios.filter(function(usuario) {
+                    return usuario.ID_DEPART == departamentoSeleccionado;
+                });
+
+                // Agregar las opciones de usuarios al select de ocupantes al cargar la página
+                usuariosFiltradosInicial.forEach(function(usuario) {
+                    options.add(new Option(usuario.NOMBRES + ' ' + usuario.APELLIDOS, usuario.id));
+                });
+
+                departamentosSelect.addEventListener('change', function() {
+                    var departamentoId = this.value;
+                    var options = ocupanteSelect.options;
+
+                    // Limpiar opciones anteriores
+                    options.length = 0;
+                    options.add(new Option('-- Seleccione un compañero --', ''));
+
+                    // Filtrar usuarios por departamento seleccionado
+                    var usuariosFiltrados = usuarios.filter(function(usuario) {
+                        return usuario.ID_DEPART == departamentoId;
+                    });
+
+                    // Agregar las opciones de usuarios al select de ocupantes
+                    usuariosFiltrados.forEach(function(usuario) {
+                        options.add(new Option(usuario.NOMBRES + ' ' + usuario.APELLIDOS, usuario.id));
+                    });
+                });
+
+                agregarOcupanteBtn.addEventListener('click', function() {
+                    var ocupanteNombre = ocupanteSelect.options[ocupanteSelect.selectedIndex].text;
+                    var departamentoNombre = departamentosSelect.options[departamentosSelect.selectedIndex].text;
+                    var nombreCompleto = ocupanteNombre + ' (' + departamentoNombre + ')';
+                    nombreOcupantesTextarea.value += nombreCompleto + '\n';
+                });
+
+                limpiarCampoBtn.addEventListener('click', function() {
+                    nombreOcupantesTextarea.value = '';
+                });
+            });
+        </script>
+
 @stop

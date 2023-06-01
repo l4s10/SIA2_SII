@@ -109,7 +109,11 @@
                             <select name="departamentos" id="departamentos" class="form-control">
                                 <option value="">-- Seleccione un departamento --</option>
                                 @foreach ($departamentos as $departamento)
-                                    <option value="{{ $departamento->ID_DEPART }}">{{ $departamento->DEPARTAMENTO }}</option>
+                                    @if ($departamento->ID_DEPART === auth()->user()->ID_DEPART)
+                                        <option value="{{ $departamento->ID_DEPART }}" selected>{{ $departamento->DEPARTAMENTO }}</option>
+                                    @else
+                                        <option value="{{ $departamento->ID_DEPART }}">{{ $departamento->DEPARTAMENTO }}</option>
+                                    @endif
                                 @endforeach
                             </select>
                         </div>
@@ -223,6 +227,24 @@
         document.addEventListener('DOMContentLoaded', function() {
             var departamentosSelect = document.getElementById('departamentos');
             var ocupanteSelect = document.getElementById('ocupante');
+            var agregarOcupanteBtn = document.getElementById('agregarOcupante');
+            var limpiarCampoBtn = document.getElementById('limpiarCampo');
+            var nombreOcupantesTextarea = document.getElementById('NOMBRE_OCUPANTES');
+
+            // Obtener las opciones correspondientes al departamento seleccionado al cargar la página
+            var usuarios = @json($conductores);
+            var departamentoSeleccionado = departamentosSelect.value;
+            var options = ocupanteSelect.options;
+
+            // Filtrar usuarios por departamento seleccionado al cargar la página
+            var usuariosFiltradosInicial = usuarios.filter(function(usuario) {
+                return usuario.ID_DEPART == departamentoSeleccionado;
+            });
+
+            // Agregar las opciones de usuarios al select de ocupantes al cargar la página
+            usuariosFiltradosInicial.forEach(function(usuario) {
+                options.add(new Option(usuario.NOMBRES + ' ' + usuario.APELLIDOS, usuario.id));
+            });
 
             departamentosSelect.addEventListener('change', function() {
                 var departamentoId = this.value;
@@ -231,9 +253,6 @@
                 // Limpiar opciones anteriores
                 options.length = 0;
                 options.add(new Option('-- Seleccione un compañero --', ''));
-
-                // Obtener las opciones correspondientes al departamento seleccionado
-                var usuarios = @json($conductores);
 
                 // Filtrar usuarios por departamento seleccionado
                 var usuariosFiltrados = usuarios.filter(function(usuario) {
@@ -245,19 +264,12 @@
                     options.add(new Option(usuario.NOMBRES + ' ' + usuario.APELLIDOS, usuario.id));
                 });
             });
-        });
-    </script>
-    {{-- *FUNCIONALIDAD BOTONES DE "AGREGAR" Y "ME EQUIVOQUE"* --}}
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            var agregarOcupanteBtn = document.getElementById('agregarOcupante');
-            var limpiarCampoBtn = document.getElementById('limpiarCampo');
-            var ocupanteSelect = document.getElementById('ocupante');
-            var nombreOcupantesTextarea = document.getElementById('NOMBRE_OCUPANTES');
 
             agregarOcupanteBtn.addEventListener('click', function() {
-                var nombreOcupante = ocupanteSelect.options[ocupanteSelect.selectedIndex].text;
-                nombreOcupantesTextarea.value += nombreOcupante + '\n';
+                var ocupanteNombre = ocupanteSelect.options[ocupanteSelect.selectedIndex].text;
+                var departamentoNombre = departamentosSelect.options[departamentosSelect.selectedIndex].text;
+                var nombreCompleto = ocupanteNombre + ' (' + departamentoNombre + ')';
+                nombreOcupantesTextarea.value += nombreCompleto + '\n';
             });
 
             limpiarCampoBtn.addEventListener('click', function() {
