@@ -57,22 +57,7 @@
                         </div>
                     </div>
             </div>
-            <div class="mb-3">
-                <label for="ID_TIPO_VEH" class="form-label"><i class="fa-solid fa-car-side"></i> Seleccione tipo de vehículo:</label>
-                <select id="ID_TIPO_VEH" name="ID_TIPO_VEH" class="form-control @error('ID_TIPO_VEH') is-invalid @enderror" required>
-                    <option value="" selected>--Seleccione un tipo de vehículo--</option>
 
-                    @foreach ($tipo_vehiculos as $tipo_vehiculo)
-                        <option value="{{ $tipo_vehiculo['ID_TIPO_VEH'] }}" @if ($tipo_vehiculo['ID_TIPO_VEH'] === $solicitud->ID_TIPO_VEH) selected @endif>
-                            {{ $tipo_vehiculo['TIPO_VEHICULO'] }}
-                        </option>
-                    @endforeach
-                </select>
-
-                @error('ID_TIPO_VEH')
-                    <div class="invalid-feedback">{{ $message }}</div>
-                @enderror
-            </div>
 
             {{-- *CAMPO CONDUCTOR* --}}
             <div class="mb-3">
@@ -151,17 +136,32 @@
                 @enderror
             </div>
             <div class="mb-3">
-                <label for="PATENTE_VEHICULO" class="form-label"><i class="fa-solid fa-car-on"></i> Asignar vehiculos:</label>
+                <label for="ID_TIPO_VEH" class="form-label"><i class="fa-solid fa-car-side"></i> Seleccione tipo de vehículo:</label>
+                <select id="ID_TIPO_VEH" name="ID_TIPO_VEH" class="form-control @error('ID_TIPO_VEH') is-invalid @enderror" required>
+                    <option value="" selected>--Seleccione un tipo de vehículo--</option>
+
+                    @foreach ($tipo_vehiculos as $tipo_vehiculo)
+                        <option value="{{ $tipo_vehiculo['ID_TIPO_VEH'] }}" @if ($tipo_vehiculo['ID_TIPO_VEH'] === $solicitud->ID_TIPO_VEH) selected @endif>
+                            {{ $tipo_vehiculo['TIPO_VEHICULO'] }}
+                        </option>
+                    @endforeach
+                </select>
+
+                @error('ID_TIPO_VEH')
+                    <div class="invalid-feedback">{{ $message }}</div>
+                @enderror
+            </div>
+
+            <div class="mb-3">
+                <label for="PATENTE_VEHICULO" class="form-label"><i class="fa-solid fa-car-on"></i> Asignar vehículos:</label>
                 <select id="PATENTE_VEHICULO" name="PATENTE_VEHICULO" class="form-control @if($errors->has('PATENTE_VEHICULO')) is-invalid @endif">
                     <option value="">-- Seleccione el vehículo a asignar --</option>
                     @foreach ($vehiculos->groupBy('UNIDAD_VEHICULO') as $grupo => $autos)
                         <optgroup label="{{ $grupo }}">
                             @foreach ($autos as $auto)
-                                @if ($auto->tipoVehiculo->ID_TIPO_VEH === $solicitud->ID_TIPO_VEH)
-                                    <option value="{{ $auto->PATENTE_VEHICULO }}" @if ($auto->PATENTE_VEHICULO === $solicitud->PATENTE_VEHICULO) selected @endif>
-                                        {{ $auto->PATENTE_VEHICULO }} ({{ $auto->tipoVehiculo->TIPO_VEHICULO }})
-                                    </option>
-                                @endif
+                                <option value="{{ $auto->PATENTE_VEHICULO }}" data-tipo-vehiculo="{{ $auto->tipoVehiculo->ID_TIPO_VEH }}" @if ($auto->PATENTE_VEHICULO === $solicitud->PATENTE_VEHICULO) selected @endif>
+                                    {{ $auto->PATENTE_VEHICULO }} ({{ $auto->tipoVehiculo->TIPO_VEHICULO }})
+                                </option>
                             @endforeach
                         </optgroup>
                     @endforeach
@@ -190,6 +190,8 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
 @stop
 @section('js')
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
     <!-- Incluir archivos JS flatpicker-->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
@@ -238,8 +240,6 @@
             });
         });
     </script>
-    {{-- *VEHICULOS CON REFRESCADO DINAMICO* --}}
-
     {{-- *FUNCION PARA REFRESCAR DINAMICAMENTE EL FILTRO DE FUNCIONARIOS* --}}
         <script>
             document.addEventListener('DOMContentLoaded', function() {
@@ -295,5 +295,25 @@
                 });
             });
         </script>
+    {{-- *FUNCION PARA REFRESCAR DINAMICAMENTE LOS VEHICULOS A ASIGNAR* --}}
+    <script>
+        $(document).ready(function() {
+            $('#ID_TIPO_VEH').change(function() {
+                var selectedTipoVehiculo = $(this).val();
 
+                $('#PATENTE_VEHICULO option').each(function() {
+                    var tipoVehiculoOption = $(this).data('tipo-vehiculo');
+
+                    if (tipoVehiculoOption == selectedTipoVehiculo) {
+                        $(this).show();
+                    } else {
+                        $(this).hide();
+                    }
+                });
+
+                // Restablecer la selección del segundo select
+                $('#PATENTE_VEHICULO').val('');
+            });
+        });
+        </script>
 @stop
