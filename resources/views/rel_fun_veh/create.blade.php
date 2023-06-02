@@ -58,7 +58,7 @@
             </div>
             <div class="mb-3">
                 <label for="ID_TIPO_VEH" class="form-label"><i class="fa-solid fa-car-side"></i> Seleccione tipo de vehiculo:</label>
-                <select id="ID_TIPO_VEH" name="ID_TIPO_VEH" class="form-control @error('ID_TIPO_VEH') is-invalid @enderror" required>
+                <select id="ID_TIPO_VEH" name="ID_TIPO_VEH" class="form-control @error('ID_TIPO_VEH') is-invalid @enderror" required autofocus>
                     <option value="" selected>--Seleccione un tipo de vehículo--</option>
 
                     @foreach ($tipo_vehiculos as $tipo_vehiculo)
@@ -75,7 +75,7 @@
 
             <div class="mb-3">
                 <label for="CONDUCTOR" class="form-label"><i class="fa-solid fa-user-plus"></i> Seleccione conductor:</label>
-                <select id="CONDUCTOR" name="CONDUCTOR" class="form-control @if($errors->has('CONDUCTOR')) is-invalid @endif" required>
+                <select id="CONDUCTOR" name="CONDUCTOR" class="form-control @if($errors->has('CONDUCTOR')) is-invalid @endif" required autofocus>
                     <option value="" selected>--Seleccione un(a) conductor(a):--</option>
                     {{-- *CORRECCION DE FILTRO ARREGLADO, AHORA SOLO MUESTRA CONDUCTORES DEL MISMO DEPARTAMENTO* --}}
                     @foreach ($departamentos as $departamento)
@@ -95,7 +95,7 @@
 
             <div class="mb-3">
                 <label for="MOTIVO_SOL_VEH" class="form-label"><i class="fa-solid fa-file-pen"></i> Motivo de solicitud:</label>
-                <textarea id="MOTIVO_SOL_VEH" name="MOTIVO_SOL_VEH" class="form-control @error('MOTIVO_SOL_VEH') is-invalid @enderror" aria-label="With textarea" rows="5" placeholder="Escriba el motivo de su solicitud (MÁX 1000 CARACTERES)">{{ old('MOTIVO_SOL_VEH') }}</textarea>
+                <textarea id="MOTIVO_SOL_VEH" name="MOTIVO_SOL_VEH" class="form-control @error('MOTIVO_SOL_VEH') is-invalid @enderror" aria-label="With textarea" rows="5" placeholder="Escriba el motivo de su solicitud (MÁX 1000 CARACTERES)" required autofocus>{{ old('MOTIVO_SOL_VEH') }}</textarea>
                 @error('MOTIVO_SOL_VEH')
                     <div class="invalid-feedback">{{ $message }}</div>
                 @enderror
@@ -129,7 +129,7 @@
                     </div>
                 </div>
                 <div class="textarea-container">
-                    <textarea id="NOMBRE_OCUPANTES" name="NOMBRE_OCUPANTES" class="form-control @error('NOMBRE_OCUPANTES') is-invalid @enderror" aria-label="With textarea" rows="5" placeholder="Cuando seleccione a un compañero, haga click en el boton Agregar " readonly>{{ old('NOMBRE_OCUPANTES') }}</textarea>
+                    <textarea id="NOMBRE_OCUPANTES" name="NOMBRE_OCUPANTES" class="form-control @error('NOMBRE_OCUPANTES') is-invalid @enderror" aria-label="With textarea" rows="5" placeholder="Cuando seleccione a un compañero, haga click en el boton Agregar " required>{{ old('NOMBRE_OCUPANTES') }}</textarea>
                     @error('NOMBRE_OCUPANTES')
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror

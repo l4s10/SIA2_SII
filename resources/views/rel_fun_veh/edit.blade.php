@@ -87,10 +87,10 @@
                 @enderror
             </div>
 
-
+            {{-- *CAMPO MOTIVO SOLICITUD* --}}
             <div class="mb-3">
                 <label for="MOTIVO_SOL_VEH" class="form-label"><i class="fa-solid fa-file-pen"></i> Motivo de solicitud:</label>
-                <textarea id="MOTIVO_SOL_VEH" name="MOTIVO_SOL_VEH" class="form-control @error('MOTIVO_SOL_VEH') is-invalid @enderror" aria-label="With textarea" rows="5" placeholder="Escriba el motivo de su solicitud (MÁX 1000 CARACTERES)">{{ $solicitud->MOTIVO_SOL_VEH }}</textarea>
+                <textarea id="MOTIVO_SOL_VEH" name="MOTIVO_SOL_VEH" class="form-control @error('MOTIVO_SOL_VEH') is-invalid @enderror" aria-label="With textarea" rows="5" placeholder="Escriba el motivo de su solicitud (MÁX 1000 CARACTERES)" required autofocus>{{ $solicitud->MOTIVO_SOL_VEH }}</textarea>
                 @error('MOTIVO_SOL_VEH')
                     <div class="invalid-feedback">{{ $message }}</div>
                 @enderror
@@ -98,7 +98,7 @@
 
             <div class="mb-3">
                 <label for="NOMBRE_OCUPANTES" class="form-label"><i class="fa-solid fa-users-line"></i> Ocupantes:</label>
-                <textarea id="NOMBRE_OCUPANTES" name="NOMBRE_OCUPANTES" class="form-control @error('NOMBRE_OCUPANTES') is-invalid @enderror" aria-label="With textarea" rows="5" placeholder="Nombre Nombre Apellido Apellido">{{ $solicitud->NOMBRE_OCUPANTES }}</textarea>
+                <textarea id="NOMBRE_OCUPANTES" name="NOMBRE_OCUPANTES" class="form-control @error('NOMBRE_OCUPANTES') is-invalid @enderror" aria-label="With textarea" rows="5" placeholder="Nombre Nombre Apellido Apellido" required>{{ $solicitud->NOMBRE_OCUPANTES }}</textarea>
                 @error('NOMBRE_OCUPANTES')
                     <div class="invalid-feedback">{{ $message }}</div>
                 @enderror
@@ -181,7 +181,8 @@
                 </select>
             </div>
             <a href="{{route('solicitud.vehiculos.index')}}" class="btn btn-secondary" tabindex="5">Cancelar</a>
-            <button type="submit" class="btn btn-primary">Enviar solicitud</button>
+            <button type="button" class="btn btn-info" onclick="resetFields()">Me equivoqué</button>
+            <button type="submit" class="btn btn-primary">Enviar cambios</button>
         </form>
     </div>
 @stop
@@ -298,6 +299,7 @@
     {{-- *FUNCION PARA REFRESCAR DINAMICAMENTE LOS VEHICULOS A ASIGNAR* --}}
     <script>
         $(document).ready(function() {
+            // Evento change del elemento ID_TIPO_VEH
             $('#ID_TIPO_VEH').change(function() {
                 var selectedTipoVehiculo = $(this).val();
 
@@ -314,6 +316,59 @@
                 // Restablecer la selección del segundo select
                 $('#PATENTE_VEHICULO').val('');
             });
+
+            // Desencadenar el evento change al cargar la página
+            $('#ID_TIPO_VEH').trigger('change');
         });
-        </script>
+    </script>
+    {{-- *FUNCION RESETEAR SOLICITUD (DEVUELVE LOS VALORES ORIGINALES)* --}}
+    <script>
+        function resetFields() {
+            // Obtener los elementos de formulario por sus IDs
+            var conductor = document.getElementById('CONDUCTOR');
+            var motivoSolicitud = document.getElementById('MOTIVO_SOL_VEH');
+            var nombreOcupantes = document.getElementById('NOMBRE_OCUPANTES');
+            var fechaSalida = document.getElementById('FECHA_SALIDA_SOL_VEH');
+            var horaSalida = document.getElementById('HORA_SALIDA_SOL_VEH');
+            var horaLlegada = document.getElementById('HORA_LLEGADA_SOL_VEH');
+            var observaciones = document.getElementById('OBSERV_SOL_VEH');
+            var tipoVehiculo = document.getElementById('ID_TIPO_VEH');
+            var patenteVehiculo = document.getElementById('PATENTE_VEHICULO');
+            var estadoSolicitud = document.getElementById('ESTADO_SOL_VEH');
+
+            // Restaurar los valores originales de los campos
+            conductor.value = "{{ $solicitud->CONDUCTOR }}";
+            motivoSolicitud.value = "{{ $solicitud->MOTIVO_SOL_VEH }}";
+            nombreOcupantes.value = "{{ $solicitud->NOMBRE_OCUPANTES }}";
+            fechaSalida.value = "{{ $solicitud->FECHA_SALIDA_SOL_VEH }}";
+            horaSalida.value = "{{ $solicitud->HORA_SALIDA_SOL_VEH }}";
+            horaLlegada.value = "{{ $solicitud->HORA_LLEGADA_SOL_VEH }}";
+            observaciones.value = "{{ $solicitud->OBSERV_SOL_VEH }}";
+            tipoVehiculo.value = "{{ $solicitud->ID_TIPO_VEH }}";
+            patenteVehiculo.value = "{{ $solicitud->PATENTE_VEHICULO }}";
+            estadoSolicitud.value = "{{ $solicitud->ESTADO_SOL_VEH }}";
+
+            // Restablecer el selector de fecha Flatpickr
+            flatpickr("#FECHA_SALIDA_SOL_VEH", {
+                dateFormat: 'Y-m-d',
+                altFormat: 'd-m-Y',
+                altInput: true,
+                locale: 'es',
+                minDate: "today",
+                showClearButton: true,
+                mode: "range"
+            });
+            // Mostrar la alerta SweetAlert2
+            Swal.fire({
+                icon: 'success',
+                title: 'Campos restablecidos',
+                text: 'Los campos se han restablecido correctamente.',
+                timer: 2000,
+                timerProgressBar: true,
+                toast: true,
+                position: 'top-end',
+                showConfirmButton: false
+            });
+        }
+    </script>
 @stop

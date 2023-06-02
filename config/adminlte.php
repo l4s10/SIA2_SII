@@ -308,11 +308,6 @@ return [
         ],
         ['header' => 'Módulos Funcionario'],
         [
-            'text'        => 'Vehículos',
-            'url'         => 'vehiculos',
-            'icon'        => 'fas fa-fw fa-car',
-        ],
-        [
             'text'        => 'Solicitudes vehiculares',
             'url'         => '#',
             'icon'        => 'fas fa-fw fa-car',
@@ -483,8 +478,8 @@ return [
                     'icon'        => 'fas fa-fw fa-users',
                 ],
                 [
-                    'text'        => 'Administrar Vehiculos',
-                    'url'         => '/reserva/vehiculo',
+                    'text'        => 'Administrar Vehículos',
+                    'url'         => 'vehiculos',
                     'icon'        => 'fas fa-fw fa-car',
                 ],
                 [
