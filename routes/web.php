@@ -94,3 +94,8 @@ Route::middleware(['auth'])->group(function () {
     })->name('dashboard');
 });
 
+// Método Route::get
+Route::get('/home', function () {
+    return view('home.home');
+});
+
