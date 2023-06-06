@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('DEPARTAMENTO', 128)->nullable();
         });
         Schema::create('region', function (Blueprint $table) {
-            $table->integer('ID_REGION')->unsigned()->primary();
+            $table->increments('ID_REGION');
             $table->string('REGION', 128)->nullable();
         });
         Schema::create('ubicacion', function (Blueprint $table) {
@@ -81,6 +81,7 @@ return new class extends Migration
      */
     public function down(): void
     {
+        Schema::dropIfExists('users');
         Schema::dropIfExists('departamento');
         Schema::dropIfExists('region');
         Schema::dropIfExists('ubicacion');
@@ -89,6 +90,5 @@ return new class extends Migration
         Schema::dropIfExists('grado');
         Schema::dropIfExists('calidad_juridica');
         Schema::dropIfExists('sexo');
-        Schema::dropIfExists('users');
     }
 };

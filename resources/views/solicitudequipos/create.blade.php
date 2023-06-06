@@ -55,7 +55,8 @@
                     </div>
                 </div>
             </div>
-            <div class="mb-3">
+            {{-- * PASA A SER CARRITO *--}}
+            {{-- <div class="mb-3">
                 <label for="ID_TIPO_EQUIPOS" class="form-label"><i class="fa-solid fa-desktop"></i> Tipo de equipo:</label>
                 <select id="ID_TIPO_EQUIPOS" name="ID_TIPO_EQUIPOS" class="form-control @if($errors->has('ID_TIPO_EQUIPOS')) is-invalid @endif" required>
                     <option value="" selected>--Seleccione un tipo de equipo--</option>
@@ -66,6 +67,35 @@
                     @endforeach
                 </select>
                 @error('ID_TIPO_EQUIPOS')
+                    <div class="invalid-feedback">{{ $message }}</div>
+                @enderror
+            </div> --}}
+
+            {{-- *CARRITO DE COMPRAS* --}}
+            <table id="equipos" class="table table-bordered">
+                <thead class="bg-primary text-white">
+                    <tr>
+                        <th scope="col">Tipo equipo</th>
+                        <th scope="col">Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach ($tipos as $tipo)
+                        <tr>
+                            <td>{{ $tipo->TIPO_EQUIPO}}</td>
+                            <td>
+                                <button type="button" class="btn btn-info btn-agregar" data-nombre="{{ $tipo->TIPO_EQUIPO }}"><i class="fa-solid fa-cart-plus"></i></button>
+                                <button type="button" class="btn btn-danger btn-eliminar" data-nombre="{{ $tipo->TIPO_EQUIPO }}"><i class="fa-solid fa-trash"></i></button>
+                            </td>
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
+
+            <div class="mb-3">
+                <label for="EQUIPO_SALA" class="form-label"><i class="fa-solid fa-file-pen"></i> Resumen:</label>
+                <textarea id="EQUIPO_SALA" name="EQUIPO_SALA" class="form-control @error('EQUIPO_SALA') is-invalid @enderror" aria-label="With textarea" rows="1" placeholder="Resumen de su pedido" readonly>{{ old('EQUIPO_SALA') }}</textarea>
+                @error('EQUIPO_SALA')
                     <div class="invalid-feedback">{{ $message }}</div>
                 @enderror
             </div>
@@ -158,6 +188,68 @@
                 defaultHour: 9 // Agregamos una hora predeterminadas
             });
             $('#FECHA_SOL_EQUIPO, #HORA_INICIO_SOL_EQUIPO, #HORA_TERM_SOL_EQUIPO').css('background-color', 'white');
+        });
+    </script>
+    <script>
+        $(document).ready(function () {
+            $('#equipos').DataTable({
+                "lengthMenu": [[5,10, 50, -1], [5, 10, 50, "All"]],
+                "columnDefs": [
+                    { "orderable": false, "targets": 1 } // La séptima columna no es ordenable
+                ],
+                "language": {
+                    "url": "https://cdn.datatables.net/plug-ins/1.11.3/i18n/es_es.json"
+                },
+            });
+        });
+    </script>
+    {{-- *CARRITO DE COMPRAS PARA EQUIPOS* --}}
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const btnAgregar = document.querySelectorAll('.btn-agregar');
+            const btnEliminar = document.querySelectorAll('.btn-eliminar');
+            const equipoSalaInput = document.getElementById('EQUIPO_SALA');
+
+            // Manejar clic en el botón de agregar
+            btnAgregar.forEach(function (btn) {
+                btn.addEventListener('click', function () {
+                    const nombreEquipo = this.getAttribute('data-nombre');
+                    const equipoSala = equipoSalaInput.value;
+
+                    // Verificar si el equipo ya está en el carrito
+                    if (equipoSala.includes(nombreEquipo)) {
+                        Swal.fire({
+                            icon: 'warning',
+                            text: 'El equipo ya está en el carrito',
+                            showConfirmButton: false,
+                            timer: 3000 // Cerrar automáticamente después de 3 segundos
+                        });
+                    } else {
+                        // Agregar el equipo al carrito
+                        const nuevoEquipoSala = equipoSala ? nombreEquipo + ', ' + equipoSala : nombreEquipo;
+                        equipoSalaInput.value = nuevoEquipoSala;
+                    }
+                });
+            });
+
+
+            // Manejar clic en el botón de eliminar
+            btnEliminar.forEach(function (btn) {
+                btn.addEventListener('click', function () {
+                    const nombreEquipo = this.getAttribute('data-nombre');
+                    const equipoSala = equipoSalaInput.value;
+
+                    // Separar los elementos del carrito de compras por coma
+                    const elementos = equipoSala.split(', ');
+
+                    // Remover el equipo del carrito
+                    const nuevosElementos = elementos.filter(function (elemento) {
+                        return elemento !== nombreEquipo;
+                    });
+
+                    equipoSalaInput.value = nuevosElementos.join(', ');
+                });
+            });
         });
     </script>
 @stop

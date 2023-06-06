@@ -23,10 +23,6 @@ class TipoEquiposSeeder extends Seeder
                 'ID_TIPO_EQUIPOS' => 2,
                 'TIPO_EQUIPO' => 'DATA',
             ],
-            [
-                'ID_TIPO_EQUIPOS' => 3,
-                'TIPO_EQUIPO' => 'DATA Y NOTEBOOK',
-            ],
         ]);
     }
 }

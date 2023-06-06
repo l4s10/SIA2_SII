@@ -58,7 +58,7 @@
             </div>
             <div class="mb-3">
                 <label for="ID_TIPO_VEH" class="form-label"><i class="fa-solid fa-car-side"></i> Seleccione tipo de vehiculo:</label>
-                <select id="ID_TIPO_VEH" name="ID_TIPO_VEH" class="form-control @error('ID_TIPO_VEH') is-invalid @enderror" required>
+                <select id="ID_TIPO_VEH" name="ID_TIPO_VEH" class="form-control @error('ID_TIPO_VEH') is-invalid @enderror" required autofocus>
                     <option value="" selected>--Seleccione un tipo de vehículo--</option>
 
                     @foreach ($tipo_vehiculos as $tipo_vehiculo)
@@ -75,12 +75,13 @@
 
             <div class="mb-3">
                 <label for="CONDUCTOR" class="form-label"><i class="fa-solid fa-user-plus"></i> Seleccione conductor:</label>
-                <select id="CONDUCTOR" name="CONDUCTOR" class="form-control @if($errors->has('CONDUCTOR')) is-invalid @endif" required>
+                <select id="CONDUCTOR" name="CONDUCTOR" class="form-control @if($errors->has('CONDUCTOR')) is-invalid @endif" required autofocus>
                     <option value="" selected>--Seleccione un(a) conductor(a):--</option>
+                    {{-- *CORRECCION DE FILTRO ARREGLADO, AHORA SOLO MUESTRA CONDUCTORES DEL MISMO DEPARTAMENTO* --}}
                     @foreach ($departamentos as $departamento)
                         <optgroup label="{{ $departamento->DEPARTAMENTO }}">
                             @foreach ($conductores as $conductor)
-                                @if ($conductor->departamento->DEPARTAMENTO === $departamento->DEPARTAMENTO)
+                                @if ($conductor->departamento->DEPARTAMENTO === $departamento->DEPARTAMENTO && $conductor->departamento->ID_DEPART === auth()->user()->departamento->ID_DEPART)
                                     <option value="{{ $conductor->id }}">{{ $conductor->NOMBRES }} {{ $conductor->APELLIDOS }}</option>
                                 @endif
                             @endforeach
@@ -94,7 +95,7 @@
 
             <div class="mb-3">
                 <label for="MOTIVO_SOL_VEH" class="form-label"><i class="fa-solid fa-file-pen"></i> Motivo de solicitud:</label>
-                <textarea id="MOTIVO_SOL_VEH" name="MOTIVO_SOL_VEH" class="form-control @error('MOTIVO_SOL_VEH') is-invalid @enderror" aria-label="With textarea" rows="5" placeholder="Escriba el motivo de su solicitud (MÁX 1000 CARACTERES)">{{ old('MOTIVO_SOL_VEH') }}</textarea>
+                <textarea id="MOTIVO_SOL_VEH" name="MOTIVO_SOL_VEH" class="form-control @error('MOTIVO_SOL_VEH') is-invalid @enderror" aria-label="With textarea" rows="5" placeholder="Escriba el motivo de su solicitud (MÁX 1000 CARACTERES)" required autofocus>{{ old('MOTIVO_SOL_VEH') }}</textarea>
                 @error('MOTIVO_SOL_VEH')
                     <div class="invalid-feedback">{{ $message }}</div>
                 @enderror
@@ -102,10 +103,37 @@
 
             <div class="mb-3">
                 <label for="NOMBRE_OCUPANTES" class="form-label"><i class="fa-solid fa-users-line"></i> Ocupantes:</label>
-                <textarea id="NOMBRE_OCUPANTES" name="NOMBRE_OCUPANTES" class="form-control @error('NOMBRE_OCUPANTES') is-invalid @enderror" aria-label="With textarea" rows="5" placeholder="Nombre Nombre Apellido Apellido">{{ old('NOMBRE_OCUPANTES') }}</textarea>
-                @error('NOMBRE_OCUPANTES')
-                    <div class="invalid-feedback">{{ $message }}</div>
-                @enderror
+                <div class="row">
+                    <div class="col-4">
+                        <div class="input-group">
+                            <select name="departamentos" id="departamentos" class="form-control">
+                                <option value="">-- Seleccione un departamento --</option>
+                                @foreach ($departamentos as $departamento)
+                                    @if ($departamento->ID_DEPART === auth()->user()->ID_DEPART)
+                                        <option value="{{ $departamento->ID_DEPART }}" selected>{{ $departamento->DEPARTAMENTO }}</option>
+                                    @else
+                                        <option value="{{ $departamento->ID_DEPART }}">{{ $departamento->DEPARTAMENTO }}</option>
+                                    @endif
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <select name="ocupante" id="ocupante" class="form-control">
+                            <option value="">-- Seleccione un compañero --</option>
+                        </select>
+                    </div>
+                    <div class="col-4">
+                        <button id="agregarOcupante" type="button" class="btn btn-primary">Agregar</button>
+                        <button id="limpiarCampo" type="button" class="btn btn-secondary">Me equivoqué</button>
+                    </div>
+                </div>
+                <div class="textarea-container">
+                    <textarea id="NOMBRE_OCUPANTES" name="NOMBRE_OCUPANTES" class="form-control @error('NOMBRE_OCUPANTES') is-invalid @enderror" aria-label="With textarea" rows="5" placeholder="Cuando seleccione a un compañero, haga click en el boton Agregar " required>{{ old('NOMBRE_OCUPANTES') }}</textarea>
+                    @error('NOMBRE_OCUPANTES')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
+                </div>
             </div>
 
             <div class="form-group">
@@ -139,6 +167,11 @@
 @section('css')
     <link rel="stylesheet" href="/css/admin_custom.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <style>
+        .textarea-container {
+            margin-top: 10px; /* Ajusta el valor según sea necesario */
+        }
+    </style>
 @stop
 @section('js')
     <!-- Incluir archivos JS flatpicker-->
@@ -186,6 +219,61 @@
                         instance.clear();
                     });
                 }
+            });
+        });
+    </script>
+    {{-- *FUNCION PARA REFRESCAR DINAMICAMENTE EL FILTRO DE FUNCIONARIOS* --}}
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var departamentosSelect = document.getElementById('departamentos');
+            var ocupanteSelect = document.getElementById('ocupante');
+            var agregarOcupanteBtn = document.getElementById('agregarOcupante');
+            var limpiarCampoBtn = document.getElementById('limpiarCampo');
+            var nombreOcupantesTextarea = document.getElementById('NOMBRE_OCUPANTES');
+
+            // Obtener las opciones correspondientes al departamento seleccionado al cargar la página
+            var usuarios = @json($conductores);
+            var departamentoSeleccionado = departamentosSelect.value;
+            var options = ocupanteSelect.options;
+
+            // Filtrar usuarios por departamento seleccionado al cargar la página
+            var usuariosFiltradosInicial = usuarios.filter(function(usuario) {
+                return usuario.ID_DEPART == departamentoSeleccionado;
+            });
+
+            // Agregar las opciones de usuarios al select de ocupantes al cargar la página
+            usuariosFiltradosInicial.forEach(function(usuario) {
+                options.add(new Option(usuario.NOMBRES + ' ' + usuario.APELLIDOS, usuario.id));
+            });
+
+            departamentosSelect.addEventListener('change', function() {
+                var departamentoId = this.value;
+                var options = ocupanteSelect.options;
+
+                // Limpiar opciones anteriores
+                options.length = 0;
+                options.add(new Option('-- Seleccione un compañero --', ''));
+
+                // Filtrar usuarios por departamento seleccionado
+                var usuariosFiltrados = usuarios.filter(function(usuario) {
+                    return usuario.ID_DEPART == departamentoId;
+                });
+
+                // Agregar las opciones de usuarios al select de ocupantes
+                usuariosFiltrados.forEach(function(usuario) {
+                    options.add(new Option(usuario.NOMBRES + ' ' + usuario.APELLIDOS, usuario.id));
+                });
+            });
+
+            agregarOcupanteBtn.addEventListener('click', function() {
+                var ocupanteNombre = ocupanteSelect.options[ocupanteSelect.selectedIndex].text;
+                var departamentoNombre = departamentosSelect.options[departamentosSelect.selectedIndex].text;
+                var nombreCompleto = ocupanteNombre + ' (' + departamentoNombre + ')';
+                nombreOcupantesTextarea.value += nombreCompleto + '\n';
+            });
+
+            limpiarCampoBtn.addEventListener('click', function() {
+                nombreOcupantesTextarea.value = '';
             });
         });
     </script>

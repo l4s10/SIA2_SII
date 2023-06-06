@@ -274,13 +274,20 @@
 
                     // Verificar si el equipo ya está en el carrito
                     if (equipoSala.includes(nombreEquipo)) {
-                        alert('El equipo ya está en el carrito');
+                        Swal.fire({
+                            icon: 'warning',
+                            text: 'El equipo ya está en el carrito',
+                            showConfirmButton: false,
+                            timer: 3000 // Cerrar automáticamente después de 3 segundos
+                        });
                     } else {
                         // Agregar el equipo al carrito
-                        equipoSalaInput.value = equipoSala ? equipoSala + ', ' + nombreEquipo : nombreEquipo;
+                        const nuevoEquipoSala = equipoSala ? nombreEquipo + ', ' + equipoSala : nombreEquipo;
+                        equipoSalaInput.value = nuevoEquipoSala;
                     }
                 });
             });
+
 
             // Manejar clic en el botón de eliminar
             btnEliminar.forEach(function (btn) {
@@ -288,9 +295,15 @@
                     const nombreEquipo = this.getAttribute('data-nombre');
                     const equipoSala = equipoSalaInput.value;
 
+                    // Separar los elementos del carrito de compras por coma
+                    const elementos = equipoSala.split(', ');
+
                     // Remover el equipo del carrito
-                    const nuevoEquipoSala = equipoSala.replace(nombreEquipo, '');
-                    equipoSalaInput.value = nuevoEquipoSala.trim();
+                    const nuevosElementos = elementos.filter(function (elemento) {
+                        return elemento !== nombreEquipo;
+                    });
+
+                    equipoSalaInput.value = nuevosElementos.join(', ');
                 });
             });
         });

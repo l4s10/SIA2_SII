@@ -35,7 +35,23 @@ class CamposUsuarioNormalizados extends Seeder
         ]);
         // Población de la tabla 'region'
         Region::insert([
-            ['ID_REGION' => 1, 'REGION' => 'VIII DIRECCION REGIONAL CONCEPCION'],
+            ['ID_REGION' => 1, 'REGION' => 'Región de Arica y Parinacota'],
+            ['ID_REGION' => 2, 'REGION' => 'Región de Tarapacá'],
+            ['ID_REGION' => 3, 'REGION' => 'Región de Antofagasta'],
+            ['ID_REGION' => 4, 'REGION' => 'Región de Atacama'],
+            ['ID_REGION' => 5, 'REGION' => 'Región de Coquimbo'],
+            ['ID_REGION' => 6, 'REGION' => 'Región de Valparaíso'],
+            ['ID_REGION' => 7, 'REGION' => 'Región Metropolitana de Santiago'],
+            ['ID_REGION' => 8, 'REGION' => "Región del Libertador General Bernardo O'Higgins"],
+            ['ID_REGION' => 9, 'REGION' => 'Región del Maule'],
+            ['ID_REGION' => 10, 'REGION' => 'Región de Ñuble'],
+            ['ID_REGION' => 11, 'REGION' => 'Región del Biobío'],
+            ['ID_REGION' => 12, 'REGION' => 'Región de La Araucanía'],
+            ['ID_REGION' => 13, 'REGION' => 'Región de Los Ríos'],
+            ['ID_REGION' => 14, 'REGION' => 'Región de Los Lagos'],
+            ['ID_REGION' => 15, 'REGION' => "Región de Aysén del General Carlos Ibáñez del Campo"],
+            ['ID_REGION' => 16, 'REGION' => "Región de Magallanes y de la Antártica Chilena"]
+
         ]);
         // Población de la tabla 'ubicacion'
         Ubicacion::insert([

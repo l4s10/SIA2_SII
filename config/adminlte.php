@@ -253,7 +253,7 @@ return [
     */
 
     'use_route_url' => false,
-    'dashboard_url' => 'solmaterial',
+    'dashboard_url' => 'home',
     'logout_url' => 'logout',
     'login_url' => 'login',
     'register_url' => 'funcionarios/create',
@@ -308,7 +308,12 @@ return [
         ],
         ['header' => 'Módulos Funcionario'],
         [
-            'text'        => 'Solicitud de vehículos',
+            'text'        => 'Vehículos',
+            'url'         => 'vehiculos',
+            'icon'        => 'fas fa-fw fa-car',
+        ],
+        [
+            'text'        => 'Solicitudes vehiculares',
             'url'         => '#',
             'icon'        => 'fas fa-fw fa-car',
             'submenu' => [
@@ -467,11 +472,6 @@ return [
             'icon'        => 'fas fa-fw fa-solid fa-chart-simple',
         ],
         ['header' => 'Módulos Administrador'],
-        [
-            'text'        => 'Administrar vehículos',
-            'url'         => 'vehiculos',
-            'icon'        => 'fas fa-fw fa-car',
-        ],
         [
             'text'        => 'Administrar Usuarios',
             'url'         => '/funcionarios',

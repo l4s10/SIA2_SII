@@ -120,24 +120,34 @@
                 <div class="invalid-feedback">{{ $message }}</div>
                 @enderror
             </div>
-            {{-- *FECHA ASIGNADA* --}}
-            <div class="form-group">
-                <label for="FECHA_ASIG_SALA"><i class="fa-solid fa-calendar"></i> Fecha asignada:</label>
-                <div class="input-group">
-                    <input type="text" id="FECHA_ASIG_SALA" name="FECHA_ASIG_SALA" class="form-control @error('FECHA_ASIG_SALA') is-invalid @enderror" placeholder="Asigne la fecha" data-input required value="{{ $solicitud->FECHA_ASIG_SALA }}">
-                    {{-- *HORA SOLICITADA* --}}
-                    <input type="text" id="HORA_ASIG_SOL_SALA" name="HORA_ASIG_SOL_SALA" class="form-control flatpickr @error('HORA_ASIG_SOL_SALA') is-invalid @enderror" placeholder="Asigne la hora" data-input required value="{{ $solicitud->HORA_ASIG_SOL_SALA }}">
-                    {{-- Hora termino ASIGNADA --}}
-                    <input type="text" id="HORA_TERM_ASIG_SALA" name="HORA_TERM_ASIG_SALA" class="form-control flatpickr @if($errors->has('HORA_TERM_ASIG_SALA')) is-invalid @endif" placeholder="Seleccione la hora de término" data-input required value="{{ $solicitud->HORA_TERM_ASIG_SALA }}">
-                    <button type="button" id="clearButton" class="btn btn-danger">Limpiar</button>
+
+            <div class="row">
+                <div class="col-md-6">
+                    {{-- Fecha y hora de inicio asignadas --}}
+                    <div class="form-group">
+                        <label for="FECHA_INICIO_ASIG_SALA"><i class="fa-solid fa-calendar"></i> Fecha y hora de inicio asignada:</label>
+                        <div class="input-group">
+                            <input type="text" id="FECHA_INICIO_ASIG_SALA" name="FECHA_INICIO_ASIG_SALA" class="form-control @error('FECHA_INICIO_ASIG_SALA') is-invalid @enderror" placeholder="Seleccione fecha y hora de inicio" required value="{{$solicitud->FECHA_INICIO_ASIG_SALA}}">
+                        </div>
+                        @error('FECHA_INICIO_ASIG_SALA')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                    </div>
                 </div>
-                @error('FECHA_ASIG_SALA')
-                <div class="invalid-feedback">{{ $message }}</div>
-                @enderror
-                @error('HORA_ASIG_SOL_SALA')
-                <div class="invalid-feedback">{{ $message }}</div>
-                @enderror
+                <div class="col-md-6">
+                    {{-- **Fecha y hora de término asignadas **--}}
+                    <div class="form-group">
+                        <label for="FECHA_TERM_ASIG_SALA"><i class="fa-solid fa-calendar"></i> Fecha y hora de término asignada:</label>
+                        <div class="input-group">
+                            <input type="text" id="FECHA_TERM_ASIG_SALA" name="FECHA_TERM_ASIG_SALA" class="form-control @error('FECHA_TERM_ASIG_SALA') is-invalid @enderror" placeholder="Seleccione fecha y hora de término" required value="{{$solicitud->FECHA_TERM_ASIG_SALA }}">
+                        </div>
+                        @error('FECHA_TERM_ASIG_SALA')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                    </div>
+                </div>
             </div>
+
             {{-- **ESTADO SOLICITUD** --}}
             <div class="mb-3">
                 <label for="ESTADO_SOL_SALA" class="form-label"><i class="fa-solid fa-file-circle-check"></i> Estado de la Solicitud:</label>
@@ -148,7 +158,7 @@
                     <option value="RECHAZADO" {{ $solicitud->ESTADO_SOL_SALA === 'RECHAZADO' ? 'selected' : '' }}>Rechazado</option>
                 </select>
             </div>
-            {{-- CAMPOS NIVEL 2 --}}
+            {{-- !!CAMPOS NIVEL 2 --}}
             {{-- Sala a asignar (depende de ID_CATEGORIA_SALA) --}}
             <div class="mb-3">
                 <label for="SALA_A_ASIGNAR" class="form-label"><i class="fa-solid fa-person-shelter"></i> Sala/Bodega a asignar:</label>
@@ -202,6 +212,25 @@
 
     <script>
         $(function () {
+             // Inicializar Flatpickr para el campo de fecha y hora de inicio
+            flatpickr("#FECHA_INICIO_ASIG_SALA", {
+                locale: 'es',
+                enableTime: true,
+                dateFormat: "Y-m-d H:i",
+                // Otras opciones y configuraciones adicionales que desees utilizar
+                altFormat: 'd-m-Y H:i',
+                altInput: true,
+            });
+
+            // Inicializar Flatpickr para el campo de fecha y hora de término
+            flatpickr("#FECHA_TERM_ASIG_SALA", {
+                locale: 'es',
+                enableTime: true,
+                dateFormat: "Y-m-d H:i",
+                // Otras opciones y configuraciones adicionales que desees utilizar
+                altFormat: 'd-m-Y H:i',
+                altInput: true,
+            });
             $('#FECHA_SOL_SALA').flatpickr({
                 dateFormat: 'Y-m-d',
                 altFormat: 'd-m-Y',
@@ -212,22 +241,7 @@
                 mode: "range",
             });
 
-            $('#HORA_SOL_SALA').flatpickr({
-                enableTime: true,
-                noCalendar: true,
-                dateFormat: "H:i",
-                time_24hr: true,
-                locale: "es",
-                placeholder: "Seleccione la hora",
-            });
-            $('#HORA_TERM_SOL_SALA').flatpickr({
-                enableTime: true,
-                noCalendar: true,
-                dateFormat: "H:i",
-                time_24hr: true,
-                locale: "es",
-                placeholder: "Seleccione la hora",
-            });
+
             $('#FECHA_ASIG_SALA').flatpickr({
                 dateFormat: 'Y-m-d',
                 altFormat: 'd-m-Y',
@@ -243,7 +257,7 @@
                 }
             });
 
-            $('#HORA_ASIG_SOL_SALA').flatpickr({
+            $('#HORA_SOL_SALA').flatpickr({
                 enableTime: true,
                 noCalendar: true,
                 dateFormat: "H:i",
@@ -256,7 +270,7 @@
                     });
                 }
             });
-            $('#HORA_TERM_ASIG_SALA').flatpickr({
+            $('#HORA_TERM_SOL_SALA').flatpickr({
                 enableTime: true,
                 noCalendar: true,
                 dateFormat: "H:i",

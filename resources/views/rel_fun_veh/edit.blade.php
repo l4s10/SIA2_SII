@@ -57,33 +57,21 @@
                         </div>
                     </div>
             </div>
-            <div class="mb-3">
-                <label for="ID_TIPO_VEH" class="form-label"><i class="fa-solid fa-car-side"></i> Seleccione tipo de vehículo:</label>
-                <select id="ID_TIPO_VEH" name="ID_TIPO_VEH" class="form-control @error('ID_TIPO_VEH') is-invalid @enderror" required>
-                    <option value="" selected>--Seleccione un tipo de vehículo--</option>
 
-                    @foreach ($tipo_vehiculos as $tipo_vehiculo)
-                        <option value="{{ $tipo_vehiculo['ID_TIPO_VEH'] }}" @if ($tipo_vehiculo['ID_TIPO_VEH'] === $solicitud->ID_TIPO_VEH) selected @endif>
-                            {{ $tipo_vehiculo['TIPO_VEHICULO'] }}
-                        </option>
-                    @endforeach
-                </select>
-
-                @error('ID_TIPO_VEH')
-                    <div class="invalid-feedback">{{ $message }}</div>
-                @enderror
-            </div>
 
             {{-- *CAMPO CONDUCTOR* --}}
             <div class="mb-3">
                 <label for="CONDUCTOR" class="form-label"><i class="fa-solid fa-user-plus"></i> Seleccione conductor:</label>
-                <select id="CONDUCTOR" name="CONDUCTOR" class="form-control @error('CONDUCTOR') is-invalid @enderror" required>
-                    <option value="" selected>--Seleccione un(a) conductor(a)--</option>
-
+                <select id="CONDUCTOR" name="CONDUCTOR" class="form-control @if($errors->has('CONDUCTOR')) is-invalid @endif" required>
+                    <option value="">--Seleccione un(a) conductor(a)--</option>
+                    {{-- *CORRECCION DE FILTRO ARREGLADO, AHORA SOLO MUESTRA CONDUCTORES DEL MISMO DEPARTAMENTO* --}}
                     @foreach ($departamentos as $departamento)
                         <optgroup label="{{ $departamento->DEPARTAMENTO }}">
                             @foreach ($conductores as $conductor)
-                                @if ($conductor->departamento->DEPARTAMENTO === $departamento->DEPARTAMENTO)
+                                @php
+                                    $usuario = App\Models\User::find($solicitud->ID_USUARIO);
+                                @endphp
+                                @if ($conductor->departamento->DEPARTAMENTO === $departamento->DEPARTAMENTO && $conductor->departamento->ID_DEPART === $usuario->departamento->ID_DEPART)
                                     <option value="{{ $conductor->id }}" @if ($conductor->id == $solicitud->CONDUCTOR) selected @endif>
                                         {{ $conductor->NOMBRES }} {{ $conductor->APELLIDOS }}
                                     </option>
@@ -93,15 +81,16 @@
                     @endforeach
                 </select>
 
+
                 @error('CONDUCTOR')
                     <div class="invalid-feedback">{{ $message }}</div>
                 @enderror
             </div>
 
-
+            {{-- *CAMPO MOTIVO SOLICITUD* --}}
             <div class="mb-3">
                 <label for="MOTIVO_SOL_VEH" class="form-label"><i class="fa-solid fa-file-pen"></i> Motivo de solicitud:</label>
-                <textarea id="MOTIVO_SOL_VEH" name="MOTIVO_SOL_VEH" class="form-control @error('MOTIVO_SOL_VEH') is-invalid @enderror" aria-label="With textarea" rows="5" placeholder="Escriba el motivo de su solicitud (MÁX 1000 CARACTERES)">{{ $solicitud->MOTIVO_SOL_VEH }}</textarea>
+                <textarea id="MOTIVO_SOL_VEH" name="MOTIVO_SOL_VEH" class="form-control @error('MOTIVO_SOL_VEH') is-invalid @enderror" aria-label="With textarea" rows="5" placeholder="Escriba el motivo de su solicitud (MÁX 1000 CARACTERES)" required autofocus>{{ $solicitud->MOTIVO_SOL_VEH }}</textarea>
                 @error('MOTIVO_SOL_VEH')
                     <div class="invalid-feedback">{{ $message }}</div>
                 @enderror
@@ -109,7 +98,7 @@
 
             <div class="mb-3">
                 <label for="NOMBRE_OCUPANTES" class="form-label"><i class="fa-solid fa-users-line"></i> Ocupantes:</label>
-                <textarea id="NOMBRE_OCUPANTES" name="NOMBRE_OCUPANTES" class="form-control @error('NOMBRE_OCUPANTES') is-invalid @enderror" aria-label="With textarea" rows="5" placeholder="Nombre Nombre Apellido Apellido">{{ $solicitud->NOMBRE_OCUPANTES }}</textarea>
+                <textarea id="NOMBRE_OCUPANTES" name="NOMBRE_OCUPANTES" class="form-control @error('NOMBRE_OCUPANTES') is-invalid @enderror" aria-label="With textarea" rows="5" placeholder="Nombre Nombre Apellido Apellido" required>{{ $solicitud->NOMBRE_OCUPANTES }}</textarea>
                 @error('NOMBRE_OCUPANTES')
                     <div class="invalid-feedback">{{ $message }}</div>
                 @enderror
@@ -147,17 +136,32 @@
                 @enderror
             </div>
             <div class="mb-3">
-                <label for="PATENTE_VEHICULO" class="form-label"><i class="fa-solid fa-car-on"></i> Asignar vehiculos:</label>
+                <label for="ID_TIPO_VEH" class="form-label"><i class="fa-solid fa-car-side"></i> Seleccione tipo de vehículo:</label>
+                <select id="ID_TIPO_VEH" name="ID_TIPO_VEH" class="form-control @error('ID_TIPO_VEH') is-invalid @enderror" required>
+                    <option value="" selected>--Seleccione un tipo de vehículo--</option>
+
+                    @foreach ($tipo_vehiculos as $tipo_vehiculo)
+                        <option value="{{ $tipo_vehiculo['ID_TIPO_VEH'] }}" @if ($tipo_vehiculo['ID_TIPO_VEH'] === $solicitud->ID_TIPO_VEH) selected @endif>
+                            {{ $tipo_vehiculo['TIPO_VEHICULO'] }}
+                        </option>
+                    @endforeach
+                </select>
+
+                @error('ID_TIPO_VEH')
+                    <div class="invalid-feedback">{{ $message }}</div>
+                @enderror
+            </div>
+
+            <div class="mb-3">
+                <label for="PATENTE_VEHICULO" class="form-label"><i class="fa-solid fa-car-on"></i> Asignar vehículos:</label>
                 <select id="PATENTE_VEHICULO" name="PATENTE_VEHICULO" class="form-control @if($errors->has('PATENTE_VEHICULO')) is-invalid @endif">
                     <option value="">-- Seleccione el vehículo a asignar --</option>
                     @foreach ($vehiculos->groupBy('UNIDAD_VEHICULO') as $grupo => $autos)
                         <optgroup label="{{ $grupo }}">
                             @foreach ($autos as $auto)
-                                @if ($auto->tipoVehiculo->ID_TIPO_VEH === $solicitud->ID_TIPO_VEH)
-                                    <option value="{{ $auto->PATENTE_VEHICULO }}" @if ($auto->PATENTE_VEHICULO === $solicitud->PATENTE_VEHICULO) selected @endif>
-                                        {{ $auto->PATENTE_VEHICULO }} ({{ $auto->tipoVehiculo->TIPO_VEHICULO }})
-                                    </option>
-                                @endif
+                                <option value="{{ $auto->PATENTE_VEHICULO }}" data-tipo-vehiculo="{{ $auto->tipoVehiculo->ID_TIPO_VEH }}" @if ($auto->PATENTE_VEHICULO === $solicitud->PATENTE_VEHICULO) selected @endif>
+                                    {{ $auto->PATENTE_VEHICULO }} ({{ $auto->tipoVehiculo->TIPO_VEHICULO }})
+                                </option>
                             @endforeach
                         </optgroup>
                     @endforeach
@@ -177,7 +181,8 @@
                 </select>
             </div>
             <a href="{{route('solicitud.vehiculos.index')}}" class="btn btn-secondary" tabindex="5">Cancelar</a>
-            <button type="submit" class="btn btn-primary">Enviar solicitud</button>
+            <button type="button" class="btn btn-info" onclick="resetFields()">Me equivoqué</button>
+            <button type="submit" class="btn btn-primary">Enviar cambios</button>
         </form>
     </div>
 @stop
@@ -186,6 +191,8 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
 @stop
 @section('js')
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
     <!-- Incluir archivos JS flatpicker-->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
@@ -233,5 +240,135 @@
                 }
             });
         });
+    </script>
+    {{-- *FUNCION PARA REFRESCAR DINAMICAMENTE EL FILTRO DE FUNCIONARIOS* --}}
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                var departamentosSelect = document.getElementById('departamentos');
+                var ocupanteSelect = document.getElementById('ocupante');
+                var agregarOcupanteBtn = document.getElementById('agregarOcupante');
+                var limpiarCampoBtn = document.getElementById('limpiarCampo');
+                var nombreOcupantesTextarea = document.getElementById('NOMBRE_OCUPANTES');
+
+                // Obtener las opciones correspondientes al departamento seleccionado al cargar la página
+                var usuarios = @json($conductores);
+                var departamentoSeleccionado = departamentosSelect.value;
+                var options = ocupanteSelect.options;
+
+                // Filtrar usuarios por departamento seleccionado al cargar la página
+                var usuariosFiltradosInicial = usuarios.filter(function(usuario) {
+                    return usuario.ID_DEPART == departamentoSeleccionado;
+                });
+
+                // Agregar las opciones de usuarios al select de ocupantes al cargar la página
+                usuariosFiltradosInicial.forEach(function(usuario) {
+                    options.add(new Option(usuario.NOMBRES + ' ' + usuario.APELLIDOS, usuario.id));
+                });
+
+                departamentosSelect.addEventListener('change', function() {
+                    var departamentoId = this.value;
+                    var options = ocupanteSelect.options;
+
+                    // Limpiar opciones anteriores
+                    options.length = 0;
+                    options.add(new Option('-- Seleccione un compañero --', ''));
+
+                    // Filtrar usuarios por departamento seleccionado
+                    var usuariosFiltrados = usuarios.filter(function(usuario) {
+                        return usuario.ID_DEPART == departamentoId;
+                    });
+
+                    // Agregar las opciones de usuarios al select de ocupantes
+                    usuariosFiltrados.forEach(function(usuario) {
+                        options.add(new Option(usuario.NOMBRES + ' ' + usuario.APELLIDOS, usuario.id));
+                    });
+                });
+
+                agregarOcupanteBtn.addEventListener('click', function() {
+                    var ocupanteNombre = ocupanteSelect.options[ocupanteSelect.selectedIndex].text;
+                    var departamentoNombre = departamentosSelect.options[departamentosSelect.selectedIndex].text;
+                    var nombreCompleto = ocupanteNombre + ' (' + departamentoNombre + ')';
+                    nombreOcupantesTextarea.value += nombreCompleto + '\n';
+                });
+
+                limpiarCampoBtn.addEventListener('click', function() {
+                    nombreOcupantesTextarea.value = '';
+                });
+            });
+        </script>
+    {{-- *FUNCION PARA REFRESCAR DINAMICAMENTE LOS VEHICULOS A ASIGNAR* --}}
+    <script>
+        $(document).ready(function() {
+            // Evento change del elemento ID_TIPO_VEH
+            $('#ID_TIPO_VEH').change(function() {
+                var selectedTipoVehiculo = $(this).val();
+
+                $('#PATENTE_VEHICULO option').each(function() {
+                    var tipoVehiculoOption = $(this).data('tipo-vehiculo');
+
+                    if (tipoVehiculoOption == selectedTipoVehiculo) {
+                        $(this).show();
+                    } else {
+                        $(this).hide();
+                    }
+                });
+
+                // Restablecer la selección del segundo select
+                $('#PATENTE_VEHICULO').val('');
+            });
+
+            // Desencadenar el evento change al cargar la página
+            $('#ID_TIPO_VEH').trigger('change');
+        });
+    </script>
+    {{-- *FUNCION RESETEAR SOLICITUD (DEVUELVE LOS VALORES ORIGINALES)* --}}
+    <script>
+        function resetFields() {
+            // Obtener los elementos de formulario por sus IDs
+            var conductor = document.getElementById('CONDUCTOR');
+            var motivoSolicitud = document.getElementById('MOTIVO_SOL_VEH');
+            var nombreOcupantes = document.getElementById('NOMBRE_OCUPANTES');
+            var fechaSalida = document.getElementById('FECHA_SALIDA_SOL_VEH');
+            var horaSalida = document.getElementById('HORA_SALIDA_SOL_VEH');
+            var horaLlegada = document.getElementById('HORA_LLEGADA_SOL_VEH');
+            var observaciones = document.getElementById('OBSERV_SOL_VEH');
+            var tipoVehiculo = document.getElementById('ID_TIPO_VEH');
+            var patenteVehiculo = document.getElementById('PATENTE_VEHICULO');
+            var estadoSolicitud = document.getElementById('ESTADO_SOL_VEH');
+
+            // Restaurar los valores originales de los campos
+            conductor.value = "{{ $solicitud->CONDUCTOR }}";
+            motivoSolicitud.value = "{{ $solicitud->MOTIVO_SOL_VEH }}";
+            nombreOcupantes.value = "{{ $solicitud->NOMBRE_OCUPANTES }}";
+            fechaSalida.value = "{{ $solicitud->FECHA_SALIDA_SOL_VEH }}";
+            horaSalida.value = "{{ $solicitud->HORA_SALIDA_SOL_VEH }}";
+            horaLlegada.value = "{{ $solicitud->HORA_LLEGADA_SOL_VEH }}";
+            observaciones.value = "{{ $solicitud->OBSERV_SOL_VEH }}";
+            tipoVehiculo.value = "{{ $solicitud->ID_TIPO_VEH }}";
+            patenteVehiculo.value = "{{ $solicitud->PATENTE_VEHICULO }}";
+            estadoSolicitud.value = "{{ $solicitud->ESTADO_SOL_VEH }}";
+
+            // Restablecer el selector de fecha Flatpickr
+            flatpickr("#FECHA_SALIDA_SOL_VEH", {
+                dateFormat: 'Y-m-d',
+                altFormat: 'd-m-Y',
+                altInput: true,
+                locale: 'es',
+                minDate: "today",
+                showClearButton: true,
+                mode: "range"
+            });
+            // Mostrar la alerta SweetAlert2
+            Swal.fire({
+                icon: 'success',
+                title: 'Campos restablecidos',
+                text: 'Los campos se han restablecido correctamente.',
+                timer: 2000,
+                timerProgressBar: true,
+                toast: true,
+                position: 'top-end',
+                showConfirmButton: false
+            });
+        }
     </script>
 @stop
