@@ -108,16 +108,6 @@
                 @enderror
             </div>
 
-            <!--<div class="mb-3">
-                <label for="DEPTO" class="form-label"><i class="fa-solid fa-building-user"></i> Departamento:</label>
-                <select id="DEPTO" name="DEPTO" class="form-control">
-                    <option value="" selected>--Seleccione un departamento--</option>
-                    @foreach ($departamentos as $departamento)
-                        <option value="{{ $departamento->id }}">{{ $departamento->nombre }}</option>
-                    @endforeach
-                </select>
-            </div>-->
-
             <div class="form-group">
                 <label for="FECHA_SALIDA_SOL_VEH"><i class="fa-solid fa-calendar"></i> Fecha de inicio y término:</label>
                 <div class="input-group">
