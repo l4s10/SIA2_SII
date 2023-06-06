@@ -94,7 +94,7 @@
 
             <div class="mb-3">
                 <label for="EQUIPO_SALA" class="form-label"><i class="fa-solid fa-file-pen"></i> Resumen:</label>
-                <textarea id="EQUIPO_SALA" name="EQUIPO_SALA" class="form-control @error('EQUIPO_SALA') is-invalid @enderror" aria-label="With textarea" rows="1" placeholder="Escriba el motivo de su solicitud (MÁX 1000 CARACTERES)" readonly>{{ old('EQUIPO_SALA') }}</textarea>
+                <textarea id="EQUIPO_SALA" name="EQUIPO_SALA" class="form-control @error('EQUIPO_SALA') is-invalid @enderror" aria-label="With textarea" rows="1" placeholder="Resumen de su pedido" readonly>{{ old('EQUIPO_SALA') }}</textarea>
                 @error('EQUIPO_SALA')
                     <div class="invalid-feedback">{{ $message }}</div>
                 @enderror
@@ -218,13 +218,20 @@
 
                     // Verificar si el equipo ya está en el carrito
                     if (equipoSala.includes(nombreEquipo)) {
-                        alert('El equipo ya está en el carrito');
+                        Swal.fire({
+                            icon: 'warning',
+                            text: 'El equipo ya está en el carrito',
+                            showConfirmButton: false,
+                            timer: 3000 // Cerrar automáticamente después de 3 segundos
+                        });
                     } else {
                         // Agregar el equipo al carrito
-                        equipoSalaInput.value = equipoSala ? equipoSala + ', ' + nombreEquipo : nombreEquipo;
+                        const nuevoEquipoSala = equipoSala ? nombreEquipo + ', ' + equipoSala : nombreEquipo;
+                        equipoSalaInput.value = nuevoEquipoSala;
                     }
                 });
             });
+
 
             // Manejar clic en el botón de eliminar
             btnEliminar.forEach(function (btn) {
@@ -232,9 +239,15 @@
                     const nombreEquipo = this.getAttribute('data-nombre');
                     const equipoSala = equipoSalaInput.value;
 
+                    // Separar los elementos del carrito de compras por coma
+                    const elementos = equipoSala.split(', ');
+
                     // Remover el equipo del carrito
-                    const nuevoEquipoSala = equipoSala.replace(nombreEquipo, '');
-                    equipoSalaInput.value = nuevoEquipoSala.trim();
+                    const nuevosElementos = elementos.filter(function (elemento) {
+                        return elemento !== nombreEquipo;
+                    });
+
+                    equipoSalaInput.value = nuevosElementos.join(', ');
                 });
             });
         });

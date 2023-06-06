@@ -23,11 +23,12 @@ return new class extends Migration
             $table->string('MOTIVO_SOL_SALA', 1000)->nullable();
             $table->integer('CANT_PERSONAS_SOL_SALAS')->nullable();
             $table->string('FECHA_SOL_SALA',128)->nullable();
-            $table->string('FECHA_ASIG_SALA',128)->nullable();
+            $table->timestamp('FECHA_INICIO_ASIG_SALA')->nullable();
+            $table->timestamp('FECHA_TERM_ASIG_SALA')->nullable();
+
             $table->string('HORA_SOL_SALA', 128)->nullable();
             $table->string('HORA_TERM_SOL_SALA', 128)->nullable();
-            $table->string('HORA_ASIG_SOL_SALA', 128)->nullable();
-            $table->string('HORA_TERM_ASIG_SALA', 128)->nullable();
+
 
             $table->string('SALA_PEDIDA', 128)->nullable();
             $table->string('SALA_A_ASIGNAR', 128)->nullable();

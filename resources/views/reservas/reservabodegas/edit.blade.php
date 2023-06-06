@@ -103,24 +103,38 @@
                 <div class="input-group">
                     <input type="text" id="FECHA_SOL_BODEGA" name="FECHA_SOL_BODEGA" class="form-control @if($errors->has('FECHA_SOL_BODEGA')) is-invalid @endif" placeholder="Ingrese la fecha" data-input required value="{{ $solicitud->FECHA_SOL_BODEGA }}">
                     {{-- *HORA SOLICITADA* --}}
-                    <input type="text" id="HORA_SOL_BODEGA" name="HORA_SOL_BODEGA" class="form-control flatpickr @if($errors->has('HORA_SOL_BODEGA')) is-invalid @endif" placeholder="Seleccione la hora" data-input required value="{{ $solicitud->HORA_SOL_BODEGA }}">
+                    <input type="text" id="HORA_INICIO_SOL_BODEGA" name="HORA_INICIO_SOL_BODEGA" class="form-control flatpickr @if($errors->has('HORA_INICIO_SOL_BODEGA')) is-invalid @endif" placeholder="Seleccione la hora" data-input required value="{{$solicitud->HORA_INICIO_SOL_BODEGA }}">
                 </div>
                 @if ($errors->has('FECHA_SOL_BODEGA'))
                     <div class="invalid-feedback">{{ $errors->first('FECHA_SOL_BODEGA') }}</div>
                 @endif
             </div>
             {{-- *FECHA ASIGNADA* --}}
-            <div class="form-group">
-                <label for="FECHA_ASIG_BODEGA"><i class="fa-solid fa-calendar"></i> Fecha y hora a asignar:</label>
-                <div class="input-group">
-                    <input type="text" id="FECHA_ASIG_BODEGA" name="FECHA_ASIG_BODEGA" class="form-control @if($errors->has('FECHA_ASIG_BODEGA')) is-invalid @endif" placeholder="Ingrese la fecha" data-input required value="{{ $solicitud->FECHA_ASIG_BODEGA }}">
-                    {{-- *HORA SOLICITADA* --}}
-                    <input type="text" id="HORA_ASIG_BODEGA" name="HORA_ASIG_BODEGA" class="form-control flatpickr @if($errors->has('HORA_ASIG_BODEGA')) is-invalid @endif" placeholder="Seleccione la hora" data-input required value="{{ $solicitud->HORA_ASIG_BODEGA }}">
-                    <button type="button" id="clearButton" class="btn btn-danger">Limpiar</button>
+            <div class="row">
+                <div class="col-md-6">
+                    {{-- Fecha y hora de inicio asignadas --}}
+                    <div class="form-group">
+                        <label for="FECHA_INICIO_ASIG_BODEGA"><i class="fa-solid fa-calendar"></i> Fecha y hora de inicio asignada:</label>
+                        <div class="input-group">
+                            <input type="text" id="FECHA_INICIO_ASIG_BODEGA" name="FECHA_INICIO_ASIG_BODEGA" class="form-control @error('FECHA_INICIO_ASIG_BODEGA') is-invalid @enderror" placeholder="Seleccione fecha y hora de inicio" required value="{{$solicitud->FECHA_INICIO_ASIG_BODEGA}}">
+                        </div>
+                        @error('FECHA_INICIO_ASIG_BODEGA')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                    </div>
                 </div>
-                @if ($errors->has('FECHA_ASIG_BODEGA'))
-                    <div class="invalid-feedback">{{ $errors->first('FECHA_ASIG_BODEGA') }}</div>
-                @endif
+                <div class="col-md-6">
+                    {{-- **Fecha y hora de término asignadas **--}}
+                    <div class="form-group">
+                        <label for="FECHA_TERM_ASIG_BODEGA"><i class="fa-solid fa-calendar"></i> Fecha y hora de término asignada:</label>
+                        <div class="input-group">
+                            <input type="text" id="FECHA_TERM_ASIG_BODEGA" name="FECHA_TERM_ASIG_BODEGA" class="form-control @error('FECHA_TERM_ASIG_BODEGA') is-invalid @enderror" placeholder="Seleccione fecha y hora de término" required value="{{$solicitud->FECHA_TERM_ASIG_BODEGA }}">
+                        </div>
+                        @error('FECHA_TERM_ASIG_BODEGA')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                    </div>
+                </div>
             </div>
             {{-- **ESTADO SOL BODEGA** --}}
             <div class="mb-3">
@@ -157,6 +171,25 @@
 
     <script>
         $(function () {
+             // Inicializar Flatpickr para el campo de fecha y hora de inicio
+             flatpickr("#FECHA_INICIO_ASIG_BODEGA", {
+                locale: 'es',
+                enableTime: true,
+                dateFormat: "Y-m-d H:i",
+                // Otras opciones y configuraciones adicionales que desees utilizar
+                altFormat: 'd-m-Y H:i',
+                altInput: true,
+            });
+
+            // Inicializar Flatpickr para el campo de fecha y hora de término
+            flatpickr("#FECHA_TERM_ASIG_BODEGA", {
+                locale: 'es',
+                enableTime: true,
+                dateFormat: "Y-m-d H:i",
+                // Otras opciones y configuraciones adicionales que desees utilizar
+                altFormat: 'd-m-Y H:i',
+                altInput: true,
+            });
             $('#FECHA_SOL_BODEGA').flatpickr({
                 dateFormat: 'Y-m-d',
                 altFormat: 'd-m-Y',
@@ -166,7 +199,7 @@
                 showClearButton: true,
                 mode: "range",
             });
-            $('#HORA_SOL_BODEGA').flatpickr({
+            $('#HORA_INICIO_SOL_BODEGA').flatpickr({
                 enableTime: true,
                 noCalendar: true,
                 dateFormat: "H:i",
@@ -174,33 +207,7 @@
                 locale: "es",
                 placeholder: "Seleccione la hora",
             });
-            $('#FECHA_ASIG_BODEGA').flatpickr({
-                dateFormat: 'Y-m-d',
-                altFormat: 'd-m-Y',
-                altInput: true,
-                locale: 'es',
-                minDate: "today",
-                showClearButton: true,
-                mode: "multiple",
-                onReady: function(selectedDates, dateStr, instance) {
-                    $('#clearButton').on('click', function() {
-                        instance.clear();
-                    });
-                }
-            });
-            $('#HORA_ASIG_BODEGA').flatpickr({
-                enableTime: true,
-                noCalendar: true,
-                dateFormat: "H:i",
-                time_24hr: true,
-                locale: "es",
-                placeholder: "Seleccione la hora",
-                onReady: function(selectedDates, dateStr, instance) {
-                    $('#clearButton').on('click', function() {
-                        instance.clear();
-                    });
-                }
-            });
+
         });
     </script>
     <!-- Para inicializar -->

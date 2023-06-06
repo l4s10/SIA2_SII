@@ -8,33 +8,21 @@
 
 @section('content')
     <div class="" id="calendar"></div>
-
-    <!-- Modal -->
+    <!-- Carta para mostrar los detalles del evento -->
     <div class="modal fade" id="eventModal" tabindex="-1" aria-labelledby="eventModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
+        <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="eventModalLabel">Nuevo evento</h5>
+                    <h5 class="modal-title" id="eventModalLabel">Detalles de reserva/evento</h5>
                 </div>
                 <div class="modal-body">
-                    <form id="eventForm">
-                        <div class="form-group">
-                            <label for="title">Título del evento</label>
-                            <input type="text" class="form-control" id="title" placeholder="Introduce el título">
-                        </div>
-                        <div class="form-group">
-                            <label for="startDate">Fecha de inicio</label>
-                            <input type="text" class="form-control" id="startDate">
-                        </div>
-                        <div class="form-group">
-                            <label for="endDate">Fecha de fin</label>
-                            <input type="text" class="form-control" id="endDate">
-                        </div>
-                    </form>
+                    <p id="eventTitle"></p>
+                    <p><strong>Fecha de inicio:</strong> <span id="startDate"></span></p>
+                    <p><strong>Fecha de termino:</strong> <span id="endDate"></span></p>
+                    <!-- Mostrar otros detalles del evento aquí -->
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                    <button type="button" class="btn btn-primary" id="saveEvent">Guardar evento</button>
                 </div>
             </div>
         </div>
@@ -53,47 +41,35 @@
 
     <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@fullcalendar/core@6.1.8/locales/es.global.min.js"></script>
+
     <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var calendarEl = document.getElementById('calendar');
+            var calendar = new FullCalendar.Calendar(calendarEl, {
+                initialView: 'dayGridMonth',
+                headerToolbar: {
+                    left: 'prev,next today',
+                    center: 'title',
+                    right: 'dayGridMonth,timeGridWeek,timeGridDay'
+                },
+                locale: 'es',
+                events: @json($events),
+                displayEventEnd: true,
+                eventClick: function(info) {
+                    // Mostrar los detalles del evento en la carta modal
+                    $('#eventTitle').text(info.event.title);
+                    $('#startDate').text(moment(info.event.start).format('DD-MM-YYYY H:mm'));
+                    $('#endDate').text(moment(info.event.end).format('DD-MM-YYYY H:mm'));
 
-    document.addEventListener('DOMContentLoaded', function() {
-        var calendarEl = document.getElementById('calendar');
-        var calendar = new FullCalendar.Calendar(calendarEl, {
-            initialView: 'dayGridMonth',
-            locale: 'es',  // Aquí se especifica el locale
-            dateClick: function() {
-                var eventModal = new bootstrap.Modal(document.getElementById('eventModal'));
-                eventModal.show();
-            }
-        });
-        calendar.render();
+                    // Mostrar otros detalles del evento aquí
 
-        // Initialize Flatpickr
-        $('#startDate, #endDate').flatpickr({
-            enableTime: true,
-            dateFormat: "Y-m-d H:i",
-        });
-
-        // Save event
-        $('#saveEvent').click(function() {
-            var title = $('#title').val();
-            var startDate = $('#startDate').val();
-            var endDate = $('#endDate').val();
-
-            // Add event to FullCalendar
-            calendar.addEvent({
-                title: title,
-                start: startDate,
-                end: endDate
+                    // Abrir la carta modal
+                    var modal = new bootstrap.Modal(document.getElementById('eventModal'));
+                    modal.show();
+                }
             });
-
-            // Close modal
-            eventModal.hide();
-
-            // Reset form
-            $('#eventForm')[0].reset();
+            calendar.render();
         });
-    });
-
     </script>
 @endsection
 
