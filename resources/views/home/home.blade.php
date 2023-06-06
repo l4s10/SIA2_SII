@@ -13,13 +13,18 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="eventModalLabel">Detalles de reserva/evento</h5>
+                    <h5 class="modal-title" id="eventModalLabel">Detalles </h5>
                 </div>
                 <div class="modal-body">
-                    <p id="eventTitle"></p>
+                    {{-- *DETALLE DEL EVENTO* --}}
+                    <p><strong>Lugar/evento:</strong> <span id="eventTitle"></span></p>
+                    <p><strong>Tipo de evento:</strong> <span id="eventType"></span></p>
+                    {{-- *DATOS SOLICITANTE* --}}
+                    <p><strong>Departamento:</strong> <span id="eventDepartamento"></span></p>
+                    <p><strong>Nombre Solicitante:</strong> <span id="eventNombreSolicitante"></span></p>
+                    {{-- *FECHAS* --}}
                     <p><strong>Fecha de inicio:</strong> <span id="startDate"></span></p>
                     <p><strong>Fecha de termino:</strong> <span id="endDate"></span></p>
-                    <!-- Mostrar otros detalles del evento aquí -->
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
@@ -55,13 +60,16 @@
                 locale: 'es',
                 events: @json($events),
                 displayEventEnd: true,
+                dayHeaderFormat: { weekday: 'long' },
                 eventClick: function(info) {
                     // Mostrar los detalles del evento en la carta modal
                     $('#eventTitle').text(info.event.title);
                     $('#startDate').text(moment(info.event.start).format('DD-MM-YYYY H:mm'));
                     $('#endDate').text(moment(info.event.end).format('DD-MM-YYYY H:mm'));
-
                     // Mostrar otros detalles del evento aquí
+                    $('#eventDepartamento').text(info.event.extendedProps.departamento);
+                    $('#eventNombreSolicitante').text(info.event.extendedProps.nombreSolicitante);
+                    $('#eventType').text(info.event.extendedProps.tipoEvento);
 
                     // Abrir la carta modal
                     var modal = new bootstrap.Modal(document.getElementById('eventModal'));
