@@ -20,6 +20,7 @@ use App\Models\Sexo;
 use App\Models\Comuna;
 use App\Models\DireccionRegional;
 use App\Models\Resolucion;
+use App\Models\Cargo;
 
 class CamposUsuarioNormalizados extends Seeder
 {
@@ -190,6 +191,10 @@ class CamposUsuarioNormalizados extends Seeder
             ['ID_GRADO' => 14, 'GRADO' => 19],
             ['ID_GRADO' => 15, 'GRADO' => 20],
             ['ID_GRADO' => 16, 'GRADO' => 21],
+        ]);
+        Cargo::insert([
+            ['ID_CARGO' => 1, 'CARGO' => 'DIRECTOR REGIONAL'],
+            ['ID_CARGO' => 2, 'CARGO' => 'JEFE DPTO']
         ]);
         // Población de la tabla 'calidad_juridica'
         CalidadJuridica::insert([

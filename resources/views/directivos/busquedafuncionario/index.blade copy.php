@@ -3,7 +3,7 @@
 @section('title', 'Solicitudes')
 
 @section('content_header')
-    <h1>Solicitudes de Reparaciones y Mantenciones (Vehículos)</h1>
+    <h1>Información de funcionarios directivos</h1>
 @stop
 
 @section('content')
@@ -36,35 +36,13 @@
             <table id="solicitudes" class="table table-bordered mt-4">
                 <thead class="bg-primary text-white">
                     <tr>
-                        <th>Solicitante</th>
-                        <th>Rut</th>
-                        <th>Departamento</th>
-                        <th>Email</th>
-                        <th>Fecha</th>
-                        <th>Estado</th>
-                        <th>Acciones</th>
+                        <th>Nombre</th>
+                        <th>Cargo</th>
+                        <th>Resoluciones</th>
                     </tr>
+                    <button type="submit" class="btn btn-danger"><i class="fa-solid fa-trash"></i> Borrar</button>
+
                 </thead>
-                <tbody>
-                    @foreach($sol_rep_veh as $solicitud)
-                        <tr>
-                            <td>{{$solicitud->NOMBRE_SOLICITANTE }}</td>
-                            <td>{{$solicitud->RUT}}</td>
-                            <td>{{$solicitud->DEPTO}}</td>
-                            <td>{{$solicitud->EMAIL}}</td>
-                            <td>{{ $solicitud->created_at->tz('America/Santiago')->format('d/m/Y H:i') }}</td>
-                            <td>{{$solicitud->ESTADO_SOL_REP_VEH}}</td>
-                            <td>
-                                <form action="{{ route('repvehiculos.destroy',$solicitud->ID_SOL_REP_VEH) }}" method="POST">
-                                    @csrf
-                                    @method('DELETE')
-                                    <a href="{{route('repvehiculos.update',$solicitud->ID_SOL_REP_VEH)}}" class="btn btn-info"><i class="fa-solid fa-pen-to-square"></i> Editar</a>
-                                    <button type="submit" class="btn btn-danger"><i class="fa-solid fa-trash"></i> Borrar</button>
-                                </form>
-                            </td>
-                        </tr>
-                    @endforeach
-                </tbody>
             </table>
         </div>
     </div>

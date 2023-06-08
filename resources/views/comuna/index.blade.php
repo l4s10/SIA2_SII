@@ -53,7 +53,7 @@
                         <th scope="col">Comuna</th>
                         <th scope="col">Region</th>
                         <th scope="col">Dirección Regional</th>
-                        <th scope="col">Acciones</th>
+                        <th scope="col">Administrar</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -63,7 +63,7 @@
                         <td>{{$comuna->regionAsociada->REGION}}</td>
                         <td>{{$comuna->direccionRegionalAsociada->DIRECCION}}</td>
                         <td>
-                            <a href="{{route('comuna.show',$comuna->ID_COMUNA)}}" class="btn btn-sia-primary btn-block" >Administrar</a>
+                            <a href="{{route('comuna.show',$comuna->ID_COMUNA)}}" class="btn btn-sia-primary btn-block"><i class="fa-solid fa-gear"></i></a>
                         </td>
                     </tr>
                 @endforeach

@@ -33,12 +33,13 @@ class User extends Authenticatable
         'ID_GRUPO',
         'ID_ESCALAFON',
         'ID_GRADO',
+        'ID_CARGO',
         'FECHA_NAC',
         'FECHA_INGRESO',
         'ID_CALIDAD_JURIDICA',
         'FONO',
         'ANEXO',
-        'ID_SEXO',
+        'ID_SEXO'     
     ];
     //*MENSAJES DE ERROR PARA EL FORMULARIO*/
     public static $messages = [
@@ -71,6 +72,8 @@ class User extends Authenticatable
         'ID_ESCALAFON.numeric' => 'El campo ID_ESCALAFON debe ser un dato numerico',
         'ID_GRADO.required' => 'El campo ID_GRADO es obligatorio',
         'ID_GRADO.numeric' => 'El campo ID_GRADO debe ser un dato numerico',
+        'ID_CARGO.required' => 'El campo ID_CARGO es obligatorio',
+        'ID_CARGO.numeric' => 'El campo ID_CARGO debe ser un dato numerico',
         'FECHA_NAC.required' => 'La fecha de nacimiento es obligatoria',
         'FECHA_NAC.date' => 'La fecha de nacimiento debe ser una fecha válida',
         'FECHA_INGRESO.required' => 'La fecha de ingreso es obligatoria',
@@ -127,6 +130,11 @@ class User extends Authenticatable
     public function grado()
     {
         return $this->belongsTo(Grado::class, 'ID_GRADO');
+    }
+    //* Obtener el grado a través de la ID_GRADO */
+    public function cargo()
+    {
+        return $this->belongsTo(Cargo::class, 'ID_CARGO');
     }
 
     //* Obtener la calidad jurídica a través de la ID_CALIDAD_JURIDICA */

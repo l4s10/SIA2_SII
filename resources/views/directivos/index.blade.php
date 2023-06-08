@@ -1,9 +1,9 @@
 @extends('adminlte::page')
 
-@section('title', 'Menú mantenciones y reparaciones')
+@section('title', 'Menú Directivos')
 
 @section('content_header')
-    <h1>Menú mantenciones y reparaciones</h1>
+    <h1>Menú Directivos</h1>
     @role('ADMINISTRADOR')
     <div class="alert alert-info" role="alert">
     <div><strong>Bienvenido Administrador:</strong> Acceso total al modulo.<div>
@@ -61,17 +61,17 @@
 
     <div class="container-fluid d-flex justify-content-center align-items-center flex-column">
         <div class="card text-bg-primary mb-3 mx-auto col-sm-12 col-md-6" style="max-width: 100%; text-align: justify;">
-            <div class="card-header">Módulo Muebles e Inmuebles</div>
+            <div class="card-header">Busqueda de información de funcionario</div>
             <div class="card-body">
-                <p class="card-text">Este módulo permite a los funcionarios reportar problemas en los <strong>muebles</strong> e <strong>inmuebles</strong>. Los funcionarios deberán proporcionar información detallada y el equipo encargado del mantenimiento o soporte técnico tomará las medidas para solucionar el problema.</p>
+                <p class="card-text">Este módulo permite a los directivos buscar las resoluciones delegatorias asociadas a un funcionario, dado su <strong>'nombre'</strong> o <strong>'cargo'</strong>.</p>
             </div>
             <div class="card-footer">
-                <a class="btn btn-primary" href="{{route('reparaciones.create')}}"><i class="fa-solid fa-file-pen"></i> Solicitar</a>
-                <a class="btn btn-primary" href="{{route('reparaciones.index')}}"><i class="fa-solid fa-eye"></i> Solicitudes</a>
+                <a class="btn btn-primary" href="{{route('directivos.index')}}"><i class="fa-solid fa-file-pen"></i> Seleccionar</a>
+                <a class="btn btn-primary" href="{{ route('busquedafuncionario.index') }}"><i class="fa-solid fa-file-pen"></i> Seleccionar</a>
             </div>
         </div>
         <div class="card text-bg-primary mb-3 mx-auto col-sm-12 col-md-6" style="max-width: 100%; text-align: justify;">
-            <div class="card-header">Módulo Vehículos</div>
+            <div class="card-header">Busqueda de información de funcionario</div>
             <div class="card-body">
                 <p class="card-text">Este módulo permite a los funcionarios reportar problemas en los <strong>vehículos</strong>. Los funcionarios deberán proporcionar información detallada y el equipo encargado del mantenimiento o soporte técnico tomará las medidas para solucionar el problema.</p>
             </div>
@@ -115,3 +115,4 @@
         </script>
 
 @stop
+

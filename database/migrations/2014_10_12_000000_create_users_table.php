@@ -35,6 +35,10 @@ return new class extends Migration
             $table->integer('ID_GRADO')->unsigned()->primary();
             $table->integer('GRADO')->nullable();
         });
+        Schema::create('cargos', function(Blueprint $table){
+            $table->integer('ID_CARGO')->unsigned()->primary();
+            $table->string('CARGO', 128)->nullable();
+        });
         Schema::create('calidad_juridica', function (Blueprint $table) {
             $table->integer('ID_CALIDAD')->unsigned()->primary();
             $table->string('CALIDAD', 128)->nullable();
@@ -63,6 +67,10 @@ return new class extends Migration
             $table->foreign('ID_ESCALAFON')->references('ID_ESCALAFON')->on('escalafon');
             $table->unsignedInteger('ID_GRADO');
             $table->foreign('ID_GRADO')->references('ID_GRADO')->on('grado');
+
+            $table->unsignedInteger('ID_CARGO');
+            $table->foreign('ID_CARGO')->references('ID_CARGO')->on('cargos');
+            
             $table->date('FECHA_NAC');
             $table->date('FECHA_INGRESO');
             $table->unsignedInteger('ID_CALIDAD_JURIDICA');

@@ -3,19 +3,20 @@
 namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 //use Illuminate\Validation\Rule;
-use App\Models\DireccionRegional;
+use App\Models\User;
+use App\Models\Poliza;
 
 
 
-class DireccionRegionalController extends Controller
+class PolizaController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $direcciones = DireccionRegional::all();
-        return view('direccionregional.index',compact('direcciones'));
+        $polizas = Poliza::all();
+        return view('polizas.index',compact('polizas'));
     }
 
     /**
@@ -23,7 +24,8 @@ class DireccionRegionalController extends Controller
      *///Carga formulario de creacion
     public function create()
     {
-        return view('direccionregional.create');
+        $users = User::all();
+        return view('polizas.create',compact('users'));
     }
 
     /**
@@ -33,16 +35,16 @@ class DireccionRegionalController extends Controller
     {
         try{   
             
-            $request->validate(DireccionRegional::$rules, DireccionRegional::$messages);
+            $request->validate(Poliza::rules(), Poliza::messages());
             $data = $request->except('_token');
-            DireccionRegional::create($data);
+            Poliza::create($data);
             
 
-            session()->flash('success','La dirección regional fue agregada exitosamente.');
+            session()->flash('success','La póliza fue agregada exitosamente.');
         }catch(\Exception $e){
-            session()->flash('error','Hubo un error al agregar la dirección regional. Vuelva a intentarlo nuevamente' .$e->getMessage());
+            session()->flash('error','Hubo un error al agregar la póliza. Vuelva a intentarlo nuevamente' .$e->getMessage());
         }
-        return redirect(route('direccionregional.index'));
+        return redirect(route('polizas.index'));
     }
 
     /**
@@ -51,11 +53,11 @@ class DireccionRegionalController extends Controller
     public function show(string $id)
     {
         try{
-            $direcciones = DireccionRegional::find($id);
-            return view('direccionregional.show', compact('direcciones'));
+            $poliza = Poliza::find($id);
+            return view('polizas.show', compact('poliza'));
         }catch(\Exception $e){
-            session()->flash('error', 'Error al acceder a la dirección regional seleccionada, vuelva a intentarlo más tarde.');
-            return view('direccionregional.index');
+            session()->flash('error', 'Error al acceder a la póliza seleccionada, vuelva a intentarlo más tarde.');
+            return view('polizas.index');
         }
     }
 
@@ -64,8 +66,8 @@ class DireccionRegionalController extends Controller
      *///Carga el formulario de edicion
     public function edit(string $id)
     {
-        $direcciones = DireccionRegional::find($id);
-        return view('direccionregional.edit',compact('direcciones'));
+        $poliza = Poliza::find($id);
+        return view('polizas.edit',compact('poliza'));
     }
 
     /**
@@ -73,18 +75,20 @@ class DireccionRegionalController extends Controller
      *///Guarda el formulario de edicion en la bd
     public function update(Request $request, string $id)
     {
-        $request->validate(DireccionRegional::$rules, DireccionRegional::$messages);
+        $request->validate(Poliza::rules(), Poliza::messages());
         try {
-            $direcciones = DireccionRegional::find($id);
-            $direcciones->fill([
-                'DIRECCION' => $request->input('DIRECCION'),
+            $poliza = Poliza::find($id);
+            $poliza->fill([
+                'NRO_POLIZA' => $request->input('NRO_POLIZA'),
+                'ID' => $request -> input('ID'),
+                'FECHA_VENCIMIENTO_LICENCIA' => $request->input('FECHA_VENCIMIENTO_LICENCIA')
             ]);
-            $direcciones->save();
-            session()->flash('success', 'La dirección regional fue modificada exitosamente');
+            $poliza->save();
+            session()->flash('success', 'La póliza fue modificada exitosamente');
         } catch(\Exception $e) {
-            session()->flash('error', 'Error al modificar la dirección regional seleccionado: ' . $e->getMessage());
+            session()->flash('error', 'Error al modificar la póliza seleccionada: ' . $e->getMessage());
         }
-        return redirect(route('direccionregional.index'));
+        return redirect(route('polizas.index'));
     }
 
     /**
@@ -92,14 +96,14 @@ class DireccionRegionalController extends Controller
      */
     public function destroy(string $id)
     {
-        $direcciones = DireccionRegional::find($id);
+        $polizas = Poliza::find($id);
         try{
-            $direcciones->delete();
-            session()->flash('success','La dirección regional ha sido eliminada correctamente.');
+            $polizas->delete();
+            session()->flash('success','La póliza ha sido eliminada correctamente.');
         }catch(\Exception $e){
-            session()->flash('error','Error al eliminar la dirección regional seleccionada, vuelva a intentarlo nuevamente.');
+            session()->flash('error','Error al eliminar la póliza seleccionada, vuelva a intentarlo nuevamente.');
         }
-        return redirect(route('direccionregional.index'));
+        return redirect(route('polizas.index'));
     }
 }
 

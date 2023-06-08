@@ -51,7 +51,7 @@
                 <thead class="bg-sia-primary">
                     <tr>
                         <th scope="col">Nombres</th>
-                        <th scope="col">Acciones</th>
+                        <th scope="col">Administrar</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -59,7 +59,7 @@
                     <tr>
                         <td>{{$direccion->DIRECCION}}</td>
                         <td>
-                            <a href="{{route('direccionregional.show',$direccion->ID_DIRECCION)}}" class="btn btn-sia-primary btn-block" >Administrar</a>
+                            <a href="{{route('direccionregional.show',$direccion->ID_DIRECCION)}}" class="btn btn-sia-primary btn-block"><i class="fa-solid fa-gear"></i></a>
                         </td>
                     </tr>
                 @endforeach

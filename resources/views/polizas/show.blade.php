@@ -1,38 +1,49 @@
 @extends('adminlte::page')
 
-@section('title', 'Detalle de Solicitud')
+@section('title', 'Resolución delegatoria')
 
 @section('content_header')
-    <h1 class="title">Detalle de Solicitud</h1>
+    <h1 class="title">Detalle de póliza</h1>
 @stop
 
 @section('content')
-    <div class="container">
-        <div class="card">
-            <div class="card-header">
-                <h3 class="card-title">Información de la Solicitud</h3>
-            </div>
-            <div class="card-body">
-                <!-- Mostrar información de la solicitud -->
-                <p>Solicitante: {{ $sol_material->NOMBRE_SOLICITANTE }}</p>
-                <p>Rut: {{ $sol_material->RUT }}</p>
-                <p>Departamento: {{ $sol_material->DEPTO }}</p>
-                <p>Email: {{ $sol_material->EMAIL }}</p>
-                <p>Estado: {{ $sol_material->ESTADO_SOL }}</p>
-                <p>Fecha de ingreso: {{ $sol_material->created_at->tz('America/Santiago')->format('d/m/Y H:i:s') }}</p>
-                <p>Pedido: {{ $sol_material->MATERIAL_SOL}}</p>
-                <p>Observaciones: {{ $sol_material->OBSERVACIONES }}</p>
-                <p>Revisado por: {{$sol_material->MODIFICADO_POR}}</p>
-            </div>
-            <div class="card-footer text-center">
-                <a href="{{ route('solmaterial.index') }}" class="btn btn-secondary"><i class="fa-solid fa-arrow-left"></i> Volver</a>
-                @can('Nivel 2')
-                    <a href="{{ route('solmaterial.edit', $sol_material->ID_SOLICITUD) }}" class="btn btn-primary"><i class="fa-regular fa-clipboard"></i> Revisar</a>
-                @endcan
-            </div>
+<div class="container">
+    <div class="card" style="background-color: #f7f7f7; border: 1px solid #ccc;">
+        <div class="card-header" style="background-color: #eaeaea;">
+            <h3 class="card-title" style="color: #333;">{{ __('Información de la póliza registrada con n°')}} {{$poliza->ID_POLIZA}}</h3>
+        </div>
+
+        <div class="card-body">
+            <!-- Mostrar información de la solicitud -->
+            <p class="parameter"><strong>N° Póliza:</strong></p>
+            <p class="data">{{ $poliza->NRO_POLIZA }}</p>
+
+            <p class="parameter"><strong>Vencimiento licencia de conducir:</strong></p>
+            <p class="data">{{ date('d/m/Y', strtotime($poliza->FECHA_VENCIMIENTO_LICENCIA )) }}</p>
+
+            <p class="parameter"><strong>Conductor:</strong></p>
+            <p class="data">{{ $poliza->ID }}</p>
+        </div>
+
+        <div class="card-footer" style="background-color: #eaeaea;">
+            <form action="{{route('polizas.destroy',$poliza->ID_POLIZA)}}" method="POST">
+                @csrf
+                @method('DELETE')
+                <a href="{{route('polizas.index')}}" class="btn btn-secondary" style="margin-right: 5px;">Volver</a>
+                <a href="{{route('polizas.edit',$poliza->ID_POLIZA)}}" class="btn btn-primary" style="margin-right: 5px;"><i class="fa-solid fa-pen-to-square"></i> Modificar</a>
+                <button type="submit" href="{{route('polizas.destroy',$poliza->ID_POLIZA)}}" class="btn btn-danger"><i class="fa-solid fa-trash"></i> Eliminar</button>
+            </form>
         </div>
     </div>
+</div>
+@stop
+
+
+@section('css')
+{{-- styles --}}
 @stop
 
 @section('js')
+    <!-- CONEXION FONT-AWESOME CON TOOLKIT -->
+    <script src="https://kit.fontawesome.com/742a59c628.js" crossorigin="anonymous"></script>
 @stop

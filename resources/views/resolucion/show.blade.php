@@ -8,34 +8,50 @@
 
 @section('content')
 <div class="container">
-    <div class="card">
-        <div class="card-header">
-            <h3 class="card-title">{{ __('Información de la resolución delegatoria registrada con n°')}} {{$resoluciones->ID_RESOLUCION}}</h3>
+    <div class="card" style="background-color: #f7f7f7; border: 1px solid #ccc;">
+        <div class="card-header" style="background-color: #eaeaea;">
+            <h3 class="card-title" style="color: #333;">{{ __('Información de la resolución delegatoria registrada con n°')}} {{$resolucion->ID_RESOLUCION}}</h3>
         </div>
 
         <div class="card-body">
             <!-- Mostrar información de la solicitud -->
-            <p>N° Resolución delegatoria: {{ $resoluciones->NRO_RESOLUCION }}</p>
-            <p>Fecha de ingreso: {{ date('Y-m-d', strtotime($resoluciones->FECHA)) }}</p>
-            <p>Autoridad: {{ $resoluciones->AUTORIDAD }}</p>
-            <p>Funcionarios delegados: {{ $resoluciones->ESTADO_SOL_VEH }}</p>
-            <p>Materia asociada: {{ $resoluciones->MATERIA }}</p>
+            <p class="parameter"><strong>N° Resolución delegatoria:</strong></p>
+            <p class="data">{{ $resolucion->NRO_RESOLUCION }}</p>
+
+            <p class="parameter"><strong>Fecha de ingreso:</strong></p>
+            <p class="data">{{ date('Y-m-d', strtotime($resolucion->FECHA)) }}</p>
+
+            <p class="parameter"><strong>Autoridad:</strong></p>
+            <p class="data">{{ $resolucion->AUTORIDAD }}</p>
+
+            <p class="parameter"><strong>Funcionarios delegados:</strong></p>
+            @if ($resolucion->FUNCIONARIOS_DELEGADOS)
+                <p class="data">{{ $resolucion->FUNCIONARIOS_DELEGADOS }}</p>
+            @else
+                <p class="data"> - </p>
+            @endif
+
+            <p class="parameter"><strong>Materia asociada:</strong></p>
+            @if ($resolucion->MATERIA)
+                <p class="data">{{ $resolucion->MATERIA }}</p>
+            @else
+                <p class="data"> - </p>
+            @endif
         </div>
 
-        
-
-        <div class="card-footer">
-            <form action="{{route('resolucion.destroy',$resoluciones->ID_RESOLUCION)}}" method="POST">
+        <div class="card-footer" style="background-color: #eaeaea;">
+            <form action="{{route('resolucion.destroy',$resolucion->ID_RESOLUCION)}}" method="POST">
                 @csrf
                 @method('DELETE')
-                <a href="{{route('resolucion.index')}}" class="btn btn-secondary">Volver</a>
-                <a href="{{route('resolucion.edit',$resoluciones->ID_RESOLUCION)}}" class="btn btn-primary"><i class="fa-solid fa-pen-to-square"></i> Modificar</a>
-                <button type="submit" href="{{route('resolucion.destroy',$resoluciones->ID_RESOLUCION)}}" class="btn btn-danger"><i class="fa-solid fa-trash"></i> Eliminar</button>
+                <a href="{{route('resolucion.index')}}" class="btn btn-secondary" style="margin-right: 5px;">Volver</a>
+                <a href="{{route('resolucion.edit',$resolucion->ID_RESOLUCION)}}" class="btn btn-primary" style="margin-right: 5px;"><i class="fa-solid fa-pen-to-square"></i> Modificar</a>
+                <button type="submit" href="{{route('resolucion.destroy',$resolucion->ID_RESOLUCION)}}" class="btn btn-danger"><i class="fa-solid fa-trash"></i> Eliminar</button>
             </form>
         </div>
     </div>
 </div>
 @stop
+
 
 @section('css')
 {{-- styles --}}

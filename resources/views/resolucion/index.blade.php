@@ -21,57 +21,60 @@
 @section('content')
     <div class="container">
         @if (session('success'))
-        <script>
-            document.addEventListener('DOMContentLoaded', () => {
-                Swal.fire({
-                    icon: 'success',
-                    title: '{{ session('success') }}',
-                    confirmButtonText: 'OK',
-                    confirmButtonColor: '#0064A0'
+            <script>
+                document.addEventListener('DOMContentLoaded', () => {
+                    Swal.fire({
+                        icon: 'success',
+                        title: '{{ session('success') }}',
+                        confirmButtonText: 'OK',
+                        confirmButtonColor: '#0064A0'
+                    });
                 });
-            });
-        </script>
-    @elseif (session('error'))
-        <script>
-            document.addEventListener('DOMContentLoaded', () => {
-                Swal.fire({
-                    icon: 'error',
-                    title: '{{ session('error') }}',
-                    confirmButtonText: 'OK',
-                    confirmButtonColor: '#0064A0'
+            </script>
+        @elseif (session('error'))
+            <script>
+                document.addEventListener('DOMContentLoaded', () => {
+                    Swal.fire({
+                        icon: 'error',
+                        title: '{{ session('error') }}',
+                        confirmButtonText: 'OK',
+                        confirmButtonColor: '#0064A0'
+                    });
                 });
-            });
-        </script>
-    @endif
+            </script>
+        @endif
 
-
-        <a href="{{route('resolucion.create')}}" class="btn btn-sia-primary"> Ingresar nueva resolución delegatoria</a>
-        <div class="table">
-            <table id="resoluciones" class="table table-bordered mt-4">
-                <thead class="bg-sia-primary">
+        <a href="{{route('resolucion.create')}}" class="btn btn-sia-primary custom-color">Ingresar nueva resolución delegatoria</a>        
+        
+        <div class="table-responsive">
+            <table id="resoluciones" class="table table-bordered mt-4 custom-table">
+                
+                <thead class="bg-primary text-white">
                     <tr>
-                        <th scope="col">N° Resolución</th>
+                        <th scope="col">Resolución</th>
                         <th scope="col">Fecha</th>
                         <th scope="col">Autoridad</th>
                         <th scope="col">Funcionario(s) Delegado(s)</th>
                         <th scope="col">Materia</th>
-                        <th scope="col">Ver Documento</th>
-                        <th scope="col">Acciones</th>
+                        <th scope="col">Documento</th>
+                        <th scope="col">Administrar</th>
                     </tr>
                 </thead>
+
                 <tbody>
                     @foreach($resoluciones as $resolucion)
-                    <tr>
-                        <td>{{$resolucion->NRO_RESOLUCION}}</td>
-                        <td>{{ date('d/m/Y', strtotime($resolucion->FECHA)) }}</td>
-                        <td>{{$resolucion->AUTORIDAD}}</td>
-                        <td>{{$resolucion->FUNCIONARIOS_DELEGADOS}}</td>
-                        <td>{{$resolucion->MATERIA}}</td>
-                        <td><a href="" class="btn btn-sia-primary btn-block"><i class="fa-solid fa-file-pdf"></i></a></td>                        <td>
-                            <a href="{{route('resolucion.show',$resolucion->ID_RESOLUCION)}}" class="btn btn-sia-primary btn-block" >Administrar</a>
-                        </td>
-                    </tr>
-                @endforeach
+                        <tr>
+                            <td>{{$resolucion->NRO_RESOLUCION}}</td>
+                            <td>{{ date('d/m/Y', strtotime($resolucion->FECHA)) }}</td>
+                            <td>{{$resolucion->AUTORIDAD}}</td>
+                            <td>{{$resolucion->FUNCIONARIOS_DELEGADOS}}</td>
+                            <td>{{$resolucion->MATERIA}}</td>
+                            <td>
+                                <a href="" class="btn btn-sia-primary btn-block"><i class="fa-solid fa-file-pdf"></i></a></td>                        <td>
+                                <a href="{{route('resolucion.show',$resolucion->ID_RESOLUCION)}}" class="btn btn-sia-primary btn-block"><i class="fa-solid fa-gear"></i></a>
+                            </td>
+                        </tr>
+                    @endforeach
                 </tbody>
             </table>
         </div>
@@ -80,7 +83,25 @@
 
 @section('css')
     {{-- Probando colores personalizados --}}
-    <link rel="stylesheet" href="{{asset('vendor/adminlte/dist/css/custom.css')}}">
+    <link rel="stylesheet" href="{{asset('vendor/adminlte/dist/css/admin_custom.css')}}">
+    <style>
+        .custom-table th,
+        .custom-table td {
+            padding: 10px 13px;
+        }
+
+        .alert {
+        opacity: 0.7; /* Ajusta la opacidad a tu gusto /
+        background-color: #99CCFF; / Color de fondo del aviso */
+        color:     #000000;
+        }
+
+        .custom-color{
+            background-color: #0099FF;
+            color:white;
+;
+        }
+    </style>
 @endsection
 
 @section('js')

@@ -39,7 +39,7 @@
         </div>
         <div class="mb-3">
             <label for="FUNCIONARIOS_DELEGADOS" class="form-label"><i class="fa-solid fa-book-bookmark"></i> Funcionarios delegados:</label>
-            <input type="text" class="form-control{{ $errors->has('FUNCIONARIOS_DELEGADOS') ? ' is-invalid' : '' }}" id="FUNCIONARIOS_DELEGADOS" name="FUNCIONARIOS_DELEGADOS" value="{{ old('FUNCIONARIOS_DELEGADOS') }}" placeholder="Ej: Jefes Unidad" required>
+            <input type="text" class="form-control{{ $errors->has('FUNCIONARIOS_DELEGADOS') ? ' is-invalid' : '' }}" id="FUNCIONARIOS_DELEGADOS" name="FUNCIONARIOS_DELEGADOS" value="{{ old('FUNCIONARIOS_DELEGADOS') }}" placeholder="Ej: Jefes Unidad" >
             @if ($errors->has('FUNCIONARIOS_DELEGADOS'))
                 <div class="invalid-feedback">
                     {{ $errors->first('FUNCIONARIOS_DELEGADOS') }}
@@ -48,7 +48,7 @@
         </div>
         <div class="mb-3">
             <label for="MATERIA" class="form-label"><i class="fa-solid fa-book-bookmark"></i> Materia:</label>
-            <input type="text" class="form-control{{ $errors->has('MATERIA') ? ' is-invalid' : '' }}" id="MATERIA" name="MATERIA" value="{{ old('MATERIA') }}" placeholder="Ej: Autorización máquinas registradoras Jefes Unidad" required>
+            <input type="text" class="form-control{{ $errors->has('MATERIA') ? ' is-invalid' : '' }}" id="MATERIA" name="MATERIA" value="{{ old('MATERIA') }}" placeholder="Ej: Autorización máquinas registradoras Jefes Unidad" >
             @if ($errors->has('MATERIA'))
                 <div class="invalid-feedback">
                     {{ $errors->first('MATERIA') }}

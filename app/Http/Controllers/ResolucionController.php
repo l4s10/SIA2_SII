@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Resolucion;
+
 use Illuminate\Http\Request;
 //use Illuminate\Validation\Rule;
 //use Illuminate\Support\Facades\Auth;
+use App\Models\Resolucion;
 
 
 
@@ -34,12 +35,9 @@ class ResolucionController extends Controller
     public function store(Request $request)
     {
         try{   
-            
-            $request->validate(Resolucion::rules(), Resolucion::messages());
+            $request->validate(Resolucion::rules($request->NRO_RESOLUCION), Resolucion::messages());
             $data = $request->except('_token');
             Resolucion::create($data);
-            
-
             session()->flash('success','La resolución delegatoria fue agregada exitosamente.');
         }catch(\Exception $e){
             session()->flash('error','Hubo un error al agregar la resolución delegatoria. Vuelva a intentarlo nuevamente' .$e->getMessage());
@@ -53,8 +51,8 @@ class ResolucionController extends Controller
     public function show(string $id)
     {
         try{
-            $resoluciones = Resolucion::find($id);
-            return view('resolucion.show', compact('resoluciones'));
+            $resolucion = Resolucion::find($id);
+            return view('resolucion.show', compact('resolucion'));
         }catch(\Exception $e){
             session()->flash('error', 'Error al acceder a la resolución delegatoria seleccionada, vuelva a intentarlo más tarde.');
             return view('resolucion.index');
@@ -66,82 +64,20 @@ class ResolucionController extends Controller
      *///Carga el formulario de edicion
     public function edit(string $id)
     {
-        $resoluciones = Resolucion::find($id);
-        return view('resolucion.edit',compact('resoluciones'));
-    }
-
-
-    /*$resoluciones = Resolucion::find($id);
-    $resoluciones->update([
-        'NRO_RESOLUCION' => $request->input('NRO_RESOLUCION'),
-        'FECHA' => $request->input('FECHA'),
-        'AUTORIDAD' => $request->input('AUTORIDAD'),
-        'FUNCIONARIOS_DELEGADOS' => $request->input('FUNCIONARIOS_DELEGADOS'),
-        'MATERIA' => $request->input('MATERIA')
-    ]);*/
-
-    /**
-     * Update the specified resource in storage.
-     *///Guarda el formulario de edicion en la bd
-     /*public function update(Request $request, string $id)
-     {
-         $request->validate(Resolucion::rules(), Resolucion::messages());
-         try {
-             $resoluciones = Resolucion::find($id);
-             $resoluciones->fill([
-                'NRO_RESOLUCION' => $request->input('NRO_RESOLUCION'),
-                'FECHA' => $request->input('FECHA'),
-                'AUTORIDAD' => $request->input('AUTORIDAD'),
-                'FUNCIONARIOS_DELEGADOS' => $request->input('FUNCIONARIOS_DELEGADOS'),
-                'MATERIA'  => $request->input('MATERIA')
-             ]);
-             $resoluciones->save();
-             session()->flash('success', 'La resolución delegatoria fue modificada exitosamente');
-         } catch(\Exception $e) {
-             session()->flash('error', 'Error al modificar la resolución delegatoria seleccionado: ' . $e->getMessage());
-         }
-         return redirect(route('resolucion.index'));
-     }
-     public function update(Request $request, string $id)
-    {
-        $request->validate(Resolucion::rules(), Resolucion::messages());
-        try {
-            $resolucion = Resolucion::find($id);
-            $resolucion->fill([
-                'NRO_RESOLUCION' => $request->input('NRO_RESOLUCION'),
-                'FECHA' => $request->input('FECHA'),
-                'AUTORIDAD' => $request->input('AUTORIDAD'),
-                'FUNCIONARIOS_DELEGADOS' => $request->input('FUNCIONARIOS_DELEGADOS'),
-                'MATERIA'  => $request->input('MATERIA')
-            ]);
-            $resolucion->save();
-            session()->flash('success', 'La resolución delegatoria fue modificada exitosamente');
-        } catch(\Exception $e) {
-            session()->flash('error', 'Error al modificar la resolución delegatoria seleccionada: ' . $e->getMessage());
-        }
-        return redirect(route('resolucion.index'));
+        $resolucion = Resolucion::find($id);
+        return view('resolucion.edit',compact('resolucion'));
     }
 
     public function update(Request $request, string $id)
     {
-        $request->validate(Resolucion::rules(), Resolucion::messages());
-        $resoluciones = Resolucion::find($id);
-        try {
-            $resoluciones->update($request->all());
-            session()->flash('success', 'La resolución delegatoria fue modificada exitosamente');
-        } catch (\Exception $e) {
-            session()->flash('error', 'Error al modificar la resolución delegatoria seleccionada: ' . $e->getMessage());
-        }
-        return redirect(route('resolucion.index'));
-    }*/
-
-    public function update(Request $request, string $id)
-    {
-        $request->validate(Resolucion::rules(), Resolucion::messages());
         try {
             $resolucion = Resolucion::find($id);
+            $rules = Resolucion::rules($resolucion->ID_RESOLUCION);
+            $request->validate($rules,Resolucion::messages());
+            //$request->validate(Resolucion::rules(), Resolucion::messages());
+
             $resolucion->fill([
-                'NRO_RESOLUCION' => $request->input('NRO_RESOLUCION'),
+                'NRO_RESOLUCION' => (int) $request->input('NRO_RESOLUCION'),
                 'FECHA' => $request->input('FECHA'),
                 'AUTORIDAD' => $request->input('AUTORIDAD'),
                 'FUNCIONARIOS_DELEGADOS' => $request->input('FUNCIONARIOS_DELEGADOS'),

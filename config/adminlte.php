@@ -464,6 +464,11 @@ return [
         ],
         [
             'text'        => 'Directivos',
+            'url'         => 'directivos',
+            'icon'        => 'fa-solid fa-user-tie',
+        ],
+        [
+            'text'        => 'Directivoss',
             'url'         => '#',
             'icon'        => 'fa-solid fa-user-tie',
             'submenu' => [
