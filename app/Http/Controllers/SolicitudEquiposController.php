@@ -143,7 +143,7 @@ class SolicitudEquiposController extends Controller
         }catch(\Exception $e){
             session()->flash('error','Error al eliminar la solicitud seleccionada');
         }
-        return redirect(route('solequipos'));
+        return redirect(route('solequipos.index'));
     }
     //-----FUNCION QUE NOS PERMITE FORMATEAR EL RUT CON  PUNTOS Y GUIÓN.------
     public function formatRut($rut) {
