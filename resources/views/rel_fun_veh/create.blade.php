@@ -72,7 +72,15 @@
                 @enderror
             </div>
 
+            <div class="mb-3">
+                <label for="MOTIVO_SOL_VEH" class="form-label"><i class="fa-solid fa-file-pen"></i> Labor a realizar:</label>
+                <textarea id="MOTIVO_SOL_VEH" name="MOTIVO_SOL_VEH" class="form-control @error('MOTIVO_SOL_VEH') is-invalid @enderror" aria-label="With textarea" rows="5" placeholder="Indique la labor a realizar (MÁX 1000 CARACTERES)" required autofocus>{{ old('MOTIVO_SOL_VEH') }}</textarea>
+                @error('MOTIVO_SOL_VEH')
+                    <div class="invalid-feedback">{{ $message }}</div>
+                @enderror
+            </div>
 
+            {{-- *ASIGNACION DE CONDUCTOR (LIMITAR AL ROL NUEVO "SOLICITANTE")* --}}
             <div class="mb-3">
                 <label for="CONDUCTOR" class="form-label"><i class="fa-solid fa-user-plus"></i> Seleccione conductor:</label>
                 <select id="CONDUCTOR" name="CONDUCTOR" class="form-control @if($errors->has('CONDUCTOR')) is-invalid @endif" required autofocus>
@@ -94,17 +102,9 @@
             </div>
 
             <div class="mb-3">
-                <label for="MOTIVO_SOL_VEH" class="form-label"><i class="fa-solid fa-file-pen"></i> Motivo de solicitud:</label>
-                <textarea id="MOTIVO_SOL_VEH" name="MOTIVO_SOL_VEH" class="form-control @error('MOTIVO_SOL_VEH') is-invalid @enderror" aria-label="With textarea" rows="5" placeholder="Escriba el motivo de su solicitud (MÁX 1000 CARACTERES)" required autofocus>{{ old('MOTIVO_SOL_VEH') }}</textarea>
-                @error('MOTIVO_SOL_VEH')
-                    <div class="invalid-feedback">{{ $message }}</div>
-                @enderror
-            </div>
-
-            <div class="mb-3">
-                <label for="NOMBRE_OCUPANTES" class="form-label"><i class="fa-solid fa-users-line"></i> Ocupantes:</label>
+                <label for="OCUPANTES" class="form-label"><i class="fa-solid fa-users-line"></i> Ocupante 1:</label>
                 <div class="row">
-                    <div class="col-4">
+                    <div class="col-6">
                         <div class="input-group">
                             <select name="departamentos" id="departamentos" class="form-control">
                                 <option value="">-- Seleccione un departamento --</option>
@@ -118,24 +118,131 @@
                             </select>
                         </div>
                     </div>
-                    <div class="col-4">
-                        <select name="ocupante" id="ocupante" class="form-control">
+                    <div class="col-6">
+                        <select name="OCUPANTE_1" id="OCUPANTE_1" class="form-control">
                             <option value="">-- Seleccione un compañero --</option>
                         </select>
                     </div>
-                    <div class="col-4">
-                        <button id="agregarOcupante" type="button" class="btn btn-primary">Agregar</button>
-                        <button id="limpiarCampo" type="button" class="btn btn-secondary">Me equivoqué</button>
+                </div>
+                {{-- *COPIAR LAS ROW 5 VECES MAS PARA LOS DEMAS OCUPANTES* --}}
+                <label for="OCUPANTE_2">Ocupante 2:</label>
+                <div class="row">
+                    <div class="col-6">
+                        <div class="input-group">
+                            <select name="departamentos" id="departamentos" class="form-control">
+                                <option value="">-- Seleccione un departamento --</option>
+                                @foreach ($departamentos as $departamento)
+                                    @if ($departamento->ID_DEPART === auth()->user()->ID_DEPART)
+                                        <option value="{{ $departamento->ID_DEPART }}" selected>{{ $departamento->DEPARTAMENTO }}</option>
+                                    @else
+                                        <option value="{{ $departamento->ID_DEPART }}">{{ $departamento->DEPARTAMENTO }}</option>
+                                    @endif
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <select name="OCUPANTE_2" id="OCUPANTE_2" class="form-control">
+                            <option value="">-- Seleccione un compañero --</option>
+                        </select>
                     </div>
                 </div>
-                <div class="textarea-container">
-                    <textarea id="NOMBRE_OCUPANTES" name="NOMBRE_OCUPANTES" class="form-control @error('NOMBRE_OCUPANTES') is-invalid @enderror" aria-label="With textarea" rows="5" placeholder="Cuando seleccione a un compañero, haga click en el boton Agregar " required>{{ old('NOMBRE_OCUPANTES') }}</textarea>
-                    @error('NOMBRE_OCUPANTES')
-                        <div class="invalid-feedback">{{ $message }}</div>
-                    @enderror
+                {{-- !!OCUPANTE 3 --}}
+                <label for="OCUPANTE_3">Ocupante 3:</label>
+                <div class="row">
+                    <div class="col-6">
+                        <div class="input-group">
+                            <select name="departamentos" id="departamentos" class="form-control">
+                                <option value="">-- Seleccione un departamento --</option>
+                                @foreach ($departamentos as $departamento)
+                                    @if ($departamento->ID_DEPART === auth()->user()->ID_DEPART)
+                                        <option value="{{ $departamento->ID_DEPART }}" selected>{{ $departamento->DEPARTAMENTO }}</option>
+                                    @else
+                                        <option value="{{ $departamento->ID_DEPART }}">{{ $departamento->DEPARTAMENTO }}</option>
+                                    @endif
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <select name="OCUPANTE_3" id="OCUPANTE_3" class="form-control">
+                            <option value="">-- Seleccione un compañero --</option>
+                        </select>
+                    </div>
+                </div>
+                {{-- !!OCUPANTE 4 --}}
+                <label for="OCUPANTE_4">Ocupante 4:</label>
+                <div class="row">
+                    <div class="col-6">
+                        <div class="input-group">
+                            <select name="departamentos" id="departamentos" class="form-control">
+                                <option value="">-- Seleccione un departamento --</option>
+                                @foreach ($departamentos as $departamento)
+                                    @if ($departamento->ID_DEPART === auth()->user()->ID_DEPART)
+                                        <option value="{{ $departamento->ID_DEPART }}" selected>{{ $departamento->DEPARTAMENTO }}</option>
+                                    @else
+                                        <option value="{{ $departamento->ID_DEPART }}">{{ $departamento->DEPARTAMENTO }}</option>
+                                    @endif
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <select name="OCUPANTE_4" id="OCUPANTE_4" class="form-control">
+                            <option value="">-- Seleccione un compañero --</option>
+                        </select>
+                    </div>
+                </div>
+                {{-- !!OCUPANTE 5 --}}
+                <label for="OCUPANTE_5">Ocupante 5:</label>
+                <div class="row">
+                    <div class="col-6">
+                        <div class="input-group">
+                            <select name="departamentos" id="departamentos" class="form-control">
+                                <option value="">-- Seleccione un departamento --</option>
+                                @foreach ($departamentos as $departamento)
+                                    @if ($departamento->ID_DEPART === auth()->user()->ID_DEPART)
+                                        <option value="{{ $departamento->ID_DEPART }}" selected>{{ $departamento->DEPARTAMENTO }}</option>
+                                    @else
+                                        <option value="{{ $departamento->ID_DEPART }}">{{ $departamento->DEPARTAMENTO }}</option>
+                                    @endif
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <select name="OCUPANTE_5" id="OCUPANTE_5" class="form-control">
+                            <option value="">-- Seleccione un compañero --</option>
+                        </select>
+                    </div>
+                </div>
+                {{-- !!OCUPANTE 6 --}}
+                <label for="OCUPANTE_6">Ocupante 6:</label>
+                <div class="row">
+                    <div class="col-6">
+                        <div class="input-group">
+                            {{-- !!SELECT DEPARTAMENTO --}}
+                            <select name="departamentos" id="departamentos" class="form-control">
+                                <option value="">-- Seleccione un departamento --</option>
+                                @foreach ($departamentos as $departamento)
+                                    @if ($departamento->ID_DEPART === auth()->user()->ID_DEPART)
+                                        <option value="{{ $departamento->ID_DEPART }}" selected>{{ $departamento->DEPARTAMENTO }}</option>
+                                    @else
+                                        <option value="{{ $departamento->ID_DEPART }}">{{ $departamento->DEPARTAMENTO }}</option>
+                                    @endif
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+                    {{-- !!SELECT USUARIO --}}
+                    <div class="col-6">
+                        <select name="OCUPANTE_6" id="OCUPANTE_6" class="form-control">
+                            <option value="">-- Seleccione un compañero --</option>
+                        </select>
+                    </div>
                 </div>
             </div>
-
+            {{-- *FECHA DE SALIDA SOLICITADA* --}}
             <div class="form-group">
                 <label for="FECHA_SALIDA_SOL_VEH"><i class="fa-solid fa-calendar"></i> Fecha de inicio y término:</label>
                 <div class="input-group">
@@ -226,10 +333,7 @@
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             var departamentosSelect = document.getElementById('departamentos');
-            var ocupanteSelect = document.getElementById('ocupante');
-            var agregarOcupanteBtn = document.getElementById('agregarOcupante');
-            var limpiarCampoBtn = document.getElementById('limpiarCampo');
-            var nombreOcupantesTextarea = document.getElementById('NOMBRE_OCUPANTES');
+            var ocupanteSelect = document.getElementById('OCUPANTE_1');
 
             // Obtener las opciones correspondientes al departamento seleccionado al cargar la página
             var usuarios = @json($conductores);
@@ -263,17 +367,6 @@
                 usuariosFiltrados.forEach(function(usuario) {
                     options.add(new Option(usuario.NOMBRES + ' ' + usuario.APELLIDOS, usuario.id));
                 });
-            });
-
-            agregarOcupanteBtn.addEventListener('click', function() {
-                var ocupanteNombre = ocupanteSelect.options[ocupanteSelect.selectedIndex].text;
-                var departamentoNombre = departamentosSelect.options[departamentosSelect.selectedIndex].text;
-                var nombreCompleto = ocupanteNombre + ' (' + departamentoNombre + ')';
-                nombreOcupantesTextarea.value += nombreCompleto + '\n';
-            });
-
-            limpiarCampoBtn.addEventListener('click', function() {
-                nombreOcupantesTextarea.value = '';
             });
         });
     </script>

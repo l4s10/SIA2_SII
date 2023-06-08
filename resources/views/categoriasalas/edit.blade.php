@@ -7,7 +7,7 @@
 @stop
 
 @section('content')
-    <form action="{{route('categoriasalas.update',$categoria->ID_CATEGORIA_SALA}}" method="POST">
+    <form action="{{route('categoriasalas.update',$categoria->ID_CATEGORIA_SALA)}}" method="POST">
         @csrf
         @method('PUT')
         <div class="mb-3">
@@ -18,7 +18,7 @@
             @enderror
         </div>
 
-        <a href="{{'categoriasalas'}}" class="btn btn-secondary" tabindex="5">Cancelar</a>
+        <a href="{{route('categoriasalas.index')}}" class="btn btn-secondary" tabindex="5">Cancelar</a>
         <button type="submit" class="btn btn-primary" tabindex="4">Guardar</button>
     </form>
 @stop

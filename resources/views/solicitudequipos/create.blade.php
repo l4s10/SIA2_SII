@@ -11,6 +11,9 @@
         <form action="{{route('solequipos.store')}}" method="POST">
             @csrf
             <div class="row">
+                <div class="">
+                    <input type="text" id="ID_USUARIO" name="ID_USUARIO" value="{{ auth()->user()->id }}" hidden>
+                </div>
                 <div class="col-md-6">
                     <div class="mb-3">
                     <label for="NOMBRE_SOLICITANTE" class="form-label"><i class="fa-solid fa-user"></i> Nombre del solicitante:</label>
@@ -55,21 +58,6 @@
                     </div>
                 </div>
             </div>
-            {{-- * PASA A SER CARRITO *--}}
-            {{-- <div class="mb-3">
-                <label for="ID_TIPO_EQUIPOS" class="form-label"><i class="fa-solid fa-desktop"></i> Tipo de equipo:</label>
-                <select id="ID_TIPO_EQUIPOS" name="ID_TIPO_EQUIPOS" class="form-control @if($errors->has('ID_TIPO_EQUIPOS')) is-invalid @endif" required>
-                    <option value="" selected>--Seleccione un tipo de equipo--</option>
-                    @foreach($tipos as $tipo)
-                        <option value="{{ $tipo->ID_TIPO_EQUIPOS }}">
-                            {{ $tipo->TIPO_EQUIPO }}
-                        </option>
-                    @endforeach
-                </select>
-                @error('ID_TIPO_EQUIPOS')
-                    <div class="invalid-feedback">{{ $message }}</div>
-                @enderror
-            </div> --}}
 
             {{-- *CARRITO DE COMPRAS* --}}
             <table id="equipos" class="table table-bordered">
@@ -93,9 +81,9 @@
             </table>
 
             <div class="mb-3">
-                <label for="EQUIPO_SALA" class="form-label"><i class="fa-solid fa-file-pen"></i> Resumen:</label>
-                <textarea id="EQUIPO_SALA" name="EQUIPO_SALA" class="form-control @error('EQUIPO_SALA') is-invalid @enderror" aria-label="With textarea" rows="1" placeholder="Resumen de su pedido" readonly>{{ old('EQUIPO_SALA') }}</textarea>
-                @error('EQUIPO_SALA')
+                <label for="EQUIPO_SOL" class="form-label"><i class="fa-solid fa-file-pen"></i> Resumen:</label>
+                <textarea id="EQUIPO_SOL" name="EQUIPO_SOL" class="form-control @error('EQUIPO_SOL') is-invalid @enderror" aria-label="With textarea" rows="1" placeholder="Resumen de su pedido" readonly>{{ old('EQUIPO_SOL') }}</textarea>
+                @error('EQUIPO_SOL')
                     <div class="invalid-feedback">{{ $message }}</div>
                 @enderror
             </div>
@@ -165,11 +153,14 @@
     <script>
         $(function () {
             $('#FECHA_SOL_EQUIPO').flatpickr({
-                dateFormat: 'd-m-Y',
+                dateFormat: 'Y-m-d',
                 locale: 'es',
                 minDate: "today",
+                altFormat: "d-m-Y",
+                altInput: true,
                 showClearButton: true,
-                defaultHour: 8 // Agregamos una hora predeterminada
+                defaultHour: 8, // Agregamos una hora predeterminada
+                mode: "range"
             });
             $('#HORA_INICIO_SOL_EQUIPO').flatpickr({
                 enableTime: true,
@@ -208,7 +199,7 @@
         document.addEventListener('DOMContentLoaded', function () {
             const btnAgregar = document.querySelectorAll('.btn-agregar');
             const btnEliminar = document.querySelectorAll('.btn-eliminar');
-            const equipoSalaInput = document.getElementById('EQUIPO_SALA');
+            const equipoSalaInput = document.getElementById('EQUIPO_SOL');
 
             // Manejar clic en el botón de agregar
             btnAgregar.forEach(function (btn) {
