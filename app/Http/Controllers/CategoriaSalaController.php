@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\CategoriaSala;
+use App\Models\Sala;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
 
 
 class CategoriaSalaController extends Controller
@@ -57,7 +59,15 @@ class CategoriaSalaController extends Controller
             'CATEGORIA_SALA.unique' => 'Este tipo de sala ya existe.',
             'CATEGORIA_SALA.regex' => 'El campo Nombre solo puede contener letras y espacios.',
         ];
-        $request->validate($rules,$messages);
+        //Se valida la entrada y en caso de error se redirige al formulario con los mensajes
+        $validator = Validator::make($request->all(), $rules, $messages);
+
+        if ($validator->fails()) {
+            return redirect()
+                ->route('categoriasalas.create')
+                ->withErrors($validator)
+                ->withInput();
+        }
         $data = $request->except('_token');
         try{
             CategoriaSala::create($data);
@@ -92,27 +102,42 @@ class CategoriaSalaController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, $id)
     {
-        $categoria = CategoriaSala::find($id);
         $rules = [
-            'CATEGORIA_SALA' => ['required', 'regex:/^[A-Za-z\s]+$/', 'max:255', Rule::unique('categoria_salas')],
+            'CATEGORIA_SALA' => ['required', 'regex:/^[A-Za-z\s]+$/', 'max:255', Rule::unique('categoria_salas')->ignore($id,'CATEGORIA_SALA')],
         ];
-        //Mensajes de feedback para usuario
+
+        // Mensajes de feedback para el usuario
         $messages = [
             'CATEGORIA_SALA.required' => 'El campo Nombre es obligatorio.',
             'CATEGORIA_SALA.unique' => 'Este tipo de sala ya existe.',
             'CATEGORIA_SALA.regex' => 'El campo Nombre solo puede contener letras y espacios.',
         ];
-        $request->validate($rules,$messages);
-        try{
-            $categoria->update($request->all());
-            session()->flash('success','La categoria se ha modificado exitosamente');
-        }catch(\Exception $e){
-            session()->flash('error','Error al modificar la categoria seleccionada');
+
+        // Se valida la entrada y en caso de error se redirige al formulario con los mensajes
+        $validator = Validator::make($request->all(), $rules, $messages);
+
+        if ($validator->fails()) {
+            return redirect()
+                ->route('categoriasalas.edit', $id)
+                ->withErrors($validator)
+                ->withInput();
         }
+
+        $data = $request->except('_token');
+
+        try {
+            $categoria = CategoriaSala::findOrFail($id);
+            $categoria->update($data);
+            session()->flash('success', 'La categoría se ha actualizado exitosamente');
+        } catch (\Exception $e) {
+            session()->flash('error', 'Error al actualizar la categoría de sala');
+        }
+
         return redirect(route('categoriasalas.index'));
     }
+
 
     /**
      * Remove the specified resource from storage.
@@ -120,6 +145,15 @@ class CategoriaSalaController extends Controller
     public function destroy(string $id)
     {
         $categoria = CategoriaSala::find($id);
+
+        // Verificar si existen registros relacionados en el modelo SALAS
+        $existeRelacion = Sala::where('ID_CATEGORIA_SALA', $id)->exists();
+
+        if ($existeRelacion) {
+            session()->flash('error', 'No se puede eliminar la categoría porque existen registros con esta categoria.');
+            return redirect(route('categoriasalas.index'));
+        }
+
         try{
             $categoria->delete();
             session()->flash('success','La categoría se ha eliminado exitosamente.');

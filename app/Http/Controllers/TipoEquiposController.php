@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\TipoEquipo;
+use App\Models\Equipo;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
 
 class TipoEquiposController extends Controller
 {
@@ -56,15 +58,25 @@ class TipoEquiposController extends Controller
             'TIPO_EQUIPO.string' => 'El campo tipo de equipo debe ser una cadena',
             'TIPO_EQUIPO.unique' => 'El campo tipo de equipo ya existe'
         ];
-        $request->validate($rules,$messages);
-        try{
-            TipoEquipo::create($request->all());
-            session()->flash('success','El tipo de equipo se ha creado exitosamente.');
-        }catch(\Exception $e){
-            session()->flash('Error','Hubo un error al crear el tipo de equipo, vuelva a intentarlo mas tarde');
+        $validator = Validator::make($request->all(), $rules, $messages);
+
+        if ($validator->fails()) {
+            return redirect()
+                ->route('tipoequipos.create')
+                ->withErrors($validator)
+                ->withInput();
         }
-        return redirect('/tipoequipos');
+
+        try {
+            TipoEquipo::create($request->all());
+            session()->flash('success', 'El tipo de equipo se ha creado exitosamente.');
+        } catch (\Exception $e) {
+            session()->flash('error', 'Hubo un error al crear el tipo de equipo, vuelva a intentarlo más tarde');
+        }
+
+        return redirect(route('tipoequipos.index'));
     }
+
 
     /**
      * Display the specified resource.
@@ -86,24 +98,35 @@ class TipoEquiposController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id){
+    public function update(Request $request, string $id)
+    {
         $solicitud = TipoEquipo::find($id);
-        $rules=[
+
+        $rules = [
             'TIPO_EQUIPO' => 'required|unique:tipo_equipos,TIPO_EQUIPO|string',
         ];
-        $messages=[
+        $messages = [
             'TIPO_EQUIPO.required' => 'El tipo de equipo es requerido',
             'TIPO_EQUIPO.unique' => 'El tipo de equipo ya existe',
             'TIPO_EQUIPO.string' => 'El tipo de equipo debe ser un campo de texto'
         ];
-        $request->validate($rules,$messages);
-        try{
-            $solicitud->update($request->all());
-            session()->flash('success','El tipo de equipo se ha creado exitosamente.');
-        }catch(\Exception $e){
-            session()->flash('Error','Hubo un error al crear el tipo de equipo, vuelva a intentarlo mas tarde');
+        $validator = Validator::make($request->all(), $rules, $messages);
+
+        if ($validator->fails()) {
+            return redirect()
+                ->route('tipoequipos.edit', $id)
+                ->withErrors($validator)
+                ->withInput();
         }
-        return redirect('/tipoequipos');
+
+        try {
+            $solicitud->update($request->all());
+            session()->flash('success', 'El tipo de equipo se ha actualizado exitosamente.');
+        } catch (\Exception $e) {
+            session()->flash('error', 'Hubo un error al actualizar el tipo de equipo, vuelva a intentarlo más tarde');
+        }
+
+        return redirect(route('tipoequipos.index'));
     }
 
     /**
@@ -111,13 +134,22 @@ class TipoEquiposController extends Controller
      */
     public function destroy(string $id)
     {
-        $request = TipoEquipo::find($id);
-        try{
-            $request->delete();
-            session()->flash('success','El tipo de equipo se eliminó exitosamente');
-        }catch(\Exception $e){
-            session()->flash('error','Error al eliminar el tipo seleccionado.');
+        $tipoEquipo = TipoEquipo::find($id);
+
+        $existeRelacion = Equipo::where('ID_TIPO_EQUIPOS', $id)->exists();
+
+        if($existeRelacion){
+            session()->flash('error', 'No se puede eliminar el tipo de equipo porque existen registros asignados con este tipo.');
+            return redirect(route('tipoequipos.index'));
         }
-        return redirect('/tipoequipos');
+
+        try {
+            $tipoEquipo->delete();
+            session()->flash('success', 'El tipo de equipo se eliminó exitosamente');
+        } catch (\Exception $e) {
+            session()->flash('error', 'Error al eliminar el tipo seleccionado.');
+        }
+
+        return redirect(route('tipoequipos.index'));
     }
 }

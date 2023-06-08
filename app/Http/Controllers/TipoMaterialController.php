@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\TipoMaterial;
+use App\Models\Material;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
 
 class TipoMaterialController extends Controller
 {
@@ -46,29 +48,36 @@ class TipoMaterialController extends Controller
      */
     public function store(Request $request)
     {
-        //Especificamos la regla de los campos y los mensajes de validaciones
+        // Especificamos la regla de los campos y los mensajes de validación
         $rules = [
             'TIPO_MATERIAL' => ['required', 'regex:/^[A-Za-z\s]+$/', 'max:255', Rule::unique('tipo_material')],
         ];
-        //Mensajes de feedback para usuario
+
+        // Mensajes de feedback para usuario
         $messages = [
             'TIPO_MATERIAL.required' => 'El campo Nombre es obligatorio.',
             'TIPO_MATERIAL.unique' => 'Este tipo de material ya existe.',
             'TIPO_MATERIAL.regex' => 'El campo Nombre solo puede contener letras y espacios.',
         ];
-        //Validamos la request con las reglas y devolviendo los mensajes especificados anteriormente
-        $request->validate($rules,$messages);
 
-        $data = $request->except('_token');
-        // TipoMaterial::create($data);
-        // return redirect('/tipomaterial')->with('success','El tipo de material se ha creado correctamente.');
-        try{
-            TipoMaterial::create($data);
-            session()->flash('success','Tipo de material creado existosamente');
-        }catch(\Exception $e){
-            session()->flash('error','Error al crear tipo de material');
+        // Validamos la request
+        $validator = Validator::make($request->all(), $rules, $messages);
+
+        if ($validator->fails()) {
+            return redirect()
+                ->route('tipomaterial.create')
+                ->withErrors($validator)
+                ->withInput();
         }
-        return redirect('/tipomaterial');
+
+        try {
+            TipoMaterial::create($request->all());
+            session()->flash('success', 'Tipo de material creado exitosamente');
+        } catch (\Exception $e) {
+            session()->flash('error', 'Error al crear tipo de material');
+        }
+
+        return redirect(route('tipomaterial.index'));
     }
 
     /**
@@ -99,26 +108,39 @@ class TipoMaterialController extends Controller
     public function update(Request $request, string $id)
     {
         $tipo = TipoMaterial::find($id);
-        //Especificamos la regla de los campos y los mensajes de validaciones
+
+        // Especificamos la regla de los campos y los mensajes de validación
         $rules = [
-            'TIPO_MATERIAL' => ['required', 'regex:/^[A-Za-z\s]+$/', 'max:255', Rule::unique('tipo_material')],
+            'TIPO_MATERIAL' => ['required', 'regex:/^[A-Za-z\s]+$/', 'max:255', Rule::unique('tipo_material')->ignore($id,'TIPO_MATERIAL')],
         ];
-        //Mensajes de feedback para usuario
+
+        // Mensajes de feedback para usuario
         $messages = [
             'TIPO_MATERIAL.required' => 'El campo Nombre es obligatorio.',
             'TIPO_MATERIAL.unique' => 'Este tipo de material ya existe.',
             'TIPO_MATERIAL.regex' => 'El campo Nombre solo puede contener letras y espacios.',
         ];
-        //validamos la request
-        $request->validate($rules,$messages);
-        try{
-            $tipo->update($request->all());
-            session()->flash('success','El tipo de material ha sido modificado exitosamente!.');
-        }catch(\Exception $e){
-            session()->flash('error','Error al modificar el tipo de material');
+
+        // Validamos la request
+        $validator = Validator::make($request->all(), $rules, $messages);
+
+        if ($validator->fails()) {
+            return redirect()
+                ->route('tipomaterial.edit', $id)
+                ->withErrors($validator)
+                ->withInput();
         }
-        return redirect('/tipomaterial');
+
+        try {
+            $tipo->update($request->all());
+            session()->flash('success', 'El tipo de material ha sido modificado exitosamente.');
+        } catch (\Exception $e) {
+            session()->flash('error', 'Error al modificar el tipo de material');
+        }
+
+        return redirect(route('tipomaterial.index'));
     }
+
 
     /**
      * Remove the specified resource from storage.
@@ -126,12 +148,22 @@ class TipoMaterialController extends Controller
     public function destroy(string $id)
     {
         $tipo = TipoMaterial::find($id);
-        try{
-            $tipo->delete();
-            session()->flash('success','El tipo de material ha sido eliminado exitosamente');
-        }catch(\Exception $e){
-            session()->flash('error','Error al eliminar el tipo de material');
+
+        // Verificar si existen registros relacionados en el modelo MATERIALES
+        $existeRelacion = Material::where('ID_TIPO_MAT', $id)->exists();
+
+        if ($existeRelacion) {
+            session()->flash('error', 'No se puede eliminar el tipo de material porque existen registros con este tipo.');
+            return redirect(route('tipomaterial.index'));
         }
-        return redirect('/tipomaterial');
+
+        try {
+            $tipo->delete();
+            session()->flash('success', 'El tipo de material se ha eliminado exitosamente.');
+        } catch (\Exception $e) {
+            session()->flash('error', 'Error al eliminar el tipo de material seleccionado.');
+        }
+
+        return redirect(route('tipomaterial.index'));
     }
 }
