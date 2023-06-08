@@ -543,7 +543,7 @@ return [
                 ],
                 [
                     'text'        => 'Administrar Vehiculos',
-                    'url'         => '/vehiculo',
+                    'url'         => '/vehiculos',
                     'icon'        => 'fas fa-fw fa-car',
                 ],
                 [

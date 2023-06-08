@@ -70,7 +70,7 @@ return new class extends Migration
 
             $table->unsignedInteger('ID_CARGO');
             $table->foreign('ID_CARGO')->references('ID_CARGO')->on('cargos');
-            
+
             $table->date('FECHA_NAC');
             $table->date('FECHA_INGRESO');
             $table->unsignedInteger('ID_CALIDAD_JURIDICA');
@@ -96,6 +96,7 @@ return new class extends Migration
         Schema::dropIfExists('grupo');
         Schema::dropIfExists('escalafon');
         Schema::dropIfExists('grado');
+        Schema::dropIfExists('cargos');
         Schema::dropIfExists('calidad_juridica');
         Schema::dropIfExists('sexo');
     }
