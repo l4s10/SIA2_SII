@@ -20,7 +20,6 @@ return new class extends Migration
             $table->string('EMAIL', 128);
             //Campos relacionados con la solicitud
             $table->integer('ID_USUARIO')->references('id')->on('users')->nullable();
-            $table->string('TIPO_EQUIPO', 128)->nullable();
             $table->text('MOTIVO_SOL_EQUIPO', 1000)->nullable();
             $table->text('EQUIPO_SOL', 1000)->nullable();
             $table->string('FECHA_SOL_EQUIPO',128)->nullable();

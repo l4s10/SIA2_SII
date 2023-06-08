@@ -1,6 +1,6 @@
 @extends('adminlte::page')
 
-@section('title', 'Solicitud de reparación')
+@section('title', 'Solicitud de equipo')
 
 @section('content_header')
     <h1 class="title">Detalle de la solicitud</h1>
