@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\InventoryController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\ReporteController;
 
 /*
 |--------------------------------------------------------------------------
@@ -88,6 +89,7 @@ Route::resource('funcionarios','App\Http\Controllers\UserController');
 Route::post('/update-stock', [InventoryController::class, 'updateStock'])->name('update-stock');
 
 Route::get('/home', [HomeController::class, 'index']);
+Route::get('/reportes', [ReporteController::class, 'index']);
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/dashboard', function () {
