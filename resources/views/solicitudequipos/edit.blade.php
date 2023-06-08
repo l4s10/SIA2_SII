@@ -11,6 +11,7 @@
         <form action="{{route('solequipos.update',$solicitud->ID_SOL_EQUIPOS)}}" method="POST">
             @csrf
             @method('PUT')
+            {{-- *CAMPOS USUARI* --}}
             <div class="row">
                     <div class="col-md-6">
                         <div class="mb-3">
@@ -25,7 +26,7 @@
 
                         <div class="mb-3">
                             <label for="RUT" class="form-label"><i class="fa-solid fa-id-card"></i> RUT:</label>
-                            <input type="text" id="RUT" name="RUT" class="form-control{{ $errors->has('RUT') ? ' is-invalid' : '' }}" value="{{ $solicitud->RUT }}" placeholder="Sin puntos con guion (Ej: 12345678-9)">
+                            <input type="text" id="RUT" name="RUT" class="form-control{{ $errors->has('RUT') ? ' is-invalid' : '' }}" value="{{ $solicitud->RUT }}" placeholder="Sin puntos con guion (Ej: 12345678-9)" readonly>
                             @if ($errors->has('RUT'))
                             <div class="invalid-feedback">
                                 {{ $errors->first('RUT') }}
@@ -37,7 +38,7 @@
                     <div class="col-md-6">
                         <div class="mb-3">
                             <label for="DEPTO" class="form-label"><i class="fa-solid fa-building-user"></i> Departamento:</label>
-                            <input type="text" id="DEPTO" name="DEPTO" class="form-control{{ $errors->has('DEPTO') ? ' is-invalid' : '' }}" value="{{ $solicitud->DEPTO }}" placeholder="Ej: ADMINISTRACION">
+                            <input type="text" id="DEPTO" name="DEPTO" class="form-control{{ $errors->has('DEPTO') ? ' is-invalid' : '' }}" value="{{ $solicitud->DEPTO }}" placeholder="Ej: ADMINISTRACION" readonly>
                             @if ($errors->has('DEPTO'))
                             <div class="invalid-feedback">
                                 {{ $errors->first('DEPTO') }}
@@ -56,25 +57,18 @@
                         </div>
                     </div>
             </div>
-            {{-- Obtenemos el tipo de equipo solicitado --}}
+
             <div class="mb-3">
-                <label for="ID_TIPO_EQUIPOS" class="form-label"><i class="fa-solid fa-desktop"></i> Tipo de equipo:</label>
-                <select id="ID_TIPO_EQUIPOS" name="ID_TIPO_EQUIPOS" class="form-control @if($errors->has('ID_TIPO_EQUIPOS')) is-invalid @endif" required>
-                    <option value="" selected>--Seleccione un tipo de equipo--</option>
-                    @foreach($tipos as $tipo)
-                        <option value="{{ $tipo->ID_TIPO_EQUIPOS }}" @if($solicitud->ID_TIPO_EQUIPOS == $tipo->ID_TIPO_EQUIPOS) selected @endif>
-                            {{ $tipo->TIPO_EQUIPO }}
-                        </option>
-                    @endforeach
-                </select>
-                @error('ID_TIPO_EQUIPOS')
+                <label for="EQUIPO_SOL" class="form-label"><i class="fa-sharp fa-solid fa-desktop"></i> Equipos solicitados:</label>
+                <textarea id="EQUIPO_SOL" name="EQUIPO_SOL" class="form-control @error('EQUIPO_SOL') is-invalid @enderror" aria-label="With textarea" rows="3" placeholder="Escriba el motivo de su solicitud (MÁX 1000 CARACTERES)" readonly>{{ $solicitud->EQUIPO_SOL }}</textarea>
+                @error('EQUIPO_SOL')
                     <div class="invalid-feedback">{{ $message }}</div>
                 @enderror
             </div>
 
             <div class="mb-3">
                 <label for="MOTIVO_SOL_EQUIPO" class="form-label"><i class="fa-solid fa-file-pen"></i> Motivo de solicitud:</label>
-                <textarea id="MOTIVO_SOL_EQUIPO" name="MOTIVO_SOL_EQUIPO" class="form-control @error('MOTIVO_SOL_EQUIPO') is-invalid @enderror" aria-label="With textarea" rows="5" placeholder="Escriba el motivo de su solicitud (MÁX 1000 CARACTERES)">{{ $solicitud->MOTIVO_SOL_EQUIPO }}</textarea>
+                <textarea id="MOTIVO_SOL_EQUIPO" name="MOTIVO_SOL_EQUIPO" class="form-control @error('MOTIVO_SOL_EQUIPO') is-invalid @enderror" aria-label="With textarea" rows="5" placeholder="Escriba el motivo de su solicitud (MÁX 1000 CARACTERES)" readonly>{{ $solicitud->MOTIVO_SOL_EQUIPO }}</textarea>
                 @error('MOTIVO_SOL_EQUIPO')
                     <div class="invalid-feedback">{{ $message }}</div>
                 @enderror
@@ -82,7 +76,7 @@
 
             <div class="form-group">
                 <label for="FECHA_SOL_EQUIPO"><i class="fa-solid fa-calendar"></i> Fecha de Inicio:</label>
-                <input type="text" id="FECHA_SOL_EQUIPO" name="FECHA_SOL_EQUIPO" class="form-control flatpickr @if($errors->has('FECHA_SOL_EQUIPO')) is-invalid @endif" placeholder="Ingrese fecha de inicio" data-input required value=" {{ \Carbon\Carbon::parse($solicitud->FECHA_SOL_EQUIPO)->format('d/m/Y') }}">
+                <input type="text" id="FECHA_SOL_EQUIPO" name="FECHA_SOL_EQUIPO" class="form-control flatpickr @if($errors->has('FECHA_SOL_EQUIPO')) is-invalid @endif" placeholder="Ingrese fecha de inicio" data-input disabled value=" {{($solicitud->FECHA_SOL_EQUIPO)}}">
                 @if ($errors->has('FECHA_SOL_EQUIPO'))
                     <div class="invalid-feedback">{{ $errors->first('FECHA_SOL_EQUIPO') }}</div>
                 @endif
@@ -91,7 +85,7 @@
             <div class="row">
                 <div class="form-group col-md-6">
                     <label for="HORA_INICIO_SOL_EQUIPO"><i class="fa-solid fa-clock"></i> Hora de Inicio:</label>
-                    <input type="text" id="HORA_INICIO_SOL_EQUIPO" name="HORA_INICIO_SOL_EQUIPO" class="form-control flatpickr @if($errors->has('HORA_INICIO_SOL_EQUIPO')) is-invalid @endif" placeholder="Ingrese hora de inicio" data-input required value="{{ $solicitud->HORA_INICIO_SOL_EQUIPO }}">
+                    <input type="text" id="HORA_INICIO_SOL_EQUIPO" name="HORA_INICIO_SOL_EQUIPO" class="form-control flatpickr @if($errors->has('HORA_INICIO_SOL_EQUIPO')) is-invalid @endif" placeholder="Ingrese hora de inicio" data-input value="{{ $solicitud->HORA_INICIO_SOL_EQUIPO }}" disabled>
                     @if ($errors->has('HORA_INICIO_SOL_EQUIPO'))
                         <div class="invalid-feedback">{{ $errors->first('HORA_INICIO_SOL_EQUIPO') }}</div>
                     @endif
@@ -99,37 +93,89 @@
 
                 <div class="form-group col-md-6">
                     <label for="HORA_TERM_SOL_EQUIPO"><i class="fa-solid fa-clock"></i> Hora de Término:</label>
-                    <input type="text" id="HORA_TERM_SOL_EQUIPO" name="HORA_TERM_SOL_EQUIPO" class="form-control flatpickr @if($errors->has('HORA_TERM_SOL_EQUIPO')) is-invalid @endif" placeholder="Ingrese hora de término" data-input required value="{{ $solicitud->HORA_TERM_SOL_EQUIPO }}">
+                    <input type="text" id="HORA_TERM_SOL_EQUIPO" name="HORA_TERM_SOL_EQUIPO" class="form-control flatpickr @if($errors->has('HORA_TERM_SOL_EQUIPO')) is-invalid @endif" placeholder="Ingrese hora de término" data-input value="{{ $solicitud->HORA_TERM_SOL_EQUIPO }}" disabled>
                     @if ($errors->has('HORA_TERM_SOL_EQUIPO'))
                         <div class="invalid-feedback">{{ $errors->first('HORA_TERM_SOL_EQUIPO') }}</div>
                     @endif
                 </div>
             </div>
-
+            {{-- ESTADO SOLICITUD --}}
             <div class="mb-3">
                 <label for="ESTADO_SOL_EQUIPO" class="form-label"><i class="fa-solid fa-file-circle-check"></i> Estado de la Solicitud:</label>
                 <select id="ESTADO_SOL_EQUIPO" name="ESTADO_SOL_EQUIPO" class="form-control">
-                    <option value="INGRESADO">Ingresado</option>
-                    <option value="EN REVISION" selected>En revisión</option>
-                    <option value="ACEPTADO">Aceptado</option>
-                    <option value="RECHAZADO">Rechazado</option>
+                    <option value="INGRESADO" {{ $solicitud->ESTADO_SOL_EQUIPO == 'INGRESADO' ? 'selected' : '' }}>Ingresado</option>
+                    <option value="EN REVISION" {{ $solicitud->ESTADO_SOL_EQUIPO == 'EN REVISION' ? 'selected' : '' }}>En revisión</option>
+                    <option value="ACEPTADO" {{ $solicitud->ESTADO_SOL_EQUIPO == 'ACEPTADO' ? 'selected' : '' }}>Aceptado</option>
+                    <option value="RECHAZADO" {{ $solicitud->ESTADO_SOL_EQUIPO == 'RECHAZADO' ? 'selected' : '' }}>Rechazado</option>
                 </select>
             </div>
+
             {{-- CAMPOS PARA NIVEL 2 --}}
             {{-- EQUIPO A ASIGNAR --}}
+            {{-- !!CARGAR DATATABLE CON EQUIPOS PARA ASIGNAR
+
+            !! TABLA EQUIPOS Y CAMPO EQUIPOS ASIGNADOS--}}
+            <div class="table-responsive">
+                <table id="equipos" class="table table-bordered mt-4">
+                    <thead class="bg-primary text-white">
+                        <tr>
+                            <th scope="col">Modelo</th>
+                            <th scope="col">Marca</th>
+                            <th scope="col">Tipo</th>
+                            <th scope="col">Estado</th>
+                            <th scope="col">Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach($equipos as $index => $equipo)
+                            <tr>
+                                <td>{{ $equipo->MODELO_EQUIPO }}</td>
+                                <td>{{ $equipo->MARCA_EQUIPO }}</td>
+                                <td>{{ $equipo->tipoEquipo->TIPO_EQUIPO }}</td>
+                                <td>{{ $equipo->ESTADO_EQUIPO }}</td>
+                                <td>
+                                    <button type="button" id="agregar_{{ $index }}" class="btn btn-primary" onclick="agregarEquipo('{{ $equipo->MODELO_EQUIPO }}', '{{ $equipo->tipoEquipo->TIPO_EQUIPO }}', {{ $index }})">Agregar</button>
+                                    <button type="button" id="eliminar_{{ $index }}" class="btn btn-danger d-none" onclick="eliminarEquipo('{{ $equipo->MODELO_EQUIPO }}', '{{ $equipo->tipoEquipo->TIPO_EQUIPO }}', {{ $index }})">Eliminar</button>
+                                </td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
+
             <div class="mb-3">
-                <label for="EQUIPO_A_ASIGNAR" class="form-label"><i class="fa-solid fa-desktop"></i> Equipo a asignar:</label>
-                <select id="EQUIPO_A_ASIGNAR" name="EQUIPO_A_ASIGNAR" class="form-control @if($errors->has('EQUIPO_A_ASIGNAR')) is-invalid @endif" required>
-                    <option value="" selected>--Seleccione el equipo a asignar--</option>
-                    @foreach($equipos as $equipo)
-                        @if($equipo->ID_TIPO_EQUIPOS == $solicitud->ID_TIPO_EQUIPOS)
-                            <option value="{{ $equipo->ID_EQUIPO }}">{{ $equipo->MODELO_EQUIPO }} {{$equipo->MARCA_EQUIPO}}</option>
-                        @endif
-                    @endforeach
-                </select>
-                @error('EQUIPO_A_ASIGNAR')
-                    <div class="invalid-feedback">{{ $message }}</div>
-                @enderror
+                <label class="" for="EQUIPO_A_ASIGNAR"><i class="fa-sharp fa-solid fa-desktop"></i> Equipo(s) asignado(s):</label>
+                <textarea id="EQUIPO_A_ASIGNAR" name="EQUIPO_A_ASIGNAR" class="form-control" rows="3" readonly placeholder="Resumen de los equipos asignados">{{$solicitud->EQUIPO_A_ASIGNAR}}</textarea>
+                <button type="button" class="btn btn-warning mt-2" onclick="resetEquipos()">Restablecer</button>
+                <button type="button" class="btn btn-secondary mt-2" onclick="limpiarEquipos()">Limpiar</button>
+
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    {{-- Fecha y hora de inicio asignadas --}}
+                    <div class="form-group">
+                        <label for="FECHA_INICIO_EQUIPO"><i class="fa-solid fa-calendar"></i> Fecha y hora de inicio asignada:</label>
+                        <div class="input-group">
+                            <input type="text" id="FECHA_INICIO_EQUIPO" name="FECHA_INICIO_EQUIPO" class="form-control @error('FECHA_INICIO_EQUIPO') is-invalid @enderror" placeholder="Seleccione fecha y hora de inicio" required value="{{$solicitud->FECHA_INICIO_EQUIPO}}">
+                        </div>
+                        @error('FECHA_INICIO_EQUIPO')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    {{-- **Fecha y hora de término asignadas **--}}
+                    <div class="form-group">
+                        <label for="FECHA_FIN_EQUIPO"><i class="fa-solid fa-calendar"></i> Fecha y hora de término asignada:</label>
+                        <div class="input-group">
+                            <input type="text" id="FECHA_FIN_EQUIPO" name="FECHA_FIN_EQUIPO" class="form-control @error('FECHA_FIN_EQUIPO') is-invalid @enderror" placeholder="Seleccione fecha y hora de término" required value="{{$solicitud->FECHA_FIN_EQUIPO }}">
+                        </div>
+                        @error('FECHA_FIN_EQUIPO')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                    </div>
+                </div>
             </div>
             {{-- Observaciones --}}
             <div class="mb-3">
@@ -142,7 +188,7 @@
             {{-- Campo no es relevante para ver en user nivel 2 --}}
             <div class="mb-3" hidden>
                 <label for="MODIFICADO_POR_SOL_EQUIPO" class="form-label">Modificado por:</label>
-                <input type="text" id="MODIFICADO_POR_SOL_EQUIPO" name="MODIFICADO_POR_SOL_EQUIPO" class="form-control" value="{{ auth()->user()->name}}">
+                <input type="text" id="MODIFICADO_POR_SOL_EQUIPO" name="MODIFICADO_POR_SOL_EQUIPO" class="form-control" value="{{ auth()->user()->NOMBRES}} {{auth()->user()->APELLIDOS}}">
             </div>
 
             <!-- Botones de envio -->
@@ -170,12 +216,34 @@
     <script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/es.js"></script>
     <script>
         $(function () {
+             // Inicializar Flatpickr para el campo de fecha y hora de inicio
+             flatpickr("#FECHA_INICIO_EQUIPO", {
+                locale: 'es',
+                enableTime: true,
+                dateFormat: "Y-m-d H:i",
+                // Otras opciones y configuraciones adicionales que desees utilizar
+                altFormat: 'd-m-Y H:i',
+                altInput: true,
+            });
+
+            // Inicializar Flatpickr para el campo de fecha y hora de término
+            flatpickr("#FECHA_FIN_EQUIPO", {
+                locale: 'es',
+                enableTime: true,
+                dateFormat: "Y-m-d H:i",
+                // Otras opciones y configuraciones adicionales que desees utilizar
+                altFormat: 'd-m-Y H:i',
+                altInput: true,
+            });
             $('#FECHA_SOL_EQUIPO').flatpickr({
-                dateFormat: 'd-m-Y',
+                dateFormat: 'Y-m-d',
                 locale: 'es',
                 minDate: "today",
+                altFormat: "d-m-Y",
+                altInput: true,
                 showClearButton: true,
-                defaultHour: 8 // Agregamos una hora predeterminada
+                defaultHour: 8, // Agregamos una hora predeterminada
+                mode: "range",
             });
             $('#HORA_INICIO_SOL_EQUIPO').flatpickr({
                 enableTime: true,
@@ -193,21 +261,63 @@
                 time_24hr: true,
                 defaultHour: 9 // Agregamos una hora predeterminadas
             });
-            $('#FECHA_SOL_EQUIPO, #HORA_INICIO_SOL_EQUIPO, #HORA_TERM_SOL_EQUIPO').css('background-color', 'white');
         });
     </script>
-    {{-- Script para actualizar dinámicamente el campo EQUIPO_A_ASIGNAR --}}
+    <!-- Para inicializar -->
     <script>
-        $(document).ready(function() {
-            $('#ID_TIPO_EQUIPOS').on('change', function() {
-                var tipoEquipoId = $(this).val();
-                $('#EQUIPO_A_ASIGNAR').empty();
-                $('#EQUIPO_A_ASIGNAR').append('<option value="" selected>--Seleccione el equipo a asignar--</option>');
-                @foreach($equipos as $equipo)
-                    if({{$equipo->ID_TIPO_EQUIPOS}} == tipoEquipoId) {
-                        $('#EQUIPO_A_ASIGNAR').append('<option value="{{$equipo->ID_EQUIPO}}">{{$equipo->MODELO_EQUIPO}} {{$equipo->MARCA_EQUIPO}}</option>');
-                    }
-                @endforeach
+        var EQUIPO_A_ASIGNARTextarea = document.getElementById('EQUIPO_A_ASIGNAR');
+        var EQUIPO_A_ASIGNAR = [];
+        var equiposOriginales = EQUIPO_A_ASIGNARTextarea.value;
+
+        function agregarEquipo(modelo, tipo, index) {
+            var equipo = modelo + ' - ' + tipo;
+            EQUIPO_A_ASIGNAR.push(equipo);
+            document.getElementById('agregar_'+index).classList.add('d-none');
+            document.getElementById('eliminar_'+index).classList.remove('d-none');
+            actualizarTextarea();
+        }
+
+        function eliminarEquipo(modelo, tipo, index) {
+            var equipo = modelo + ' - ' + tipo;
+            var equipoIndex = EQUIPO_A_ASIGNAR.indexOf(equipo);
+            if (equipoIndex > -1) {
+                EQUIPO_A_ASIGNAR.splice(equipoIndex, 1);
+                document.getElementById('agregar_'+index).classList.remove('d-none');
+                document.getElementById('eliminar_'+index).classList.add('d-none');
+                actualizarTextarea();
+            }
+        }
+
+        function actualizarTextarea() {
+            EQUIPO_A_ASIGNARTextarea.value = EQUIPO_A_ASIGNAR.join('\n');
+        }
+
+        function limpiarEquipos() {
+            EQUIPO_A_ASIGNARTextarea.value = '';
+            EQUIPO_A_ASIGNAR = [];
+            var agregarButtons = document.getElementsByClassName('btn-primary');
+            var eliminarButtons = document.getElementsByClassName('btn-danger');
+            for (var i = 0; i < agregarButtons.length; i++) {
+                agregarButtons[i].classList.remove('d-none');
+                eliminarButtons[i].classList.add('d-none');
+            }
+        }
+
+        function resetEquipos() {
+            EQUIPO_A_ASIGNARTextarea.value = equiposOriginales;
+            EQUIPO_A_ASIGNAR = equiposOriginales.split('\n');
+        }
+
+        $(document).ready(function () {
+            $('#equipos').DataTable({
+                "lengthMenu": [[5, 10, 50, -1], [5, 10, 50, "All"]],
+                "columnDefs": [{
+                    "orderable": false,
+                    "targets": 4 // Esto asume que la columna de Acciones es la quinta columna (la indexación comienza en 0)
+                }],
+                "language": {
+                    "url": "https://cdn.datatables.net/plug-ins/1.11.3/i18n/es_es.json"
+                },
             });
         });
     </script>

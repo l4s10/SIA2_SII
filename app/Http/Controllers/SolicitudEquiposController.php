@@ -8,6 +8,8 @@ use App\Models\TipoEquipo;
 use Illuminate\Http\Request;
 //Para formatear fechas
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Http\RedirectResponse;
 
 use Illuminate\Support\Facades\Auth;
 
@@ -66,35 +68,15 @@ class SolicitudEquiposController extends Controller
      */
     public function store(Request $request)
     {
-        $rules = [
-            'ID_TIPO_EQUIPOS' => 'required',
-            'MOTIVO_SOL_EQUIPO' => 'required|max:1000',
-            'FECHA_SOL_EQUIPO' => 'required',
-            'HORA_INICIO_SOL_EQUIPO' => 'required|date_format:H:i',
-            'HORA_TERM_SOL_EQUIPO' => 'required|date_format:H:i|after:HORA_INICIO_SOL_EQUIPO',
-        ];
+        $validator = Validator::make($request->all(), SolicitudEquipos::$rules, SolicitudEquipos::$messages);
 
-        $messages = [
-            'ID_TIPO_EQUIPOS.required' => 'Debe seleccionar un tipo de equipo.',
-            'MOTIVO_SOL_EQUIPO.required' => 'El campo motivo de solicitud es obligatorio.',
-            'MOTIVO_SOL_EQUIPO.max' => 'El campo motivo de solicitud no puede exceder los 1000 caracteres.',
-            'FECHA_SOL_EQUIPO.required' => 'El campo fecha de inicio es obligatorio.',
-            'HORA_INICIO_SOL_EQUIPO.required' => 'El campo hora de inicio es obligatorio.',
-            'HORA_INICIO_SOL_EQUIPO.date_format' => 'El formato de la hora de inicio es incorrecto.',
-            'HORA_TERM_SOL_EQUIPO.required' => 'El campo hora de término es obligatorio.',
-            'HORA_TERM_SOL_EQUIPO.date_format' => 'El formato de la hora de término es incorrecto.',
-            'HORA_TERM_SOL_EQUIPO.after' => 'La hora de término debe ser mayor que la hora de inicio.',
-        ];
-        $request->validate($rules, $messages);
-        $data = $request->except('_token');
-        // Formatear la fecha usando Carbon
-        $fecha = Carbon::createFromFormat('d-m-Y', $request['FECHA_SOL_EQUIPO'])->format('Y-m-d');
-        $data['FECHA_SOL_EQUIPO'] = $fecha;
-
-        $rut = intval(str_replace(['.', '-'], '', $request['RUT']));
-        $data['RUT'] = $this->formatRut($rut);
-        //Guardar en BDD
+        if ($validator->fails()) {
+            return redirect(route('solequipos.create'))
+                ->withErrors($validator)
+                ->withInput();
+        }
         try{
+            $data = $request->all(); // Obtener los datos del formulario
             SolicitudEquipos::create($data);
             session()->flash('success','La solicitud de equipo ha sido enviada exitosamente.');
         }catch(\Exception $e){
@@ -126,42 +108,28 @@ class SolicitudEquiposController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request,string $id)
+    public function update(Request $request, $id)
     {
-        $solicitud = SolicitudEquipos::find($id);
-        $rules = [
-            'ID_TIPO_EQUIPOS' => 'required',
-            'MOTIVO_SOL_EQUIPO' => 'required|max:1000',
-            'FECHA_SOL_EQUIPO' => 'required',
-            'HORA_INICIO_SOL_EQUIPO' => 'required|date_format:H:i',
-            'HORA_TERM_SOL_EQUIPO' => 'required|date_format:H:i|after:HORA_INICIO_SOL_EQUIPO',
-        ];
-
-        $messages = [
-            'ID_TIPO_EQUIPOS.required' => 'Debe seleccionar un tipo de equipo.',
-            'MOTIVO_SOL_EQUIPO.required' => 'El campo motivo de solicitud es obligatorio.',
-            'MOTIVO_SOL_EQUIPO.max' => 'El campo motivo de solicitud no puede exceder los 1000 caracteres.',
-            'FECHA_SOL_EQUIPO.required' => 'El campo fecha de inicio es obligatorio.',
-            'HORA_INICIO_SOL_EQUIPO.required' => 'El campo hora de inicio es obligatorio.',
-            'HORA_INICIO_SOL_EQUIPO.date_format' => 'El formato de la hora de inicio es incorrecto.',
-            'HORA_TERM_SOL_EQUIPO.required' => 'El campo hora de término es obligatorio.',
-            'HORA_TERM_SOL_EQUIPO.date_format' => 'El formato de la hora de término es incorrecto.',
-            'HORA_TERM_SOL_EQUIPO.after' => 'La hora de término debe ser mayor que la hora de inicio.',
-        ];
-        $request->validate($rules,$messages);
-        $rut = intval(str_replace(['.', '-'], '', $request['RUT']));
-        $fecha = Carbon::createFromFormat('d-m-Y', $request['FECHA_SOL_EQUIPO'])->format('Y-m-d');
-        $request['RUT'] = $this->formatRut($rut);
-        $request['FECHA_SOL_EQUIPO'] = $fecha;
-        //Guardar en bdd
-        try{
-            $solicitud->update($request->all());
-            session()->flash('success','La solicitud se ha modificado exitosamente.');
-        }catch(\Exception $e){
-            session()->flash('error','Error al modificar la solicitud seleccionada, intentelo más tarde.');
+        $validator = Validator::make($request->all(), SolicitudEquipos::$rules, SolicitudEquipos::$messages);
+        //EN CASO DE QUE FALLE LA VALIDACION SE REGRESA AL FORMULARIO CON LOS MENSAJES DE ERROR Y LOS INPUTS PREVIOS
+        if ($validator->fails()) {
+            return redirect(route('solequipos.edit', $id))
+                ->withErrors($validator)
+                ->withInput();
         }
-        return redirect(route('solequipos'));
+
+        try {
+            $solicitud = SolicitudEquipos::findOrFail($id);
+            $data = $request->all();
+            $solicitud->update($data);
+            session()->flash('success', 'La solicitud de equipo ha sido actualizada exitosamente.');
+        } catch (\Exception $e) {
+            session()->flash('error', 'Error al actualizar la solicitud, vuelva a intentarlo más tarde.');
+        }
+
+        return redirect(route('solequipos.index'));
     }
+
 
     /**
      * Remove the specified resource from storage.

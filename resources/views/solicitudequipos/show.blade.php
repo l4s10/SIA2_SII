@@ -20,7 +20,7 @@
                 <p>Email: {{ $solicitud->EMAIL }}</p>
                 <p>Estado: {{ $solicitud->ESTADO_SOL_EQUIPO }}</p>
                 <p>Fecha de ingreso: {{ $solicitud->created_at->tz('America/Santiago')->format('d/m/Y H:i') }}</p>
-                <p>Fecha solicitada: {{ \Carbon\Carbon::parse($solicitud->FECHA_SOL_EQUIPO)->format('d/m/Y') }} desde {{$solicitud->HORA_INICIO_SOL_EQUIPO}} hasta las {{$solicitud->HORA_TERM_SOL_EQUIPO}}</p>
+                <p>Fecha solicitada: {{$solicitud->FECHA_SOL_EQUIPO}} desde {{$solicitud->HORA_INICIO_SOL_EQUIPO}} hasta las {{$solicitud->HORA_TERM_SOL_EQUIPO}}</p>
                 <p>Motivo de la solicitud: {{$solicitud->MOTIVO_SOL_EQUIPO}}</p>
             </div>
             <div class="card-footer text-center">
