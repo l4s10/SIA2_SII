@@ -5,27 +5,27 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Region extends Model
+class Cargo extends Model
 {
     use HasFactory;
 
-    protected $table = 'region';
-    protected $primaryKey = 'ID_REGION';
+    protected $table = 'cargos';
+    protected $primaryKey = 'ID_CARGO';
     public $timestamps = false;
 
     protected $fillable = [
-        'REGION'
+        'CARGO'
     ];
 
     //* Agregamos validaciones para la tabla de regiones*/
     public static $rules = [
-        'REGION' => 'required|unique:region,REGION|max:128'
+        'CARGO' => 'required|unique:cargos,CARGO|max:128'
     ];
 
     public static $messages = [
-        'REGION.required' => 'El campo Región es requerido.',
-        'REGION.unique' => 'La región ingresada ya existe.',
-        'REGION.max' => 'El campo Región no debe exceder los 128 caracteres.'
+        'CARGO.required' => 'El campo "Cargo" es requerido.',
+        'CARGO.unique' => 'La "Cargo" ingresada ya existe.',
+        'CARGO.max' => 'El campo "Cargo" no debe exceder los 128 caracteres.'
     ];
 
     // $request 

@@ -322,6 +322,12 @@ return [
                     'url'     => 'reserva/vehiculo/create',
                     'icon'    => 'fas fa-fw fa-plus',
                 ],
+                [
+                    'text'    => 'Autorizar',
+                    'url'     => 'reserva/vehiculo/edit',
+                    'icon'    => 'fa-solid fa-file-circle-check',
+                ],
+
             ],
         ],
         [
@@ -458,8 +464,65 @@ return [
         ],
         [
             'text'        => 'Directivos',
+            'url'         => 'directivos',
+            'icon'        => 'fa-solid fa-user-tie',
+        ],
+        [
+            'text'        => 'Directivoss',
             'url'         => '#',
             'icon'        => 'fa-solid fa-user-tie',
+            'submenu' => [
+                [
+                    'text'    => 'Ver Resoluciones',
+                    'url'     => 'resolucion',
+                    'icon'    => 'fas fa-fw fa-eye',
+                ],
+                [
+                    'text'    => 'Ver Pólizas',
+                    'url'     => 'polizas',
+                    'icon'    => 'fas fa-fw fa-eye',
+                ]/*,
+                [
+                    'text'    => 'Tipos Materiales',
+                    'url'     => 'tipomaterial',
+                    'icon'    => 'fas fa-fw fa-eye',
+                ],
+                [
+                    'text'    => 'Agregar Tipo Material',
+                    'url'     => 'tipomaterial/create',
+                    'icon'    => 'fas fa-fw fa-plus',
+                ],
+                [
+                    'text'    => 'Ver Equipos',
+                    'url'     => 'equipos',
+                    'icon'    => 'fas fa-fw fa-eye',
+                ],
+                [
+                    'text'    => 'Agregar Equipo',
+                    'url'     => 'equipos/create',
+                    'icon'    => 'fas fa-fw fa-plus',
+                ],
+                [
+                    'text'    => 'Ver Tipo Equipos',
+                    'url'     => 'tipoequipos',
+                    'icon'    => 'fas fa-fw fa-eye',
+                ],
+                [
+                    'text'    => 'Agregar Tipo Equipo',
+                    'url'     => 'tipoequipos/create',
+                    'icon'    => 'fas fa-fw fa-plus',
+                ],
+                [
+                    'text'    => 'Ver Sala/Bodega',
+                    'url'     => 'categoriasalas',
+                    'icon'    => 'fas fa-fw fa-eye',
+                ],
+                [
+                    'text'    => 'Agregar Sala/bodega',
+                    'url'     => 'categoriasalas/create',
+                    'icon'    => 'fas fa-fw fa-plus',
+                ],*/
+            ],
         ],
         [
             'text'        => 'Reportes',
@@ -467,6 +530,7 @@ return [
             'icon'        => 'fas fa-fw fa-solid fa-chart-simple',
         ],
         ['header' => 'Módulos Administrador'],
+
         [
             'text'        => 'Panel de control',
             'url'         => '#',
@@ -478,22 +542,29 @@ return [
                     'icon'        => 'fas fa-fw fa-users',
                 ],
                 [
-                    'text'        => 'Administrar Vehículos',
-                    'url'         => 'vehiculos',
+                    'text'        => 'Administrar Vehiculos',
+                    'url'         => '/vehiculo',
                     'icon'        => 'fas fa-fw fa-car',
                 ],
                 [
                     'text'        => 'Administrar Regiones',
-                    'url'         => '/regiones',
+                    'url'         => '/region',
                     'icon'        => 'fas fa-fw fa-earth-americas',
                 ],
                 [
                     'text'        => 'Administrar Comunas',
-                    'url'         => '/comunas',
+                    'url'         => '/comuna',
                     'icon'        => 'fas fa-fw fa-street-view',
                 ],
+                [
+                    'text'        => 'Administrar Direcciones Regionales',
+                    'url'         => '/direccionregional',
+                    'icon'        => 'fa-solid fa-location-arrow',
+
+                ]
             ]
         ],
+
         // [
         //     'text'       => 'important',
         //     'icon_color' => 'red',

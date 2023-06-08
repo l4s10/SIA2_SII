@@ -19,6 +19,7 @@ class DatabaseSeeder extends Seeder
             CamposUsuarioNormalizados::class,
             RolesAndPermissionsSeeder::class,
             FuncionariosSeeder::class,
+            PolizasSeeder::class,
             //*Llamar primero a los tipos de objetos*/
             MaterialTipoSeeder::class,
             TipoEquiposSeeder::class,

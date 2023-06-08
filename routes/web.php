@@ -24,6 +24,11 @@ Route::get('/', function () {
 Route::get('/repyman', function(){
     return view('repyman.index');
 })->name('repyman.index');
+
+//Ruta para acceder al módulo de directivos:
+Route::get('/directivos', function(){
+    return view('directivos.index');
+})->name('directivos.index');
 //Dashboard para modulo reserva salas y visitas a bodega
 Route::get('/reservas', function(){
     return view('reservas.dashboard');
@@ -54,6 +59,18 @@ Route::resource('solequipos','App\Http\Controllers\SolicitudEquiposController');
 Route::resource('categoriasalas','App\Http\Controllers\CategoriaSalaController');
 //Rutas salas
 Route::resource('salas','App\Http\Controllers\SalaController');
+//Rutas region
+Route::resource('region','App\Http\Controllers\RegionController');
+//Rutas comuna
+Route::resource('comuna','App\Http\Controllers\ComunaController');
+//Rutas direccion regional
+Route::resource('direccionregional','App\Http\Controllers\DireccionRegionalController');
+//Rutas resolucion
+Route::resource('resolucion','App\Http\Controllers\ResolucionController');
+//Rutas poliza
+Route::resource('polizas','App\Http\Controllers\PolizaController');
+//Rutas busquedafuncionario
+Route::resource('busquedafuncionario','App\Http\Controllers\BusquedaFuncionarioController');
 // Rutas para el controlador SolicitudSalaController
 Route::resource('reserva/sala', 'App\Http\Controllers\SolicitudSalaController')->names([
     'index' => 'solicitud.salas.index',
