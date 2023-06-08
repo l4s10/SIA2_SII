@@ -89,8 +89,8 @@
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.2/css/dataTables.bootstrap5.min.css">
     <style>
         .alert {
-        opacity: 0.7; /* Ajusta la opacidad a tu gusto /
-        background-color: #99CCFF; / Color de fondo del aviso */
+        opacity: 0.7; /* Ajusta la opacidad a tu gusto */
+        background-color: #99CCFF;
         color:     #000000;
         }
     </style>

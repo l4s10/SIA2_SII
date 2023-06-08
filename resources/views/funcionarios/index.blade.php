@@ -83,6 +83,13 @@
 @section('css')
     {{-- Probando colores personalizados --}}
     <link rel="stylesheet" href="{{asset('vendor/adminlte/dist/css/custom.css')}}">
+    <style>
+        .alert {
+        opacity: 0.7; /* Ajusta la opacidad a tu gusto */
+        background-color: #99CCFF;
+        color:     #000000;
+        }
+    </style>
 @endsection
 
 @section('js')

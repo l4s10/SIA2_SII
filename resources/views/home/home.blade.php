@@ -17,14 +17,14 @@
                 </div>
                 <div class="modal-body">
                     {{-- *DETALLE DEL EVENTO* --}}
-                    <p><strong>Lugar/evento:</strong> <span id="eventTitle"></span></p>
-                    <p><strong>Tipo de evento:</strong> <span id="eventType"></span></p>
+                    <p><i class="fa-solid fa-building-flag"></i> <strong>Lugar/evento:</strong> <span id="eventTitle"></span></p>
+                    <p><i class="fa-regular fa-calendar-check"></i> <strong>Tipo de evento:</strong> <span id="eventType"></span></p>
                     {{-- *DATOS SOLICITANTE* --}}
-                    <p><strong>Departamento:</strong> <span id="eventDepartamento"></span></p>
-                    <p><strong>Nombre Solicitante:</strong> <span id="eventNombreSolicitante"></span></p>
+                    <p><i class="fa-solid fa-building-user"></i> <strong>Departamento:</strong> <span id="eventDepartamento"></span></p>
+                    <p><i class="fa-solid fa-user"></i> <strong>Nombre Solicitante:</strong> <span id="eventNombreSolicitante"></span></p>
                     {{-- *FECHAS* --}}
-                    <p><strong>Fecha de inicio:</strong> <span id="startDate"></span></p>
-                    <p><strong>Fecha de termino:</strong> <span id="endDate"></span></p>
+                    <p><i class="fa-solid fa-hourglass-start"></i> <strong>Fecha de inicio:</strong> <span id="startDate"></span></p>
+                    <p><i class="fa-solid fa-hourglass-end"></i> <strong>Fecha de termino:</strong> <span id="endDate"></span></p>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
@@ -43,6 +43,9 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     <script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/es.js"></script>
+
+    <!-- CONEXION FONT-AWESOME CON TOOLKIT -->
+    <script src="https://kit.fontawesome.com/742a59c628.js" crossorigin="anonymous"></script>
 
     <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@fullcalendar/core@6.1.8/locales/es.global.min.js"></script>
