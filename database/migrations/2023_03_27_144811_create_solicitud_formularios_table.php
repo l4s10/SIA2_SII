@@ -14,8 +14,7 @@ return new class extends Migration
         Schema::create('solicitud_formularios', function (Blueprint $table) {
             //Agregamos los campos de la tabla en la BDD
             $table->increments('ID_SOL_FORM');
-            // $table->integer('ID_USUARIO')->nullable();
-            //Agregamos los campos de todos los formularios
+            $table->integer('ID_USUARIO')->unsigned()->references('id')->on('users');
             $table->string('NOMBRE_SOLICITANTE',128);
             $table->string('RUT', 20);
             $table->string('DEPTO', 128);

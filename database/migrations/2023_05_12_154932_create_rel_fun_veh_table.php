@@ -33,12 +33,15 @@ class CreateRelFunVehTable extends Migration
             $table->string('DESTINO', 128)->nullable();
             $table->unsignedInteger('N_ORDEN_TRABAJO')->nullable();
             $table->string('KMS_INICIAL', 128)->nullable();
-            $table->string('KSM_FINAL', 128)->nullable();
+            $table->string('KMS_FINAL', 128)->nullable();
             $table->string('KMS_RECORRIDOS', 128)->nullable();
+            $table->string('HORA_SALIDA',128)->nullable();
+            $table->string('HORA_LLEGADA',128)->nullable();
             $table->string('HORAS_TOTALES', 128)->nullable();
             $table->string('NIVEL_TANQUE', 128)->nullable();
             $table->unsignedInteger('N_BITACORA')->nullable();
             $table->string('ABS_BENCINA', 128)->nullable();
+            $table->string('FECHA_SOL_VEH', 128)->nullable();
             $table->timestamp('FECHA_SALIDA')->nullable();
             $table->timestamp('FECHA_LLEGADA')->nullable();
             $table->string('NOMBRE_OCUPANTES', 1000)->nullable();

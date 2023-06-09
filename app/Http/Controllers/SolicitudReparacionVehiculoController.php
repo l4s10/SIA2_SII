@@ -8,6 +8,7 @@ use App\Models\Vehiculo;
 use App\Models\SolicitudReparacionVehiculo;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
 
 class SolicitudReparacionVehiculoController extends Controller
 {
@@ -18,11 +19,33 @@ class SolicitudReparacionVehiculoController extends Controller
     public function __construct(){
         $this->middleware('auth');
         //Tambien aqui podremos agregar que roles son los que pueden ingresar
+        $this->middleware(function ($request, $next) {
+            $user = Auth::user();
+
+            if ($user->hasRole('ADMINISTRADOR')) {
+                return $next($request);
+            } elseif ($user->hasRole('SERVICIOS')) {
+                if ($request->route()->getActionMethod() === 'destroy') {
+                    abort(403, 'Acceso no autorizado');
+                }
+                return $next($request);
+            } else {
+                if ($request->route()->getActionMethod() !== 'index' && $request->route()->getActionMethod() !== 'create' && $request->route()->getActionMethod() !== 'store' && $request->route()->getActionMethod() !== 'show') {
+                    abort(403, 'Acceso no autorizado');
+                }
+                return $next($request);
+            }
+        });
     }
 
     public function index()
     {
-        $sol_rep_veh = SolicitudReparacionVehiculo::all();
+        $user = Auth::user();
+        if($user->hasAnyRole(['ADMINISTRADOR','SERVICIOS'])){
+            $sol_rep_veh = SolicitudReparacionVehiculo::all();
+        } else {
+            $sol_rep_veh = SolicitudReparacionVehiculo::where('ID_USUARIO', $user->id)->get();
+        }
         $tipos_servicio = TipoServicio::all();
         return view('repyman.rep_veh.index',compact('sol_rep_veh','tipos_servicio'));
     }
@@ -90,7 +113,7 @@ class SolicitudReparacionVehiculoController extends Controller
         }catch(\Exception $e){
             session()->flash('error','Error al enviar la solicitud, vuelva a intentarlo mas tarde'. $e->getMessage());
         }
-        return redirect('/repyman');
+        return redirect(route('repvehiculos.index'));
     }
 
     /**
@@ -171,15 +194,22 @@ class SolicitudReparacionVehiculoController extends Controller
         }catch(\Exception $e){
             session()->flash('error','Error al crear la solicitud, vuelva a intentarlo más tarde.' . $e->getMessage());
         }
-        return redirect('/repyman');
+        return redirect(route('repvehiculos.index'));
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(SolicitudReparacionVehiculo $solicitudReparacionVehiculo)
+    public function destroy(string $id)
     {
-        //
+        $request = SolicitudReparacionVehiculo::find($id);
+        try{
+            $request->delete();
+            session()->flash('success','La solicitud de reparación se eliminó exitosamente');
+        }catch(\Exception $e){
+            session()->flash('error','Error al eliminar la solicitud seleccionada.');
+        }
+        return redirect(route('repvehiculos.index'));
     }
     //-----FUNCION QUE NOS PERMITE FORMATEAR EL RUT CON  PUNTOS Y GUIÓN.------
     public function formatRut($rut) {

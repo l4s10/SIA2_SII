@@ -8,6 +8,8 @@ use App\Models\Vehiculo;
 use App\Models\TipoVehiculo;
 use App\Models\User;
 use App\Models\Departamento;
+use App\Models\Comuna;
+use Illuminate\Support\Facades\Validator;
 
 class RelFunVehController extends Controller
 {
@@ -31,7 +33,8 @@ class RelFunVehController extends Controller
         $tipo_vehiculos = TipoVehiculo::all();
         $conductores = User::all();
         $departamentos = Departamento::all();
-        return view('rel_fun_veh.create', compact('vehiculos','tipo_vehiculos','departamentos','conductores'));
+        $comunas = Comuna::all();
+        return view('rel_fun_veh.create', compact('vehiculos','tipo_vehiculos','departamentos','conductores','comunas'));
     }
 
     /**
@@ -41,7 +44,17 @@ class RelFunVehController extends Controller
     {
         //*Guardar solicitud
         try{
-            $request->validate(RelFunVeh::rules(), RelFunVeh::messages());
+            $rules = RelFunVeh::$rules;
+            $messages = RelFunVeh::$messages;
+
+            $validator = Validator::make($request->all(), $rules, $messages);
+
+            if ($validator->fails()) {
+                return redirect()
+                    ->route('solicitud.vehiculos.create')
+                    ->withErrors($validator)
+                    ->withInput();
+            }
             $data = $request->except('_token');
             RelFunVeh::create($data);
             session()->flash('success','La solicitud se ha enviado exitosamente');
@@ -71,13 +84,26 @@ class RelFunVehController extends Controller
     public function edit(string $id)
     {
         try{
+            $solicitud = RelFunVeh::find($id);
             $vehiculos = Vehiculo::all();
             $tipo_vehiculos = TipoVehiculo::all();
             $conductores = User::all();
             $departamentos = Departamento::all();
-            $solicitud = RelFunVeh::find($id);
             $autos = Vehiculo::all();
-            return view('rel_fun_veh.edit',compact('solicitud','tipo_vehiculos','vehiculos','conductores','departamentos'));
+            $comunas = Comuna::all();
+            $ocupantes = [];
+            for ($i = 1; $i <= 6; $i++) {
+                $campoOcupante = "OCUPANTE_" . $i;
+
+                // Verifica si el campo OCUPANTE coincide con el ID de usuario en la solicitud
+                $ocupante = $conductores->where('id', $solicitud->$campoOcupante)->first();
+
+                // Si se encontró un ocupante válido, agrégalo al array de ocupantes
+                if ($ocupante) {
+                    $ocupantes[] = $ocupante;
+                }
+            }
+            return view('rel_fun_veh.edit',compact('solicitud','tipo_vehiculos','vehiculos','ocupantes','departamentos','comunas'));
         }catch(\Exception $e){
             session()->flash('error','Hubo un error al cargar la solicitud, vuelva a intentarlo mas tarde');
             return redirect(route('solicitud.vehiculos.index'));
@@ -91,7 +117,17 @@ class RelFunVehController extends Controller
     {
         try{
             $solicitud = RelFunVeh::find($id);
-            $request->validate(RelFunVeh::rules(), RelFunVeh::messages());
+            $rules = RelFunVeh::$rules;
+            $messages = RelFunVeh::$messages;
+
+            $validator = Validator::make($request->all(), $rules, $messages);
+
+            if ($validator->fails()) {
+                return redirect()
+                    ->route('solicitud.vehiculos.create')
+                    ->withErrors($validator)
+                    ->withInput();
+            }
             //*ACTUALIZAR REGISTRO */
             $data = $request->except('_token');
             $solicitud->update($data);

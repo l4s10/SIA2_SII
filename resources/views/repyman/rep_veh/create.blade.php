@@ -26,6 +26,7 @@
         @csrf
         <div class="row">
             <div class="col-md-6">
+                <input type="text" id="ID_USUARIO" name="ID_USUARIO" value="{{auth()->user()->id}}" hidden>
                 <div class="mb-3">
                 <label for="NOMBRE_SOLICITANTE" class="form-label"><i class="fa-solid fa-user"></i> Nombre del solicitante:</label>
                 <input type="text" id="NOMBRE_SOLICITANTE" name="NOMBRE_SOLICITANTE" class="form-control{{ $errors->has('NOMBRE_SOLICITANTE') ? ' is-invalid' : '' }}" value="{{ auth()->user()->NOMBRES }} {{auth()->user()->APELLIDOS}}" placeholder="Ej: ANDRES RODRIGO SUAREZ MATAMALA" readonly>

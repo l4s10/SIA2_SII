@@ -13,7 +13,6 @@
             @method('PUT')
             <div class="row">
                     <div class="col-md-6">
-                        <input type="text" name="ID_USUARIO" value="{{$solicitud->ID_USUARIO}}" hidden>
                         <div class="mb-3">
                             <label for="NOMBRE_SOLICITANTE" class="form-label"><i class="fa-solid fa-user"></i> Nombre del solicitante:</label>
                             <input type="text" id="NOMBRE_SOLICITANTE" name="NOMBRE_SOLICITANTE" class="form-control{{ $errors->has('NOMBRE_SOLICITANTE') ? ' is-invalid' : '' }}" value="{{ $solicitud->NOMBRE_SOLICITANTE}}" placeholder="Ej: ANDRES RODRIGO SUAREZ MATAMALA" readonly>
@@ -67,19 +66,23 @@
                     {{-- *CORRECCION DE FILTRO ARREGLADO, AHORA SOLO MUESTRA CONDUCTORES DEL MISMO DEPARTAMENTO* --}}
                     @foreach ($departamentos as $departamento)
                         <optgroup label="{{ $departamento->DEPARTAMENTO }}">
-                            @foreach ($conductores as $conductor)
-                                @php
-                                    $usuario = App\Models\User::find($solicitud->ID_USUARIO);
-                                @endphp
-                                @if ($conductor->departamento->DEPARTAMENTO === $departamento->DEPARTAMENTO && $conductor->departamento->ID_DEPART === $usuario->departamento->ID_DEPART)
-                                    <option value="{{ $conductor->id }}" @if ($conductor->id == $solicitud->CONDUCTOR) selected @endif>
-                                        {{ $conductor->NOMBRES }} {{ $conductor->APELLIDOS }}
+                            @foreach ($ocupantes as $ocupante)
+                                {{-- Verifica si el conductor pertenece al departamento actual --}}
+                                @if ($ocupante->ID_DEPART == $departamento->ID_DEPART)
+                                    <option value="{{$ocupante->id}}"
+                                        @if ($ocupante->id == $solicitud->CONDUCTOR)
+                                            selected
+                                        @endif
+                                    >
+                                        {{$ocupante->NOMBRES}} {{$ocupante->APELLIDOS}}
                                     </option>
                                 @endif
                             @endforeach
                         </optgroup>
                     @endforeach
                 </select>
+
+
 
 
                 @error('CONDUCTOR')
@@ -98,24 +101,116 @@
 
             <div class="mb-3">
                 <label for="NOMBRE_OCUPANTES" class="form-label"><i class="fa-solid fa-users-line"></i> Ocupantes:</label>
-                <textarea id="NOMBRE_OCUPANTES" name="NOMBRE_OCUPANTES" class="form-control @error('NOMBRE_OCUPANTES') is-invalid @enderror" aria-label="With textarea" rows="5" placeholder="Nombre Nombre Apellido Apellido" required>{{ $solicitud->NOMBRE_OCUPANTES }}</textarea>
+                <textarea id="NOMBRE_OCUPANTES" name="NOMBRE_OCUPANTES" class="form-control @error('NOMBRE_OCUPANTES') is-invalid @enderror" aria-label="With textarea" rows="5" placeholder="Nombre Nombre Apellido Apellido" readonly>@foreach ($ocupantes as $ocupante){{$ocupante->NOMBRES}} {{$ocupante->APELLIDOS}}
+@endforeach</textarea>
                 @error('NOMBRE_OCUPANTES')
                     <div class="invalid-feedback">{{ $message }}</div>
                 @enderror
             </div>
-            {{-- *FECHAS SOLICITADAS* --}}
-            <div class="form-group">
-                <label for="FECHA_SALIDA_SOL_VEH"><i class="fa-solid fa-calendar"></i> Fecha de inicio y término:</label>
-                <div class="input-group">
-                    <input type="text" id="FECHA_SALIDA_SOL_VEH" name="FECHA_SALIDA_SOL_VEH" class="form-control @if($errors->has('FECHA_SALIDA_SOL_VEH')) is-invalid @endif" placeholder="Ingrese la fecha" data-input required value="{{ $solicitud->FECHA_SALIDA_SOL_VEH }}">
-                    {{-- *HORA SOLICITADA* --}}
-                    <input type="text" id="HORA_SALIDA_SOL_VEH" name="HORA_SALIDA_SOL_VEH" class="form-control flatpickr @if($errors->has('HORA_SALIDA_SOL_VEH')) is-invalid @endif" placeholder="Seleccione la hora de salida" data-input required value="{{ $solicitud->HORA_SALIDA_SOL_VEH }}">
-                    <input type="text" id="HORA_LLEGADA_SOL_VEH" name="HORA_LLEGADA_SOL_VEH" class="form-control flatpickr @if($errors->has('HORA_LLEGADA_SOL_VEH')) is-invalid @endif" placeholder="Seleccione la hora de llegada" data-input required value="{{ $solicitud->HORA_LLEGADA_SOL_VEH }}">
-                    <button type="button" id="clearButton" class="btn btn-danger">Limpiar</button>
+            {{-- *COMUNAS* --}}
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="mb-3">
+                        <label for="ORIGEN" class="form-label"><i class="fa-solid fa-map"></i> Comuna origen:</label>
+                        <select id="ORIGEN" name="ORIGEN" class="form-control @error('ORIGEN') is-invalid @enderror" required>
+                            <option value="" selected>--Seleccione una comuna--</option>
+                            {{-- CAPTURAR COMUNAS Y MOSTRAR AQUI --}}
+                            @foreach ($comunas as $comuna)
+                                <option value="{{ $comuna->ID_COMUNA }}" {{ $solicitud->ORIGEN == $comuna->ID_COMUNA ? 'selected' : '' }}>
+                                    {{ $comuna->COMUNA }}
+                                </option>
+                            @endforeach
+                        </select>
+
+                        @error('ORIGEN')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                    </div>
                 </div>
-                @if ($errors->has('FECHA_SOL_SALA'))
-                    <div class="invalid-feedback">{{ $errors->first('FECHA_SOL_SALA') }}</div>
+                <div class="col-md-6">
+                    <div class="mb-3">
+                        <label for="DESTINO" class="form-label"><i class="fa-solid fa-map-location-dot"></i> Comuna destino:</label>
+                        <select id="DESTINO" name="DESTINO" class="form-control @error('DESTINO') is-invalid @enderror" required>
+                            <option value="" selected>--Seleccione una comuna--</option>
+                            @foreach ($comunas as $comuna)
+                                <option value="{{ $comuna->ID_COMUNA }}" {{ $solicitud->DESTINO == $comuna->ID_COMUNA ? 'selected' : '' }}>
+                                    {{ $comuna->COMUNA }}
+                                </option>
+                            @endforeach
+                        </select>
+
+                        @error('DESTINO')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="mb-3">
+                        <!-- Solo acceso para conductores(nivel 1) y estado formulario por rendir(autorizado/rendir nivel 3) -->
+                        <label for="KMS_INICIAL" class="form-label"><i class="fa-solid fa-caret-down"></i> Kilometraje al partir:</label>
+                        <input type="number" id="KMS_INICIAL" name="KMS_INICIAL" class="form-control" placeholder="Ej: 99999" readonly value="{{$solicitud->KMS_INICIAL}}">
+                        @if ($errors->has('KMS_INICIAL'))
+                        <div class="invalid-feedback">
+                            {{ $errors->first('KMS_INICIAL') }}
+                        </div>
+                        @endif
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="mb-3">
+                        <label for="KMS_FINAL" class="form-label"><i class="fa-solid fa-caret-up"></i> Kilometraje al finalizar:</label>
+                        <input type="number" id="KMS_FINAL" name="KMS_FINAL" class="form-control" placeholder="Ej: 100000" readonly value="{{$solicitud->KMS_FINAL}}">
+                        @if ($errors->has('KMS_FINAL'))
+                        <div class="invalid-feedback">
+                            {{ $errors->first('KMS_FINAL') }}
+                        </div>
+                        @endif
+                    </div>
+                </div>
+            </div>
+            {{-- *FECHA DE SALIDA SOLICITADA* --}}
+            <div class="form-group mt-3">
+                <label for="FECHA_SOL_VEH"><i class="fa-solid fa-calendar"></i> Fecha de inicio y término:</label>
+                <div class="input-group">
+                    <input type="text" id="FECHA_SOL_VEH" name="FECHA_SOL_VEH" class="form-control @if($errors->has('FECHA_SOL_VEH')) is-invalid @endif" placeholder="Ingrese la fecha" data-input disabled value="{{$solicitud->FECHA_SOL_VEH }}">
+                    {{-- *HORA SOLICITADA* --}}
+                    <input type="text" id="HORA_SALIDA" name="HORA_SALIDA" class="form-control flatpickr @if($errors->has('HORA_SALIDA')) is-invalid @endif" placeholder="Seleccione la hora de salida" data-input disabled value="{{ $solicitud->HORA_SALIDA }}">
+                    <input type="text" id="HORA_LLEGADA" name="HORA_LLEGADA" class="form-control flatpickr @if($errors->has('HORA_LLEGADA')) is-invalid @endif" placeholder="Seleccione la hora de llegada" data-input disabled value="{{ $solicitud->HORA_LLEGADA }}">
+                </div>
+                @if ($errors->has('FECHA_SOL_VEH'))
+                    <div class="invalid-feedback">{{ $errors->first('FECHA_SOL_VEH') }}</div>
                 @endif
+            </div>
+            {{-- *FECHAS AUTORIZADAS* --}}
+            {{-- COPIAR DE SOL_SALAS --}}
+            <div class="row">
+                <div class="col-md-6">
+                    {{-- Fecha y hora de inicio asignadas --}}
+                    <div class="form-group">
+                        <label for="FECHA_SALIDA"><i class="fa-solid fa-calendar"></i> Fecha y hora de inicio asignada:</label>
+                        <div class="input-group">
+                            <input type="text" id="FECHA_SALIDA" name="FECHA_SALIDA" class="form-control @error('FECHA_SALIDA') is-invalid @enderror" placeholder="Seleccione fecha y hora de inicio" required value="{{$solicitud->FECHA_SALIDA}}">
+                        </div>
+                        @error('FECHA_SALIDA')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    {{-- **Fecha y hora de término asignadas **--}}
+                    <div class="form-group">
+                        <label for="FECHA_LLEGADA"><i class="fa-solid fa-calendar"></i> Fecha y hora de término asignada:</label>
+                        <div class="input-group">
+                            <input type="text" id="FECHA_LLEGADA" name="FECHA_LLEGADA" class="form-control @error('FECHA_LLEGADA') is-invalid @enderror" placeholder="Seleccione fecha y hora de término" required value="{{$solicitud->FECHA_LLEGADA }}">
+                        </div>
+                        @error('FECHA_LLEGADA')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                    </div>
+                </div>
             </div>
             {{-- *MODIFICADO POR* --}}
             <div class="mb-3" hidden>
@@ -199,7 +294,26 @@
     <script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/es.js"></script>
     <script>
         $(function () {
-            $('#FECHA_SALIDA_SOL_VEH').flatpickr({
+             // Inicializar Flatpickr para el campo de fecha y hora de inicio
+             flatpickr("#FECHA_SALIDA", {
+                locale: 'es',
+                enableTime: true,
+                dateFormat: "Y-m-d H:i",
+                // Otras opciones y configuraciones adicionales que desees utilizar
+                altFormat: 'd-m-Y H:i',
+                altInput: true,
+            });
+
+            // Inicializar Flatpickr para el campo de fecha y hora de término
+            flatpickr("#FECHA_LLEGADA", {
+                locale: 'es',
+                enableTime: true,
+                dateFormat: "Y-m-d H:i",
+                // Otras opciones y configuraciones adicionales que desees utilizar
+                altFormat: 'd-m-Y H:i',
+                altInput: true,
+            });
+            $('#FECHA_SOL_VEH').flatpickr({
                 dateFormat: 'Y-m-d',
                 altFormat: 'd-m-Y',
                 altInput: true,
@@ -213,7 +327,7 @@
                     });
                 }
             });
-            $('#HORA_SALIDA_SOL_VEH').flatpickr({
+            $('#HORA_SALIDA').flatpickr({
                 enableTime: true,
                 noCalendar: true,
                 dateFormat: "H:i",
@@ -226,7 +340,7 @@
                     });
                 }
             });
-            $('#HORA_LLEGADA_SOL_VEH').flatpickr({
+            $('#HORA_LLEGADA').flatpickr({
                 enableTime: true,
                 noCalendar: true,
                 dateFormat: "H:i",
@@ -251,7 +365,7 @@
                 var nombreOcupantesTextarea = document.getElementById('NOMBRE_OCUPANTES');
 
                 // Obtener las opciones correspondientes al departamento seleccionado al cargar la página
-                var usuarios = @json($conductores);
+                var usuarios = @json($ocupantes);
                 var departamentoSeleccionado = departamentosSelect.value;
                 var options = ocupanteSelect.options;
 

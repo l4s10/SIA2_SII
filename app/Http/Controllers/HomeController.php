@@ -60,9 +60,22 @@ class HomeController extends Controller
             ];
         }
 
-
+        $solVeh = RelFunVeh::where('ESTADO_SOL_VEH','ACEPTADO')->get();
+        $eventoSolVeh = [];
+        //**PARSEAMOS A EVENTO FULLCALENDAR */
+        foreach($solVeh as $solicitudVeh){
+            $eventoSolVeh[] = [
+                'title' => $solicitudVeh->PATENTE_VEHICULO,
+                'start' => $solicitudVeh->FECHA_SALIDA,
+                'end' => $solicitudVeh->FECHA_LLEGADA,
+                'color' => '#696969',
+                'departamento' => $solicitudVeh->DEPTO,
+                'nombreSolicitante' => $solicitudVeh->NOMBRE_SOLICITANTE,
+                'tipoEvento' => 'Reserva de vehiculo'
+            ];
+        }
         //*CONCATENAMOS TODOS LOS EVENTOS EN UN ARRAY DE EVENTOS.
-        $events = array_merge($salas, $eventoBodegas, $eventoVeh);
+        $events = array_merge($salas, $eventoBodegas, $eventoVeh, $eventoSolVeh);
         return view('home.home', compact('events'));
     }
 }

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Formulario;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class FormularioController extends Controller
 {
@@ -11,6 +12,15 @@ class FormularioController extends Controller
     public function __construct(){
         $this->middleware('auth');
         //Tambien aqui podremos agregar que roles son los que pueden ingresar
+        $this->middleware(function ($request, $next) {
+            $user = Auth::user();
+
+            if ($user->hasRole('ADMINISTRADOR') || $user->hasRole('SERVICIOS')) {
+                return $next($request);
+            } else {
+                abort(403, 'Acceso no autorizado');
+            }
+        });
     }
     /**
      * Display a listing of the resource.

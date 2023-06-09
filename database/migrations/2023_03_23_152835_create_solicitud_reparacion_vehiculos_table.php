@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('solicitud_reparacion_vehiculos', function (Blueprint $table) {
             $table->id('ID_SOL_REP_VEH');
+            $table->integer('ID_USUARIO')->unsigned()->references('id')->on('users');
             //Campos informacion Solicitante
             $table->string('NOMBRE_SOLICITANTE',128);
             $table->string('RUT', 20);

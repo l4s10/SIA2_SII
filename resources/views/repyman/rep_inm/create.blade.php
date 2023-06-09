@@ -11,6 +11,7 @@
         <form action="{{route('reparaciones.index')}}" method="POST">
             @csrf
             <div class="row">
+                <input type="text" id="ID_USUARIO" name="ID_USUARIO" value="{{auth()->user()->id}}" hidden>
                 <div class="col-md-6">
                     <div class="mb-3">
                     <label for="NOMBRE_SOLICITANTE" class="form-label"><i class="fa-solid fa-user"></i> Nombre del solicitante:</label>

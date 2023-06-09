@@ -6,6 +6,7 @@ use App\Models\RelFunRepGeneral;
 use Illuminate\Http\Request;
 //Agregamos el modelo de tipo de reparacion (para el desplegable)
 use App\Models\TipoReparacion;
+use Illuminate\Support\Facades\Auth;
 
 class RelFunRepGeneralController extends Controller
 {
@@ -13,13 +14,35 @@ class RelFunRepGeneralController extends Controller
     public function __construct(){
         $this->middleware('auth');
         //Tambien aqui podremos agregar que roles son los que pueden ingresar
+        $this->middleware(function ($request, $next) {
+            $user = Auth::user();
+
+            if ($user->hasRole('ADMINISTRADOR')) {
+                return $next($request);
+            } elseif ($user->hasRole('SERVICIOS')) {
+                if ($request->route()->getActionMethod() === 'destroy') {
+                    abort(403, 'Acceso no autorizado');
+                }
+                return $next($request);
+            } else {
+                if ($request->route()->getActionMethod() !== 'index' && $request->route()->getActionMethod() !== 'create' && $request->route()->getActionMethod() !== 'store' && $request->route()->getActionMethod() !== 'show') {
+                    abort(403, 'Acceso no autorizado');
+                }
+                return $next($request);
+            }
+        });
     }
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $sol_reparaciones = RelFunRepGeneral::all();
+        $user = Auth::user();
+        if($user->hasAnyRole(['ADMINISTRADOR','SERVICIOS'])){
+            $sol_reparaciones = RelFunRepGeneral::all();
+        } else {
+            $sol_reparaciones = RelFunRepGeneral::where('ID_USUARIO',$user->id)->get();
+        }
         return view('repyman.rep_inm.index',compact('sol_reparaciones'));
     }
 
@@ -82,7 +105,7 @@ class RelFunRepGeneralController extends Controller
         }catch(\Exception $e){
             session()->flash('error','Error al crear la solicitud, vuelva a intentarlo más tarde.');
         }
-        return redirect(route('repyman.index'));
+        return redirect(route('reparaciones.index'));
     }
 
     /**
@@ -155,7 +178,7 @@ class RelFunRepGeneralController extends Controller
         }catch(\Exception $e){
             session()->flash('error','Error al crear la solicitud, vuelva a intentarlo más tarde.');
         }
-        return redirect(route('repyman.index'));
+        return redirect(route('reparaciones.index'));
     }
 
     /**

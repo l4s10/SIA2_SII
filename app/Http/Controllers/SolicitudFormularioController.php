@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\SolicitudFormulario;
 use App\Models\Formulario;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class SolicitudFormularioController extends Controller
 {
@@ -12,13 +13,35 @@ class SolicitudFormularioController extends Controller
     public function __construct(){
         $this->middleware('auth');
         //Tambien aqui podremos agregar que roles son los que pueden ingresar
+        $this->middleware(function ($request, $next) {
+            $user = Auth::user();
+
+            if ($user->hasRole('ADMINISTRADOR')) {
+                return $next($request);
+            } elseif ($user->hasRole('SERVICIOS')) {
+                if ($request->route()->getActionMethod() === 'destroy') {
+                    abort(403, 'Acceso no autorizado');
+                }
+                return $next($request);
+            } else {
+                if ($request->route()->getActionMethod() !== 'index' && $request->route()->getActionMethod() !== 'create' && $request->route()->getActionMethod() !== 'store' && $request->route()->getActionMethod() !== 'show') {
+                    abort(403, 'Acceso no autorizado');
+                }
+                return $next($request);
+            }
+        });
     }
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $solicitudes = SolicitudFormulario::all();
+        $user = Auth::user();
+        if($user->hasAnyRole(['ADMINISTRADOR','SERVICIOS'])){
+            $solicitudes = SolicitudFormulario::all();
+        } else {
+            $solicitudes = SolicitudFormulario::where('ID_USUARIO', $user->id)->get();
+        }
         return view ('solicitudformularios.index', compact('solicitudes'));
     }
 

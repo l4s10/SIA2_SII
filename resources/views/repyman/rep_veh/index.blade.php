@@ -1,6 +1,6 @@
 @extends('adminlte::page')
 
-@section('title', 'Solicitudes')
+@section('title', 'Solicitudes reparacion vehicular')
 
 @section('content_header')
     <h1>Solicitudes de Reparaciones y Mantenciones (Vehículos)</h1>
@@ -58,7 +58,7 @@
                                 <form action="{{ route('repvehiculos.destroy',$solicitud->ID_SOL_REP_VEH) }}" method="POST">
                                     @csrf
                                     @method('DELETE')
-                                    <a href="{{route('repvehiculos.update',$solicitud->ID_SOL_REP_VEH)}}" class="btn btn-info"><i class="fa-solid fa-pen-to-square"></i> Editar</a>
+                                    <a href="{{route('repvehiculos.edit', $solicitud->ID_SOL_REP_VEH)}}" class="btn btn-info"><i class="fa-solid fa-pen-to-square"></i> Editar</a>
                                     <button type="submit" class="btn btn-danger"><i class="fa-solid fa-trash"></i> Borrar</button>
                                 </form>
                             </td>

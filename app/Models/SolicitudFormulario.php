@@ -11,6 +11,7 @@ class SolicitudFormulario extends Model
     protected $table = 'solicitud_formularios';
     protected $primaryKey = 'ID_SOL_FORM';
     protected $fillable = [
+        'ID_USUARIO',
         'NOMBRE_SOLICITANTE',
         'RUT',
         'DEPTO',

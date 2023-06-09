@@ -12,7 +12,6 @@ class RelFunVeh extends Model
     protected $primaryKey = 'ID_SOL_VEH';
 
     protected $fillable = [
-        'ID_SOL_VEH',
         'PATENTE_VEHICULO',
         'ID_USUARIO',
         'NOMBRE_SOLICITANTE',
@@ -31,12 +30,15 @@ class RelFunVeh extends Model
         'DESTINO',
         'N_ORDEN_TRABAJO',
         'KMS_INICIAL',
-        'KSM_FINAL',
+        'KMS_FINAL',
         'KMS_RECORRIDOS',
+        'HORA_SALIDA',
+        'HORA_LLEGADA',
         'HORAS_TOTALES',
         'NIVEL_TANQUE',
         'N_BITACORA',
         'ABS_BENCINA',
+        'FECHA_SOL_VEH',
         'FECHA_SALIDA',
         'FECHA_LLEGADA',
         'NOMBRE_OCUPANTES',
@@ -47,7 +49,6 @@ class RelFunVeh extends Model
     ];
 
     public static $rules = [
-        'ID_SOL_VEH' => 'required|integer',
         'PATENTE_VEHICULO' => 'nullable|string|max:7',
         'ID_USUARIO' => 'nullable|integer',
         'NOMBRE_SOLICITANTE' => 'required|string|max:128',
@@ -66,7 +67,7 @@ class RelFunVeh extends Model
         'DESTINO' => 'nullable|string|max:128',
         'N_ORDEN_TRABAJO' => 'nullable|integer',
         'KMS_INICIAL' => 'nullable|string|max:128',
-        'KSM_FINAL' => 'nullable|string|max:128',
+        'KMS_FINAL' => 'nullable|string|max:128',
         'KMS_RECORRIDOS' => 'nullable|string|max:128',
         'HORAS_TOTALES' => 'nullable|string|max:128',
         'NIVEL_TANQUE' => 'nullable|string|max:128',
