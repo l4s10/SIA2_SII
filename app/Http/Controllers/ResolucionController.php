@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 //use Illuminate\Validation\Rule;
 //use Illuminate\Support\Facades\Auth;
 use App\Models\Resolucion;
+use App\Models\Cargo;
 
 
 
@@ -26,7 +27,8 @@ class ResolucionController extends Controller
      *///Carga formulario de creacion
     public function create()
     {
-        return view('resolucion.create');
+        $cargos = Cargo::all();
+        return view('resolucion.create',compact('cargos'));
     }
 
     /**
@@ -37,7 +39,12 @@ class ResolucionController extends Controller
         try{   
             $request->validate(Resolucion::rules($request->NRO_RESOLUCION), Resolucion::messages());
             $data = $request->except('_token');
-            Resolucion::create($data);
+            $resolucion = Resolucion::create($data); //Instancia de resolución para verificar primero la existencia foránea del cargo
+
+        if ($cargo = Cargo::find($request->input('ID_CARGO'))) {
+            $resolucion->cargo()->associate($cargo); // Asociar el modelo Cargo a la relación
+            $resolucion->save();
+        }
             session()->flash('success','La resolución delegatoria fue agregada exitosamente.');
         }catch(\Exception $e){
             session()->flash('error','Hubo un error al agregar la resolución delegatoria. Vuelva a intentarlo nuevamente' .$e->getMessage());
@@ -51,7 +58,7 @@ class ResolucionController extends Controller
     public function show(string $id)
     {
         try{
-            $resolucion = Resolucion::find($id);
+            $resolucion = Resolucion::with('cargo')->find($id); // Incluye la relación entre tablas 'resoluciones' y 'cargos' a través del método 'cargo' del modelo 'resolucion'.
             return view('resolucion.show', compact('resolucion'));
         }catch(\Exception $e){
             session()->flash('error', 'Error al acceder a la resolución delegatoria seleccionada, vuelva a intentarlo más tarde.');
@@ -65,7 +72,8 @@ class ResolucionController extends Controller
     public function edit(string $id)
     {
         $resolucion = Resolucion::find($id);
-        return view('resolucion.edit',compact('resolucion'));
+        $cargos = Cargo::all();
+        return view('resolucion.edit',compact('resolucion','cargos'));
     }
 
     public function update(Request $request, string $id)
@@ -79,10 +87,13 @@ class ResolucionController extends Controller
             $resolucion->fill([
                 'NRO_RESOLUCION' => (int) $request->input('NRO_RESOLUCION'),
                 'FECHA' => $request->input('FECHA'),
-                'AUTORIDAD' => $request->input('AUTORIDAD'),
+                'ID_CARGO' => $request->input('ID_CARGO'),
                 'FUNCIONARIOS_DELEGADOS' => $request->input('FUNCIONARIOS_DELEGADOS'),
                 'MATERIA'  => $request->input('MATERIA')
             ]);
+            if ($cargo = Cargo::find($request->input('ID_CARGO'))) {
+                $resolucion->cargo()->associate($cargo); // Asocia el modelo Cargo a la relación
+            }
             $resolucion->save();
             session()->flash('success', 'La resolución delegatoria fue modificada exitosamente');
         } catch(\Exception $e) {
@@ -96,8 +107,8 @@ class ResolucionController extends Controller
      */
     public function destroy(string $id)
     {
-        $resolucion = Resolucion::find($id);
         try{
+            $resolucion = Resolucion::find($id);
             $resolucion->delete();
             session()->flash('success','La resolución delegatoria ha sido eliminada correctamente.');
         }catch(\Exception $e){

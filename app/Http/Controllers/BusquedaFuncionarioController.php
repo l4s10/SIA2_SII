@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use App\Models\User;
 use App\Models\Cargo;
+use App\Models\Resolucion;
 
 use Illuminate\Http\Request;
 
@@ -11,11 +12,26 @@ class BusquedaFuncionarioController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $funcionarios = User::all();
+        $nombres = $request->input('NOMBRES');
+        $apellidos = $request->input('APELLIDOS');
+
+
+        $resoluciones = Resolucion::join('users', 'users.ID_CARGO', '=', 'resoluciones.ID_CARGO')
+        ->where('users.NOMBRES', $nombres)
+        ->where('users.APELLIDOS', $apellidos)
+        ->get();
+        /*
+        $resoluciones = Resolucion::whereHas('user', function ($query) use ($nombres, $apellidos) {
+            $query->where('NOMBRES', $nombres)
+                  ->where('APELLIDOS', $apellidos);
+        })->get();*/
+
+        //dd($resoluciones);
+
         $cargos = Cargo::all();
-        return view('directivos.busquedafuncionario.index',compact('funcionarios','cargos'));
+        return view('directivos.busquedafuncionario.index', compact('resoluciones','cargos'));
     }
 
     /**
@@ -23,9 +39,8 @@ class BusquedaFuncionarioController extends Controller
      */
     public function create()
     {
-        $funcionarios = User::all();
         $cargos = Cargo::all();
-        return view('directivos.busquedafuncionario.create',compact('funcionarios','cargos'));
+        return view('directivos.busquedafuncionario.create', compact('cargos'));
     }
 
     /**

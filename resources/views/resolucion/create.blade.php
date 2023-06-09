@@ -28,15 +28,24 @@
                 </div>
             @endif
         </div>
+        
+
         <div class="mb-3">
-            <label for="AUTORIDAD" class="form-label"><i class="fa-solid fa-book-bookmark"></i> Autoridad:</label>
-            <input type="text" class="form-control{{ $errors->has('AUTORIDAD') ? ' is-invalid' : '' }}" id="AUTORIDAD" name="AUTORIDAD" value="{{ old('AUTORIDAD') }}" placeholder="Ej: Director Regional" required>
-            @if ($errors->has('AUTORIDAD'))
-                <div class="invalid-feedback">
-                    {{ $errors->first('AUTORIDAD') }}
-                </div>
-            @endif
+            <label for="ID_CARGO" class="form-label"><i class="fa-solid fa-car-side"></i> Autoridad:</label>
+            <select id="ID_CARGO" name="ID_CARGO" class="form-control @error('ID_CARGO') is-invalid @enderror" required>
+                <option value="" selected>--Seleccione Autoridad--</option>
+
+                @foreach ($cargos as $cargo)
+                    <option value="{{ $cargo['ID_CARGO'] }}">{{ $cargo['CARGO'] }}</option>
+                @endforeach
+
+            </select>
+
+            @error('ID_CARGO')
+                <div class="invalid-feedback">{{ $message }}</div>
+            @enderror
         </div>
+
         <div class="mb-3">
             <label for="FUNCIONARIOS_DELEGADOS" class="form-label"><i class="fa-solid fa-book-bookmark"></i> Funcionarios delegados:</label>
             <input type="text" class="form-control{{ $errors->has('FUNCIONARIOS_DELEGADOS') ? ' is-invalid' : '' }}" id="FUNCIONARIOS_DELEGADOS" name="FUNCIONARIOS_DELEGADOS" value="{{ old('FUNCIONARIOS_DELEGADOS') }}" placeholder="Ej: Jefes Unidad" >

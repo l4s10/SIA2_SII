@@ -39,13 +39,19 @@
                             </span>
                         @enderror
                     </div>
-                    <div class="form-group">
-                        <label for="AUTORIDAD">Autoridad:</label>
-                        <input type="text" name="AUTORIDAD" id="AUTORIDAD" class="form-control" placeholder="Cargo directivo: (Ej: Director Regional )" value="{{ $resolucion->AUTORIDAD }}" required autofocus>
-                        @error('AUTORIDAD')
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
+                    <div class="mb-3">
+                        <label for="ID_CARGO" class="form-label"><i class="fa-solid fa-car-side"></i> Autoridad:</label>
+                        <select id="ID_CARGO" name="ID_CARGO" class="form-control @error('ID_CARGO') is-invalid @enderror" required>
+                            <option value="" selected>--Seleccione Autoridad--</option>
+            
+                            @foreach ($cargos as $cargo)
+                                <option value="{{ $cargo['ID_CARGO'] }}">{{ $cargo['CARGO'] }}</option>
+                            @endforeach
+            
+                        </select>
+            
+                        @error('ID_CARGO')
+                            <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
                     </div>
                     

@@ -133,15 +133,19 @@ class CamposUsuarioNormalizados extends Seeder
         ]);
         // Población de la tabla 'ubicacion'
         Ubicacion::insert([
-            ['ID_UBICACION' => 1, 'UBICACION' => 'DEPARTAMENTO DE ADMINISTRACIÓN'],
-            ['ID_UBICACION' => 2, 'UBICACION' => 'DEPARTAMENTO DE FISCALIZACIÓN'],
-            ['ID_UBICACION' => 3, 'UBICACION' => 'DEPARTAMENTO DE AVALUACIONES'],
+            ['ID_UBICACION' => 1, 'UBICACION' => 'GABINETE DIRECTOR'],
+            ['ID_UBICACION' => 2, 'UBICACION' => 'DEPARTAMENTO DE ADMINISTRACIÓN'],
+            ['ID_UBICACION' => 3, 'UBICACION' => 'DEPARTAMENTO DE FISCALIZACIÓN'],
             ['ID_UBICACION' => 4, 'UBICACION' => 'DEPARTAMENTO DE ASISTENCIA AL CONTRIBUYENTE'],
-            ['ID_UBICACION' => 5, 'UBICACION' => 'UNIDAD DE LOS ÁNGELES'],
-            ['ID_UBICACION' => 6, 'UBICACION' => 'UNIDAD DE LEBU'],
+            ['ID_UBICACION' => 5, 'UBICACION' => 'DEPARTAMENTO DE AVALUACIONES'],
+            ['ID_UBICACION' => 6, 'UBICACION' => 'UNIDAD DE LOS ÁNGELES'],
+            ['ID_UBICACION' => 7, 'UBICACION' => 'UNIDAD DE LEBU'],
             ['ID_UBICACION' => 8, 'UBICACION' => 'UNIDAD DE TALCAHUANO'],
-            ['ID_UBICACION' => 9, 'UBICACION' => 'DEPARTAMENTO JURÍDICO'],
-            ['ID_UBICACION' => 10, 'UBICACION' => 'DEPARTAMENTO DE PROCEDIMIENTOS ADMINISTRATIVOS TRIBUTARIOS'],
+            ['ID_UBICACION' => 9, 'UBICACION' => 'DEPARTAMENTO DE PROCEDIMIENTOS ADMINISTRATIVOS TRIBUTARIOS'],
+            ['ID_UBICACION' => 10, 'UBICACION' => 'DEPARTAMENTO JURÍDICO'],
+            ['ID_UBICACION' => 99, 'UBICACION' => 'DIRECCION NACIONAL'],
+            ['ID_UBICACION' => 999, 'UBICACION' => 'EXTERNO'],
+
         ]);
         // Población de la tabla 'grupo'
         Grupo::insert([
@@ -313,23 +317,23 @@ class CamposUsuarioNormalizados extends Seeder
 
          //Población de la tabla 'resoluciones' con RESOLUCIONES DELEGATORIAS DICTADAS POR LA V D.R. VALPARAISO'
          Resolucion::insert([
-            ['ID_RESOLUCION' => 1, 'NRO_RESOLUCION' => '1171', 'FECHA' => '1981-08-24', 'AUTORIDAD' => 'Director Regional', 'FUNCIONARIOS_DELEGADOS' => 'Jefes Depto. Fiscalización, Resoluciones y Jurídico', 'MATERIA' => 'Facultades de fiscalización, autorizaciones contabilidad e información tribunales.'],
-            ['ID_RESOLUCION' => 2, 'NRO_RESOLUCION' => '8819', 'FECHA' => '1994-06-27', 'AUTORIDAD' => 'Director Regional', 'FUNCIONARIOS_DELEGADOS' => '', 'MATERIA' => ''],
-            ['ID_RESOLUCION' => 3, 'NRO_RESOLUCION' => '730', 'FECHA' => '2000-08-21', 'AUTORIDAD' => 'Director Regional', 'FUNCIONARIOS_DELEGADOS' => '', 'MATERIA' => ''],
-            ['ID_RESOLUCION' => 4, 'NRO_RESOLUCION' => '5396', 'FECHA' => '1992-03-31', 'AUTORIDAD' => 'Director Regional', 'FUNCIONARIOS_DELEGADOS' => 'Jefe Depto. Avaluaciones, Funcionarios Avaluaciones', 'MATERIA' => 'Delega facultades relativas a roles de avalúo y facultades de fiscalización en Jefes de Unidad.'],
-            ['ID_RESOLUCION' => 5, 'NRO_RESOLUCION' => '3520', 'FECHA' => '1994-03-16', 'AUTORIDAD' => 'Director Regional', 'FUNCIONARIOS_DELEGADOS' => 'Jefe Depto Avaluaciones', 'MATERIA' => 'Agrega facultad autorizar deducción valor terreno (art. 17 inc. 5 IVA)'],
-            ['ID_RESOLUCION' => 6, 'NRO_RESOLUCION' => '1035', 'FECHA' => '1996-03-15', 'AUTORIDAD' => 'Director Regional', 'FUNCIONARIOS_DELEGADOS' => '', 'MATERIA' => 'Agrega Unidad Villa Alemana'],
-            ['ID_RESOLUCION' => 7, 'NRO_RESOLUCION' => '321', 'FECHA' => '1999-03-02', 'AUTORIDAD' => 'Director Regional', 'FUNCIONARIOS_DELEGADOS' => 'Jefes Unidad', 'MATERIA' => 'Autorización máquinas registradoras Jefes Unidad'],
-            ['ID_RESOLUCION' => 8, 'NRO_RESOLUCION' => '744', 'FECHA' => '2002-08-22', 'AUTORIDAD' => 'Director Regional', 'FUNCIONARIOS_DELEGADOS' => 'Jefe Unidad San Felipe', 'MATERIA' => 'Autorización máquinas registradoras Jefe Unidad San Felipe'],
-            ['ID_RESOLUCION' => 9, 'NRO_RESOLUCION' => '5325', 'FECHA' => '2009-08-05', 'AUTORIDAD' => 'Director Regional', 'FUNCIONARIOS_DELEGADOS' => 'Jefe Depto. Avaluaciones y Jefes de Grupo Y Convenio', 'MATERIA' => 'Resolver solicitudes reconsideración administrativa E 2827'],
-            ['ID_RESOLUCION' => 10, 'NRO_RESOLUCION' => '4491', 'FECHA' => '2010-06-22', 'AUTORIDAD' => 'Director Regional', 'FUNCIONARIOS_DELEGADOS' => '', 'MATERIA' => 'Modifica Res. 5396/92 (atribuciones Jefe Unidad Viña del Mar)'],
-            ['ID_RESOLUCION' => 11, 'NRO_RESOLUCION' => '9417', 'FECHA' => '1994-07-13', 'AUTORIDAD' => 'Director Regional', 'FUNCIONARIOS_DELEGADOS' => 'Jefe Depto. Resoluciones', 'MATERIA' => 'Delega funciones de fiscalización'],
-            ['ID_RESOLUCION' => 12, 'NRO_RESOLUCION' => '11345', 'FECHA' => '1993-08-11', 'AUTORIDAD' => 'Director Regional', 'FUNCIONARIOS_DELEGADOS' => 'Jefe Depto. Fiscalización y Jefes Unidad', 'MATERIA' => 'Dev. F. 22 hasta 200 UTM'],
-            ['ID_RESOLUCION' => 13, 'NRO_RESOLUCION' => '1197', 'FECHA' => '1998-10-23', 'AUTORIDAD' => 'Director Regional', 'FUNCIONARIOS_DELEGADOS' => 'Jefe Depto. Fiscalización y Jefes Unidad', 'MATERIA' => ''],
-            ['ID_RESOLUCION' => 14, 'NRO_RESOLUCION' => '11729', 'FECHA' => '1994-09-02', 'AUTORIDAD' => 'Director Regional', 'FUNCIONARIOS_DELEGADOS' => 'Jefe Depto. Resoluciones', 'MATERIA' => 'Autoriza disminución de capital'],
-            ['ID_RESOLUCION' => 15, 'NRO_RESOLUCION' => '1595', 'FECHA' => '1995-02-24', 'AUTORIDAD' => 'Director Regional', 'FUNCIONARIOS_DELEGADOS' => 'Funcionarios que indica', 'MATERIA' => ''],
-            ['ID_RESOLUCION' => 16, 'NRO_RESOLUCION' => '591', 'FECHA' => '1997-06-18', 'AUTORIDAD' => 'Director Regional', 'FUNCIONARIOS_DELEGADOS' => 'Funcionarios de Termino de Giro', 'MATERIA' => 'Información herencia'],
-            ['ID_RESOLUCION' => 17, 'NRO_RESOLUCION' => '275', 'FECHA' => '1999-02-22', 'AUTORIDAD' => 'Director Regional', 'FUNCIONARIOS_DELEGADOS' => 'Jefe Depto. Resoluciones y Jefes de Unidad', 'MATERIA' => 'Devolución con motivo del Término de Giro'],
+            ['ID_RESOLUCION' => 1, 'NRO_RESOLUCION' => '1171', 'FECHA' => '1981-08-24', 'ID_CARGO' => 1, 'FUNCIONARIOS_DELEGADOS' => 'Jefes Depto. Fiscalización, Resoluciones y Jurídico', 'MATERIA' => 'Facultades de fiscalización, autorizaciones contabilidad e información tribunales.'],
+            ['ID_RESOLUCION' => 2, 'NRO_RESOLUCION' => '8819', 'FECHA' => '1994-06-27', 'ID_CARGO' => 1, 'FUNCIONARIOS_DELEGADOS' => '', 'MATERIA' => ''],
+            ['ID_RESOLUCION' => 3, 'NRO_RESOLUCION' => '730', 'FECHA' => '2000-08-21', 'ID_CARGO' => 1, 'FUNCIONARIOS_DELEGADOS' => '', 'MATERIA' => ''],
+            ['ID_RESOLUCION' => 4, 'NRO_RESOLUCION' => '5396', 'FECHA' => '1992-03-31', 'ID_CARGO' => 1, 'FUNCIONARIOS_DELEGADOS' => 'Jefe Depto. Avaluaciones, Funcionarios Avaluaciones', 'MATERIA' => 'Delega facultades relativas a roles de avalúo y facultades de fiscalización en Jefes de Unidad.'],
+            ['ID_RESOLUCION' => 5, 'NRO_RESOLUCION' => '3520', 'FECHA' => '1994-03-16', 'ID_CARGO' => 1, 'FUNCIONARIOS_DELEGADOS' => 'Jefe Depto Avaluaciones', 'MATERIA' => 'Agrega facultad autorizar deducción valor terreno (art. 17 inc. 5 IVA)'],
+            ['ID_RESOLUCION' => 6, 'NRO_RESOLUCION' => '1035', 'FECHA' => '1996-03-15', 'ID_CARGO' => 1, 'FUNCIONARIOS_DELEGADOS' => '', 'MATERIA' => 'Agrega Unidad Villa Alemana'],
+            ['ID_RESOLUCION' => 7, 'NRO_RESOLUCION' => '321', 'FECHA' => '1999-03-02', 'ID_CARGO' => 1, 'FUNCIONARIOS_DELEGADOS' => 'Jefes Unidad', 'MATERIA' => 'Autorización máquinas registradoras Jefes Unidad'],
+            ['ID_RESOLUCION' => 8, 'NRO_RESOLUCION' => '744', 'FECHA' => '2002-08-22', 'ID_CARGO' => 1, 'FUNCIONARIOS_DELEGADOS' => 'Jefe Unidad San Felipe', 'MATERIA' => 'Autorización máquinas registradoras Jefe Unidad San Felipe'],
+            ['ID_RESOLUCION' => 9, 'NRO_RESOLUCION' => '5325', 'FECHA' => '2009-08-05', 'ID_CARGO' => 2, 'FUNCIONARIOS_DELEGADOS' => 'Jefe Depto. Avaluaciones y Jefes de Grupo Y Convenio', 'MATERIA' => 'Resolver solicitudes reconsideración administrativa E 2827'],
+            ['ID_RESOLUCION' => 10, 'NRO_RESOLUCION' => '4491', 'FECHA' => '2010-06-22', 'ID_CARGO' => 2, 'FUNCIONARIOS_DELEGADOS' => '', 'MATERIA' => 'Modifica Res. 5396/92 (atribuciones Jefe Unidad Viña del Mar)'],
+            ['ID_RESOLUCION' => 11, 'NRO_RESOLUCION' => '9417', 'FECHA' => '1994-07-13', 'ID_CARGO' => 2, 'FUNCIONARIOS_DELEGADOS' => 'Jefe Depto. Resoluciones', 'MATERIA' => 'Delega funciones de fiscalización'],
+            ['ID_RESOLUCION' => 12, 'NRO_RESOLUCION' => '11345', 'FECHA' => '1993-08-11', 'ID_CARGO' => 2, 'FUNCIONARIOS_DELEGADOS' => 'Jefe Depto. Fiscalización y Jefes Unidad', 'MATERIA' => 'Dev. F. 22 hasta 200 UTM'],          
+            ['ID_RESOLUCION' => 13, 'NRO_RESOLUCION' => '1197', 'FECHA' => '1998-10-23', 'ID_CARGO' => 1, 'FUNCIONARIOS_DELEGADOS' => 'Jefe Depto. Fiscalización y Jefes Unidad', 'MATERIA' => ''],
+            ['ID_RESOLUCION' => 14, 'NRO_RESOLUCION' => '11729', 'FECHA' => '1994-09-02', 'ID_CARGO' => 1, 'FUNCIONARIOS_DELEGADOS' => 'Jefe Depto. Resoluciones', 'MATERIA' => 'Autoriza disminución de capital'],
+            ['ID_RESOLUCION' => 15, 'NRO_RESOLUCION' => '1595', 'FECHA' => '1995-02-24', 'ID_CARGO' => 1, 'FUNCIONARIOS_DELEGADOS' => 'Funcionarios que indica', 'MATERIA' => ''],
+            ['ID_RESOLUCION' => 16, 'NRO_RESOLUCION' => '591', 'FECHA' => '1997-06-18', 'ID_CARGO' => 1, 'FUNCIONARIOS_DELEGADOS' => 'Funcionarios de Termino de Giro', 'MATERIA' => 'Información herencia'],
+            ['ID_RESOLUCION' => 17, 'NRO_RESOLUCION' => '275', 'FECHA' => '1999-02-22', 'ID_CARGO' => 1, 'FUNCIONARIOS_DELEGADOS' => 'Jefe Depto. Resoluciones y Jefes de Unidad', 'MATERIA' => 'Devolución con motivo del Término de Giro'],
         ]);
 
     }

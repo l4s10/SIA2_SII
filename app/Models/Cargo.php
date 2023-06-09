@@ -17,7 +17,7 @@ class Cargo extends Model
         'CARGO'
     ];
 
-    //* Agregamos validaciones para la tabla de regiones*/
+    //* Agregamos validaciones para la tabla de cargos*/
     public static $rules = [
         'CARGO' => 'required|unique:cargos,CARGO|max:128'
     ];
@@ -28,7 +28,15 @@ class Cargo extends Model
         'CARGO.max' => 'El campo "Cargo" no debe exceder los 128 caracteres.'
     ];
 
-    // $request 
-    // $data = $request->validate(Region::$rules, Region::$messages);
+    public function users()
+    {
+        return $this->hasMany(User::class, 'ID_CARGO');
+    }
+
+    public function resoluciones()
+    {
+        return $this->hasMany(Resolución::class, 'ID_CARGO');
+    }
+
 
 }

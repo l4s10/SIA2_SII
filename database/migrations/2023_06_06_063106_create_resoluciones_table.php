@@ -15,7 +15,7 @@ return new class extends Migration
             $table->increments('ID_RESOLUCION');
             $table->integer('NRO_RESOLUCION')->unsigned();
             $table->dateTime('FECHA')->nullable();
-            $table->string('AUTORIDAD', 128)->nullable();
+            $table->integer('ID_CARGO')->unsigned();
             $table->string('FUNCIONARIOS_DELEGADOS', 128)->nullable();
             $table->string('MATERIA', 255)->nullable();
         });
