@@ -66,7 +66,7 @@
                         <tr>
                             <td>{{$resolucion->NRO_RESOLUCION}}</td>
                             <td>{{ date('d/m/Y', strtotime($resolucion->FECHA)) }}</td>
-                            <td>{{$resolucion->AUTORIDAD}}</td>
+                            <td>{{$resolucion->cargo->CARGO}}</td>
                             <td>{{$resolucion->FUNCIONARIOS_DELEGADOS}}</td>
                             <td>{{$resolucion->MATERIA}}</td>
                             <td>

@@ -73,6 +73,7 @@ return new class extends Migration
             
             $table->date('FECHA_NAC');
             $table->date('FECHA_INGRESO');
+            $table->date('FECHA_ASIM_O_1')->nullable();
             $table->unsignedInteger('ID_CALIDAD_JURIDICA');
             $table->foreign('ID_CALIDAD_JURIDICA')->references('ID_CALIDAD')->on('calidad_juridica');
             $table->string('FONO', 255);

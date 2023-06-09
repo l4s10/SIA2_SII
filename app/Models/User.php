@@ -36,6 +36,7 @@ class User extends Authenticatable
         'ID_CARGO',
         'FECHA_NAC',
         'FECHA_INGRESO',
+        'FECHA_ASIM_O_1',
         'ID_CALIDAD_JURIDICA',
         'FONO',
         'ANEXO',
@@ -146,6 +147,11 @@ class User extends Authenticatable
     public function sexo()
     {
         return $this->belongsTo(Sexo::class, 'ID_SEXO');
+    }
+
+    public function resoluciones()
+    {
+        return $this->hasMany(Resolucion::class, 'ID_USER', 'ID_USER');
     }
 
 }

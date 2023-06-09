@@ -1,84 +1,95 @@
 @extends('adminlte::page')
 
-@section('title', 'Solicitar vehiculo')
+@section('title', 'busqueda de resoluciones')
 
 @section('content_header')
-    <h1>Información asociada a un Directivo</h1>
+    <h1>Información sobre resoluciones de directivos</h1>
 @stop
 
 @section('content')
     <div class="container">
-        <form action="{{route('directivos.index')}}" method="POST">
+        <form id="searchForm" action="{{ route('busquedafuncionario.index') }}" method="GET">
             @csrf
-            <div class="row">
-                <div class="col-md-6">
-                    <input type="text" name="id" value="{{auth()->user()->id}}" hidden>
-                    <div class="mb-3">
-                        <label for="NOMBRES" class="form-label"><i class="fa-solid fa-user"></i> Nombre del solicitante:</label>
-                        <input type="text" id="NOMBRES" name="NOMBRES" class="form-control{{ $errors->has('NOMBRES') ? ' is-invalid' : '' }}" value="{{ auth()->user()->NOMBRES }} {{auth()->user()->APELLIDOS}}" placeholder="Ej: ANDRES RODRIGO SUAREZ MATAMALA" readonly>
-                        @if ($errors->has('NOMBRES'))
-                            <div class="invalid-feedback">
-                                {{ $errors->first('NOMBRES') }}
-                            </div>
-                        @endif
-                    </div>
+            <div class="row g-3">
+                <input type="text" name="id" value="{{ auth()->user()->id }}" hidden>
 
-                    <div class="mb-3">
-                        <label for="NOMBRES" class="form-label"><i class="fa-solid fa-user"></i> Nombre del solicitante:</label>
-                        <input type="text" id="NOMBRES" name="NOMBRES" class="form-control{{ $errors->has('NOMBRES') ? ' is-invalid' : '' }}" placeholder="Ej: ANDRES RODRIGO">
-                        @if ($errors->has('NOMBRES'))
-                            <div class="invalid-feedback">
-                                {{ $errors->first('NOMBRES') }}
-                            </div>
-                        @endif
-                    </div>
-
-                    <div class="mb-3">
-                        <label for="APELLIDOS" class="form-label"><i class="fa-solid fa-user"></i> Nombre del solicitante:</label>
-                        <input type="text" id="APELLIDOS" name="APELLIDOS" class="form-control{{ $errors->has('APELLIDOS') ? ' is-invalid' : '' }}" placeholder="Ej: SUAREZ MATAMALA">
-                        @if ($errors->has('APELLIDOS'))
-                            <div class="invalid-feedback">
-                                {{ $errors->first('APELLIDOS') }}
-                            </div>
-                        @endif
-                    </div>
-                </div>
-            
-                <div class="modal" tabindex="-1">
-                    <div class="modal-dialog">
-                      <div class="modal-content">
-                        <div class="modal-header">
-                          <h5 class="modal-title">Título del modal</h5>
-                          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-                          <p>El texto del cuerpo modal va aquí.</p>
-                        </div>
-                        <div class="modal-footer">
-                          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                          <button type="button" class="btn btn-primary">Guardar cambios</button>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-                <div class="mb-3">
-                    <label for="" class="form-label"><i class="fa-solid fa-user-plus"></i> Seleccione Funcionario:</label>
-                    <select id="NOMBRES" name="NOMBRES" class="form-control @if($errors->has('NOMBRES')) is-invalid @endif" required autofocus>
-                        <option value="" selected>--Seleccione un(a) funcionario(a):--</option>
-                        {{-- *CORRECCION DE FILTRO ARREGLADO, AHORA SOLO MUESTRA CONDUCTORES DEL MISMO DEPARTAMENTO* --}}
-                        @foreach ($funcionarios as $funcionario)
-                                    @if ($funcionario->ID_ESCALAFON === 5)
-                                        <option value="{{ $funcionario->id}}">{{ $funcionario->NOMBRES }} {{ $funcionario->APELLIDOS }}</option>
-                                    @endif
-                            </optgroup>
-                        @endforeach
-                    </select>
+                <div class="col">
+                    <label for="NOMBRES" class="form-label">Nombres:</label>
+                    <input type="string" class="form-control" id="NOMBRES" name="NOMBRES" value="{{ old('NOMBRES') }}">
                     @error('NOMBRES')
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
                 </div>
+
+                <div class="col">
+                    <label for="APELLIDOS" class="form-label">Apellidos:</label>
+                    <input type="string" class="form-control" id="APELLIDOS" name="APELLIDOS" value="{{ old('APELLIDOS') }}">
+                    @error('APELLIDOS')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
+                </div>
+            </div>
+
+            <button type="button" id="buscarPorDatos" class="btn btn-primary">Buscar por Datos</button>
+
+            <div class="row g-3">
+                <div class="col">
+                    <label for="ID_CARGO" class="form-label"><i class="fa-solid fa-car-side"></i> Autoridad:</label>
+                    <select id="ID_CARGO" name="ID_CARGO" class="form-control @error('ID_CARGO') is-invalid @enderror">
+                        <option value="" selected>--Seleccione Autoridad--</option>
+                        @foreach ($cargos as $cargo)
+                            <option value="{{ $cargo['ID_CARGO'] }}">{{ $cargo['CARGO'] }}</option>
+                        @endforeach
+                    </select>
+                    @error('ID_CARGO')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
+                </div>
+            </div>
+
+            <button type="button" id="buscarPorCargo" class="btn btn-primary">Buscar por Cargo</button>
+        </form>
+
+        @if(count($resoluciones) > 0)
+            <div class="table-responsive">
+                <table id="resoluciones" class="table table-bordered mt-4 custom-table">
+                    <thead class="bg-primary text-white">
+                        <tr>
+                            <th scope="col">Resolución</th>
+                            <th scope="col">Fecha</th>
+                            <th scope="col">Autoridad</th>
+                            <th scope="col">Funcionario(s) Delegado(s)</th>
+                            <th scope="col">Materia</th>
+                            <th scope="col">Documento</th>
+                            <th scope="col">Administrar</th>
+                        </tr>
+                    </thead>
+    
+                    <tbody>
+                        @foreach($resoluciones as $resolucion)
+                            <tr>
+                                <td>{{ $resolucion->NRO_RESOLUCION }}</td>
+                                <td>{{ date('d/m/Y', strtotime($resolucion->FECHA)) }}</td>
+                                <td>{{ $resolucion->cargo->CARGO }}</td>
+                                <td>{{ $resolucion->FUNCIONARIOS_DELEGADOS }}</td>
+                                <td>{{ $resolucion->MATERIA }}</td>
+                                <td>
+                                    <a href="" class="btn btn-sia-primary btn-block"><i class="fa-solid fa-file-pdf"></i></a>
+                                </td>
+                                <td>
+                                    <a href="{{ route('resolucion.show', $resolucion->ID_RESOLUCION) }}" class="btn btn-sia-primary btn-block"><i class="fa-solid fa-gear"></i></a>
+                                </td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
+        @else
+            <div class="alert alert-info">No se encontraron resoluciones.</div>
+        @endif
+    </div>
 @stop
+
 @section('css')
     <link rel="stylesheet" href="/css/admin_custom.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
@@ -90,55 +101,26 @@
         }
     </style>
 @stop
+
 @section('js')
-    <!-- Incluir archivos JS flatpicker-->
+    <!-- Incluir archivos JS flatpicker -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     <script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/es.js"></script>
     <script>
         $(function () {
-            $('#FECHA_SALIDA_SOL_VEH').flatpickr({
-                dateFormat: 'Y-m-d',
-                altFormat: 'd-m-Y',
-                altInput: true,
-                locale: 'es',
-                minDate: "today",
-                showClearButton: true,
-                mode: "range",
-                onReady: function(selectedDates, dateStr, instance) {
-                    $('#clearButton').on('click', function() {
-                        instance.clear();
-                    });
-                }
+            // Agregar evento de clic al botón de búsqueda por nombre
+            $('#buscarPorDatos').on('click', function () {
+                $('#ID_CARGO').val(''); // Limpiar valor del input de ID_CARGO
+                $('#searchForm').submit(); // Enviar el formulario
             });
-            $('#HORA_SALIDA_SOL_VEH').flatpickr({
-                enableTime: true,
-                noCalendar: true,
-                dateFormat: "H:i",
-                time_24hr: true,
-                locale: "es",
-                placeholder: "Seleccione la hora",
-                onReady: function(selectedDates, dateStr, instance) {
-                    $('#clearButton').on('click', function() {
-                        instance.clear();
-                    });
-                }
-            });
-            $('#HORA_LLEGADA_SOL_VEH').flatpickr({
-                enableTime: true,
-                noCalendar: true,
-                dateFormat: "H:i",
-                time_24hr: true,
-                locale: "es",
-                placeholder: "Seleccione la hora",
-                onReady: function(selectedDates, dateStr, instance) {
-                    $('#clearButton').on('click', function() {
-                        instance.clear();
-                    });
-                }
+
+            // Agregar evento de clic al botón de búsqueda por cargo
+            $('#buscarPorCargo').on('click', function () {
+                $('#NOMBRES').val(''); // Limpiar valor del input de NOMBRES
+                $('#APELLIDOS').val(''); // Limpiar valor del input de APELLIDOS
+                $('#searchForm').submit(); // Enviar el formulario
             });
         });
     </script>
-    {{-- *FUNCION PARA REFRESCAR DINAMICAMENTE EL FILTRO DE FUNCIONARIOS* --}}
-    
 @stop
