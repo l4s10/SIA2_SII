@@ -468,9 +468,9 @@ return [
             'icon'        => 'fa-solid fa-user-tie',
         ],
         [
-            'text'        => 'Directivoss',
+            'text'        => 'Repositorio',
             'url'         => '#',
-            'icon'        => 'fa-solid fa-user-tie',
+            'icon'        => 'fa-solid fa-folder-minus',
             'submenu' => [
                 [
                     'text'    => 'Ver Resoluciones',

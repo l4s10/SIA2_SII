@@ -85,7 +85,7 @@ class MaterialController extends Controller
         }
 
         // Redirigimos al listado de materiales
-        return redirect(route('materiales'));
+        return redirect(route('materiales.index'));
     }
 
 
@@ -144,7 +144,7 @@ class MaterialController extends Controller
         } catch(\Exception $e) {
             session()->flash('error', 'Error al modificar el material seleccionado: ' . $e->getMessage());
         }
-        return redirect(route('materiales'));
+        return redirect(route('materiales.index'));
     }
 
 

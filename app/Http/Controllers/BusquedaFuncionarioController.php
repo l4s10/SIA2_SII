@@ -25,7 +25,7 @@ class BusquedaFuncionarioController extends Controller
         /*
         $resoluciones = Resolucion::whereHas('user', function ($query) use ($nombres, $apellidos) {
             $query->where('NOMBRES', $nombres)
-                  ->where('APELLIDOS', $apellidos);
+            ->where('APELLIDOS', $apellidos);
         })->get();*/
 
         //dd($resoluciones);

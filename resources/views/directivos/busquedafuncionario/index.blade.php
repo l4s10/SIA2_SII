@@ -14,7 +14,7 @@
                 <input type="text" name="id" value="{{ auth()->user()->id }}" hidden>
 
                 <div class="col">
-                    <label for="NOMBRES" class="form-label">Nombres:</label>
+                    <label for="NOMBRES" class="form-label"><i class="fa-solid fa-user"></i>Nombres:</label>
                     <input type="string" class="form-control" id="NOMBRES" name="NOMBRES" value="{{ old('NOMBRES') }}">
                     @error('NOMBRES')
                         <div class="invalid-feedback">{{ $message }}</div>
@@ -22,7 +22,7 @@
                 </div>
 
                 <div class="col">
-                    <label for="APELLIDOS" class="form-label">Apellidos:</label>
+                    <label for="APELLIDOS" class="form-label"><i class="fa-solid fa-user"></i>Apellidos:</label>
                     <input type="string" class="form-control" id="APELLIDOS" name="APELLIDOS" value="{{ old('APELLIDOS') }}">
                     @error('APELLIDOS')
                         <div class="invalid-feedback">{{ $message }}</div>
@@ -34,7 +34,7 @@
 
             <div class="row g-3">
                 <div class="col">
-                    <label for="ID_CARGO" class="form-label"><i class="fa-solid fa-car-side"></i> Autoridad:</label>
+                    <label for="ID_CARGO" class="form-label"><i class="fa-solid fa-bookmark"></i> Autoridad:</label>
                     <select id="ID_CARGO" name="ID_CARGO" class="form-control @error('ID_CARGO') is-invalid @enderror">
                         <option value="" selected>--Seleccione Autoridad--</option>
                         @foreach ($cargos as $cargo)
@@ -100,6 +100,15 @@
             margin-top: 10px; /* Ajusta el valor según sea necesario */
         }
     </style>
+        <style>
+        .alert {
+        opacity: 0.7; 
+        background-color: #99CCFF;
+        color:     #000000;
+        }
+    </style>
+
+    
 @stop
 
 @section('js')

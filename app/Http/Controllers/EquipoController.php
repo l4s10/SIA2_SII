@@ -68,7 +68,7 @@ class EquipoController extends Controller
         }catch(\Exception $e){
             session()->flash('error','Hubo un error al agregar el equipo, vuelva a intentarlo más tarde');
         }
-        return redirect(route('equipos'));
+        return redirect(route('equipos.index'));
     }
 
     /**
@@ -90,7 +90,7 @@ class EquipoController extends Controller
             return view('equipos.edit', compact('equipo','tipos'));
         } catch (\Exception $e) {
             session()->flash('error', 'El equipo que desea editar no existe.');
-            return redirect(route('equipos'));
+            return redirect(route('equipos.index'));
         }
     }
 
@@ -121,7 +121,7 @@ class EquipoController extends Controller
             session()->flash('error', 'Hubo un error al actualizar el equipo, vuelva a intentarlo más tarde.');
         }
 
-        return redirect(route('equipos'));
+        return redirect(route('equipos.index'));
     }
 
 
@@ -137,6 +137,6 @@ class EquipoController extends Controller
         }catch(\Exception $e){
             session()->flash('error','Error al eliminar el equipo seleccionado, vuelva a intentarlo mas tarde');
         }
-        return redirect(route('equipos'));
+        return redirect(route('equipos.index'));
     }
 }

@@ -63,7 +63,7 @@
         <div class="card text-bg-primary mb-3 mx-auto col-sm-12 col-md-6" style="max-width: 100%; text-align: justify;">
             <div class="card-header">Busqueda de información de funcionario</div>
             <div class="card-body">
-                <p class="card-text">Este módulo permite a los directivos buscar las resoluciones delegatorias asociadas a un funcionario, dado su <strong>'nombre'</strong> o <strong>'cargo'</strong>.</p>
+                <p class="card-text">Este módulo permite a los directivos buscar las resoluciones delegatorias asociadas a un funcionario, dado su <strong>'nombre' y 'apellido'</strong> o <strong>'cargo'</strong>.</p>
             </div>
             <div class="card-footer">
                 <a class="btn btn-primary" href="{{ route('busquedafuncionario.index') }}"><i class="fa-solid fa-eye"></i> Seleccionar</a>
@@ -75,7 +75,7 @@
 
             </div>
             <div class="card-footer">
-                <a class="btn btn-primary" href="{{route('repvehiculos.index')}}"><i class="fa-solid fa-eye"></i> Solicitudes</a>
+                <a class="btn btn-primary" href="{{route('repvehiculos.index')}}"><i class="fa-solid fa-eye"></i> Seleccionar</a>
             </div>
         </div>
     </div>
@@ -87,12 +87,13 @@
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.2/css/dataTables.bootstrap5.min.css">
     <style>
         .alert {
-        opacity: 0.7; /* Ajusta la opacidad a tu gusto /
-        background-color: #99CCFF; / Color de fondo del aviso */
+        opacity: 0.7; 
+        background-color: #99CCFF;
         color:     #000000;
         }
     </style>
 @stop
+
 
 @section('js')
     <!-- CONEXION FONT-AWESOME CON TOOLKIT -->
