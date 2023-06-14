@@ -160,6 +160,6 @@ class MaterialController extends Controller
         }catch(\Exception $e){
             session()->flash('error','Error al eliminar el material seleccionado');
         }
-        return redirect(route('materiales'));
+        return redirect(route('materiales.index'));
     }
 }
