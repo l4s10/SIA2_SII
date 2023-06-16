@@ -62,6 +62,9 @@
         <li class="nav-item">
             <a class="nav-link" href="#">
             <i class="fa-regular fa-flag"></i>
+            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+            99+
+            </span>
             </a>
         </li>
         @endrole

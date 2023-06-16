@@ -81,7 +81,11 @@
                                 <td>{{ $sol_material->DEPTO}}</td>
                                 <td>{{ $sol_material->EMAIL}}</td>
                                 <!-- Cambio de colores a los estados -->
-                                <td class="estado-{{ strtolower(str_replace(' ', '-', $sol_material->ESTADO_SOL)) }}">{{ $sol_material->ESTADO_SOL }}</td>
+                                <td>
+                                <span class="badge rounded-pill estado-{{ strtolower(str_replace(' ', '-', $sol_material->ESTADO_SOL)) }}">
+                                {{ $sol_material->ESTADO_SOL }}
+                                </span>
+                                </td>
                                 <!-- Carbon sirve para parsear datos, esta es una instancia de carbon -->
                                 <td>{{ $sol_material->created_at->tz('America/Santiago')->format('d/m/Y H:i') }}</td>
                                 {{-- <td>{{ $sol_material->OBSERVACIONES}}</td> --}}
@@ -108,26 +112,37 @@
 
 @section('css')
     <link rel="stylesheet" href="/css/admin_custom.css">
-    <style>
-        .estado-en-revision {
-            color: #adad03e1;
-        }
-        .estado-aceptado {
-            color: #00FF00;
-        }
-        .estado-en-espera {
-            color: #afafaf;
-        }
-        .estado-rechazado {
-            color: #FF0000;
-        }
-        .estado-terminado {
-            color: #000000;
-        }
-        .estado-ingresado {
-            color: #FFA500;
-        }
-    </style>
+<style>
+    .estado-en-revision {
+    color: #adad03e1;
+    background-color: #f7f702;
+    }      
+
+    .estado-aceptado {
+    color: #ffffff;
+    background-color: #0CB009;
+    }
+
+    .estado-en-espera {
+    color: #afafaf;
+    background-color: #e2e2e2;
+    }
+
+    .estado-rechazado {
+    color: #FF0000;
+    background-color: #ffb3b3;
+    }
+
+    .estado-terminado {
+    color: #000000;
+    background-color: #d9d9d9;
+    }
+
+    .estado-ingresado {
+    color: #FFA500;
+    background-color: #feeec9;
+    }
+</style>
     <style>
         .alert {
         opacity: 0.7; /* Ajusta la opacidad a tu gusto */
