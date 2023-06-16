@@ -32,7 +32,19 @@
 @endsection
 
 @section('content')
-<div>
+<!-- Agrega los elementos input de fecha aquí -->
+<div class="container overflow-hidden">
+    <div class="row gx-5">
+        <div class="col">
+            <label for="start-date">Fecha de inicio:</label>
+            <input type="date" id="start-date" class="form-control">
+        </div>
+        <div class="col">
+            <label for="end-date">Fecha de fin:</label>
+            <input type="date" id="end-date" class="form-control">
+        </div>
+    </div>
+</div>
 <canvas id="myChart"></canvas>
 </div>
 @endsection
