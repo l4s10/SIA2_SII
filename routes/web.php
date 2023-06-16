@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\InventoryController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ReporteController;
-
+use App\Http\Controllers\SolicitudSalaController;
 
 /*
 |--------------------------------------------------------------------------
@@ -81,6 +81,8 @@ Route::resource('reserva/sala', 'App\Http\Controllers\SolicitudSalaController')-
     'update' => 'solicitud.salas.update',
     'destroy' => 'solicitud.salas.destroy',
 ]);
+Route::get('/solicitudes/all', [SolicitudSalaController::class, 'getAllSolicitudes'])->name('solicitudes.all');
+Route::get('/solicitudes/byDates', [SolicitudSalaController::class, 'getSolicitudesByDates'])->name('solicitudes.byDates');
 // Rutas para el controlador SolicitudBodegasControler
 Route::resource('reserva/bodega', 'App\Http\Controllers\SolicitudBodegasController')->names([
     'index' => 'solicitud.bodegas.index',

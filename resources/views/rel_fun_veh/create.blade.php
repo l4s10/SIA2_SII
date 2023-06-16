@@ -260,11 +260,12 @@
                     <div class="invalid-feedback">{{ $errors->first('FECHA_SOL_VEH') }}</div>
                 @endif
             </div>
-
+            {{-- *COMUNA ORIGEN* --}}
         <div class="row">
                 <div class="col-md-6">
+                    {{-- *SELECT PARA REGION* --}}
                     <div class="mb-3">
-                            <label for="ORIGEN" class="form-label"><i class="fa-solid fa-map"></i> Comuna origen:</label>
+                            <label for="ORIGEN" class="form-label"><i class="fa-solid fa-map"></i> Region origen:</label>
                             <select id="ORIGEN" name="ORIGEN" class="form-control @error('ORIGEN') is-invalid @enderror" required>
                                 <option value="" selected>--Seleccione una comuna--</option>
                                 {{-- CAPTURAR COMUNAS Y MOSTRAR AQUI --}}
@@ -280,7 +281,7 @@
                 </div>
                 <div class="col-md-6">
                     <div class="mb-3">
-                            <label for="DESTINO" class="form-label"><i class="fa-solid fa-map-location-dot"></i> Comuna destino:</label>
+                            <label for="DESTINO" class="form-label"><i class="fa-solid fa-map-location-dot"></i> Comuna origen:</label>
                             <select id="DESTINO" name="DESTINO" class="form-control @error('DESTINO') is-invalid @enderror" required>
                                 <option value="" selected>--Seleccione una comuna--</option>
                                 @foreach ($comunas as $comuna)
@@ -293,8 +294,43 @@
                             @enderror
                         </div>
                 </div>
-</div>
-            <div class="row">
+        </div>
+        {{-- *COMUNA DESTINO* --}}
+        <div class="row">
+            <div class="col-md-6">
+                {{-- *SELECT PARA REGION* --}}
+                <div class="mb-3">
+                        <label for="ORIGEN" class="form-label"><i class="fa-solid fa-map"></i> Region destino:</label>
+                        <select id="ORIGEN" name="ORIGEN" class="form-control @error('ORIGEN') is-invalid @enderror" required>
+                            <option value="" selected>--Seleccione una comuna--</option>
+                            {{-- CAPTURAR COMUNAS Y MOSTRAR AQUI --}}
+                            @foreach ($comunas as $comuna)
+                            <option value="{{$comuna->ID_COMUNA}}">{{$comuna->COMUNA}}</option>
+                            @endforeach
+                        </select>
+
+                        @error('ORIGEN')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                    </div>
+            </div>
+            <div class="col-md-6">
+                <div class="mb-3">
+                        <label for="DESTINO" class="form-label"><i class="fa-solid fa-map-location-dot"></i> Comuna destino:</label>
+                        <select id="DESTINO" name="DESTINO" class="form-control @error('DESTINO') is-invalid @enderror" required>
+                            <option value="" selected>--Seleccione una comuna--</option>
+                            @foreach ($comunas as $comuna)
+                            <option value="{{$comuna->ID_COMUNA}}">{{$comuna->COMUNA}}</option>
+                            @endforeach
+                        </select>
+
+                        @error('DESTINO')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                    </div>
+            </div>
+    </div>
+            <div class="row" hidden>
                 <div class="col-md-6">
                     <div class="mb-3">
                         <!-- Solo acceso para conductores(nivel 1) y estado formulario por rendir(autorizado/rendir nivel 3) -->
