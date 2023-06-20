@@ -4,10 +4,13 @@ namespace App\Http\Controllers;
 
 
 use Illuminate\Http\Request;
+use Carbon\Carbon;
 //use Illuminate\Validation\Rule;
 //use Illuminate\Support\Facades\Auth;
 use App\Models\Resolucion;
 use App\Models\Cargo;
+use App\Models\TipoResolucion;
+use App\Models\Facultad;
 
 
 
@@ -25,30 +28,39 @@ class ResolucionController extends Controller
     /**
      * Show the form for creating a new resource.
      *///Carga formulario de creacion
-    public function create()
-    {
-        $cargos = Cargo::all();
-        return view('resolucion.create',compact('cargos'));
-    }
+     public function create()
+     {
+        $tiposResolucion = TipoResolucion::pluck('NOMBRE', 'ID_TIPO');
+        $facultades = Facultad::pluck('NOMBRE', 'ID_FACULTAD');
+        $firmantes = Cargo::pluck('CARGO', 'ID_CARGO');
+        $delegados = Cargo::pluck('CARGO', 'ID_CARGO');
+
+         return view('resolucion.create', compact('tiposResolucion', 'facultades','firmantes','delegados'));
+     }
 
     /**
      * Store a newly created resource in storage.
      *///Guarda los datos del formulario
+
     public function store(Request $request)
     {
-        try{   
-            $request->validate(Resolucion::rules($request->NRO_RESOLUCION), Resolucion::messages());
-            $data = $request->except('_token');
-            $resolucion = Resolucion::create($data); //Instancia de resolución para verificar primero la existencia foránea del cargo
+        try {
+            $request->validate(Resolucion::rules($request->input('NRO_RESOLUCION')), Resolucion::messages());
 
-        if ($cargo = Cargo::find($request->input('ID_CARGO'))) {
-            $resolucion->cargo()->associate($cargo); // Asociar el modelo Cargo a la relación
-            $resolucion->save();
+            $fecha = $request->input('FECHA');
+            if (Carbon::parse($fecha)->isAfter(Carbon::now())) {
+                throw new \Exception('. La fecha debe ser anterior o igual a la fecha actual.');
+            }
+
+            $data = $request->only('NRO_RESOLUCION', 'FECHA', 'ID_TIPO', 'ID_FIRMANTE', 'ID_FACULTAD', 'ID_DELEGADO');
+
+            $resolucion = Resolucion::create($data);
+
+            session()->flash('success', 'La resolución delegatoria fue agregada exitosamente.');
+        } catch (\Exception $e) {
+            session()->flash('error', 'Hubo un error al agregar la resolución delegatoria. Vuelva a intentarlo nuevamente' . $e->getMessage());
         }
-            session()->flash('success','La resolución delegatoria fue agregada exitosamente.');
-        }catch(\Exception $e){
-            session()->flash('error','Hubo un error al agregar la resolución delegatoria. Vuelva a intentarlo nuevamente' .$e->getMessage());
-        }
+
         return redirect(route('resolucion.index'));
     }
 
@@ -58,45 +70,55 @@ class ResolucionController extends Controller
     public function show(string $id)
     {
         try{
-            $resolucion = Resolucion::with('cargo')->find($id); // Incluye la relación entre tablas 'resoluciones' y 'cargos' a través del método 'cargo' del modelo 'resolucion'.
+            $resolucion = Resolucion::with('tipo', 'firmante', 'delegado', 'facultad')->find($id);
             return view('resolucion.show', compact('resolucion'));
         }catch(\Exception $e){
             session()->flash('error', 'Error al acceder a la resolución delegatoria seleccionada, vuelva a intentarlo más tarde.');
-            return view('resolucion.index');
+            return redirect(route('resolucion.index'));
         }
     }
-
+/*
+    public function show(string $id)
+    {
+        try {
+            $resolucion = Resolucion::with('cargo')->find($id);
+            return view('resolucion.show', compact('resolucion'));
+        } catch (\Exception $e) {
+            session()->flash('error', 'Error al acceder a la resolución delegatoria seleccionada, vuelva a intentarlo más tarde.');
+        }
+    }*/
     /**
      * Show the form for editing the specified resource.
      *///Carga el formulario de edicion
     public function edit(string $id)
     {
-        $resolucion = Resolucion::find($id);
-        $cargos = Cargo::all();
-        return view('resolucion.edit',compact('resolucion','cargos'));
+        $resolucion = Resolucion::findOrFail($id);
+        $tiposResolucion = TipoResolucion::pluck('NOMBRE', 'ID_TIPO');
+        $facultades = Facultad::pluck('NOMBRE', 'ID_FACULTAD');
+        $firmantes = Cargo::pluck('CARGO', 'ID_CARGO');
+        $delegados = Cargo::pluck('CARGO', 'ID_CARGO');
+
+        return view('resolucion.edit', compact('resolucion', 'tiposResolucion', 'facultades', 'firmantes', 'delegados'));
     }
 
-    public function update(Request $request, string $id)
-    {
+
+     public function update(Request $request, string $id)
+     {
         try {
             $resolucion = Resolucion::find($id);
             $rules = Resolucion::rules($resolucion->ID_RESOLUCION);
-            $request->validate($rules,Resolucion::messages());
-            //$request->validate(Resolucion::rules(), Resolucion::messages());
+            $request->validate($rules, Resolucion::messages());
 
-            $resolucion->fill([
-                'NRO_RESOLUCION' => (int) $request->input('NRO_RESOLUCION'),
-                'FECHA' => $request->input('FECHA'),
-                'ID_CARGO' => $request->input('ID_CARGO'),
-                'FUNCIONARIOS_DELEGADOS' => $request->input('FUNCIONARIOS_DELEGADOS'),
-                'MATERIA'  => $request->input('MATERIA')
-            ]);
-            if ($cargo = Cargo::find($request->input('ID_CARGO'))) {
-                $resolucion->cargo()->associate($cargo); // Asocia el modelo Cargo a la relación
+            $fecha = $request->input('FECHA');
+            if (strtotime($fecha) > time()) {
+                throw new \Exception('. La fecha debe ser anterior o igual a la fecha actual');
             }
+
+            $data = $request->only('NRO_RESOLUCION', 'FECHA', 'ID_TIPO', 'ID_FIRMANTE', 'ID_FACULTAD', 'ID_DELEGADO');
+            $resolucion->fill($data);
             $resolucion->save();
             session()->flash('success', 'La resolución delegatoria fue modificada exitosamente');
-        } catch(\Exception $e) {
+        } catch (\Exception $e) {
             session()->flash('error', 'Error al modificar la resolución delegatoria seleccionada: ' . $e->getMessage());
         }
         return redirect(route('resolucion.index'));

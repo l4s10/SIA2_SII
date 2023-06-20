@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class SolicitudFormulario extends Model
 {
     use HasFactory;
-    protected $table = 'solicitud_formularios';
+    protected $table = 'rel_fun_form';
     protected $primaryKey = 'ID_SOL_FORM';
     protected $fillable = [
         'ID_USUARIO',

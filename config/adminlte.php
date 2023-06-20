@@ -473,55 +473,25 @@ return [
             'icon'        => 'fa-solid fa-folder-minus',
             'submenu' => [
                 [
-                    'text'    => 'Ver Resoluciones',
+                    'text'    => 'Resoluciones',
                     'url'     => 'resolucion',
                     'icon'    => 'fas fa-fw fa-eye',
                 ],
                 [
-                    'text'    => 'Ver Pólizas',
+                    'text'    => 'Pólizas',
                     'url'     => 'polizas',
                     'icon'    => 'fas fa-fw fa-eye',
-                ]/*,
+                ],
                 [
-                    'text'    => 'Tipos Materiales',
-                    'url'     => 'tipomaterial',
+                    'text'    => 'Facultades',
+                    'url'     => 'facultades',
                     'icon'    => 'fas fa-fw fa-eye',
                 ],
                 [
-                    'text'    => 'Agregar Tipo Material',
-                    'url'     => 'tipomaterial/create',
-                    'icon'    => 'fas fa-fw fa-plus',
-                ],
-                [
-                    'text'    => 'Ver Equipos',
-                    'url'     => 'equipos',
+                    'text'    => 'Cargos',
+                    'url'     => 'cargos',
                     'icon'    => 'fas fa-fw fa-eye',
-                ],
-                [
-                    'text'    => 'Agregar Equipo',
-                    'url'     => 'equipos/create',
-                    'icon'    => 'fas fa-fw fa-plus',
-                ],
-                [
-                    'text'    => 'Ver Tipo Equipos',
-                    'url'     => 'tipoequipos',
-                    'icon'    => 'fas fa-fw fa-eye',
-                ],
-                [
-                    'text'    => 'Agregar Tipo Equipo',
-                    'url'     => 'tipoequipos/create',
-                    'icon'    => 'fas fa-fw fa-plus',
-                ],
-                [
-                    'text'    => 'Ver Sala/Bodega',
-                    'url'     => 'categoriasalas',
-                    'icon'    => 'fas fa-fw fa-eye',
-                ],
-                [
-                    'text'    => 'Agregar Sala/bodega',
-                    'url'     => 'categoriasalas/create',
-                    'icon'    => 'fas fa-fw fa-plus',
-                ],*/
+                ]
             ],
         ],
         [

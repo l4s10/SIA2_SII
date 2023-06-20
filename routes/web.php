@@ -69,8 +69,16 @@ Route::resource('direccionregional','App\Http\Controllers\DireccionRegionalContr
 Route::resource('resolucion','App\Http\Controllers\ResolucionController');
 //Rutas poliza
 Route::resource('polizas','App\Http\Controllers\PolizaController');
+//Rutas cargo
+Route::resource('cargos','App\Http\Controllers\CargoController');
+//Rutas facultad
+Route::resource('facultades','App\Http\Controllers\FacultadController');
+
 //Rutas busquedafuncionario
 Route::resource('busquedafuncionario','App\Http\Controllers\BusquedaFuncionarioController');
+//Rutas busquedaavanzada
+Route::resource('busquedaavanzada','App\Http\Controllers\BusquedaAvanzadaController');
+
 // Rutas para el controlador SolicitudSalaController
 Route::resource('reserva/sala', 'App\Http\Controllers\SolicitudSalaController')->names([
     'index' => 'solicitud.salas.index',

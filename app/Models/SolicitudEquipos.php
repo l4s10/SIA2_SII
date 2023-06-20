@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class SolicitudEquipos extends Model
 {
-    protected $table = 'solicitud_equipos';
+    protected $table = 'rel_fun_equipos';
     protected $primaryKey = 'ID_SOL_EQUIPOS';
 
     protected $fillable = [

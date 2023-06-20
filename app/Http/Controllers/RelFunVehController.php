@@ -7,8 +7,9 @@ use App\Models\RelFunVeh;
 use App\Models\Vehiculo;
 use App\Models\TipoVehiculo;
 use App\Models\User;
-use App\Models\Departamento;
+use App\Models\Ubicacion;
 use App\Models\Comuna;
+use App\Models\Region;
 use Illuminate\Support\Facades\Validator;
 
 class RelFunVehController extends Controller
@@ -32,9 +33,10 @@ class RelFunVehController extends Controller
         $vehiculos = Vehiculo::all();
         $tipo_vehiculos = TipoVehiculo::all();
         $conductores = User::all();
-        $departamentos = Departamento::all();
+        $departamentos = Ubicacion::all();
+        $regiones = Region::all();
         $comunas = Comuna::all();
-        return view('rel_fun_veh.create', compact('vehiculos','tipo_vehiculos','departamentos','conductores','comunas'));
+        return view('rel_fun_veh.create', compact('vehiculos','tipo_vehiculos','departamentos','conductores','comunas','regiones'));
     }
 
     /**
@@ -88,7 +90,7 @@ class RelFunVehController extends Controller
             $vehiculos = Vehiculo::all();
             $tipo_vehiculos = TipoVehiculo::all();
             $conductores = User::all();
-            $departamentos = Departamento::all();
+            $departamentos = Ubicacion::all();
             $autos = Vehiculo::all();
             $comunas = Comuna::all();
             $ocupantes = [];

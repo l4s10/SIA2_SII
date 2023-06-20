@@ -43,13 +43,9 @@
             <label for="end-date">Fecha de fin:</label>
             <input type="date" id="end-date" class="form-control">
         </div>
-        <div class="col">
-            <button id="filter-button" class="btn btn-primary">Filtrar</button>
-        </div>
     </div>
 </div>
-<div class="div">
-    <canvas id="myChart"></canvas>
+<canvas id="myChart"></canvas>
 </div>
 
 <!-- Código JavaScript -->
@@ -98,19 +94,5 @@
 
     });
 </script>
-@endsection
 
-@endsection
-@section('css')
-<style>
-.alert {
-opacity: 0.7; /* Ajusta la opacidad a tu gusto */
-background-color: #99CCFF;
-color: #000000;
-}
-</style>
-@stop
-
-@section('js')
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 @endsection

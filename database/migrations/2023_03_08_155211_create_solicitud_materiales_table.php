@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('solicitud_materiales', function (Blueprint $table) {
+        Schema::create('rel_fun_mat', function (Blueprint $table) {
             $table->id('ID_SOLICITUD');
             //*CAMPOS SOLICITANTE*/
             $table->integer('ID_USUARIO')->unsigned()->references('id')->on('users');
@@ -34,6 +34,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('solicitud_materiales');
+        Schema::dropIfExists('rel_fun_mat');
     }
 };

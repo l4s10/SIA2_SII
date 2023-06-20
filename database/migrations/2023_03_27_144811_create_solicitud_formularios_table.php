@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('solicitud_formularios', function (Blueprint $table) {
+        Schema::create('rel_fun_form', function (Blueprint $table) {
             //Agregamos los campos de la tabla en la BDD
             $table->increments('ID_SOL_FORM');
             $table->integer('ID_USUARIO')->unsigned()->references('id')->on('users');
@@ -34,6 +34,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('solicitud_formularios');
+        Schema::dropIfExists('rel_fun_form');
     }
 };

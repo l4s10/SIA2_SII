@@ -38,7 +38,7 @@
                     <div class="col-md-6">
                         <div class="mb-3">
                             <label for="DEPTO" class="form-label"><i class="fa-solid fa-building-user"></i> Departamento:</label>
-                            <input type="text" id="DEPTO" name="DEPTO" class="form-control{{ $errors->has('DEPTO') ? ' is-invalid' : '' }}" value="{{ auth()->user()->departamento->DEPARTAMENTO }}" placeholder="Ej: ADMINISTRACION" readonly>
+                            <input type="text" id="DEPTO" name="DEPTO" class="form-control{{ $errors->has('DEPTO') ? ' is-invalid' : '' }}" value="{{ auth()->user()->ubicacion->UBICACION }}" placeholder="Ej: ADMINISTRACION" readonly>
                             @if ($errors->has('DEPTO'))
                             <div class="invalid-feedback">
                                 {{ $errors->first('DEPTO') }}
@@ -86,11 +86,11 @@
                 <label for="CONDUCTOR" class="form-label"><i class="fa-solid fa-user-plus"></i> Seleccione conductor:</label>
                 <select id="CONDUCTOR" name="CONDUCTOR" class="form-control @if($errors->has('CONDUCTOR')) is-invalid @endif">
                     <option value="" selected>--Seleccione un(a) conductor(a):--</option>
-                    {{-- *CORRECCION DE FILTRO ARREGLADO, AHORA SOLO MUESTRA CONDUCTORES DEL MISMO DEPARTAMENTO* --}}
+                    {{-- *CORRECCION DE FILTRO ARREGLADO, AHORA SOLO MUESTRA CONDUCTORES DEL MISMO UBICACION* --}}
                     @foreach ($departamentos as $departamento)
-                        <optgroup label="{{ $departamento->DEPARTAMENTO }}">
+                        <optgroup label="{{ $departamento->UBICACION }}">
                             @foreach ($conductores as $conductor)
-                                @if ($conductor->departamento->DEPARTAMENTO === $departamento->DEPARTAMENTO && $conductor->departamento->ID_DEPART === auth()->user()->departamento->ID_DEPART)
+                                @if ($conductor->ubicacion->UBICACION === $departamento->UBICACION && $conductor->ubicacion->ID_UBICACION === auth()->user()->ubicacion->ID_UBICACION)
                                     <option value="{{ $conductor->id }}">{{ $conductor->NOMBRES }} {{ $conductor->APELLIDOS }}</option>
                                 @endif
                             @endforeach
@@ -110,10 +110,10 @@
                             <select name="departamentos" id="departamentos" class="form-control">
                                 <option value="">-- Seleccione un departamento --</option>
                                 @foreach ($departamentos as $departamento)
-                                    @if ($departamento->ID_DEPART === auth()->user()->ID_DEPART)
-                                        <option value="{{ $departamento->ID_DEPART }}" selected>{{ $departamento->DEPARTAMENTO }}</option>
+                                    @if ($departamento->ID_UBICACION === auth()->user()->ID_UBICACION)
+                                        <option value="{{ $departamento->ID_UBICACION }}" selected>{{ $departamento->UBICACION }}</option>
                                     @else
-                                        <option value="{{ $departamento->ID_DEPART }}">{{ $departamento->DEPARTAMENTO }}</option>
+                                        <option value="{{ $departamento->ID_UBICACION }}">{{ $departamento->UBICACION }}</option>
                                     @endif
                                 @endforeach
                             </select>
@@ -133,10 +133,10 @@
             <select name="departamentos" id="departamentos_2" class="form-control">
                 <option value="">-- Seleccione un departamento --</option>
                 @foreach ($departamentos as $departamento)
-                    @if ($departamento->ID_DEPART === auth()->user()->ID_DEPART)
-                        <option value="{{ $departamento->ID_DEPART }}" selected>{{ $departamento->DEPARTAMENTO }}</option>
+                    @if ($departamento->ID_UBICACION === auth()->user()->ID_UBICACION)
+                        <option value="{{ $departamento->ID_UBICACION }}" selected>{{ $departamento->UBICACION }}</option>
                     @else
-                        <option value="{{ $departamento->ID_DEPART }}">{{ $departamento->DEPARTAMENTO }}</option>
+                        <option value="{{ $departamento->ID_UBICACION }}">{{ $departamento->UBICACION }}</option>
                     @endif
                 @endforeach
             </select>
@@ -157,10 +157,10 @@
             <select name="departamentos" id="departamentos_3" class="form-control">
                 <option value="">-- Seleccione un departamento --</option>
                 @foreach ($departamentos as $departamento)
-                    @if ($departamento->ID_DEPART === auth()->user()->ID_DEPART)
-                        <option value="{{ $departamento->ID_DEPART }}" selected>{{ $departamento->DEPARTAMENTO }}</option>
+                    @if ($departamento->ID_UBICACION === auth()->user()->ID_UBICACION)
+                        <option value="{{ $departamento->ID_UBICACION }}" selected>{{ $departamento->UBICACION }}</option>
                     @else
-                        <option value="{{ $departamento->ID_DEPART }}">{{ $departamento->DEPARTAMENTO }}</option>
+                        <option value="{{ $departamento->ID_UBICACION }}">{{ $departamento->UBICACION }}</option>
                     @endif
                 @endforeach
             </select>
@@ -181,10 +181,10 @@
             <select name="departamentos" id="departamentos_4" class="form-control">
                 <option value="">-- Seleccione un departamento --</option>
                 @foreach ($departamentos as $departamento)
-                    @if ($departamento->ID_DEPART === auth()->user()->ID_DEPART)
-                        <option value="{{ $departamento->ID_DEPART }}" selected>{{ $departamento->DEPARTAMENTO }}</option>
+                    @if ($departamento->ID_UBICACION === auth()->user()->ID_UBICACION)
+                        <option value="{{ $departamento->ID_UBICACION }}" selected>{{ $departamento->UBICACION }}</option>
                     @else
-                        <option value="{{ $departamento->ID_DEPART }}">{{ $departamento->DEPARTAMENTO }}</option>
+                        <option value="{{ $departamento->ID_UBICACION }}">{{ $departamento->UBICACION }}</option>
                     @endif
                 @endforeach
             </select>
@@ -205,10 +205,10 @@
             <select name="departamentos" id="departamentos_5" class="form-control">
                 <option value="">-- Seleccione un departamento --</option>
                 @foreach ($departamentos as $departamento)
-                    @if ($departamento->ID_DEPART === auth()->user()->ID_DEPART)
-                        <option value="{{ $departamento->ID_DEPART }}" selected>{{ $departamento->DEPARTAMENTO }}</option>
+                    @if ($departamento->ID_UBICACION === auth()->user()->ID_UBICACION)
+                        <option value="{{ $departamento->ID_UBICACION }}" selected>{{ $departamento->UBICACION }}</option>
                     @else
-                        <option value="{{ $departamento->ID_DEPART }}">{{ $departamento->DEPARTAMENTO }}</option>
+                        <option value="{{ $departamento->ID_UBICACION }}">{{ $departamento->UBICACION }}</option>
                     @endif
                 @endforeach
             </select>
@@ -229,10 +229,10 @@
             <select name="departamentos" id="departamentos_6" class="form-control">
                 <option value="">-- Seleccione un departamento --</option>
                 @foreach ($departamentos as $departamento)
-                    @if ($departamento->ID_DEPART === auth()->user()->ID_DEPART)
-                        <option value="{{ $departamento->ID_DEPART }}" selected>{{ $departamento->DEPARTAMENTO }}</option>
+                    @if ($departamento->ID_UBICACION === auth()->user()->ID_UBICACION)
+                        <option value="{{ $departamento->ID_UBICACION }}" selected>{{ $departamento->UBICACION }}</option>
                     @else
-                        <option value="{{ $departamento->ID_DEPART }}">{{ $departamento->DEPARTAMENTO }}</option>
+                        <option value="{{ $departamento->ID_UBICACION }}">{{ $departamento->UBICACION }}</option>
                     @endif
                 @endforeach
             </select>
@@ -267,10 +267,10 @@
                     <div class="mb-3">
                             <label for="ORIGEN" class="form-label"><i class="fa-solid fa-map"></i> Region origen:</label>
                             <select id="ORIGEN" name="ORIGEN" class="form-control @error('ORIGEN') is-invalid @enderror" required>
-                                <option value="" selected>--Seleccione una comuna--</option>
-                                {{-- CAPTURAR COMUNAS Y MOSTRAR AQUI --}}
-                                @foreach ($comunas as $comuna)
-                                <option value="{{$comuna->ID_COMUNA}}">{{$comuna->COMUNA}}</option>
+                                <option value="" selected>--Seleccione una region--</option>
+                                {{-- CAPTURAR REGIONES Y MOSTRAR AQUI --}}
+                                @foreach ($regiones as $region)
+                                <option value="{{$region->ID_REGION}}">{{$region->REGION}}</option>
                                 @endforeach
                             </select>
 
@@ -281,9 +281,9 @@
                 </div>
                 <div class="col-md-6">
                     <div class="mb-3">
-                            <label for="DESTINO" class="form-label"><i class="fa-solid fa-map-location-dot"></i> Comuna origen:</label>
+                            <label for="DESTINO" class="form-label"><i class="fa-solid fa-map-location-dot"></i> Region destino:</label>
                             <select id="DESTINO" name="DESTINO" class="form-control @error('DESTINO') is-invalid @enderror" required>
-                                <option value="" selected>--Seleccione una comuna--</option>
+                                <option value="" selected>--Seleccione una region--</option>
                                 @foreach ($comunas as $comuna)
                                 <option value="{{$comuna->ID_COMUNA}}">{{$comuna->COMUNA}}</option>
                                 @endforeach
@@ -294,42 +294,40 @@
                             @enderror
                         </div>
                 </div>
-        </div>
-        {{-- *COMUNA DESTINO* --}}
-        <div class="row">
-            <div class="col-md-6">
-                {{-- *SELECT PARA REGION* --}}
-                <div class="mb-3">
-                        <label for="ORIGEN" class="form-label"><i class="fa-solid fa-map"></i> Region destino:</label>
-                        <select id="ORIGEN" name="ORIGEN" class="form-control @error('ORIGEN') is-invalid @enderror" required>
-                            <option value="" selected>--Seleccione una comuna--</option>
-                            {{-- CAPTURAR COMUNAS Y MOSTRAR AQUI --}}
-                            @foreach ($comunas as $comuna)
-                            <option value="{{$comuna->ID_COMUNA}}">{{$comuna->COMUNA}}</option>
-                            @endforeach
-                        </select>
+</div>
+<div class="row">
+    <div class="col-md-6">
+        <div class="mb-3">
+                <label for="ORIGEN" class="form-label"><i class="fa-solid fa-map"></i> Comuna origen:</label>
+                <select id="ORIGEN" name="ORIGEN" class="form-control @error('ORIGEN') is-invalid @enderror" required>
+                    <option value="" selected>--Seleccione una comuna--</option>
+                    {{-- CAPTURAR COMUNAS Y MOSTRAR AQUI --}}
+                    @foreach ($comunas as $comuna)
+                    <option value="{{$comuna->ID_COMUNA}}">{{$comuna->COMUNA}}</option>
+                    @endforeach
+                </select>
 
-                        @error('ORIGEN')
-                            <div class="invalid-feedback">{{ $message }}</div>
-                        @enderror
-                    </div>
-            </div>
-            <div class="col-md-6">
-                <div class="mb-3">
-                        <label for="DESTINO" class="form-label"><i class="fa-solid fa-map-location-dot"></i> Comuna destino:</label>
-                        <select id="DESTINO" name="DESTINO" class="form-control @error('DESTINO') is-invalid @enderror" required>
-                            <option value="" selected>--Seleccione una comuna--</option>
-                            @foreach ($comunas as $comuna)
-                            <option value="{{$comuna->ID_COMUNA}}">{{$comuna->COMUNA}}</option>
-                            @endforeach
-                        </select>
-
-                        @error('DESTINO')
-                            <div class="invalid-feedback">{{ $message }}</div>
-                        @enderror
-                    </div>
+                @error('ORIGEN')
+                    <div class="invalid-feedback">{{ $message }}</div>
+                @enderror
             </div>
     </div>
+    <div class="col-md-6">
+        <div class="mb-3">
+                <label for="DESTINO" class="form-label"><i class="fa-solid fa-map-location-dot"></i> Comuna destino:</label>
+                <select id="DESTINO" name="DESTINO" class="form-control @error('DESTINO') is-invalid @enderror" required>
+                    <option value="" selected>--Seleccione una comuna--</option>
+                    @foreach ($comunas as $comuna)
+                    <option value="{{$comuna->ID_COMUNA}}">{{$comuna->COMUNA}}</option>
+                    @endforeach
+                </select>
+
+                @error('DESTINO')
+                    <div class="invalid-feedback">{{ $message }}</div>
+                @enderror
+            </div>
+    </div>
+</div>
             <div class="row" hidden>
                 <div class="col-md-6">
                     <div class="mb-3">
@@ -456,7 +454,7 @@
 
             // Filtrar usuarios por departamento seleccionado y que no estén seleccionados en otros select
             var usuariosFiltrados = usuarios.filter(function(usuario) {
-                return usuario.ID_DEPART == departamentoId && !seleccionados.includes(usuario.id.toString());
+                return usuario.ID_UBICACION == departamentoId && !seleccionados.includes(usuario.id.toString());
             });
 
             // Agregar las opciones de usuarios al select de ocupantes

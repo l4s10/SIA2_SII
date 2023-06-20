@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('solicitud_equipos', function (Blueprint $table) {
+        Schema::create('rel_fun_equipos', function (Blueprint $table) {
             $table->increments('ID_SOL_EQUIPOS');
             //Campos informacion Solicitante
             $table->string('NOMBRE_SOLICITANTE',128);
@@ -41,6 +41,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('solicitud_equipos');
+        Schema::dropIfExists('rel_fun_equipos');
     }
 };
