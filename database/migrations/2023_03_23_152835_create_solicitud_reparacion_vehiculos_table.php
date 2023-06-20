@@ -17,7 +17,7 @@ return new class extends Migration
             //Campos informacion Solicitante
             $table->string('NOMBRE_SOLICITANTE',128);
             $table->string('RUT', 20);
-            // $table->string('DEPTO', 128);
+            $table->string('DEPTO', 128);
             $table->string('EMAIL', 128);
             //-------CAMPOS SOLICITUD---------//
             $table->string('PATENTE_VEHICULO', 7)->references('PATENTE_VEHICULO')->on('vehiculos');

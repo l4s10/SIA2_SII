@@ -9,7 +9,7 @@ use Illuminate\Database\Seeder;
  * Importar MODELOS de las tablas que queremos poblar e insertar datos
  * para cada una de ellas.
 **/
-use App\Models\Departamento;
+// use App\Models\Departamento;
 use App\Models\Region;
 use App\Models\Ubicacion;
 use App\Models\Grupo;
@@ -31,12 +31,12 @@ class CamposUsuarioNormalizados extends Seeder
     {
         //* Insertamos datos en la tablas con el metodo INSERT
         // Población de la tabla 'departamento'
-        Departamento::insert([
-            ['ID_DEPART' => 1, 'DEPARTAMENTO' => 'DEPARTAMENTO DE FISCALIZACION'],
-            ['ID_DEPART' => 2, 'DEPARTAMENTO' => 'DEPARTAMENTO ASISTENCIA AL CONTRIBUYENTE'],
-            ['ID_DEPART' => 3, 'DEPARTAMENTO' => 'DEPARTAMENTO DE AVALUACIONES'],
-            ['ID_DEPART' => 4, 'DEPARTAMENTO' => 'DEPARTAMENTO JURIDICO'],
-        ]);
+        // Departamento::insert([
+        //     ['ID_DEPART' => 1, 'DEPARTAMENTO' => 'DEPARTAMENTO DE FISCALIZACION'],
+        //     ['ID_DEPART' => 2, 'DEPARTAMENTO' => 'DEPARTAMENTO ASISTENCIA AL CONTRIBUYENTE'],
+        //     ['ID_DEPART' => 3, 'DEPARTAMENTO' => 'DEPARTAMENTO DE AVALUACIONES'],
+        //     ['ID_DEPART' => 4, 'DEPARTAMENTO' => 'DEPARTAMENTO JURIDICO'],
+        // ]);
         // Población de la tabla 'region'
         Region::insert([
             ['ID_REGION' => 1, 'REGION' => 'REGIÓN DE ARICA Y PARINACOTA'],
@@ -345,7 +345,7 @@ class CamposUsuarioNormalizados extends Seeder
         ['ID_COMUNA' => 100, 'COMUNA' => 'SAN JOAQUÍN', 'ID_REGION' => 7, 'ID_DIRECCION' => 30],
         */]);
 
-        
+
 
     }
 }

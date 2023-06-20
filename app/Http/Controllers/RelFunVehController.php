@@ -7,7 +7,7 @@ use App\Models\RelFunVeh;
 use App\Models\Vehiculo;
 use App\Models\TipoVehiculo;
 use App\Models\User;
-use App\Models\Departamento;
+use App\Models\Ubicacion;
 use App\Models\Comuna;
 use Illuminate\Support\Facades\Validator;
 
@@ -32,7 +32,7 @@ class RelFunVehController extends Controller
         $vehiculos = Vehiculo::all();
         $tipo_vehiculos = TipoVehiculo::all();
         $conductores = User::all();
-        $departamentos = Departamento::all();
+        $departamentos = Ubicacion::all();
         $comunas = Comuna::all();
         return view('rel_fun_veh.create', compact('vehiculos','tipo_vehiculos','departamentos','conductores','comunas'));
     }

@@ -26,7 +26,7 @@ class FuncionariosSeeder extends Seeder
             'ID_GRADO' => 4,
             'FECHA_NAC' => '1971-05-24',
             'FECHA_INGRESO' => '1999-01-02',
-            'FECHA_ASIM_O_1' => '1999-01-02',
+            //'FECHA_ASIM_O_1' => '1999-01-02',
             'ID_CALIDAD_JURIDICA' => 1,
             'ID_GRUPO' => 5,
             'ID_CARGO' => 1,
@@ -35,7 +35,7 @@ class FuncionariosSeeder extends Seeder
             'ANEXO' => '5102',
             'ID_SEXO' => 1,
             'password' => Hash::make('12345678'),
-            'ID_DEPART' => 2 
+            //'ID_DEPART' => 2
         ]);
         $user_administrador2 = User::create([
             'RUT' => '12890503-0',
@@ -47,7 +47,7 @@ class FuncionariosSeeder extends Seeder
             'ID_GRADO' => 7,
             'FECHA_NAC' => '1975-07-31',
             'FECHA_INGRESO' => '2001-01-31',
-            'FECHA_ASIM_O_1' => '2001-01-31',
+            //'FECHA_ASIM_O_1' => '2001-01-31',
             'ID_CALIDAD_JURIDICA' => 1,
             'ID_GRUPO' => 3,
             'ID_CARGO' => 5,
@@ -56,7 +56,7 @@ class FuncionariosSeeder extends Seeder
             'ANEXO' => '5115',
             'ID_SEXO' => 1,
             'password' => Hash::make('12345678'),
-            'ID_DEPART' => 1 
+            //'ID_DEPART' => 1
         ]);
         $user_administrador3 = User::create([
             'RUT' => '8545158-8',
@@ -68,7 +68,7 @@ class FuncionariosSeeder extends Seeder
             'ID_GRADO' => 7,
             'FECHA_NAC' => '1976-02-07',
             'FECHA_INGRESO' => '2001-02-12',
-            'FECHA_ASIM_O_1' => '2001-02-12',
+            //'FECHA_ASIM_O_1' => '2001-02-12',
             'ID_CALIDAD_JURIDICA' => 1,
             'ID_GRUPO' => 5,
             'ID_CARGO' => 8,
@@ -77,7 +77,7 @@ class FuncionariosSeeder extends Seeder
             'ANEXO' => '5150',
             'ID_SEXO' => 1,
             'password' => Hash::make('12345678'),
-            'ID_DEPART' => 3 
+            //'ID_DEPART' => 3
         ]);
         $user_administrador4 = User::create([
             'RUT' => '13507336-9',
@@ -89,7 +89,7 @@ class FuncionariosSeeder extends Seeder
             'ID_GRADO' => 7,
             'FECHA_NAC' => '1978-07-22',
             'FECHA_INGRESO' => '2010-06-15',
-            'FECHA_ASIM_O_1' => '2010-06-15',
+            //'FECHA_ASIM_O_1' => '2010-06-15',
             'ID_CALIDAD_JURIDICA' => 1,
             'ID_GRUPO' => 5,
             'ID_CARGO' => 19,
@@ -98,7 +98,7 @@ class FuncionariosSeeder extends Seeder
             'ANEXO' => '5125',
             'ID_SEXO' => 2,
             'password' => Hash::make('12345678'),
-            'ID_DEPART' => 4 
+            //'ID_DEPART' => 4
         ]);
         $user_administrador5 = User::create([
             'RUT' => '14436764-2',
@@ -110,7 +110,7 @@ class FuncionariosSeeder extends Seeder
             'ID_GRADO' => 7,
             'FECHA_NAC' => '1972-09-16',
             'FECHA_INGRESO' => '1999-02-01',
-            'FECHA_ASIM_O_1' => '1999-02-01',
+            //'FECHA_ASIM_O_1' => '1999-02-01',
             'ID_CALIDAD_JURIDICA' => 1,
             'ID_GRUPO' => 5,
             'ID_CARGO' => 20,
@@ -119,7 +119,7 @@ class FuncionariosSeeder extends Seeder
             'ANEXO' => '5275',
             'ID_SEXO' => 2,
             'password' => Hash::make('12345678'),
-            'ID_DEPART' => 1 
+            //'ID_DEPART' => 1
         ]);
         $user_administrador6 = User::create([
             'RUT' => '9685432-3',
@@ -131,7 +131,7 @@ class FuncionariosSeeder extends Seeder
             'ID_GRADO' => 9,
             'FECHA_NAC' => '1967-03-13',
             'FECHA_INGRESO' => '1999-02-01',
-            'FECHA_ASIM_O_1' => '1999-02-01',
+            //'FECHA_ASIM_O_1' => '1999-02-01',
             'ID_CALIDAD_JURIDICA' => 1,
             'ID_GRUPO' => 5,
             'ID_CARGO' => 21,
@@ -140,7 +140,7 @@ class FuncionariosSeeder extends Seeder
             'ANEXO' => '8531',
             'ID_SEXO' => 1,
             'password' => Hash::make('12345678'),
-            'ID_DEPART' => 2 
+            //'ID_DEPART' => 2
         ]);
         $user_administrador7 = User::create([
             'RUT' => '11684760-4',
@@ -152,7 +152,7 @@ class FuncionariosSeeder extends Seeder
             'ID_GRADO' => 11,
             'FECHA_NAC' => '1970-09-22',
             'FECHA_INGRESO' => '1999-02-01',
-            'FECHA_ASIM_O_1' => '1999-02-01',
+            //'FECHA_ASIM_O_1' => '1999-02-01',
             'ID_CALIDAD_JURIDICA' => 1,
             'ID_GRUPO' => 5,
             'ID_CARGO' => 22,
@@ -161,7 +161,7 @@ class FuncionariosSeeder extends Seeder
             'ANEXO' => '5254',
             'ID_SEXO' => 1,
             'password' => Hash::make('12345678'),
-            'ID_DEPART' => 3
+            //'ID_DEPART' => 3
         ]);
         $user_administrador8 = User::create([
             'RUT' => '12918071-4',
@@ -173,7 +173,7 @@ class FuncionariosSeeder extends Seeder
             'ID_GRADO' => 10,
             'FECHA_NAC' => '1975-06-29',
             'FECHA_INGRESO' => '2001-02-12',
-            'FECHA_ASIM_O_1' => '2001-02-12',
+            //'FECHA_ASIM_O_1' => '2001-02-12',
             'ID_CALIDAD_JURIDICA' => 1,
             'ID_GRUPO' => 5,
             'ID_CARGO' => 23,
@@ -182,7 +182,7 @@ class FuncionariosSeeder extends Seeder
             'ANEXO' => '6636',
             'ID_SEXO' => 2,
             'password' => Hash::make('12345678'),
-            'ID_DEPART' => 4        
+            //'ID_DEPART' => 4
         ]);
         $user_administrador9 = User::create([
             'RUT' => '15475732-5',
@@ -194,7 +194,7 @@ class FuncionariosSeeder extends Seeder
             'ID_GRADO' => 7,
             'FECHA_NAC' => '1983-01-02',
             'FECHA_INGRESO' => '2015-09-21',
-            'FECHA_ASIM_O_1' => '2015-09-21',
+            //'FECHA_ASIM_O_1' => '2015-09-21',
             'ID_CALIDAD_JURIDICA' => 1,
             'ID_GRUPO' => 5,
             'ID_CARGO' => 24,
@@ -203,7 +203,7 @@ class FuncionariosSeeder extends Seeder
             'ANEXO' => '5248',
             'ID_SEXO' => 1,
             'password' => Hash::make('12345678'),
-            'ID_DEPART' => 1
+            //'ID_DEPART' => 1
         ]);
         $user_administrador10 = User::create([
             'RUT' => '8465530-9',
@@ -215,7 +215,7 @@ class FuncionariosSeeder extends Seeder
             'ID_GRADO' => 7,
             'FECHA_NAC' => '1968-03-31',
             'FECHA_INGRESO' => '1993-07-12',
-            'FECHA_ASIM_O_1' => '1993-07-12',
+            //'FECHA_ASIM_O_1' => '1993-07-12',
             'ID_CALIDAD_JURIDICA' => 1,
             'ID_GRUPO' => 5,
             'ID_CARGO' => 6,
@@ -224,7 +224,7 @@ class FuncionariosSeeder extends Seeder
             'ANEXO' => '5238',
             'ID_SEXO' => 2,
             'password' => Hash::make('12345678'),
-            'ID_DEPART' => 2 
+            //'ID_DEPART' => 2
         ]);
 
 
@@ -235,7 +235,7 @@ class FuncionariosSeeder extends Seeder
             'email' => 'servicios@demo.com',
             'password' => Hash::make('12345678'),
             'RUT' => '11.111.111-2',
-            'ID_DEPART' => 2,
+            //'ID_DEPART' => 2,
             'ID_REGION' => 1,
             'ID_UBICACION' => 1,
             'ID_GRUPO' => 1,
@@ -244,7 +244,7 @@ class FuncionariosSeeder extends Seeder
             'ID_GRADO' => 1,
             'FECHA_NAC' => '1970-02-10',
             'FECHA_INGRESO' => '2001-02-22',
-            'FECHA_ASIM_O_1' => '1999-02-01',
+            //'FECHA_ASIM_O_1' => '1999-02-01',
             'ID_CALIDAD_JURIDICA' => 1,
             'FONO' => '+56 9 1234 5678',
             'ANEXO' => 'TEST',
@@ -257,7 +257,7 @@ class FuncionariosSeeder extends Seeder
             'email' => 'informatica@demo.com',
             'password' => Hash::make('12345678'),
             'RUT' => '11.111.111-5',
-            'ID_DEPART' => 2,
+            //'ID_DEPART' => 2,
             'ID_REGION' => 1,
             'ID_UBICACION' => 1,
             'ID_GRUPO' => 1,
@@ -266,7 +266,7 @@ class FuncionariosSeeder extends Seeder
             'ID_CARGO' => 1,
             'FECHA_NAC' => '1970-02-15',
             'FECHA_INGRESO' => '2001-05-25',
-            'FECHA_ASIM_O_1' => '1999-02-01',
+            //'FECHA_ASIM_O_1' => '1999-02-01',
             'ID_CALIDAD_JURIDICA' => 1,
             'FONO' => '+56 9 1234 5678',
             'ANEXO' => 'TEST',
@@ -279,7 +279,7 @@ class FuncionariosSeeder extends Seeder
             'email' => 'juridico@demo.com',
             'password' => Hash::make('12345678'),
             'RUT' => '11.111.111-4',
-            'ID_DEPART' => 2,
+            //'ID_DEPART' => 2,
             'ID_REGION' => 1,
             'ID_UBICACION' => 1,
             'ID_GRUPO' => 1,
@@ -288,7 +288,7 @@ class FuncionariosSeeder extends Seeder
             'ID_CARGO' => 1,
             'FECHA_NAC' => '1980-05-20',
             'FECHA_INGRESO' => '2001-05-25',
-            'FECHA_ASIM_O_1' => '1999-02-01',
+            //'FECHA_ASIM_O_1' => '1999-02-01',
             'ID_CALIDAD_JURIDICA' => 1,
             'FONO' => '+56 9 1234 5678',
             'ANEXO' => 'TEST',
@@ -301,7 +301,7 @@ class FuncionariosSeeder extends Seeder
             'email' => 'funcionario@demo.com',
             'password' => Hash::make('12345678'),
             'RUT' => '11.111.111-1',
-            'ID_DEPART' => 2,
+            //'ID_DEPART' => 2,
             'ID_REGION' => 1,
             'ID_UBICACION' => 1,
             'ID_GRUPO' => 1,
@@ -310,7 +310,7 @@ class FuncionariosSeeder extends Seeder
             'ID_CARGO' => 2,
             'FECHA_NAC' => '1970-02-10',
             'FECHA_INGRESO' => '2001-02-22',
-            'FECHA_ASIM_O_1' => '1999-02-01',
+            //'FECHA_ASIM_O_1' => '1999-02-01',
             'ID_CALIDAD_JURIDICA' => 1,
             'FONO' => '+56 9 1234 5678',
             'ANEXO' => 'TEST',

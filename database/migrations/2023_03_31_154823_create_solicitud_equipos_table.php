@@ -16,7 +16,7 @@ return new class extends Migration
             //Campos informacion Solicitante
             $table->string('NOMBRE_SOLICITANTE',128);
             $table->string('RUT', 20);
-            // $table->string('DEPTO', 128);
+            $table->string('DEPTO', 128);
             $table->string('EMAIL', 128);
             //Campos relacionados con la solicitud
             $table->integer('ID_USUARIO')->references('id')->on('users')->nullable();

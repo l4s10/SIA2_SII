@@ -17,7 +17,7 @@ return new class extends Migration
             //------datos del solicitante (Eliminar?)------
             $table->string('NOMBRE_SOLICITANTE',128);
             $table->string('RUT', 20);
-            // $table->string('DEPTO', 128);
+            $table->string('DEPTO', 128);
             $table->string('EMAIL', 128);
             //---------------------------------
             // $table->string('TIPO_REPARCION_REP_GEN', 128)->nullable();

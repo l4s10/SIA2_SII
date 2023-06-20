@@ -19,7 +19,7 @@ class CreateRelFunVehTable extends Migration
             $table->unsignedInteger('ID_USUARIO')->nullable();
             $table->string('NOMBRE_SOLICITANTE', 128);
             $table->string('RUT', 20);
-            // $table->string('DEPTO', 128);
+            $table->string('DEPTO', 128);
             $table->string('EMAIL', 128);
             $table->string('MOTIVO_SOL_VEH', 1000)->nullable();
             $table->string('CONDUCTOR', 128)->nullable();

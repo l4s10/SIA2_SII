@@ -14,7 +14,7 @@ class SolicitudMateriales extends Model
         'ID_USUARIO',
         'NOMBRE_SOLICITANTE',
         'RUT',
-        // 'DEPTO',
+        'DEPTO',
         'EMAIL',
         'MATERIAL_SOL',
         'FECHA_DESPACHO',

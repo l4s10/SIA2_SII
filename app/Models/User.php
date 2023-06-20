@@ -28,7 +28,7 @@ class User extends Authenticatable
         'password',
         'RUT',
         // 'ID_DEPART',
-        // 'ID_UBICACION',
+        'ID_UBICACION',
         'ID_REGION',
         'ID_GRUPO',
         'ID_ESCALAFON',
@@ -65,8 +65,8 @@ class User extends Authenticatable
         // 'ID_DEPART.numeric' => 'El campo ID_DEPART debe ser un dato numerico',
         'ID_REGION.required' => 'El campo ID_REGION es obligatorio',
         'ID_REGION.numeric' => 'El campo ID_REGION debe ser un dato numerico',
-        // 'ID_UBICACION.required' => 'El campo ID_UBICACION es obligatorio',
-        // 'ID_UBICACION.numeric' => 'El campo ID_UBICACION debe ser un dato numerico',
+        'ID_UBICACION.required' => 'El campo ID_UBICACION es obligatorio',
+        'ID_UBICACION.numeric' => 'El campo ID_UBICACION debe ser un dato numerico',
         'ID_GRUPO.required' => 'El campo ID_GRUPO es obligatorio',
         'ID_GRUPO.numeric' => 'El campo ID_GRUPO debe ser un dato numerico',
         'ID_ESCALAFON.required' => 'El campo ESCALAFON es requerido',
@@ -110,10 +110,10 @@ class User extends Authenticatable
         return $this->belongsTo(Region::class, 'ID_REGION');
     }
     //* Obtener la ubicación a través de la ID_UBICACION */
-    // public function ubicacion()
-    // {
-    //     return $this->belongsTo(Ubicacion::class, 'ID_UBICACION');
-    // }
+    public function ubicacion()
+    {
+        return $this->belongsTo(Ubicacion::class, 'ID_UBICACION');
+    }
 
     //* Obtener el grupo a través de la ID_GRUPO */
     public function grupo()

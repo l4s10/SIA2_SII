@@ -14,7 +14,7 @@ class SolicitudFormulario extends Model
         'ID_USUARIO',
         'NOMBRE_SOLICITANTE',
         'RUT',
-        // 'DEPTO',
+        'DEPTO',
         'EMAIL',
         'FORM_SOL',
         'CANT_FORM_SOL',

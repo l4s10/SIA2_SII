@@ -16,10 +16,10 @@ return new class extends Migration
         //     $table->integer('ID_DEPART')->unsigned()->primary();
         //     $table->string('DEPARTAMENTO', 128)->nullable();
         // });
-        // Schema::create('ubicacion', function (Blueprint $table) {
-        //     $table->integer('ID_UBICACION')->unsigned()->primary();
-        //     $table->string('UBICACION', 128)->nullable();
-        // });
+        Schema::create('ubicacion', function (Blueprint $table) {
+            $table->integer('ID_UBICACION')->unsigned()->primary();
+            $table->string('UBICACION', 128)->nullable();
+        });
         //!!------------------------------------------
         //*--------------------------TABLAS NORMALIZADAS-----------------------*/
         Schema::create('region', function (Blueprint $table) {
@@ -69,8 +69,8 @@ return new class extends Migration
             // $table->date('FECHA_ASIM_O_1')->nullable();
             // $table->unsignedInteger('ID_DEPART');
             // $table->foreign('ID_DEPART')->references('ID_DEPART')->on('departamento');
-            //$table->unsignedInteger('ID_UBICACION');
-            //$table->foreign('ID_UBICACION')->references('ID_UBICACION')->on('ubicacion');
+            $table->unsignedInteger('ID_UBICACION');
+            $table->foreign('ID_UBICACION')->references('ID_UBICACION')->on('ubicacion');
             //!! --------------CLAVES FORANEAS-------------------------
             $table->unsignedInteger('ID_REGION');
             $table->foreign('ID_REGION')->references('ID_REGION')->on('region');
@@ -100,11 +100,11 @@ return new class extends Migration
     {
         //!!-----------TABLAS BORRADAS----------------
         //Schema::dropIfExists('departamento');
-        //Schema::dropIfExists('ubicacion');
         //!!------------------------------------------
         //*---------REFRESCAR TABLAS----------------- */
         Schema::dropIfExists('users');
         Schema::dropIfExists('region');
+        Schema::dropIfExists('ubicacion');
         Schema::dropIfExists('grupo');
         Schema::dropIfExists('escalafon');
         Schema::dropIfExists('grado');

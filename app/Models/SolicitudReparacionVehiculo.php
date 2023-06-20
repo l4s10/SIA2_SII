@@ -14,7 +14,7 @@ class SolicitudReparacionVehiculo extends Model
         'ID_USUARIO',
         'NOMBRE_SOLICITANTE',
         'RUT',
-        // 'DEPTO',
+        'DEPTO',
         'EMAIL',
         'PATENTE_VEHICULO',
         'ID_TIPO_SERVICIO',

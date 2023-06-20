@@ -17,7 +17,7 @@ return new class extends Migration
             $table->integer('ID_USUARIO')->unsigned()->references('id')->on('users');
             $table->string('NOMBRE_SOLICITANTE',128);
             $table->string('RUT', 20);
-            // $table->string('DEPTO', 128);
+            $table->string('DEPTO', 128);
             $table->string('EMAIL', 128);
             //*Aqui almacenamos el nombre de quien modifica el registro*/
             $table->string('MOTIVO_SOL_BODEGA', 1000)->nullable();

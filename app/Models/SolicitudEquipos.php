@@ -12,7 +12,7 @@ class SolicitudEquipos extends Model
     protected $fillable = [
         'NOMBRE_SOLICITANTE',
         'RUT',
-        // 'DEPTO',
+        'DEPTO',
         'EMAIL',
         'ID_USUARIO',
         'TIPO_EQUIPO',
@@ -32,7 +32,7 @@ class SolicitudEquipos extends Model
     public static $rules = [
         'NOMBRE_SOLICITANTE' => 'required|string|max:128',
         'RUT' => 'required|string|max:20',
-        // 'DEPTO' => 'required|string|max:128',
+        'DEPTO' => 'required|string|max:128',
         'EMAIL' => 'required|string|email|max:128',
         'ID_USUARIO' => 'nullable|integer|exists:users,id',
         'TIPO_EQUIPO' => 'nullable|string|max:128',
@@ -54,8 +54,8 @@ class SolicitudEquipos extends Model
         'NOMBRE_SOLICITANTE.max' => 'El campo Nombre del Solicitante no puede exceder los 128 caracteres.',
         'RUT.required' => 'El campo RUT es requerido.',
         'RUT.max' => 'El campo RUT no puede exceder los 20 caracteres.',
-        // 'DEPTO.required' => 'El campo Departamento es requerido.',
-        // 'DEPTO.max' => 'El campo Departamento no puede exceder los 128 caracteres.',
+        'DEPTO.required' => 'El campo Departamento es requerido.',
+        'DEPTO.max' => 'El campo Departamento no puede exceder los 128 caracteres.',
         'EMAIL.required' => 'El campo Email es requerido.',
         'EMAIL.email' => 'El campo Email debe ser una dirección de correo electrónico válida.',
         'EMAIL.max' => 'El campo Email no puede exceder los 128 caracteres.',
