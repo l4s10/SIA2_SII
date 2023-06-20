@@ -58,16 +58,26 @@
             </a>
         </li>
             {{-- Notification Flag icon --}}
-        @role('ADMINISTRADOR')
-        <li class="nav-item">
-            <a class="nav-link" href="#">
-            <i class="fa-regular fa-flag"></i>
-            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+            @role('ADMINISTRADOR')
+<li class="nav-item dropdown">
+    <a class="nav-link dropdown-toggle" href="#" id="flagDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <i class="fa-regular fa-flag"></i>
+        <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
             99+
-            </span>
-            </a>
-        </li>
-        @endrole
+        </span>
+    </a>
+    <div class="dropdown-menu dropdown-menu-end" aria-labelledby="flagDropdown">
+        <!-- Agrega más opciones de menú según tus necesidades -->
+        <a class="dropdown-item" href="{{ route('solicitud.salas.index') }}">Solicitud de salas</a>
+        <a class="dropdown-item" href="{{ route('solicitud.bodegas.index') }}">Solicitud de bodegas</a>
+        <a class="dropdown-item" href="{{ route('solicitud.vehiculos.index') }}">Solicitud de vehículos</a>
+        <a class="dropdown-item" href="{{ route('solmaterial.index') }}">Solicitud de materiales</a>
+        <a class="dropdown-item" href="{{ route('solequipos.index') }}">Solicitud de equipos</a>
+        <a class="dropdown-item" href="{{ route('formulariosSol.index') }}">Solicitud de formulario</a>         
+    </div>
+</li>
+@endrole
+
         {{-- User menu link --}}
         @if(Auth::user())
             @if(config('adminlte.usermenu_enabled'))
