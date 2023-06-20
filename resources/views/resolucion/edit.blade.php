@@ -10,13 +10,12 @@
 
 @section('content')
     <div class="container">
-        <form action="{{route('resolucion.update',$resolucion->ID_RESOLUCION)}}" method="POST">
+        <form action="{{ route('resolucion.update', $resolucion->ID_RESOLUCION) }}" method="POST">
             @csrf
             @method('PUT')
             <div class="row">
                 <div class="col">
                     <div class="form-group">
-                        <p>ID_RESOLUCION: {{$resolucion->ID_RESOLUCION}}</p>
                         <label for="NRO_RESOLUCION">N° Resolución:</label>
                         <input type="text" name="NRO_RESOLUCION" id="NRO_RESOLUCION" class="form-control" placeholder="N° Resolución (Ej: 1234)" value="{{ $resolucion->NRO_RESOLUCION }}" required autofocus>
                         @error('NRO_RESOLUCION')
@@ -25,65 +24,97 @@
                             </span>
                         @enderror
                     </div>
-                    @php
-                        // Imprimir el valor del ID_RESOLUCION
-                        echo "ID_RESOLUCION: " . $resolucion->ID_RESOLUCION;
-                    @endphp
                     
-                    <div class="form-group">
-                        <label for="FECHA">Fecha:</label>
-                        <input type="text" name="FECHA" id="FECHA" class="form-control" placeholder="Fecha: (Ej 1996-24-08) " value="{{ date('Y-m-d', strtotime($resolucion->FECHA)) }}" required autofocus>
-                        @error('FECHA')
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
-                        @enderror
-                    </div>
                     <div class="mb-3">
-                        <label for="ID_CARGO" class="form-label"><i class="fa-solid fa-car-side"></i> Autoridad:</label>
-                        <select id="ID_CARGO" name="ID_CARGO" class="form-control @error('ID_CARGO') is-invalid @enderror" required>
-                            <option value="" selected>--Seleccione Autoridad--</option>
+                        <label for="FECHA" class="form-label"><i class="fa-solid fa-book-bookmark"></i> Fecha:</label>
+                        <input type="text" class="form-control{{ $errors->has('FECHA') ? ' is-invalid' : '' }}" id="FECHA" name="FECHA" value="{{ old('FECHA', $resolucion->FECHA) }}" placeholder="Ej: 1996-08-24" required>
+                        @if ($errors->has('FECHA'))
+                            <div class="invalid-feedback">
+                                {{ $errors->first('FECHA') }}
+                            </div>
+                        @endif
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="ID_TIPO" class="form-label"><i class="fa-solid fa-book-bookmark"></i> Tipo de Resolución:</label>
+                        <select id="ID_TIPO" name="ID_TIPO" class="form-control @error('ID_TIPO') is-invalid @enderror" required>
+                            <option value="" selected>--Seleccione Tipo de Resolución--</option>
             
-                            @foreach ($cargos as $cargo)
-                                <option value="{{ $cargo['ID_CARGO'] }}">{{ $cargo['CARGO'] }}</option>
+                            @foreach ($tiposResolucion as $idTipoResolucion => $nombreTipoResolucion)
+                                <option value="{{ $idTipoResolucion }}" {{ $resolucion->ID_TIPO == $idTipoResolucion ? 'selected' : '' }}>
+                                    {{ $nombreTipoResolucion }}
+                                </option>
                             @endforeach
             
                         </select>
             
-                        @error('ID_CARGO')
+                        @error('ID_TIPO')
                             <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
                     </div>
-                    
-                    <div class="form-group">
-                        <label for="FUNCIONARIOS_DELEGADOS">Funcionarios delegados:</label>
-                        <input type="text" name="FUNCIONARIOS_DELEGADOS" id="FUNCIONARIOS_DELEGADOS" class="form-control" placeholder="Cargo funcionario delegado: (Ej: Jefe Depto Avaluaciones)" value="{{ $resolucion->FUNCIONARIOS_DELEGADOS }}" autofocus>
-                        @error('FUNCIONARIOS_DELEGADOS')
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
+
+                    <div class="mb-3">
+                        <label for="ID_FIRMANTE" class="form-label"><i class="fa-solid fa-book-bookmark"></i> Firmante:</label>
+                        <select id="ID_FIRMANTE" name="ID_FIRMANTE" class="form-control @error('ID_FIRMANTE') is-invalid @enderror" required>
+                            <option value="" selected>--Seleccione Firmante--</option>
+
+                            @foreach ($firmantes as $idFirmante => $nombreFirmante)
+                                <option value="{{ $idFirmante }}" {{ $resolucion->ID_FIRMANTE == $idFirmante ? 'selected' : '' }}>
+                                    {{ $nombreFirmante }}
+                                </option>
+                            @endforeach
+
+                        </select>
+
+                        @error('ID_FIRMANTE')
+                            <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
                     </div>
-                    <div class="form-group">
-                        <label for="MATERIA">Materia asociada:</label>
-                        <input type="text" name="MATERIA" id="MATERIA" class="form-control" placeholder="Materia asociada: (Ej: Autorización máquinas registradoras Jefes Unidad)" value="{{ $resolucion->MATERIA }}" autofocus>
-                        @error('MATERIA')
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
+
+                    <div class="mb-3">
+                        <label for="ID_FACULTAD" class="form-label"><i class="fa-solid fa-book-bookmark"></i> Facultad:</label>
+                        <select id="ID_FACULTAD" name="ID_FACULTAD" class="form-control @error('ID_FACULTAD') is-invalid @enderror" required>
+                            <option value="" selected>--Seleccione Facultad--</option>
+            
+                            @foreach ($facultades as $idFacultad => $nombreFacultad)
+                                <option value="{{ $idFacultad }}" {{ $resolucion->ID_FACULTAD == $idFacultad ? 'selected' : '' }}>
+                                    {{ $nombreFacultad }}
+                                </option>
+                            @endforeach
+            
+                        </select>
+            
+                        @error('ID_FACULTAD')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="ID_DELEGADO" class="form-label"><i class="fa-solid fa-book-bookmark"></i> Delegado:</label>
+                        <select id="ID_DELEGADO" name="ID_DELEGADO" class="form-control @error('ID_DELEGADO') is-invalid @enderror" required>
+                            <option value="" selected>--Seleccione Delegado--</option>
+            
+                            @foreach ($delegados as $idDelegado => $nombreDelegado)
+                                <option value="{{ $idDelegado }}" {{ $resolucion->ID_DELEGADO == $idDelegado ? 'selected' : '' }}>
+                                    {{ $nombreDelegado }}
+                                </option>
+                            @endforeach
+            
+                        </select>
+            
+                        @error('ID_DELEGADO')
+                            <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
                     </div>
                 </div>
             </div>
             <div class="form-group">
-                <a href="{{route('resolucion.index')}}" class="btn btn-secondary">Cancelar</a>
+                <a href="{{ route('resolucion.index') }}" class="btn btn-secondary">Cancelar</a>
                 <button type="submit" class="btn btn-primary">Modificar resolución</button>
             </div>
         </form>
     </div>
 @endsection
-
-
 
 @section('css')
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
@@ -96,23 +127,7 @@
     <script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/es.js"></script>
     <script>
         $(function () {
-            $('#fecha_nacimiento').flatpickr({
-                locale: 'es',
-                minDate: "1950-01-01",
-                dateFormat: "Y-m-d",
-                altFormat: "d-m-Y",
-                altInput: true,
-                allowInput: true,
-            });
-            $('#fecha_ingreso').flatpickr({
-                locale: 'es',
-                minDate: "1950-01-01",
-                dateFormat: "Y-m-d",
-                altFormat: "d-m-Y",
-                altInput: true,
-                allowInput: true,
-            });
-            $('#fecha_asim_planta').flatpickr({
+            $('#FECHA').flatpickr({
                 locale: 'es',
                 minDate: "1950-01-01",
                 dateFormat: "Y-m-d",

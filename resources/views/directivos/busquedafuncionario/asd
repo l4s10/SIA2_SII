@@ -41,14 +41,13 @@
                     <label for="CARGO_FUNCIONARIO" class="form-label"><i class="fa-solid fa-user"></i> Cargo asociado:</label>
                     <input type="text" class="form-control" id="CARGO_FUNCIONARIO" name="CARGO_FUNCIONARIO" value="{{ old('CARGO_FUNCIONARIO', $cargoFuncionario ?? '') }}" readonly>                
                 </div>
-
             </div>
 
             <div class="row g-3">
                 <div class="col">
                     <label for="ID_DELEGADO" class="form-label"><i class="fa-solid fa-bookmark"></i> Autoridad:</label>
                     <select id="ID_DELEGADO" name="ID_DELEGADO" class="form-control @error('ID_DELEGADO') is-invalid @enderror">
-                        <option value="" selected>--Seleccione Cargo Delegado--</option>
+                        <option value="" selected>--Seleccione Autoridad--</option>
                         @foreach ($cargos as $cargo)
                             <option value="{{ $cargo->ID_CARGO }}">{{ $cargo->CARGO }}</option>
                         @endforeach
@@ -57,7 +56,6 @@
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
                 </div>
-
             </div>
 
             <button type="button" id="buscarPorCargo" class="btn btn-primary">Buscar por Cargo</button>
@@ -76,8 +74,10 @@
                             <th scope="col">Facultad</th>
                             <th scope="col">Glosa</th>
                             <th scope="col">Documento</th>
+                            <th scope="col">Administrar</th>
                         </tr>
                     </thead>
+
                     <tbody>
                         @foreach($resoluciones as $resolucion)
                             <tr>
@@ -95,11 +95,13 @@
                                     <button class="btn btn-sia-primary btn-block btn-collapse" style="display: none;">
                                         <i class="fa-solid fa-square-minus"></i>
                                     </button>
-                                    
                                     <span class="glosa-completa" style="display: none;">{{ $resolucion->facultad->CONTENIDO }}</span>
                                 </td>
                                 <td>
                                     <a href="" class="btn btn-sia-primary btn-block"><i class="fa-solid fa-file-pdf"></i></a>
+                                </td>
+                                <td>
+                                    <a href="{{ route('resolucion.show', $resolucion->ID_RESOLUCION) }}" class="btn btn-sia-primary btn-block"><i class="fa-solid fa-gear"></i></a>
                                 </td>
                             </tr>
                         @endforeach
@@ -122,15 +124,13 @@
             margin-top: 10px; /* Ajusta el valor según sea necesario */
         }
     </style>
-        <style>
+    <style>
         .alert {
         opacity: 0.7; 
         background-color: #99CCFF;
         color:     #000000;
         }
     </style>
-
-    
 @stop
 
 @section('js')
@@ -151,12 +151,9 @@
                 $('#NOMBRES').val(''); // Limpiar valor del input de NOMBRES
                 $('#APELLIDOS').val(''); // Limpiar valor del input de APELLIDOS
                 $('#searchForm').submit(); // Enviar el formulario
-                $('#tablaResoluciones').hide(); // Ocultar la tabla actual
-                $('#tablaOtra').show(); // Mostrar la otra tabla
             });
 
-
-            // Agrega evento de clic al botón de expansión
+            // Agregar evento de clic al botón de expansión
             $('.btn-expand').on('click', function () {
                 var glosaAbreviada = $(this).siblings('.glosa-abreviada');
                 var glosaCompleta = $(this).siblings('.glosa-completa');
@@ -167,21 +164,20 @@
                 glosaCompleta.show();
                 btnExpand.hide();
                 btnCollapse.show();
-                //$(this).hide();
             });
 
             // Agregar evento de clic al botón de colapso
             $('.btn-collapse').on('click', function () {
-                    var glosaAbreviada = $(this).siblings('.glosa-abreviada');
-                    var glosaCompleta = $(this).siblings('.glosa-completa');
-                    var btnExpand = $(this).siblings('.btn-expand');
-                    var btnCollapse = $(this);
+                var glosaAbreviada = $(this).siblings('.glosa-abreviada');
+                var glosaCompleta = $(this).siblings('.glosa-completa');
+                var btnExpand = $(this).siblings('.btn-expand');
+                var btnCollapse = $(this);
 
-                    glosaAbreviada.show();
-                    glosaCompleta.hide();
-                    btnExpand.show();
-                    btnCollapse.hide();
-                });
+                glosaAbreviada.show();
+                glosaCompleta.hide();
+                btnExpand.show();
+                btnCollapse.hide();
             });
+        });
     </script>
 @stop
