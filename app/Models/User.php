@@ -27,20 +27,20 @@ class User extends Authenticatable
         'email',
         'password',
         'RUT',
-        'ID_DEPART',
+        // 'ID_DEPART',
+        // 'ID_UBICACION',
         'ID_REGION',
-        'ID_UBICACION',
         'ID_GRUPO',
         'ID_ESCALAFON',
         'ID_GRADO',
         'ID_CARGO',
         'FECHA_NAC',
         'FECHA_INGRESO',
-        'FECHA_ASIM_O_1',
+        // 'FECHA_ASIM_O_1',
         'ID_CALIDAD_JURIDICA',
         'FONO',
         'ANEXO',
-        'ID_SEXO'     
+        'ID_SEXO'
     ];
     //*MENSAJES DE ERROR PARA EL FORMULARIO*/
     public static $messages = [
@@ -61,12 +61,12 @@ class User extends Authenticatable
         'RUT.string' => 'El campo RUT debe ser una cadena de texto',
         'RUT.max' => 'El campo RUT no puede tener más de 20 caracteres',
         'RUT.unique' => 'El RUT ya está registrado en el sistema',
-        'ID_DEPART.required' => 'El campo ID_DEPART es obligatorio',
-        'ID_DEPART.numeric' => 'El campo ID_DEPART debe ser un dato numerico',
+        // 'ID_DEPART.required' => 'El campo ID_DEPART es obligatorio',
+        // 'ID_DEPART.numeric' => 'El campo ID_DEPART debe ser un dato numerico',
         'ID_REGION.required' => 'El campo ID_REGION es obligatorio',
         'ID_REGION.numeric' => 'El campo ID_REGION debe ser un dato numerico',
-        'ID_UBICACION.required' => 'El campo ID_UBICACION es obligatorio',
-        'ID_UBICACION.numeric' => 'El campo ID_UBICACION debe ser un dato numerico',
+        // 'ID_UBICACION.required' => 'El campo ID_UBICACION es obligatorio',
+        // 'ID_UBICACION.numeric' => 'El campo ID_UBICACION debe ser un dato numerico',
         'ID_GRUPO.required' => 'El campo ID_GRUPO es obligatorio',
         'ID_GRUPO.numeric' => 'El campo ID_GRUPO debe ser un dato numerico',
         'ID_ESCALAFON.required' => 'El campo ESCALAFON es requerido',
@@ -99,10 +99,10 @@ class User extends Authenticatable
     ];
 
     //*Obtener depto desde su ID*/
-    public function departamento()
-    {
-        return $this->belongsTo(Departamento::class, 'ID_DEPART');
-    }
+    // public function departamento()
+    // {
+    //     return $this->belongsTo(Departamento::class, 'ID_DEPART');
+    // }
 
     //*Obtener region a traves de la ID*/
     public function region()
@@ -110,10 +110,10 @@ class User extends Authenticatable
         return $this->belongsTo(Region::class, 'ID_REGION');
     }
     //* Obtener la ubicación a través de la ID_UBICACION */
-    public function ubicacion()
-    {
-        return $this->belongsTo(Ubicacion::class, 'ID_UBICACION');
-    }
+    // public function ubicacion()
+    // {
+    //     return $this->belongsTo(Ubicacion::class, 'ID_UBICACION');
+    // }
 
     //* Obtener el grupo a través de la ID_GRUPO */
     public function grupo()

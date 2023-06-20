@@ -11,13 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('solicitud_formularios', function (Blueprint $table) {
+        Schema::create('rel_fun_form', function (Blueprint $table) {
             //Agregamos los campos de la tabla en la BDD
             $table->increments('ID_SOL_FORM');
             $table->integer('ID_USUARIO')->unsigned()->references('id')->on('users');
             $table->string('NOMBRE_SOLICITANTE',128);
             $table->string('RUT', 20);
-            $table->string('DEPTO', 128);
+            // $table->string('DEPTO', 128);
             $table->string('EMAIL', 128);
             //--------FORMULARIO DE SOLICITUD
             $table->integer('ID_FORMULARIO')->nullable();
@@ -34,6 +34,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('solicitud_formularios');
+        Schema::dropIfExists('rel_fun_form');
     }
 };

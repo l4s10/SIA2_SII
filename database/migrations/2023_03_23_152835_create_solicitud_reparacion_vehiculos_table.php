@@ -11,13 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('solicitud_reparacion_vehiculos', function (Blueprint $table) {
+        Schema::create('rel_fun_rep_veh', function (Blueprint $table) {
             $table->id('ID_SOL_REP_VEH');
             $table->integer('ID_USUARIO')->unsigned()->references('id')->on('users');
             //Campos informacion Solicitante
             $table->string('NOMBRE_SOLICITANTE',128);
             $table->string('RUT', 20);
-            $table->string('DEPTO', 128);
+            // $table->string('DEPTO', 128);
             $table->string('EMAIL', 128);
             //-------CAMPOS SOLICITUD---------//
             $table->string('PATENTE_VEHICULO', 7)->references('PATENTE_VEHICULO')->on('vehiculos');
@@ -38,6 +38,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('solicitud_reparacion_vehiculos');
+        Schema::dropIfExists('rel_fun_rep_veh');
     }
 };

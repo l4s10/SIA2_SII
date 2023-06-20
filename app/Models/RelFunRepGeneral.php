@@ -16,7 +16,7 @@ class RelFunRepGeneral extends Model
         // 'TIPO_REPARACION_REP_GEN',
         'NOMBRE_SOLICITANTE',
         'RUT',
-        'DEPTO',
+        // 'DEPTO',
         'EMAIL',
         'REP_SOL',
         'ESTADO_REP_INM',
