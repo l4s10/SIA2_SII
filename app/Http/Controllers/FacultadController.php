@@ -41,19 +41,19 @@ class FacultadController extends Controller
             $request->validate(Facultad::rules(), Facultad::messages());
             $data = $request->except('_token');
             Facultad::create($data);
-    
+
             session()->flash('success', 'La facultad fue agregada exitosamente.');
         } catch (\Exception $e) {
             session()->flash('error', 'Hubo un error al agregar la facultad. Vuelva a intentarlo nuevamente' . $e->getMessage());
         }
         return redirect(route('facultades.index'));
 
-        /*try{   
-            
+        /*try{
+
             $request->validate(Facultad::rules(), Facultad::messages());
             $data = $request->except('_token');
             Facultad::create($data);
-            
+
 
             session()->flash('success','La facultad fue agregada exitosamente.');
         }catch(\Exception $e){
@@ -61,7 +61,7 @@ class FacultadController extends Controller
         }
         return redirect(route('facultad.index'));*/
     }
-    
+
     /**
      * Display the specified resource.
      *///Accede a un único registro
@@ -75,7 +75,7 @@ class FacultadController extends Controller
             return redirect(route('facultades.index'));
         }
     }
-    
+
     /**
      * Show the form for editing the specified resource.
      *///Carga el formulario de edicion

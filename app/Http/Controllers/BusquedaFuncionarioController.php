@@ -20,19 +20,19 @@ class BusquedaFuncionarioController extends Controller
         $idCargo = $request->input('ID_DELEGADO');
 
         //$resoluciones = Resolucion::join('users', 'users.ID_CARGO', '=', 'resoluciones.ID_DELEGADO')
-        
+
 
         //$query = Resolucion::join('users', 'users.ID_CARGO', '=', 'resoluciones.ID_DELEGADO');
-        $resoluciones = []; 
+        $resoluciones = [];
         $cargoFuncionario = null; // Valor predeterminado
 
         if ($nombres && $apellidos) {
             $query = Resolucion::join('users', 'users.ID_CARGO', '=', 'resoluciones.ID_DELEGADO')
                 ->where('users.NOMBRES', $nombres)
                 ->where('users.APELLIDOS', $apellidos);
-    
+
             $resoluciones = $query->distinct()->get();
-    
+
             if ($resoluciones->isNotEmpty()) {
                 $user = $resoluciones->first()->delegado->users->first();
                 if ($user) {
@@ -44,7 +44,7 @@ class BusquedaFuncionarioController extends Controller
             $resoluciones = Resolucion::with('tipo', 'firmante', 'delegado', 'facultad')
             ->where('ID_DELEGADO', $idCargo)
             ->get();
-            $cargoFuncionario = Cargo::find($idCargo)->CARGO; 
+            $cargoFuncionario = Cargo::find($idCargo)->CARGO;
         }
 
         $cargos = Cargo::all();

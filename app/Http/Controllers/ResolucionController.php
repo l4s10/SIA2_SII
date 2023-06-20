@@ -34,7 +34,7 @@ class ResolucionController extends Controller
         $facultades = Facultad::pluck('NOMBRE', 'ID_FACULTAD');
         $firmantes = Cargo::pluck('CARGO', 'ID_CARGO');
         $delegados = Cargo::pluck('CARGO', 'ID_CARGO');
-         
+
          return view('resolucion.create', compact('tiposResolucion', 'facultades','firmantes','delegados'));
      }
 
@@ -46,21 +46,21 @@ class ResolucionController extends Controller
     {
         try {
             $request->validate(Resolucion::rules($request->input('NRO_RESOLUCION')), Resolucion::messages());
-    
+
             $fecha = $request->input('FECHA');
             if (Carbon::parse($fecha)->isAfter(Carbon::now())) {
                 throw new \Exception('. La fecha debe ser anterior o igual a la fecha actual.');
             }
-    
+
             $data = $request->only('NRO_RESOLUCION', 'FECHA', 'ID_TIPO', 'ID_FIRMANTE', 'ID_FACULTAD', 'ID_DELEGADO');
-    
+
             $resolucion = Resolucion::create($data);
-    
+
             session()->flash('success', 'La resolución delegatoria fue agregada exitosamente.');
         } catch (\Exception $e) {
             session()->flash('error', 'Hubo un error al agregar la resolución delegatoria. Vuelva a intentarlo nuevamente' . $e->getMessage());
         }
-    
+
         return redirect(route('resolucion.index'));
     }
 
@@ -71,7 +71,7 @@ class ResolucionController extends Controller
     {
         try{
             $resolucion = Resolucion::with('tipo', 'firmante', 'delegado', 'facultad')->find($id);
-            return view('resolucion.show', compact('resolucion'));  
+            return view('resolucion.show', compact('resolucion'));
         }catch(\Exception $e){
             session()->flash('error', 'Error al acceder a la resolución delegatoria seleccionada, vuelva a intentarlo más tarde.');
             return redirect(route('resolucion.index'));
@@ -97,7 +97,7 @@ class ResolucionController extends Controller
         $facultades = Facultad::pluck('NOMBRE', 'ID_FACULTAD');
         $firmantes = Cargo::pluck('CARGO', 'ID_CARGO');
         $delegados = Cargo::pluck('CARGO', 'ID_CARGO');
-         
+
         return view('resolucion.edit', compact('resolucion', 'tiposResolucion', 'facultades', 'firmantes', 'delegados'));
     }
 
@@ -108,12 +108,12 @@ class ResolucionController extends Controller
             $resolucion = Resolucion::find($id);
             $rules = Resolucion::rules($resolucion->ID_RESOLUCION);
             $request->validate($rules, Resolucion::messages());
-    
+
             $fecha = $request->input('FECHA');
             if (strtotime($fecha) > time()) {
                 throw new \Exception('. La fecha debe ser anterior o igual a la fecha actual');
             }
-    
+
             $data = $request->only('NRO_RESOLUCION', 'FECHA', 'ID_TIPO', 'ID_FIRMANTE', 'ID_FACULTAD', 'ID_DELEGADO');
             $resolucion->fill($data);
             $resolucion->save();

@@ -264,12 +264,12 @@
         <div class="row">
                 <div class="col-md-6">
                     <div class="mb-3">
-                            <label for="ORIGEN" class="form-label"><i class="fa-solid fa-map"></i> Comuna origen:</label>
+                            <label for="ORIGEN" class="form-label"><i class="fa-solid fa-map"></i> Region origen:</label>
                             <select id="ORIGEN" name="ORIGEN" class="form-control @error('ORIGEN') is-invalid @enderror" required>
-                                <option value="" selected>--Seleccione una comuna--</option>
-                                {{-- CAPTURAR COMUNAS Y MOSTRAR AQUI --}}
-                                @foreach ($comunas as $comuna)
-                                <option value="{{$comuna->ID_COMUNA}}">{{$comuna->COMUNA}}</option>
+                                <option value="" selected>--Seleccione una region--</option>
+                                {{-- CAPTURAR REGIONES Y MOSTRAR AQUI --}}
+                                @foreach ($regiones as $region)
+                                <option value="{{$region->ID_REGION}}">{{$region->REGION}}</option>
                                 @endforeach
                             </select>
 
@@ -280,9 +280,9 @@
                 </div>
                 <div class="col-md-6">
                     <div class="mb-3">
-                            <label for="DESTINO" class="form-label"><i class="fa-solid fa-map-location-dot"></i> Comuna destino:</label>
+                            <label for="DESTINO" class="form-label"><i class="fa-solid fa-map-location-dot"></i> Region destino:</label>
                             <select id="DESTINO" name="DESTINO" class="form-control @error('DESTINO') is-invalid @enderror" required>
-                                <option value="" selected>--Seleccione una comuna--</option>
+                                <option value="" selected>--Seleccione una region--</option>
                                 @foreach ($comunas as $comuna)
                                 <option value="{{$comuna->ID_COMUNA}}">{{$comuna->COMUNA}}</option>
                                 @endforeach
@@ -294,7 +294,40 @@
                         </div>
                 </div>
 </div>
-            <div class="row">
+<div class="row">
+    <div class="col-md-6">
+        <div class="mb-3">
+                <label for="ORIGEN" class="form-label"><i class="fa-solid fa-map"></i> Comuna origen:</label>
+                <select id="ORIGEN" name="ORIGEN" class="form-control @error('ORIGEN') is-invalid @enderror" required>
+                    <option value="" selected>--Seleccione una comuna--</option>
+                    {{-- CAPTURAR COMUNAS Y MOSTRAR AQUI --}}
+                    @foreach ($comunas as $comuna)
+                    <option value="{{$comuna->ID_COMUNA}}">{{$comuna->COMUNA}}</option>
+                    @endforeach
+                </select>
+
+                @error('ORIGEN')
+                    <div class="invalid-feedback">{{ $message }}</div>
+                @enderror
+            </div>
+    </div>
+    <div class="col-md-6">
+        <div class="mb-3">
+                <label for="DESTINO" class="form-label"><i class="fa-solid fa-map-location-dot"></i> Comuna destino:</label>
+                <select id="DESTINO" name="DESTINO" class="form-control @error('DESTINO') is-invalid @enderror" required>
+                    <option value="" selected>--Seleccione una comuna--</option>
+                    @foreach ($comunas as $comuna)
+                    <option value="{{$comuna->ID_COMUNA}}">{{$comuna->COMUNA}}</option>
+                    @endforeach
+                </select>
+
+                @error('DESTINO')
+                    <div class="invalid-feedback">{{ $message }}</div>
+                @enderror
+            </div>
+    </div>
+</div>
+            <div class="row" hidden>
                 <div class="col-md-6">
                     <div class="mb-3">
                         <!-- Solo acceso para conductores(nivel 1) y estado formulario por rendir(autorizado/rendir nivel 3) -->

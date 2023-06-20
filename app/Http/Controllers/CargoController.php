@@ -37,8 +37,8 @@ class CargoController extends Controller
 
     public function store(Request $request)
     {
-        try{   
-            
+        try{
+
             $request->validate(Cargo::$rules, Cargo::$messages);
             $data = $request->except('_token');
             Cargo::create($data);
@@ -49,7 +49,7 @@ class CargoController extends Controller
         }
         return redirect(route('cargos.index'));
     }
-    
+
     /**
      * Display the specified resource.
      *///Accede a un único registro
@@ -63,7 +63,7 @@ class CargoController extends Controller
              return view('cargo.show');
          }
      }
-    
+
     /**
      * Show the form for editing the specified resource.
      *///Carga el formulario de edicion

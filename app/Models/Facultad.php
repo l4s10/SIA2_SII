@@ -40,4 +40,3 @@ class Facultad extends Model
     }
 
 }
-
