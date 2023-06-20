@@ -28,44 +28,72 @@
                 </div>
             @endif
         </div>
-        
+
 
         <div class="mb-3">
-            <label for="ID_CARGO" class="form-label"><i class="fa-solid fa-car-side"></i> Autoridad:</label>
-            <select id="ID_CARGO" name="ID_CARGO" class="form-control @error('ID_CARGO') is-invalid @enderror" required>
-                <option value="" selected>--Seleccione Autoridad--</option>
+            <label for="ID_TIPO" class="form-label"><i class="fa-solid fa-book-bookmark"></i> Tipo de Resolución:</label>
+            <select id="ID_TIPO" name="ID_TIPO" class="form-control @error('ID_TIPO') is-invalid @enderror" required>
+                <option value="" selected>--Seleccione Tipo de Resolución--</option>
 
-                @foreach ($cargos as $cargo)
-                    <option value="{{ $cargo['ID_CARGO'] }}">{{ $cargo['CARGO'] }}</option>
+                @foreach ($tiposResolucion as $idTipoResolucion => $nombreTipoResolucion)
+                    <option value="{{ $idTipoResolucion }}">{{ $nombreTipoResolucion }}</option>
                 @endforeach
 
             </select>
 
-            @error('ID_CARGO')
+            @error('ID_TIPO')
+                <div class="invalid-feedback">{{ $message }}</div>
+            @enderror
+        </div>
+        
+        <div class="mb-3">
+            <label for="ID_FIRMANTE" class="form-label"><i class="fa-solid fa-book-bookmark"></i> Firmante:</label>
+            <select id="ID_FIRMANTE" name="ID_FIRMANTE" class="form-control @error('ID_FIRMANTE') is-invalid @enderror" required>
+                <option value="" selected>--Seleccione Firmante--</option>
+
+                @foreach ($firmantes as $idFirmante => $nombreFirmante)
+                    <option value="{{ $idFirmante }}">{{ $nombreFirmante }}</option>
+                @endforeach
+
+            </select>
+
+            @error('ID_FIRMANTE')
+                <div class="invalid-feedback">{{ $message }}</div>
+            @enderror
+        </div>
+        
+        <div class="mb-3">
+            <label for="ID_FACULTAD" class="form-label"><i class="fa-solid fa-book-bookmark"></i> Facultad:</label>
+            <select id="ID_FACULTAD" name="ID_FACULTAD" class="form-control @error('ID_FACULTAD') is-invalid @enderror" required>
+                <option value="" selected>--Seleccione Facultad--</option>
+
+                @foreach ($facultades as $idFacultad => $nombreFacultad)
+                    <option value="{{ $idFacultad }}">{{ $nombreFacultad }}</option>
+                @endforeach
+
+            </select>
+
+            @error('ID_FACULTAD')
+                <div class="invalid-feedback">{{ $message }}</div>
+            @enderror
+        </div>
+        <div class="mb-3">
+            <label for="ID_DELEGADO" class="form-label"><i class="fa-solid fa-book-bookmark"></i> Delegado:</label>
+            <select id="ID_DELEGADO" name="ID_DELEGADO" class="form-control @error('ID_DELEGADO') is-invalid @enderror" required>
+                <option value="" selected>--Seleccione Delegado--</option>
+
+                @foreach ($delegados as $idDelegado => $nombreDelegado)
+                    <option value="{{ $idDelegado }}">{{ $nombreDelegado }}</option>
+                @endforeach
+
+            </select>
+
+            @error('ID_DELEGADO')
                 <div class="invalid-feedback">{{ $message }}</div>
             @enderror
         </div>
 
-        <div class="mb-3">
-            <label for="FUNCIONARIOS_DELEGADOS" class="form-label"><i class="fa-solid fa-book-bookmark"></i> Funcionarios delegados:</label>
-            <input type="text" class="form-control{{ $errors->has('FUNCIONARIOS_DELEGADOS') ? ' is-invalid' : '' }}" id="FUNCIONARIOS_DELEGADOS" name="FUNCIONARIOS_DELEGADOS" value="{{ old('FUNCIONARIOS_DELEGADOS') }}" placeholder="Ej: Jefes Unidad" >
-            @if ($errors->has('FUNCIONARIOS_DELEGADOS'))
-                <div class="invalid-feedback">
-                    {{ $errors->first('FUNCIONARIOS_DELEGADOS') }}
-                </div>
-            @endif
-        </div>
-        <div class="mb-3">
-            <label for="MATERIA" class="form-label"><i class="fa-solid fa-book-bookmark"></i> Materia:</label>
-            <input type="text" class="form-control{{ $errors->has('MATERIA') ? ' is-invalid' : '' }}" id="MATERIA" name="MATERIA" value="{{ old('MATERIA') }}" placeholder="Ej: Autorización máquinas registradoras Jefes Unidad" >
-            @if ($errors->has('MATERIA'))
-                <div class="invalid-feedback">
-                    {{ $errors->first('MATERIA') }}
-                </div>
-            @endif
-        </div>
-
-        <a href="{{route('resolucion.index')}}" class="btn btn-secondary" tabindex="5"><i class="fa-solid fa-hand-point-left"></i> Cancelar</a>
+        <a href="{{ route('resolucion.index') }}" class="btn btn-secondary" tabindex="5"><i class="fa-solid fa-hand-point-left"></i> Cancelar</a>
         <button type="submit" class="btn btn-primary" tabindex="4"><i class="fa-solid fa-floppy-disk"></i> Guardar resolución</button>
     </form>
 </div>
@@ -73,11 +101,25 @@
 
 
 @section('css')
-    <link rel="stylesheet" href="/css/admin_custom.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
 @stop
 
 @section('js')
     <!-- CONEXION FONT-AWESOME CON TOOLKIT -->
-    <script src="https://kit.fontawesome.com/742a59c628.js" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/es.js"></script>
+    <script>
+        $(function () {
+            $('#FECHA').flatpickr({
+                locale: 'es',
+                minDate: "1950-01-01",
+                dateFormat: "Y-m-d",
+                altFormat: "d-m-Y",
+                altInput: true,
+                allowInput: true,
+            });
+        });
+    </script>
 @stop
 

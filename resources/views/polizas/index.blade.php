@@ -44,11 +44,10 @@
             </script>
         @endif
 
-        <a href="{{route('polizas.create')}}" class="btn btn-sia-primary custom-color">Ingresar nueva póliza</a>        
+        <a href="{{route('polizas.create')}}" class="btn" style="background-color: #0099FF; color: white;">Ingresar nueva póliza</a>
         
         <div class="table-responsive">
-            <table id="polizas" class="table table-bordered mt-4 custom-table">
-                
+            <table id="polizas" class="table text-justify table-bordered mt-4 mx-auto" style="white-space:nowrap;">
                 <thead class="bg-primary text-white">
                     <tr>
                         <th scope="col">N° Póliza</th>
@@ -76,24 +75,12 @@
 @endsection
 
 @section('css')
-    {{-- Probando colores personalizados --}}
-    <link rel="stylesheet" href="{{asset('vendor/adminlte/dist/css/admin_custom.css')}}">
+    <link rel="stylesheet" href="/css/admin_custom.css">
     <style>
-        .custom-table th,
-        .custom-table td {
-            padding: 10px 20px;
-        }
-
         .alert {
-        opacity: 0.7; /* Ajusta la opacidad a tu gusto /
-        background-color: #99CCFF; / Color de fondo del aviso */
+        opacity: 0.7; /* Ajusta la opacidad a tu gusto */
+        background-color: #99CCFF;
         color:     #000000;
-        }
-
-        .custom-color{
-            background-color: #0099FF;
-            color:white;
-;
         }
     </style>
 @endsection

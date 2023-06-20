@@ -43,9 +43,9 @@
                 });
             </script>
         @endif
-
-        <a href="{{route('resolucion.create')}}" class="btn btn-sia-primary custom-color">Ingresar nueva resolución delegatoria</a>        
         
+        <a href="{{route('resolucion.create')}}" class="btn" style="background-color: #0099FF; color: white;">Ingresar nueva resolución delegatoria</a>
+
         <div class="table-responsive">
             <table id="resoluciones" class="table table-bordered mt-4 custom-table">
                 
@@ -53,10 +53,11 @@
                     <tr>
                         <th scope="col">Resolución</th>
                         <th scope="col">Fecha</th>
-                        <th scope="col">Autoridad</th>
-                        <th scope="col">Funcionario(s) Delegado(s)</th>
-                        <th scope="col">Materia</th>
-                        <th scope="col">Documento</th>
+                        <th scope="col">Tipo</th>
+                        <th scope="col">Firmante</th>
+                        <th scope="col">Facultad</th>
+                        <th scope="col">Delegado</th>
+                        <th scope='col'>Documento</th>
                         <th scope="col">Administrar</th>
                     </tr>
                 </thead>
@@ -66,9 +67,10 @@
                         <tr>
                             <td>{{$resolucion->NRO_RESOLUCION}}</td>
                             <td>{{ date('d/m/Y', strtotime($resolucion->FECHA)) }}</td>
-                            <td>{{$resolucion->cargo->CARGO}}</td>
-                            <td>{{$resolucion->FUNCIONARIOS_DELEGADOS}}</td>
-                            <td>{{$resolucion->MATERIA}}</td>
+                            <td>{{$resolucion->tipo->NOMBRE}}</td>
+                            <td>{{$resolucion->firmante->CARGO}}</td>
+                            <td>{{$resolucion->facultad->NOMBRE}}</td>
+                            <td>{{$resolucion->delegado->CARGO}}</td>
                             <td>
                                 <a href="" class="btn btn-sia-primary btn-block"><i class="fa-solid fa-file-pdf"></i></a></td>                        <td>
                                 <a href="{{route('resolucion.show',$resolucion->ID_RESOLUCION)}}" class="btn btn-sia-primary btn-block"><i class="fa-solid fa-gear"></i></a>
@@ -82,26 +84,14 @@
 @endsection
 
 @section('css')
-    {{-- Probando colores personalizados --}}
-    <link rel="stylesheet" href="{{asset('vendor/adminlte/dist/css/admin_custom.css')}}">
-    <style>
-        .custom-table th,
-        .custom-table td {
-            padding: 10px 13px;
-        }
-
-        .alert {
-        opacity: 0.7; /* Ajusta la opacidad a tu gusto /
-        background-color: #99CCFF; / Color de fondo del aviso */
-        color:     #000000;
-        }
-
-        .custom-color{
-            background-color: #0099FF;
-            color:white;
-;
-        }
-    </style>
+<link rel="stylesheet" href="/css/admin_custom.css">
+<style>
+    .alert {
+    opacity: 0.7; 
+    background-color: #99CCFF;
+    color:     #000000;
+    }
+</style>
 @endsection
 
 @section('js')
@@ -112,7 +102,7 @@
                 "lengthMenu": [[5,10, 50, -1], [5, 10, 50, "All"]],
                 "responsive": true,
                 "columnDefs": [
-                    { "orderable": false, "targets": 6 } // La séptima columna no es ordenable
+                    { "orderable": false, "targets": 7 } // La séptima columna no es ordenable
                 ],
                 "language": {
                     "url": "https://cdn.datatables.net/plug-ins/1.11.3/i18n/es_es.json"

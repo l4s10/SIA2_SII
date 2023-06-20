@@ -40,7 +40,7 @@ return new class extends Migration
         });
         //!! SE AGREGA LA TABLA CARGOS PARA USERS
         Schema::create('cargos', function(Blueprint $table){
-            $table->integer('ID_CARGO')->unsigned()->primary();
+            $table->increments('ID_CARGO');
             $table->string('CARGO', 128)->nullable();
         });
         Schema::create('calidad_juridica', function (Blueprint $table) {

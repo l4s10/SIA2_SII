@@ -198,7 +198,37 @@ class CamposUsuarioNormalizados extends Seeder
         ]);
         Cargo::insert([
             ['ID_CARGO' => 1, 'CARGO' => 'DIRECTOR REGIONAL'],
-            ['ID_CARGO' => 2, 'CARGO' => 'JEFE DPTO']
+            ['ID_CARGO' => 2, 'CARGO' => 'JEFE DE DEPARTAMENTO JURIDICO'],
+            ['ID_CARGO' => 3, 'CARGO' => 'JEFE DE DEPARTAMENTO DE FISCALIZACION'],
+            ['ID_CARGO' => 4, 'CARGO' => 'JEFE DE DEPARTAMENTO DE ASISTENCIA'],
+            ['ID_CARGO' => 5, 'CARGO' => 'JEFE DE DEPARTAMENTO DE AVALUACIONES'],
+            ['ID_CARGO' => 6, 'CARGO' => 'JEFE DE DEPARTAMENTO DE PROCEDIMIENTOS ADMINISTRATIVOS'],
+            ['ID_CARGO' => 7, 'CARGO' => 'JEFE DE ADMINISTRACION'],
+            ['ID_CARGO' => 8, 'CARGO' => 'JEFE DE UNIDAD DE TALCAHUANO'],
+            ['ID_CARGO' => 9, 'CARGO' => 'JEFE DE UNIDAD DE LOS ANGELES'],
+            ['ID_CARGO' => 10, 'CARGO' => 'JEFE DE UNIDAD DE LEBU'],
+            ['ID_CARGO' => 11, 'CARGO' => 'JEFE DE GRUPO CONCEPCION 1'],
+            ['ID_CARGO' => 12, 'CARGO' => 'JEFE DE GRUPO CONCEPCION 2'],
+            ['ID_CARGO' => 13, 'CARGO' => 'JEFE DE GRUPO CONCEPCION 3'],
+            ['ID_CARGO' => 14, 'CARGO' => 'JEFE DE GRUPO CONCEPCION 4'],
+            ['ID_CARGO' => 15, 'CARGO' => 'JEFE DE GRUPO CONCEPCION 5'],
+            ['ID_CARGO' => 16, 'CARGO' => 'JEFE DE GRUPO CONCEPCION 6'],
+            ['ID_CARGO' => 17, 'CARGO' => 'JEFE DE GRUPO CONCEPCION 7'],
+            ['ID_CARGO' => 18, 'CARGO' => 'JEFE DE GRUPO CUMPLIMIENTO TRIBUTARIO EN TERRENO'],
+            ['ID_CARGO' => 19, 'CARGO' => 'JEFE GRUPO N° 1 MEDIANAS Y GRANDES EMPRESAS SEDE REGIONAL CONCEPCION'],
+            ['ID_CARGO' => 20, 'CARGO' => 'JEFE GRUPO N° 2 MEDIANAS Y GRANDES EMPRESAS SEDE REGIONAL CONCEPCION'],
+            ['ID_CARGO' => 21, 'CARGO' => 'JEFE GRUPO N° 3 MEDIANAS Y GRANDES EMPRESAS SEDE REGIONAL CONCEPCION'],
+            ['ID_CARGO' => 22, 'CARGO' => 'JEFE GRUPO N° 1 PERSONAS Y MICRO-PEQUEÑA EMPRESAS SEDE REGIONAL CONCEPCION'],
+            ['ID_CARGO' => 23, 'CARGO' => 'JEFE GRUPO N° 2 PERSONAS Y MICRO-PEQUEÑA EMPRESAS SEDE REGIONAL CONCEPCION'],
+            ['ID_CARGO' => 24, 'CARGO' => 'JEFE GRUPO N° 3 PERSONAS Y MICRO-PEQUEÑA EMPRESAS SEDE REGIONAL CONCEPCION'],
+            ['ID_CARGO' => 25, 'CARGO' => 'JEFE GRUPO N° 4 PERSONAS Y MICRO-PEQUEÑA EMPRESAS SEDE REGIONAL CONCEPCION'],
+            ['ID_CARGO' => 26, 'CARGO' => 'JEFE GRUPO N° 1 FISCALIZACION UNIDAD DE CHILLAN'],
+            ['ID_CARGO' => 27, 'CARGO' => 'JEFE GRUPO N° 2 FISCALIZACION UNIDAD DE CHILLAN'],
+            ['ID_CARGO' => 28, 'CARGO' => 'JEFE GRUPO N° 1 FISCALIZACION UNIDAD DE LOS ANGELES'],
+            ['ID_CARGO' => 29, 'CARGO' => 'JEFE GRUPO N° 2 FISCALIZACION UNIDAD DE LOS ANGELES'],
+            ['ID_CARGO' => 30, 'CARGO' => 'JEFE GRUPO N° 1 FISCALIZACION TALCAHUANO'],
+            ['ID_CARGO' => 31, 'CARGO' => 'JEFE DE UNIDAD DE CHILLAN'],
+            ['ID_CARGO' => 32, 'CARGO' => 'JEFE DE UNIDAD DE SAN CARLOS']
         ]);
         // Población de la tabla 'calidad_juridica'
         CalidadJuridica::insert([
@@ -315,26 +345,7 @@ class CamposUsuarioNormalizados extends Seeder
         ['ID_COMUNA' => 100, 'COMUNA' => 'SAN JOAQUÍN', 'ID_REGION' => 7, 'ID_DIRECCION' => 30],
         */]);
 
-         //Población de la tabla 'resoluciones' con RESOLUCIONES DELEGATORIAS DICTADAS POR LA V D.R. VALPARAISO'
-         Resolucion::insert([
-            ['ID_RESOLUCION' => 1, 'NRO_RESOLUCION' => '1171', 'FECHA' => '1981-08-24', 'ID_CARGO' => 1, 'FUNCIONARIOS_DELEGADOS' => 'Jefes Depto. Fiscalización, Resoluciones y Jurídico', 'MATERIA' => 'Facultades de fiscalización, autorizaciones contabilidad e información tribunales.'],
-            ['ID_RESOLUCION' => 2, 'NRO_RESOLUCION' => '8819', 'FECHA' => '1994-06-27', 'ID_CARGO' => 1, 'FUNCIONARIOS_DELEGADOS' => '', 'MATERIA' => ''],
-            ['ID_RESOLUCION' => 3, 'NRO_RESOLUCION' => '730', 'FECHA' => '2000-08-21', 'ID_CARGO' => 1, 'FUNCIONARIOS_DELEGADOS' => '', 'MATERIA' => ''],
-            ['ID_RESOLUCION' => 4, 'NRO_RESOLUCION' => '5396', 'FECHA' => '1992-03-31', 'ID_CARGO' => 1, 'FUNCIONARIOS_DELEGADOS' => 'Jefe Depto. Avaluaciones, Funcionarios Avaluaciones', 'MATERIA' => 'Delega facultades relativas a roles de avalúo y facultades de fiscalización en Jefes de Unidad.'],
-            ['ID_RESOLUCION' => 5, 'NRO_RESOLUCION' => '3520', 'FECHA' => '1994-03-16', 'ID_CARGO' => 1, 'FUNCIONARIOS_DELEGADOS' => 'Jefe Depto Avaluaciones', 'MATERIA' => 'Agrega facultad autorizar deducción valor terreno (art. 17 inc. 5 IVA)'],
-            ['ID_RESOLUCION' => 6, 'NRO_RESOLUCION' => '1035', 'FECHA' => '1996-03-15', 'ID_CARGO' => 1, 'FUNCIONARIOS_DELEGADOS' => '', 'MATERIA' => 'Agrega Unidad Villa Alemana'],
-            ['ID_RESOLUCION' => 7, 'NRO_RESOLUCION' => '321', 'FECHA' => '1999-03-02', 'ID_CARGO' => 1, 'FUNCIONARIOS_DELEGADOS' => 'Jefes Unidad', 'MATERIA' => 'Autorización máquinas registradoras Jefes Unidad'],
-            ['ID_RESOLUCION' => 8, 'NRO_RESOLUCION' => '744', 'FECHA' => '2002-08-22', 'ID_CARGO' => 1, 'FUNCIONARIOS_DELEGADOS' => 'Jefe Unidad San Felipe', 'MATERIA' => 'Autorización máquinas registradoras Jefe Unidad San Felipe'],
-            ['ID_RESOLUCION' => 9, 'NRO_RESOLUCION' => '5325', 'FECHA' => '2009-08-05', 'ID_CARGO' => 2, 'FUNCIONARIOS_DELEGADOS' => 'Jefe Depto. Avaluaciones y Jefes de Grupo Y Convenio', 'MATERIA' => 'Resolver solicitudes reconsideración administrativa E 2827'],
-            ['ID_RESOLUCION' => 10, 'NRO_RESOLUCION' => '4491', 'FECHA' => '2010-06-22', 'ID_CARGO' => 2, 'FUNCIONARIOS_DELEGADOS' => '', 'MATERIA' => 'Modifica Res. 5396/92 (atribuciones Jefe Unidad Viña del Mar)'],
-            ['ID_RESOLUCION' => 11, 'NRO_RESOLUCION' => '9417', 'FECHA' => '1994-07-13', 'ID_CARGO' => 2, 'FUNCIONARIOS_DELEGADOS' => 'Jefe Depto. Resoluciones', 'MATERIA' => 'Delega funciones de fiscalización'],
-            ['ID_RESOLUCION' => 12, 'NRO_RESOLUCION' => '11345', 'FECHA' => '1993-08-11', 'ID_CARGO' => 2, 'FUNCIONARIOS_DELEGADOS' => 'Jefe Depto. Fiscalización y Jefes Unidad', 'MATERIA' => 'Dev. F. 22 hasta 200 UTM'],          
-            ['ID_RESOLUCION' => 13, 'NRO_RESOLUCION' => '1197', 'FECHA' => '1998-10-23', 'ID_CARGO' => 1, 'FUNCIONARIOS_DELEGADOS' => 'Jefe Depto. Fiscalización y Jefes Unidad', 'MATERIA' => ''],
-            ['ID_RESOLUCION' => 14, 'NRO_RESOLUCION' => '11729', 'FECHA' => '1994-09-02', 'ID_CARGO' => 1, 'FUNCIONARIOS_DELEGADOS' => 'Jefe Depto. Resoluciones', 'MATERIA' => 'Autoriza disminución de capital'],
-            ['ID_RESOLUCION' => 15, 'NRO_RESOLUCION' => '1595', 'FECHA' => '1995-02-24', 'ID_CARGO' => 1, 'FUNCIONARIOS_DELEGADOS' => 'Funcionarios que indica', 'MATERIA' => ''],
-            ['ID_RESOLUCION' => 16, 'NRO_RESOLUCION' => '591', 'FECHA' => '1997-06-18', 'ID_CARGO' => 1, 'FUNCIONARIOS_DELEGADOS' => 'Funcionarios de Termino de Giro', 'MATERIA' => 'Información herencia'],
-            ['ID_RESOLUCION' => 17, 'NRO_RESOLUCION' => '275', 'FECHA' => '1999-02-22', 'ID_CARGO' => 1, 'FUNCIONARIOS_DELEGADOS' => 'Jefe Depto. Resoluciones y Jefes de Unidad', 'MATERIA' => 'Devolución con motivo del Término de Giro'],
-        ]);
+        
 
     }
 }

@@ -14,24 +14,41 @@ class BusquedaFuncionarioController extends Controller
      */
     public function index(Request $request)
     {
+        //inputs importados desde la vista para busqueda por datos y cargos
         $nombres = $request->input('NOMBRES');
         $apellidos = $request->input('APELLIDOS');
+        $idCargo = $request->input('ID_DELEGADO');
 
+        //$resoluciones = Resolucion::join('users', 'users.ID_CARGO', '=', 'resoluciones.ID_DELEGADO')
+        
 
-        $resoluciones = Resolucion::join('users', 'users.ID_CARGO', '=', 'resoluciones.ID_CARGO')
-        ->where('users.NOMBRES', $nombres)
-        ->where('users.APELLIDOS', $apellidos)
-        ->get();
-        /*
-        $resoluciones = Resolucion::whereHas('user', function ($query) use ($nombres, $apellidos) {
-            $query->where('NOMBRES', $nombres)
-            ->where('APELLIDOS', $apellidos);
-        })->get();*/
+        //$query = Resolucion::join('users', 'users.ID_CARGO', '=', 'resoluciones.ID_DELEGADO');
+        $resoluciones = []; 
+        $cargoFuncionario = null; // Valor predeterminado
 
-        //dd($resoluciones);
+        if ($nombres && $apellidos) {
+            $query = Resolucion::join('users', 'users.ID_CARGO', '=', 'resoluciones.ID_DELEGADO')
+                ->where('users.NOMBRES', $nombres)
+                ->where('users.APELLIDOS', $apellidos);
+    
+            $resoluciones = $query->distinct()->get();
+    
+            if ($resoluciones->isNotEmpty()) {
+                $user = $resoluciones->first()->delegado->users->first();
+                if ($user) {
+                    $cargoFuncionario = $user->cargo->CARGO;
+                }
+            }
+        }elseif ($idCargo) {
+            //$resoluciones = Resolucion::where('ID_DELEGADO', $idCargo)->get();
+            $resoluciones = Resolucion::with('tipo', 'firmante', 'delegado', 'facultad')
+            ->where('ID_DELEGADO', $idCargo)
+            ->get();
+            $cargoFuncionario = Cargo::find($idCargo)->CARGO; 
+        }
 
         $cargos = Cargo::all();
-        return view('directivos.busquedafuncionario.index', compact('resoluciones','cargos'));
+        return view('directivos.busquedafuncionario.index', compact('resoluciones', 'cargos', 'nombres', 'apellidos','cargoFuncionario'));
     }
 
     /**

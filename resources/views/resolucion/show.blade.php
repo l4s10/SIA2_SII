@@ -21,19 +21,25 @@
             <p class="parameter"><strong>Fecha de ingreso:</strong></p>
             <p class="data">{{ date('Y-m-d', strtotime($resolucion->FECHA)) }}</p>
 
-            <p class="parameter"><strong>Autoridad:</strong></p>
-            <p class="data">{{ $resolucion->AUTORIDAD }}</p>
+            <p class="parameter"><strong>Tipo:</strong></p>
+            <p class="data">{{ $resolucion->tipo->NOMBRE }}</p>
 
-            <p class="parameter"><strong>Funcionarios delegados:</strong></p>
-            @if ($resolucion->FUNCIONARIOS_DELEGADOS)
-                <p class="data">{{ $resolucion->FUNCIONARIOS_DELEGADOS }}</p>
+            <p class="parameter"><strong>Firmante:</strong></p>
+            @if ($resolucion->ID_FIRMANTE)
+                <p class="data">{{ $resolucion->firmante->CARGO }}</p>
             @else
                 <p class="data"> - </p>
             @endif
 
-            <p class="parameter"><strong>Materia asociada:</strong></p>
-            @if ($resolucion->MATERIA)
-                <p class="data">{{ $resolucion->MATERIA }}</p>
+            <p class="parameter"><strong>Delegado:</strong></p>
+            @if ($resolucion->ID_DELEGADO)
+                <p class="data">{{ $resolucion->delegado->CARGO }}</p>
+            @else
+                <p class="data"> - </p>
+            @endif
+            <p class="parameter"><strong>Facultad:</strong></p>
+            @if ($resolucion->facultad)
+                <p class="data">{{ $resolucion->facultad->NOMBRE }}</p>
             @else
                 <p class="data"> - </p>
             @endif
