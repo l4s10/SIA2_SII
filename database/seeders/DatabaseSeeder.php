@@ -5,6 +5,7 @@ namespace Database\Seeders;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
 use App\Models\TipoReparacion;
+use App\Models\TipoResolucion;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -20,6 +21,9 @@ class DatabaseSeeder extends Seeder
             RolesAndPermissionsSeeder::class,
             FuncionariosSeeder::class,
             PolizasSeeder::class,
+            FacultadesSeeder::class,
+            TipoResolucionSeeder::class,
+            ResolucionesSeeder::class,
             //*Llamar primero a los tipos de objetos*/
             MaterialTipoSeeder::class,
             TipoEquiposSeeder::class,

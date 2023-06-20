@@ -1,11 +1,11 @@
 @extends('adminlte::page')
 
 <!-- TITULO DE LA PESTAÑA -->
-@section('title', 'Mostrar comunas')
+@section('title', 'Mostrar cargos')
 
 <!-- CABECERA DE LA PAGINA -->
 @section('content_header')
-    <h1>Lista de comunas</h1>
+    <h1>Lista de cargos</h1>
     @role('ADMINISTRADOR')
     <div class="alert alert-info" role="alert">
     <div><strong>Bienvenido Administrador:</strong> Acceso total al modulo.<div>
@@ -43,29 +43,25 @@
             });
         </script>
     @endif
-
-    <a href="{{route('comuna.create')}}" class="btn" style="background-color: #0099FF; color: white;">Ingresar nueva comuna</a>
+    
+    <a href="{{route('cargos.create')}}" class="btn" style="background-color: #0099FF; color: white;">Ingresar nuevo cargo</a>
         <div class="table-responsive">
-            <table id="comuna" class="table text-justify table-bordered mt-4 mx-auto" style="white-space:nowrap;">
+            <table id="cargos" class="table table-bordered mt-4 custom-table">
                 <thead class="bg-primary text-white">
                     <tr>
-                        <th scope="col">Comuna</th>
-                        <th scope="col">Region</th>
-                        <th scope="col">Dirección Regional</th>
+                        <th scope="col">Cargo</th>
                         <th scope="col">Administrar</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach($comunas as $comuna)
-                    <tr>
-                        <td>{{$comuna->COMUNA}}</td>
-                        <td>{{$comuna->regionAsociada->REGION}}</td>
-                        <td>{{$comuna->direccionRegionalAsociada->DIRECCION}}</td>
-                        <td>
-                            <a href="{{route('comuna.show',$comuna->ID_COMUNA)}}" class="btn btn-sia-primary btn-block"><i class="fa-solid fa-gear"></i></a>
-                        </td>
-                    </tr>
-                @endforeach
+                    @foreach($cargos as $id => $cargo)
+                        <tr>
+                            <td>{{ $cargo }}</td>
+                            <td>
+                                <a href="{{ route('cargos.show', $id) }}" class="btn btn-sia-primary btn-block"><i class="fa-solid fa-gear"></i></a>
+                            </td>
+                        </tr>
+                    @endforeach
                 </tbody>
             </table>
         </div>
@@ -76,7 +72,7 @@
     <link rel="stylesheet" href="/css/admin_custom.css">
     <style>
         .alert {
-        opacity: 0.7; /* Ajusta la opacidad a tu gusto */
+        opacity: 0.7; 
         background-color: #99CCFF;
         color:     #000000;
         }
@@ -87,11 +83,11 @@
     <!-- Para inicializar -->
     <script>
         $(document).ready(function () {
-            $('#comuna').DataTable({
-                "lengthMenu": [[5 ,10, 50, -1], [5, 10, 50, "All"]],
+            $('#cargos').DataTable({
+                "lengthMenu": [[5,10, 50, -1], [5, 10, 50, "All"]],
                 "responsive": true,
                 "columnDefs": [
-                    { "orderable": false, "targets": 3 } // La séptima columna no es ordenable
+                    { "orderable": false, "targets": 1 } // La séptima columna no es ordenable
                 ],
                 "language": {
                     "url": "https://cdn.datatables.net/plug-ins/1.11.3/i18n/es_es.json"

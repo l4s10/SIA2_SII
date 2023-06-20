@@ -34,17 +34,30 @@
 
             <div class="row g-3">
                 <div class="col">
-                    <label for="ID_CARGO" class="form-label"><i class="fa-solid fa-bookmark"></i> Autoridad:</label>
-                    <select id="ID_CARGO" name="ID_CARGO" class="form-control @error('ID_CARGO') is-invalid @enderror">
-                        <option value="" selected>--Seleccione Autoridad--</option>
+                    <label for="NOMBRE_COMPLETO" class="form-label"><i class="fa-solid fa-user"></i>Funcionario(a) en búsqueda:</label>
+                    <input type="text" class="form-control" id="NOMBRE_COMPLETO" name="NOMBRE_COMPLETO" value="{{ old('NOMBRE_COMPLETO', $nombres.' '.$apellidos) }}" readonly>
+                </div>
+                <div class="col">
+                    <label for="CARGO_FUNCIONARIO" class="form-label"><i class="fa-solid fa-user"></i> Cargo asociado:</label>
+                    <input type="text" class="form-control" id="CARGO_FUNCIONARIO" name="CARGO_FUNCIONARIO" value="{{ old('CARGO_FUNCIONARIO', $cargoFuncionario ?? '') }}" readonly>                
+                </div>
+
+            </div>
+
+            <div class="row g-3">
+                <div class="col">
+                    <label for="ID_DELEGADO" class="form-label"><i class="fa-solid fa-bookmark"></i> Autoridad:</label>
+                    <select id="ID_DELEGADO" name="ID_DELEGADO" class="form-control @error('ID_DELEGADO') is-invalid @enderror">
+                        <option value="" selected>--Seleccione Cargo Delegado--</option>
                         @foreach ($cargos as $cargo)
-                            <option value="{{ $cargo['ID_CARGO'] }}">{{ $cargo['CARGO'] }}</option>
+                            <option value="{{ $cargo->ID_CARGO }}">{{ $cargo->CARGO }}</option>
                         @endforeach
                     </select>
-                    @error('ID_CARGO')
+                    @error('ID_DELEGADO')
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
                 </div>
+
             </div>
 
             <button type="button" id="buscarPorCargo" class="btn btn-primary">Buscar por Cargo</button>
@@ -57,27 +70,36 @@
                         <tr>
                             <th scope="col">Resolución</th>
                             <th scope="col">Fecha</th>
-                            <th scope="col">Autoridad</th>
-                            <th scope="col">Funcionario(s) Delegado(s)</th>
-                            <th scope="col">Materia</th>
+                            <th scope="col">Tipo Resolucion</th>
+                            <th scope="col">Firmante</th>
+                            <th scope="col">Delegado</th>
+                            <th scope="col">Facultad</th>
+                            <th scope="col">Glosa</th>
                             <th scope="col">Documento</th>
-                            <th scope="col">Administrar</th>
                         </tr>
                     </thead>
-    
                     <tbody>
                         @foreach($resoluciones as $resolucion)
                             <tr>
                                 <td>{{ $resolucion->NRO_RESOLUCION }}</td>
                                 <td>{{ date('d/m/Y', strtotime($resolucion->FECHA)) }}</td>
-                                <td>{{ $resolucion->cargo->CARGO }}</td>
-                                <td>{{ $resolucion->FUNCIONARIOS_DELEGADOS }}</td>
-                                <td>{{ $resolucion->MATERIA }}</td>
+                                <td>{{ $resolucion->tipo->NOMBRE }}</td>
+                                <td>{{ $resolucion->firmante->CARGO }}</td>
+                                <td>{{ $resolucion->delegado->CARGO }}</td>
+                                <td>{{ $resolucion->facultad->NOMBRE }}</td>
                                 <td>
-                                    <a href="" class="btn btn-sia-primary btn-block"><i class="fa-solid fa-file-pdf"></i></a>
+                                    <span class="glosa-abreviada">{{ substr($resolucion->facultad->CONTENIDO, 0, 0) }}</span>
+                                    <button class="btn btn-sia-primary btn-block btn-expand" data-glosa="{{ $resolucion->facultad->CONTENIDO }}">
+                                        <i class="fa-solid fa-square-plus"></i>
+                                    </button>
+                                    <button class="btn btn-sia-primary btn-block btn-collapse" style="display: none;">
+                                        <i class="fa-solid fa-square-minus"></i>
+                                    </button>
+                                    
+                                    <span class="glosa-completa" style="display: none;">{{ $resolucion->facultad->CONTENIDO }}</span>
                                 </td>
                                 <td>
-                                    <a href="{{ route('resolucion.show', $resolucion->ID_RESOLUCION) }}" class="btn btn-sia-primary btn-block"><i class="fa-solid fa-gear"></i></a>
+                                    <a href="" class="btn btn-sia-primary btn-block"><i class="fa-solid fa-file-pdf"></i></a>
                                 </td>
                             </tr>
                         @endforeach
@@ -120,7 +142,7 @@
         $(function () {
             // Agregar evento de clic al botón de búsqueda por nombre
             $('#buscarPorDatos').on('click', function () {
-                $('#ID_CARGO').val(''); // Limpiar valor del input de ID_CARGO
+                $('#ID_DELEGADO').val(''); // Limpiar valor del input de ID_CARGO
                 $('#searchForm').submit(); // Enviar el formulario
             });
 
@@ -129,7 +151,37 @@
                 $('#NOMBRES').val(''); // Limpiar valor del input de NOMBRES
                 $('#APELLIDOS').val(''); // Limpiar valor del input de APELLIDOS
                 $('#searchForm').submit(); // Enviar el formulario
+                $('#tablaResoluciones').hide(); // Ocultar la tabla actual
+                $('#tablaOtra').show(); // Mostrar la otra tabla
             });
-        });
+
+
+            // Agrega evento de clic al botón de expansión
+            $('.btn-expand').on('click', function () {
+                var glosaAbreviada = $(this).siblings('.glosa-abreviada');
+                var glosaCompleta = $(this).siblings('.glosa-completa');
+                var btnExpand = $(this);
+                var btnCollapse = $(this).siblings('.btn-collapse');
+
+                glosaAbreviada.hide();
+                glosaCompleta.show();
+                btnExpand.hide();
+                btnCollapse.show();
+                //$(this).hide();
+            });
+
+            // Agregar evento de clic al botón de colapso
+            $('.btn-collapse').on('click', function () {
+                    var glosaAbreviada = $(this).siblings('.glosa-abreviada');
+                    var glosaCompleta = $(this).siblings('.glosa-completa');
+                    var btnExpand = $(this).siblings('.btn-expand');
+                    var btnCollapse = $(this);
+
+                    glosaAbreviada.show();
+                    glosaCompleta.hide();
+                    btnExpand.show();
+                    btnCollapse.hide();
+                });
+            });
     </script>
 @stop

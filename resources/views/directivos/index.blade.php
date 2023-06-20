@@ -61,21 +61,21 @@
 
     <div class="container-fluid d-flex justify-content-center align-items-center flex-column">
         <div class="card text-bg-primary mb-3 mx-auto col-sm-12 col-md-6" style="max-width: 100%; text-align: justify;">
-            <div class="card-header">Busqueda de información de funcionario</div>
+            <div class="card-header">Busqueda de información de resoluciones delegatorias asociadas a un funcionario</div>
             <div class="card-body">
-                <p class="card-text">Este módulo permite a los directivos buscar las resoluciones delegatorias asociadas a un funcionario, dado su <strong>'nombre' y 'apellido'</strong> o <strong>'cargo'</strong>.</p>
+                <p class="card-text">Este módulo permite a los directivos buscar las resoluciones delegatorias asociadas al cargo de un funcionario, dado su <strong>'nombre' y 'apellido'</strong> o <strong>'cargo'</strong>.</p>
             </div>
             <div class="card-footer">
                 <a class="btn btn-primary" href="{{ route('busquedafuncionario.index') }}"><i class="fa-solid fa-eye"></i> Seleccionar</a>
             </div>
         </div>
         <div class="card text-bg-primary mb-3 mx-auto col-sm-12 col-md-6" style="max-width: 100%; text-align: justify;">
-            <div class="card-header">Busqueda de información de funcionario</div>
+            <div class="card-header">Busqueda avanzada de resoluciones delegatorias</div>
             <div class="card-body">
-
+                <p class="card-text">Este módulo permite a los directivos buscar resoluciones delegatorias según distintos filtros</p>
             </div>
             <div class="card-footer">
-                <a class="btn btn-primary" href="{{route('repvehiculos.index')}}"><i class="fa-solid fa-eye"></i> Seleccionar</a>
+                <a class="btn btn-primary" href="{{route('busquedaavanzada.index')}}"><i class="fa-solid fa-eye"></i> Seleccionar</a>
             </div>
         </div>
     </div>

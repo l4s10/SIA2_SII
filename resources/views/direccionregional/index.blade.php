@@ -45,10 +45,10 @@
     @endif
 
 
-        <a href="{{route('direccionregional.create')}}" class="btn btn-sia-primary"> Ingresar nueva dirección regional</a>
-        <div class="table">
-            <table id="direcciones_regionales" class="table table-bordered mt-4">
-                <thead class="bg-sia-primary">
+    <a href="{{route('direccionregional.create')}}" class="btn" style="background-color: #0099FF; color: white;">Ingresar nueva dirección regional</a>
+        <div class="table-responsive">
+            <table id="direcciones_regionales" class="table text-justify table-bordered mt-4 mx-auto" style="white-space:nowrap;">
+                <thead class="bg-primary text-white">
                     <tr>
                         <th scope="col">Nombres</th>
                         <th scope="col">Administrar</th>
@@ -70,8 +70,14 @@
 @endsection
 
 @section('css')
-    {{-- Probando colores personalizados --}}
-    <link rel="stylesheet" href="{{asset('vendor/adminlte/dist/css/custom.css')}}">
+    <link rel="stylesheet" href="/css/admin_custom.css">
+    <style>
+        .alert {
+        opacity: 0.7; /* Ajusta la opacidad a tu gusto */
+        background-color: #99CCFF;
+        color:     #000000;
+        }
+    </style>
 @endsection
 
 @section('js')

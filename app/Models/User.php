@@ -149,9 +149,9 @@ class User extends Authenticatable
         return $this->belongsTo(Sexo::class, 'ID_SEXO');
     }
 
-    public function resoluciones()
+    /*public function resoluciones()
     {
-        return $this->hasMany(Resolucion::class, 'ID_USER', 'ID_USER');
-    }
+        return $this->hasMany(Resolucion::class, 'ID_RESOLUCION', 'ID_USER');
+    }*/
 
 }
