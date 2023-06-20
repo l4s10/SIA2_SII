@@ -45,13 +45,7 @@
         </div>
     </div>
 </div>
-<div class="row">
-    <div class="col-md-6">
-        <canvas id="myChart"></canvas>
-    </div>
-    <div class="col-md-6">
-        <canvas id="chart2"></canvas>
-    </div>
+<canvas id="myChart"></canvas>
 </div>
 @endsection
 
@@ -188,7 +182,7 @@
 
         // Cargar los datos JSON en el gráfico al cargar la página
         loadChartData();
-        
+
 
         // Escuchar el evento de cambio en los inputs de fecha
         startDateInput.addEventListener('change', updateChart);

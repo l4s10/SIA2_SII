@@ -114,9 +114,9 @@
     <link rel="stylesheet" href="/css/admin_custom.css">
 <style>
     .estado-en-revision {
-    color: #adad03e1;
-    background-color: #f7f702;
-    }      
+    color: #000000;
+    background-color: #F7F70B;
+    }
 
     .estado-aceptado {
     color: #ffffff;
@@ -124,13 +124,13 @@
     }
 
     .estado-en-espera {
-    color: #afafaf;
-    background-color: #e2e2e2;
+    color: #ffffff;
+    background-color: #7E7E7E;
     }
 
     .estado-rechazado {
-    color: #FF0000;
-    background-color: #ffb3b3;
+    color: #FFFFFF;
+    background-color: #F70B0B;
     }
 
     .estado-terminado {
@@ -139,8 +139,8 @@
     }
 
     .estado-ingresado {
-    color: #FFA500;
-    background-color: #feeec9;
+    color: #000000;
+    background-color: #FFA600;
     }
 </style>
     <style>
