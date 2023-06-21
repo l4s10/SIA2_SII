@@ -1,9 +1,9 @@
 <?php
 
 namespace App\Http\Controllers;
-use App\Models\User;
 use App\Models\Cargo;
 use App\Models\Resolucion;
+use App\Models\User;
 
 use Illuminate\Http\Request;
 
@@ -27,11 +27,11 @@ class BusquedaFuncionarioController extends Controller
         $cargoFuncionario = null; // Valor predeterminado
 
         if ($nombres && $apellidos) {
-            $query = Resolucion::join('users', 'users.ID_CARGO', '=', 'resoluciones.ID_DELEGADO')
-                ->where('users.NOMBRES', $nombres)
-                ->where('users.APELLIDOS', $apellidos);
-
-            $resoluciones = $query->distinct()->get();
+            $query = Resolucion::whereHas('delegado.users', function ($query) use ($nombres, $apellidos) {
+                $query->where('NOMBRES', $nombres)
+                    ->where('APELLIDOS', $apellidos);
+            });
+            $resoluciones = $query->with('tipo', 'firmante', 'delegado', 'facultad')->distinct()->get();
 
             if ($resoluciones->isNotEmpty()) {
                 $user = $resoluciones->first()->delegado->users->first();
@@ -41,16 +41,43 @@ class BusquedaFuncionarioController extends Controller
             }
         }elseif ($idCargo) {
             //$resoluciones = Resolucion::where('ID_DELEGADO', $idCargo)->get();
-            $resoluciones = Resolucion::with('tipo', 'firmante', 'delegado', 'facultad')
-            ->where('ID_DELEGADO', $idCargo)
-            ->get();
-            $cargoFuncionario = Cargo::find($idCargo)->CARGO;
+            $resoluciones = Resolucion::whereHas('delegado', function ($query) use ($idCargo) {
+                $query->where('ID_CARGO', $idCargo);
+            })->with('tipo', 'firmante', 'delegado', 'facultad')->get();
+            $cargoFuncionario = Cargo::where('ID_CARGO', $idCargo)->value('CARGO');
         }
 
         $cargos = Cargo::all();
         return view('directivos.busquedafuncionario.index', compact('resoluciones', 'cargos', 'nombres', 'apellidos','cargoFuncionario'));
     }
 
+    public function buscarFuncionarios(Request $request)
+    {
+        // Obtiene los valores de nombres y apellidos desde la solicitud AJAX
+        $nombres = strtolower($request->input('nombres'));
+        $apellidos = strtolower($request->input('apellidos'));
+
+        // Verifica los casos específicos para retornar los funcionarios
+        if (!empty($nombres) && !empty($apellidos)) {
+            // Realizar la búsqueda de funcionarios en la base de datos según los nombres y apellidos registrados, respetando el orden de sus caracteres 
+            $funcionarios = User::whereRaw("LOWER(NOMBRES) LIKE ? AND LOWER(APELLIDOS) LIKE ?", ["$nombres%", "$apellidos%"])
+                ->get();
+        } elseif (!empty($nombres)) {
+            // Realizar la búsqueda de funcionarios en la base de datos solo por nombres
+            $funcionarios = User::whereRaw("LOWER(NOMBRES) LIKE ?", ["$nombres%"])
+                ->get();
+        } elseif (!empty($apellidos)) {
+            // Realizar la búsqueda de funcionarios en la base de datos solo por apellidos
+            $funcionarios = User::whereRaw("LOWER(APELLIDOS) LIKE ?", ["$apellidos%"])
+                ->get();
+        } else {
+            // No se proporcionaron nombres ni apellidos, retornar una respuesta vacía
+            return response()->json([]);
+        }
+
+        // Retorna los resultados de búsqueda en formato JSON
+        return response()->json($funcionarios);
+    }
     /**
      * Show the form for creating a new resource.
      */

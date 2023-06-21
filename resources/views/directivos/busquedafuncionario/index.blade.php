@@ -31,6 +31,11 @@
             </div>
 
             <button type="button" id="buscarPorDatos" class="btn btn-primary">Buscar por Datos</button>
+            <div id="resultados-busqueda"></div>
+
+            <div id="mensaje-error"></div>
+
+
 
             <div class="row g-3">
                 <div class="col">
@@ -136,10 +141,55 @@
 @section('js')
     <!-- Incluir archivos JS flatpicker -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     <script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/es.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
     <script>
         $(function () {
+            var timeoutId; // Variable para almacenar el ID del temporizador
+
+            // Agregar eventos de cambio en los campos de nombres y apellidos
+            $('#NOMBRES, #APELLIDOS').on('input', function () {
+                clearTimeout(timeoutId); // Limpiar el temporizador si existe uno
+
+                // Establecer un nuevo temporizador para retrasar la búsqueda
+                timeoutId = setTimeout(function () {
+                    // Obtener los valores ingresados en los campos de nombres y apellidos
+                    var nombres = $('#NOMBRES').val();
+                    var apellidos = $('#APELLIDOS').val();
+
+                    // Realizar la solicitud AJAX para obtener los funcionarios en tiempo real
+                    $.ajax({
+                        url: '/consultaAjax', //URL del endpoint de consulta en tiempo real
+                        type: 'GET',
+                        data: {
+                            nombres: nombres,
+                            apellidos: apellidos
+                        },
+                        success: function(response) {
+                            var htmlResultados = generarHTMLResultados(response);
+                            $("#resultados-busqueda").html(htmlResultados);
+                        },
+                        error: function(xhr, status, error) {
+                            var mensajeError = "Se produjo un error: " + error;
+                            $("#mensaje-error").text(mensajeError);
+                        }   
+                    });
+                }, 500); // Esperar 500 ms después de la última entrada antes de realizar la búsqueda
+            });
+
+            function generarHTMLResultados(response) {
+                var html = "<h2>Resultados de la búsqueda:</h2>";
+                html += "<ul>";
+                response.forEach(function(item) {
+                    html += "<li>" + item.NOMBRES + " " + item.APELLIDOS + "</li>";
+                });
+                html += "</ul>";
+                return html;
+            }
+
             // Agregar evento de clic al botón de búsqueda por nombre
             $('#buscarPorDatos').on('click', function () {
                 $('#ID_DELEGADO').val(''); // Limpiar valor del input de ID_CARGO

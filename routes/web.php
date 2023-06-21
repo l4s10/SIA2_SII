@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\BusquedaFuncionarioController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\InventoryController;
 use App\Http\Controllers\HomeController;
@@ -76,6 +77,8 @@ Route::resource('facultades','App\Http\Controllers\FacultadController');
 
 //Rutas busquedafuncionario
 Route::resource('busquedafuncionario','App\Http\Controllers\BusquedaFuncionarioController');
+//Rutas Ajax para consultas en tiempo real
+Route::get('/consultaAjax', [BusquedaFuncionarioController::class, 'buscarFuncionarios']);
 //Rutas busquedaavanzada
 Route::resource('busquedaavanzada','App\Http\Controllers\BusquedaAvanzadaController');
 
