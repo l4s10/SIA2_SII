@@ -134,9 +134,9 @@
                         <label for="ubicacion">Ubicación</label>
                         <select name="ID_UBICACION" class="form-control @error('ID_UBICACION') is-invalid @enderror" required>
                             <option value="" disabled>Seleccione una ubicación</option>
-                            @foreach ($ubicaciones as $ubicacion)
+                            {{-- @foreach ($ubicaciones as $ubicacion)
                                 <option value="{{ $ubicacion->ID_UBICACION }}" {{ old('ID_UBICACION') == $ubicacion->ID_UBICACION ? 'selected' : '' }}>{{ $ubicacion->UBICACION }}</option>
-                            @endforeach
+                            @endforeach --}}
                         </select>
 
                         @error('ID_UBICACION')

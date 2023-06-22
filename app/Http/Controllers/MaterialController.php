@@ -10,7 +10,7 @@ use App\Models\TipoMaterial;
 //Importamos paquete de validacion
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Auth;
-
+use Dompdf\Dompdf;
 
 class MaterialController extends Controller
 {
@@ -162,4 +162,21 @@ class MaterialController extends Controller
         }
         return redirect(route('materiales.index'));
     }
+    public function exportToPDF()
+{
+    $materiales = Material::all();
+
+    $html = view('materiales.pdf', compact('materiales'))->render();
+
+    $dompdf = new Dompdf();
+    $dompdf->loadHtml($html);
+
+    $dompdf->setPaper('A4', 'portrait');
+    $dompdf->render();
+
+    $dompdf->stream("materiales.pdf", ["Attachment" => false]);
+}
+
+
+
 }

@@ -58,6 +58,7 @@
             </script>
         @endif
 
+        <a href="{{ route('materiales.exportar-pdf') }}" class="btn btn-primary">Exportar a PDF</a>
 
         <div class="table-responsive">
             <table id="materiales" class="table table-bordered mt-4">

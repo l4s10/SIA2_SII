@@ -35,6 +35,8 @@ Route::get('/reservas', function(){
 })->name('reservas.dashboard');
 //Rutas para materiales
 Route::resource('materiales','App\Http\Controllers\MaterialController');
+Route::get('materiales/exportar-pdf', 'App\Http\Controllers\MaterialController@exportToPDF')->name('materiales.exportar-pdf');
+
 //Rutas para tipos de materiales.
 Route::resource('tipomaterial','App\Http\Controllers\TipoMaterialController');
 //Rutas para solicitud de materiales

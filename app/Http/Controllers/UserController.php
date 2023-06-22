@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Auth;
 use Spatie\Permission\Models\Role;
 
 //*Importamos modelos de las tablas normalizadas para enviarlas a las vistas*/
-use App\Models\Departamento;
+// use App\Models\Departamento;
 use App\Models\Region;
 use App\Models\Ubicacion;
 use App\Models\Grupo;
@@ -51,15 +51,15 @@ class UserController extends Controller
     {
         $roles = Role::all();
         //*Recuperamos los datos y los enviamos*/
-        $departamentos = Departamento::all();
+        $departamentos = Ubicacion::all();
         $regiones = Region::all();
-        $ubicaciones = Ubicacion::all();
+        // $ubicaciones = Ubicacion::all();
         $grupos = Grupo::all();
         $escalafones = Escalafon::all();
         $grados = Grado::all();
         $calidadesJuridicas = CalidadJuridica::all();
         $sexos = Sexo::all();
-        return view('funcionarios.create',compact('roles','departamentos','regiones','ubicaciones','grupos','escalafones','grados','calidadesJuridicas','sexos'));
+        return view('funcionarios.create',compact('roles','departamentos','regiones','grupos','escalafones','grados','calidadesJuridicas','sexos'));
     }
 
     /**
