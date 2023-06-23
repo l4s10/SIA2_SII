@@ -77,7 +77,7 @@ Route::resource('facultades','App\Http\Controllers\FacultadController');
 
 //Rutas busquedafuncionario
 Route::resource('busquedafuncionario','App\Http\Controllers\BusquedaFuncionarioController');
-//Rutas Ajax para consultas en tiempo real
+//Rutas Ajax para consulta en tiempo real de funcionarios
 Route::get('/consultaAjax', [BusquedaFuncionarioController::class, 'buscarFuncionarios']);
 //Rutas busquedaavanzada
 Route::resource('busquedaavanzada','App\Http\Controllers\BusquedaAvanzadaController');

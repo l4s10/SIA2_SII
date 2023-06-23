@@ -3,72 +3,121 @@
 @section('title', 'busqueda de resoluciones')
 
 @section('content_header')
-    <h1>Información sobre resoluciones de directivos</h1>
+    <h1>Búsqueda de Resoluciones Delegatorias de Facultades</h1>
 @stop
 
 @section('content')
     <div class="container">
         <form id="searchForm" action="{{ route('busquedafuncionario.index') }}" method="GET">
             @csrf
-            <div class="row g-3">
-                <input type="text" name="id" value="{{ auth()->user()->id }}" hidden>
-
-                <div class="col">
-                    <label for="NOMBRES" class="form-label"><i class="fa-solid fa-user"></i>Nombres:</label>
-                    <input type="string" class="form-control" id="NOMBRES" name="NOMBRES" value="{{ old('NOMBRES') }}">
-                    @error('NOMBRES')
+            <fieldset>
+                <legend><i class="fa-solid fa-caret-right"></i> Resoluciones asociadas a un funcionario específico</legend>
+                <div class="row g-3">
+                    <input type="text" name="id" value="{{ auth()->user()->id }}" hidden>
+            
+                    <div class="col">
+                        <label for="NOMBRES" class="form-label">Nombres:</label>
+                        <input type="string" class="form-control" id="NOMBRES" name="NOMBRES" value="{{ old('NOMBRES') }}" placeholder="1er NOMBRE 2do NOMBRE">
+                        @error('NOMBRES')
                         <div class="invalid-feedback">{{ $message }}</div>
-                    @enderror
-                </div>
-
-                <div class="col">
-                    <label for="APELLIDOS" class="form-label"><i class="fa-solid fa-user"></i>Apellidos:</label>
-                    <input type="string" class="form-control" id="APELLIDOS" name="APELLIDOS" value="{{ old('APELLIDOS') }}">
-                    @error('APELLIDOS')
+                        @enderror
+                    </div>
+            
+                    <div class="col">
+                        <label for="APELLIDOS" class="form-label">Apellidos:</label>
+                        <input type="string" class="form-control" id="APELLIDOS" name="APELLIDOS" value="{{ old('APELLIDOS') }}" placeholder="1er APELLIDO 2do APELLIDO">
+                        @error('APELLIDOS')
                         <div class="invalid-feedback">{{ $message }}</div>
-                    @enderror
+                        @enderror
+                    </div>
+            
+                    <div class="col">
+                        <label for="RUT" class="form-label">Rut:</label>
+                        <input type="string" class="form-control" id="RUT" name="RUT" value="{{ old('RUT') }}" placeholder="12345678-9">
+                        @error('RUT')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                    </div>
+            
+                    <div class="col">
+                        <label for="ID_CARGO" class="form-label">Cargo:</label>
+                        <div class="input-group">
+                            <select id="ID_CARGO" name="ID_CARGO" class="form-control @error('ID_CARGO') is-invalid @enderror">
+                                <option value="" selected>--Seleccione Cargo--</option>
+                                @foreach ($cargos as $cargo)
+                                    <option value="{{ $cargo->ID_CARGO }}">{{ $cargo->CARGO }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        @error('ID_CARGO')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                    </div>
                 </div>
-            </div>
+            </fieldset>
+            
+            <div  id="mensaje-error"></div>
 
-            <button type="button" id="buscarPorDatos" class="btn btn-primary">Buscar por Datos</button>
+            <div style="margin-top: 60px;"></div> <!-- Espacio entre las funcionalidades -->
             <div id="resultados-busqueda"></div>
 
-            <div id="mensaje-error"></div>
+            <fieldset>
+                <legend><i class="fa-solid fa-caret-right"></i> Resoluciones asociadas a un cargo específico</legend>
 
-
-
-            <div class="row g-3">
-                <div class="col">
-                    <label for="NOMBRE_COMPLETO" class="form-label"><i class="fa-solid fa-user"></i>Funcionario(a) en búsqueda:</label>
-                    <input type="text" class="form-control" id="NOMBRE_COMPLETO" name="NOMBRE_COMPLETO" value="{{ old('NOMBRE_COMPLETO', $nombres.' '.$apellidos) }}" readonly>
+                <div class="row g-3">
+                    <div class="col d-flex flex-column align-items-start">
+                        <label for="ID_DELEGADO" class="form-label">Autoridad:</label>
+                        <div class="input-group custom-input-group">
+                            <select id="ID_DELEGADO" name="ID_DELEGADO" class="w-50 custom-select @error('ID_DELEGADO') is-invalid @enderror">
+                                <option value="" selected>--Seleccione Cargo Delegado--</option>
+                                @foreach ($cargos as $cargo)
+                                    <option value="{{ $cargo->ID_CARGO }}">{{ $cargo->CARGO }}</option>
+                                @endforeach
+                            </select>
+                            <div class="input-group-append">
+                                <button type="button" id="buscarPorCargo" class="btn btn-primary">Buscar por Cargo</button>
+                            </div>
+                        </div>
+                        @error('ID_DELEGADO')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                    </div>
                 </div>
-                <div class="col">
-                    <label for="CARGO_FUNCIONARIO" class="form-label"><i class="fa-solid fa-user"></i> Cargo asociado:</label>
-                    <input type="text" class="form-control" id="CARGO_FUNCIONARIO" name="CARGO_FUNCIONARIO" value="{{ old('CARGO_FUNCIONARIO', $cargoFuncionario ?? '') }}" readonly>                
-                </div>
-
-            </div>
-
-            <div class="row g-3">
-                <div class="col">
-                    <label for="ID_DELEGADO" class="form-label"><i class="fa-solid fa-bookmark"></i> Autoridad:</label>
-                    <select id="ID_DELEGADO" name="ID_DELEGADO" class="form-control @error('ID_DELEGADO') is-invalid @enderror">
-                        <option value="" selected>--Seleccione Cargo Delegado--</option>
-                        @foreach ($cargos as $cargo)
-                            <option value="{{ $cargo->ID_CARGO }}">{{ $cargo->CARGO }}</option>
-                        @endforeach
-                    </select>
-                    @error('ID_DELEGADO')
-                        <div class="invalid-feedback">{{ $message }}</div>
-                    @enderror
-                </div>
-
-            </div>
-
-            <button type="button" id="buscarPorCargo" class="btn btn-primary">Buscar por Cargo</button>
+            </fieldset> 
         </form>
 
+        <div style="margin-top: 60px;"></div> <!-- Espacio entre las funcionalidades -->
+            @if($busquedaResolucionFuncionario||$busquedaResolucionFuncionarioFallida)
+                <div class="row g-3">
+                    <div style="margin-top: 50px;"></div> <!-- Espacio entre las funcionalidades -->
+                    <legend><i class="fa-solid fa-caret-right"></i> Resultados de la búsqueda</legend>
+                    <div style="margin-top: 5px;"></div> <!-- Espacio entre las funcionalidades -->
+                    <div class="col">
+                        <label for="NOMBRE_COMPLETO" class="form-label"><i class="fa-solid fa-user"></i> Funcionario(a):</label>
+                        <input type="text" class="form-control" id="NOMBRE_COMPLETO" name="NOMBRE_COMPLETO" value="{{ old('NOMBRE_COMPLETO', $nombres.' '.$apellidos) }}" readonly>
+                    </div>
+                    <div class="col">
+                        <label for="CARGO_FUNCIONARIO" class="form-label"><i class="fa-solid fa-bookmark"></i> Cargo asociado:</label>
+                        <input type="text" class="form-control" id="CARGO_FUNCIONARIO" name="CARGO_FUNCIONARIO" value="{{ old('CARGO_FUNCIONARIO', $cargoFuncionario ?? '') }}" readonly>                
+                    </div>
+                    <div class="col">
+                        <label for="RUT" class="form-label"><i class="fa-solid fa-address-card"></i> Rut:</label>
+                        <input type="text" class="form-control" id="RUT" name="RUT" value="{{ old('RUT', $rutRes ?? '') }}" readonly>                
+                    </div>
+                </div>
+            @else
+                @if($busquedaResolucionCargo||$busquedaResolucionCargoFallida)
+                    <legend><i class="fa-solid fa-caret-right"></i> Resoluciones</legend>
+                    <div style="margin-top: 5px;"></div> <!-- Espacio entre las funcionalidades -->
+                    <div class="col">
+                        <label for="CARGO_FUNCIONARIO" class="form-label"><i class="fa-solid fa-bookmark"></i> Resoluciones asociadas al cargo:</label>
+                        <input type="text" class="form-control" id="CARGO_FUNCIONARIO" name="CARGO_FUNCIONARIO" value="{{ old('CARGO_FUNCIONARIO', $cargoResolucion ?? '') }}" readonly>                
+                    </div>
+                @endif
+            @endif
+
         @if(count($resoluciones) > 0)
+            <div style="margin-top: 60px;"></div> <!-- Espacio entre las funcionalidades -->
             <div class="table-responsive">
                 <table id="resoluciones" class="table table-bordered mt-4 custom-table">
                     <thead class="bg-primary text-white">
@@ -112,7 +161,20 @@
                 </table>
             </div>
         @else
-            <div class="alert alert-info">No se encontraron resoluciones.</div>
+            @if((session('busquedaAjax')))
+                <div style="margin-top: 60px;"></div> <!-- Espacio entre las funcionalidades -->
+                <div class="alert alert-info">No se encontraron resoluciones para el funcionario seleccionado.</div>
+                {{ session()->forget('busquedaAjax') }}
+            @else
+                @if($busquedaResolucionCargoFallida)
+                    <div style="margin-top: 60px;"></div> <!-- Espacio entre las funcionalidades -->
+                    <div class="alert alert-info">No se encontraron resoluciones para el cargo seleccionado.</div>
+                    {{ session()->forget('busquedaResolucionCargoFallida') }}
+                @else
+                    <div style="margin-top: 60px;"></div> <!-- Espacio entre las funcionalidades -->
+                    <div class="alert alert-info">Ingrese algún parámetro para obtener resoluciones</div>
+                @endif
+            @endif
         @endif
     </div>
 @stop
@@ -126,12 +188,15 @@
         .textarea-container {
             margin-top: 10px; /* Ajusta el valor según sea necesario */
         }
-    </style>
-        <style>
+
         .alert {
-        opacity: 0.7; 
-        background-color: #99CCFF;
-        color:     #000000;
+            opacity: 0.7; 
+            background-color: #99CCFF;
+            color:     #000000;
+        }
+
+        .custom-input-group {
+            width: 50%; /* Ajusta el valor según sea necesario */
         }
     </style>
 
@@ -149,62 +214,92 @@
     <script>
         $(function () {
             var timeoutId; // Variable para almacenar el ID del temporizador
-
+            
             // Agregar eventos de cambio en los campos de nombres y apellidos
-            $('#NOMBRES, #APELLIDOS').on('input', function () {
+            $('#NOMBRES, #APELLIDOS, #RUT, #ID_CARGO').on('input', function () {       
                 clearTimeout(timeoutId); // Limpiar el temporizador si existe uno
+                // Obtener los valores ingresados en los campos de nombres y apellidos
+                var nombres = $('#NOMBRES').val();
+                var apellidos = $('#APELLIDOS').val();
+                var rut = $('#RUT').val();
+                var idCargoFuncionario = $('#ID_CARGO').val();
 
-                // Establecer un nuevo temporizador para retrasar la búsqueda
-                timeoutId = setTimeout(function () {
-                    // Obtener los valores ingresados en los campos de nombres y apellidos
-                    var nombres = $('#NOMBRES').val();
-                    var apellidos = $('#APELLIDOS').val();
+                if (!nombres && !apellidos && !rut && !idCargoFuncionario) {
+                         // Si todos los campos están vacíos, borrar la tabla de resultados
+                    $("#resultados-busqueda").empty();
+                } else {
+                    // Establecer un nuevo temporizador para retrasar la búsqueda
+                    timeoutId = setTimeout(function () {
+                        // Realizar la solicitud AJAX para obtener los funcionarios en tiempo real
+                        $.ajax({
+                            url: '/consultaAjax', // URL del endpoint de consulta en tiempo real
+                            type: 'GET',
+                            data: {
+                                nombres: nombres,
+                                apellidos: apellidos,
+                                rut: rut,
+                                idCargoFuncionario: idCargoFuncionario
+                            },
+                            success: function (response) {
+                                if (response.length > 0) {
+                                    var htmlResultados = generarHTMLResultados(response);
+                                    $("#resultados-busqueda").html(htmlResultados);
+                                } else {
+                                    $("#resultados-busqueda").html('<h4>No existen funcionarios para esos registros</h4>');
+                                    $("#resultados-busqueda").append('<div style="margin-top: 60px;"></div>');
 
-                    // Realizar la solicitud AJAX para obtener los funcionarios en tiempo real
-                    $.ajax({
-                        url: '/consultaAjax', //URL del endpoint de consulta en tiempo real
-                        type: 'GET',
-                        data: {
-                            nombres: nombres,
-                            apellidos: apellidos
-                        },
-                        success: function(response) {
-                            var htmlResultados = generarHTMLResultados(response);
-                            $("#resultados-busqueda").html(htmlResultados);
-                        },
-                        error: function(xhr, status, error) {
-                            var mensajeError = "Se produjo un error: " + error;
-                            $("#mensaje-error").text(mensajeError);
-                        }   
-                    });
-                }, 500); // Esperar 500 ms después de la última entrada antes de realizar la búsqueda
+                                }
+                            },
+                            error: function (xhr, status, error) {
+                                var mensajeError = "Se produjo un error: " + error;
+                                $("#mensaje-error").text(mensajeError);
+                            }
+                        });
+                    }, 500); // Esperar 500 ms después de la última entrada antes de realizar la búsqueda
+                }
             });
 
-            function generarHTMLResultados(response) {
-                var html = "<h2>Resultados de la búsqueda:</h2>";
-                html += "<ul>";
-                response.forEach(function(item) {
-                    html += "<li>" + item.NOMBRES + " " + item.APELLIDOS + "</li>";
-                });
-                html += "</ul>";
-                return html;
+            function obtenerNombreCargo(idCargoFuncionario) {
+                // Aquí debes implementar la lógica para obtener el nombre del cargo
+                var cargoSeleccionado = $('#ID_CARGO option[value="' + idCargoFuncionario + '"]').text();
+                return cargoSeleccionado;
             }
 
-            // Agregar evento de clic al botón de búsqueda por nombre
-            $('#buscarPorDatos').on('click', function () {
-                $('#ID_DELEGADO').val(''); // Limpiar valor del input de ID_CARGO
-                $('#searchForm').submit(); // Enviar el formulario
-            });
+            
+            function generarHTMLResultados(response) {
+                var html = '<h4>Seleccione un funcionario(a)</h4>';
+                html += '<table class="table"><thead><tr><th>Nombres</th><th>Apellidos</th><th>Rut</th><th>Cargo</th><th class="text-center">Ver Resoluciones</th></tr></thead><tbody>';
+                response.forEach(function (item) {
+                    var cargo = obtenerNombreCargo(item.ID_CARGO); // Obtener el nombre del cargo utilizando la función obtenerNombreCargo
+                    html += "<tr><td>" + item.NOMBRES + "</td><td>" + item.APELLIDOS + "</td><td>" + item.RUT + "</td><td>" + cargo + "</td>";
+                    html += '<td class="text-center"><button class="btn btn-primary btn-buscar-datos" data-nombres="' + item.NOMBRES + '" data-apellidos="' + item.APELLIDOS + '" data-rut="' + item.RUT + '" data-id-cargo="' + item.ID_CARGO + '" onclick="verResoluciones"><i class="fa-solid fa-magnifying-glass"></i></button></td>';
+                });
+                html += '</tbody></table>';
+                return html;
+            }
 
             // Agregar evento de clic al botón de búsqueda por cargo
             $('#buscarPorCargo').on('click', function () {
                 $('#NOMBRES').val(''); // Limpiar valor del input de NOMBRES
                 $('#APELLIDOS').val(''); // Limpiar valor del input de APELLIDOS
                 $('#searchForm').submit(); // Enviar el formulario
-                $('#tablaResoluciones').hide(); // Ocultar la tabla actual
-                $('#tablaOtra').show(); // Mostrar la otra tabla
             });
 
+            $(document).on('click', '.btn-buscar-datos', function() {
+                var nombres = $(this).data('nombres');
+                var apellidos = $(this).data('apellidos');
+                var rut = $(this).data('rut');
+                var idCargoFuncionario = $(this).data('id-cargo');
+
+                // Asignar los valores a los campos correspondientes
+                $('#NOMBRES').val(nombres);
+                $('#APELLIDOS').val(apellidos);
+                $('#RUT').val(rut);
+                $('#ID_CARGO').val(idCargoFuncionario);
+
+                // Enviar el formulario
+                $('#searchForm').submit();
+            });
 
             // Agrega evento de clic al botón de expansión
             $('.btn-expand').on('click', function () {
@@ -233,5 +328,18 @@
                     btnCollapse.hide();
                 });
             });
+
+            $(document).ready(function () {
+            $('#resoluciones').DataTable({
+                "lengthMenu": [[5,10, 50, -1], [5, 10, 50, "All"]],
+                "responsive": true,
+                "columnDefs": [
+                    { "orderable": false, "targets": 7 } // La séptima columna no es ordenable
+                ],
+                "language": {
+                    "url": "https://cdn.datatables.net/plug-ins/1.11.3/i18n/es_es.json"
+                },
+            });
+        });
     </script>
 @stop

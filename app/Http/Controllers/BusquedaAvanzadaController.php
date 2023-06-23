@@ -43,32 +43,35 @@ class BusquedaAvanzadaController extends Controller
         $firmantesReq = [];
         $fechasReq = [];
         $nrosReq = [];*/
-        $resoluciones = [];
+        $resoluciones = Resolucion::query();
 
         if ($tiposReq) {
-            $resoluciones = Resolucion::where('ID_TIPO', $tiposReq)->get();
+            $resoluciones->where('ID_TIPO', $tiposReq);
         }
         if ($facultadesReq) {
-            $resoluciones = Resolucion::where('ID_FACULTAD', $facultadesReq)->get();
+            $resoluciones->where('ID_FACULTAD', $facultadesReq);
         }
         if ($delegadosReq) {
-            $resoluciones = Resolucion::where('ID_DELEGADO', $delegadosReq)->get();
+            $resoluciones->where('ID_DELEGADO', $delegadosReq);
         }
         if ($firmantesReq) {
-            $resoluciones = Resolucion::where('ID_FIRMANTE', $firmantesReq)->get();
+            $resoluciones->where('ID_FIRMANTE', $firmantesReq);
         }
         if ($fechasReq) {
-            $resoluciones = Resolucion::where('FECHA', $fechasReq)->get();
+            $resoluciones->where('FECHA', $fechasReq);
         }
         if ($nrosReq) {
-            $resoluciones = Resolucion::where('NRO_RESOLUCION', $nrosReq)->get();
+            $resoluciones->where('NRO_RESOLUCION', $nrosReq);
         }
         if ($artsReq) {
-            $resoluciones = Resolucion::where('ID_FACULTAD', $artsReq)->get();
-        }
+            $resoluciones = Resolucion::whereHas('facultad', function ($query) use ($artsReq) {
+                $query->where('ID_ART_LEY', $artsReq);
+            })->get();        }
         if ($leyReq) {
-            $resoluciones = Resolucion::where('ID_FACULTAD', $leyReq)->get();
+            $resoluciones->where('ID_LEY', $leyReq);
         }
+
+        $resoluciones = $resoluciones->get();
 
         return view('directivos.busquedaavanzada.index', compact('tipos','facultades','delegados','firmantes','fechas','nros','resoluciones'));
     }
