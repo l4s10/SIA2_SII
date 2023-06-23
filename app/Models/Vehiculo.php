@@ -26,4 +26,8 @@ class Vehiculo extends Model
     {
         return $this->belongsTo(TipoVehiculo::class, 'ID_TIPO_VEH');
     }
+    public function ubicacion()
+    {
+        return $this->belongsTo(Ubicacion::class, 'UNIDAD_VEHICULO');
+    }
 }

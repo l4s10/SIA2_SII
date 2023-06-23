@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Vehiculo;
+use App\Models\TipoVehiculo;
+use App\Models\Ubicacion;
 use Illuminate\Http\Request;
 
 class VehiculoController extends Controller
@@ -26,7 +28,9 @@ class VehiculoController extends Controller
      */
     public function create()
     {
-        return view('vehiculos.create');
+        $tipos = TipoVehiculo::all();
+        $ubicaciones = Ubicacion::all();
+        return view('vehiculos.create', compact('tipos','ubicaciones'));
     }
 
     /**
@@ -40,7 +44,7 @@ class VehiculoController extends Controller
 
         $vehiculos = new Vehiculo();
         $vehiculos->PATENTE_VEHICULO = $request->get('PATENTE_VEHICULO');
-        $vehiculos->TIPO_VEHICULO = $request->get('TIPO_VEHICULO');
+        $vehiculos->ID_TIPO_VEH = $request->get('ID_TIPO_VEH');
         $vehiculos->MARCA = $request->get('MARCA');
         $vehiculos->MODELO_VEHICULO = $request->get('MODELO_VEHICULO');
         $vehiculos->ANO_VEHICULO = $request->get('ANO_VEHICULO');
@@ -48,7 +52,7 @@ class VehiculoController extends Controller
         $vehiculos->ESTADO_VEHICULO = $request->get('ESTADO_VEHICULO');
         //Una vez seteados, guardamos con la siguiente instruccion.
         $vehiculos->save();
-        return redirect('/vehiculos');
+        return redirect(route('vehiculos.index'));
     }
 
     /**

@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string('MARCA', 128)->nullable();
             $table->string('MODELO_VEHICULO', 128)->nullable();
             $table->string('ANO_VEHICULO', 128)->nullable();
-            $table->string('UNIDAD_VEHICULO', 128)->nullable();
+            $table->string('UNIDAD_VEHICULO', 128)->references('ID_UBICACION')->on('ubicacion');
             $table->string('ESTADO_VEHICULO', 128)->nullable();
             $table->timestamps();
         });

@@ -83,6 +83,8 @@ Route::resource('busquedafuncionario','App\Http\Controllers\BusquedaFuncionarioC
 Route::resource('busquedaavanzada','App\Http\Controllers\BusquedaAvanzadaController');
 
 // Rutas para el controlador SolicitudSalaController
+Route::get('/solicitudes/all', [SolicitudSalaController::class, 'getAllSolicitudes'])->name('solicitudes.all');
+Route::get('/solicitudes/byDates', [SolicitudSalaController::class, 'getSolicitudesByDates'])->name('solicitudes.byDates');
 Route::resource('reserva/sala', 'App\Http\Controllers\SolicitudSalaController')->names([
     'index' => 'solicitud.salas.index',
     'create' => 'solicitud.salas.create',
@@ -92,8 +94,6 @@ Route::resource('reserva/sala', 'App\Http\Controllers\SolicitudSalaController')-
     'update' => 'solicitud.salas.update',
     'destroy' => 'solicitud.salas.destroy',
 ]);
-Route::get('/solicitudes/all', [SolicitudSalaController::class, 'getAllSolicitudes'])->name('solicitudes.all');
-Route::get('/solicitudes/byDates', [SolicitudSalaController::class, 'getSolicitudesByDates'])->name('solicitudes.byDates');
 // Rutas para el controlador SolicitudBodegasControler
 Route::resource('reserva/bodega', 'App\Http\Controllers\SolicitudBodegasController')->names([
     'index' => 'solicitud.bodegas.index',
@@ -120,7 +120,12 @@ Route::resource('funcionarios','App\Http\Controllers\UserController');
 Route::post('/update-stock', [InventoryController::class, 'updateStock'])->name('update-stock');
 
 Route::get('/home', [HomeController::class, 'index']);
-Route::get('/reportes', [ReporteController::class, 'index']);
+
+// Esta es la ruta GET para mostrar la página
+Route::get('/reportes', [ReporteController::class, 'index'])->name('reportes.index');
+// Esta es la ruta POST para recibir las solicitudes AJAX
+Route::post('/reportes/data', [ReporteController::class, 'obtenerDatos'])->name('reportes.data');
+
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/dashboard', function () {
