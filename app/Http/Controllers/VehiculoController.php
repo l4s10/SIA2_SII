@@ -38,21 +38,15 @@ class VehiculoController extends Controller
      */
     public function store(Request $request)
     {
-        // $data = $request->except('_token');
-        // Vehiculo::create($data);
-        // return redirect('/vehiculos');
+        try {
+            $vehiculo = new Vehiculo();
+            $vehiculo->fill($request->all());
+            $vehiculo->save();
 
-        $vehiculos = new Vehiculo();
-        $vehiculos->PATENTE_VEHICULO = $request->get('PATENTE_VEHICULO');
-        $vehiculos->ID_TIPO_VEH = $request->get('ID_TIPO_VEH');
-        $vehiculos->MARCA = $request->get('MARCA');
-        $vehiculos->MODELO_VEHICULO = $request->get('MODELO_VEHICULO');
-        $vehiculos->ANO_VEHICULO = $request->get('ANO_VEHICULO');
-        $vehiculos->UNIDAD_VEHICULO = $request->get('UNIDAD_VEHICULO');
-        $vehiculos->ESTADO_VEHICULO = $request->get('ESTADO_VEHICULO');
-        //Una vez seteados, guardamos con la siguiente instruccion.
-        $vehiculos->save();
-        return redirect(route('vehiculos.index'));
+            return redirect()->route('vehiculos.index')->with('success', 'El vehículo se ha creado exitosamente.');
+        } catch (\Exception $e) {
+            return redirect()->back()->withInput()->with('error', 'Error al crear el vehículo: ');
+        }
     }
 
     /**
@@ -68,7 +62,10 @@ class VehiculoController extends Controller
      */
     public function edit(Vehiculo $vehiculo)
     {
-        //
+        $tipos = TipoVehiculo::all();
+        $ubicaciones = Ubicacion::all();
+
+        return view('vehiculos.edit', compact('vehiculo', 'tipos', 'ubicaciones'));
     }
 
     /**
@@ -76,7 +73,13 @@ class VehiculoController extends Controller
      */
     public function update(Request $request, Vehiculo $vehiculo)
     {
-        //
+        try {
+            $vehiculo->update($request->all());
+
+            return redirect()->route('vehiculos.index')->with('success', 'El vehículo se ha actualizado exitosamente.');
+        } catch (\Exception $e) {
+            return redirect()->back()->withInput()->with('error', 'Error al actualizar el vehículo: ' . $e->getMessage());
+        }
     }
 
     /**

@@ -1,6 +1,6 @@
 @extends('adminlte::page')
 
-@section('title', 'CRUD con Laravel 10')
+@section('title', 'Ingresar Vehiculo')
 
 @section('content_header')
     <h1>Ingresar vehículo</h1>
@@ -78,14 +78,14 @@
                 @enderror
             </div>
             <div class="col">
-                <label for="UNIDAD_VEHICULO" class="form-label">Ubicación</label>
-                <select name="UNIDAD_VEHICULO" id="UNIDAD_VEHICULO" class="form-control">
+                <label for="ID_UBICACION" class="form-label">Ubicación</label>
+                <select name="ID_UBICACION" id="ID_UBICACION" class="form-control">
                     <option value="">-- SELECCIONE UNA UBICACIÓN --</option>
                     @foreach ($ubicaciones as $ubicacion)
                         <option value="{{$ubicacion->ID_UBICACION}}">{{$ubicacion->UBICACION}}</option>
                     @endforeach
                 </select>
-                @error('UNIDAD_VEHICULO')
+                @error('ID_UBICACION')
                     <div class="alert alert-danger mt-2">{{ $message }}</div>
                 @enderror
             </div>
