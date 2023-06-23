@@ -73,7 +73,7 @@ class SolMatController extends Controller
         $rules = [
             'NOMBRE_SOLICITANTE' => ['required', 'string', 'max:255', 'regex:/^[A-Za-zñÑ\s]+$/u'],
             'RUT' => 'required|regex:/^[0-9.-]+$/|min:7|max:12',
-            'DEPTO' => ['required', 'string', 'max:255', 'regex:/^[A-Za-z\s]+$/'],
+            'DEPTO' => ['required', 'string', 'max:255'],
             'EMAIL' => 'required|email',
             'MATERIAL_SOL' => 'required|max:1000',
         ];
@@ -90,7 +90,6 @@ class SolMatController extends Controller
             'DEPTO.required' => 'El campo Departamento es obligatorio.',
             'DEPTO.string' => 'El campo Departamento debe ser una cadena de caracteres.',
             'DEPTO.max' => 'El campo Departamento no puede tener más de 255 caracteres.',
-            'DEPTO.regex' => 'El campo Departamento solo puede contener letras y espacios.',
             'EMAIL.required' => 'El campo Email es obligatorio.',
             'EMAIL.email' => 'El campo Email debe ser una dirección de correo electrónico válida.',
             'MATERIAL_SOL.required' => 'El carrito debe contener materiales',
@@ -142,7 +141,7 @@ class SolMatController extends Controller
         $rules = [
             'NOMBRE_SOLICITANTE' => ['required', 'string', 'max:255', 'regex:/^[A-Za-zñÑ\s]+$/u'],
             'RUT' => 'required|regex:/^[0-9.-]+$/|min:7|max:12',
-            'DEPTO' => ['required', 'string', 'max:255', 'regex:/^[A-Za-z\s]+$/'],
+            'DEPTO' => ['required', 'string', 'max:255'],
             'EMAIL' => 'required|email',
             'MATERIAL_SOL' => 'required|max:1000',
         ];
@@ -159,7 +158,6 @@ class SolMatController extends Controller
             'DEPTO.required' => 'El campo Departamento es obligatorio.',
             'DEPTO.string' => 'El campo Departamento debe ser una cadena de caracteres.',
             'DEPTO.max' => 'El campo Departamento no puede tener más de 255 caracteres.',
-            'DEPTO.regex' => 'El campo Departamento solo puede contener letras y espacios.',
             'EMAIL.required' => 'El campo Email es obligatorio.',
             'EMAIL.email' => 'El campo Email debe ser una dirección de correo electrónico válida.',
             'MATERIAL_SOL.required' => 'El campo de checkout de materiales solicitados es requerido',
