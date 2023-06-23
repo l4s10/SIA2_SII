@@ -57,16 +57,16 @@
                 });
             </script>
         @endif
-
-        <a href="{{ route('materiales.exportar-pdf') }}" class="btn btn-primary">Exportar a PDF</a>
+        {{-- !!GENERAR REPORTE DE MATERIALES (INVENTARIO) --}}
+        <a href="{{ route('materiales.report') }}" class="btn btn-primary" target="_blank"><i class="fa-solid fa-file-pdf"></i> Exportar PDF</a>
 
         <div class="table-responsive">
             <table id="materiales" class="table table-bordered mt-4">
                 <thead class="bg-primary text-white">
                     <tr>
                         <!-- <th scope="col">ID</th> -->
-                        <th scope="col">Nombre material</th>
                         <th scope="col">Tipo material</th>
+                        <th scope="col">Nombre material</th>
                         <th scope="col">Stock</th>
                         <th scope="col">Acciones</th>
                     </tr>
@@ -74,8 +74,8 @@
                 <tbody>
                     @foreach($materiales as $material)
                         <tr>
-                            <td>{{ $material->NOMBRE_MATERIAL }}</td>
                             <td>{{ $material->tipoMaterial->TIPO_MATERIAL }}</td>
+                            <td>{{ $material->NOMBRE_MATERIAL }}</td>
                             <td>{{$material->STOCK}} </td>
                             <td>
                                 <form action="{{ route('materiales.destroy',$material->ID_MATERIAL) }}" method="POST">

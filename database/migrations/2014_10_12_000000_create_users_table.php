@@ -16,16 +16,25 @@ return new class extends Migration
         //     $table->integer('ID_DEPART')->unsigned()->primary();
         //     $table->string('DEPARTAMENTO', 128)->nullable();
         // });
-        Schema::create('ubicacion', function (Blueprint $table) {
-            $table->integer('ID_UBICACION')->unsigned()->primary();
-            $table->string('UBICACION', 128)->nullable();
-        });
         //!!------------------------------------------
         //*--------------------------TABLAS NORMALIZADAS-----------------------*/
         Schema::create('region', function (Blueprint $table) {
             $table->increments('ID_REGION');
             $table->string('REGION', 128)->nullable();
         });
+        Schema::create('direcciones_regionales', function (Blueprint $table) {
+            $table->increments('ID_DIRECCION');
+            $table->string('DIRECCION', 128)->nullable();
+            $table->unsignedInteger('ID_REGION');
+            $table->foreign('ID_REGION')->references('ID_REGION')->on('region');
+        });
+        Schema::create('ubicacion', function (Blueprint $table) {
+            $table->integer('ID_UBICACION')->unsigned()->primary();
+            $table->string('UBICACION', 128)->nullable();
+            $table->unsignedInteger('ID_DIRECCION');
+            $table->foreign('ID_DIRECCION')->references('ID_DIRECCION')->on('direcciones_regionales');
+        });
+        //!!-----------------------------------------------------
         Schema::create('grupo', function (Blueprint $table) {
             $table->integer('ID_GRUPO')->unsigned()->primary();
             $table->string('GRUPO', 128)->nullable();
@@ -103,8 +112,9 @@ return new class extends Migration
         //!!------------------------------------------
         //*---------REFRESCAR TABLAS----------------- */
         Schema::dropIfExists('users');
-        Schema::dropIfExists('region');
         Schema::dropIfExists('ubicacion');
+        Schema::dropIfExists('direcciones_regionales');
+        Schema::dropIfExists('region');
         Schema::dropIfExists('grupo');
         Schema::dropIfExists('escalafon');
         Schema::dropIfExists('grado');
