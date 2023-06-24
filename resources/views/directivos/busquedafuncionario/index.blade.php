@@ -75,7 +75,7 @@
                                 @endforeach
                             </select>
                             <div class="input-group-append">
-                                <button type="button" id="buscarPorCargo" class="btn btn-primary">Buscar por Cargo</button>
+                                <button type="button" id="buscarPorCargo" class="btn btn-primary"><i class="fa-solid fa-magnifying-glass"></i></button>
                             </div>
                         </div>
                         @error('ID_DELEGADO')
@@ -87,34 +87,36 @@
         </form>
 
         <div style="margin-top: 60px;"></div> <!-- Espacio entre las funcionalidades -->
-            @if($busquedaResolucionFuncionario||$busquedaResolucionFuncionarioFallida)
-                <div class="row g-3">
-                    <div style="margin-top: 50px;"></div> <!-- Espacio entre las funcionalidades -->
-                    <legend><i class="fa-solid fa-caret-right"></i> Resultados de la búsqueda</legend>
-                    <div style="margin-top: 5px;"></div> <!-- Espacio entre las funcionalidades -->
-                    <div class="col">
-                        <label for="NOMBRE_COMPLETO" class="form-label"><i class="fa-solid fa-user"></i> Funcionario(a):</label>
-                        <input type="text" class="form-control" id="NOMBRE_COMPLETO" name="NOMBRE_COMPLETO" value="{{ old('NOMBRE_COMPLETO', $nombres.' '.$apellidos) }}" readonly>
-                    </div>
-                    <div class="col">
-                        <label for="CARGO_FUNCIONARIO" class="form-label"><i class="fa-solid fa-bookmark"></i> Cargo asociado:</label>
-                        <input type="text" class="form-control" id="CARGO_FUNCIONARIO" name="CARGO_FUNCIONARIO" value="{{ old('CARGO_FUNCIONARIO', $cargoFuncionario ?? '') }}" readonly>                
-                    </div>
-                    <div class="col">
-                        <label for="RUT" class="form-label"><i class="fa-solid fa-address-card"></i> Rut:</label>
-                        <input type="text" class="form-control" id="RUT" name="RUT" value="{{ old('RUT', $rutRes ?? '') }}" readonly>                
-                    </div>
+        @if($busquedaResolucionFuncionario||$busquedaResolucionFuncionarioFallida)
+            <div class="row g-3">
+                <div style="margin-top: 50px;"></div> <!-- Espacio entre las funcionalidades -->
+                <legend><i class="fa-solid fa-caret-right"></i> Resultados de la búsqueda</legend>
+                <div style="margin-top: 5px;"></div> <!-- Espacio entre las funcionalidades -->
+                <div class="col">
+                    <label for="NOMBRE_COMPLETO" class="form-label"><i class="fa-solid fa-user"></i> Funcionario(a):</label>
+                    <input type="text" class="form-control" id="NOMBRE_COMPLETO" name="NOMBRE_COMPLETO" value="{{ old('NOMBRE_COMPLETO', $nombres.' '.$apellidos) }}" readonly>
                 </div>
-            @else
-                @if($busquedaResolucionCargo||$busquedaResolucionCargoFallida)
-                    <legend><i class="fa-solid fa-caret-right"></i> Resoluciones</legend>
-                    <div style="margin-top: 5px;"></div> <!-- Espacio entre las funcionalidades -->
-                    <div class="col">
-                        <label for="CARGO_FUNCIONARIO" class="form-label"><i class="fa-solid fa-bookmark"></i> Resoluciones asociadas al cargo:</label>
-                        <input type="text" class="form-control" id="CARGO_FUNCIONARIO" name="CARGO_FUNCIONARIO" value="{{ old('CARGO_FUNCIONARIO', $cargoResolucion ?? '') }}" readonly>                
-                    </div>
-                @endif
+                <div class="col">
+                    <label for="CARGO_FUNCIONARIO" class="form-label"><i class="fa-solid fa-bookmark"></i> Cargo asociado:</label>
+                    <input type="text" class="form-control" id="CARGO_FUNCIONARIO" name="CARGO_FUNCIONARIO" value="{{ old('CARGO_FUNCIONARIO', $cargoFuncionario ?? '') }}" readonly>                
+                </div>
+                <div class="col">
+                    <label for="RUT" class="form-label"><i class="fa-solid fa-address-card"></i> Rut:</label>
+                    <input type="text" class="form-control" id="RUT" name="RUT" value="{{ old('RUT', $rutRes ?? '') }}" readonly>                
+                </div>
+            </div>
+        @else
+            @if($busquedaResolucionCargo||$busquedaResolucionCargoFallida)
+                <div style="margin-top: 50px;"></div> <!-- Espacio entre las funcionalidades -->
+                <legend><i class="fa-solid fa-caret-right"></i> Resultados de la búsqueda</legend>
+                <div style="margin-top: 5px;"></div> <!-- Espacio entre las funcionalidades -->
+                <div class="col-md-6 form-group">
+                    <label for="CARGO_FUNCIONARIO" class="form-label"><i class="fa-solid fa-bookmark"></i> Cargo delegado:</label>
+                    <div style="margin-top: 10px;"></div> <!-- Espacio entre las funcionalidades -->
+                    <input type="text" class="form-control" id="CARGO_FUNCIONARIO" name="CARGO_FUNCIONARIO" value="{{ old('CARGO_FUNCIONARIO', $cargoResolucion ?? '') }}" readonly>                
+                </div>
             @endif
+        @endif
 
         @if(count($resoluciones) > 0)
             <div style="margin-top: 60px;"></div> <!-- Espacio entre las funcionalidades -->
@@ -160,6 +162,9 @@
                     </tbody>
                 </table>
             </div>
+            <!-- Limpio 'session' para depurar el buffer y controlar de mensajes asociados al 'else' -->
+            {{ session()->forget('busquedaAjax') }}
+            {{ session()->forget('busquedaResolucionCargoFallida') }}
         @else
             @if((session('busquedaAjax')))
                 <div style="margin-top: 60px;"></div> <!-- Espacio entre las funcionalidades -->
@@ -212,24 +217,23 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
     <script>
-        $(function () {
+        $(function() {
             var timeoutId; // Variable para almacenar el ID del temporizador
-            
-            // Agregar eventos de cambio en los campos de nombres y apellidos
-            $('#NOMBRES, #APELLIDOS, #RUT, #ID_CARGO').on('input', function () {       
+            // Agrega eventos de cambio en los campos de nombres y apellidos
+            $('#NOMBRES, #APELLIDOS, #RUT, #ID_CARGO').on('input', function() {
                 clearTimeout(timeoutId); // Limpiar el temporizador si existe uno
                 // Obtener los valores ingresados en los campos de nombres y apellidos
                 var nombres = $('#NOMBRES').val();
                 var apellidos = $('#APELLIDOS').val();
                 var rut = $('#RUT').val();
                 var idCargoFuncionario = $('#ID_CARGO').val();
-
+        
                 if (!nombres && !apellidos && !rut && !idCargoFuncionario) {
-                         // Si todos los campos están vacíos, borrar la tabla de resultados
+                    // Si todos los campos están vacíos, borrar la tabla de resultados
                     $("#resultados-busqueda").empty();
                 } else {
                     // Establecer un nuevo temporizador para retrasar la búsqueda
-                    timeoutId = setTimeout(function () {
+                    timeoutId = setTimeout(function() {
                         // Realizar la solicitud AJAX para obtener los funcionarios en tiempo real
                         $.ajax({
                             url: '/consultaAjax', // URL del endpoint de consulta en tiempo real
@@ -240,36 +244,37 @@
                                 rut: rut,
                                 idCargoFuncionario: idCargoFuncionario
                             },
-                            success: function (response) {
+                            success: function(response) {
                                 if (response.length > 0) {
                                     var htmlResultados = generarHTMLResultados(response);
                                     $("#resultados-busqueda").html(htmlResultados);
                                 } else {
                                     $("#resultados-busqueda").html('<h4>No existen funcionarios para esos registros</h4>');
                                     $("#resultados-busqueda").append('<div style="margin-top: 60px;"></div>');
-
                                 }
                             },
-                            error: function (xhr, status, error) {
+                            error: function(xhr, status, error) {
                                 var mensajeError = "Se produjo un error: " + error;
                                 $("#mensaje-error").text(mensajeError);
                             }
                         });
                     }, 500); // Esperar 500 ms después de la última entrada antes de realizar la búsqueda
                 }
+                $('#ID_DELEGADO').val("");
+                deshabilitarBotonDelegado();
             });
-
+        
             function obtenerNombreCargo(idCargoFuncionario) {
                 // Aquí debes implementar la lógica para obtener el nombre del cargo
                 var cargoSeleccionado = $('#ID_CARGO option[value="' + idCargoFuncionario + '"]').text();
                 return cargoSeleccionado;
             }
-
-            
+      
+            //Genera tabla de posibles funcionarios para realizar la búsqueda.
             function generarHTMLResultados(response) {
                 var html = '<h4>Seleccione un funcionario(a)</h4>';
                 html += '<table class="table"><thead><tr><th>Nombres</th><th>Apellidos</th><th>Rut</th><th>Cargo</th><th class="text-center">Ver Resoluciones</th></tr></thead><tbody>';
-                response.forEach(function (item) {
+                response.forEach(function(item) {
                     var cargo = obtenerNombreCargo(item.ID_CARGO); // Obtener el nombre del cargo utilizando la función obtenerNombreCargo
                     html += "<tr><td>" + item.NOMBRES + "</td><td>" + item.APELLIDOS + "</td><td>" + item.RUT + "</td><td>" + cargo + "</td>";
                     html += '<td class="text-center"><button class="btn btn-primary btn-buscar-datos" data-nombres="' + item.NOMBRES + '" data-apellidos="' + item.APELLIDOS + '" data-rut="' + item.RUT + '" data-id-cargo="' + item.ID_CARGO + '" onclick="verResoluciones"><i class="fa-solid fa-magnifying-glass"></i></button></td>';
@@ -277,69 +282,97 @@
                 html += '</tbody></table>';
                 return html;
             }
-
+      
             // Agregar evento de clic al botón de búsqueda por cargo
-            $('#buscarPorCargo').on('click', function () {
-                $('#NOMBRES').val(''); // Limpiar valor del input de NOMBRES
-                $('#APELLIDOS').val(''); // Limpiar valor del input de APELLIDOS
+            $('#buscarPorCargo').on('click', function() {
                 $('#searchForm').submit(); // Enviar el formulario
             });
-
+        
             $(document).on('click', '.btn-buscar-datos', function() {
                 var nombres = $(this).data('nombres');
                 var apellidos = $(this).data('apellidos');
                 var rut = $(this).data('rut');
                 var idCargoFuncionario = $(this).data('id-cargo');
-
+        
                 // Asignar los valores a los campos correspondientes
                 $('#NOMBRES').val(nombres);
                 $('#APELLIDOS').val(apellidos);
                 $('#RUT').val(rut);
                 $('#ID_CARGO').val(idCargoFuncionario);
-
+        
                 // Enviar el formulario
                 $('#searchForm').submit();
             });
-
+        
+            //Control del botón búsqueda por cargo
+            function deshabilitarBotonDelegado() {
+                var selectedValue = $('#ID_DELEGADO').val();
+                // Habilita o deshabilita el botón según la selección
+                if (selectedValue !== "") {
+                    $('#buscarPorCargo').prop('disabled', false);
+                } else {
+                    $('#buscarPorCargo').prop('disabled', true);
+                }
+            }
+        
             // Agrega evento de clic al botón de expansión
-            $('.btn-expand').on('click', function () {
+            $('.btn-expand').on('click', function() {
                 var glosaAbreviada = $(this).siblings('.glosa-abreviada');
                 var glosaCompleta = $(this).siblings('.glosa-completa');
                 var btnExpand = $(this);
                 var btnCollapse = $(this).siblings('.btn-collapse');
-
+        
                 glosaAbreviada.hide();
                 glosaCompleta.show();
                 btnExpand.hide();
                 btnCollapse.show();
-                //$(this).hide();
             });
-
+        
             // Agregar evento de clic al botón de colapso
-            $('.btn-collapse').on('click', function () {
-                    var glosaAbreviada = $(this).siblings('.glosa-abreviada');
-                    var glosaCompleta = $(this).siblings('.glosa-completa');
-                    var btnExpand = $(this).siblings('.btn-expand');
-                    var btnCollapse = $(this);
-
-                    glosaAbreviada.show();
-                    glosaCompleta.hide();
-                    btnExpand.show();
-                    btnCollapse.hide();
-                });
+            $('.btn-collapse').on('click', function() {
+                var glosaAbreviada = $(this).siblings('.glosa-abreviada');
+                var glosaCompleta = $(this).siblings('.glosa-completa');
+                var btnExpand = $(this).siblings('.btn-expand');
+                var btnCollapse = $(this);
+        
+                glosaAbreviada.show();
+                glosaCompleta.hide();
+                btnExpand.show();
+                btnCollapse.hide();
             });
-
-            $(document).ready(function () {
+        
             $('#resoluciones').DataTable({
-                "lengthMenu": [[5,10, 50, -1], [5, 10, 50, "All"]],
-                "responsive": true,
-                "columnDefs": [
-                    { "orderable": false, "targets": 7 } // La séptima columna no es ordenable
+                "lengthMenu": [
+                    [5, 10, 50, -1],
+                    [5, 10, 50, "All"]
                 ],
+                "responsive": true,
+                "columnDefs": [{
+                    "orderable": false,
+                    "targets": 7
+                }], // La séptima columna no es ordenable
                 "language": {
                     "url": "https://cdn.datatables.net/plug-ins/1.11.3/i18n/es_es.json"
-                },
+                }
             });
+        
+            $('#ID_DELEGADO').change(function() {
+                deshabilitarBotonDelegado();
+        
+                // Vaciar los campos si se selecciona un ID_DELEGADO
+                if ($('#ID_DELEGADO').val() !== "") {
+                    $('#NOMBRES').val("");
+                    $('#APELLIDOS').val("");
+                    $('#RUT').val("");
+                    $('#ID_CARGO').val("");
+                    $("#resultados-busqueda").empty();
+                }
+            });
+        
+            // Deshabilita el botón al cargar la página si no hay opción seleccionada inicialmente
+            if ($('#ID_DELEGADO').val() === "") {
+                $('#buscarPorCargo').prop('disabled', true);
+            }
         });
     </script>
 @stop

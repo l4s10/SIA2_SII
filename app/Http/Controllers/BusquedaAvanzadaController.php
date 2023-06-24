@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+//Consultas SQL personalizadas
 use App\Models\User;
 use App\Models\Cargo;
 use App\Models\TipoResolucion;
@@ -17,111 +18,72 @@ class BusquedaAvanzadaController extends Controller
     //Obtiene todas las resoluciones delegatorias con sus atributos.
     public function index(Request $request)
     {
+        //Atributos para la vista
         $tipos = TipoResolucion::distinct()->get(['ID_TIPO', 'NOMBRE']);
         $facultades = Facultad::all();
-        $delegados = Cargo::distinct()->get(['ID_CARGO', 'CARGO']);
-        $firmantes = Cargo::distinct()->get(['ID_CARGO', 'CARGO']);
+        $delegados = Cargo::pluck('CARGO', 'ID_CARGO');
+        $firmantes = Cargo::pluck('CARGO', 'ID_CARGO');
         $fechas = Resolucion::distinct()->get(['FECHA']);
         $nros = Resolucion::distinct()->get(['NRO_RESOLUCION']);
-        //$leys = Facultad::distinct()->get(['ID_FACULTAD', 'LEY_ASOCIADA']);
-        //$arts = Facultad::distinct()->get(['ID_FACULTAD', 'ART_LEY_ASOCIADA']);
+        
+        // Obtengo '0' resoluciones, entonces, no muestro tabla en la vista
+        $resoluciones = [];
 
+        if ($request->has('buscar')) {
+            // Llamar a la función buscarResoluciones solo si se presionó el botón "Buscar"
+            $resoluciones = $this->buscarResoluciones($request);
+        }
+        return view('directivos.busquedaavanzada.index', compact('tipos', 'facultades', 'delegados', 'firmantes', 'fechas', 'nros', 'resoluciones'));
+    }
 
+    public function buscarResoluciones(Request $request){
+        //Request de la vista
         $tiposReq = $request->input('ID_TIPO');
         $facultadesReq = $request->input('ID_FACULTAD');
         $delegadosReq = $request->input('ID_DELEGADO');
         $firmantesReq = $request->input('ID_FIRMANTE');
         $fechasReq = $request->input('FECHA');
         $nrosReq = $request->input('NRO_RESOLUCION');
-        $leyReq = $request->input('ID_LEY');
-        $artsReq = $request->input('ID_ART_LEY');
+        $leyReq = $request->input('LEY_ASOCIADA');
+        $artsReq = $request->input('ART_LEY_ASOCIADA');
+        
+        // Obtiene todos los checkboxes de seleciconados en la vista
+        $selectedFilters = $request->input('selectedFilters');
 
 
-        /*$tiposReq = [];
-        $facultadesReq = [];
-        $delegadosReq = [];
-        $firmantesReq = [];
-        $fechasReq = [];
-        $nrosReq = [];*/
-        $resoluciones = Resolucion::query();
-
-        if ($tiposReq) {
-            $resoluciones->where('ID_TIPO', $tiposReq);
+        //Valido que dado cualquier selección en estos inputs desencadene la búesqueda de resoluciones en función de sus respectivos checkboxes
+        if($tiposReq || $facultadesReq || $delegadosReq || $firmantesReq || $fechasReq || $nrosReq || $leyReq || $artsReq){
+            $resoluciones = Resolucion::query();
+            
+            if ($tiposReq && isset($selectedFilters['ID_TIPO'])) {
+                $resoluciones->where('ID_TIPO', $tiposReq);
+            }
+            if ($facultadesReq && isset($selectedFilters['ID_FACULTAD'])) {
+                $resoluciones->where('ID_FACULTAD', $facultadesReq);
+            }
+            if ($delegadosReq && isset($selectedFilters['ID_DELEGADO'])) {
+                $resoluciones->where('ID_DELEGADO', $delegadosReq);
+            }
+            if ($firmantesReq && isset($selectedFilters['ID_FIRMANTE'])) {
+                $resoluciones->where('ID_FIRMANTE', $firmantesReq);
+            }
+            if ($fechasReq && isset($selectedFilters['FECHA'])) {
+                $resoluciones->where('FECHA', $fechasReq);
+            }
+            if ($nrosReq && isset($selectedFilters['NRO_RESOLUCION'])) {
+                $resoluciones->where('NRO_RESOLUCION', $nrosReq);
+            }
+            if ($artsReq && isset($selectedFilters['ART_LEY_ASOCIADA'])) {
+                $resoluciones->where('ID_FACULTAD', $artsReq);
+            }
+            if ($leyReq && isset($selectedFilters['LEY_ASOCIADA'])) {
+                $resoluciones->where('ID_FACULTAD', $leyReq);
+            }
+            //Obtengo colección de resoluciones según parámetros de búsqueda
+            $resoluciones = $resoluciones->distinct()->get();
+            return $resoluciones;
+        }else{
+            return $resoluciones = [];
         }
-        if ($facultadesReq) {
-            $resoluciones->where('ID_FACULTAD', $facultadesReq);
-        }
-        if ($delegadosReq) {
-            $resoluciones->where('ID_DELEGADO', $delegadosReq);
-        }
-        if ($firmantesReq) {
-            $resoluciones->where('ID_FIRMANTE', $firmantesReq);
-        }
-        if ($fechasReq) {
-            $resoluciones->where('FECHA', $fechasReq);
-        }
-        if ($nrosReq) {
-            $resoluciones->where('NRO_RESOLUCION', $nrosReq);
-        }
-        if ($artsReq) {
-            $resoluciones = Resolucion::whereHas('facultad', function ($query) use ($artsReq) {
-                $query->where('ID_ART_LEY', $artsReq);
-            })->get();        }
-        if ($leyReq) {
-            $resoluciones->where('ID_LEY', $leyReq);
-        }
-
-        $resoluciones = $resoluciones->get();
-
-        return view('directivos.busquedaavanzada.index', compact('tipos','facultades','delegados','firmantes','fechas','nros','resoluciones'));
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        $cargos = Cargo::all();
-        return view('directivos.busquedafuncionario.create', compact('cargos'));
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
     }
 }
