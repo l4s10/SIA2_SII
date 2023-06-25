@@ -86,7 +86,6 @@
                         <input class="form-check-input" type="checkbox" name="selectedFilters[LEY_ASOCIADA]" value="LEY_ASOCIADA" id="filter_LEY_ASOCIADA">
                         <label class="form-check-label" for="filter_LEY_ASOCIADA">Incluir como filtro de búsqueda</label>
                     </div>
-                    <p>Valor seleccionado: {{ $leyReq ?? '' }}</p>
                 </div>
                 
 
@@ -106,7 +105,6 @@
                         <input class="form-check-input" type="checkbox" name="selectedFilters[ART_LEY_ASOCIADA]" value="ART_LEY_ASOCIADA" id="filter_ART_LEY_ASOCIADA">
                         <label class="form-check-label" for="filter_ART_LEY_ASOCIADA">Incluir como filtro de búsqueda</label>
                     </div>
-                    <p>Valor seleccionado: {{ $artsReq ?? '' }}</p>
                 </div>
                 
 
@@ -146,7 +144,6 @@
                 </div>
             </div>
         </form>
-        {{ count($resoluciones) }}
 
         @if(count($resoluciones) > 0)
             <div class="table-responsive">
@@ -230,28 +227,28 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
     <script>
-        // Configuración checkboxes
-
-        // Obtén todos los checkboxes y selects
-        const checkboxes = document.querySelectorAll('input[type="checkbox"]');
-        const selects = document.querySelectorAll('select');
-
-        // Recorre los checkboxes y agrega el evento de cambio
-        checkboxes.forEach((checkbox) => {
-            checkbox.addEventListener('change', (event) => {
-                const checkbox = event.target;
-                const select = document.querySelector(`select#${checkbox.getAttribute('id').replace('filter_', '')}`);
-
-                if (checkbox.checked) {
-                    select.disabled = false; // Habilita el select
-                } else {
-                    select.disabled = true; // Deshabilita el select
-                }
-            });
-        });
-
-        // Configuración botón '+' o '-' de la glosa en la tabla
         $(function () {
+            // Configuración checkboxes
+
+            // Obtén todos los checkboxes y selects
+            const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+            const selects = document.querySelectorAll('select');
+
+            // Recorre los checkboxes y agrega el evento de cambio
+            checkboxes.forEach((checkbox) => {
+                checkbox.addEventListener('change', (event) => {
+                    const checkbox = event.target;
+                    const select = document.querySelector(`select#${checkbox.getAttribute('id').replace('filter_', '')}`);
+
+                    if (checkbox.checked) {
+                        select.disabled = false; // Habilita el select
+                    } else {
+                        select.disabled = true; // Deshabilita el select
+                    }
+                });
+            });
+
+            // Configuración botón '+' o '-' de la glosa en la tabla:
             // Agrega evento de clic al botón de expansión
             $('.btn-expand').on('click', function () {
                 var glosaAbreviada = $(this).siblings('.glosa-abreviada');
@@ -277,8 +274,8 @@
                     glosaCompleta.hide();
                     btnExpand.show();
                     btnCollapse.hide();
-                });
             });
+            
 
             $('#resoluciones').DataTable({
                 "lengthMenu": [
@@ -289,10 +286,11 @@
                 "columnDefs": [{
                     "orderable": false,
                     "targets": 9
-                }], // La séptima columna no es ordenable
+                }],
                 "language": {
                     "url": "https://cdn.datatables.net/plug-ins/1.11.3/i18n/es_es.json"
                 }
             });
+        });
     </script>
 @stop
