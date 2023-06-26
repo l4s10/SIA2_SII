@@ -136,6 +136,20 @@ class SolicitudSalaController extends Controller
         }
         return redirect(route('reservas.dashboard'));
     }
+    public function getAllSolicitudes()
+    {
+        $solicitudes = SolicitudSala::all();
+        return response()->json($solicitudes);
+    }
+
+    public function getSolicitudesByDates(Request $request)
+    {
+        $startDate = $request->input('start_date');
+        $endDate = $request->input('end_date');
+
+        $solicitudes = SolicitudSala::whereBetween('FECHA_SOL_SALA', [$startDate, $endDate])->get();
+        return response()->json($solicitudes);
+    }
     //-----FUNCION QUE NOS PERMITE FORMATEAR EL RUT CON  PUNTOS Y GUIÓN.------
     public function formatRut($rut) {
         $rut = preg_replace('/[^0-9kK]/', '', $rut); // Remueve todos los caracteres excepto los números y la letra K

@@ -12,45 +12,39 @@
             @csrf
 
             <div class="row">
-                <div class="col-md-9 form-group">
-                    <label for="NRO_RESOLUCION" class="form-label"><i class="fa-solid fa-bookmark"></i> Número de Resolución:</label>
-                    <select id="NRO_RESOLUCION" name="NRO_RESOLUCION" class="form-control @error('NRO_RESOLUCION') is-invalid @enderror">
+                <div class="col-md-3 form-group">
+                    <label for="NRO_RESOLUCION" class="form-label"><i class="fas fa-bookmark"></i> Número de Resolución:</label>
+                    <select id="NRO_RESOLUCION" name="NRO_RESOLUCION" class="form-control" disabled>
                         <option value="" selected>--Seleccione Nro--</option>
                         @foreach ($nros as $nro)
-                        <option value="{{ $nro->NRO_RESOLUCION }}">{{ $nro->NRO_RESOLUCION }}</option>
+                            <option value="{{ $nro->NRO_RESOLUCION }}">{{ $nro->NRO_RESOLUCION }}</option>
                         @endforeach
                     </select>
+                    <div class="form-check mt-2">
+                        <input class="form-check-input" type="checkbox" name="selectedFilters[NRO_RESOLUCION]" value="NRO_RESOLUCION" id="filter_NRO_RESOLUCION">
+                        <label class="form-check-label" for="filter_NRO_RESOLUCION">Incluir como filtro de búsqueda</label>
+                    </div>
                 </div>
 
-                <div class="col-md-3 form-group d-flex align-items-end">
-                    <button id="BuscarNro" class="btn btn-primary btn-block">Buscar por Número</button>
-                </div>
-            </div>
-            
-            <div class="row">
-                <div class="col-md-9 form-group">
-                    <label for="ID_TIPO" class="form-label"><i class="fa-solid fa-bookmark"></i> Tipo Resolución:</label>
-                    <select id="ID_TIPO" name="ID_TIPO" class="form-control @error('ID_TIPO') is-invalid @enderror">
+                <div class="col-md-3 form-group">
+                    <label for="ID_TIPO" class="form-label"><i class="fas fa-bookmark"></i> Tipo Resolución:</label>
+                    <select id="ID_TIPO" name="ID_TIPO" class="form-control" disabled>
                         <option value="" selected>--Seleccione Tipo--</option>
                         @foreach ($tipos as $tipo)
                             <option value="{{ $tipo->ID_TIPO }}">{{ $tipo->NOMBRE }}</option>
                         @endforeach
                     </select>
-                    @error('ID_TIPO')
-                        <div class="invalid-feedback">{{ $message }}</div>
-                    @enderror
+                    <div class="form-check mt-2">
+                        <input class="form-check-input" type="checkbox" name="selectedFilters[ID_TIPO]" value="ID_TIPO" id="filter_ID_TIPO">
+                        <label class="form-check-label" for="filter_ID_TIPO">Incluir como filtro de búsqueda</label>
+                    </div>
                 </div>
             
-                <div class="col-md-3 form-group d-flex align-items-end">
-                    <button id="BuscarTipo" class="btn btn-primary btn-block">Buscar por Tipo</button>
-                </div>
-            </div>
 
-            <div class="row">
-                <div class="col-md-9 form-group">
-                    <label for="FECHA" class="form-label"><i class="fa-solid fa-bookmark"></i> Fecha:</label>
-                    <select id="FECHA" name="FECHA" class="form-control @error('FECHA') is-invalid @enderror">
-                        <option value="" selected>--Seleccione Tipo--</option>
+                <div class="col-md-3 form-group">
+                    <label for="FECHA" class="form-label"><i class="fas fa-bookmark"></i> Fecha:</label>
+                    <select id="FECHA" name="FECHA" class="form-control @error('FECHA') is-invalid @enderror" disabled>
+                        <option value="" selected>--Seleccione Fecha--</option>
                         @foreach ($fechas as $fecha)
                             <option value="{{ $fecha->FECHA }}">{{ date('d-m-Y', strtotime($fecha->FECHA)) }}</option>
                         @endforeach
@@ -58,110 +52,98 @@
                     @error('FECHA')
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
+                    <div class="form-check mt-2">
+                        <input class="form-check-input" type="checkbox" name="selectedFilters[FECHA]" value="FECHA" id="filter_FECHA">
+                        <label class="form-check-label" for="filter_FECHA">Incluir como filtro de búsqueda</label>                    
+                    </div>
                 </div>
-            
-                <div class="col-md-3 form-group d-flex align-items-end">
-                    <button id="BuscarFecha" class="btn btn-primary btn-block">Buscar por Fecha</button>
-                </div>
-            </div>
 
-            <div class="row">
-                <div class="col-md-9 form-group">
-                    <label for="ID_FACULTAD" class="form-label"><i class="fa-solid fa-bookmark"></i> Facultad:</label>
-                    <select id="ID_FACULTAD" name="ID_FACULTAD" class="form-control @error('ID_FACULTAD') is-invalid @enderror">
+                <div class="col-md-3 form-group">
+                    <label for="ID_FACULTAD" class="form-label"><i class="fas fa-bookmark"></i> Facultad:</label>
+                    <select id="ID_FACULTAD" name="ID_FACULTAD" class="form-control" disabled>
                         <option value="" selected>--Seleccione Facultad--</option>
                         @foreach ($facultades as $facultad)
                             <option value="{{ $facultad->ID_FACULTAD }}">{{ $facultad->NOMBRE }}</option>
                         @endforeach
                     </select>
-                    @error('ID_FACULTAD')
-                        <div class="invalid-feedback">{{ $message }}</div>
-                    @enderror
-                </div>
-            
-                <div class="col-md-3 form-group d-flex align-items-end">
-                    <button id="BuscarFacultad" class="btn btn-primary btn-block">Buscar por Facultad</button>
+                    <div class="form-check mt-2">
+                        <input class="form-check-input" type="checkbox" name="selectedFilters[ID_FACULTAD]" value="ID_FACULTAD" id="filter_ID_FACULTAD">
+                        <label class="form-check-label" for="filter_ID_FACULTAD">Incluir como filtro de búsqueda</label>
+                    </div>
                 </div>
             </div>
             
             <div class="row">
-                <div class="col-md-9 form-group">
-                    <label for="ID_LEY" class="form-label"><i class="fa-solid fa-bookmark"></i> Ley asociada:</label>
-                    <select id="ID_LEY" name="ID_LEY" class="form-control @error('ID_LEY') is-invalid @enderror">
+                <div class="col-md-3 form-group">
+                    <label for="LEY_ASOCIADA" class="form-label"><i class="fas fa-bookmark"></i> Ley asociada:</label>
+                    <select id="LEY_ASOCIADA" name="LEY_ASOCIADA" class="form-control" disabled>
                         <option value="" selected>--Seleccione Ley--</option>
-                        @foreach ($facultades as $facultad)
+                        @foreach ($facultades->unique('LEY_ASOCIADA') as $facultad)
                             <option value="{{ $facultad->ID_FACULTAD }}">{{ $facultad->LEY_ASOCIADA }}</option>
                         @endforeach
                     </select>
-                    @error('ID_LEY')
-                        <div class="invalid-feedback">{{ $message }}</div>
-                    @enderror
+                    <div class="form-check mt-2">
+                        <input class="form-check-input" type="checkbox" name="selectedFilters[LEY_ASOCIADA]" value="LEY_ASOCIADA" id="filter_LEY_ASOCIADA">
+                        <label class="form-check-label" for="filter_LEY_ASOCIADA">Incluir como filtro de búsqueda</label>
+                    </div>
                 </div>
-            
-                <div class="col-md-3 form-group d-flex align-items-end">
-                    <button id="BuscarLey" class="btn btn-primary btn-block">Buscar por Ley</button>
-                </div>
-            </div>
-            
-            <div class="row">
-                <div class="col-md-9 form-group">
-                    <label for="ID_ART_LEY" class="form-label"><i class="fa-solid fa-bookmark"></i> Artículo de ley:</label>
-                    <select id="ID_ART_LEY" name="ID_ART_LEY" class="form-control @error('ID_ART_LEY') is-invalid @enderror">
+                
+
+                
+                <div class="col-md-3 form-group">
+                    <label for="ART_LEY_ASOCIADA" class="form-label"><i class="fas fa-bookmark"></i> Artículo de ley:</label>
+                    <select id="ART_LEY_ASOCIADA" name="ART_LEY_ASOCIADA" class="form-control" disabled>
                         <option value="" selected>--Seleccione Artículo--</option>
-                        @foreach ($facultades as $facultad)
+                        @foreach ($facultades->unique('ART_LEY_ASOCIADA') as $facultad)
                             <option value="{{ $facultad->ID_FACULTAD }}">{{ $facultad->ART_LEY_ASOCIADA }}</option>
                         @endforeach
                     </select>
-                    @error('ID_ART_LEY')
+                    @error('ART_LEY_ASOCIADA')
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
+                    <div class="form-check mt-2">
+                        <input class="form-check-input" type="checkbox" name="selectedFilters[ART_LEY_ASOCIADA]" value="ART_LEY_ASOCIADA" id="filter_ART_LEY_ASOCIADA">
+                        <label class="form-check-label" for="filter_ART_LEY_ASOCIADA">Incluir como filtro de búsqueda</label>
+                    </div>
                 </div>
-            
-                <div class="col-md-3 form-group d-flex align-items-end">
-                    <button id="BuscarArticulo" class="btn btn-primary btn-block">Buscar por Artículo</button>
-                </div>
-            </div>
+                
 
-            <div class="row">
-                <div class="col-md-9 form-group">
-                    <label for="ID_FIRMANTE" class="form-label"><i class="fa-solid fa-bookmark"></i> Firmante:</label>
-                    <select id="ID_FIRMANTE" name="ID_FIRMANTE" class="form-control @error('ID_FIRMANTE') is-invalid @enderror">
+
+                <div class="col-md-3 form-group">
+                    <label for="ID_FIRMANTE" class="form-label"><i class="fas fa-bookmark"></i> Firmante:</label>
+                    <select id="ID_FIRMANTE" name="ID_FIRMANTE" class="form-control" disabled>
                         <option value="" selected>--Seleccione Firmante--</option>
-                        @foreach ($firmantes as $firmante)
-                            <option value="{{ $firmante->ID_CARGO }}">{{ $firmante->CARGO }}</option>
+                        @foreach ($firmantes as $idFirmante => $nombreFirmante)
+                            <option value="{{ $idFirmante }}">{{ $nombreFirmante }}</option>
                         @endforeach
                     </select>
-                    @error('ID_FIRMANTE')
-                        <div class="invalid-feedback">{{ $message }}</div>
-                    @enderror
+                    <div class="form-check mt-2">
+                        <input class="form-check-input" type="checkbox" name="selectedFilters[ID_FIRMANTE]" value="ID_FIRMANTE" id="filter_ID_FIRMANTE">
+                        <label class="form-check-label" for="filter_ID_FIRMANTE">Incluir como filtro de búsqueda</label>
+                    </div>
                 </div>
 
-                <div class="col-md-3 form-group d-flex align-items-end">
-                    <button id="BuscarFirmante" class="btn btn-primary btn-block">Buscar por Firmante</button>
+                <div class="col-md-3 form-group">
+                    <label for="ID_DELEGADO" class="form-label"><i class="fas fa-bookmark"></i> Delegado:</label>
+                    <select id="ID_DELEGADO" name="ID_DELEGADO" class="form-control" disabled>
+                        <option value="" selected>--Seleccione Delegado--</option>
+                        @foreach ($delegados as $idCargo => $nombreDelegado)
+                            <option value="{{ $idCargo }}">{{ $nombreDelegado }}</option>
+                        @endforeach
+                    </select>
+                    <div class="form-check mt-2">
+                        <input class="form-check-input" type="checkbox" name="selectedFilters[ID_DELEGADO]" value="ID_DELEGADO" id="filter_ID_DELEGADO">
+                        <label class="form-check-label" for="filter_ID_DELEGADO">Incluir como filtro de búsqueda</label>
+                    </div>
                 </div>
             </div>
 
             <div class="row">
-                <div class="col-md-9 form-group">
-                    <label for="ID_DELEGADO" class="form-label"><i class="fa-solid fa-bookmark"></i> Delegado:</label>
-                    <select id="ID_DELEGADO" name="ID_DELEGADO" class="form-control @error('ID_DELEGADO') is-invalid @enderror">
-                        <option value="" selected>--Seleccione Delegado--</option>
-                        @foreach ($delegados as $delegado)
-                            <option value="{{ $delegado->ID_CARGO }}">{{ $delegado->CARGO }}</option>
-                        @endforeach
-                    </select>
-                    @error('ID_DELEGADO')
-                        <div class="invalid-feedback">{{ $message }}</div>
-                    @enderror
-                </div>
-
-                <div class="col-md-3 form-group d-flex align-items-end">
-                    <button id="BuscarDelegado" class="btn btn-primary btn-block">Buscar por Delegado</button>
+                <div class="col-md-12">
+                    <button type="submit" class="btn btn-primary" name="buscar"><i class="fas fa-search"></i> Buscar</button>
                 </div>
             </div>
-            
         </form>
-
 
         @if(count($resoluciones) > 0)
             <div class="table-responsive">
@@ -212,7 +194,8 @@
                 </table>
             </div>
         @else
-            <div class="alert alert-info">No se encontraron resoluciones.</div>
+            <div style="margin-top: 60px;"></div> <!-- Espacio entre las funcionalidades -->
+            <div class="alert alert-info">Ingrese algún parámetro para obtener resoluciones</div>
         @endif
     </div>
 @stop
@@ -239,12 +222,33 @@
 @stop
 
 @section('js')
-    <!-- Incluir archivos JS flatpicker -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     <script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/es.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
     <script>
         $(function () {
+            // Configuración checkboxes
+
+            // Obtén todos los checkboxes y selects
+            const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+            const selects = document.querySelectorAll('select');
+
+            // Recorre los checkboxes y agrega el evento de cambio
+            checkboxes.forEach((checkbox) => {
+                checkbox.addEventListener('change', (event) => {
+                    const checkbox = event.target;
+                    const select = document.querySelector(`select#${checkbox.getAttribute('id').replace('filter_', '')}`);
+
+                    if (checkbox.checked) {
+                        select.disabled = false; // Habilita el select
+                    } else {
+                        select.disabled = true; // Deshabilita el select
+                    }
+                });
+            });
+
+            // Configuración botón '+' o '-' de la glosa en la tabla:
             // Agrega evento de clic al botón de expansión
             $('.btn-expand').on('click', function () {
                 var glosaAbreviada = $(this).siblings('.glosa-abreviada');
@@ -270,7 +274,23 @@
                     glosaCompleta.hide();
                     btnExpand.show();
                     btnCollapse.hide();
-                });
             });
+            
+
+            $('#resoluciones').DataTable({
+                "lengthMenu": [
+                    [5, 10, 50, -1],
+                    [5, 10, 50, "All"]
+                ],
+                "responsive": true,
+                "columnDefs": [{
+                    "orderable": false,
+                    "targets": 9
+                }],
+                "language": {
+                    "url": "https://cdn.datatables.net/plug-ins/1.11.3/i18n/es_es.json"
+                }
+            });
+        });
     </script>
 @stop

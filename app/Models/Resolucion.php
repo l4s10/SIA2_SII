@@ -39,11 +39,11 @@ class Resolucion extends Model
     }
     public static function messages(){
         return[
-            'required' => ' El campo :attribute es obligatorio.',
-            'string' => ' El campo :attribute debe ser una cadena de texto.',
-            'integer' => ' El campo :attribute debe ser un número entero.',
-            'exists' => ' El valor seleccionado para :attribute no es válido.',
-            'unique' => ' El campo ":attribute" ya existe en la base de datos.'
+            'required' => 'El campo :attribute es obligatorio.',
+            'string' => 'El campo :attribute debe ser una cadena de texto.',
+            'integer' => 'El campo :attribute debe ser un número entero.',
+            'max' => 'El campo :attribute no debe exceder los :max caracteres.',
+            'exists' => 'El valor seleccionado para :attribute no es válido.'
         ];
     }
 

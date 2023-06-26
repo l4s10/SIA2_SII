@@ -1,9 +1,9 @@
 <?php
 
 namespace App\Http\Controllers;
-use App\Models\User;
 use App\Models\Cargo;
 use App\Models\Resolucion;
+use App\Models\User;
 
 use Illuminate\Http\Request;
 
@@ -14,89 +14,109 @@ class BusquedaFuncionarioController extends Controller
      */
     public function index(Request $request)
     {
+        //Parámetros de control
+        $busquedaResolucionCargo = null;
+        $busquedaResolucionCargoFallida = null;
+        $busquedaResolucionFuncionario = null;
+        $busquedaResolucionFuncionarioFallida = null;
+
         //inputs importados desde la vista para busqueda por datos y cargos
         $nombres = $request->input('NOMBRES');
         $apellidos = $request->input('APELLIDOS');
+        $rut = $request->input('RUT');
+        $idCargoFuncionario = $request->input('ID_CARGO');
+        //id del Cargo delegado de la resolución 
         $idCargo = $request->input('ID_DELEGADO');
+        
 
-        //$resoluciones = Resolucion::join('users', 'users.ID_CARGO', '=', 'resoluciones.ID_DELEGADO')
-
-
-        //$query = Resolucion::join('users', 'users.ID_CARGO', '=', 'resoluciones.ID_DELEGADO');
         $resoluciones = [];
         $cargoFuncionario = null; // Valor predeterminado
+        $cargoResolucion = null;
+        $rutRes = null;
 
-        if ($nombres && $apellidos) {
-            $query = Resolucion::join('users', 'users.ID_CARGO', '=', 'resoluciones.ID_DELEGADO')
-                ->where('users.NOMBRES', $nombres)
-                ->where('users.APELLIDOS', $apellidos);
-
-            $resoluciones = $query->distinct()->get();
+        if ($nombres && $apellidos && $rut && $idCargoFuncionario) {
+            $query = Resolucion::whereHas('delegado.users', function ($query) use ($nombres, $apellidos, $rut, $idCargoFuncionario) {
+                $query->where('NOMBRES', $nombres)
+                    ->where('APELLIDOS', $apellidos)
+                    ->where('RUT', $rut)
+                    ->where('ID_CARGO',$idCargoFuncionario);
+            });
+            $resoluciones = $query->with('tipo', 'firmante', 'delegado', 'facultad')->get();
 
             if ($resoluciones->isNotEmpty()) {
                 $user = $resoluciones->first()->delegado->users->first();
                 if ($user) {
+                    //Parámetros del funcionario seleccionado para realizar búsqueda de sus resoluciones
                     $cargoFuncionario = $user->cargo->CARGO;
+                    $rutRes = $user->RUT;
                 }
-            }
+                $busquedaResolucionFuncionario = true;
+            }else{
+                $user = User::where('ID_CARGO',$idCargoFuncionario)->first();
+                $cargoFuncionario = $user->cargo->CARGO;
+                $rutRes = $user->RUT;
+                $busquedaResolucionFuncionarioFallida = true;
+            }    
         }elseif ($idCargo) {
             //$resoluciones = Resolucion::where('ID_DELEGADO', $idCargo)->get();
-            $resoluciones = Resolucion::with('tipo', 'firmante', 'delegado', 'facultad')
-            ->where('ID_DELEGADO', $idCargo)
-            ->get();
-            $cargoFuncionario = Cargo::find($idCargo)->CARGO;
+            $query = Resolucion::whereHas('delegado', function ($query) use ($idCargo) {
+                $query->where('ID_CARGO', $idCargo);
+            });
+            $resoluciones = $query->with('tipo', 'firmante', 'delegado', 'facultad')->get();
+            
+            if ($resoluciones->isNotEmpty()) {
+                $cargoResolucion = $resoluciones->first()->delegado->CARGO;
+                $busquedaResolucionCargo = true;
+            }else{
+                $aux = Cargo::where('ID_CARGO', $idCargo)->first();
+                $cargoResolucion = $aux->CARGO;
+                $busquedaResolucionCargoFallida = true;
+            } 
+            
         }
 
         $cargos = Cargo::all();
-        return view('directivos.busquedafuncionario.index', compact('resoluciones', 'cargos', 'nombres', 'apellidos','cargoFuncionario'));
+        return view('directivos.busquedafuncionario.index', compact('resoluciones', 'cargos','nombres', 'apellidos', 'cargoFuncionario','rutRes', 'cargoResolucion','busquedaResolucionCargo','busquedaResolucionFuncionario','busquedaResolucionCargoFallida','busquedaResolucionFuncionarioFallida'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
+    public function buscarFuncionarios(Request $request)
     {
-        $cargos = Cargo::all();
-        return view('directivos.busquedafuncionario.create', compact('cargos'));
-    }
+        // Obtener los valores de nombres, apellidos, rut e idCargo desde la solicitud AJAX
+        $nombres = strtolower($request->input('nombres'));
+        $apellidos = strtolower($request->input('apellidos'));
+        $rut = strtolower($request->input('rut'));
+        $idCargoFuncionario = $request->input('idCargoFuncionario');
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
+        // Realizar la búsqueda de funcionarios en la base de datos según los nombres, apellidos, rut y cargo registrados
+        $funcionarios = User::query();
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
+        if (!empty($nombres)) {
+            $funcionarios->where('NOMBRES', 'LIKE', strtolower($nombres) . '%');
+        }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
+        if (!empty($apellidos)) {
+            $funcionarios->where('APELLIDOS', 'LIKE', strtolower($apellidos) . '%');
+        }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
+        if (!empty($rut)) {
+            $funcionarios->where('RUT', 'LIKE', strtolower($rut) . '%');
+        }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
+        if (!empty($idCargoFuncionario)) {
+            $funcionarios->whereHas('cargo', function ($query) use ($idCargoFuncionario) {
+                //Accedo al método 'cargo' del modelo 'user'
+                $query->where('ID_CARGO', $idCargoFuncionario);
+            });
+        }
+
+        $funcionarios = $funcionarios->get();
+
+
+        // Validación para controlar el mensaje de error de búsqueda de resoluciones
+        // Luego cargamos la nueva variable "busquedaAjax"
+        session()->put('busquedaAjax', true);
+        // Retorna los resultados de búsqueda en formato JSON
+        return response()->json($funcionarios);
     }
+   
 }

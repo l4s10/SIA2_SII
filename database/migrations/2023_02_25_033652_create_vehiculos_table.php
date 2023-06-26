@@ -16,11 +16,11 @@ return new class extends Migration
         Schema::create('vehiculos', function (Blueprint $table) {
             $table->increments('ID_VEHICULO');
             $table->string('PATENTE_VEHICULO',7);
-            $table->string('ID_TIPO_VEH', 128)->references('ID_TIPO_VEH')->on('tipo_vehiculo');
+            $table->unsignedBigInteger('ID_TIPO_VEH')->references('ID_TIPO_VEH')->on('tipo_vehiculo');
             $table->string('MARCA', 128)->nullable();
-            $table->string('MODELO_VEHICULO', 128)->nullable();
+            $table->string('MODELO_VEHICULO')->nullable();
             $table->string('ANO_VEHICULO', 128)->nullable();
-            $table->string('UNIDAD_VEHICULO', 128)->nullable();
+            $table->unsignedBigInteger('ID_UBICACION')->references('ID_UBICACION')->on('ubicacion');
             $table->string('ESTADO_VEHICULO', 128)->nullable();
             $table->timestamps();
         });

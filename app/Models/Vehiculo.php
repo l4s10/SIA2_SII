@@ -2,12 +2,13 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Vehiculo extends Model
 {
-    use HasFactory;
+    protected $table = 'vehiculos';
+    protected $primaryKey = 'ID_VEHICULO';
+    public $timestamps = true;
 
     protected $fillable = [
         'PATENTE_VEHICULO',
@@ -15,15 +16,19 @@ class Vehiculo extends Model
         'MARCA',
         'MODELO_VEHICULO',
         'ANO_VEHICULO',
-        'UNIDAD_VEHICULO',
+        'ID_UBICACION',
         'ESTADO_VEHICULO',
     ];
-    // Cambiamos el valor por defecto de id al nombre que tenga en la base de datos
-    protected $primaryKey = 'ID_VEHICULO';
-    //Si nuestra llave primaria NO ES NUMERICO y es STRING, debemos cambiar el valor de $keytype...
-    // protected $keyType = 'string';
+
+    // Relación con el tipo de vehículo
     public function tipoVehiculo()
     {
         return $this->belongsTo(TipoVehiculo::class, 'ID_TIPO_VEH');
+    }
+
+    // Relación con la ubicación
+    public function ubicacion()
+    {
+        return $this->belongsTo(Ubicacion::class, 'ID_UBICACION');
     }
 }

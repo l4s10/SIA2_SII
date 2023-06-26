@@ -49,7 +49,7 @@ class ResolucionesSeeder extends Seeder
 
             ['ID_RESOLUCION' => 32, 'NRO_RESOLUCION' => '1575', 'FECHA' => '2012-02-17', 'ID_TIPO' => 1, 'ID_FIRMANTE' => 1, 'ID_FACULTAD' => 7, 'ID_DELEGADO' => 6],
 
-            ['ID_RESOLUCION' => 33, 'NRO_RESOLUCION' => '1802', 'FECHA' => '2012-02-18', 'ID_TIPO' => 1, 'ID_FIRMANTE' => 1, 'ID_FACULTAD' => 8, 'ID_DELEGADO' => 6],
+            ['ID_RESOLUCION' => 33, 'NRO_RESOLUCION' => '1576', 'FECHA' => '2012-02-18', 'ID_TIPO' => 1, 'ID_FIRMANTE' => 1, 'ID_FACULTAD' => 8, 'ID_DELEGADO' => 6],
 
             ['ID_RESOLUCION' => 34, 'NRO_RESOLUCION' => '2197', 'FECHA' => '2012-03-09', 'ID_TIPO' => 1, 'ID_FIRMANTE' => 1, 'ID_FACULTAD' => 9, 'ID_DELEGADO' => 5],          
             ['ID_RESOLUCION' => 35, 'NRO_RESOLUCION' => '2197', 'FECHA' => '2012-03-09', 'ID_TIPO' => 1, 'ID_FIRMANTE' => 1, 'ID_FACULTAD' => 9, 'ID_DELEGADO' => 9],

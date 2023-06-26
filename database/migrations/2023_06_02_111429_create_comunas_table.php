@@ -14,10 +14,8 @@ return new class extends Migration
         Schema::create('comunas', function (Blueprint $table) {
             $table->increments('ID_COMUNA');
             $table->string('COMUNA', 128)->nullable();
-            $table->integer('ID_REGION')->unsigned();
-            $table->integer('ID_DIRECCION')->unsigned();
+            $table->unsignedInteger('ID_REGION');
             $table->foreign('ID_REGION')->references('ID_REGION')->on('region');
-            $table->foreign('ID_DIRECCION')->references('ID_DIRECCION')->on('direcciones_regionales');
         });
     }
 
