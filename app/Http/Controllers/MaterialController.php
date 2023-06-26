@@ -189,7 +189,7 @@ class MaterialController extends Controller
     */
     public function report(){
         $materiales = Material::orderBy('ID_TIPO_MAT')->get();
-        $fecha = Carbon::now()->setTimezone('America/Santiago')->format('d/m/Y H:i');
+        $fecha = Carbon::now()->format('d/m/Y H:i');
         $pdf = Pdf::loadView('materiales.report', compact('materiales', 'fecha'));
         $nombreArchivo = $fecha . '_maestro_materiales.pdf';
         return $pdf->stream($nombreArchivo);
