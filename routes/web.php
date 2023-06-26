@@ -115,7 +115,11 @@ Route::resource('funcionarios','App\Http\Controllers\UserController');
 Route::post('/update-stock', [InventoryController::class, 'updateStock'])->name('update-stock');
 
 Route::get('/home', [HomeController::class, 'index']);
-Route::get('/reportes', [ReporteController::class, 'index']);
+
+// Esta es la ruta GET para mostrar la página
+Route::get('/reportes', [ReporteController::class, 'index'])->name('reportes.index');
+// Esta es la ruta POST para recibir las solicitudes AJAX
+Route::post('/reportes/data', [ReporteController::class, 'obtenerDatos'])->name('reportes.data');
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/dashboard', function () {
