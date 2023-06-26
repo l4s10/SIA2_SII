@@ -1,312 +1,319 @@
 @extends('adminlte::page')
 
 <!-- TITULO DE LA PESTAÑA -->
-@section('title', 'Modificar Funcionario')
+@section('title', 'Editar Funcionario')
 
 <!-- CABECERA DE LA PAGINA -->
 @section('content_header')
-    <h1>Modificar Funcionario</h1>
+    <h1>Editar funcionario</h1>
 @stop
 
 @section('content')
-<div class="container">
-    <form action="{{route('funcionarios.update',$funcionario->id)}}" method="POST">
-        @csrf
-        @method('PUT')
-        <div class="row">
-            <div class="col">
-                <div class="form-group">
-                    <label for="name">Nombre completo</label>
-                    <input type="text" name="name" id="name" class="form-control" placeholder="Nombre completo" value="{{ $funcionario->name }}" required autofocus>
+    <div class="container">
+        <form action="{{ route('funcionarios.update', $funcionario->id) }}" method="post">
+            @csrf
+            @method('PUT')
 
-                    @error('name')
-                        <span class="invalid-feedback" role="alert">
-                            <strong>{{ $message }}</strong>
-                        </span>
-                    @enderror
+            {{-- Datos de la persona --}}
+            <h4>Datos de la persona</h4>
+            <div class="row">
+                <div class="col">
+                    <div class="form-group">
+                        <label for="NOMBRES">Nombres</label>
+                        <input type="text" name="NOMBRES" id="NOMBRES" class="form-control @error('nombres') is-invalid @enderror" placeholder="Nombres" value="{{ $funcionario->NOMBRES }}" required autofocus>
+                        @error('NOMBRES')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                        @enderror
+                    </div>
+                </div>
+
+                <div class="col">
+                    <div class="form-group">
+                        <label for="APELLIDOS">Apellidos</label>
+                        <input type="text" name="APELLIDOS" id="APELLIDOS" class="form-control @error('APELLIDOS') is-invalid @enderror" placeholder="Apellido Paterno Apellido Materno" value="{{ $funcionario->APELLIDOS }}" required autofocus>
+                        @error('APELLIDOS')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                        @enderror
+                    </div>
                 </div>
             </div>
-            <div class="col">
-                <div class="form-group">
-                    <label for="email">Correo electrónico</label>
-                    <input type="email" name="email" id="email" class="form-control" placeholder="Correo electrónico" value="{{ $funcionario->email }}" required>
 
-                    @error('email')
-                        <span class="invalid-feedback" role="alert">
-                            <strong>{{ $message }}</strong>
-                        </span>
-                    @enderror
+            {{-- Correo electrónico --}}
+            <div class="row">
+                <div class="col">
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" name="email" id="email" class="form-control @error('email') is-invalid @enderror" value="{{ $funcionario->email }}" placeholder="funcionario@sii.cl" required>
+                        @error('email')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                        @enderror
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="form-group">
+                        <label for="RUT">RUT</label>
+                        <input type="text" name="RUT" id="RUT" class="form-control" placeholder="RUT (sin puntos con guión)" value="{{ $funcionario->RUT }}" required>
+                        @error('RUT')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                        @enderror
+                    </div>
                 </div>
             </div>
-        </div>
 
-        <div class="row">
-            <div class="col">
-                <div class="form-group">
-                    <label for="password">{{ __('Contraseña') }}</label>
-                    <input id="password" type="password" class="form-control @error('password') is-invalid @enderror"
-                        name="password" placeholder="{{ __('Dejar en blanco para mantener la contraseña actual') }}">
-                    @error('password')
-                        <span class="invalid-feedback" role="alert">
-                            <strong>{{ $message }}</strong>
-                        </span>
-                    @enderror
+            <div class="row">
+                <div class="col">
+                    {{-- Fecha de nacimiento field --}}
+                    <div class="form-group">
+                        <label for="FECHA_NAC">Fecha de nacimiento</label>
+                        <input type="date" id="FECHA_NAC" name="FECHA_NAC" class="form-control @error('FECHA_NAC') is-invalid @enderror"
+                            value="{{ $funcionario->FECHA_NAC }}" placeholder="{{ __('Fecha de Nacimiento') }}" required autofocus>
+                        @error('FECHA_NAC')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                        @enderror
+                    </div>
+                </div>
+                <div class="col">
+                    {{-- Fecha de ingreso a la empresa field --}}
+                    <div class="form-group">
+                        <label for="FECHA_INGRESO">Fecha ingreso</label>
+                        <input type="date" id="FECHA_INGRESO" name="FECHA_INGRESO" class="form-control @error('FECHA_INGRESO') is-invalid @enderror"
+                            value="{{ $funcionario->FECHA_INGRESO }}" placeholder="{{ __('Fecha de Ingreso a la Empresa') }}" required autofocus>
+                        @error('FECHA_INGRESO')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                        @enderror
+                    </div>
                 </div>
             </div>
-            <div class="col">
-                <div class="form-group">
-                    <label for="password-confirm">{{ __('Confirmar Contraseña') }}</label>
-                    <input id="password-confirm" type="password" class="form-control"
-                        name="password_confirmation" placeholder="{{ __('Dejar en blanco para mantener la contraseña actual') }}">
+
+            <div class="row">
+                <div class="col">
+                    {{-- Fono field --}}
+                    <div class="form-group">
+                        <label for="FONO">Fono</label>
+                        <input type="text" name="FONO" class="form-control @error('FONO') is-invalid @enderror"
+                            value="{{ $funcionario->FONO }}" placeholder="{{ __('Fono') }}" required autofocus>
+                        @error('FONO')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                        @enderror
+                    </div>
+                </div>
+                <div class="col">
+                    {{-- Anexo field --}}
+                    <div class="form-group">
+                        <label for="ANEXO">Anexo</label>
+                        <input type="text" name="ANEXO" class="form-control @error('ANEXO') is-invalid @enderror"
+                            value="{{ $funcionario->ANEXO }}" placeholder="{{ __('Anexo') }}" required autofocus>
+                        @error('ANEXO')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                        @enderror
+                    </div>
                 </div>
             </div>
-        </div>
 
-        <div class="row">
-            <div class="col">
-                <div class="form-group">
-                    <label for="rut">RUT</label>
-                    <input type="text" name="rut" id="rut" class="form-control" placeholder="RUT" value="{{ $funcionario->rut }}" required>
+            {{-- Sexo field --}}
+            <div class="form-group">
+                <label for="ID_SEXO">Sexo</label>
+                <select name="ID_SEXO" class="form-control @error('ID_SEXO') is-invalid @enderror" required>
+                    <option value="" disabled>Seleccione un sexo</option>
+                    @foreach ($sexos as $sexo)
+                        <option value="{{ $sexo->ID_SEXO }}" {{ $funcionario->ID_SEXO == $sexo->ID_SEXO ? 'selected' : '' }}>{{ $sexo->SEXO }}</option>
+                    @endforeach
+                </select>
+                @error('ID_SEXO')
+                    <span class="invalid-feedback" role="alert">
+                        <strong>{{ $message }}</strong>
+                    </span>
+                @enderror
+            </div>
 
-                    @error('rut')
-                        <span class="invalid-feedback" role="alert">
-                            <strong>{{ $message }}</strong>
-                        </span>
-                    @enderror
+            {{-- Contraseña y confirmación de contraseña --}}
+            <h4>Configuración de la cuenta</h4>
+            <div class="row">
+                <div class="col">
+                    <div class="form-group">
+                        <label for="password">Contraseña</label>
+                        <input type="password" name="password" id="password" class="form-control" placeholder="Contraseña (dejar en blanco si no desea cambiar)">
+                        @error('password')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                        @enderror
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="form-group">
+                        <label for="password_confirmation">Confirmar contraseña</label>
+                        <input type="password" name="password_confirmation" id="password_confirmation" class="form-control" placeholder="Confirmar contraseña (dejar en blanco si no desea cambiar)">
+                        @error('password_confirmation')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                        @enderror
+                    </div>
                 </div>
             </div>
-            <div class="col">
-                <div class="form-group">
-                    <label for="depto">Departamento</label>
-                    <input type="text" name="depto" id="depto" class="form-control" placeholder="Departamento" value="{{ $funcionario->depto }}" required>
+            {{-- !!ROL --}}
+            <div class="form-group">
+                <label for="role">Rol</label>
+                <select name="role" id="role" class="form-control">
+                    @foreach ($roles as $role)
+                        <option value="{{ $role->id }}" {{ $funcionario->hasRole($role->name) ? 'selected' : '' }}>{{ $role->name }}</option>
+                    @endforeach
+                </select>
+            </div>
+
+            {{-- Ubicación --}}
+            <h4>Ubicación</h4>
+            <div class="row">
+                <div class="col">
+                    {{-- Region field --}}
+                    <div class="form-group">
+                        <label for="region">Región</label>
+                        <select name="ID_REGION" class="form-control @error('ID_REGION') is-invalid @enderror" required>
+                            <option value="" disabled>Seleccione una región</option>
+                            @foreach ($regiones as $region)
+                                <option value="{{ $region->ID_REGION }}" {{ $funcionario->ID_REGION == $region->ID_REGION ? 'selected' : '' }}>{{ $region->REGION }}</option>
+                            @endforeach
+                        </select>
+                        @error('ID_REGION')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                        @enderror
+                    </div>
+                </div>
+                <div class="col">
+                    {{-- Ubicacion field --}}
+                    <div class="form-group">
+                        <label for="ubicacion">Ubicación</label>
+                        <select name="ID_UBICACION" class="form-control @error('ID_UBICACION') is-invalid @enderror" required>
+                            <option value="" disabled>Seleccione una ubicación</option>
+                            @foreach ($ubicaciones as $ubicacion)
+                                <option value="{{ $ubicacion->ID_UBICACION }}" {{ $funcionario->ID_UBICACION == $ubicacion->ID_UBICACION ? 'selected' : '' }}>{{ $ubicacion->UBICACION }}</option>
+                            @endforeach
+                        </select>
+                        @error('ID_UBICACION')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                        @enderror
+                    </div>
+                </div>
+
+            </div>
+            <div class="form-row">
+                <div class="col">
+                    {{-- Grupo field --}}
+                    <div class="form-group">
+                        <label for="ID_GRUPO">Grupo</label>
+                        <select name="ID_GRUPO" id="ID_GRUPO" class="form-control @error('ID_GRUPO') is-invalid @enderror" required autofocus>
+                            <option value="" disabled>Seleccione un grupo</option>
+                            @foreach ($grupos as $grupo)
+                                <option value="{{ $grupo->ID_GRUPO }}" {{ $funcionario->ID_GRUPO == $grupo->ID_GRUPO ? 'selected' : '' }}>{{ $grupo->GRUPO }}</option>
+                            @endforeach
+                        </select>
+                        @error('ID_GRUPO')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                        @enderror
+                    </div>
+                </div>
+                <div class="col">
+                    {{-- Calidad Jurídica --}}
+                    <div class="form-group">
+                        <label for="ID_CALIDAD_JURIDICA">Calidad Jurídica</label>
+                        <select name="ID_CALIDAD_JURIDICA" id="ID_CALIDAD_JURIDICA" class="form-control @error('ID_CALIDAD_JURIDICA') is-invalid @enderror">
+                            <option value="">Seleccionar</option>
+                            @foreach ($calidadesJuridicas as $calidadJuridica)
+                                <option value="{{ $calidadJuridica->ID_CALIDAD }}" {{ $funcionario->ID_CALIDAD_JURIDICA == $calidadJuridica->ID_CALIDAD ? 'selected' : '' }}>{{ $calidadJuridica->CALIDAD }}</option>
+                            @endforeach
+                        </select>
+                        @error('ID_CALIDAD_JURIDICA')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                        @enderror
+                    </div>
                 </div>
             </div>
-        </div>
 
-        <div class="row">
-            <div class="col">{{-- Region field --}}
-                <div class="form-group">
-                    <label for="region">Región</label>
-                    <input type="text" name="region" class="form-control @error('region') is-invalid @enderror"
-                        value="{{ $funcionario->region }}" placeholder="{{ __('Region') }}" required autofocus>
-
-                    @error('region')
-                        <span class="invalid-feedback" role="alert">
-                            <strong>{{ $message }}</strong>
-                        </span>
-                    @enderror
+            {{-- Niveles --}}
+            <h4>Niveles</h4>
+            <div class="row">
+                <div class="col">
+                    {{-- Grado field --}}
+                    <div class="form-group">
+                        <label for="ID_GRADO">Grado</label>
+                        <select name="ID_GRADO" class="form-control @error('ID_GRADO') is-invalid @enderror" required>
+                            <option value="" selected disabled>Seleccione un grado</option>
+                            @foreach($grados as $grado)
+                                <option value="{{ $grado->ID_GRADO }}" {{ $funcionario->ID_GRADO == $grado->ID_GRADO ? 'selected' : '' }}>{{ $grado->GRADO }}</option>
+                            @endforeach
+                        </select>
+                        @error('ID_GRADO')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                        @enderror
+                    </div>
+                </div>
+                <div class="col">
+                    {{-- Escalafon field --}}
+                    <div class="form-group">
+                        <label for="ID_ESCALAFON">Escalafon</label>
+                        <select name="ID_ESCALAFON" class="form-control @error('ID_ESCALAFON') is-invalid @enderror" required>
+                            <option value="" selected disabled>Seleccione un escalafon</option>
+                            @foreach($escalafones as $escalafon)
+                                <option value="{{ $escalafon->ID_ESCALAFON }}" {{ $funcionario->ID_ESCALAFON == $escalafon->ID_ESCALAFON ? 'selected' : '' }}>{{ $escalafon->ESCALAFON }}</option>
+                            @endforeach
+                        </select>
+                        @error('ID_ESCALAFON')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                        @enderror
+                    </div>
                 </div>
             </div>
-            <div class="col">
-                {{-- Ubicacion field --}}
-                <div class="form-group">
-                    <label for="ubicacion">Ubicación</label>
-                    <input type="text" name="ubicacion" class="form-control @error('ubicacion') is-invalid @enderror"
-                        value="{{ $funcionario->ubicacion }}" placeholder="{{ __('Ubicacion') }}" required autofocus>
 
-                    @error('ubicacion')
-                        <span class="invalid-feedback" role="alert">
-                            <strong>{{ $message }}</strong>
-                        </span>
-                    @enderror
-                </div>
+            <div>
+                <label for="cargo">Cargo:</label>
+                <select name="ID_CARGO" id="ID_CARGO" class="form-control">
+                    @foreach ($cargos as $cargo)
+                        <option value="{{$cargo->ID_CARGO}}" {{ $funcionario->ID_CARGO == $cargo->ID_CARGO ? 'selected' : '' }}>{{$cargo->CARGO}}</option>
+                    @endforeach
+                </select>
             </div>
-        </div>
 
-        <div class="row">
-            <div class="col">
-                {{-- Grupo field --}}
-                <div class="form-group">
-                    <label for="grupo">Grupo</label>
-                    <input type="text" name="grupo" class="form-control @error('grupo') is-invalid @enderror"
-                        value="{{ $funcionario->grupo }}" placeholder="{{ __('Grupo') }}" required autofocus>
-
-                    @error('grupo')
-                        <span class="invalid-feedback" role="alert">
-                            <strong>{{ $message }}</strong>
-                        </span>
-                    @enderror
-                </div>
+            <div class="form-group">
+                <a href="{{ route('funcionarios.index') }}" class="btn btn-secondary">Cancelar</a>
+                <button type="submit" class="btn btn-sia-primary">Guardar cambios</button>
             </div>
-            <div class="col">
-                {{-- Escalafon field --}}
-                <div class="form-group">
-                    <label for="escalafon">Escalafon</label>
-                    <input type="text" name="escalafon" class="form-control @error('escalafon') is-invalid @enderror"
-                        value="{{ $funcionario->escalafon }}" placeholder="{{ __('Escalafon') }}" required autofocus>
-
-                    @error('escalafon')
-                        <span class="invalid-feedback" role="alert">
-                            <strong>{{ $message }}</strong>
-                        </span>
-                    @enderror
-                </div>
-            </div>
-        </div>
-
-        {{-- Grado field --}}
-        <div class="form-group">
-            <label for="grado">Grado</label>
-            <input type="text" name="grado" class="form-control @error('grado') is-invalid @enderror"
-                value="{{ $funcionario->grado }}" placeholder="{{ __('Grado') }}" required autofocus>
-
-            @error('grado')
-                <span class="invalid-feedback" role="alert">
-                    <strong>{{ $message }}</strong>
-                </span>
-            @enderror
-        </div>
-        <div class="row">
-            <div class="col">
-                {{-- Fecha de nacimiento field --}}
-                <div class="form-group">
-                    <label for="fecha_nacimiento">Fecha de nacimiento</label>
-                    <input type="date" id="fecha_nacimiento" name="fecha_nacimiento" class="form-control @error('fecha_nacimiento') is-invalid @enderror"
-                        value="{{ $funcionario->fecha_nacimiento }}" placeholder="{{ __('Fecha de Nacimiento') }}" required autofocus>
-
-                    @error('fecha_nacimiento')
-                        <span class="invalid-feedback" role="alert">
-                            <strong>{{ $message }}</strong>
-                        </span>
-                    @enderror
-                </div>
-            </div>
-            <div class="col">
-                {{-- Fecha de ingreso a la empresa field --}}
-                <div class="form-group">
-                    <label for="fecha_ingreso">Fecha ingreso</label>
-                    <input type="date" id="fecha_ingreso" name="fecha_ingreso" class="form-control @error('fecha_ingreso') is-invalid @enderror"
-                        value="{{ $funcionario->fecha_ingreso }}" placeholder="{{ __('Fecha de Ingreso a la Empresa') }}" required autofocus>
-
-                    @error('fecha_ingreso')
-                        <span class="invalid-feedback" role="alert">
-                            <strong>{{ $message }}</strong>
-                        </span>
-                    @enderror
-                </div>
-            </div>
-            <div class="col">
-                {{-- Fecha de asimilación a planta field --}}
-                <div class="form-group">
-                    <label for="fecha_asim_planta">Fecha asim planta</label>
-                    <input type="date" id="fecha_asim_planta" name="fecha_asim_planta" class="form-control @error('fecha_asim_planta') is-invalid @enderror"
-                        value="{{ $funcionario->fecha_asim_planta }}" placeholder="{{ __('Fecha de Asimilación a Planta') }}" required autofocus>
-
-                    @error('fecha_asim_planta')
-                        <span class="invalid-feedback" role="alert">
-                            <strong>{{ $message }}</strong>
-                        </span>
-                    @enderror
-                </div>
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col">
-                {{-- Funcion field --}}
-                <div class="form-group">
-                    <label for="funcion">Función</label>
-                    <input type="text" name="funcion" class="form-control @error('funcion') is-invalid @enderror"
-                        value="{{ $funcionario->funcion }}" placeholder="{{ __('Funcion') }}" required autofocus>
-
-                    @error('funcion')
-                        <span class="invalid-feedback" role="alert">
-                            <strong>{{ $message }}</strong>
-                        </span>
-                    @enderror
-                </div>
-            </div>
-            <div class="col">
-                {{-- Profesion field --}}
-                <div class="form-group">
-                    <label for="profesion">Profesión</label>
-                    <input type="text" name="profesion" class="form-control @error('profesion') is-invalid @enderror"
-                        value="{{ $funcionario->profesion }}" placeholder="{{ __('Profesion') }}" required autofocus>
-
-                    @error('profesion')
-                        <span class="invalid-feedback" role="alert">
-                            <strong>{{ $message }}</strong>
-                        </span>
-                    @enderror
-                </div>
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col">
-                {{-- Area field --}}
-                <div class="form-group">
-                    <label for="area">Area</label>
-                    <input type="text" name="area" class="form-control @error('area') is-invalid @enderror"
-                        value="{{ $funcionario->area }}" placeholder="{{ __('Area') }}" required autofocus>
-
-                    @error('area')
-                        <span class="invalid-feedback" role="alert">
-                            <strong>{{ $message }}</strong>
-                        </span>
-                    @enderror
-                </div>
-            </div>
-            <div class="col">
-                {{-- Fono field --}}
-                <div class="form-group">
-                    <label for="fono">Fono</label>
-                    <input type="text" name="fono" class="form-control @error('fono') is-invalid @enderror"
-                        value="{{ $funcionario->fono }}" placeholder="{{ __('Fono') }}" required autofocus>
-
-                    @error('fono')
-                        <span class="invalid-feedback" role="alert">
-                            <strong>{{ $message }}</strong>
-                        </span>
-                    @enderror
-                </div>
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col">
-                {{-- Anexo field --}}
-                <div class="form-group">
-                    <label for="anexo">Anexo</label>
-                    <input type="text" name="anexo" class="form-control @error('anexo') is-invalid @enderror"
-                        value="{{ $funcionario->anexo }}" placeholder="{{ __('Anexo') }}" required autofocus>
-
-                    @error('anexo')
-                        <span class="invalid-feedback" role="alert">
-                            <strong>{{ $message }}</strong>
-                        </span>
-                    @enderror
-                </div>
-            </div>
-            <div class="col">
-                {{-- Sexo field --}}
-                <div class="form-group">
-                    <label for="sexo">Sexo</label>
-                    <select name="sexo" class="form-control @error('sexo') is-invalid @enderror" required>
-                        <option value="" disabled {{ $funcionario->sexo ? '' : 'selected' }}>{{ __('Sexo') }}</option>
-                        <option value="M" {{ $funcionario->sexo == 'M' ? 'selected' : '' }}>{{ __('Masculino') }}</option>
-                        <option value="F" {{ $funcionario->sexo == 'F' ? 'selected' : '' }}>{{ __('Femenino') }}</option>
-                    </select>
-
-                    @error('sexo')
-                        <span class="invalid-feedback" role="alert">
-                            <strong>{{ $message }}</strong>
-                        </span>
-                    @enderror
-                </div>
-            </div>
-        </div>
-
-        <div class="form-group">
-            <a href="{{route('funcionarios.index')}}" class="btn btn-secondary">Cancelar</a>
-            <button type="submit" class="btn btn-primary">Modificar usuario</button>
-        </div>
-    </form>
-</div>
-@endsection
+        </form>
+    </div>
+@stop
 
 @section('css')
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    {{-- Probando colores personalizados --}}
+    <link rel="stylesheet" href="{{ asset('vendor/adminlte/dist/css/custom.css') }}">
 @endsection
 
 @section('js')
@@ -316,7 +323,7 @@
     <script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/es.js"></script>
     <script>
         $(function () {
-            $('#fecha_nacimiento').flatpickr({
+            $('#FECHA_NAC').flatpickr({
                 locale: 'es',
                 minDate: "1950-01-01",
                 dateFormat: "Y-m-d",
@@ -324,7 +331,7 @@
                 altInput: true,
                 allowInput: true,
             });
-            $('#fecha_ingreso').flatpickr({
+            $('#FECHA_INGRESO').flatpickr({
                 locale: 'es',
                 minDate: "1950-01-01",
                 dateFormat: "Y-m-d",

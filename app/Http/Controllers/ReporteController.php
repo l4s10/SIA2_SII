@@ -18,7 +18,7 @@ class ReporteController extends Controller
         $solicitudBodegas = SolicitudBodegas::count();
         $solicitudReparacionVehiculo = SolicitudReparacionVehiculo::count();
         $relFunVeh = RelFunVeh::count();
-    
+
         // Asignar los valores al arreglo Grafico_1
         $Grafico_1 = [
             $solicitudSala,
@@ -26,7 +26,7 @@ class ReporteController extends Controller
             $solicitudReparacionVehiculo,
             $relFunVeh
         ];
-    
+
         // Devolver la vista con los datos
         return view('reportes.index', compact('Grafico_1'));
     }
@@ -35,17 +35,17 @@ class ReporteController extends Controller
     {
         $fechaInicio = $request->input('fechaInicio');
         $fechaFin = $request->input('fechaFin');
-    
+
         // Convertir las fechas de entrada a instancias de Carbon
         $fechaInicio = Carbon::parse($fechaInicio);
         $fechaFin = Carbon::parse($fechaFin)->endOfDay();
-    
+
         // Obtener el recuento de registros para cada modelo
         $solicitudSala = SolicitudSala::whereBetween('created_at', [$fechaInicio, $fechaFin])->count();
         $solicitudBodegas = SolicitudBodegas::whereBetween('created_at', [$fechaInicio, $fechaFin])->count();
         $solicitudReparacionVehiculo = SolicitudReparacionVehiculo::whereBetween('created_at', [$fechaInicio, $fechaFin])->count();
         $relFunVeh = RelFunVeh::whereBetween('created_at', [$fechaInicio, $fechaFin])->count();
-            
+
         return response()->json([
             'solicitudSala' => $solicitudSala,
             'solicitudBodegas' => $solicitudBodegas,

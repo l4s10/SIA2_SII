@@ -142,27 +142,6 @@ class FuncionariosSeeder extends Seeder
             'password' => Hash::make('12345678'),
             //'ID_DEPART' => 2
         ]);
-        $user_administrador7 = User::create([
-            'RUT' => '11684760-4',
-            'NOMBRES' => 'EDUARDO',
-            'APELLIDOS' => 'CONCHA PEÑA',
-            'ID_REGION' => 8,
-            'ID_UBICACION' => 7,
-            'ID_ESCALAFON' => 5,
-            'ID_GRADO' => 11,
-            'FECHA_NAC' => '1970-09-22',
-            'FECHA_INGRESO' => '1999-02-01',
-            //'FECHA_ASIM_O_1' => '1999-02-01',
-            'ID_CALIDAD_JURIDICA' => 1,
-            'ID_GRUPO' => 5,
-            'ID_CARGO' => 22,
-            'email' => 'eaconcha@sii.cl',
-            'FONO' => '41-3115254',
-            'ANEXO' => '5254',
-            'ID_SEXO' => 1,
-            'password' => Hash::make('12345678'),
-            //'ID_DEPART' => 3
-        ]);
         $user_administrador8 = User::create([
             'RUT' => '12918071-4',
             'NOMBRES' => 'PAULINA ANDREA',
@@ -331,7 +310,7 @@ class FuncionariosSeeder extends Seeder
         $user_administrador4->assignRole($adminMaestro);
         $user_administrador5->assignRole($adminMaestro);
         $user_administrador6->assignRole($adminMaestro);
-        $user_administrador7->assignRole($adminMaestro);
+        // $user_administrador7->assignRole($adminMaestro);
         $user_administrador8->assignRole($adminMaestro);
         $user_administrador9->assignRole($adminMaestro);
         $user_administrador10->assignRole($adminMaestro);

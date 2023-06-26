@@ -31,12 +31,12 @@
                     <p class="form-control-plaintext">{{ $funcionario->RUT }}</p>
                 </div>
             </div>
-            <div class="form-group row">
+            {{-- <div class="form-group row">
                 <label for="depto" class="col-sm-2 col-form-label">{{ __('Departamento') }}</label>
                 <div class="col-sm-10">
                     <p class="form-control-plaintext">{{ $funcionario->departamento->DEPARTAMENTO }}</p>
                 </div>
-            </div>
+            </div> --}}
             <div class="form-group row">
                 <label for="region" class="col-sm-2 col-form-label">{{ __('Región') }}</label>
                 <div class="col-sm-10">

@@ -81,16 +81,16 @@
         <table id="materiales" class="table table-bordered">
             <thead class="bg-primary text-white">
                 <tr>
-                    <th scope="col">Nombre Material</th>
                     <th scope="col">Tipo Material</th>
+                    <th scope="col">Nombre Material</th>
                     <th scope="col">Acciones</th>
                 </tr>
             </thead>
             <tbody>
                 @foreach ($materiales as $material)
                     <tr>
-                        <td>{{ $material->NOMBRE_MATERIAL }}</td>
                         <td>{{ $material->tipoMaterial->TIPO_MATERIAL }}</td>
+                        <td>{{ $material->NOMBRE_MATERIAL }}</td>
                         <td>
                             <button type="button" class="btn btn-info btn-agregar" data-nombre="{{ $material->NOMBRE_MATERIAL }}" data-tipo="{{ $material->tipoMaterial->TIPO_MATERIAL }}"><i class="fa-solid fa-cart-plus"></i></button>
                             <button type="button" class="btn btn-danger btn-eliminar" data-nombre="{{ $material->NOMBRE_MATERIAL }}"><i class="fa-solid fa-trash"></i></button>
@@ -168,6 +168,9 @@
                 "columnDefs": [
                 { "orderable": false, "targets": 2 }
                 ],
+                "language": {
+                    "url": "https://cdn.datatables.net/plug-ins/1.11.3/i18n/es_es.json"
+                },
             });
         });
     </script>

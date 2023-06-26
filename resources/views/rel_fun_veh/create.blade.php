@@ -260,9 +260,10 @@
                     <div class="invalid-feedback">{{ $errors->first('FECHA_SOL_VEH') }}</div>
                 @endif
             </div>
-
+            {{-- *COMUNA ORIGEN* --}}
         <div class="row">
                 <div class="col-md-6">
+                    {{-- *SELECT PARA REGION* --}}
                     <div class="mb-3">
                             <label for="ORIGEN" class="form-label"><i class="fa-solid fa-map"></i> Region origen:</label>
                             <select id="ORIGEN" name="ORIGEN" class="form-control @error('ORIGEN') is-invalid @enderror" required>

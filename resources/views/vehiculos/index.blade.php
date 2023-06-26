@@ -59,7 +59,7 @@
         </script>
     @endif
 
-
+    <a href="{{route('vehiculos.create')}}" class="btn btn-primary"> Ingresar nuevo vehiculo</a>
         <div class="table-responsive">
             <!-- en el href, hacemos referencia dentro de la carpeta de vistas -->
             {{-- <a href="vehiculos/create" class="btn btn-primary mb-3">Ingresar nuevo vehículo</a> --}}
@@ -71,7 +71,7 @@
                         <th scope="col">Marca</th>
                         <th scope="col">Modelo</th>
                         <th scope="col">Año</th>
-                        <th scope="col">Unidad</th>
+                        <th scope="col">Ubicacion</th>
                         <th scope="col">Estado</th>
                         <th scope="col">Acciones</th>
                     </tr>
@@ -84,7 +84,7 @@
                             <td>{{ $vehiculo->MARCA }}</td>
                             <td>{{ $vehiculo->MODELO_VEHICULO }}</td>
                             <td>{{ $vehiculo->ANO_VEHICULO }}</td>
-                            <td>{{ $vehiculo->UNIDAD_VEHICULO }}</td>
+                            <td>{{ $vehiculo->ubicacion->UBICACION }}</td>
                             <td>{{ $vehiculo->ESTADO_VEHICULO }}</td>
                             <td>
                                 <form action="{{ route('vehiculos.destroy',$vehiculo->ID_VEHICULO) }}" method="POST">
