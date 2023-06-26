@@ -55,14 +55,31 @@
         <div class="col-md-6">
             <div class="chart-container">
                 <canvas id="myChart"></canvas>
+                <button id="view-chart" class="btn btn-primary move-right"><i class="fa-solid fa-maximize"></i></button>
             </div>
         </div>
     </div>
     <br>
+    <!-- Modal para mostrar el gráfico en grande -->
+    <div class="modal fade" id="chart-modal" tabindex="-1" aria-labelledby="chart-modal-label" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-xl">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="chart-modal-label">Gráfico en grande</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" ><i class="fa-solid fa-xmark"></i></button>
+            </div>
+                <div class="modal-body">
+                <!-- Aquí se mostrará el gráfico en grande -->
+                <canvas id="modalChart"></canvas>
+            </div>
+        </div>
+    </div>
+</div>
+
 @endsection
 
 @section('css')
-    <style>
+<style>
         .alert {
             opacity: 0.7;
             /* Ajusta la opacidad a tu gusto */
@@ -87,8 +104,8 @@
             justify-content: center;
             align-items: center;
         }
-    </style>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+</style>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
 @stop
 
 @section('js')
@@ -97,7 +114,25 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     <script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/es.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
+<script>
+$(document).ready(function() {
+    // Manejar el evento de clic en el enlace
+    $('#view-chart').click(function(e) {
+        e.preventDefault();
+
+        // Obtener la imagen del gráfico
+        var chartImage = $('#myChart')[0].toDataURL();
+
+        // Mostrar el gráfico en un modal
+        var modalContent = '<img src="' + chartImage + '" alt="Gráfico" style="width: 100%;">';
+        $('#chart-modal .modal-body').html(modalContent);
+        $('#chart-modal').modal('show');
+    });
+});
+</script>
+    
     <script>
         flatpickr('#start-date', {
             locale: 'es',
@@ -114,7 +149,7 @@
         });
     </script>
 
-    <script>
+<script>
         const ctx = document.getElementById('myChart').getContext('2d');
         const myChart = new Chart(ctx, {
             type: 'bar',
@@ -226,5 +261,6 @@
                     myChart.update();
                 });
         });
-    </script>
+</script>
+
 @endsection
