@@ -105,35 +105,36 @@
             align-items: center;
         }
 </style>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+{{-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css"> --}}
 @stop
 
 @section('js')
-    <script src="https://kit.fontawesome.com/742a59c628.js" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+    {{-- <script src="https://kit.fontawesome.com/742a59c628.js" crossorigin="anonymous"></script> --}}
+    {{-- <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> --}}
+    {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     <script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/es.js"></script>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> --}}
+    {{-- CHART.JS --}}
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
-$(document).ready(function() {
-    // Manejar el evento de clic en el enlace
-    $('#view-chart').click(function(e) {
-        e.preventDefault();
+    $(document).ready(function() {
+        // Manejar el evento de clic en el enlace
+        $('#view-chart').click(function(e) {
+            e.preventDefault();
 
-        // Obtener la imagen del gráfico
-        var chartImage = $('#myChart')[0].toDataURL();
+            // Obtener la imagen del gráfico
+            var chartImage = $('#myChart')[0].toDataURL();
 
-        // Mostrar el gráfico en un modal
-        var modalContent = '<img src="' + chartImage + '" alt="Gráfico" style="width: 100%;">';
-        $('#chart-modal .modal-body').html(modalContent);
-        $('#chart-modal').modal('show');
+            // Mostrar el gráfico en un modal
+            var modalContent = '<img src="' + chartImage + '" alt="Gráfico" style="width: 100%;">';
+            $('#chart-modal .modal-body').html(modalContent);
+            $('#chart-modal').modal('show');
+        });
     });
-});
 </script>
 
-    <script>
+    {{-- <script>
         flatpickr('#start-date', {
             locale: 'es',
             dateFormat: "Y-m-d",
@@ -147,119 +148,138 @@ $(document).ready(function() {
             altFormat: 'd-m-Y',
             altInput: true,
         });
+    </script> --}}
+    <script>
+        $(function () {
+            $('#start-date').flatpickr({
+                locale: 'es',
+                dateFormat: "Y-m-d",
+                altFormat: 'd-m-Y',
+                altInput: true,
+            });
+            $('#end-date').flatpickr({
+                locale: 'es',
+                dateFormat: "Y-m-d",
+                altFormat: 'd-m-Y',
+                altInput: true,
+            });
+        });
     </script>
 
 <script>
-        const ctx = document.getElementById('myChart').getContext('2d');
-        const myChart = new Chart(ctx, {
-            type: 'bar',
-            data: {
-                labels: ['Solicitud Sala', 'Solicitud Bodegas', 'Reparación de Vehículos', 'Reserva de Vehículos'],
-                datasets: [{
-                    label: 'Cantidad de Solicitudes',
-                    data: [@foreach($Grafico_1 as $AUX) {{ $AUX }}, @endforeach],
-                    backgroundColor: [
-                        'rgba(255, 165, 0, 0.2)', // Color de fondo para Salas (naranja)
-                        'rgba(255, 0, 0, 0.2)', // Color de fondo para Bodegas (rojo)
-                        'rgba(0, 128, 0, 0.2)', // Color de fondo para Reserva de Vehículos (verde)
-                        'rgba(0, 191, 255, 0.2)' // Color de fondo para Reparación de Vehículos (celeste)
-                    ],
-                    borderWidth: 1
-                }]
-            },
-            options: {
-                scales: {
-                    x: {
-                        title: {
-                            display: true,
-                            text: 'Solicitud'
-                        }
+    const ctx = document.getElementById('myChart').getContext('2d');
+    const myChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: ['Solicitud Sala', 'Solicitud Bodegas', 'Reparación de Vehículos', 'Reserva de Vehículos'],
+            datasets: [{
+                label: 'Cantidad de Solicitudes',
+                data: [@foreach($Grafico_1 as $AUX) {{ round($AUX) }}, @endforeach],
+                backgroundColor: [
+                    'rgba(255, 165, 0, 0.2)', // Color de fondo para Salas (naranja)
+                    'rgba(255, 0, 0, 0.2)', // Color de fondo para Bodegas (rojo)
+                    'rgba(0, 128, 0, 0.2)', // Color de fondo para Reserva de Vehículos (verde)
+                    'rgba(0, 191, 255, 0.2)' // Color de fondo para Reparación de Vehículos (celeste)
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                x: {
+                    title: {
+                        display: true,
+                        text: 'Solicitud'
+                    }
+                },
+                y: {
+                    beginAtZero: true,
+                    title: {
+                        display: true,
+                        text: 'Cantidad'
                     },
-                    y: {
-                        beginAtZero: true,
-                        title: {
-                            display: true,
-                            text: 'Cantidad'
+                    ticks: {
+                        precision: 0 // Mostrar números enteros en el eje Y
+                    }
+                }
+            },
+            plugins: {
+                legend: {
+                    display: true,
+                    labels: {
+                        generateLabels: function (chart) {
+                            const data = chart.data;
+                            if (data.labels.length && data.datasets.length) {
+                                return data.labels.map(function (label, index) {
+                                    const dataset = data.datasets[0];
+                                    const backgroundColor = dataset.backgroundColor[index];
+                                    return {
+                                        text: label,
+                                        fillStyle: backgroundColor,
+                                        hidden: false,
+                                        lineCap: 'round',
+                                        lineDash: [],
+                                        lineDashOffset: 0,
+                                        lineJoin: 'round',
+                                        lineWidth: 1,
+                                        strokeStyle: backgroundColor,
+                                        pointStyle: 'circle',
+                                        rotation: 0
+                                    };
+                                });
+                            }
+                            return [];
                         }
                     }
                 },
-                plugins: {
-                    legend: {
-                        display: true,
-                        labels: {
-                            generateLabels: function (chart) {
-                                const data = chart.data;
-                                if (data.labels.length && data.datasets.length) {
-                                    return data.labels.map(function (label, index) {
-                                        const dataset = data.datasets[0];
-                                        const backgroundColor = dataset.backgroundColor[index];
-                                        return {
-                                            text: label,
-                                            fillStyle: backgroundColor,
-                                            hidden: false,
-                                            lineCap: 'round',
-                                            lineDash: [],
-                                            lineDashOffset: 0,
-                                            lineJoin: 'round',
-                                            lineWidth: 1,
-                                            strokeStyle: backgroundColor,
-                                            pointStyle: 'circle',
-                                            rotation: 0
-                                        };
-                                    });
-                                }
-                                return [];
-                            }
-                        }
-                    },
-                    title: {
-                        display: true,
-                        text: 'Ranking de Solicitudes',
-                        padding: {
-                            top: 10,
-                            bottom: 30
-                        }
+                title: {
+                    display: true,
+                    text: 'Ranking de Solicitudes',
+                    padding: {
+                        top: 10,
+                        bottom: 30
                     }
                 }
             }
-        });
+        }
+    });
 
-        document.querySelector('#refresh-button').addEventListener('click', function () {
-            var fechaInicio = document.querySelector('#start-date').value;
-            var fechaFin = document.querySelector('#end-date').value;
+    document.querySelector('#refresh-button').addEventListener('click', function () {
+        var fechaInicio = document.querySelector('#start-date').value;
+        var fechaFin = document.querySelector('#end-date').value;
 
-            Swal.fire({
-                title: 'Actualizando registros',
-                timer: 2000,
-                didOpen: () => {
+        Swal.fire({
+            title: 'Actualizando registros',
+            timer: 2000,
+            didOpen: () => {
                 Swal.showLoading();
-                },
-                willClose: () => {
+            },
+            willClose: () => {
                 // Al cerrarse
-                }
-            });
-
-            fetch('/reportes/data', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
-                },
-                body: JSON.stringify({
-                    fechaInicio: fechaInicio,
-                    fechaFin: fechaFin
-                })
-            })
-                .then(response => response.json())
-                .then(data => {
-                    myChart.data.datasets[0].data = [
-                        data.solicitudSala,
-                        data.solicitudBodegas,
-                        data.solicitudReparacionVehiculo,
-                        data.relFunVeh
-                    ];
-                    myChart.update();
-                });
+            }
         });
+
+        fetch('/reportes/data', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+            },
+            body: JSON.stringify({
+                fechaInicio: fechaInicio,
+                fechaFin: fechaFin
+            })
+        })
+            .then(response => response.json())
+            .then(data => {
+                myChart.data.datasets[0].data = [
+                    Math.round(data.solicitudSala),
+                    Math.round(data.solicitudBodegas),
+                    Math.round(data.solicitudReparacionVehiculo),
+                    Math.round(data.relFunVeh)
+                ];
+                myChart.update();
+            });
+    });
 </script>
 @endsection
