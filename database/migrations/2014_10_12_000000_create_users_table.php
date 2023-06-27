@@ -11,12 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        //!!-------------TABLAS BORRADAS-------------
-        // Schema::create('departamento', function (Blueprint $table) {
-        //     $table->integer('ID_DEPART')->unsigned()->primary();
-        //     $table->string('DEPARTAMENTO', 128)->nullable();
-        // });
-        //!!------------------------------------------
+        
         //*--------------------------TABLAS NORMALIZADAS-----------------------*/
         Schema::create('region', function (Blueprint $table) {
             $table->increments('ID_REGION');
@@ -34,6 +29,12 @@ return new class extends Migration
             $table->unsignedInteger('ID_DIRECCION');
             $table->foreign('ID_DIRECCION')->references('ID_DIRECCION')->on('direcciones_regionales');
         });
+        Schema::create('departamento', function (Blueprint $table) {
+            $table->integer('ID_DEPARTAMENTO')->unsigned()->primary();
+            $table->string('DEPARTAMENTO', 128)->nullable();
+        });
+
+        
         //!!-----------------------------------------------------
         Schema::create('grupo', function (Blueprint $table) {
             $table->integer('ID_GRUPO')->unsigned()->primary();
@@ -78,8 +79,8 @@ return new class extends Migration
             // $table->date('FECHA_ASIM_O_1')->nullable();
             // $table->unsignedInteger('ID_DEPART');
             // $table->foreign('ID_DEPART')->references('ID_DEPART')->on('departamento');
-            $table->unsignedInteger('ID_UBICACION');
-            $table->foreign('ID_UBICACION')->references('ID_UBICACION')->on('ubicacion');
+            //$table->unsignedInteger('ID_UBICACION');
+            //$table->foreign('ID_UBICACION')->references('ID_UBICACION')->on('ubicacion');
             //!! --------------CLAVES FORANEAS-------------------------
             $table->unsignedInteger('ID_REGION');
             $table->foreign('ID_REGION')->references('ID_REGION')->on('region');
@@ -107,13 +108,12 @@ return new class extends Migration
      */
     public function down(): void
     {
-        //!!-----------TABLAS BORRADAS----------------
-        //Schema::dropIfExists('departamento');
         //!!------------------------------------------
         //*---------REFRESCAR TABLAS----------------- */
         Schema::dropIfExists('users');
         Schema::dropIfExists('ubicacion');
         Schema::dropIfExists('direcciones_regionales');
+        Schema::dropIfExists('departamento');
         Schema::dropIfExists('region');
         Schema::dropIfExists('grupo');
         Schema::dropIfExists('escalafon');

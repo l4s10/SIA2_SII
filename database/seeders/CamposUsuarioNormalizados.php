@@ -9,7 +9,7 @@ use Illuminate\Database\Seeder;
  * Importar MODELOS de las tablas que queremos poblar e insertar datos
  * para cada una de ellas.
 **/
-// use App\Models\Departamento;
+use App\Models\Departamento;
 use App\Models\Region;
 use App\Models\Ubicacion;
 use App\Models\Grupo;
@@ -31,12 +31,18 @@ class CamposUsuarioNormalizados extends Seeder
     {
         //* Insertamos datos en la tablas con el metodo INSERT
         // Población de la tabla 'departamento'
-        // Departamento::insert([
-        //     ['ID_DEPART' => 1, 'DEPARTAMENTO' => 'DEPARTAMENTO DE FISCALIZACION'],
-        //     ['ID_DEPART' => 2, 'DEPARTAMENTO' => 'DEPARTAMENTO ASISTENCIA AL CONTRIBUYENTE'],
-        //     ['ID_DEPART' => 3, 'DEPARTAMENTO' => 'DEPARTAMENTO DE AVALUACIONES'],
-        //     ['ID_DEPART' => 4, 'DEPARTAMENTO' => 'DEPARTAMENTO JURIDICO'],
-        // ]);
+        Departamento::insert([
+            ['ID_DEPARTAMENTO' => 1, 'DEPARTAMENTO' => 'GABINETE DIRECTOR'],
+            ['ID_DEPARTAMENTO' => 2, 'DEPARTAMENTO' => 'DEPARTAMENTO DE ADMINISTRACIÓN'],
+            ['ID_DEPARTAMENTO' => 3, 'DEPARTAMENTO' => 'DEPARTAMENTO DE FISCALIZACIÓN'],
+            ['ID_DEPARTAMENTO' => 4, 'DEPARTAMENTO' => 'DEPARTAMENTO DE ASISTENCIA AL CONTRIBUYENTE'],
+            ['ID_DEPARTAMENTO' => 5, 'DEPARTAMENTO' => 'DEPARTAMENTO DE AVALUACIONES'],
+            ['ID_DEPARTAMENTO' => 6, 'DEPARTAMENTO' => 'UNIDAD DE LOS ÁNGELES'],
+            ['ID_DEPARTAMENTO' => 7, 'DEPARTAMENTO' => 'UNIDAD DE LEBU'],
+            ['ID_DEPARTAMENTO' => 9, 'DEPARTAMENTO' => 'UNIDAD DE TALCAHUANO'],
+            ['ID_DEPARTAMENTO' => 99, 'DEPARTAMENTO' => 'DIRECCIÓN NACIONAL'],
+            ['ID_DEPARTAMENTO' => 999, 'DEPARTAMENTO' => 'EXTERNO']
+        ]);
         
         // Población de la tabla 'region'
         // Region::insert([

@@ -111,10 +111,10 @@ class User extends Authenticatable
         return $this->belongsTo(Region::class, 'ID_REGION');
     }
     //* Obtener la ubicación a través de la ID_UBICACION */
-    public function ubicacion()
+    /*public function ubicacion()
     {
         return $this->belongsTo(Ubicacion::class, 'ID_UBICACION');
-    }
+    }*/
 
     //* Obtener el grupo a través de la ID_GRUPO */
     public function grupo()

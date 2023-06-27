@@ -264,8 +264,8 @@
                 deshabilitarBotonDelegado();
             });
         
+            //Envía a la vista el nombre del cargo seleccionado en búsqueda
             function obtenerNombreCargo(idCargoFuncionario) {
-                // Aquí debes implementar la lógica para obtener el nombre del cargo
                 var cargoSeleccionado = $('#ID_CARGO option[value="' + idCargoFuncionario + '"]').text();
                 return cargoSeleccionado;
             }
