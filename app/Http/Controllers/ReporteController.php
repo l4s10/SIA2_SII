@@ -11,22 +11,23 @@ use Carbon\Carbon;
 
 class ReporteController extends Controller
 {
+    // Define los modelos en un array
+    private $models = [
+        'solicitudSala' => SolicitudSala::class,
+        'solicitudBodegas' => SolicitudBodegas::class,
+        'solicitudReparacionVehiculo' => SolicitudReparacionVehiculo::class,
+        'relFunVeh' => RelFunVeh::class
+    ];
+
     public function index()
     {
-        // Obtener los valores para el Grafico_1
-        $solicitudSala = SolicitudSala::count();
-        $solicitudBodegas = SolicitudBodegas::count();
-        $solicitudReparacionVehiculo = SolicitudReparacionVehiculo::count();
-        $relFunVeh = RelFunVeh::count();
-
-        // Asignar los valores al arreglo Grafico_1
-        $Grafico_1 = [
-            $solicitudSala,
-            $solicitudBodegas,
-            $solicitudReparacionVehiculo,
-            $relFunVeh
-        ];
-
+        $Grafico_1 = [];
+        // Obtener y asignar los valores para el Grafico_1
+        //Grafico 1 = Tipo de solicitud mas pedido.
+        // Itera a través de los modelos y guarda el recuento
+        foreach ($this->models as $key => $model) {
+            $Grafico_1[$key] = $model::count();
+        }
         // Devolver la vista con los datos
         return view('reportes.index', compact('Grafico_1'));
     }
@@ -40,17 +41,12 @@ class ReporteController extends Controller
         $fechaInicio = Carbon::parse($fechaInicio);
         $fechaFin = Carbon::parse($fechaFin)->endOfDay();
 
-        // Obtener el recuento de registros para cada modelo
-        $solicitudSala = SolicitudSala::whereBetween('created_at', [$fechaInicio, $fechaFin])->count();
-        $solicitudBodegas = SolicitudBodegas::whereBetween('created_at', [$fechaInicio, $fechaFin])->count();
-        $solicitudReparacionVehiculo = SolicitudReparacionVehiculo::whereBetween('created_at', [$fechaInicio, $fechaFin])->count();
-        $relFunVeh = RelFunVeh::whereBetween('created_at', [$fechaInicio, $fechaFin])->count();
-
-        return response()->json([
-            'solicitudSala' => $solicitudSala,
-            'solicitudBodegas' => $solicitudBodegas,
-            'solicitudReparacionVehiculo' => $solicitudReparacionVehiculo,
-            'relFunVeh' => $relFunVeh
-        ]);
+        $data = ['grafico1' => []];
+        // Itera a través de los modelos y guarda el recuento entre fechas
+        foreach ($this->models as $key => $model) {
+            $data['grafico1'][$key] = $model::whereBetween('created_at', [$fechaInicio, $fechaFin])->count();
+        }
+        // Obtener el recuento de registros para cada modelo y devolver en JSON
+        return response()->json($data);
     }
 }
