@@ -15,7 +15,7 @@ return new class extends Migration
             $table->increments('ID_POLIZA');
             $table->unsignedBigInteger('ID');
             $table->string('FECHA_VENCIMIENTO_LICENCIA');
-            $table->integer('NRO_POLIZA');
+            $table->integer('NRO_POLIZA')->unsigned();
             // Agrega aquí los demás campos de la tabla 'polizas' si los tienes
 
             // Relación con la tabla 'funcionarios'

@@ -16,12 +16,13 @@ class FuncionariosSeeder extends Seeder
     {
 
         //*CUENTAS USUARIO MAESTRO
+        /*
         $user_administrador = User::create([
             'RUT' => '11821718-7',
             'NOMBRES' => 'CRISTIAN ALBERTO',
             'APELLIDOS' => 'GOMEZ CASTILLO',
             'ID_REGION' => 8,
-            'ID_UBICACION' => 1,
+            //'ID_UBICACION' => 1,
             'ID_ESCALAFON' => 5,
             'ID_GRADO' => 4,
             'FECHA_NAC' => '1971-05-24',
@@ -42,7 +43,7 @@ class FuncionariosSeeder extends Seeder
             'NOMBRES' => 'ADOLFO MAURICIO',
             'APELLIDOS' => 'MILLAN FAUNDEZ',
             'ID_REGION' => 8,
-            'ID_UBICACION' => 2,
+            //'ID_UBICACION' => 2,
             'ID_ESCALAFON' => 5,
             'ID_GRADO' => 7,
             'FECHA_NAC' => '1975-07-31',
@@ -63,7 +64,7 @@ class FuncionariosSeeder extends Seeder
             'NOMBRES' => 'CARLOS ALBERTO',
             'APELLIDOS' => 'OCARES MATURANA',
             'ID_REGION' => 8,
-            'ID_UBICACION' => 3,
+            //'ID_UBICACION' => 3,
             'ID_ESCALAFON' => 5,
             'ID_GRADO' => 7,
             'FECHA_NAC' => '1976-02-07',
@@ -84,7 +85,7 @@ class FuncionariosSeeder extends Seeder
             'NOMBRES' => 'LOREN ANDREA CAROLINA',
             'APELLIDOS' => 'UGALDE JAQUE',
             'ID_REGION' => 8,
-            'ID_UBICACION' => 5,
+            //'ID_UBICACION' => 5,
             'ID_ESCALAFON' => 5,
             'ID_GRADO' => 7,
             'FECHA_NAC' => '1978-07-22',
@@ -105,7 +106,7 @@ class FuncionariosSeeder extends Seeder
             'NOMBRES' => 'PAMELA',
             'APELLIDOS' => 'ARAVENA PINO',
             'ID_REGION' => 8,
-            'ID_UBICACION' => 4,
+            //'ID_UBICACION' => 4,
             'ID_ESCALAFON' => 5,
             'ID_GRADO' => 7,
             'FECHA_NAC' => '1972-09-16',
@@ -126,7 +127,7 @@ class FuncionariosSeeder extends Seeder
             'NOMBRES' => 'JUAN',
             'APELLIDOS' => 'ALARCON CONTRERAS',
             'ID_REGION' => 8,
-            'ID_UBICACION' => 6,
+            //'ID_UBICACION' => 6,
             'ID_ESCALAFON' => 5,
             'ID_GRADO' => 9,
             'FECHA_NAC' => '1967-03-13',
@@ -147,7 +148,7 @@ class FuncionariosSeeder extends Seeder
             'NOMBRES' => 'EDUARDO',
             'APELLIDOS' => 'CONCHA PEÑA',
             'ID_REGION' => 8,
-            'ID_UBICACION' => 7,
+            //'ID_UBICACION' => 7,
             'ID_ESCALAFON' => 5,
             'ID_GRADO' => 11,
             'FECHA_NAC' => '1970-09-22',
@@ -168,7 +169,7 @@ class FuncionariosSeeder extends Seeder
             'NOMBRES' => 'PAULINA ANDREA',
             'APELLIDOS' => 'PRADENA GARDRAT',
             'ID_REGION' => 8,
-            'ID_UBICACION' => 8,
+            //'ID_UBICACION' => 8,
             'ID_ESCALAFON' => 5,
             'ID_GRADO' => 10,
             'FECHA_NAC' => '1975-06-29',
@@ -189,7 +190,7 @@ class FuncionariosSeeder extends Seeder
             'NOMBRES' => 'JOSE MANUEL',
             'APELLIDOS' => 'CORVALAN DURAN',
             'ID_REGION' => 8,
-            'ID_UBICACION' => 10,
+            //'ID_UBICACION' => 10,
             'ID_ESCALAFON' => 5,
             'ID_GRADO' => 7,
             'FECHA_NAC' => '1983-01-02',
@@ -210,7 +211,7 @@ class FuncionariosSeeder extends Seeder
             'NOMBRES' => 'SANDRA',
             'APELLIDOS' => 'BRAVO LOPEZ',
             'ID_REGION' => 8,
-            'ID_UBICACION' => 9,
+            //'ID_UBICACION' => 9,
             'ID_ESCALAFON' => 5,
             'ID_GRADO' => 7,
             'FECHA_NAC' => '1968-03-31',
@@ -226,8 +227,29 @@ class FuncionariosSeeder extends Seeder
             'password' => Hash::make('12345678'),
             //'ID_DEPART' => 2
         ]);
-
-
+        */
+        //*CUENTA USUARIO MAESTRO
+        $user_admin = User::create([
+            'NOMBRES' => 'USUARIO DEMO',
+            'APELLIDOS' => 'SIA',
+            'email' => 'admin@demo.com',
+            'password' => Hash::make('12345678'),
+            'RUT' => '11.111.111-3',
+            //'ID_DEPART' => 2,
+            'ID_REGION' => 1,
+            'ID_UBICACION' => 1,
+            'ID_GRUPO' => 1,
+            'ID_ESCALAFON' => 5,
+            'ID_GRADO' => 1,
+            'ID_CARGO' => 2,
+            'FECHA_NAC' => '1970-02-10',
+            'FECHA_INGRESO' => '2001-02-22',
+            //'FECHA_ASIM_O_1' => '1999-02-01',
+            'ID_CALIDAD_JURIDICA' => 1,
+            'FONO' => '+56 9 1234 5678',
+            'ANEXO' => 'TEST',
+            'ID_SEXO' => 1
+        ]);
         //*CUENTA USUARIO SERVICIOS
         $user_servicios = User::create([
             'NOMBRES' => 'USUARIO DEMO',
@@ -325,7 +347,7 @@ class FuncionariosSeeder extends Seeder
         $rolFuncionario = Role::findByName('FUNCIONARIO');
 
         //*Asignamos roles a usuarios creados
-        $user_administrador->assignRole($adminMaestro);
+        /*$user_administrador->assignRole($adminMaestro);
         $user_administrador2->assignRole($adminMaestro);
         $user_administrador3->assignRole($adminMaestro);
         $user_administrador4->assignRole($adminMaestro);
@@ -333,8 +355,8 @@ class FuncionariosSeeder extends Seeder
         $user_administrador6->assignRole($adminMaestro);
         $user_administrador7->assignRole($adminMaestro);
         $user_administrador8->assignRole($adminMaestro);
-        $user_administrador9->assignRole($adminMaestro);
-        $user_administrador10->assignRole($adminMaestro);
+        $user_administrador9->assignRole($adminMaestro);*/
+        $user_admin->assignRole($adminMaestro);
         $user_servicios->assignRole($rolServicios);
         $user_informatica->assignRole($rolInformatica);
         $user_juridico->assignRole($rolJuridico);
