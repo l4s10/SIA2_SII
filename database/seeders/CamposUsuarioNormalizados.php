@@ -138,7 +138,9 @@ class CamposUsuarioNormalizados extends Seeder
             ['ID_CARGO' => 29, 'CARGO' => 'JEFE GRUPO N° 2 FISCALIZACION UNIDAD DE LOS ANGELES'],
             ['ID_CARGO' => 30, 'CARGO' => 'JEFE GRUPO N° 1 FISCALIZACION TALCAHUANO'],
             ['ID_CARGO' => 31, 'CARGO' => 'JEFE DE UNIDAD DE CHILLAN'],
-            ['ID_CARGO' => 32, 'CARGO' => 'JEFE DE UNIDAD DE SAN CARLOS']
+            ['ID_CARGO' => 32, 'CARGO' => 'JEFE DE UNIDAD DE SAN CARLOS'],
+            ['ID_CARGO' => 99, 'CARGO' => 'FUNCIONARIO'],
+            ['ID_CARGO' => 999, 'CARGO' => 'EXTERNO']
         ]);
         // Población de la tabla 'calidad_juridica'
         CalidadJuridica::insert([

@@ -41,7 +41,10 @@ class ReporteController extends Controller
         $fechaInicio = Carbon::parse($fechaInicio);
         $fechaFin = Carbon::parse($fechaFin)->endOfDay();
 
-        $data = ['grafico1' => []];
+        $data = [
+            'grafico1' => []
+        ];
+
         // Itera a través de los modelos y guarda el recuento entre fechas
         foreach ($this->models as $key => $model) {
             $data['grafico1'][$key] = $model::whereBetween('created_at', [$fechaInicio, $fechaFin])->count();
