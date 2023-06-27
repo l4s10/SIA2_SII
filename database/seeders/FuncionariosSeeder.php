@@ -226,8 +226,8 @@ class FuncionariosSeeder extends Seeder
             'ID_SEXO' => 2,
             'password' => Hash::make('12345678'),
             //'ID_DEPART' => 2
-        ]);
-        */
+        ]);*/
+
         //*CUENTA USUARIO MAESTRO
         $user_admin = User::create([
             'NOMBRES' => 'USUARIO DEMO',
@@ -250,6 +250,7 @@ class FuncionariosSeeder extends Seeder
             'ANEXO' => 'TEST',
             'ID_SEXO' => 1
         ]);
+
         //*CUENTA USUARIO SERVICIOS
         $user_servicios = User::create([
             'NOMBRES' => 'USUARIO DEMO',
@@ -339,14 +340,38 @@ class FuncionariosSeeder extends Seeder
             'ID_SEXO' => 1
         ]);
 
+        $user_maestro = User::create([
+            'NOMBRES' => 'USUARIO ADMIN',
+            'APELLIDOS' => 'SIA',
+            'email' => 'administrador@demo.com',
+            'password' => Hash::make('12345678'),
+            'RUT' => '11.111.111-9',
+            //'ID_DEPART' => 2,
+            'ID_REGION' => 1,
+            'ID_UBICACION' => 1,
+            'ID_GRUPO' => 1,
+            'ID_ESCALAFON' => 5,
+            'ID_GRADO' => 1,
+            'ID_CARGO' => 2,
+            'FECHA_NAC' => '1970-02-10',
+            'FECHA_INGRESO' => '2001-02-22',
+            //'FECHA_ASIM_O_1' => '1999-02-01',
+            'ID_CALIDAD_JURIDICA' => 1,
+            'FONO' => '+56 9 1234 5678',
+            'ANEXO' => 'TEST',
+            'ID_SEXO' => 1
+        ]);
+
         //*Buscamos los roles por nombre
-        $adminMaestro = Role::findByName('ADMINISTRADOR');
-        $rolServicios = Role::findByName('SERVICIOS');
-        $rolInformatica = Role::findByName('INFORMATICA');
-        $rolJuridico = Role::findByName('JURIDICO');
-        $rolFuncionario = Role::findByName('FUNCIONARIO');
+        $adminMaestro = Role::findByName('ADMINISTRADOR');  //ID 1
+        $rolServicios = Role::findByName('SERVICIOS');      //ID 2
+        $rolInformatica = Role::findByName('INFORMATICA');  //ID 3
+        $rolJuridico = Role::findByName('JURIDICO');        //ID 4
+        $rolFuncionario = Role::findByName('FUNCIONARIO');  //ID 5
+        //CONDUCTOR                                         //ID 6
 
         //*Asignamos roles a usuarios creados
+
         /*$user_administrador->assignRole($adminMaestro);
         $user_administrador2->assignRole($adminMaestro);
         $user_administrador3->assignRole($adminMaestro);
@@ -356,6 +381,7 @@ class FuncionariosSeeder extends Seeder
         $user_administrador7->assignRole($adminMaestro);
         $user_administrador8->assignRole($adminMaestro);
         $user_administrador9->assignRole($adminMaestro);*/
+        
         $user_admin->assignRole($adminMaestro);
         $user_servicios->assignRole($rolServicios);
         $user_informatica->assignRole($rolInformatica);

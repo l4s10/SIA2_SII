@@ -46,8 +46,8 @@ class Resolucion extends Model
             'exists' => 'El valor seleccionado para :attribute no es válido.'
         ];
     }
-    
-    
+
+
     public function firmante()
     {
         return $this->belongsTo(Cargo::class, 'ID_FIRMANTE', 'ID_CARGO');

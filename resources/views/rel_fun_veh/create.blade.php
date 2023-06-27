@@ -57,6 +57,7 @@
                         </div>
                     </div>
             </div>
+            {{-- !!SELECCION DE TIPO DE VEHICULO --}}
             <div class="mb-3">
                 <label for="ID_TIPO_VEH" class="form-label"><i class="fa-solid fa-car-side"></i> Seleccione tipo de vehiculo:</label>
                 <select id="ID_TIPO_VEH" name="ID_TIPO_VEH" class="form-control @error('ID_TIPO_VEH') is-invalid @enderror" required autofocus>
@@ -73,6 +74,7 @@
                 @enderror
             </div>
 
+            {{-- !!INDICAR LABOR A REALIZAR --}}
             <div class="mb-3">
                 <label for="MOTIVO_SOL_VEH" class="form-label"><i class="fa-solid fa-file-pen"></i> Labor a realizar:</label>
                 <textarea id="MOTIVO_SOL_VEH" name="MOTIVO_SOL_VEH" class="form-control @error('MOTIVO_SOL_VEH') is-invalid @enderror" aria-label="With textarea" rows="5" placeholder="Indique la labor a realizar (MÁX 1000 CARACTERES)" required autofocus>{{ old('MOTIVO_SOL_VEH') }}</textarea>
@@ -126,133 +128,134 @@
                     </div>
                 </div>
                 {{-- !!OCUPANTE 2 --}}
-<label for="OCUPANTE_2">Ocupante 2:</label>
-<div class="row">
-    <div class="col-6">
-        <div class="input-group">
-            <select name="departamentos" id="departamentos_2" class="form-control">
-                <option value="">-- Seleccione un departamento --</option>
-                @foreach ($departamentos as $departamento)
-                    @if ($departamento->ID_UBICACION === auth()->user()->ID_UBICACION)
-                        <option value="{{ $departamento->ID_UBICACION }}" selected>{{ $departamento->UBICACION }}</option>
-                    @else
-                        <option value="{{ $departamento->ID_UBICACION }}">{{ $departamento->UBICACION }}</option>
-                    @endif
-                @endforeach
-            </select>
-        </div>
-    </div>
-    <div class="col-6">
-        <select name="OCUPANTE_2" id="OCUPANTE_2" class="form-control">
-            <option value="">-- Seleccione un compañero --</option>
-        </select>
-    </div>
-</div>
+            <label for="OCUPANTE_2">Ocupante 2:</label>
+            <div class="row">
+                <div class="col-6">
+                    <div class="input-group">
+                        <select name="departamentos" id="departamentos_2" class="form-control">
+                            <option value="">-- Seleccione un departamento --</option>
+                            @foreach ($departamentos as $departamento)
+                                @if ($departamento->ID_UBICACION === auth()->user()->ID_UBICACION)
+                                    <option value="{{ $departamento->ID_UBICACION }}" selected>{{ $departamento->UBICACION }}</option>
+                                @else
+                                    <option value="{{ $departamento->ID_UBICACION }}">{{ $departamento->UBICACION }}</option>
+                                @endif
+                            @endforeach
+                        </select>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <select name="OCUPANTE_2" id="OCUPANTE_2" class="form-control">
+                        <option value="">-- Seleccione un compañero --</option>
+                    </select>
+                </div>
+            </div>
 
-{{-- !!OCUPANTE 3 --}}
-<label for="OCUPANTE_3">Ocupante 3:</label>
-<div class="row">
-    <div class="col-6">
-        <div class="input-group">
-            <select name="departamentos" id="departamentos_3" class="form-control">
-                <option value="">-- Seleccione un departamento --</option>
-                @foreach ($departamentos as $departamento)
-                    @if ($departamento->ID_UBICACION === auth()->user()->ID_UBICACION)
-                        <option value="{{ $departamento->ID_UBICACION }}" selected>{{ $departamento->UBICACION }}</option>
-                    @else
-                        <option value="{{ $departamento->ID_UBICACION }}">{{ $departamento->UBICACION }}</option>
-                    @endif
-                @endforeach
-            </select>
-        </div>
-    </div>
-    <div class="col-6">
-        <select name="OCUPANTE_3" id="OCUPANTE_3" class="form-control">
-            <option value="">-- Seleccione un compañero --</option>
-        </select>
-    </div>
-</div>
+            {{-- !!OCUPANTE 3 --}}
+            <label for="OCUPANTE_3">Ocupante 3:</label>
+            <div class="row">
+                <div class="col-6">
+                    <div class="input-group">
+                        <select name="departamentos" id="departamentos_3" class="form-control">
+                            <option value="">-- Seleccione un departamento --</option>
+                            @foreach ($departamentos as $departamento)
+                                @if ($departamento->ID_UBICACION === auth()->user()->ID_UBICACION)
+                                    <option value="{{ $departamento->ID_UBICACION }}" selected>{{ $departamento->UBICACION }}</option>
+                                @else
+                                    <option value="{{ $departamento->ID_UBICACION }}">{{ $departamento->UBICACION }}</option>
+                                @endif
+                            @endforeach
+                        </select>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <select name="OCUPANTE_3" id="OCUPANTE_3" class="form-control">
+                        <option value="">-- Seleccione un compañero --</option>
+                    </select>
+                </div>
+            </div>
 
-{{-- !!OCUPANTE 4 --}}
-<label for="OCUPANTE_4">Ocupante 4:</label>
-<div class="row">
-    <div class="col-6">
-        <div class="input-group">
-            <select name="departamentos" id="departamentos_4" class="form-control">
-                <option value="">-- Seleccione un departamento --</option>
-                @foreach ($departamentos as $departamento)
-                    @if ($departamento->ID_UBICACION === auth()->user()->ID_UBICACION)
-                        <option value="{{ $departamento->ID_UBICACION }}" selected>{{ $departamento->UBICACION }}</option>
-                    @else
-                        <option value="{{ $departamento->ID_UBICACION }}">{{ $departamento->UBICACION }}</option>
-                    @endif
-                @endforeach
-            </select>
-        </div>
-    </div>
-    <div class="col-6">
-        <select name="OCUPANTE_4" id="OCUPANTE_4" class="form-control">
-            <option value="">-- Seleccione un compañero --</option>
-        </select>
-    </div>
-</div>
+            {{-- !!OCUPANTE 4 --}}
+            <label for="OCUPANTE_4">Ocupante 4:</label>
+            <div class="row">
+                <div class="col-6">
+                    <div class="input-group">
+                        <select name="departamentos" id="departamentos_4" class="form-control">
+                            <option value="">-- Seleccione un departamento --</option>
+                            @foreach ($departamentos as $departamento)
+                                @if ($departamento->ID_UBICACION === auth()->user()->ID_UBICACION)
+                                    <option value="{{ $departamento->ID_UBICACION }}" selected>{{ $departamento->UBICACION }}</option>
+                                @else
+                                    <option value="{{ $departamento->ID_UBICACION }}">{{ $departamento->UBICACION }}</option>
+                                @endif
+                            @endforeach
+                        </select>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <select name="OCUPANTE_4" id="OCUPANTE_4" class="form-control">
+                        <option value="">-- Seleccione un compañero --</option>
+                    </select>
+                </div>
+            </div>
 
-{{-- !!OCUPANTE 5 --}}
-<label for="OCUPANTE_5">Ocupante 5:</label>
-<div class="row">
-    <div class="col-6">
-        <div class="input-group">
-            <select name="departamentos" id="departamentos_5" class="form-control">
-                <option value="">-- Seleccione un departamento --</option>
-                @foreach ($departamentos as $departamento)
-                    @if ($departamento->ID_UBICACION === auth()->user()->ID_UBICACION)
-                        <option value="{{ $departamento->ID_UBICACION }}" selected>{{ $departamento->UBICACION }}</option>
-                    @else
-                        <option value="{{ $departamento->ID_UBICACION }}">{{ $departamento->UBICACION }}</option>
-                    @endif
-                @endforeach
-            </select>
-        </div>
-    </div>
-    <div class="col-6">
-        <select name="OCUPANTE_5" id="OCUPANTE_5" class="form-control">
-            <option value="">-- Seleccione un compañero --</option>
-        </select>
-    </div>
-</div>
+            {{-- !!OCUPANTE 5 --}}
+            <label for="OCUPANTE_5">Ocupante 5:</label>
+            <div class="row">
+                <div class="col-6">
+                    <div class="input-group">
+                        <select name="departamentos" id="departamentos_5" class="form-control">
+                            <option value="">-- Seleccione un departamento --</option>
+                            @foreach ($departamentos as $departamento)
+                                @if ($departamento->ID_UBICACION === auth()->user()->ID_UBICACION)
+                                    <option value="{{ $departamento->ID_UBICACION }}" selected>{{ $departamento->UBICACION }}</option>
+                                @else
+                                    <option value="{{ $departamento->ID_UBICACION }}">{{ $departamento->UBICACION }}</option>
+                                @endif
+                            @endforeach
+                        </select>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <select name="OCUPANTE_5" id="OCUPANTE_5" class="form-control">
+                        <option value="">-- Seleccione un compañero --</option>
+                    </select>
+                </div>
+            </div>
 
-{{-- !!OCUPANTE 6 --}}
-<label for="OCUPANTE_6">Ocupante 6:</label>
-<div class="row">
-    <div class="col-6">
-        <div class="input-group">
-            <select name="departamentos" id="departamentos_6" class="form-control">
-                <option value="">-- Seleccione un departamento --</option>
-                @foreach ($departamentos as $departamento)
-                    @if ($departamento->ID_UBICACION === auth()->user()->ID_UBICACION)
-                        <option value="{{ $departamento->ID_UBICACION }}" selected>{{ $departamento->UBICACION }}</option>
-                    @else
-                        <option value="{{ $departamento->ID_UBICACION }}">{{ $departamento->UBICACION }}</option>
-                    @endif
-                @endforeach
-            </select>
-        </div>
-    </div>
-    <div class="col-6">
-        <select name="OCUPANTE_6" id="OCUPANTE_6" class="form-control">
-            <option value="">-- Seleccione un compañero --</option>
-        </select>
-    </div>
-</div>
+            {{-- !!OCUPANTE 6 --}}
+            <label for="OCUPANTE_6">Ocupante 6:</label>
+            <div class="row">
+                <div class="col-6">
+                    <div class="input-group">
+                        <select name="departamentos" id="departamentos_6" class="form-control">
+                            <option value="">-- Seleccione un departamento --</option>
+                            @foreach ($departamentos as $departamento)
+                                @if ($departamento->ID_UBICACION === auth()->user()->ID_UBICACION)
+                                    <option value="{{ $departamento->ID_UBICACION }}" selected>{{ $departamento->UBICACION }}</option>
+                                @else
+                                    <option value="{{ $departamento->ID_UBICACION }}">{{ $departamento->UBICACION }}</option>
+                                @endif
+                            @endforeach
+                        </select>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <select name="OCUPANTE_6" id="OCUPANTE_6" class="form-control">
+                        <option value="">-- Seleccione un compañero --</option>
+                    </select>
+                </div>
+            </div>
 
-            <div>
-            {{-- *FECHA DE SALIDA SOLICITADA* --}}
+            {{-- *FECHA Y HORA DE SALIDA SOLICITADA* --}}
             <div class="form-group mt-3">
                 <label for="FECHA_SOL_VEH"><i class="fa-solid fa-calendar"></i> Fecha de inicio y término:</label>
                 <div class="input-group">
+                    {{-- !!FECHAS SOLICITADAS --}}
                     <input type="text" id="FECHA_SOL_VEH" name="FECHA_SOL_VEH" class="form-control @if($errors->has('FECHA_SOL_VEH')) is-invalid @endif" placeholder="Ingrese la fecha" data-input required value="{{ old('FECHA_SOL_VEH') }}">
-                    {{-- *HORA SOLICITADA* --}}
+                    {{-- *HORA SALIDA SOLICITADA* --}}
                     <input type="text" id="HORA_SALIDA" name="HORA_SALIDA" class="form-control flatpickr @if($errors->has('HORA_SALIDA')) is-invalid @endif" placeholder="Seleccione la hora de salida" data-input required value="{{ old('HORA_SALIDA') }}">
+                    {{-- *HORA LLEGADA SOLICITADA* --}}
                     <input type="text" id="HORA_LLEGADA" name="HORA_LLEGADA" class="form-control flatpickr @if($errors->has('HORA_LLEGADA')) is-invalid @endif" placeholder="Seleccione la hora de llegada" data-input required value="{{ old('HORA_LLEGADA') }}">
                     <button type="button" id="clearButton" class="btn btn-danger">Limpiar</button>
                 </div>
@@ -260,73 +263,79 @@
                     <div class="invalid-feedback">{{ $errors->first('FECHA_SOL_VEH') }}</div>
                 @endif
             </div>
-
-        <div class="row">
+            {{-- !!SELECT PARA REGIONES --}}
+            <div class="row">
+                {{-- *SELECT PARA REGION ORIGEN* --}}
                 <div class="col-md-6">
                     <div class="mb-3">
-                            <label for="ORIGEN" class="form-label"><i class="fa-solid fa-map"></i> Region origen:</label>
-                            <select id="ORIGEN" name="ORIGEN" class="form-control @error('ORIGEN') is-invalid @enderror" required>
-                                <option value="" selected>--Seleccione una region--</option>
-                                {{-- CAPTURAR REGIONES Y MOSTRAR AQUI --}}
-                                @foreach ($regiones as $region)
-                                <option value="{{$region->ID_REGION}}">{{$region->REGION}}</option>
-                                @endforeach
-                            </select>
+                        <label for="REGION_ORIGEN" class="form-label"><i class="fa-solid fa-map"></i> Region origen:</label>
+                        <select id="REGION_ORIGEN" name="REGION_ORIGEN" class="form-control @error('REGION_ORIGEN') is-invalid @enderror" required>
+                            <option value="" selected>--Seleccione una region--</option>
+                            {{-- CAPTURAR REGIONES Y MOSTRAR AQUI --}}
+                            @foreach ($regiones as $region)
+                            <option value="{{$region->ID_REGION}}">{{$region->REGION}}</option>
+                            @endforeach
+                        </select>
 
-                            @error('ORIGEN')
-                                <div class="invalid-feedback">{{ $message }}</div>
-                            @enderror
-                        </div>
+                        @error('REGION_ORIGEN')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                    </div>
                 </div>
+                {{-- *SELECT PARA REGION DESTINO* --}}
                 <div class="col-md-6">
                     <div class="mb-3">
-                            <label for="DESTINO" class="form-label"><i class="fa-solid fa-map-location-dot"></i> Region destino:</label>
-                            <select id="DESTINO" name="DESTINO" class="form-control @error('DESTINO') is-invalid @enderror" required>
-                                <option value="" selected>--Seleccione una region--</option>
-                                @foreach ($comunas as $comuna)
-                                <option value="{{$comuna->ID_COMUNA}}">{{$comuna->COMUNA}}</option>
-                                @endforeach
-                            </select>
+                        <label for="REGION_DESTINO" class="form-label"><i class="fa-solid fa-map-location-dot"></i> Region destino:</label>
+                        <select id="REGION_DESTINO" name="REGION_DESTINO" class="form-control @error('REGION_DESTINO') is-invalid @enderror" required>
+                            <option value="" selected>--Seleccione una region--</option>
+                            @foreach ($regiones as $region)
+                            <option value="{{$region->ID_REGION}}">{{$region->REGION}}</option>
+                            @endforeach
+                        </select>
 
-                            @error('DESTINO')
-                                <div class="invalid-feedback">{{ $message }}</div>
-                            @enderror
-                        </div>
+                        @error('REGION_DESTINO')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                    </div>
                 </div>
-</div>
-<div class="row">
-    <div class="col-md-6">
-        <div class="mb-3">
-                <label for="ORIGEN" class="form-label"><i class="fa-solid fa-map"></i> Comuna origen:</label>
-                <select id="ORIGEN" name="ORIGEN" class="form-control @error('ORIGEN') is-invalid @enderror" required>
-                    <option value="" selected>--Seleccione una comuna--</option>
-                    {{-- CAPTURAR COMUNAS Y MOSTRAR AQUI --}}
-                    @foreach ($comunas as $comuna)
-                    <option value="{{$comuna->ID_COMUNA}}">{{$comuna->COMUNA}}</option>
-                    @endforeach
-                </select>
-
-                @error('ORIGEN')
-                    <div class="invalid-feedback">{{ $message }}</div>
-                @enderror
             </div>
-    </div>
-    <div class="col-md-6">
-        <div class="mb-3">
-                <label for="DESTINO" class="form-label"><i class="fa-solid fa-map-location-dot"></i> Comuna destino:</label>
-                <select id="DESTINO" name="DESTINO" class="form-control @error('DESTINO') is-invalid @enderror" required>
-                    <option value="" selected>--Seleccione una comuna--</option>
-                    @foreach ($comunas as $comuna)
-                    <option value="{{$comuna->ID_COMUNA}}">{{$comuna->COMUNA}}</option>
-                    @endforeach
-                </select>
+            {{-- !!COMUNAS DE ORIGEN Y DESTINO --}}
+            <div class="row">
+                {{-- **COMUNA DE ORIGEN --}}
+                <div class="col-md-6">
+                    <div class="mb-3">
+                        <label for="ORIGEN" class="form-label"><i class="fa-solid fa-map"></i> Comuna origen:</label>
+                        <select id="ORIGEN" name="ORIGEN" class="form-control @error('ORIGEN') is-invalid @enderror" required>
+                            <option value="" selected>--Seleccione una comuna--</option>
+                            {{-- CAPTURAR COMUNAS Y MOSTRAR AQUI --}}
+                            @foreach ($comunas as $comuna)
+                            <option value="{{$comuna->ID_COMUNA}}" data-region="{{$comuna->ID_REGION}}">{{$comuna->COMUNA}}</option>
+                            @endforeach
+                        </select>
 
-                @error('DESTINO')
-                    <div class="invalid-feedback">{{ $message }}</div>
-                @enderror
+                        @error('ORIGEN')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                    </div>
+                </div>
+                {{-- *COMUNA DE DESTINO --}}
+                <div class="col-md-6">
+                    <div class="mb-3">
+                        <label for="DESTINO" class="form-label"><i class="fa-solid fa-map-location-dot"></i> Comuna destino:</label>
+                        <select id="DESTINO" name="DESTINO" class="form-control @error('DESTINO') is-invalid @enderror" required>
+                            <option value="" selected>--Seleccione una comuna--</option>
+                            @foreach ($comunas as $comuna)
+                            <option value="{{$comuna->ID_COMUNA}}" data-region="{{$comuna->ID_REGION}}">{{$comuna->COMUNA}}</option>
+                            @endforeach
+                        </select>
+
+                        @error('DESTINO')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                    </div>
+                </div>
             </div>
-    </div>
-</div>
+            {{-- !!CAMPO DISPONIBLE SOLO PARA CONDUCTOR --}}
             <div class="row" hidden>
                 <div class="col-md-6">
                     <div class="mb-3">
@@ -353,6 +362,7 @@
                     </div>
                 </div>
             </div>
+            {{-- !!ESTADO DE LA SOLICITUD --}}
             <div class="mb-3">
                 <label for="ESTADO_SOL_VEH" class="form-label"><i class="fa-solid fa-file-circle-check"></i> Estado de la Solicitud:</label>
                 <select id="ESTADO_SOL_VEH" name="ESTADO_SOL_VEH" class="form-control" disabled>
@@ -362,6 +372,7 @@
                     <option value="RECHAZADO">Rechazado</option>
                 </select>
             </div>
+            {{-- !!BOTONES DE ENVIO --}}
             <a href="{{route('solicitud.vehiculos.index')}}" class="btn btn-secondary" tabindex="5">Cancelar</a>
             <button type="submit" class="btn btn-primary">Enviar solicitud</button>
         </form>
@@ -369,7 +380,7 @@
 @stop
 @section('css')
     <link rel="stylesheet" href="/css/admin_custom.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    {{-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css"> --}}
     <style>
         .textarea-container {
             margin-top: 10px; /* Ajusta el valor según sea necesario */
@@ -377,10 +388,12 @@
     </style>
 @stop
 @section('js')
+    {{-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> --}}
     <!-- Incluir archivos JS flatpicker-->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+    {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
-    <script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/es.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/es.js"></script> --}}
+    {{-- !!CONFIG FLATPICKR --}}
     <script>
         $(function () {
             $('#FECHA_SOL_VEH').flatpickr({
@@ -428,46 +441,62 @@
     {{-- *FUNCION PARA REFRESCAR DINAMICAMENTE EL FILTRO DE FUNCIONARIOS* --}}
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-    var departamentosSelects = document.querySelectorAll('[id^="departamentos"]');
-    var ocupanteSelects = document.querySelectorAll('[id^="OCUPANTE_"]');
+            var departamentosSelects = document.querySelectorAll('[id^="departamentos"]');
+            var ocupanteSelects = document.querySelectorAll('[id^="OCUPANTE_"]');
 
-    // Obtener las opciones correspondientes a los departamentos seleccionados al cargar la página
-    var usuarios = @json($conductores);
+            // Obtener las opciones correspondientes a los departamentos seleccionados al cargar la página
+            var usuarios = @json($conductores);
 
-    // Agregar los eventos de cambio a los select de departamentos y ocupantes
-    departamentosSelects.forEach(function(departamentosSelect, index) {
-        var ocupanteSelect = ocupanteSelects[index];
+            // Agregar los eventos de cambio a los select de departamentos y ocupantes
+            departamentosSelects.forEach(function(departamentosSelect, index) {
+                var ocupanteSelect = ocupanteSelects[index];
 
-        departamentosSelect.addEventListener('change', function() {
-            var departamentoId = this.value;
-            var options = ocupanteSelect.options;
+                departamentosSelect.addEventListener('change', function() {
+                    var departamentoId = this.value;
+                    var options = ocupanteSelect.options;
 
-            // Obtener los valores seleccionados en los otros select de ocupantes
-            var seleccionados = Array.from(ocupanteSelects).map(function(select) {
-                return select.value;
+                    // Obtener los valores seleccionados en los otros select de ocupantes
+                    var seleccionados = Array.from(ocupanteSelects).map(function(select) {
+                        return select.value;
+                    });
+
+                    // Limpiar opciones anteriores
+                    options.length = 0;
+                    options.add(new Option('-- Seleccione un compañero --', ''));
+
+                    // Filtrar usuarios por departamento seleccionado y que no estén seleccionados en otros select
+                    var usuariosFiltrados = usuarios.filter(function(usuario) {
+                        return usuario.ID_UBICACION == departamentoId && !seleccionados.includes(usuario.id.toString());
+                    });
+
+                    // Agregar las opciones de usuarios al select de ocupantes
+                    usuariosFiltrados.forEach(function(usuario) {
+                        options.add(new Option(usuario.NOMBRES + ' ' + usuario.APELLIDOS, usuario.id));
+                    });
+                });
             });
 
-            // Limpiar opciones anteriores
-            options.length = 0;
-            options.add(new Option('-- Seleccione un compañero --', ''));
-
-            // Filtrar usuarios por departamento seleccionado y que no estén seleccionados en otros select
-            var usuariosFiltrados = usuarios.filter(function(usuario) {
-                return usuario.ID_UBICACION == departamentoId && !seleccionados.includes(usuario.id.toString());
-            });
-
-            // Agregar las opciones de usuarios al select de ocupantes
-            usuariosFiltrados.forEach(function(usuario) {
-                options.add(new Option(usuario.NOMBRES + ' ' + usuario.APELLIDOS, usuario.id));
+            // Ejecutar el evento de cambio inicialmente para cargar las opciones de ocupantes
+            departamentosSelects.forEach(function(departamentosSelect, index) {
+                departamentosSelect.dispatchEvent(new Event('change'));
             });
         });
-    });
-
-    // Ejecutar el evento de cambio inicialmente para cargar las opciones de ocupantes
-    departamentosSelects.forEach(function(departamentosSelect, index) {
-        departamentosSelect.dispatchEvent(new Event('change'));
-    });
-});
-
+    </script>
+    {{-- !!FUNCION PARA REFRESCAR DINAMICAMENTE LAS COMUNAS A TRAVES DE LAS REGIONES --}}
+    <script>
+        $(document).ready(function() {
+            $('#REGION_ORIGEN, #REGION_DESTINO').change(function() {
+                var regionID = $(this).val();
+                var selectID = $(this).attr('id') == 'REGION_ORIGEN' ? '#ORIGEN' : '#DESTINO';
+                $(selectID).val('').find('option').each(function() {
+                    var $this = $(this);
+                    if ($this.data('region') == regionID) {
+                        $this.show();
+                    } else {
+                        $this.hide();
+                    }
+                });
+            });
+        });
     </script>
 @stop

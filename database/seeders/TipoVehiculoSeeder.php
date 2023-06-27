@@ -24,14 +24,10 @@ class TipoVehiculoSeeder extends Seeder
             ],
             [
                 'ID_TIPO_VEH' => 3,
-                'TIPO_VEHICULO' => 'STATION WAGON',
-            ],
-            [
-                'ID_TIPO_VEH' => 4,
                 'TIPO_VEHICULO' => 'CAMIONETA',
             ],
             [
-                'ID_TIPO_VEH' => 5,
+                'ID_TIPO_VEH' => 4,
                 'TIPO_VEHICULO' => 'FURGON',
             ],
         ]);

@@ -10,7 +10,10 @@ use App\Models\TipoMaterial;
 //Importamos paquete de validacion
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Auth;
+use Dompdf\Dompdf;
 
+use Barryvdh\DomPDF\Facade\Pdf;
+use Carbon\Carbon;
 
 class MaterialController extends Controller
 {
@@ -160,6 +163,37 @@ class MaterialController extends Controller
         }catch(\Exception $e){
             session()->flash('error','Error al eliminar el material seleccionado');
         }
-        return redirect(route('materiales'));
+        return redirect(route('materiales.index'));
     }
+    public function exportToPDF()
+    {
+        $materiales = Material::orderBy('ID_TIPO_MAT')->get();
+        $fecha = Carbon::now()->setTimezone('America/Santiago')->format('d/m/Y H:i');
+        $html = view('materiales.pdf', compact('materiales','fecha'))->render();
+
+        $dompdf = new Dompdf();
+        $dompdf->loadHtml($html);
+
+        $dompdf->setPaper('A4', 'portrait');
+        $dompdf->render();
+
+        $dompdf->stream("materiales.pdf", ["Attachment" => false]);
+    }
+    //!!FUNCION EXPORTABLE A PDF
+    /*
+        Obtenemos los materiales y los ordenamos por tipos
+        Obtenemos la fecha "actual" con la que se esta generando el exportable
+        Definimos el PDF cargandole la vista que contendrá la información del reporte
+        Definimos el nombre del archivo (Fecha + maestro_materiales)
+        Devolvemos el exportable y lo mostramos.
+    */
+    public function report(){
+        $materiales = Material::orderBy('ID_TIPO_MAT')->get();
+        $fecha = Carbon::now()->format('d/m/Y H:i');
+        $pdf = Pdf::loadView('materiales.report', compact('materiales', 'fecha'));
+        $nombreArchivo = $fecha . '_maestro_materiales.pdf';
+        return $pdf->stream($nombreArchivo);
+    }
+
+
 }

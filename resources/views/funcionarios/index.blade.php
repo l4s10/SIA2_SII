@@ -67,7 +67,7 @@
                                 <td>{{$funcionario->APELLIDOS}}</td>
                                 <td>{{$funcionario->RUT}}</td>
                                 <td>{{$funcionario->email}}</td>
-                                <td>{{$funcionario->departamento->DEPARTAMENTO}}</td>
+                                <td>{{$funcionario->ubicacion->UBICACION}}</td>
                                 <td>{{ $funcionario->getRoleNames()->implode(', ') }}</td>
                                 <td>
                                     <a href="{{route('funcionarios.show',$funcionario->id)}}" class="btn btn-sia-primary btn-block" >Administrar</a>

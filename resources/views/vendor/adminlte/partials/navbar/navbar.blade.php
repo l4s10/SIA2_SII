@@ -52,15 +52,27 @@
         {{-- Configured right links --}}
         @each('adminlte::partials.navbar.menu-item', $adminlte->menu('navbar-right'), 'item')
         {{-- Notification bell icon --}}
-        <li class="nav-item">
-            <a class="nav-link" href="#">
-            <i class="fa-regular fa-bell"></i>
-            </a>
-        </li>
-            {{-- Notification Flag icon --}}
-            @role('ADMINISTRADOR')
-<li class="nav-item dropdown">
-    <a class="nav-link dropdown-toggle" href="#" id="flagDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="notificationDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <i class="fa-regular fa-bell"></i>
+        <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+            1+
+        </span>
+        </a>
+    <div div class="dropdown-menu dropdown-menu-end" aria-labelledby="notificationDropdown">
+        <!-- Agrega más opciones de menú según tus necesidades -->
+        <a class="dropdown-item" href="{{ route('solicitud.salas.create') }}">Solicitar Sala</a>
+        <a class="dropdown-item" href="{{ route('solicitud.bodegas.create') }}">Solicitar visita a bodega</a>
+        <a class="dropdown-item" href="{{ route('solicitud.vehiculos.create') }}">Solicitud de Reservas de Vehículos</a>
+        <a class="dropdown-item" href="{{ route('solmaterial.index') }}">Solicitar Materiales</a>
+        <a class="dropdown-item" href="{{ route('solequipos.create') }}">Solicitud de Reserva de Equipos</a>
+        <a class="dropdown-item" href="{{ route('formulariosSol.create') }}">Solicitud de Formulario</a>
+    </div>
+</li>
+        {{-- Notification Flag icon --}}
+        @role('ADMINISTRADOR')
+    <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="flagDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
         <i class="fa-regular fa-flag"></i>
         <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
             99+
@@ -68,12 +80,12 @@
     </a>
     <div class="dropdown-menu dropdown-menu-end" aria-labelledby="flagDropdown">
         <!-- Agrega más opciones de menú según tus necesidades -->
-        <a class="dropdown-item" href="{{ route('solicitud.salas.index') }}">Solicitud de salas</a>
-        <a class="dropdown-item" href="{{ route('solicitud.bodegas.index') }}">Solicitud de bodegas</a>
-        <a class="dropdown-item" href="{{ route('solicitud.vehiculos.index') }}">Solicitud de vehículos</a>
-        <a class="dropdown-item" href="{{ route('solmaterial.index') }}">Solicitud de materiales</a>
-        <a class="dropdown-item" href="{{ route('solequipos.index') }}">Solicitud de equipos</a>
-        <a class="dropdown-item" href="{{ route('formulariosSol.index') }}">Solicitud de formulario</a>
+        <a class="dropdown-item" href="{{ route('solicitud.salas.index') }}">Solicitudes de Salas</a>
+        <a class="dropdown-item" href="{{ route('solicitud.bodegas.index') }}">Solicitudes de Bodegas</a>
+        <a class="dropdown-item" href="{{ route('solicitud.vehiculos.index') }}">Solicitudes de vehiculos</a>
+        <a class="dropdown-item" href="{{ route('solmaterial.index') }}">Solicitudes de Materiales</a>
+        <a class="dropdown-item" href="{{ route('solequipos.index') }}">Listado solicitudes equipos</a>
+        <a class="dropdown-item" href="{{ route('formulariosSol.index') }}">Listado solicitudes formulario</a>
     </div>
 </li>
 @endrole

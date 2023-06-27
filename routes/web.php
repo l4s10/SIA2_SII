@@ -5,7 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\InventoryController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ReporteController;
-
+use App\Http\Controllers\SolicitudSalaController;
 
 /*
 |--------------------------------------------------------------------------
@@ -35,7 +35,10 @@ Route::get('/reservas', function(){
     return view('reservas.dashboard');
 })->name('reservas.dashboard');
 //Rutas para materiales
+Route::get('materiales/exportar-pdf', 'App\Http\Controllers\MaterialController@exportToPDF')->name('materiales.exportar-pdf');
+Route::get('materiales/descargar-PDF', 'App\Http\Controllers\MaterialController@report')->name('materiales.report');
 Route::resource('materiales','App\Http\Controllers\MaterialController');
+
 //Rutas para tipos de materiales.
 Route::resource('tipomaterial','App\Http\Controllers\TipoMaterialController');
 //Rutas para solicitud de materiales
@@ -83,6 +86,8 @@ Route::get('/consultaAjax', [BusquedaFuncionarioController::class, 'buscarFuncio
 Route::resource('busquedaavanzada','App\Http\Controllers\BusquedaAvanzadaController');
 
 // Rutas para el controlador SolicitudSalaController
+Route::get('/solicitudes/all', [SolicitudSalaController::class, 'getAllSolicitudes'])->name('solicitudes.all');
+Route::get('/solicitudes/byDates', [SolicitudSalaController::class, 'getSolicitudesByDates'])->name('solicitudes.byDates');
 Route::resource('reserva/sala', 'App\Http\Controllers\SolicitudSalaController')->names([
     'index' => 'solicitud.salas.index',
     'create' => 'solicitud.salas.create',
@@ -118,7 +123,10 @@ Route::resource('funcionarios','App\Http\Controllers\UserController');
 Route::post('/update-stock', [InventoryController::class, 'updateStock'])->name('update-stock');
 
 Route::get('/home', [HomeController::class, 'index']);
-Route::get('/reportes', [ReporteController::class, 'index']);
+// Esta es la ruta GET para mostrar la página
+Route::get('/reportes', [ReporteController::class, 'index'])->name('reportes.index');
+// Esta es la ruta POST para recibir las solicitudes AJAX
+Route::post('/reportes/data', [ReporteController::class, 'obtenerDatos'])->name('reportes.data');
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/dashboard', function () {
