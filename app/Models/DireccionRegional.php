@@ -14,9 +14,9 @@ class DireccionRegional extends Model
 
     protected $fillable = [
         'DIRECCION',
-        'ID_REGION',
-        'ID_DEPARTAMENTO',
-        'ID_UBICACION'
+        'ID_REGION'
+        //'ID_DEPARTAMENTO',
+        //'ID_UBICACION'
     ];
 
     //* Agregamos validaciones para la tabla de direcciones regionales*/
@@ -32,9 +32,9 @@ class DireccionRegional extends Model
         'DIRECCION.unique' => 'La "Dirección Regional" ingresada ya existe.',
         'DIRECCION.max' => 'El campo "Dirección Regional" no debe exceder los 128 caracteres.',
         'ID_REGION.required' => 'El campo "region asociada" es requerido.',
-        'ID_REGION.exists' => 'El valor seleccionado para "region asociada" no es válido.',
+        'ID_REGION.exists' => 'El valor seleccionado para "region asociada" no es válido.'
         //'ID_DEPARTAMENTO.required' => 'El campo " Departamento asociado" es requerido.',
-        //'ID_DEPARTAMENTO.exists' => 'El valor seleccionado para " Departamento asociado" no es válido.',
+        //'ID_DEPARTAMENTO.exists' => 'El valor seleccionado para " Departamento asociado" no es válido.'
         //'ID_UBICACION.required' => 'El campo " Ubicación asociada" es requerido.',
         //'ID_UBICACION.exists' => 'El valor seleccionado para  " Ubicación asociada" no es válido.',
     ];

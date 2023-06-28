@@ -19,6 +19,7 @@ use App\Models\Grado;
 use App\Models\CalidadJuridica;
 use App\Models\Sexo;
 use App\Models\Cargo;
+use App\Models\Departamento;
 //!!WEA LOCA
 use App\Models\DireccionRegional;
 //*IMPORTAMOS EL UTILS DE FORMATEAR RUT */
@@ -55,7 +56,7 @@ class UserController extends Controller
     {
         $roles = Role::all();
         //*Recuperamos los datos y los enviamos*/
-        //$departamentos = Ubicacion::all();
+        $departamentos = Departamento::all();
         $regiones = Region::all();
         $ubicaciones = Ubicacion::all();
         $grupos = Grupo::all();
@@ -65,7 +66,7 @@ class UserController extends Controller
         $calidadesJuridicas = CalidadJuridica::all();
         $sexos = Sexo::all();
         $direcciones = DireccionRegional::all();
-        return view('funcionarios.create',compact('roles','ubicaciones','regiones','grupos','escalafones','grados','calidadesJuridicas','cargos','sexos','direcciones'));
+        return view('funcionarios.create',compact('roles','ubicaciones','regiones','grupos','escalafones','grados','calidadesJuridicas','cargos','sexos','direcciones','departamentos'));
     }
 
     /**
@@ -82,6 +83,7 @@ class UserController extends Controller
                 'RUT' => 'required|string|max:20|unique:users',
                 'ID_REGION' => 'required|numeric',
                 'ID_UBICACION' => 'required|numeric',
+                'ID_DEPARTAMENTO' => 'required|numeric',
                 'ID_GRUPO' => 'required|numeric',
                 'ID_ESCALAFON' => 'required|numeric',
                 'ID_GRADO' => 'required|numeric',
@@ -102,6 +104,7 @@ class UserController extends Controller
                 'RUT' => RutUtils::formatRut($request->RUT),
                 'ID_REGION' => $request->ID_REGION,
                 'ID_UBICACION' => $request->ID_UBICACION,
+                'ID_DEPARTAMENTO' => $request->ID_DEPARTAMENTO,
                 'ID_GRUPO' => $request->ID_GRUPO,
                 'ID_ESCALAFON' => $request->ID_ESCALAFON,
                 'ID_GRADO' => $request->ID_GRADO,

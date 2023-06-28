@@ -10,27 +10,19 @@ class Departamento extends Model
     use HasFactory;
 
     protected $table = 'departamento';
-    protected $primaryKey = 'ID_DEPART';
+    protected $primaryKey = 'ID_DEPARTAMENTO';
     public $timestamps = false;
 
     protected $fillable = [
         'DEPARTAMENTO',
-        //'ID_DIRECCION'
     ];
     public static $rules = [
-        'DEPARTAMENTO' => 'required|unique:departamento,DEPARTAMENTO|max:128',
+        'DEPARTAMENTO' => 'required|max:128',
     ];
 
     public static $messages = [
         'required' => 'El campo " :attribute" es requerido.',
-        'unique' => 'El " :attribute" ingresada ya existe.',
-        'max' => 'El campo " :attribute" no debe exceder los 128 caracteres.',
-        //'exists' => 'El valor seleccionado para :attribute no es válido.'
+        'max' => 'El campo " :attribute" no debe exceder los 128 caracteres.'
     ];
 
-    //* Obtener el grado a través de la ID_GRADO */
-    /*public function direccionRegional()
-    {
-        return $this->belongsTo(DireccionRegional::class, 'ID_DIRECCION');
-    }*/
 }
