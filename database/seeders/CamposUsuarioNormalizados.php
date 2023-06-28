@@ -9,7 +9,7 @@ use Illuminate\Database\Seeder;
  * Importar MODELOS de las tablas que queremos poblar e insertar datos
  * para cada una de ellas.
 **/
-// use App\Models\Departamento;
+use App\Models\Departamento;
 use App\Models\Region;
 use App\Models\Ubicacion;
 use App\Models\Grupo;
@@ -31,12 +31,19 @@ class CamposUsuarioNormalizados extends Seeder
     {
         //* Insertamos datos en la tablas con el metodo INSERT
         // Población de la tabla 'departamento'
-        // Departamento::insert([
-        //     ['ID_DEPART' => 1, 'DEPARTAMENTO' => 'DEPARTAMENTO DE FISCALIZACION'],
-        //     ['ID_DEPART' => 2, 'DEPARTAMENTO' => 'DEPARTAMENTO ASISTENCIA AL CONTRIBUYENTE'],
-        //     ['ID_DEPART' => 3, 'DEPARTAMENTO' => 'DEPARTAMENTO DE AVALUACIONES'],
-        //     ['ID_DEPART' => 4, 'DEPARTAMENTO' => 'DEPARTAMENTO JURIDICO'],
-        // ]);
+        Departamento::insert([
+            ['ID_DEPARTAMENTO' => 1, 'DEPARTAMENTO' => 'GABINETE DIRECTOR'],
+            ['ID_DEPARTAMENTO' => 2, 'DEPARTAMENTO' => 'DEPARTAMENTO DE ADMINISTRACIÓN'],
+            ['ID_DEPARTAMENTO' => 3, 'DEPARTAMENTO' => 'DEPARTAMENTO DE FISCALIZACIÓN'],
+            ['ID_DEPARTAMENTO' => 4, 'DEPARTAMENTO' => 'DEPARTAMENTO DE ASISTENCIA AL CONTRIBUYENTE'],
+            ['ID_DEPARTAMENTO' => 5, 'DEPARTAMENTO' => 'DEPARTAMENTO DE AVALUACIONES'],
+            ['ID_DEPARTAMENTO' => 6, 'DEPARTAMENTO' => 'UNIDAD DE LOS ÁNGELES'],
+            ['ID_DEPARTAMENTO' => 7, 'DEPARTAMENTO' => 'UNIDAD DE LEBU'],
+            ['ID_DEPARTAMENTO' => 9, 'DEPARTAMENTO' => 'UNIDAD DE TALCAHUANO'],
+            ['ID_DEPARTAMENTO' => 99, 'DEPARTAMENTO' => 'DIRECCIÓN NACIONAL'],
+            ['ID_DEPARTAMENTO' => 999, 'DEPARTAMENTO' => 'EXTERNO']
+        ]);
+        
         // Población de la tabla 'region'
         // Region::insert([
         //     ['ID_REGION' => 1, 'REGION' => 'REGIÓN DE ARICA Y PARINACOTA'],
@@ -56,6 +63,7 @@ class CamposUsuarioNormalizados extends Seeder
         //     ['ID_REGION' => 15, 'REGION' => 'REGIÓN DE AYSÉN DEL GENERAL CARLOS IBÁÑEZ DEL CAMPO'],
         //     ['ID_REGION' => 16, 'REGION' => 'REGIÓN DE MAGALLANES Y DE LA ANTÁRTICA CHILENA'],
         // ]);
+
 
         // Población de la tabla 'grupo'
         Grupo::insert([
@@ -153,6 +161,7 @@ class CamposUsuarioNormalizados extends Seeder
             ['ID_SEXO' => 1, 'SEXO' => 'MASCULINO'],
             ['ID_SEXO' => 2, 'SEXO' => 'FEMENINO'],
         ]);
+
         //Población de la tabla 'comunas'
         // Comuna::insert([
         //     ['ID_COMUNA' => 1, 'COMUNA' => 'ARICA', 'ID_REGION' => 1],
@@ -175,15 +184,15 @@ class CamposUsuarioNormalizados extends Seeder
         //     ['ID_COMUNA' => 18, 'COMUNA' => 'SAN PEDRO DE ATACAMA', 'ID_REGION' => 3],
         //     ['ID_COMUNA' => 19, 'COMUNA' => 'MARÍA ELENA', 'ID_REGION' => 3],
         //     ['ID_COMUNA' => 20, 'COMUNA' => 'TOCOPILLA', 'ID_REGION' => 3],
-            // ['ID_COMUNA' => 21, 'COMUNA' => 'COPIAPÓ', 'ID_REGION' => 4],
-            // ['ID_COMUNA' => 22, 'COMUNA' => 'CALDERA', 'ID_REGION' => 4],
-            // ['ID_COMUNA' => 23, 'COMUNA' => 'TIERRA AMARILLA', 'ID_REGION' => 4],
-            // ['ID_COMUNA' => 24, 'COMUNA' => 'CHAÑARAL', 'ID_REGION' => 4],
-            // ['ID_COMUNA' => 25, 'COMUNA' => 'DIEGO DE ALMAGRO', 'ID_REGION' => 4],
-            // ['ID_COMUNA' => 26, 'COMUNA' => 'VALLENAR', 'ID_REGION' => 4],
-            // ['ID_COMUNA' => 27, 'COMUNA' => 'ALTO DEL CARMEN', 'ID_REGION' => 4],
-            // ['ID_COMUNA' => 28, 'COMUNA' => 'FREIRINA', 'ID_REGION' => 4],
-            // ['ID_COMUNA' => 29, 'COMUNA' => 'HUASCO', 'ID_REGION' => 4],
+        //     ['ID_COMUNA' => 21, 'COMUNA' => 'COPIAPÓ', 'ID_REGION' => 4],
+        //     ['ID_COMUNA' => 22, 'COMUNA' => 'CALDERA', 'ID_REGION' => 4],
+        //     ['ID_COMUNA' => 23, 'COMUNA' => 'TIERRA AMARILLA', 'ID_REGION' => 4],
+        // ['ID_COMUNA' => 24, 'COMUNA' => 'CHAÑARAL', 'ID_REGION' => 4],
+        // ['ID_COMUNA' => 25, 'COMUNA' => 'DIEGO DE ALMAGRO', 'ID_REGION' => 4],
+        // ['ID_COMUNA' => 26, 'COMUNA' => 'VALLENAR', 'ID_REGION' => 4],
+        // ['ID_COMUNA' => 27, 'COMUNA' => 'ALTO DEL CARMEN', 'ID_REGION' => 4],
+        // ['ID_COMUNA' => 28, 'COMUNA' => 'FREIRINA', 'ID_REGION' => 4],
+        // ['ID_COMUNA' => 29, 'COMUNA' => 'HUASCO', 'ID_REGION' => 4],
         // ['ID_COMUNA' => 30, 'COMUNA' => 'LA SERENA', 'ID_REGION' => 5],
         // ['ID_COMUNA' => 31, 'COMUNA' => 'COQUIMBO', 'ID_REGION' => 5],
         // ['ID_COMUNA' => 32, 'COMUNA' => 'ANDACOLLO', 'ID_REGION' => 5],
@@ -256,6 +265,7 @@ class CamposUsuarioNormalizados extends Seeder
         // ['ID_COMUNA' => 99, 'COMUNA' => 'SAN BERNARDO', 'ID_REGION' => 7],
         // ['ID_COMUNA' => 100, 'COMUNA' => 'SAN JOAQUÍN', 'ID_REGION' => 7],
         // ]);
+
 
 
 
