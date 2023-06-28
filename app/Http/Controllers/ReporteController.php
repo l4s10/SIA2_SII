@@ -7,6 +7,7 @@ use App\Models\SolicitudSala;
 use App\Models\SolicitudBodegas;
 use App\Models\SolicitudReparacionVehiculo;
 use App\Models\RelFunVeh;
+use App\Models\Sexo;
 use Carbon\Carbon;
 
 class ReporteController extends Controller
@@ -18,6 +19,10 @@ class ReporteController extends Controller
         'solicitudReparacionVehiculo' => SolicitudReparacionVehiculo::class,
         'relFunVeh' => RelFunVeh::class
     ];
+
+    // private $models = [
+    //      'sexos' = Sexo::class,
+    // ];
 
     public function index()
     {

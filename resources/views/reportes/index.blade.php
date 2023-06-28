@@ -58,6 +58,20 @@
                 <button id="view-chart" class="btn btn-primary move-right"><i class="fa-solid fa-maximize"></i></button>
             </div>
         </div>
+        <!-- Base para el segundo Grafico -->
+        <!-- <div class="col-md-6">
+            <div class="chart-container">
+                <canvas id="myChart1"></canvas>
+                <button id="view-chart" class="btn btn-primary move-right"><i class="fa-solid fa-maximize"></i></button>
+            </div>
+        </div> -->
+        <!-- Base para el Tercer Grafico -->
+        <!-- <div class="col-md-6">
+            <div class="chart-container">
+                <canvas id="myChart2"></canvas>
+                <button id="view-chart" class="btn btn-primary move-right"><i class="fa-solid fa-maximize"></i></button>
+            </div>
+        </div> -->
     </div>
     <br>
     <!-- Modal para mostrar el gráfico en grande -->
@@ -136,154 +150,50 @@
             });
         });
     </script>
-
-        {{-- <script>
-            flatpickr('#start-date', {
-                locale: 'es',
-                dateFormat: "Y-m-d",
-                altFormat: 'd-m-Y',
-                altInput: true,
-            });
-
-            flatpickr('#end-date', {
-                locale: 'es',
-                dateFormat: "Y-m-d",
-                altFormat: 'd-m-Y',
-                altInput: true,
-            });
-        </script> --}}
-    {{-- !!SCRIPT DEL GRAFICO 1 --}}
-    {{-- <script>
-        const ctx = document.getElementById('myChart').getContext('2d');
-        const myChart = new Chart(ctx, {
-            type: 'bar',
-            data: {
-                labels: ['Solicitud Sala', 'Solicitud Bodegas', 'Reparación de Vehículos', 'Reserva de Vehículos'],
-                datasets: [{
-                    label: 'Cantidad de Solicitudes',
-                    data: [@foreach($Grafico_1 as $AUX) {{ round($AUX) }}, @endforeach],
-                    backgroundColor: [
-                        'rgba(255, 165, 0, 0.2)', // Color de fondo para Salas (naranja)
-                        'rgba(255, 0, 0, 0.2)', // Color de fondo para Bodegas (rojo)
-                        'rgba(0, 128, 0, 0.2)', // Color de fondo para Reserva de Vehículos (verde)
-                        'rgba(0, 191, 255, 0.2)' // Color de fondo para Reparación de Vehículos (celeste)
-                    ],
-                    borderWidth: 1
-                }]
-            },
-            options: {
-                scales: {
-                    x: {
-                        title: {
-                            display: true,
-                            text: 'Solicitud'
-                        }
-                    },
-                    y: {
-                        beginAtZero: true,
-                        title: {
-                            display: true,
-                            text: 'Cantidad'
-                        },
-                        ticks: {
-                            precision: 0 // Mostrar números enteros en el eje Y
-                        }
-                    }
-                },
-                plugins: {
-                    legend: {
-                        display: true,
-                        labels: {
-                            generateLabels: function (chart) {
-                                const data = chart.data;
-                                if (data.labels.length && data.datasets.length) {
-                                    return data.labels.map(function (label, index) {
-                                        const dataset = data.datasets[0];
-                                        const backgroundColor = dataset.backgroundColor[index];
-                                        return {
-                                            text: label,
-                                            fillStyle: backgroundColor,
-                                            hidden: false,
-                                            lineCap: 'round',
-                                            lineDash: [],
-                                            lineDashOffset: 0,
-                                            lineJoin: 'round',
-                                            lineWidth: 1,
-                                            strokeStyle: backgroundColor,
-                                            pointStyle: 'circle',
-                                            rotation: 0
-                                        };
-                                    });
-                                }
-                                return [];
-                            }
-                        }
-                    },
-                    title: {
-                        display: true,
-                        text: 'Ranking de Solicitudes',
-                        padding: {
-                            top: 10,
-                            bottom: 30
-                        }
-                    }
-                }
-            }
-        });
-
-        document.querySelector('#refresh-button').addEventListener('click', function () {
-            var fechaInicio = document.querySelector('#start-date').value;
-            var fechaFin = document.querySelector('#end-date').value;
-
-            Swal.fire({
-                title: 'Actualizando registros',
-                timer: 2000,
-                didOpen: () => {
-                    Swal.showLoading();
-                },
-                willClose: () => {
-                    // Al cerrarse
-                }
-            });
-
-            fetch('/reportes/data', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
-                },
-                body: JSON.stringify({
-                    fechaInicio: fechaInicio,
-                    fechaFin: fechaFin
-                })
-            })
-                .then(response => response.json())
-                .then(data => {
-                    myChart.data.datasets[0].data = [
-                        Math.round(data.solicitudSala),
-                        Math.round(data.solicitudBodegas),
-                        Math.round(data.solicitudReparacionVehiculo),
-                        Math.round(data.relFunVeh)
-                    ];
-                    myChart.update();
-                });
-        });
-    </script> --}}
-    <script>
+<script>
         window.myChartData = {
+            // Primer gráfico
             labels: ['Solicitud Sala', 'Solicitud Bodegas', 'Reparación de Vehículos', 'Reserva de Vehículos'],
             datasets: [{
                 label: 'Cantidad de Solicitudes',
                 data: [@foreach($Grafico_1 as $AUX) {{ round($AUX) }}, @endforeach],
                 backgroundColor: [
-                    'rgba(255, 165, 0, 0.2)', // Color de fondo para Salas (naranja)
-                    'rgba(255, 0, 0, 0.2)', // Color de fondo para Bodegas (rojo)
-                    'rgba(0, 128, 0, 0.2)', // Color de fondo para Reserva de Vehículos (verde)
-                    'rgba(0, 191, 255, 0.2)' // Color de fondo para Reparación de Vehículos (celeste)
+                    'rgb(250, 215, 160)', // Color de fondo para Salas (piel)
+                    'rgb(244, 0, 0)', // Color de fondo para Bodegas (rojo)
+                    'rgb(56, 231, 0)', // Color de fondo para Reserva de Vehículos (verde)
+                    'rgb(0, 232, 255)' // Color de fondo para Reparación de Vehículos (celeste)
                 ],
+                barThickness: 50, // Ajusta el valor para cambiar el ancho de la barra
                 borderWidth: 1
             }]
-        }
-    </script>
+            // Segundo gráfico para ver el tipo de materiales solicitados
+            // labels: ['Aseo, 'Computacion', 'Electrodomesticos'],
+            // datasets: [{
+            //     label: 'Datos 2',
+            //     data: [10, 20, 30],
+            //     backgroundColor: [
+            //         'rgb(0, 50, 255)', // Color de fondo para el segundo gráfico (Azul)
+            //         'rgb(255, 124, 0)', // Color de fondo para el segundo gráfico (Naranjo)
+            //         'rgb(0, 255, 8)', // Color de fondo para el segundo gráfico (Verde)
+            //         'rgb(255, 247, 0)', // Color de fondo para el segundo gráfico (Amarillo)
+            //     ]
+            //     barThickness: 20, // Ajusta el valor para cambiar el ancho de la barra
+            //     borderWidth: 1
+            // }]
+            
+            // Tercer gráfico para ver la cantidad de Hombres y mujeres en la sede de Concepcion.
+            // labels: ['Hombres', 'Mujeres'],
+            // datasets: [{
+            //     label: 'Datos 3',
+            //     data: [10, 20, 30],
+            //     backgroundColor: [
+            //     'rgb(58, 175, 0)', // Color de fondo para Salas (piel)
+            //     'rgb(0, 46, 255)', // Color de fondo para Bodegas (rojo)
+            //     ]
+            //     barThickness: 20, // Ajusta el valor para cambiar el ancho de la barra
+            //     borderWidth: 1
+            // }]
+}
+</script>
     <script src="{{asset('js/Reportes/Graficos/grafico1-config.js')}}"></script>
 @endsection
