@@ -76,8 +76,8 @@
             <table id="materiales" class="table table-bordered mt-4">
                 <thead class="bg-primary text-white">
                     <tr>
-                        <th scope="col">Nombre Material</th>
                         <th scope="col">Tipo Material</th>
+                        <th scope="col">Nombre Material</th>
                         <th scope="col">Stock</th>
                         <th scope="col">Cantidad aprobada</th>
                         {{-- <th scope="col" hidden>Acción</th> --}}
@@ -86,8 +86,8 @@
                 <tbody>
                     @foreach ($materiales as $material)
                         <tr>
-                            <td class="material-name">{{ $material->NOMBRE_MATERIAL }}</td>
                             <td>{{ $material->tipoMaterial->TIPO_MATERIAL }}</td>
+                            <td class="material-name">{{ $material->NOMBRE_MATERIAL }}</td>
                             <td>{{ $material->STOCK }}</td>
                             <td>
                                 <input type="number" type="button" class="form-control cantidad-restar cantidad-autorizada" data-id="{{ $material->ID_MATERIAL }}" min="0" max="{{ $material->STOCK }}" value="0" name="cantidad_autorizada[{{ $material->ID_MATERIAL }}]">

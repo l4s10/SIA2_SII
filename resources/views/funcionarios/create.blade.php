@@ -175,9 +175,8 @@
                     </div>
                 </div>
             </div>
-
-            {{-- Ubicación --}}
-            <h4>Ubicación</h4>
+            {{-- !!REGION Y DIRECCION REGIONAL --}}
+            <h4>Dirección Regional</h4>
             <div class="row">
                 <div class="col">
                     {{-- Region field --}}
@@ -198,19 +197,38 @@
                     </div>
                 </div>
                 <div class="col">
-                    {{-- Ubicacion field --}}
+                    {{-- Direccion field --}}
                     <div class="form-group">
-                        <label for="ubicacion">Ubicación</label>
-                        <select name="ID_UBICACION" class="form-control @error('ID_UBICACION') is-invalid @enderror" required>
-                            <option value="" disabled>Seleccione una ubicación</option>
+                        <label for="direccion">Jurisdicción</label>
+                        <select name="ID_DIRECCION" class="form-control @error('ID_DIRECCION') is-invalid @enderror" required>
+                            <option value="" disabled>Seleccione una dirección</option>
                         </select>
 
-                        @error('ID_UBICACION')
+                        @error('ID_DIRECCION')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
                             </span>
                         @enderror
                     </div>
+                </div>
+            </div>
+            {{-- !!DEPARTAMENTO Y UBICACION --}}
+            <div class="row">
+                <div class="col-md-6">
+                    {{-- Departamento --}}
+                    <label for="ID_DEPARTAMENTO">Departamento: </label>
+                    <select name="ID_DEPARTAMENTO" id="ID_DEPARTAMENTO" class="form-control">
+                        <option value="">-- Seleccione un departamento --</option>
+                        @foreach ($departamentos as $departamento)
+                            <option value="{{$departamento->ID_DEPARTAMENTO}}">{{$departamento->DEPARTAMENTO}}</option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="col-md-6">
+                    <label for="ID_UBICACION">Ubicacion</label>
+                    <select name="ID_UBICACION" id="ID_UBICACION" class="form-control">
+                        <option value="">-- Seleccione una ubicación --</option>
+                    </select>
                 </div>
             </div>
 
@@ -330,6 +348,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     <script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/es.js"></script>
+    {{-- !!SCRIPT DE FILTROS (SE OBTENDRA DIRECCION REGIONAL SEGUN LA REGION SELECCIONADA) --}}
     <script>
         $(document).ready(function () {
             // Configuración de Flatpickr para las fechas
@@ -345,32 +364,64 @@
             // Inicializar Flatpickr en los campos de fecha
             $('#FECHA_NAC').flatpickr(flatpickrConfig);
             $('#FECHA_INGRESO').flatpickr(flatpickrConfig);
-            $('#fecha_asim_planta').flatpickr(flatpickrConfig);
 
             var regionSelect = $('select[name="ID_REGION"]');
-            var ubicacionSelect = $('select[name="ID_UBICACION"]');
+            var direccionSelect = $('select[name="ID_DIRECCION"]');
             var direcciones = @json($direcciones);
+            var ubicacionSelect = $('select[name="ID_UBICACION"]');
             var ubicaciones = @json($ubicaciones);
+            var departamentoSelect = $('select[name="ID_DEPARTAMENTO"]');
 
             function filtrarUbicaciones() {
-                var regionId = regionSelect.val();
-                var direccionesFiltradas = direcciones.filter(function (direccion) {
-                    return direccion.ID_REGION == regionId;
-                });
+                var direccionId = direccionSelect.val();
                 var ubicacionesFiltradas = ubicaciones.filter(function (ubicacion) {
-                    return direccionesFiltradas.some(function (direccion) {
-                        return direccion.ID_DIRECCION === ubicacion.ID_DIRECCION;
-                    });
+                    return ubicacion.ID_DIRECCION == direccionId;
                 });
 
                 ubicacionSelect.empty();
+                ubicacionSelect.append('<option value="">-- Seleccione una ubicación --</option>');
                 ubicacionesFiltradas.forEach(function (ubicacion) {
                     ubicacionSelect.append('<option value="' + ubicacion.ID_UBICACION + '">' + ubicacion.UBICACION + '</option>');
                 });
             }
 
-            regionSelect.on('change', filtrarUbicaciones);
-            filtrarUbicaciones();
+            function filtrarDirecciones() {
+                var regionId = regionSelect.val();
+                var direccionesFiltradas = direcciones.filter(function (direccion) {
+                    return direccion.ID_REGION == regionId;
+                });
+
+                direccionSelect.empty();
+                direccionesFiltradas.forEach(function (direccion) {
+                    direccionSelect.append('<option value="' + direccion.ID_DIRECCION + '">' + direccion.DIRECCION + '</option>');
+                });
+
+                // Llama a filtrarUbicaciones después de que se hayan filtrado las direcciones
+                filtrarUbicaciones();
+            }
+
+            regionSelect.on('change', filtrarDirecciones);
+            direccionSelect.on('change', filtrarUbicaciones);
+
+            departamentoSelect.on('change', function() {
+                if($(this).val() != "") {
+                    ubicacionSelect.prop('disabled', true);
+                } else {
+                    ubicacionSelect.prop('disabled', false);
+                }
+            });
+
+            ubicacionSelect.on('change', function() {
+                if($(this).val() != "") {
+                    departamentoSelect.prop('disabled', true);
+                } else {
+                    departamentoSelect.prop('disabled', false);
+                }
+            });
+
+            // Llama a filtrarDirecciones al inicio para inicializar las listas desplegables
+            filtrarDirecciones();
         });
-    </script>
+        </script>
+
 @endsection
