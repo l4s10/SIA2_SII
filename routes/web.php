@@ -6,6 +6,7 @@ use App\Http\Controllers\InventoryController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ReporteController;
 use App\Http\Controllers\SolicitudSalaController;
+use App\Http\Controllers\UserController;
 
 /*
 |--------------------------------------------------------------------------

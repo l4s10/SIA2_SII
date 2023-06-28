@@ -492,28 +492,64 @@
 
     <script>
         $(document).ready(function(){
-    $('#Departamento, #Ubicacion').change(function () {
-        var selectedId = $(this).val();
-        var entidad = $(this).attr('id'); // obtener el id del selector que disparó el evento
+            $('#Departamento').change(function () {
+                var selectedId = $(this).val();
+                var entidad = $(this).attr('id');
 
-        $.ajax({
-            url: '/usuarios_por_entidad/' + entidad + '/' + selectedId,
-            type: 'GET',
-            dataType: 'json',
-            success: function(data) {
-                var selectUsuarios = $('#usuarios');
-                selectUsuarios.empty(); // Limpiar opciones actuales
+                // Deshabilita la ubicación cuando se selecciona un departamento
+                if (selectedId) {
+                    $('#Ubicacion').prop('disabled', true);
+                } else {
+                    $('#Ubicacion').prop('disabled', false);
+                }
 
-                $.each(data, function (i, usuario) {
-                    selectUsuarios.append($('<option>', {
-                        value: usuario.id,
-                        text : usuario.NOMBRES + ' ' + usuario.APELLIDOS
-                    }));
+                $.ajax({
+                    url: '/usuarios_por_entidad/' + entidad + '/' + selectedId,
+                    type: 'GET',
+                    dataType: 'json',
+                    success: function(data) {
+                        var selectUsuarios = $('#usuarios');
+                        selectUsuarios.empty();
+
+                        $.each(data, function (i, usuario) {
+                            selectUsuarios.append($('<option>', {
+                                value: usuario.id,
+                                text : usuario.NOMBRES + ' ' + usuario.APELLIDOS
+                            }));
+                        });
+                    }
                 });
-            }
+            });
+
+            $('#Ubicacion').change(function () {
+                var selectedId = $(this).val();
+                var entidad = $(this).attr('id');
+
+                // Deshabilita el departamento cuando se selecciona una ubicación
+                if (selectedId) {
+                    $('#Departamento').prop('disabled', true);
+                } else {
+                    $('#Departamento').prop('disabled', false);
+                }
+
+                $.ajax({
+                    url: '/usuarios_por_entidad/' + entidad + '/' + selectedId,
+                    type: 'GET',
+                    dataType: 'json',
+                    success: function(data) {
+                        var selectUsuarios = $('#usuarios');
+                        selectUsuarios.empty();
+
+                        $.each(data, function (i, usuario) {
+                            selectUsuarios.append($('<option>', {
+                                value: usuario.id,
+                                text : usuario.NOMBRES + ' ' + usuario.APELLIDOS
+                            }));
+                        });
+                    }
+                });
+            });
         });
-    });
-});
         </script>
     {{-- !!FUNCION PARA REFRESCAR DINAMICAMENTE LAS COMUNAS A TRAVES DE LAS REGIONES --}}
     <script>

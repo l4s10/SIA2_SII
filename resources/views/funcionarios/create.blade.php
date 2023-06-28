@@ -219,13 +219,13 @@
                     <label for="entidad_type">Seleccione relación</label>
                     <select name="entidad_type" id="entidad_type" class="form-control">
                         <option value="Departamento">Departamento</option>
-                        <option value="Ubicacion">Ubicacion</option>
+                        <option value="Ubicacion">Unidad</option>
                     </select>
                 </div>
                 <div class="col-md-6">
-                    <label for="entidad_id" id="entidad_id_label">Seleccione (depto o ubicación)</label>
+                    <label for="entidad_id" id="entidad_id_label">Seleccione (depto o unidad)</label>
                     <select name="entidad_id" id="entidad_id" class="form-control">
-                        <option value="">-- Seleccione una ubicación --</option>
+                        <option value="">-- Seleccione --</option>
                     </select>
                 </div>
             </div>
@@ -239,8 +239,11 @@
                         <select name="ID_GRUPO" id="ID_GRUPO" class="form-control @error('ID_GRUPO') is-invalid @enderror" required autofocus>
                             <option value="" disabled>Seleccione un grupo</option>
                             @foreach ($grupos as $grupo)
+                            {{-- !!IMPORTANTE --}}
+                            {{-- Busca el ID 99 y prefefinirla como seleccionada --}}
                                 <option value="{{ $grupo->ID_GRUPO }}" {{ old('ID_GRUPO') == $grupo->ID_GRUPO ? 'selected' : '' }}>{{ $grupo->GRUPO }}</option>
                             @endforeach
+                            <option value="99" selected>SIN GRUPO</option>
                         </select>
 
                         @error('ID_GRUPO')
@@ -412,7 +415,7 @@
                 if (entidadType === 'Departamento') {
                     $('#entidad_id_label').text('Seleccione Departamento');
                 } else if (entidadType === 'Ubicacion') {
-                    $('#entidad_id_label').text('Seleccione Ubicacion');
+                    $('#entidad_id_label').text('Seleccione Unidad');
                 }
             }
 
