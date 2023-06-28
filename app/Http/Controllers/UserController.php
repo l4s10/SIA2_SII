@@ -75,27 +75,7 @@ class UserController extends Controller
     public function store(Request $request)
     {
         try{
-            $rules = [
-                'NOMBRES' => 'required|string|max:255',
-                'APELLIDOS' => 'required|string|max:255',
-                'email' => 'required|string|email|max:255|unique:users,email',
-                'password' => 'nullable|string|min:8|confirmed',
-                'RUT' => 'required|string|max:20|unique:users',
-                'ID_REGION' => 'required|numeric',
-                'ID_UBICACION' => 'required|numeric',
-                'ID_DEPARTAMENTO' => 'required|numeric',
-                'ID_GRUPO' => 'required|numeric',
-                'ID_ESCALAFON' => 'required|numeric',
-                'ID_GRADO' => 'required|numeric',
-                'ID_CARGO' => 'required|numeric',
-                'FECHA_NAC' => 'required|date',
-                'FECHA_INGRESO' => 'required|date',
-                'ID_CALIDAD_JURIDICA' => 'required|numeric',
-                'FONO' => 'required|string|max:255',
-                'ANEXO' => 'required|string|max:255',
-                'ID_SEXO' => 'required|numeric',
-            ];
-            $request->validate($rules, User::$messages);
+            $request->validate(User::$rules, User::$messages);
             $user = User::create([
                 'NOMBRES' => $request->NOMBRES,
                 'APELLIDOS' => $request->APELLIDOS,
@@ -116,7 +96,6 @@ class UserController extends Controller
                 'ANEXO' => $request->ANEXO,
                 'ID_SEXO' => $request->ID_SEXO,
             ]);
-
             $user->assignRole($request->role);
             session()->flash('success','El funcionario fue agregado exitosamente.');
         }catch(\Exception $e){
@@ -151,7 +130,7 @@ class UserController extends Controller
         try{
             $roles = Role::all();
             //*Recuperamos los datos y los enviamos*/
-            //$departamentos = Ubicacion::all();
+            $departamentos = Ubicacion::all();
             $regiones = Region::all();
             $ubicaciones = Ubicacion::all();
             $grupos = Grupo::all();
@@ -161,7 +140,7 @@ class UserController extends Controller
             $calidadesJuridicas = CalidadJuridica::all();
             $sexos = Sexo::all();
             $funcionario = User::find($id);
-            return view('funcionarios.edit',compact('funcionario','roles','regiones','ubicaciones','grupos','escalafones','grados','cargos','calidadesJuridicas','sexos'));
+            return view('funcionarios.edit',compact('funcionario','roles','departamentos','regiones','ubicaciones','grupos','escalafones','grados','cargos','calidadesJuridicas','sexos'));
         }catch(\Exception $e){
             session()->flash('error', 'Error al acceder al funcionario seleccionado, vuelva a intentarlo más tarde.');
             return view('funcionarios.index');

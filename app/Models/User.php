@@ -43,6 +43,27 @@ class User extends Authenticatable
         'ANEXO',
         'ID_SEXO'
     ];
+
+    public static $rules = [
+        'NOMBRES' => 'required|string|max:255',
+        'APELLIDOS' => 'required|string|max:255',
+        'email' => 'required|string|email|max:255|unique:users,email',
+        'password' => 'nullable|string|min:8|confirmed',
+        'RUT' => 'required|string|max:20|unique:users',
+        'ID_REGION' => 'required|numeric',
+        'ID_DEPARTAMENTO' => 'nullable|exists:departamento,ID_DEPARTAMENTO',
+        'ID_UBICACION' => 'nullable|exists:ubicacion,ID_UBICACION',
+        'ID_GRUPO' => 'required|numeric',
+        'ID_ESCALAFON' => 'required|numeric',
+        'ID_GRADO' => 'required|numeric',
+        'ID_CARGO' => 'required|numeric',
+        'FECHA_NAC' => 'required|date',
+        'FECHA_INGRESO' => 'required|date',
+        'ID_CALIDAD_JURIDICA' => 'required|numeric',
+        'FONO' => 'required|string|max:255',
+        'ANEXO' => 'required|string|max:255',
+        'ID_SEXO' => 'required|numeric',
+    ];
     //*MENSAJES DE ERROR PARA EL FORMULARIO*/
     public static $messages = [
         'NOMBRES.required' => 'El campo NOMBRES es obligatorio',
@@ -62,11 +83,10 @@ class User extends Authenticatable
         'RUT.string' => 'El campo RUT debe ser una cadena de texto',
         'RUT.max' => 'El campo RUT no puede tener más de 20 caracteres',
         'RUT.unique' => 'El RUT ya está registrado en el sistema',
-        'ID_DEPARTAMENTO.required' => 'El campo ID_DEPARTAMENTO es obligatorio',
         'ID_DEPARTAMENTO.numeric' => 'El campo ID_DEPARTAMENTO debe ser un dato numerico',
+
         'ID_REGION.required' => 'El campo ID_REGION es obligatorio',
         'ID_REGION.numeric' => 'El campo ID_REGION debe ser un dato numerico',
-        'ID_UBICACION.required' => 'El campo ID_UBICACION es obligatorio',
         'ID_UBICACION.numeric' => 'El campo ID_UBICACION debe ser un dato numerico',
         'ID_GRUPO.required' => 'El campo ID_GRUPO es obligatorio',
         'ID_GRUPO.numeric' => 'El campo ID_GRUPO debe ser un dato numerico',
@@ -115,7 +135,7 @@ class User extends Authenticatable
     {
         return $this->belongsTo(Ubicacion::class, 'ID_UBICACION');
     }*/
-    
+
     //* Obtener el grupo a través de la ID_GRUPO */
     public function grupo()
     {
