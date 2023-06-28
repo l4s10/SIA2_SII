@@ -51,7 +51,6 @@
                     <tr>
                         <th scope="col">Comuna</th>
                         <th scope="col">Region</th>
-                        <th scope="col">Dirección Regional</th>
                         <th scope="col">Administrar</th>
                     </tr>
                 </thead>
@@ -60,7 +59,6 @@
                     <tr>
                         <td>{{$comuna->COMUNA}}</td>
                         <td>{{$comuna->regionAsociada->REGION}}</td>
-                        <td>{{$comuna->direccionRegionalAsociada->DIRECCION}}</td>
                         <td>
                             <a href="{{route('comuna.show',$comuna->ID_COMUNA)}}" class="btn btn-sia-primary btn-block"><i class="fa-solid fa-gear"></i></a>
                         </td>
@@ -91,7 +89,7 @@
                 "lengthMenu": [[5 ,10, 50, -1], [5, 10, 50, "All"]],
                 "responsive": true,
                 "columnDefs": [
-                    { "orderable": false, "targets": 3 } // La séptima columna no es ordenable
+                    { "orderable": false, "targets": 2 } // La séptima columna no es ordenable
                 ],
                 "language": {
                     "url": "https://cdn.datatables.net/plug-ins/1.11.3/i18n/es_es.json"

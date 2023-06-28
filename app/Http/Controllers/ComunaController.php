@@ -24,8 +24,7 @@ class ComunaController extends Controller
     public function create()
     {
         $regiones = Region::all();
-        $direcciones = DireccionRegional::all();
-        return view('comuna.create',compact('regiones','direcciones'));
+        return view('comuna.create',compact('regiones'));
     }
 
     /**
@@ -53,7 +52,8 @@ class ComunaController extends Controller
     {
         try{
             $comuna = Comuna::find($id);
-            return view('comuna.show', compact('comuna'));
+            $region = $comuna->regionAsociada->REGION;
+            return view('comuna.show', compact('comuna','region'));
         }catch(\Exception $e){
             session()->flash('error', 'Error al acceder a la comuna seleccionada, vuelva a intentarlo más tarde.');
             return view('comuna.index');
@@ -67,8 +67,7 @@ class ComunaController extends Controller
     {
         $comuna = Comuna::find($id);
         $regiones = Region::all();
-        $direcciones = DireccionRegional::all();
-        return view('comuna.edit',compact('comuna','regiones','direcciones'));
+        return view('comuna.edit',compact('comuna','regiones'));
     }
 
     /**
@@ -81,14 +80,8 @@ class ComunaController extends Controller
             $comuna->fill([
                 'COMUNA' => $request -> input('COMUNA'),
                 'ID_REGION' => $request -> input('ID_REGION'),
-                'ID_DIRECCION' => $request -> input('ID_DIRECCION')
             ]);
             $comuna -> save();
-            /*$material = new Material();
-            $material->NOMBRE_MATERIAL = $request->NOMBRE_MATERIAL;
-            $material->ID_TIPO_MAT = $request->ID_TIPO_MAT;
-            $material->STOCK = $request->STOCK;
-            $material->save();*/
             session()->flash('success', 'La comuna fue creada exitosamente');
         } catch (\Exception $e) {
             session()->flash('error', 'Error al crear la comuna');

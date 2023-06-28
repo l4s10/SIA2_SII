@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 //use Illuminate\Validation\Rule;
 use App\Models\DireccionRegional;
+use App\Models\Region;
 
 
 
@@ -22,8 +23,9 @@ class DireccionRegionalController extends Controller
      * Show the form for creating a new resource.
      *///Carga formulario de creacion
     public function create()
-    {
-        return view('direccionregional.create');
+    {   
+        $regiones = Region::all();
+        return view('direccionregional.create',compact('regiones'));
     }
 
     /**
@@ -52,7 +54,8 @@ class DireccionRegionalController extends Controller
     {
         try{
             $direcciones = DireccionRegional::find($id);
-            return view('direccionregional.show', compact('direcciones'));
+            $region = $direcciones->region->REGION;
+            return view('direccionregional.show', compact('direcciones','region'));
         }catch(\Exception $e){
             session()->flash('error', 'Error al acceder a la dirección regional seleccionada, vuelva a intentarlo más tarde.');
             return view('direccionregional.index');
@@ -65,7 +68,8 @@ class DireccionRegionalController extends Controller
     public function edit(string $id)
     {
         $direcciones = DireccionRegional::find($id);
-        return view('direccionregional.edit',compact('direcciones'));
+        $regiones = Region::all();
+        return view('direccionregional.edit',compact('direcciones','regiones'));
     }
 
     /**
@@ -73,17 +77,23 @@ class DireccionRegionalController extends Controller
      *///Guarda el formulario de edicion en la bd
     public function update(Request $request, string $id)
     {
+        //dd($request->all());
+
         $request->validate(DireccionRegional::$rules, DireccionRegional::$messages);
         try {
+            //dd($request->input('ID_REGION'));
             $direcciones = DireccionRegional::find($id);
             $direcciones->fill([
                 'DIRECCION' => $request->input('DIRECCION'),
+                'ID_REGION' => $request->input('ID_REGION')
             ]);
             $direcciones->save();
             session()->flash('success', 'La dirección regional fue modificada exitosamente');
+            //dd($request->input('ID_REGION'));
         } catch(\Exception $e) {
             session()->flash('error', 'Error al modificar la dirección regional seleccionado: ' . $e->getMessage());
         }
+        //dd($request->input('ID_REGION'));
         return redirect(route('direccionregional.index'));
     }
 

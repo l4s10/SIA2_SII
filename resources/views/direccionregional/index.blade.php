@@ -50,7 +50,8 @@
             <table id="direcciones_regionales" class="table text-justify table-bordered mt-4 mx-auto" style="white-space:nowrap;">
                 <thead class="bg-primary text-white">
                     <tr>
-                        <th scope="col">Nombres</th>
+                        <th scope="col">Nombre</th>
+                        <th scope="col">Region</th>
                         <th scope="col">Administrar</th>
                     </tr>
                 </thead>
@@ -58,6 +59,7 @@
                     @foreach($direcciones as $direccion)
                     <tr>
                         <td>{{$direccion->DIRECCION}}</td>
+                        <td>{{$direccion->region->REGION}}</td>
                         <td>
                             <a href="{{route('direccionregional.show',$direccion->ID_DIRECCION)}}" class="btn btn-sia-primary btn-block"><i class="fa-solid fa-gear"></i></a>
                         </td>
@@ -88,7 +90,7 @@
                 "lengthMenu": [[5,10, 50, -1], [5, 10, 50, "All"]],
                 "responsive": true,
                 "columnDefs": [
-                    { "orderable": false, "targets": 1 } // La séptima columna no es ordenable
+                    { "orderable": false, "targets": 2 } // La séptima columna no es ordenable
                 ],
                 "language": {
                     "url": "https://cdn.datatables.net/plug-ins/1.11.3/i18n/es_es.json"
