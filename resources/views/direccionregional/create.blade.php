@@ -19,6 +19,14 @@
                 </div>
             @endif
         </div>
+        <div class="mb-3" class="form-group">
+            <label for="ID_REGION">Región asociada:</label>
+            <select name="ID_REGION" id="ID_REGION" class="form-control">
+                @foreach($regiones as $region)
+                    <option value="{{ $region->ID_REGION }}">{{ $region->REGION }}</option>
+                @endforeach
+            </select>
+        </div>
 
         <a href="{{route('direccionregional.index')}}" class="btn btn-secondary" tabindex="5"><i class="fa-solid fa-hand-point-left"></i> Cancelar</a>
         <button type="submit" class="btn btn-primary" tabindex="4"><i class="fa-solid fa-floppy-disk"></i> Guardar Dirección Regional</button>

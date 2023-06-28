@@ -20,6 +20,14 @@
                 </div>
             </div>          
         </div>
+        <div class="card-body">
+            <div class="form-group row">
+                <label for="name" class="col-sm-2 col-form-label">{{ __('Región asociada:') }}</label>
+                <div class="col-sm-10">
+                    <p class="form-control-plaintext">{{ $comuna->regionAsociada->REGION }} </p>
+                </div>
+            </div>          
+        </div>
         <div class="card-footer">
             <form action="{{route('comuna.destroy',$comuna->ID_COMUNA)}}" method="POST">
                 @csrf

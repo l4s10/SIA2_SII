@@ -35,21 +35,6 @@
                     <div class="invalid-feedback">{{ $message }}</div>
                 @enderror
             </div>
-            <div class="mb-3">
-                <label for="ID_DIRECCION" class="form-label"><i class="fa-solid fa-person-chalkboard"></i> Dirección regional asociada:</label>
-                <select id="ID_DIRECCION" name="ID_DIRECCION" class="form-control @error('ID_DIRECCION') is-invalid @enderror">
-                    @foreach($direcciones as $direccion)
-                        @if($comuna->ID_DIRECCION == $direccion->ID_DIRECCION)
-                            <option value="{{$direccion->ID_DIRECCION}}" selected>{{$direccion->DIRECCION}}</option>
-                        @else
-                            <option value="{{$direccion->ID_DIRECCION}}">{{$direccion->DIRECCION}}</option>
-                        @endif
-                    @endforeach
-                </select>
-                @error('ID_DIRECCION')
-                    <div class="invalid-feedback">{{ $message }}</div>
-                @enderror
-            </div>
 
             <a href="{{route('comuna.index')}}" class="btn btn-secondary" tabindex="5"><i class="fa-solid fa-hand-point-left"></i> Cancelar</a>
             <button type="submit" class="btn btn-primary" tabindex="4"><i class="fa-solid fa-floppy-disk"></i> Guardar comuna</button>

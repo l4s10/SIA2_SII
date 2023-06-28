@@ -27,12 +27,6 @@
                     <option value="{{$region->ID_REGION}}">{{$region->REGION}}</option>
                 @endforeach
             </select>
-            <label for="ID_DIRECCION">Dirección regional asociada:</label>
-            <select name="ID_DIRECCION" id="ID_DIRECCION" class="form-control">
-                @foreach($direcciones as $direccion)
-                    <option value="{{$direccion->ID_DIRECCION}}">{{$direccion->DIRECCION}}</option>
-                @endforeach
-            </select>
         </div>
 
         <a href="{{route('comuna.index')}}" class="btn btn-secondary" tabindex="5"><i class="fa-solid fa-hand-point-left"></i> Cancelar</a>
