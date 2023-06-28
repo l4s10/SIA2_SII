@@ -120,7 +120,7 @@ class CamposUsuarioNormalizados extends Seeder
             ['ID_CARGO' => 4, 'CARGO' => 'JEFE DE DEPARTAMENTO DE ASISTENCIA'],
             ['ID_CARGO' => 5, 'CARGO' => 'JEFE DE DEPARTAMENTO DE AVALUACIONES'],
             ['ID_CARGO' => 6, 'CARGO' => 'JEFE DE DEPARTAMENTO DE PROCEDIMIENTOS ADMINISTRATIVOS'],
-            ['ID_CARGO' => 7, 'CARGO' => 'JEFE DE ADMINISTRACION'],
+            ['ID_CARGO' => 7, 'CARGO' => 'JEFE DE DEPARTAMENTO DE ADMINISTRACION'],
             ['ID_CARGO' => 8, 'CARGO' => 'JEFE DE UNIDAD DE TALCAHUANO'],
             ['ID_CARGO' => 9, 'CARGO' => 'JEFE DE UNIDAD DE LOS ANGELES'],
             ['ID_CARGO' => 10, 'CARGO' => 'JEFE DE UNIDAD DE LEBU'],
@@ -264,9 +264,6 @@ class CamposUsuarioNormalizados extends Seeder
         // ['ID_COMUNA' => 99, 'COMUNA' => 'SAN BERNARDO', 'ID_REGION' => 7],
         // ['ID_COMUNA' => 100, 'COMUNA' => 'SAN JOAQUÍN', 'ID_REGION' => 7],
         // ]);
-
-
-
 
     }
 }
