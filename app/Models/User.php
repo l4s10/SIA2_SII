@@ -120,7 +120,7 @@ class User extends Authenticatable
     ];
     public function entidad()
     {
-        return $this->morphTo(null, 'entidad_tipo', null, 'ID_DEPARTAMENTO', 'ID_UBICACION');
+        return $this->morphTo();
     }
     //* Obtener la ubicación a través de la ID_UBICACION */
     public function ubicacion()
