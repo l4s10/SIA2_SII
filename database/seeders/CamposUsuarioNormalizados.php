@@ -42,7 +42,7 @@ class CamposUsuarioNormalizados extends Seeder
             ['ID_DEPARTAMENTO' => 99, 'DEPARTAMENTO' => 'DIRECCIÓN NACIONAL'],
             ['ID_DEPARTAMENTO' => 999, 'DEPARTAMENTO' => 'EXTERNO']
         ]);
-        
+
         // Población de la tabla 'region'
         // Region::insert([
         //     ['ID_REGION' => 1, 'REGION' => 'REGIÓN DE ARICA Y PARINACOTA'],

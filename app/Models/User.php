@@ -118,6 +118,15 @@ class User extends Authenticatable
         'two_factor_recovery_codes',
         'two_factor_secret',
     ];
+    public function entidad()
+    {
+        return $this->morphTo(null, 'entidad_tipo', null, 'ID_DEPARTAMENTO', 'ID_UBICACION');
+    }
+    //* Obtener la ubicación a través de la ID_UBICACION */
+    public function ubicacion()
+    {
+        return $this->belongsTo(Ubicacion::class, 'ID_UBICACION');
+    }
 
     //*Obtener depto desde su ID*/
     public function departamento()
@@ -130,11 +139,7 @@ class User extends Authenticatable
     {
         return $this->belongsTo(Region::class, 'ID_REGION');
     }
-    //* Obtener la ubicación a través de la ID_UBICACION */
-    /*public function ubicacion()
-    {
-        return $this->belongsTo(Ubicacion::class, 'ID_UBICACION');
-    }*/
+
 
     //* Obtener el grupo a través de la ID_GRUPO */
     public function grupo()
