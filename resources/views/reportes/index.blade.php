@@ -65,6 +65,13 @@
                 <button id="view-chart" class="btn btn-primary move-right"><i class="fa-solid fa-maximize"></i></button>
             </div>
         </div> -->
+        <!-- Base para el Tercer Grafico -->
+        <!-- <div class="col-md-6">
+            <div class="chart-container">
+                <canvas id="myChart2"></canvas>
+                <button id="view-chart" class="btn btn-primary move-right"><i class="fa-solid fa-maximize"></i></button>
+            </div>
+        </div> -->
     </div>
     <br>
     <!-- Modal para mostrar el gráfico en grande -->
@@ -159,7 +166,7 @@
                 barThickness: 50, // Ajusta el valor para cambiar el ancho de la barra
                 borderWidth: 1
             }]
-            // Segundo gráfico
+            // Segundo gráfico para ver el tipo de materiales solicitados
             // labels: ['Aseo, 'Computacion', 'Electrodomesticos'],
             // datasets: [{
             //     label: 'Datos 2',
@@ -169,6 +176,19 @@
             //         'rgb(255, 124, 0)', // Color de fondo para el segundo gráfico (Naranjo)
             //         'rgb(0, 255, 8)', // Color de fondo para el segundo gráfico (Verde)
             //         'rgb(255, 247, 0)', // Color de fondo para el segundo gráfico (Amarillo)
+            //     ]
+            //     barThickness: 20, // Ajusta el valor para cambiar el ancho de la barra
+            //     borderWidth: 1
+            // }]
+            
+            // Tercer gráfico para ver la cantidad de Hombres y mujeres en la sede de Concepcion.
+            // labels: ['Hombres', 'Mujeres'],
+            // datasets: [{
+            //     label: 'Datos 3',
+            //     data: [10, 20, 30],
+            //     backgroundColor: [
+            //     'rgb(58, 175, 0)', // Color de fondo para Salas (piel)
+            //     'rgb(0, 46, 255)', // Color de fondo para Bodegas (rojo)
             //     ]
             //     barThickness: 20, // Ajusta el valor para cambiar el ancho de la barra
             //     borderWidth: 1

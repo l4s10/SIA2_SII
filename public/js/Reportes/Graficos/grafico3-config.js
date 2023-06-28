@@ -1,22 +1,16 @@
 // document.addEventListener('DOMContentLoaded', (event) => {
-//     const ctx = document.getElementById('myChart1').getContext('2d');
+//     const ctx = document.getElementById('myChart2').getContext('2d');
 //     const myChart = new Chart(ctx, {
-//         type: 'bar',
+//         type: 'pie',
 //         data: window.myChartData, //CARGAR VARIABLES
 //         options: {
 //             scales: {
 //                 x: {
-//                     title: {
-//                         display: true,
-//                         text: 'Solicitud'
-//                     }
+
 //                 },
 //                 y: {
 //                     beginAtZero: true,
-//                     title: {
-//                         display: true,
-//                         text: 'Cantidad'
-//                     },
+
 //                     ticks: {
 //                         precision: 0 // Mostrar números enteros en el eje Y
 //                     }
@@ -53,7 +47,7 @@
 //                 },
 //                 title: {
 //                     display: true,
-//                     text: 'Tipos de materiales solicitados',
+//                     text: 'Cantidad de funcionarios',
 //                     padding: {
 //                         top: 10,
 //                         bottom: 30
@@ -74,7 +68,7 @@
 //                 Swal.showLoading();
 //             },
 //             willClose: () => {
-               // Al cerrarse
+                //Al cerrarse
 //             }
 //         });
 
@@ -92,7 +86,7 @@
 //             .then(response => response.json())
 //             .then(data => {
 //                 myChart.data.datasets[0].data = [
-//                     Math.round(data.grafico1.tipoMaterial),
+//                     Math.round(data.grafico2.User),
 //                 ];
 //                 myChart.update();
 //             });
