@@ -118,6 +118,7 @@ Route::resource('reserva/vehiculo', 'App\Http\Controllers\RelFunVehController')-
     'destroy' => 'solicitud.vehiculos.destroy',
 ]);
 //Rutas para Funcionarios (usuarios)
+Route::get('/usuarios_por_entidad/{entidad}/{id}', [UserController::class, 'getUsuariosPorEntidad']);
 Route::resource('funcionarios','App\Http\Controllers\UserController');
 
 Route::post('/update-stock', [InventoryController::class, 'updateStock'])->name('update-stock');

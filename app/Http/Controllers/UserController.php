@@ -228,6 +228,14 @@ class UserController extends Controller
         }
         return redirect(route('funcionarios.index'));
     }
+    public function getUsuariosPorEntidad($entidad, $id) {
+        $usuarios = User::where('entidad_type', '=', "App\\Models\\".$entidad)
+                        ->where('entidad_id', '=', $id)
+                        ->get();
+
+        return response()->json($usuarios);
+    }
+
 }
 
 

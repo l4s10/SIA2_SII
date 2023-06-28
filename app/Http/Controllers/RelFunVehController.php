@@ -36,8 +36,9 @@ class RelFunVehController extends Controller
         $conductores = User::all();
         $departamentos = Departamento::all();
         $regiones = Region::all();
+        $ubicaciones = Ubicacion::all();
         $comunas = Comuna::all();
-        return view('rel_fun_veh.create', compact('vehiculos','tipo_vehiculos','departamentos','conductores','comunas','regiones'));
+        return view('rel_fun_veh.create', compact('vehiculos','tipo_vehiculos','departamentos','ubicaciones','conductores','comunas','regiones'));
     }
 
     /**

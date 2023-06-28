@@ -130,18 +130,6 @@ class User extends Authenticatable
         return 'No asignado';
     }
 
-    //* Obtener la ubicación a través de la ID_UBICACION */
-    public function ubicacion()
-    {
-        return $this->belongsTo(Ubicacion::class, 'ID_UBICACION');
-    }
-
-    //*Obtener depto desde su ID*/
-    public function departamento()
-    {
-        return $this->belongsTo(Departamento::class, 'ID_DEPARTAMENTO');
-    }
-
     //*Obtener region a traves de la ID*/
     public function region()
     {

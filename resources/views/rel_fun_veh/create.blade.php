@@ -83,40 +83,56 @@
                 @enderror
             </div>
 
+
             {{-- *ASIGNACION DE CONDUCTOR (LIMITAR AL ROL NUEVO "SOLICITANTE")* --}}
             <div class="mb-3" hidden>
-                <label for="CONDUCTOR" class="form-label"><i class="fa-solid fa-user-plus"></i> Seleccione conductor:</label>
-                <select id="CONDUCTOR" name="CONDUCTOR" class="form-control @if($errors->has('CONDUCTOR')) is-invalid @endif">
-                    <option value="" selected>--Seleccione un(a) conductor(a):--</option>
+                <label for="conductor" class="form-label"><i class="fa-solid fa-user"></i> Conductor:</label>
+                <select id="conductor" name="conductor" class="form-control{{ $errors->has('conductor') ? ' is-invalid' : '' }}">
+                    <option value="">Seleccione un conductor</option>
+                    @foreach ($conductores as $conductor)
+                        @if ($conductor->entidad_id === auth()->user()->entidad_id && $conductor->entidad_type === auth()->user()->entidad_type)
+                            <option value="{{ $conductor->id }}" selected>{{ $conductor->NOMBRES }} {{ $conductor->APELLIDOS }}</option>
+                        @endif
+                    @endforeach
                 </select>
-                @error('CONDUCTOR')
-                    <div class="invalid-feedback">{{ $message }}</div>
-                @enderror
+                @if ($errors->has('conductor'))
+                    <div class="invalid-feedback">
+                        {{ $errors->first('conductor') }}
+                    </div>
+                @endif
             </div>
+
             {{-- **CAMPO OCUPANTES DEL 1 AL 6 --}}
-            <div class="mb-3">
-                <label for="OCUPANTES" class="form-label"><i class="fa-solid fa-users-line"></i> Ocupante 1:</label>
-                <div class="row">
-                    <div class="col-6">
-                        <div class="input-group">
-                            <select name="departamentos" id="departamentos" class="form-control">
-                                <option value="">-- Seleccione un departamento --</option>
-                                @foreach ($departamentos as $departamento)
-                                    @if ($departamento->ID_DEPARTAMENTO === auth()->user()->getEntidadInfoAttribute())
-                                        <option value="{{ $departamento->ID_DEPARTAMENTO }}" selected>{{ $departamento->DEPARTAMENTO }}</option>
-                                    @else
-                                        <option value="{{ $departamento->ID_DEPARTAMENTO }}">{{ $departamento->DEPARTAMENTO }}</option>
-                                    @endif
-                                @endforeach
-                            </select>
-                        </div>
-                    </div>
-                    <div class="col-6">
-                        <select name="OCUPANTE_1" id="OCUPANTE_1" class="form-control">
-                            <option value="">-- Seleccione un compañero --</option>
-                        </select>
-                    </div>
+            <!-- Selector de Departamentos -->
+            <div class="row">
+                <div class="col-md-4">
+                    <select id="Departamento" class="form-control">
+                        <option value="">Selecciona un Departamento</option>
+                        @foreach($departamentos as $departamento)
+                        <option value="{{ $departamento->ID_DEPARTAMENTO }}">{{ $departamento->DEPARTAMENTO }}</option>
+                        @endforeach
+                    </select>
                 </div>
+
+                <!-- Selector de Ubicaciones -->
+                <div class="col-md-4">
+                    <select id="Ubicacion" class="form-control">
+                        <option value="">Selecciona una Ubicación</option>
+                        @foreach($ubicaciones as $ubicacion)
+                        <option value="{{ $ubicacion->ID_UBICACION }}">{{ $ubicacion->UBICACION }}</option>
+                        @endforeach
+                    </select>
+                </div>
+
+                <!-- Selector de Usuarios (que se llenará dinámicamente) -->
+                <div class="col-md-4">
+                    <select id="usuarios" class="form-control">
+                        <option value="">Selecciona un Usuario</option>
+                        <!-- Los usuarios se cargarán aquí mediante AJAX -->
+                    </select>
+                </div>
+            </div>
+
                 {{-- !!OCUPANTE 2 --}}
             <label for="OCUPANTE_2">Ocupante 2:</label>
             <div class="row">
@@ -125,10 +141,10 @@
                         <select name="departamentos" id="departamentos_2" class="form-control">
                             <option value="">-- Seleccione un departamento --</option>
                             @foreach ($departamentos as $departamento)
-                                @if ($departamento->ID_UBICACION === auth()->user()->ID_UBICACION)
-                                    <option value="{{ $departamento->ID_UBICACION }}" selected>{{ $departamento->UBICACION }}</option>
+                                @if ($departamento->ID_DEPARTAMENTO === auth()->user()->getEntidadInfoAttribute())
+                                    <option value="{{ $departamento->ID_DEPARTAMENTO }}" selected>{{ $departamento->DEPARTAMENTO }}</option>
                                 @else
-                                    <option value="{{ $departamento->ID_UBICACION }}">{{ $departamento->UBICACION }}</option>
+                                    <option value="{{ $departamento->ID_DEPARTAMENTO }}">{{ $departamento->DEPARTAMENTO }}</option>
                                 @endif
                             @endforeach
                         </select>
@@ -149,10 +165,10 @@
                         <select name="departamentos" id="departamentos_3" class="form-control">
                             <option value="">-- Seleccione un departamento --</option>
                             @foreach ($departamentos as $departamento)
-                                @if ($departamento->ID_UBICACION === auth()->user()->ID_UBICACION)
-                                    <option value="{{ $departamento->ID_UBICACION }}" selected>{{ $departamento->UBICACION }}</option>
+                                @if ($departamento->ID_DEPARTAMENTO === auth()->user()->getEntidadInfoAttribute())
+                                    <option value="{{ $departamento->ID_DEPARTAMENTO }}" selected>{{ $departamento->DEPARTAMENTO }}</option>
                                 @else
-                                    <option value="{{ $departamento->ID_UBICACION }}">{{ $departamento->UBICACION }}</option>
+                                    <option value="{{ $departamento->ID_DEPARTAMENTO }}">{{ $departamento->DEPARTAMENTO }}</option>
                                 @endif
                             @endforeach
                         </select>
@@ -173,10 +189,10 @@
                         <select name="departamentos" id="departamentos_4" class="form-control">
                             <option value="">-- Seleccione un departamento --</option>
                             @foreach ($departamentos as $departamento)
-                                @if ($departamento->ID_UBICACION === auth()->user()->ID_UBICACION)
-                                    <option value="{{ $departamento->ID_UBICACION }}" selected>{{ $departamento->UBICACION }}</option>
+                                @if ($departamento->ID_DEPARTAMENTO === auth()->user()->getEntidadInfoAttribute())
+                                    <option value="{{ $departamento->ID_DEPARTAMENTO }}" selected>{{ $departamento->DEPARTAMENTO }}</option>
                                 @else
-                                    <option value="{{ $departamento->ID_UBICACION }}">{{ $departamento->UBICACION }}</option>
+                                    <option value="{{ $departamento->ID_DEPARTAMENTO }}">{{ $departamento->DEPARTAMENTO }}</option>
                                 @endif
                             @endforeach
                         </select>
@@ -197,10 +213,10 @@
                         <select name="departamentos" id="departamentos_5" class="form-control">
                             <option value="">-- Seleccione un departamento --</option>
                             @foreach ($departamentos as $departamento)
-                                @if ($departamento->ID_UBICACION === auth()->user()->ID_UBICACION)
-                                    <option value="{{ $departamento->ID_UBICACION }}" selected>{{ $departamento->UBICACION }}</option>
+                                @if ($departamento->ID_DEPARTAMENTO === auth()->user()->getEntidadInfoAttribute())
+                                    <option value="{{ $departamento->ID_DEPARTAMENTO }}" selected>{{ $departamento->DEPARTAMENTO }}</option>
                                 @else
-                                    <option value="{{ $departamento->ID_UBICACION }}">{{ $departamento->UBICACION }}</option>
+                                    <option value="{{ $departamento->ID_DEPARTAMENTO }}">{{ $departamento->DEPARTAMENTO }}</option>
                                 @endif
                             @endforeach
                         </select>
@@ -221,10 +237,10 @@
                         <select name="departamentos" id="departamentos_6" class="form-control">
                             <option value="">-- Seleccione un departamento --</option>
                             @foreach ($departamentos as $departamento)
-                                @if ($departamento->ID_UBICACION === auth()->user()->ID_UBICACION)
-                                    <option value="{{ $departamento->ID_UBICACION }}" selected>{{ $departamento->UBICACION }}</option>
+                                @if ($departamento->ID_DEPARTAMENTO === auth()->user()->getEntidadInfoAttribute())
+                                    <option value="{{ $departamento->ID_DEPARTAMENTO }}" selected>{{ $departamento->DEPARTAMENTO }}</option>
                                 @else
-                                    <option value="{{ $departamento->ID_UBICACION }}">{{ $departamento->UBICACION }}</option>
+                                    <option value="{{ $departamento->ID_DEPARTAMENTO }}">{{ $departamento->DEPARTAMENTO }}</option>
                                 @endif
                             @endforeach
                         </select>
@@ -429,7 +445,7 @@
         });
     </script>
     {{-- *FUNCION PARA REFRESCAR DINAMICAMENTE EL FILTRO DE FUNCIONARIOS* --}}
-    <script>
+    {{-- <script>
         document.addEventListener('DOMContentLoaded', function() {
             var departamentosSelects = document.querySelectorAll('[id^="departamentos"]');
             var ocupanteSelects = document.querySelectorAll('[id^="OCUPANTE_"]');
@@ -471,7 +487,34 @@
                 departamentosSelect.dispatchEvent(new Event('change'));
             });
         });
-    </script>
+    </script> --}}
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <script>
+        $(document).ready(function(){
+    $('#Departamento, #Ubicacion').change(function () {
+        var selectedId = $(this).val();
+        var entidad = $(this).attr('id'); // obtener el id del selector que disparó el evento
+
+        $.ajax({
+            url: '/usuarios_por_entidad/' + entidad + '/' + selectedId,
+            type: 'GET',
+            dataType: 'json',
+            success: function(data) {
+                var selectUsuarios = $('#usuarios');
+                selectUsuarios.empty(); // Limpiar opciones actuales
+
+                $.each(data, function (i, usuario) {
+                    selectUsuarios.append($('<option>', {
+                        value: usuario.id,
+                        text : usuario.NOMBRES + ' ' + usuario.APELLIDOS
+                    }));
+                });
+            }
+        });
+    });
+});
+        </script>
     {{-- !!FUNCION PARA REFRESCAR DINAMICAMENTE LAS COMUNAS A TRAVES DE LAS REGIONES --}}
     <script>
         $(document).ready(function() {
