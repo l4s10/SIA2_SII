@@ -28,8 +28,8 @@ class User extends Authenticatable
         'email',
         'password',
         'RUT',
-        'ID_DEPARTAMENTO',
-        'ID_UBICACION',
+        'entidad_id',
+        'entidad_type',
         'ID_REGION',
         'ID_GRUPO',
         'ID_ESCALAFON',
@@ -51,8 +51,6 @@ class User extends Authenticatable
         'password' => 'nullable|string|min:8|confirmed',
         'RUT' => 'required|string|max:20|unique:users',
         'ID_REGION' => 'required|numeric',
-        'ID_DEPARTAMENTO' => 'nullable|exists:departamento,ID_DEPARTAMENTO',
-        'ID_UBICACION' => 'nullable|exists:ubicacion,ID_UBICACION',
         'ID_GRUPO' => 'required|numeric',
         'ID_ESCALAFON' => 'required|numeric',
         'ID_GRADO' => 'required|numeric',
@@ -83,11 +81,9 @@ class User extends Authenticatable
         'RUT.string' => 'El campo RUT debe ser una cadena de texto',
         'RUT.max' => 'El campo RUT no puede tener más de 20 caracteres',
         'RUT.unique' => 'El RUT ya está registrado en el sistema',
-        'ID_DEPARTAMENTO.numeric' => 'El campo ID_DEPARTAMENTO debe ser un dato numerico',
 
         'ID_REGION.required' => 'El campo ID_REGION es obligatorio',
         'ID_REGION.numeric' => 'El campo ID_REGION debe ser un dato numerico',
-        'ID_UBICACION.numeric' => 'El campo ID_UBICACION debe ser un dato numerico',
         'ID_GRUPO.required' => 'El campo ID_GRUPO es obligatorio',
         'ID_GRUPO.numeric' => 'El campo ID_GRUPO debe ser un dato numerico',
         'ID_ESCALAFON.required' => 'El campo ESCALAFON es requerido',
@@ -122,6 +118,18 @@ class User extends Authenticatable
     {
         return $this->morphTo();
     }
+    public function getEntidadInfoAttribute()
+    {
+        if ($this->entidad) {
+            if (get_class($this->entidad) === 'App\Models\Departamento') {
+                return $this->entidad->DEPARTAMENTO;
+            } else if (get_class($this->entidad) === 'App\Models\Ubicacion') {
+                return $this->entidad->UBICACION;
+            }
+        }
+        return 'No asignado';
+    }
+
     //* Obtener la ubicación a través de la ID_UBICACION */
     public function ubicacion()
     {

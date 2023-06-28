@@ -66,15 +66,7 @@
                                 <td>{{$funcionario->APELLIDOS}}</td>
                                 <td>{{$funcionario->RUT}}</td>
                                 <td>{{$funcionario->email}}</td>
-                                <td>
-                                    @if($funcionario->entidad && get_class($funcionario->entidad) === 'App\Models\Departamento')
-                                        {{$funcionario->entidad->DEPARTAMENTO}}
-                                    @elseif($funcionario->entidad && get_class($funcionario->entidad) === 'App\Models\Ubicacion')
-                                        {{$funcionario->entidad->UBICACION}}
-                                    @else
-                                        {{'No asignado'}}
-                                    @endif
-                                </td>
+                                <td>{{ $funcionario->entidad_info }}</td>
                                 <td>{{ $funcionario->getRoleNames()->implode(', ') }}</td>
                                 <td>
                                     <a href="{{route('funcionarios.show',$funcionario->id)}}" class="btn btn-sia-primary btn-block" >Administrar</a>

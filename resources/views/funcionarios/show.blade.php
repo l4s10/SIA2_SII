@@ -31,12 +31,6 @@
                     <p class="form-control-plaintext">{{ $funcionario->RUT }}</p>
                 </div>
             </div>
-            {{-- <div class="form-group row">
-                <label for="depto" class="col-sm-2 col-form-label">{{ __('Departamento') }}</label>
-                <div class="col-sm-10">
-                    <p class="form-control-plaintext">{{ $funcionario->departamento->DEPARTAMENTO }}</p>
-                </div>
-            </div> --}}
             <div class="form-group row">
                 <label for="region" class="col-sm-2 col-form-label">{{ __('Región') }}</label>
                 <div class="col-sm-10">
@@ -44,9 +38,17 @@
                 </div>
             </div>
             <div class="form-group row">
-                <label for="ubicacion" class="col-sm-2 col-form-label">{{ __('Ubicación') }}</label>
+                <label for="" class="col-sm-2 col-form-label">{{__('Depto/Ubicacion')}}</label>
                 <div class="col-sm-10">
-                    <p class="form-control-plaintext">{{ $funcionario->ubicacion->UBICACION }}</p>
+                    <p class="form-control-plaintext">
+                        @if($funcionario->entidad && get_class($funcionario->entidad) === 'App\Models\Departamento')
+                            {{$funcionario->entidad->DEPARTAMENTO}}
+                        @elseif($funcionario->entidad && get_class($funcionario->entidad) === 'App\Models\Ubicacion')
+                            {{$funcionario->entidad->UBICACION}}
+                        @else
+                            {{'No asignado'}}
+                        @endif
+                    </p>
                 </div>
             </div>
             <div class="form-group row">
@@ -70,13 +72,13 @@
             <div class="form-group row">
                 <label for="fecha_nacimiento" class="col-sm-2 col-form-label">{{ __('Fecha de nacimiento') }}</label>
                 <div class="col-sm-10">
-                    <p class="form-control-plaintext">{{ $funcionario->FECHA_NAC }}</p>
+                    <p class="form-control-plaintext">{{ $fechaNacimiento }}</p>
                 </div>
             </div>
             <div class="form-group row">
                 <label for="fecha_ingreso" class="col-sm-2 col-form-label">{{ __('Fecha de ingreso') }}</label>
                 <div class="col-sm-10">
-                    <p class="form-control-plaintext">{{ $funcionario->FECHA_INGRESO }}</p>
+                    <p class="form-control-plaintext">{{ $fechaIngreso }}</p>
                 </div>
             </div>
             <div class="form-group row">

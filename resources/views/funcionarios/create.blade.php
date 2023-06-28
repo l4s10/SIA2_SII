@@ -216,21 +216,20 @@
             <div class="row">
                 <div class="col-md-6">
                     {{-- Departamento --}}
-                    <label for="ID_DEPARTAMENTO">Departamento: </label>
-                    <select name="ID_DEPARTAMENTO" id="ID_DEPARTAMENTO" class="form-control">
-                        <option value="">-- Seleccione un departamento --</option>
-                        @foreach ($departamentos as $departamento)
-                            <option value="{{$departamento->ID_DEPARTAMENTO}}">{{$departamento->DEPARTAMENTO}}</option>
-                        @endforeach
+                    <label for="entidad_type">Seleccione relación</label>
+                    <select name="entidad_type" id="entidad_type" class="form-control">
+                        <option value="Departamento">Departamento</option>
+                        <option value="Ubicacion">Ubicacion</option>
                     </select>
                 </div>
                 <div class="col-md-6">
-                    <label for="ID_UBICACION">Ubicacion</label>
-                    <select name="ID_UBICACION" id="ID_UBICACION" class="form-control">
+                    <label for="entidad_id" id="entidad_id_label">Seleccione (depto o ubicación)</label>
+                    <select name="entidad_id" id="entidad_id" class="form-control">
                         <option value="">-- Seleccione una ubicación --</option>
                     </select>
                 </div>
             </div>
+
 
             <div class="form-row">
                 <div class="col">
@@ -368,22 +367,10 @@
             var regionSelect = $('select[name="ID_REGION"]');
             var direccionSelect = $('select[name="ID_DIRECCION"]');
             var direcciones = @json($direcciones);
-            var ubicacionSelect = $('select[name="ID_UBICACION"]');
+            var entidadTypeSelect = $('select[name="entidad_type"]');
+            var entidadIdSelect = $('select[name="entidad_id"]');
             var ubicaciones = @json($ubicaciones);
-            var departamentoSelect = $('select[name="ID_DEPARTAMENTO"]');
-
-            function filtrarUbicaciones() {
-                var direccionId = direccionSelect.val();
-                var ubicacionesFiltradas = ubicaciones.filter(function (ubicacion) {
-                    return ubicacion.ID_DIRECCION == direccionId;
-                });
-
-                ubicacionSelect.empty();
-                ubicacionSelect.append('<option value="">-- Seleccione una ubicación --</option>');
-                ubicacionesFiltradas.forEach(function (ubicacion) {
-                    ubicacionSelect.append('<option value="' + ubicacion.ID_UBICACION + '">' + ubicacion.UBICACION + '</option>');
-                });
-            }
+            var departamentos = @json($departamentos);
 
             function filtrarDirecciones() {
                 var regionId = regionSelect.val();
@@ -396,32 +383,50 @@
                     direccionSelect.append('<option value="' + direccion.ID_DIRECCION + '">' + direccion.DIRECCION + '</option>');
                 });
 
-                // Llama a filtrarUbicaciones después de que se hayan filtrado las direcciones
-                filtrarUbicaciones();
+                // Actualizar las opciones de entidad_id basado en el tipo de entidad actualmente seleccionado
+                actualizarEntidades();
+            }
+
+            function actualizarEntidades() {
+                entidadIdSelect.empty();
+                entidadIdSelect.append('<option value="">-- Seleccione una opción --</option>');
+
+                var entidadType = entidadTypeSelect.val();
+
+                if (entidadType === 'Departamento') {
+                    departamentos.forEach(function (departamento) {
+                        entidadIdSelect.append('<option value="' + departamento.ID_DEPARTAMENTO + '">' + departamento.DEPARTAMENTO + '</option>');
+                    });
+                } else if (entidadType === 'Ubicacion') {
+                    var direccionId = direccionSelect.val();
+                    var ubicacionesFiltradas = ubicaciones.filter(function (ubicacion) {
+                        return ubicacion.ID_DIRECCION == direccionId;
+                    });
+
+                    ubicacionesFiltradas.forEach(function (ubicacion) {
+                        entidadIdSelect.append('<option value="' + ubicacion.ID_UBICACION + '">' + ubicacion.UBICACION + '</option>');
+                    });
+                }
+
+                // Cambiar el texto del label de entidad_id basado en la selección actual de entidad_type
+                if (entidadType === 'Departamento') {
+                    $('#entidad_id_label').text('Seleccione Departamento');
+                } else if (entidadType === 'Ubicacion') {
+                    $('#entidad_id_label').text('Seleccione Ubicacion');
+                }
             }
 
             regionSelect.on('change', filtrarDirecciones);
-            direccionSelect.on('change', filtrarUbicaciones);
+            direccionSelect.on('change', actualizarEntidades);
+            entidadTypeSelect.on('change', actualizarEntidades);
 
-            departamentoSelect.on('change', function() {
-                if($(this).val() != "") {
-                    ubicacionSelect.prop('disabled', true);
-                } else {
-                    ubicacionSelect.prop('disabled', false);
-                }
-            });
-
-            ubicacionSelect.on('change', function() {
-                if($(this).val() != "") {
-                    departamentoSelect.prop('disabled', true);
-                } else {
-                    departamentoSelect.prop('disabled', false);
-                }
-            });
-
-            // Llama a filtrarDirecciones al inicio para inicializar las listas desplegables
             filtrarDirecciones();
         });
-        </script>
+    </script>
+
+
+
+
+
 
 @endsection
