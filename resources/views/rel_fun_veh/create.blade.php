@@ -88,16 +88,6 @@
                 <label for="CONDUCTOR" class="form-label"><i class="fa-solid fa-user-plus"></i> Seleccione conductor:</label>
                 <select id="CONDUCTOR" name="CONDUCTOR" class="form-control @if($errors->has('CONDUCTOR')) is-invalid @endif">
                     <option value="" selected>--Seleccione un(a) conductor(a):--</option>
-                    {{-- *CORRECCION DE FILTRO ARREGLADO, AHORA SOLO MUESTRA CONDUCTORES DEL MISMO UBICACION* --}}
-                    @foreach ($departamentos as $departamento)
-                        <optgroup label="{{ $departamento->UBICACION }}">
-                            @foreach ($conductores as $conductor)
-                                @if ($conductor->ubicacion->UBICACION === $departamento->UBICACION && $conductor->ubicacion->ID_UBICACION === auth()->user()->ubicacion->ID_UBICACION)
-                                    <option value="{{ $conductor->id }}">{{ $conductor->NOMBRES }} {{ $conductor->APELLIDOS }}</option>
-                                @endif
-                            @endforeach
-                        </optgroup>
-                    @endforeach
                 </select>
                 @error('CONDUCTOR')
                     <div class="invalid-feedback">{{ $message }}</div>
@@ -112,10 +102,10 @@
                             <select name="departamentos" id="departamentos" class="form-control">
                                 <option value="">-- Seleccione un departamento --</option>
                                 @foreach ($departamentos as $departamento)
-                                    @if ($departamento->ID_UBICACION === auth()->user()->ID_UBICACION)
-                                        <option value="{{ $departamento->ID_UBICACION }}" selected>{{ $departamento->UBICACION }}</option>
+                                    @if ($departamento->ID_DEPARTAMENTO === auth()->user()->getEntidadInfoAttribute())
+                                        <option value="{{ $departamento->ID_DEPARTAMENTO }}" selected>{{ $departamento->DEPARTAMENTO }}</option>
                                     @else
-                                        <option value="{{ $departamento->ID_UBICACION }}">{{ $departamento->UBICACION }}</option>
+                                        <option value="{{ $departamento->ID_DEPARTAMENTO }}">{{ $departamento->DEPARTAMENTO }}</option>
                                     @endif
                                 @endforeach
                             </select>
