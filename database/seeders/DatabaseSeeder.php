@@ -19,8 +19,8 @@ class DatabaseSeeder extends Seeder
             //*Llamamos campos normalizados, roles y permisos y finalmente a usuarios */
             CamposUsuarioNormalizados::class,
             RolesAndPermissionsSeeder::class,
-            FuncionariosSeeder::class,
-            PolizasSeeder::class,
+            // FuncionariosSeeder::class,
+            // PolizasSeeder::class,
             FacultadesSeeder::class,
             TipoResolucionSeeder::class,
             ResolucionesSeeder::class,

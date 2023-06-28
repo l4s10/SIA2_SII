@@ -79,13 +79,8 @@ return new class extends Migration
             $table->string('FONO', 255);
             $table->string('ANEXO', 255);
             //*-------------------------------------------------------- */
-            //!! -------------------CAMPOS BORRADOS------------------------
-            // $table->date('FECHA_ASIM_O_1')->nullable();
-            //!! --------------CLAVES FORANEAS-------------------------
-            $table->unsignedInteger('ID_DEPARTAMENTO')->nullable();
-            $table->foreign('ID_DEPARTAMENTO')->references('ID_DEPARTAMENTO')->on('departamento');
-            $table->unsignedInteger('ID_UBICACION')->nullable();
-            $table->foreign('ID_UBICACION')->references('ID_UBICACION')->on('ubicacion');
+            $table->unsignedInteger('entidad_id')->nullable(); // reemplaza ID_DEPARTAMENTO e ID_UBICACION
+            $table->string('entidad_type')->nullable(); // reemplaza ID_DEPARTAMENTO e ID_UBICACION
             $table->unsignedInteger('ID_REGION');
             $table->foreign('ID_REGION')->references('ID_REGION')->on('region');
             $table->unsignedInteger('ID_GRUPO');
@@ -100,11 +95,11 @@ return new class extends Migration
             $table->foreign('ID_CALIDAD_JURIDICA')->references('ID_CALIDAD')->on('calidad_juridica');
             $table->unsignedInteger('ID_SEXO');
             $table->foreign('ID_SEXO')->references('ID_SEXO')->on('sexo');
-            //!!--------------------------------------
 
             $table->rememberToken();
             $table->timestamps();
         });
+
     }
 
     /**

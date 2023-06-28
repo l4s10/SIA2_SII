@@ -25,4 +25,9 @@ class Departamento extends Model
         'max' => 'El campo " :attribute" no debe exceder los 128 caracteres.'
     ];
 
+    public function users()
+    {
+        return $this->morphMany(User::class, 'entidad', 'entidad_tipo', null, 'ID_DEPARTAMENTO');
+    }
+
 }

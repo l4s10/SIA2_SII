@@ -37,13 +37,12 @@ class CamposUsuarioNormalizados extends Seeder
             ['ID_DEPARTAMENTO' => 3, 'DEPARTAMENTO' => 'DEPARTAMENTO DE FISCALIZACIÓN'],
             ['ID_DEPARTAMENTO' => 4, 'DEPARTAMENTO' => 'DEPARTAMENTO DE ASISTENCIA AL CONTRIBUYENTE'],
             ['ID_DEPARTAMENTO' => 5, 'DEPARTAMENTO' => 'DEPARTAMENTO DE AVALUACIONES'],
-            ['ID_DEPARTAMENTO' => 6, 'DEPARTAMENTO' => 'UNIDAD DE LOS ÁNGELES'],
-            ['ID_DEPARTAMENTO' => 7, 'DEPARTAMENTO' => 'UNIDAD DE LEBU'],
-            ['ID_DEPARTAMENTO' => 9, 'DEPARTAMENTO' => 'UNIDAD DE TALCAHUANO'],
+            ['ID_DEPARTAMENTO' => 6, 'DEPARTAMENTO' => 'DEPARTAMENTO DE PROCEDIMIENTOS TRIBUTARIOS'],
+            ['ID_DEPARTAMENTO' => 7, 'DEPARTAMENTO' => 'DEPARTAMENTO JURÍDICO'],
             ['ID_DEPARTAMENTO' => 99, 'DEPARTAMENTO' => 'DIRECCIÓN NACIONAL'],
             ['ID_DEPARTAMENTO' => 999, 'DEPARTAMENTO' => 'EXTERNO']
         ]);
-        
+
         // Población de la tabla 'region'
         // Region::insert([
         //     ['ID_REGION' => 1, 'REGION' => 'REGIÓN DE ARICA Y PARINACOTA'],
@@ -93,7 +92,7 @@ class CamposUsuarioNormalizados extends Seeder
             ['ID_ESCALAFON' => 6, 'ESCALAFON' => 'AUXILIAR'],
             ['ID_ESCALAFON' => 7, 'ESCALAFON' => 'TECNICO EN INFORMATICA'],
             ['ID_ESCALAFON' => 8, 'ESCALAFON' => 'TECNICO EN AVALUACIONES'],
-            ['ID_ESCALAFON' => 9, 'ESCALAFON' => 'FISCALIZADOR TRASADOR'],
+            ['ID_ESCALAFON' => 9, 'ESCALAFON' => 'FISCALIZADOR TASADOR'],
         ]);
         // Población de la tabla 'grado'
         Grado::insert([
@@ -132,7 +131,7 @@ class CamposUsuarioNormalizados extends Seeder
             ['ID_CARGO' => 15, 'CARGO' => 'JEFE DE GRUPO CONCEPCION 5'],
             ['ID_CARGO' => 16, 'CARGO' => 'JEFE DE GRUPO CONCEPCION 6'],
             ['ID_CARGO' => 17, 'CARGO' => 'JEFE DE GRUPO CONCEPCION 7'],
-            ['ID_CARGO' => 18, 'CARGO' => 'JEFE DE GRUPO CUMPLIMIENTO TRIBUTARIO EN TERRENO'],
+            ['ID_CARGO' => 18, 'CARGO' => 'JEFE DE GRUPO CUMPLIMIENTO TRIBUTARIO EN TERRENO (CTT)'],
             ['ID_CARGO' => 19, 'CARGO' => 'JEFE GRUPO N° 1 MEDIANAS Y GRANDES EMPRESAS SEDE REGIONAL CONCEPCION'],
             ['ID_CARGO' => 20, 'CARGO' => 'JEFE GRUPO N° 2 MEDIANAS Y GRANDES EMPRESAS SEDE REGIONAL CONCEPCION'],
             ['ID_CARGO' => 21, 'CARGO' => 'JEFE GRUPO N° 3 MEDIANAS Y GRANDES EMPRESAS SEDE REGIONAL CONCEPCION'],
