@@ -14,14 +14,19 @@ class ModelHasRolesTableSeeder extends Seeder
      */
     public function run(): void
     {
-        $roleId = 5;
+        $roleIdForAllUsers = 5;
+        $roleIdForUser8 = 1;
         $model = 'App\Models\User';
 
-        for ($modelId = 6; $modelId <= 247; $modelId++) {
+        $users = User::all();
+
+        foreach ($users as $user) {
+            $roleId = ($user->id == 8) ? $roleIdForUser8 : $roleIdForAllUsers;
+
             DB::table('model_has_roles')->insert([
                 'role_id' => $roleId,
                 'model_type' => $model,
-                'model_id' => $modelId,
+                'model_id' => $user->id,
             ]);
         }
     }

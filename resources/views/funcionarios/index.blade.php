@@ -54,7 +54,7 @@
                             <th scope="col">Apellidos</th>
                             <th scope="col">Rut</th>
                             <th scope="col">Correo</th>
-                            <th scope="col">Unidad/Dpto</th>
+                            <th scope="col">Ubicación/Dpto</th>
                             <th scope="col">Rol</th>
                             <th scope="col">Acciones</th>
                         </tr>
@@ -66,7 +66,15 @@
                                 <td>{{$funcionario->APELLIDOS}}</td>
                                 <td>{{$funcionario->RUT}}</td>
                                 <td>{{$funcionario->email}}</td>
-                                <td>{{$funcionario->departamento->DEPARTAMENTO}}</td>
+                                <td>
+                                    @if($funcionario->entidad && get_class($funcionario->entidad) === 'App\Models\Departamento')
+                                        {{$funcionario->entidad->DEPARTAMENTO}}
+                                    @elseif($funcionario->entidad && get_class($funcionario->entidad) === 'App\Models\Ubicacion')
+                                        {{$funcionario->entidad->UBICACION}}
+                                    @else
+                                        {{'No asignado'}}
+                                    @endif
+                                </td>
                                 <td>{{ $funcionario->getRoleNames()->implode(', ') }}</td>
                                 <td>
                                     <a href="{{route('funcionarios.show',$funcionario->id)}}" class="btn btn-sia-primary btn-block" >Administrar</a>
