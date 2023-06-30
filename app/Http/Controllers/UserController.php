@@ -48,6 +48,7 @@ class UserController extends Controller
     public function index()
     {
         $funcionarios = User::all();
+        
         return view('funcionarios.index',compact('funcionarios'));
     }
 
