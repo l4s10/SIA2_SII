@@ -130,6 +130,7 @@
     <script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/es.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> --}}
     {{-- CHART.JS --}}
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     {{-- !!LLAMAMOS A SCRIPT CALENDARIO DE RANGOS --}}
     <script src="{{ asset('js/Reportes/Calendarios/range-calendar.js') }}"></script>
@@ -198,7 +199,7 @@
             }]
         }
         window.myChartData2 = {
-            // Tercer gráfico Total de Fucionarios (Hombres/mujeres)
+            // Tercer gráfico Total de Funcionarios (Hombres/mujeres)
             labels: ['Hombres', 'Mujeres'],
             datasets: [{
                 label: 'Cantidad Total',
@@ -210,7 +211,7 @@
                 barThickness: 50, // Ajusta el valor para cambiar el ancho de la barra
                 borderWidth: 1
             }]
-        }
+        };
 </script>
 
 <script src="{{asset('js/Reportes/Graficos/grafico1-config.js')}}"></script>  
