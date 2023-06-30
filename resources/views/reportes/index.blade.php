@@ -49,13 +49,15 @@
             </div>
         </div>
     </div>
-    <!-- Asignacion de los calendarios. -->
     <br>
     <div class="row">
+        <!-- Base para el primer Grafico -->
         <div class="col-md-6">
             <div class="chart-container">
                 <canvas id="myChart"></canvas>
                 <button id="view-chart" class="btn btn-primary move-right"><i class="fa-solid fa-maximize"></i></button>
+                <button id="print-button" class="btn btn-primary"><i class="fa-solid fa-print"></i></button>
+                <button id="download-png-button" class="btn btn-primary"><i class="fa-solid fa-image"></i></button>
             </div>
         </div>
         <!-- Base para el segundo Grafico -->
@@ -69,6 +71,12 @@
         <div class="col-md-6">
             <div class="chart-container">
                 <canvas id="myChart2"></canvas>
+                
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="chart-container">
+                <canvas id="myChart3"></canvas>
                 
             </div>
         </div>
@@ -89,6 +97,54 @@
         </div>
     </div>
 </div>
+    <!-- Agrega el código de la tabla de contingencia vacía -->
+    <table class="table">
+        <h3>Tabla de datos <h3>
+    <thead>
+        <tr>
+            <th></th>
+            <th>Hombres</th>
+            <th>Mujeres</th>
+            <th>Total</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+        <td>
+            <select>
+                    <option value="Departamento">Departamento</option>
+                    <option value="opcion2">Opción 2</option>
+                    <option value="opcion3">Opción 3</option>
+            </select>
+            </td>
+            <td>ID_SEXO</td>
+            <td>ID_SEXO</td>
+            <td>*Valor Final*</td>
+        </tr>
+        <td>
+            <select>
+                    <option value="opcion1">Opción 1</option>
+                    <option value="opcion2">Opción 2</option>
+                    <option value="opcion3">Opción 3</option>
+            </select>
+            </td>
+            <td>ID_SEXO</td>
+            <td>ID_SEXO</td>
+            <td>*Valor Final*</td>
+        <tr>
+        <td>
+            <select>
+                    <option value="opcion1">Opción 1</option>
+                    <option value="opcion2">Opción 2</option>
+                    <option value="opcion3">Opción 3</option>
+            </select>
+            </td>
+            <td>ID_SEXO</td>
+            <td>ID_SEXO</td>
+            <td>*Valor Final*</td>
+        </tr>
+    </tbody>
+</table>
 
 @endsection
 
@@ -132,6 +188,13 @@
     {{-- CHART.JS --}}
     <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Chart.js Plugin: Chart.js Plugin Annotations -->
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-download"></script>
+    <!-- Chart.js Plugin: Chart.js Plugin HTML Legend -->
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-htmllegend"></script>
+    <!-- Chart.js Plugin: Chart.js Plugin Chart-Title -->
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-chart-title"></script>
     {{-- !!LLAMAMOS A SCRIPT CALENDARIO DE RANGOS --}}
     <script src="{{ asset('js/Reportes/Calendarios/range-calendar.js') }}"></script>
     {{-- !!FUNCION PARA MOSTRAR EN GRANDE --}}
@@ -212,10 +275,41 @@
                 borderWidth: 1
             }]
         };
+        window.myChartData3 = {
+            // Cuarto gráfico estado de solicitud de materiales.
+            // Aqui irian las patentes de los vehiculos.
+            labels: ['X', 'X1', 'X2', 'X3', 'X4', 'X5', 'X6', 'X7', 'X8', 'X9', 'X10', 'X11', 'X12'],
+            datasets: [{
+                label: 'Cantidad de Solicitud',
+                // data: [@foreach($grafico3 as $AUX) {{ round($AUX) }}, @endforeach],
+                backgroundColor: [
+                    'rgb(3, 41, 255)', // Color de fondo único para todas las barras
+                ],
+                barThickness: 50, // Ajusta el valor para cambiar el ancho de la barra
+                borderWidth: 1
+            }]
+        };
 </script>
 
 <script src="{{asset('js/Reportes/Graficos/grafico1-config.js')}}"></script>  
 <script src="{{asset('js/Reportes/Graficos/grafico2-config.js')}}"></script>
 <script src="{{asset('js/Reportes/Graficos/grafico3-config.js')}}"></script>
+<script src="{{asset('js/Reportes/Graficos/grafico4-config.js')}}"></script>
 
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+    const printButton = document.getElementById('print-button');
+    printButton.addEventListener('click', function () {
+    window.print();
+    });
+
+    const downloadPNGButton = document.getElementById('download-png-button');
+    downloadPNGButton.addEventListener('click', function () {
+        const link = document.createElement('a');
+        link.href = myChart.toBase64Image('image/png', { backgroundColor: '#FFFFFF' });
+        link.download = 'Grafico.png';
+        link.click();
+    });
+});
+</script>
 @endsection

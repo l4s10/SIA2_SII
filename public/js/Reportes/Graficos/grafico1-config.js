@@ -100,4 +100,12 @@ document.addEventListener('DOMContentLoaded', (event) => {
                 myChart.update();
             });
     });
+    // Descargar gráfico como PNG Fondo Transparente
+    document.querySelector('#download-png-button').addEventListener('click', function () {
+        const downloadLink = document.createElement('a');
+        downloadLink.href = myChart.toBase64Image('image/png', { backgroundColor: '#FFFFFF' });
+        downloadLink.download = 'Grafico.png';
+        downloadLink.click();
+    });
+
 });
