@@ -59,19 +59,19 @@
             </div>
         </div>
         <!-- Base para el segundo Grafico -->
-        <!-- <div class="col-md-6">
+        <div class="col-md-6">
             <div class="chart-container">
                 <canvas id="myChart1"></canvas>
-                <button id="view-chart" class="btn btn-primary move-right"><i class="fa-solid fa-maximize"></i></button>
+                <button id="view-chart1" class="btn btn-primary move-right"><i class="fa-solid fa-maximize"></i></button>
             </div>
-        </div> -->
+        </div>
         <!-- Base para el Tercer Grafico -->
-        <!-- <div class="col-md-6">
+        <div class="col-md-6">
             <div class="chart-container">
                 <canvas id="myChart2"></canvas>
-                <button id="view-chart" class="btn btn-primary move-right"><i class="fa-solid fa-maximize"></i></button>
+                
             </div>
-        </div> -->
+        </div>
     </div>
     <br>
     <!-- Modal para mostrar el gráfico en grande -->
@@ -134,66 +134,87 @@
     {{-- !!LLAMAMOS A SCRIPT CALENDARIO DE RANGOS --}}
     <script src="{{ asset('js/Reportes/Calendarios/range-calendar.js') }}"></script>
     {{-- !!FUNCION PARA MOSTRAR EN GRANDE --}}
-    <script>
-        $(document).ready(function() {
-            // Manejar el evento de clic en el enlace
-            $('#view-chart').click(function(e) {
-                e.preventDefault();
+<script>
+    function showChart(chartId) {
+        // Obtener la imagen del gráfico
+        var chartImage = $('#' + chartId)[0].toDataURL();
+        // Mostrar el gráfico en un modal
+        var modalContent = '<img src="' + chartImage + '" alt="Gráfico" style="width: 100%;">';
+        $('#chart-modal .modal-body').html(modalContent);
+        $('#chart-modal').modal('show');
+    }
 
-                // Obtener la imagen del gráfico
-                var chartImage = $('#myChart')[0].toDataURL();
-
-                // Mostrar el gráfico en un modal
-                var modalContent = '<img src="' + chartImage + '" alt="Gráfico" style="width: 100%;">';
-                $('#chart-modal .modal-body').html(modalContent);
-                $('#chart-modal').modal('show');
-            });
+    $(document).ready(function() {
+        // Manejar el evento de clic en el enlace del primer gráfico
+        $('#view-chart').click(function(e) {
+            e.preventDefault();
+            showChart('myChart');
         });
-    </script>
+
+        // Manejar el evento de clic en el enlace del segundo gráfico
+        $('#view-chart1').click(function(e) {
+            e.preventDefault();
+            showChart('myChart1');
+        });
+
+        // Manejar el evento de clic en el enlace del tercer gráfico
+        $('#view-chart2').click(function(e) {
+            e.preventDefault();
+            showChart('myChart2');
+        });
+    });
+</script>
 <script>
         window.myChartData = {
-            // Primer gráfico
+            // Primer gráfico Total de solicitudes 1
             labels: ['Solicitud Sala', 'Solicitud Bodegas', 'Reparación de Vehículos', 'Reserva de Vehículos'],
             datasets: [{
                 label: 'Cantidad de Solicitudes',
-                data: [@foreach($Grafico_1 as $AUX) {{ round($AUX) }}, @endforeach],
+                data: [@foreach($grafico1 as $AUX) {{ round($AUX) }}, @endforeach],
                 backgroundColor: [
                     'rgb(250, 215, 160)', // Color de fondo para Salas (piel)
                     'rgb(244, 0, 0)', // Color de fondo para Bodegas (rojo)
                     'rgb(56, 231, 0)', // Color de fondo para Reserva de Vehículos (verde)
-                    'rgb(0, 232, 255)' // Color de fondo para Reparación de Vehículos (celeste)
+                    'rgb(0, 232, 255)', // Color de fondo para Reparación de Vehículos (celeste)
                 ],
                 barThickness: 50, // Ajusta el valor para cambiar el ancho de la barra
                 borderWidth: 1
             }]
-            // Segundo gráfico para ver el tipo de materiales solicitados
-            // labels: ['Aseo, 'Computacion', 'Electrodomesticos'],
-            // datasets: [{
-            //     label: 'Datos 2',
-            //     data: [10, 20, 30],
-            //     backgroundColor: [
-            //         'rgb(0, 50, 255)', // Color de fondo para el segundo gráfico (Azul)
-            //         'rgb(255, 124, 0)', // Color de fondo para el segundo gráfico (Naranjo)
-            //         'rgb(0, 255, 8)', // Color de fondo para el segundo gráfico (Verde)
-            //         'rgb(255, 247, 0)', // Color de fondo para el segundo gráfico (Amarillo)
-            //     ]
-            //     barThickness: 20, // Ajusta el valor para cambiar el ancho de la barra
-            //     borderWidth: 1
-            // }]
-            
-            // Tercer gráfico para ver la cantidad de Hombres y mujeres en la sede de Concepcion.
-            // labels: ['Hombres', 'Mujeres'],
-            // datasets: [{
-            //     label: 'Datos 3',
-            //     data: [10, 20, 30],
-            //     backgroundColor: [
-            //     'rgb(58, 175, 0)', // Color de fondo para Salas (piel)
-            //     'rgb(0, 46, 255)', // Color de fondo para Bodegas (rojo)
-            //     ]
-            //     barThickness: 20, // Ajusta el valor para cambiar el ancho de la barra
-            //     borderWidth: 1
-            // }]
-}
+        }
+        window.myChartData1 = {
+            // Segundo gráfico Total de solicitudes 2
+            labels: ['Solicitud de materiales', 'Solicitud de Reparación para Inmuebles', 'Formularios' ,'Equipos'],
+            datasets: [{
+                label: 'Cantidad de Solicitudes',
+                data: [@foreach($grafico2 as $AUX) {{ round($AUX) }}, @endforeach],
+                backgroundColor: [
+                    'rgb(194, 3, 255)', // Color de fondo para el segundo gráfico (morado)
+                    'rgb(3, 41, 255)', // Color de fondo para el segundo gráfico (Azul)
+                    'rgb(255, 3, 209)', // Color de fondo para el segundo gráfico (Rosa)
+                    'rgb(3, 255, 160 )',// Color de fondo para el segudno grafico (verde claro)
+                ],
+                barThickness: 50, // Ajusta el valor para cambiar el ancho de la barra
+                borderWidth: 1
+            }]
+        }
+        window.myChartData2 = {
+            // Tercer gráfico Total de Fucionarios (Hombres/mujeres)
+            labels: ['Hombres', 'Mujeres'],
+            datasets: [{
+                label: 'Cantidad Total',
+                data: [@foreach($grafico3 as $AUX) {{ round($AUX) }}, @endforeach],
+                backgroundColor: [
+                    'rgb(3, 41, 255)', // Color de fondo para el segundo gráfico (Azul)
+                    'rgb(19, 143, 0)', // Color de fondo para el segundo gráfico (Verde)
+                ],
+                barThickness: 50, // Ajusta el valor para cambiar el ancho de la barra
+                borderWidth: 1
+            }]
+        }
 </script>
-    <script src="{{asset('js/Reportes/Graficos/grafico1-config.js')}}"></script>
+
+<script src="{{asset('js/Reportes/Graficos/grafico1-config.js')}}"></script>  
+<script src="{{asset('js/Reportes/Graficos/grafico2-config.js')}}"></script>
+<script src="{{asset('js/Reportes/Graficos/grafico3-config.js')}}"></script>
+
 @endsection
