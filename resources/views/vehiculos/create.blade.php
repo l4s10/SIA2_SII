@@ -77,17 +77,58 @@
                     <div class="alert alert-danger mt-2">{{ $message }}</div>
                 @enderror
             </div>
+        </div>
+        {{-- !!REGION Y DIRECCION REGIONAL --}}
+        <div class="row">
             <div class="col">
-                <label for="ID_UBICACION" class="form-label">Ubicación</label>
-                <select name="ID_UBICACION" id="ID_UBICACION" class="form-control">
-                    <option value="">-- SELECCIONE UNA UBICACIÓN --</option>
-                    @foreach ($ubicaciones as $ubicacion)
-                        <option value="{{$ubicacion->ID_UBICACION}}">{{$ubicacion->UBICACION}}</option>
-                    @endforeach
+                {{-- Region field --}}
+                <div class="form-group">
+                    <label for="region">Región</label>
+                    <select name="ID_REGION" class="form-control @error('ID_REGION') is-invalid @enderror" required>
+                        <option value="" disabled>Seleccione una región</option>
+                        @foreach ($regiones as $region)
+                            <option value="{{ $region->ID_REGION }}" {{ old('ID_REGION') == $region->ID_REGION ? 'selected' : '' }}>{{ $region->REGION }}</option>
+                        @endforeach
+                    </select>
+
+                    @error('ID_REGION')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                    @enderror
+                </div>
+            </div>
+            <div class="col">
+                {{-- Direccion field --}}
+                <div class="form-group">
+                    <label for="direccion">Jurisdicción</label>
+                    <select name="ID_DIRECCION" class="form-control @error('ID_DIRECCION') is-invalid @enderror" required>
+                        <option value="" disabled>Seleccione una dirección</option>
+                    </select>
+
+                    @error('ID_DIRECCION')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                    @enderror
+                </div>
+            </div>
+        </div>
+        {{-- !!DEPARTAMENTO Y UBICACION --}}
+        <div class="row">
+            <div class="col-md-6">
+                {{-- Departamento --}}
+                <label for="entidad_type">Seleccione relación</label>
+                <select name="entidad_type" id="entidad_type" class="form-control">
+                    <option value="Departamento">Departamento</option>
+                    <option value="Ubicacion">Unidad</option>
                 </select>
-                @error('ID_UBICACION')
-                    <div class="alert alert-danger mt-2">{{ $message }}</div>
-                @enderror
+            </div>
+            <div class="col-md-6">
+                <label for="entidad_id" id="entidad_id_label">Seleccione (depto o unidad)</label>
+                <select name="entidad_id" id="entidad_id" class="form-control">
+                    <option value="">-- Seleccione --</option>
+                </select>
             </div>
         </div>
         <div class="mb-3">
@@ -112,4 +153,82 @@
 @stop
 
 @section('js')
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+{{-- !!SCRIPT DE FILTROS (SE OBTENDRA DIRECCION REGIONAL SEGUN LA REGION SELECCIONADA) --}}
+<script>
+    $(document).ready(function () {
+        // Configuración de Flatpickr para las fechas
+        var flatpickrConfig = {
+            locale: 'es',
+            minDate: "1950-01-01",
+            dateFormat: "Y-m-d",
+            altFormat: "d-m-Y",
+            altInput: true,
+            allowInput: true,
+        };
+
+        // Inicializar Flatpickr en los campos de fecha
+        $('#FECHA_NAC').flatpickr(flatpickrConfig);
+        $('#FECHA_INGRESO').flatpickr(flatpickrConfig);
+
+        var regionSelect = $('select[name="ID_REGION"]');
+        var direccionSelect = $('select[name="ID_DIRECCION"]');
+        var direcciones = @json($direcciones);
+        var entidadTypeSelect = $('select[name="entidad_type"]');
+        var entidadIdSelect = $('select[name="entidad_id"]');
+        var ubicaciones = @json($ubicaciones);
+        var departamentos = @json($departamentos);
+
+        function filtrarDirecciones() {
+            var regionId = regionSelect.val();
+            var direccionesFiltradas = direcciones.filter(function (direccion) {
+                return direccion.ID_REGION == regionId;
+            });
+
+            direccionSelect.empty();
+            direccionesFiltradas.forEach(function (direccion) {
+                direccionSelect.append('<option value="' + direccion.ID_DIRECCION + '">' + direccion.DIRECCION + '</option>');
+            });
+
+            // Actualizar las opciones de entidad_id basado en el tipo de entidad actualmente seleccionado
+            actualizarEntidades();
+        }
+
+        function actualizarEntidades() {
+            entidadIdSelect.empty();
+            entidadIdSelect.append('<option value="">-- Seleccione una opción --</option>');
+
+            var entidadType = entidadTypeSelect.val();
+
+            if (entidadType === 'Departamento') {
+                departamentos.forEach(function (departamento) {
+                    entidadIdSelect.append('<option value="' + departamento.ID_DEPARTAMENTO + '">' + departamento.DEPARTAMENTO + '</option>');
+                });
+            } else if (entidadType === 'Ubicacion') {
+                var direccionId = direccionSelect.val();
+                var ubicacionesFiltradas = ubicaciones.filter(function (ubicacion) {
+                    return ubicacion.ID_DIRECCION == direccionId;
+                });
+
+                ubicacionesFiltradas.forEach(function (ubicacion) {
+                    entidadIdSelect.append('<option value="' + ubicacion.ID_UBICACION + '">' + ubicacion.UBICACION + '</option>');
+                });
+            }
+
+            // Cambiar el texto del label de entidad_id basado en la selección actual de entidad_type
+            if (entidadType === 'Departamento') {
+                $('#entidad_id_label').text('Seleccione Departamento');
+            } else if (entidadType === 'Ubicacion') {
+                $('#entidad_id_label').text('Seleccione Unidad');
+            }
+        }
+
+        regionSelect.on('change', filtrarDirecciones);
+        direccionSelect.on('change', actualizarEntidades);
+        entidadTypeSelect.on('change', actualizarEntidades);
+
+        filtrarDirecciones();
+    });
+</script>
 @stop

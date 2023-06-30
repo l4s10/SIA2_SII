@@ -20,7 +20,9 @@ return new class extends Migration
             $table->string('MARCA', 128)->nullable();
             $table->string('MODELO_VEHICULO')->nullable();
             $table->string('ANO_VEHICULO', 128)->nullable();
-            $table->unsignedBigInteger('ID_UBICACION')->references('ID_UBICACION')->on('ubicacion');
+            // $table->unsignedBigInteger('ID_UBICACION')->references('ID_UBICACION')->on('ubicacion');
+            $table->unsignedInteger('entidad_id')->nullable(); // reemplaza ID_DEPARTAMENTO e ID_UBICACION
+            $table->string('entidad_type')->nullable(); // reemplaza ID_DEPARTAMENTO e ID_UBICACION
             $table->string('ESTADO_VEHICULO', 128)->nullable();
             $table->timestamps();
         });
