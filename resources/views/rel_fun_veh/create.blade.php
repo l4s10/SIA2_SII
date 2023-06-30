@@ -85,13 +85,13 @@
 
 
             {{-- *ASIGNACION DE CONDUCTOR (LIMITAR AL ROL NUEVO "SOLICITANTE")* --}}
-            <div class="mb-3" hidden>
+            <div class="mb-3">
                 <label for="conductor" class="form-label"><i class="fa-solid fa-user"></i> Conductor:</label>
-                <select id="conductor" name="conductor" class="form-control{{ $errors->has('conductor') ? ' is-invalid' : '' }}">
-                    <option value="">Seleccione un conductor</option>
-                    @foreach ($conductores as $conductor)
+                <select id="conductor" name="CONDUCTOR" class="form-control{{ $errors->has('conductor') ? ' is-invalid' : '' }}">
+                    <option value="" selected>Seleccione un conductor</option>
+                    @foreach ($usuarios as $conductor)
                         @if ($conductor->entidad_id === auth()->user()->entidad_id && $conductor->entidad_type === auth()->user()->entidad_type)
-                            <option value="{{ $conductor->id }}" selected>{{ $conductor->NOMBRES }} {{ $conductor->APELLIDOS }}</option>
+                            <option value="{{ $conductor->id }}">{{ $conductor->NOMBRES }} {{ $conductor->APELLIDOS }}</option>
                         @endif
                     @endforeach
                 </select>
@@ -103,155 +103,32 @@
             </div>
 
             {{-- **CAMPO OCUPANTES DEL 1 AL 6 --}}
-            <!-- Selector de Departamentos -->
-            <div class="row">
-                <div class="col-md-4">
-                    <select id="Departamento" class="form-control">
-                        <option value="">Selecciona un Departamento</option>
-                        @foreach($departamentos as $departamento)
-                        <option value="{{ $departamento->ID_DEPARTAMENTO }}">{{ $departamento->DEPARTAMENTO }}</option>
-                        @endforeach
-                    </select>
+            {{-- SELECT DIRECCION REGIONAL relacionado con la tabla region a traves de($direcciones->ID=REGION == $regiones->ID_REGION) lo mismo con la variable $usuarios->ID
+
+                campos de $usuarios (id , ID_REGION,NOMBRES Y APELLIDOS)
+                campos de $direcciones (ID_DIRECCION, DIRECCION y ID_REGION)
+                campos de $regiones (ID_REGION y REGION)
+                --}}
+                <div class="row">
+                    @for ($i = 1; $i <= 6; $i++)
+                        <div class="col-md-6">
+                            <label>Direccion regional:</label>
+                            <select id="region{{ $i }}" name="region[]" class="form-control region">
+                                <option value="">Selecciona una direccion regional</option>
+                                @foreach ($direcciones as $region)
+                                    <option value="{{ $region->ID_REGION }}">{{ $region->DIRECCION }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="col-md-6">
+                            <label>Ocupante {{$i}}: </label>
+                            <select id="ocupante{{ $i }}" name="OCUPANTE_{{ $i }}" class="form-control">
+                                <option value="">Selecciona un ocupante</option>
+                            </select>
+                        </div>
+                    @endfor
                 </div>
 
-                <!-- Selector de Ubicaciones -->
-                <div class="col-md-4">
-                    <select id="Ubicacion" class="form-control">
-                        <option value="">Selecciona una Ubicación</option>
-                        @foreach($ubicaciones as $ubicacion)
-                        <option value="{{ $ubicacion->ID_UBICACION }}">{{ $ubicacion->UBICACION }}</option>
-                        @endforeach
-                    </select>
-                </div>
-
-                <!-- Selector de Usuarios (que se llenará dinámicamente) -->
-                <div class="col-md-4">
-                    <select id="usuarios" class="form-control">
-                        <option value="">Selecciona un Usuario</option>
-                        <!-- Los usuarios se cargarán aquí mediante AJAX -->
-                    </select>
-                </div>
-            </div>
-
-                {{-- !!OCUPANTE 2 --}}
-            <label for="OCUPANTE_2">Ocupante 2:</label>
-            <div class="row">
-                <div class="col-6">
-                    <div class="input-group">
-                        <select name="departamentos" id="departamentos_2" class="form-control">
-                            <option value="">-- Seleccione un departamento --</option>
-                            @foreach ($departamentos as $departamento)
-                                @if ($departamento->ID_DEPARTAMENTO === auth()->user()->getEntidadInfoAttribute())
-                                    <option value="{{ $departamento->ID_DEPARTAMENTO }}" selected>{{ $departamento->DEPARTAMENTO }}</option>
-                                @else
-                                    <option value="{{ $departamento->ID_DEPARTAMENTO }}">{{ $departamento->DEPARTAMENTO }}</option>
-                                @endif
-                            @endforeach
-                        </select>
-                    </div>
-                </div>
-                <div class="col-6">
-                    <select name="OCUPANTE_2" id="OCUPANTE_2" class="form-control">
-                        <option value="">-- Seleccione un compañero --</option>
-                    </select>
-                </div>
-            </div>
-
-            {{-- !!OCUPANTE 3 --}}
-            <label for="OCUPANTE_3">Ocupante 3:</label>
-            <div class="row">
-                <div class="col-6">
-                    <div class="input-group">
-                        <select name="departamentos" id="departamentos_3" class="form-control">
-                            <option value="">-- Seleccione un departamento --</option>
-                            @foreach ($departamentos as $departamento)
-                                @if ($departamento->ID_DEPARTAMENTO === auth()->user()->getEntidadInfoAttribute())
-                                    <option value="{{ $departamento->ID_DEPARTAMENTO }}" selected>{{ $departamento->DEPARTAMENTO }}</option>
-                                @else
-                                    <option value="{{ $departamento->ID_DEPARTAMENTO }}">{{ $departamento->DEPARTAMENTO }}</option>
-                                @endif
-                            @endforeach
-                        </select>
-                    </div>
-                </div>
-                <div class="col-6">
-                    <select name="OCUPANTE_3" id="OCUPANTE_3" class="form-control">
-                        <option value="">-- Seleccione un compañero --</option>
-                    </select>
-                </div>
-            </div>
-
-            {{-- !!OCUPANTE 4 --}}
-            <label for="OCUPANTE_4">Ocupante 4:</label>
-            <div class="row">
-                <div class="col-6">
-                    <div class="input-group">
-                        <select name="departamentos" id="departamentos_4" class="form-control">
-                            <option value="">-- Seleccione un departamento --</option>
-                            @foreach ($departamentos as $departamento)
-                                @if ($departamento->ID_DEPARTAMENTO === auth()->user()->getEntidadInfoAttribute())
-                                    <option value="{{ $departamento->ID_DEPARTAMENTO }}" selected>{{ $departamento->DEPARTAMENTO }}</option>
-                                @else
-                                    <option value="{{ $departamento->ID_DEPARTAMENTO }}">{{ $departamento->DEPARTAMENTO }}</option>
-                                @endif
-                            @endforeach
-                        </select>
-                    </div>
-                </div>
-                <div class="col-6">
-                    <select name="OCUPANTE_4" id="OCUPANTE_4" class="form-control">
-                        <option value="">-- Seleccione un compañero --</option>
-                    </select>
-                </div>
-            </div>
-
-            {{-- !!OCUPANTE 5 --}}
-            <label for="OCUPANTE_5">Ocupante 5:</label>
-            <div class="row">
-                <div class="col-6">
-                    <div class="input-group">
-                        <select name="departamentos" id="departamentos_5" class="form-control">
-                            <option value="">-- Seleccione un departamento --</option>
-                            @foreach ($departamentos as $departamento)
-                                @if ($departamento->ID_DEPARTAMENTO === auth()->user()->getEntidadInfoAttribute())
-                                    <option value="{{ $departamento->ID_DEPARTAMENTO }}" selected>{{ $departamento->DEPARTAMENTO }}</option>
-                                @else
-                                    <option value="{{ $departamento->ID_DEPARTAMENTO }}">{{ $departamento->DEPARTAMENTO }}</option>
-                                @endif
-                            @endforeach
-                        </select>
-                    </div>
-                </div>
-                <div class="col-6">
-                    <select name="OCUPANTE_5" id="OCUPANTE_5" class="form-control">
-                        <option value="">-- Seleccione un compañero --</option>
-                    </select>
-                </div>
-            </div>
-
-            {{-- !!OCUPANTE 6 --}}
-            <label for="OCUPANTE_6">Ocupante 6:</label>
-            <div class="row">
-                <div class="col-6">
-                    <div class="input-group">
-                        <select name="departamentos" id="departamentos_6" class="form-control">
-                            <option value="">-- Seleccione un departamento --</option>
-                            @foreach ($departamentos as $departamento)
-                                @if ($departamento->ID_DEPARTAMENTO === auth()->user()->getEntidadInfoAttribute())
-                                    <option value="{{ $departamento->ID_DEPARTAMENTO }}" selected>{{ $departamento->DEPARTAMENTO }}</option>
-                                @else
-                                    <option value="{{ $departamento->ID_DEPARTAMENTO }}">{{ $departamento->DEPARTAMENTO }}</option>
-                                @endif
-                            @endforeach
-                        </select>
-                    </div>
-                </div>
-                <div class="col-6">
-                    <select name="OCUPANTE_6" id="OCUPANTE_6" class="form-control">
-                        <option value="">-- Seleccione un compañero --</option>
-                    </select>
-                </div>
-            </div>
 
             {{-- *FECHA Y HORA DE SALIDA SOLICITADA* --}}
             <div class="form-group mt-3">
@@ -394,11 +271,6 @@
     </style>
 @stop
 @section('js')
-    {{-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> --}}
-    <!-- Incluir archivos JS flatpicker-->
-    {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
-    <script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/es.js"></script> --}}
     {{-- !!CONFIG FLATPICKR --}}
     <script>
         $(function () {
@@ -444,113 +316,39 @@
             });
         });
     </script>
-    {{-- *FUNCION PARA REFRESCAR DINAMICAMENTE EL FILTRO DE FUNCIONARIOS* --}}
-    {{-- <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            var departamentosSelects = document.querySelectorAll('[id^="departamentos"]');
-            var ocupanteSelects = document.querySelectorAll('[id^="OCUPANTE_"]');
 
-            // Obtener las opciones correspondientes a los departamentos seleccionados al cargar la página
-            var usuarios = @json($conductores);
 
-            // Agregar los eventos de cambio a los select de departamentos y ocupantes
-            departamentosSelects.forEach(function(departamentosSelect, index) {
-                var ocupanteSelect = ocupanteSelects[index];
+<script>
+    $('#conductor').on('change', function() {
+    var conductorId = $(this).val();
+    var conductorNombre = $("#conductor option:selected").text();
+    var $primerOcupante = $('#ocupante1');
 
-                departamentosSelect.addEventListener('change', function() {
-                    var departamentoId = this.value;
-                    var options = ocupanteSelect.options;
+    // Limpia el select del primer ocupante
+    $primerOcupante.empty();
 
-                    // Obtener los valores seleccionados en los otros select de ocupantes
-                    var seleccionados = Array.from(ocupanteSelects).map(function(select) {
-                        return select.value;
-                    });
+    // Añade el conductor como primer ocupante
+    $primerOcupante.append('<option value="' + conductorId + '">' + conductorNombre + '</option>');
+});
 
-                    // Limpiar opciones anteriores
-                    options.length = 0;
-                    options.add(new Option('-- Seleccione un compañero --', ''));
-
-                    // Filtrar usuarios por departamento seleccionado y que no estén seleccionados en otros select
-                    var usuariosFiltrados = usuarios.filter(function(usuario) {
-                        return usuario.ID_UBICACION == departamentoId && !seleccionados.includes(usuario.id.toString());
-                    });
-
-                    // Agregar las opciones de usuarios al select de ocupantes
-                    usuariosFiltrados.forEach(function(usuario) {
-                        options.add(new Option(usuario.NOMBRES + ' ' + usuario.APELLIDOS, usuario.id));
-                    });
-                });
+$('.region').on('change', function() {
+    var regionId = $(this).val();
+    var index = $(this).attr('id').replace('region', '');
+    $.ajax({
+        url: '/funcionarios/region/' + regionId,
+        method: 'get',
+        success: function(data) {
+            var $ocupante = $('#ocupante' + index);
+            $ocupante.empty();
+            $ocupante.append('<option value="">Selecciona un ocupante</option>');
+            $.each(data, function(key, value) {
+                $ocupante.append('<option value="' + value.id + '">' + value.NOMBRES + " " + value.APELLIDOS + '</option>');
             });
+        }
+    });
+});
+</script>
 
-            // Ejecutar el evento de cambio inicialmente para cargar las opciones de ocupantes
-            departamentosSelects.forEach(function(departamentosSelect, index) {
-                departamentosSelect.dispatchEvent(new Event('change'));
-            });
-        });
-    </script> --}}
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-
-    <script>
-        $(document).ready(function(){
-            $('#Departamento').change(function () {
-                var selectedId = $(this).val();
-                var entidad = $(this).attr('id');
-
-                // Deshabilita la ubicación cuando se selecciona un departamento
-                if (selectedId) {
-                    $('#Ubicacion').prop('disabled', true);
-                } else {
-                    $('#Ubicacion').prop('disabled', false);
-                }
-
-                $.ajax({
-                    url: '/usuarios_por_entidad/' + entidad + '/' + selectedId,
-                    type: 'GET',
-                    dataType: 'json',
-                    success: function(data) {
-                        var selectUsuarios = $('#usuarios');
-                        selectUsuarios.empty();
-
-                        $.each(data, function (i, usuario) {
-                            selectUsuarios.append($('<option>', {
-                                value: usuario.id,
-                                text : usuario.NOMBRES + ' ' + usuario.APELLIDOS
-                            }));
-                        });
-                    }
-                });
-            });
-
-            $('#Ubicacion').change(function () {
-                var selectedId = $(this).val();
-                var entidad = $(this).attr('id');
-
-                // Deshabilita el departamento cuando se selecciona una ubicación
-                if (selectedId) {
-                    $('#Departamento').prop('disabled', true);
-                } else {
-                    $('#Departamento').prop('disabled', false);
-                }
-
-                $.ajax({
-                    url: '/usuarios_por_entidad/' + entidad + '/' + selectedId,
-                    type: 'GET',
-                    dataType: 'json',
-                    success: function(data) {
-                        var selectUsuarios = $('#usuarios');
-                        selectUsuarios.empty();
-
-                        $.each(data, function (i, usuario) {
-                            selectUsuarios.append($('<option>', {
-                                value: usuario.id,
-                                text : usuario.NOMBRES + ' ' + usuario.APELLIDOS
-                            }));
-                        });
-                    }
-                });
-            });
-        });
-        </script>
     {{-- !!FUNCION PARA REFRESCAR DINAMICAMENTE LAS COMUNAS A TRAVES DE LAS REGIONES --}}
     <script>
         $(document).ready(function() {

@@ -8,6 +8,8 @@ use Illuminate\Support\Facades\Hash;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Spatie\Permission\Models\Role;
+use Illuminate\Support\Facades\Log;
+
 
 //*Importamos modelos de las tablas normalizadas para enviarlas a las vistas*/
 // use App\Models\Departamento;
@@ -228,13 +230,15 @@ class UserController extends Controller
         }
         return redirect(route('funcionarios.index'));
     }
-    public function getUsuariosPorEntidad($entidad, $id) {
-        $usuarios = User::where('entidad_type', '=', "App\\Models\\".$entidad)
-                        ->where('entidad_id', '=', $id)
-                        ->get();
 
-        return response()->json($usuarios);
+    public function getUsersByRegion($id) {
+        error_log('Region ID: ' . $id); // Esto mostrará el ID de la región en tus logs de Laravel
+        $users = User::where('ID_REGION', $id)->get();
+        return response()->json($users);
     }
+
+
+
 
 }
 

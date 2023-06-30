@@ -11,6 +11,7 @@ use App\Models\Ubicacion;
 use App\Models\Comuna;
 use App\Models\Departamento;
 use App\Models\Region;
+use App\Models\DireccionRegional;
 use Illuminate\Support\Facades\Validator;
 
 class RelFunVehController extends Controller
@@ -33,12 +34,13 @@ class RelFunVehController extends Controller
         //*Crear solicitud
         $vehiculos = Vehiculo::all();
         $tipo_vehiculos = TipoVehiculo::all();
-        $conductores = User::all();
+        $usuarios = User::all();
         $departamentos = Departamento::all();
         $regiones = Region::all();
+        $direcciones = DireccionRegional::all();
         $ubicaciones = Ubicacion::all();
         $comunas = Comuna::all();
-        return view('rel_fun_veh.create', compact('vehiculos','tipo_vehiculos','departamentos','ubicaciones','conductores','comunas','regiones'));
+        return view('rel_fun_veh.create', compact('vehiculos','tipo_vehiculos','usuarios','departamentos','regiones','direcciones','ubicaciones','comunas'));
     }
 
     /**

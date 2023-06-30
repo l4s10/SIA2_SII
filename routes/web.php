@@ -118,8 +118,9 @@ Route::resource('reserva/vehiculo', 'App\Http\Controllers\RelFunVehController')-
     'update' => 'solicitud.vehiculos.update',
     'destroy' => 'solicitud.vehiculos.destroy',
 ]);
-//Rutas para Funcionarios (usuarios)
-Route::get('/usuarios_por_entidad/{entidad}/{id}', [UserController::class, 'getUsuariosPorEntidad']);
+//Endpoint para usuarios
+
+Route::get('funcionarios/region/{id}', 'App\Http\Controllers\UserController@getUsersByRegion')->name('funcionarios.region');
 Route::resource('funcionarios','App\Http\Controllers\UserController');
 
 Route::post('/update-stock', [InventoryController::class, 'updateStock'])->name('update-stock');
