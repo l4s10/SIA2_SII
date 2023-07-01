@@ -71,13 +71,13 @@
         <div class="col-md-6">
             <div class="chart-container">
                 <canvas id="myChart2"></canvas>
-                
+
             </div>
         </div>
         <div class="col-md-6">
             <div class="chart-container">
                 <canvas id="myChart3"></canvas>
-                
+
             </div>
         </div>
     </div>
@@ -111,10 +111,11 @@
     <tbody>
         <tr>
         <td>
-            <select>
-                    <option value="Departamento">Departamento</option>
-                    <option value="opcion2">Opción 2</option>
-                    <option value="opcion3">Opción 3</option>
+            <select name="" id="departamentos" class="form-control">
+                <option value="">--Selecciona un explorador --</option>
+                @foreach ($departamentos as $departamento)
+                    <option value="{{$departamento->ID_DEPARTAMENTO}}">{{$departamento->DEPARTAMENTO}}</option>
+                @endforeach
             </select>
             </td>
             <td>ID_SEXO</td>
@@ -291,7 +292,7 @@
         };
 </script>
 
-<script src="{{asset('js/Reportes/Graficos/grafico1-config.js')}}"></script>  
+<script src="{{asset('js/Reportes/Graficos/grafico1-config.js')}}"></script>
 <script src="{{asset('js/Reportes/Graficos/grafico2-config.js')}}"></script>
 <script src="{{asset('js/Reportes/Graficos/grafico3-config.js')}}"></script>
 <script src="{{asset('js/Reportes/Graficos/grafico4-config.js')}}"></script>
