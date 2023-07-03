@@ -128,6 +128,8 @@ Route::get('/reportes', [ReporteController::class, 'index'])->name('reportes.ind
 // Esta es la ruta POST para recibir las solicitudes AJAX
 Route::post('/reportes/data', [ReporteController::class, 'obtenerDatos'])->name('reportes.data');
 
+// Route::get('/reportes/obtener-datos', [ReporteController::class, 'obtenerDatos'])->name('reportes.obtenerDatos');
+
 Route::middleware(['auth'])->group(function () {
     Route::get('/dashboard', function () {
         return redirect()->route(config('adminlte.dashboard_url'));

@@ -51,7 +51,7 @@
     </div>
     <br>
     <div class="row">
-        <!-- Base para el primer Grafico -->
+        <!-- Base para el primer Grafico solicitudes1 -->
         <div class="col-md-6">
             <div class="chart-container">
                 <canvas id="myChart"></canvas>
@@ -60,14 +60,14 @@
                 <button id="download-png-button" class="btn btn-primary"><i class="fa-solid fa-image"></i></button>
             </div>
         </div>
-        <!-- Base para el segundo Grafico -->
+        <!-- Base para el segundo Grafico solicitudes2 -->
         <div class="col-md-6">
             <div class="chart-container">
                 <canvas id="myChart1"></canvas>
                 <button id="view-chart1" class="btn btn-primary move-right"><i class="fa-solid fa-maximize"></i></button>
             </div>
         </div>
-        <!-- Base para el Tercer Grafico -->
+        <!-- Base para el Tercer Grafico Hombres/Mujeres-->
         <div class="col-md-6">
             <div class="chart-container">
                 <canvas id="myChart2"></canvas>
@@ -77,7 +77,9 @@
         <div class="col-md-6">
             <div class="chart-container">
                 <canvas id="myChart3"></canvas>
-                
+                <button id="view-chart3" class="btn btn-primary move-right"><i class="fa-solid fa-maximize"></i></button>
+                <button id="map-open" class="btn btn-primary move-right" onclick="openMap()"><i class="fa-solid fa-map-location-dot"></i></button>
+                <div id="map" style="display: none"></div>
             </div>
         </div>
     </div>
@@ -97,54 +99,8 @@
         </div>
     </div>
 </div>
-    <!-- Agrega el código de la tabla de contingencia vacía -->
-    <table class="table">
-        <h3>Tabla de datos <h3>
-    <thead>
-        <tr>
-            <th></th>
-            <th>Hombres</th>
-            <th>Mujeres</th>
-            <th>Total</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-        <td>
-            <select>
-                    <option value="Departamento">Departamento</option>
-                    <option value="opcion2">Opción 2</option>
-                    <option value="opcion3">Opción 3</option>
-            </select>
-            </td>
-            <td>ID_SEXO</td>
-            <td>ID_SEXO</td>
-            <td>*Valor Final*</td>
-        </tr>
-        <td>
-            <select>
-                    <option value="opcion1">Opción 1</option>
-                    <option value="opcion2">Opción 2</option>
-                    <option value="opcion3">Opción 3</option>
-            </select>
-            </td>
-            <td>ID_SEXO</td>
-            <td>ID_SEXO</td>
-            <td>*Valor Final*</td>
-        <tr>
-        <td>
-            <select>
-                    <option value="opcion1">Opción 1</option>
-                    <option value="opcion2">Opción 2</option>
-                    <option value="opcion3">Opción 3</option>
-            </select>
-            </td>
-            <td>ID_SEXO</td>
-            <td>ID_SEXO</td>
-            <td>*Valor Final*</td>
-        </tr>
-    </tbody>
-</table>
+
+<!-- Agrega el código de la tabla de contingencia vacía -->
 
 @endsection
 
@@ -176,6 +132,8 @@
         }
 </style>
 {{-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css"> --}}
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="crossorigin=""/>
+
 @stop
 
 @section('js')
@@ -198,6 +156,7 @@
     {{-- !!LLAMAMOS A SCRIPT CALENDARIO DE RANGOS --}}
     <script src="{{ asset('js/Reportes/Calendarios/range-calendar.js') }}"></script>
     {{-- !!FUNCION PARA MOSTRAR EN GRANDE --}}
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="crossorigin=""></script>
 <script>
     function showChart(chartId) {
         // Obtener la imagen del gráfico
@@ -312,4 +271,43 @@
     });
 });
 </script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    var mapDiv = document.getElementById('map');
+    var mapOpenButton = document.getElementById('map-open');
+    var mapThumbnail = document.getElementById('map-thumbnail');
+
+    mapOpenButton.addEventListener('click', function() {
+        if (mapDiv.style.display === 'none') {
+            mapDiv.style.display = 'block';
+            mapDiv.requestFullscreen(); // Solicita el modo de pantalla completa para el elemento del mapa
+            initializeMap();
+            mapThumbnail.style.display = 'none'; // Oculta el mapa en miniatura
+        } else {
+            mapDiv.style.display = 'none';
+            document.exitFullscreen(); // Sale del modo de pantalla completa si el mapa ya no está visible
+            mapThumbnail.style.display = 'block'; // Muestra el mapa en miniatura
+            mapOpenButton.disabled = false; // Restablece el botón a su estado original
+        }
+    });
+});
+
+function initializeMap() {
+    var map = L.map('map').setView([-35.6751, -71.5430], 5); // Coordenadas aproximadas del centro de Chile y nivel de zoom 5
+
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 19,
+        attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors'
+    }).addTo(map);
+
+    // Añade marcadores, polígonos, etc. según tus necesidades
+}
+
+// Llama a la función initializeMap() para mostrar el mapa al cargar la página
+initializeMap();
+
+</script>
+
+
 @endsection
