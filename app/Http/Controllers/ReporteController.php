@@ -8,7 +8,7 @@ use App\Models\SolicitudSala;
 use App\Models\SolicitudBodegas;
 use App\Models\SolicitudReparacionVehiculo;
 use App\Models\RelFunVeh;
-// Segundo Grafico. 
+// Segundo Grafico.
 use App\Models\RelFunRepGeneral;
 use App\Models\SolicitudEquipos;
 use App\Models\SolicitudFormulario;
@@ -19,8 +19,6 @@ use App\Models\Sexo;
 use Carbon\Carbon;
 // Cuarto Grafico.
 use App\Models\Vehiculo;
-// Implementacion de Tabla de contingencia.
-use App\Models\Departamento;
 
 class ReporteController extends Controller
 {
@@ -67,30 +65,9 @@ class ReporteController extends Controller
             'totalHombres' => $totalHombres,
             'totalMujeres' => $totalMujeres,
         ];
-
-        // Obtener todos los departamentos
-        $departamentos = Departamento::all();
         
-            // Calcular el recuento de hombres y mujeres por departamento
-//         $datosDepartamentos = [];
-//         foreach ($departamentos as $departamento) {
-//         $hombres = User::where('entidad_type', 'App\Models\Departamento')
-//                 ->where('entidad_id', $departamento->id)
-//                 ->where('ID_SEXO', 1)
-//                 ->count();
-//         $mujeres = User::where('entidad_type', 'App\Models\Departamento')
-//                 ->where('entidad_id', $departamento->id)
-//                 ->where('ID_SEXO', 2)
-//                 ->count();
-//         $datosDepartamentos[] = [
-//             'departamento' => $departamento->nombre,
-//             'hombres' => $hombres,
-//             'mujeres' => $mujeres,
-//             'total' => $hombres + $mujeres,
-//     ];
-// }
         // Devolver la vista con los datos
-        return view('reportes.index', compact('grafico1', 'grafico2', 'grafico3', 'departamentos'));
+        return view('reportes.index', compact('grafico1', 'grafico2' , 'grafico3'));
     }
 
     public function obtenerDatos(Request $request)
