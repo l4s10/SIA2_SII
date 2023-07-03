@@ -19,6 +19,8 @@ use App\Models\Sexo;
 use Carbon\Carbon;
 // Cuarto Grafico.
 use App\Models\Vehiculo;
+//Exploradores
+use App\Models\Departamento;
 
 class ReporteController extends Controller
 {
@@ -65,9 +67,11 @@ class ReporteController extends Controller
             'totalHombres' => $totalHombres,
             'totalMujeres' => $totalMujeres,
         ];
-        
+
+        //Departamentos
+        $departamentos = Departamento::all();
         // Devolver la vista con los datos
-        return view('reportes.index', compact('grafico1', 'grafico2' , 'grafico3'));
+        return view('reportes.index', compact('grafico1', 'grafico2' , 'grafico3','departamentos'));
     }
 
     public function obtenerDatos(Request $request)
@@ -141,3 +145,4 @@ class ReporteController extends Controller
         return response()->json($data);
     }
 }
+
