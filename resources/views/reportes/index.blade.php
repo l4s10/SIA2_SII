@@ -77,7 +77,9 @@
         <div class="col-md-6">
             <div class="chart-container">
                 <canvas id="myChart3"></canvas>
-
+                <button id="view-chart3" class="btn btn-primary move-right"><i class="fa-solid fa-maximize"></i></button>
+                <button id="map-open" class="btn btn-primary move-right" onclick="openMap()"><i class="fa-solid fa-map-location-dot"></i></button>
+                <div id="map" style="display: none"></div>
             </div>
         </div>
     </div>
@@ -97,55 +99,8 @@
         </div>
     </div>
 </div>
-    <!-- Agrega el código de la tabla de contingencia vacía -->
-    <table class="table">
-        <h3>Tabla de datos <h3>
-    <thead>
-        <tr>
-            <th></th>
-            <th>Hombres</th>
-            <th>Mujeres</th>
-            <th>Total</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-        <td>
-            <select name="" id="departamentos" class="form-control">
-                <option value="">--Selecciona un explorador --</option>
-                @foreach ($departamentos as $departamento)
-                    <option value="{{$departamento->ID_DEPARTAMENTO}}">{{$departamento->DEPARTAMENTO}}</option>
-                @endforeach
-            </select>
-            </td>
-            <td>ID_SEXO</td>
-            <td>ID_SEXO</td>
-            <td>*Valor Final*</td>
-        </tr>
-        <td>
-            <select>
-                    <option value="opcion1">Opción 1</option>
-                    <option value="opcion2">Opción 2</option>
-                    <option value="opcion3">Opción 3</option>
-            </select>
-            </td>
-            <td>ID_SEXO</td>
-            <td>ID_SEXO</td>
-            <td>*Valor Final*</td>
-        <tr>
-        <td>
-            <select>
-                    <option value="opcion1">Opción 1</option>
-                    <option value="opcion2">Opción 2</option>
-                    <option value="opcion3">Opción 3</option>
-            </select>
-            </td>
-            <td>ID_SEXO</td>
-            <td>ID_SEXO</td>
-            <td>*Valor Final*</td>
-        </tr>
-    </tbody>
-</table>
+
+<!-- Agrega el código de la tabla de contingencia vacía -->
 
 @endsection
 
