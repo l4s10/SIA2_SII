@@ -1,3 +1,21 @@
+    // Calcular el porcentaje para cada dato del gráfico
+    const total = window.myChartData2.datasets[0].data.reduce((accumulator, currentValue) => accumulator + currentValue, 0);
+    window.myChartData2.datasets[0].data = window.myChartData2.datasets[0].data.map(value => ((value / total) * 100).toFixed(2));
+
+    // Agregar el signo de porcentaje al formatear los valores
+    const valueFormatter = value => value + '%';
+    window.myChartData2.options = {
+        plugins: {
+            datalabels: {
+                formatter: valueFormatter,
+                color: 'black',
+                font: {
+                    weight: 'bold'
+                }
+            }
+        }
+    };
+    
 document.addEventListener('DOMContentLoaded', (event) => {
     const ctx2 = document.getElementById('myChart2').getContext('2d');
     const myChart2 = new Chart(ctx2, {
@@ -17,22 +35,29 @@ document.addEventListener('DOMContentLoaded', (event) => {
                         bottom: 30
                     }
                 },
-                // tooltips: {
-                //     callbacks: {
-                //         label: function (tooltipItem, data) {
-                //             const dataset = data.datasets[tooltipItem.datasetIndex];
-                //             const total = dataset.data.reduce((accumulator, currentValue) => accumulator + currentValue, 0);
-                //             const currentValue = dataset.data[tooltipItem.index];
-                //             const percentage = ((currentValue / total) * 100).toFixed(2) + '%';
-                //             return `${currentValue} (${percentage})`;
-                //         }
-                //     }
-                // },
-                labels: {
-                    render: 'label',
-                    precision: 0,
-                    fontColor: 'black',
-                    fontStyle: 'bold'
+                tooltips: {
+                    callbacks: {
+                        label: function (tooltipItem, data) {
+                            const dataset = data.datasets[tooltipItem.datasetIndex];
+                            const total = dataset.data.reduce((accumulator, currentValue) => accumulator + currentValue, 0);
+                            const currentValue = dataset.data[tooltipItem.index];
+                            const percentage = ((currentValue / total) * 100).toFixed(2) + '%';
+                            return `${currentValue} (${percentage})`;
+                        }
+                    }
+                },
+                datalabels: {
+                    formatter: (value, ctx) => {
+                        const dataset = ctx.chart.data.datasets[ctx.datasetIndex];
+                        const total = dataset.data.reduce((accumulator, currentValue) => accumulator + currentValue, 0);
+                        const currentValue = dataset.data[ctx.dataIndex];
+                        const percentage = ((currentValue / total) * 100).toFixed(2) + '%';
+                        return `${percentage}`;
+                    },
+                    color: 'black',
+                    font: {
+                        weight: 'bold'
+                    }
                 }
             }
         }

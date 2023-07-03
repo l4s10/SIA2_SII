@@ -3,20 +3,24 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-//Primer Grafico
+//Primer Grafico.
 use App\Models\SolicitudSala;
 use App\Models\SolicitudBodegas;
 use App\Models\SolicitudReparacionVehiculo;
 use App\Models\RelFunVeh;
-// Segundo Grafico 
+// Segundo Grafico.
 use App\Models\RelFunRepGeneral;
 use App\Models\SolicitudEquipos;
 use App\Models\SolicitudFormulario;
 use App\Models\SolicitudMateriales;
-// Tercer Grafico
+// Tercer Grafico.
 use App\Models\User;
 use App\Models\Sexo;
 use Carbon\Carbon;
+// Cuarto Grafico.
+use App\Models\Vehiculo;
+//Exploradores
+use App\Models\Departamento;
 
 class ReporteController extends Controller
 {
@@ -40,6 +44,11 @@ class ReporteController extends Controller
         //aqui iria el apartado de sexo para leer el total de hombres y mujeres
         'sexo' => Sexo::class,
     ];
+
+    // private $models4 = [
+    //     //Definicion del modelo para mostrar los estados de la solicitud
+    //     'solicitudMateriales' =>EstadoSol::class,
+    // ];
 
     public function index()
     {
@@ -68,8 +77,11 @@ class ReporteController extends Controller
             'totalHombres' => $totalHombres,
             'totalMujeres' => $totalMujeres,
         ];
+
+        //Departamentos
+        $departamentos = Departamento::all();
         // Devolver la vista con los datos
-        return view('reportes.index', compact('grafico1', 'grafico2' , 'grafico3'));
+        return view('reportes.index', compact('grafico1', 'grafico2' , 'grafico3','departamentos'));
     }
 
     public function obtenerDatos(Request $request)
@@ -102,4 +114,5 @@ class ReporteController extends Controller
         // Obtener el recuento de registros para cada modelo y devolver en JSON
         return response()->json($data);
     }
+
 }
