@@ -40,16 +40,6 @@ class ReporteController extends Controller
         'solicitudEquipos' => SolicitudEquipos::class,
     ];
 
-    private $models3 = [
-        //aqui iria el apartado de sexo para leer el total de hombres y mujeres
-        'sexo' => Sexo::class,
-    ];
-
-    // private $models4 = [
-    //     //Definicion del modelo para mostrar los estados de la solicitud
-    //     'solicitudMateriales' =>EstadoSol::class,
-    // ];
-
     public function index()
     {
         $grafico1 = [];
@@ -110,9 +100,49 @@ class ReporteController extends Controller
             $model = new $modelClass;
             $data['grafico2'][$key] = $model->whereBetween('created_at', [$fechaInicio, $fechaFin])->count();
         }
+        
+        // Obtener el total de hombres y mujeres entre las fechas seleccionadas
+        // $totalHombres = User::where('ID_SEXO', 1)
+        //     ->whereBetween('created_at', [$fechaInicio, $fechaFin])
+        //     ->count();
+        // $totalMujeres = User::where('ID_SEXO', 2)
+        //     ->whereBetween('created_at', [$fechaInicio, $fechaFin])
+        //     ->count();
+
+        // Asignar los valores para el Gráfico 3
+        $data['grafico3'] = [
+            'totalHombres' => $totalHombres,
+            'totalMujeres' => $totalMujeres,
+        ];
+
+        // Obtener el recuento de hombres y mujeres por departamento entre las fechas seleccionadas
+        // $departamentos = Departamento::all();
+
+        // $datosDepartamentos = [];
+        // foreach ($departamentos as $departamento) {
+        //     $hombres = User::where('entidad_type', 'App\Models\Departamento')
+        //         ->where('entidad_id', $departamento->id)
+        //         ->where('ID_SEXO', 1)
+        //         ->whereBetween('created_at', [$fechaInicio, $fechaFin])
+        //         ->count();
+        //     $mujeres = User::where('entidad_type', 'App\Models\Departamento')
+        //         ->where('entidad_id', $departamento->id)
+        //         ->where('ID_SEXO', 2)
+        //         ->whereBetween('created_at', [$fechaInicio, $fechaFin])
+        //         ->count();
+        //     $datosDepartamentos[] = [
+        //         'departamento' => $departamento->nombre,
+        //         'hombres' => $hombres,
+        //         'mujeres' => $mujeres,
+        //         'total' => $hombres + $mujeres,
+        //     ];
+        // }
+
+        // Agregar los datos de los departamentos al arreglo de respuesta
+        // $data['datosDepartamentos'] = $datosDepartamentos;
 
         // Obtener el recuento de registros para cada modelo y devolver en JSON
         return response()->json($data);
     }
-
 }
+
