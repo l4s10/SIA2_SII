@@ -20,6 +20,7 @@ class RolesAndPermissionsSeeder extends Seeder
         $INFORMATICA = Role::create(['name' => 'INFORMATICA']);
         $JURIDICO = Role::create(['name' => 'JURIDICO']);
         $FUNCIONARIO = Role::create(['name' => 'FUNCIONARIO']);
+        $CONDUCTOR = Role::create(['name' => 'CONDUCTOR']);
 
         //*Permisos*/
         $Nivel_1 = Permission::create(['name' => 'Nivel 1']);
@@ -31,6 +32,7 @@ class RolesAndPermissionsSeeder extends Seeder
         $SERVICIOS->syncPermissions([$Nivel_1, $Nivel_2]);
         $INFORMATICA->syncPermissions([$Nivel_1, $Nivel_2]);
         $JURIDICO->syncPermissions([$Nivel_1]);
+        $CONDUCTOR->syncPermissions([$Nivel_1]);
         $FUNCIONARIO->syncPermissions([$Nivel_1]);
     }
 }

@@ -22,7 +22,7 @@ class FuncionariosSeeder extends Seeder
             'NOMBRES' => 'CRISTIAN ALBERTO',
             'APELLIDOS' => 'GOMEZ CASTILLO',
             'ID_REGION' => 8,
-            //'ID_UBICACION' => 1,
+            'ID_UBICACION' => 1,
             'ID_ESCALAFON' => 5,
             'ID_GRADO' => 4,
             'FECHA_NAC' => '1971-05-24',
@@ -228,29 +228,6 @@ class FuncionariosSeeder extends Seeder
             //'ID_DEPART' => 2
         ]);*/
 
-        //*CUENTA USUARIO MAESTRO
-        $user_admin = User::create([
-            'NOMBRES' => 'USUARIO DEMO',
-            'APELLIDOS' => 'SIA',
-            'email' => 'admin@demo.com',
-            'password' => Hash::make('12345678'),
-            'RUT' => '11.111.111-3',
-            'ID_DEPARTAMENTO' => 2,
-            'ID_REGION' => 1,
-            //'ID_UBICACION' => 1,
-            'ID_GRUPO' => 1,
-            'ID_ESCALAFON' => 5,
-            'ID_GRADO' => 1,
-            'ID_CARGO' => 2,
-            'FECHA_NAC' => '1970-02-10',
-            'FECHA_INGRESO' => '2001-02-22',
-            //'FECHA_ASIM_O_1' => '1999-02-01',
-            'ID_CALIDAD_JURIDICA' => 1,
-            'FONO' => '+56 9 1234 5678',
-            'ANEXO' => 'TEST',
-            'ID_SEXO' => 1
-        ]);
-
         //*CUENTA USUARIO SERVICIOS
         $user_servicios = User::create([
             'NOMBRES' => 'USUARIO DEMO',
@@ -258,9 +235,9 @@ class FuncionariosSeeder extends Seeder
             'email' => 'servicios@demo.com',
             'password' => Hash::make('12345678'),
             'RUT' => '11.111.111-2',
-            'ID_DEPARTAMENTO' => 2,
+            //'ID_DEPARTAMENTO' => 2,
             'ID_REGION' => 1,
-            //'ID_UBICACION' => 1,
+            'ID_UBICACION' => 2,
             'ID_GRUPO' => 1,
             'ID_CARGO' => 2,
             'ID_ESCALAFON' => 1,
@@ -280,9 +257,9 @@ class FuncionariosSeeder extends Seeder
             'email' => 'informatica@demo.com',
             'password' => Hash::make('12345678'),
             'RUT' => '11.111.111-5',
-            'ID_DEPARTAMENTO' => 2,
+            //'ID_DEPARTAMENTO' => 2,
             'ID_REGION' => 1,
-            //'ID_UBICACION' => 1,
+            'ID_UBICACION' => 2,
             'ID_GRUPO' => 1,
             'ID_ESCALAFON' => 1,
             'ID_GRADO' => 1,
@@ -302,9 +279,9 @@ class FuncionariosSeeder extends Seeder
             'email' => 'juridico@demo.com',
             'password' => Hash::make('12345678'),
             'RUT' => '11.111.111-4',
-            'ID_DEPARTAMENTO' => 2,
+            //'ID_DEPARTAMENTO' => 2,
             'ID_REGION' => 1,
-            //'ID_UBICACION' => 1,
+            'ID_UBICACION' => 2,
             'ID_GRUPO' => 1,
             'ID_ESCALAFON' => 1,
             'ID_GRADO' => 1,
@@ -324,9 +301,9 @@ class FuncionariosSeeder extends Seeder
             'email' => 'funcionario@demo.com',
             'password' => Hash::make('12345678'),
             'RUT' => '11.111.111-1',
-            'ID_DEPARTAMENTO' => 2,
+            //'ID_DEPARTAMENTO' => 2,
             'ID_REGION' => 1,
-            //'ID_UBICACION' => 1,
+            'ID_UBICACION' => 2,
             'ID_GRUPO' => 1,
             'ID_ESCALAFON' => 5,
             'ID_GRADO' => 1,
@@ -340,15 +317,16 @@ class FuncionariosSeeder extends Seeder
             'ID_SEXO' => 1
         ]);
 
+        //*CUENTA USUARIO MAESTRO
         $user_maestro = User::create([
             'NOMBRES' => 'USUARIO ADMIN',
             'APELLIDOS' => 'SIA',
             'email' => 'administrador@demo.com',
             'password' => Hash::make('12345678'),
             'RUT' => '11.111.111-9',
-            'ID_DEPARTAMENTO' => 2,
+            //'ID_DEPARTAMENTO' => 2,
             'ID_REGION' => 1,
-            //'ID_UBICACION' => 1,
+            'ID_UBICACION' => 2,
             'ID_GRUPO' => 1,
             'ID_ESCALAFON' => 5,
             'ID_GRADO' => 1,
@@ -381,8 +359,8 @@ class FuncionariosSeeder extends Seeder
         $user_administrador7->assignRole($adminMaestro);
         $user_administrador8->assignRole($adminMaestro);
         $user_administrador9->assignRole($adminMaestro);*/
-        
-        $user_admin->assignRole($adminMaestro);
+
+        $user_maestro->assignRole($adminMaestro);
         $user_servicios->assignRole($rolServicios);
         $user_informatica->assignRole($rolInformatica);
         $user_juridico->assignRole($rolJuridico);

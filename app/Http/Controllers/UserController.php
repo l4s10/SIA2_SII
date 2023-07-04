@@ -93,8 +93,9 @@ class UserController extends Controller
                 'password' => Hash::make($request->password),
                 'RUT' => RutUtils::formatRut($request->RUT),
                 'ID_REGION' => $request->ID_REGION,
-                'entidad_id' => $request->entidad_id, // Reemplaza a ID_UBICACION y ID_DEPARTAMENTO
-                'entidad_type' => $entidad_type, // Reemplaza a ID_UBICACION y ID_DEPARTAMENTO
+                // 'entidad_id' => $request->entidad_id, // Reemplaza a ID_UBICACION y ID_DEPARTAMENTO
+                // 'entidad_type' => $entidad_type, // Reemplaza a ID_UBICACION y ID_DEPARTAMENTO
+                'ID_UBICACION' => $request->ID_UBICACION,
                 'ID_GRUPO' => $request->ID_GRUPO,
                 'ID_ESCALAFON' => $request->ID_ESCALAFON,
                 'ID_GRADO' => $request->ID_GRADO,
@@ -237,7 +238,12 @@ class UserController extends Controller
         return response()->json($users);
     }
 
+    public function getUsuarios($id)
+    {
+        $usuarios = User::where("ID_UBICACION", $id)->pluck("NOMBRES","ID");
 
+        return json_encode($usuarios);
+    }
 
 
 }

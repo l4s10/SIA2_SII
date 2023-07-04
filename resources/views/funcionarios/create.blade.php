@@ -214,15 +214,14 @@
             </div>
             {{-- !!DEPARTAMENTO Y UBICACION --}}
             <div class="row">
-                <div class="col-md-6">
-                    {{-- Departamento --}}
+                <div class="col-md-6" hidden>
                     <label for="entidad_type">Seleccione relación</label>
                     <select name="entidad_type" id="entidad_type" class="form-control">
                         <option value="Departamento">Departamento</option>
-                        <option value="Ubicacion">Unidad</option>
+                        <option value="Ubicacion" selected>Unidad</option>
                     </select>
                 </div>
-                <div class="col-md-6">
+                <div class="col">
                     <label for="entidad_id" id="entidad_id_label">Seleccione (depto o unidad)</label>
                     <select name="entidad_id" id="entidad_id" class="form-control">
                         <option value="">-- Seleccione --</option>

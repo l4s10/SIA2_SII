@@ -111,22 +111,26 @@
                 --}}
                 <div class="row">
                     @for ($i = 1; $i <= 6; $i++)
-                        <div class="col-md-6">
-                            <label>Direccion regional:</label>
-                            <select id="region{{ $i }}" name="region[]" class="form-control region">
-                                <option value="">Selecciona una direccion regional</option>
-                                @foreach ($direcciones as $region)
-                                    <option value="{{ $region->ID_REGION }}">{{ $region->DIRECCION }}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                        <div class="col-md-6">
-                            <label>Ocupante {{$i}}: </label>
-                            <select id="ocupante{{ $i }}" name="OCUPANTE_{{ $i }}" class="form-control">
-                                <option value="">Selecciona un ocupante</option>
-                            </select>
-                        </div>
-                    @endfor
+                    <div class="col-md-4">
+                        <select class="direcciones{{$i}} form-control">
+                            @foreach ($direcciones as $direccion)
+                                <option value="{{$direccion->ID_DIRECCION}}">{{$direccion->DIRECCION}}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="col-md-4">
+                        <select class="ubicaciones{{$i}} form-control">
+                            <option value="">--Seleccione una ubicacion/depto/oficina --</option>
+                        </select>
+                    </div>
+                    <div class="col-md-4">
+                        <select class="usuarios{{$i}} form-control">
+                            <option value="">--Seleccione al ocupante n°{{$i}} --</option>
+                        </select>
+                    </div>
+
+                @endfor
+
                 </div>
 
 
@@ -331,21 +335,77 @@
     $primerOcupante.append('<option value="' + conductorId + '">' + conductorNombre + '</option>');
 });
 
-$('.region').on('change', function() {
-    var regionId = $(this).val();
-    var index = $(this).attr('id').replace('region', '');
-    $.ajax({
-        url: '/funcionarios/region/' + regionId,
-        method: 'get',
-        success: function(data) {
-            var $ocupante = $('#ocupante' + index);
-            $ocupante.empty();
-            $ocupante.append('<option value="">Selecciona un ocupante</option>');
-            $.each(data, function(key, value) {
-                $ocupante.append('<option value="' + value.id + '">' + value.NOMBRES + " " + value.APELLIDOS + '</option>');
+</script>
+
+<script>
+    $(document).ready(function() {
+
+for(let i = 1; i <= 6; i++) {
+
+    $('.direcciones' + i).change(function() {
+        var direccionID = $(this).val();
+
+        if(direccionID) {
+            $.ajax({
+                url: '/ubicaciones/'+direccionID,
+                type: 'GET',
+                dataType: 'json',
+                success: function(data) {
+                    $('.ubicaciones' + i).empty();
+                    $('.ubicaciones' + i).append('<option value="">--Seleccione una ubicacion/depto/oficina --</option>');
+                    $.each(data, function(key, value) {
+                        $('.ubicaciones' + i).append('<option value="'+ key +'">'+ value +'</option>');
+                    });
+                    $('.ubicaciones' + i).change();
+                }
             });
+        } else {
+            $('.ubicaciones' + i).empty();
         }
     });
+
+    $('.ubicaciones' + i).change(function() {
+        var ubicacionID = $(this).val();
+
+        if(ubicacionID) {
+            $.ajax({
+                url: '/usuarios/'+ubicacionID,
+                type: 'GET',
+                dataType: 'json',
+                success: function(data) {
+                    $('.usuarios' + i).empty();
+                    $('.usuarios' + i).append('<option value="">--Seleccione al ocupante n°' + i + ' --</option>');
+                    $.each(data, function(key, value) {
+                        $('.usuarios' + i).append('<option value="'+ key +'">'+ value +'</option>');
+                    });
+                }
+            });
+        } else {
+            $('.usuarios' + i).empty();
+        }
+    });
+
+    $('.usuarios' + i).change(function() {
+        var usuarioID = $(this).val();
+
+        for(let j = 1; j <= 6; j++) {
+            if(i != j && usuarioID == $('.usuarios' + j).val()) {
+                Swal.fire({
+                    title: 'Error!',
+                    text: 'Este usuario ya ha sido seleccionado.',
+                    icon: 'error',
+                    confirmButtonText: 'OK'
+                });
+
+                $(this).val("");
+                break;
+            }
+        }
+    });
+
+}
+
+$('.direcciones1').change();  // Activar el cambio inicial para cargar las ubicaciones y usuarios por defecto
 });
 </script>
 

@@ -7,7 +7,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ReporteController;
 use App\Http\Controllers\SolicitudSalaController;
 use App\Http\Controllers\UserController;
-
+use App\Http\Controllers\UbicacionesController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -119,8 +119,10 @@ Route::resource('reserva/vehiculo', 'App\Http\Controllers\RelFunVehController')-
     'destroy' => 'solicitud.vehiculos.destroy',
 ]);
 //Endpoint para usuarios
+Route::get('/ubicaciones/{id}', [UbicacionesController::class, 'getUbicaciones']);
+Route::get('/usuarios/{id}', [UserController::class, 'getUsuarios']);
 
-Route::get('funcionarios/region/{id}', 'App\Http\Controllers\UserController@getUsersByRegion')->name('funcionarios.region');
+// Route::get('funcionarios/region/{id}', 'App\Http\Controllers\UserController@getUsersByRegion')->name('funcionarios.region');
 Route::resource('funcionarios','App\Http\Controllers\UserController');
 
 Route::post('/update-stock', [InventoryController::class, 'updateStock'])->name('update-stock');
