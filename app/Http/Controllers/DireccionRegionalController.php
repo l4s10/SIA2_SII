@@ -5,6 +5,7 @@ use Illuminate\Http\Request;
 //use Illuminate\Validation\Rule;
 use App\Models\DireccionRegional;
 use App\Models\Region;
+use App\Models\Ubicacion;
 
 
 
@@ -23,7 +24,7 @@ class DireccionRegionalController extends Controller
      * Show the form for creating a new resource.
      *///Carga formulario de creacion
     public function create()
-    {   
+    {
         $regiones = Region::all();
         return view('direccionregional.create',compact('regiones'));
     }
@@ -33,12 +34,12 @@ class DireccionRegionalController extends Controller
      *///Guarda los datos del formulario
     public function store(Request $request)
     {
-        try{   
-            
+        try{
+
             $request->validate(DireccionRegional::$rules, DireccionRegional::$messages);
             $data = $request->except('_token');
             DireccionRegional::create($data);
-            
+
 
             session()->flash('success','La dirección regional fue agregada exitosamente.');
         }catch(\Exception $e){
@@ -110,6 +111,11 @@ class DireccionRegionalController extends Controller
             session()->flash('error','Error al eliminar la dirección regional seleccionada, vuelva a intentarlo nuevamente.');
         }
         return redirect(route('direccionregional.index'));
+    }
+    public function getDireccion($ubicacionId)
+    {
+        $direccion = DireccionRegional::where('ID_DIRECCION', '=', Ubicacion::find($ubicacionId)->ID_DIRECCION)->first();
+        return response()->json($direccion);
     }
 }
 

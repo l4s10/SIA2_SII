@@ -48,7 +48,7 @@ class UserController extends Controller
     public function index()
     {
         $funcionarios = User::all();
-        
+
         return view('funcionarios.index',compact('funcionarios'));
     }
 
@@ -231,11 +231,12 @@ class UserController extends Controller
         return response()->json($users);
     }
 
-    public function getUsuarios($id)
+    public function getUsuarios($ubicacionId)
     {
-        $usuarios = User::where("ID_UBICACION", $id)->pluck("NOMBRES","ID");
+        // Asume que tienes un modelo User que tiene una relación con Ubicaciones
+        $usuarios = User::where('ID_UBICACION', $ubicacionId)->get();
 
-        return json_encode($usuarios);
+        return response()->json($usuarios);
     }
 
 

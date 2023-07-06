@@ -91,7 +91,7 @@
                     <option value="" selected>Seleccione un conductor</option>
                     @foreach ($usuarios as $conductor)
                         @if ($conductor->ID_UBICACION === auth()->user()->ID_UBICACION)
-                            <option value="{{ $conductor->id }}">{{ $conductor->NOMBRES }} {{ $conductor->APELLIDOS }}</option>
+                            <option value="{{ $conductor->id }}" data-nombres="{{ $conductor->NOMBRES }}" data-apellidos="{{ $conductor->APELLIDOS }}">{{ $conductor->NOMBRES }} {{ $conductor->APELLIDOS }}</option>
                         @endif
                     @endforeach
                 </select>
@@ -102,30 +102,40 @@
                 @endif
             </div>
 
-            {{-- **CAMPO OCUPANTES DEL 1 AL 6 --}}
-                <div class="row">
-                    @for ($i = 1; $i <= 6; $i++)
-                    <div class="col-md-4">
-                        <select class="direcciones{{$i}} form-control">
+
+
+            <!-- **CAMPO OCUPANTES DEL 1 AL 6 -->
+            <div class="row">
+                @for ($i = 1; $i <= 6; $i++)
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="direcciones{{$i}}"><i class="fas fa-map-marker-alt"></i> Dirección Regional {{$i}}</label>
+                        <select id="direcciones{{$i}}" class="direcciones{{$i}} form-control">
+                            <option value="" selected>-- Seleccione una direccion regional --</option>
                             @foreach ($direcciones as $direccion)
                                 <option value="{{$direccion->ID_DIRECCION}}">{{$direccion->DIRECCION}}</option>
                             @endforeach
                         </select>
                     </div>
-                    <div class="col-md-4">
-                        <select class="ubicaciones{{$i}} form-control">
-                            <option value="">--Seleccione una ubicacion/depto/oficina --</option>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="ubicaciones{{$i}}"><i class="fas fa-location-arrow"></i> Ubicación {{$i}}</label>
+                        <select id="ubicaciones{{$i}}" class="ubicaciones{{$i}} form-control">
+                            <option value="">-- Seleccione una ubicacion --</option>
                         </select>
                     </div>
-                    <div class="col-md-4">
-                        <select class="usuarios{{$i}} form-control" name="OCUPANTE_{{$i}}">
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="usuarios{{$i}}"><i class="fas fa-user"></i> Ocupante {{$i}}</label>
+                        <select id="usuarios{{$i}}" class="usuarios{{$i}} form-control" name="OCUPANTE_{{$i}}">
                             <option value="">--Seleccione al ocupante n°{{$i}} --</option>
                         </select>
                     </div>
-
-                @endfor
-
                 </div>
+                @endfor
+            </div>
 
 
             {{-- *FECHA Y HORA DE SALIDA SOLICITADA* --}}
@@ -269,6 +279,7 @@
     </style>
 @stop
 @section('js')
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     {{-- !!CONFIG FLATPICKR --}}
     <script>
         $(function () {
@@ -317,91 +328,67 @@
 
 
 <script>
-    $('#conductor').on('change', function() {
-    var conductorId = $(this).val();
-    var conductorNombre = $("#conductor option:selected").text();
-    var $primerOcupante = $('#ocupante1');
-
-    // Limpia el select del primer ocupante
-    $primerOcupante.empty();
-
-    // Añade el conductor como primer ocupante
-    $primerOcupante.append('<option value="' + conductorId + '">' + conductorNombre + '</option>');
-});
-
+    $(document).ready(function() {
+        $('#conductor').change(function() {
+            var conductorSeleccionado = $(this).find(":selected");
+            var idConductor = conductorSeleccionado.val();
+            var nombreConductor = conductorSeleccionado.data('nombres');
+            var apellidosConductor = conductorSeleccionado.data('apellidos');
+            if(idConductor != "") {
+                $('.usuarios1').empty().append(new Option(nombreConductor + ' ' + apellidosConductor, idConductor)).trigger('change');
+            }
+        });
+    });
 </script>
 
 <script>
     $(document).ready(function() {
+        for (let i = 1; i <= 6; i++) {
+            $('.direcciones'+i).change(function() {
+                const direccionId = $(this).val();
 
-for(let i = 1; i <= 6; i++) {
+                let selectUbicaciones = $('.ubicaciones'+i);
+                let selectUsuarios = $('.usuarios'+i);
 
-    $('.direcciones' + i).change(function() {
-        var direccionID = $(this).val();
+                // Vaciamos el select de ubicaciones y usuarios cuando no hay ninguna dirección seleccionada.
+                if (!direccionId) {
+                    selectUbicaciones.empty();
+                    selectUbicaciones.append('<option value="">-- Seleccione una ubicacion --</option>');
+                    selectUsuarios.empty();
+                    selectUsuarios.append('<option value="">--Seleccione al ocupante n°'+i+' --</option>');
+                } else {
+                    $.get('/ubicaciones/'+direccionId, function(data) {
+                        selectUbicaciones.empty();
+                        selectUbicaciones.append('<option value="">-- Seleccione una ubicacion --</option>');
 
-        if(direccionID) {
-            $.ajax({
-                url: '/ubicaciones/'+direccionID,
-                type: 'GET',
-                dataType: 'json',
-                success: function(data) {
-                    $('.ubicaciones' + i).empty();
-                    $('.ubicaciones' + i).append('<option value="">--Seleccione una ubicacion/depto/oficina --</option>');
-                    $.each(data, function(key, value) {
-                        $('.ubicaciones' + i).append('<option value="'+ key +'">'+ value +'</option>');
-                    });
-                    $('.ubicaciones' + i).change();
-                }
-            });
-        } else {
-            $('.ubicaciones' + i).empty();
-        }
-    });
-
-    $('.ubicaciones' + i).change(function() {
-        var ubicacionID = $(this).val();
-
-        if(ubicacionID) {
-            $.ajax({
-                url: '/usuarios/'+ubicacionID,
-                type: 'GET',
-                dataType: 'json',
-                success: function(data) {
-                    $('.usuarios' + i).empty();
-                    $('.usuarios' + i).append('<option value="">--Seleccione al ocupante n°' + i + ' --</option>');
-                    $.each(data, function(key, value) {
-                        $('.usuarios' + i).append('<option value="'+ key +'">'+ value +'</option>');
+                        $.each(data, function(index, ubicacion) {
+                            let option = $('<option>', { value: ubicacion.ID_UBICACION, text: ubicacion.UBICACION });
+                            selectUbicaciones.append(option);
+                        });
                     });
                 }
             });
-        } else {
-            $('.usuarios' + i).empty();
+
+            $('.ubicaciones'+i).change(function() {
+                const ubicacionId = $(this).val();
+                if (ubicacionId) {
+                    $.get('/usuarios/'+ubicacionId, function(data) {
+                        let select = $('.usuarios'+i);
+                        select.empty();
+                        select.append('<option value="">--Seleccione al ocupante n°'+i+' --</option>');
+                        $.each(data, function(index, usuario) {
+                            select.append('<option value="'+usuario.id+'">'+usuario.NOMBRES+' '+usuario.APELLIDOS+'</option>');
+                        });
+                    });
+                } else {
+                    $('.usuarios'+i).empty().append('<option value="">--Seleccione al ocupante n°'+i+' --</option>');
+                }
+            });
         }
     });
-
-    $('.usuarios' + i).change(function() {
-        var usuarioID = $(this).val();
-
-        for(let j = 1; j <= 6; j++) {
-            if(i != j && usuarioID == $('.usuarios' + j).val()) {
-                Swal.fire({
-                    title: 'Error!',
-                    text: 'Este usuario ya ha sido seleccionado.',
-                    icon: 'error',
-                    confirmButtonText: 'OK'
-                });
-
-                $(this).val("");
-                break;
-            }
-        }
-    });
-
-}
-
-$('.direcciones1').change();  // Activar el cambio inicial para cargar las ubicaciones y usuarios por defecto
-});
 </script>
+
+
 
     {{-- !!FUNCION PARA REFRESCAR DINAMICAMENTE LAS COMUNAS A TRAVES DE LAS REGIONES --}}
     <script>

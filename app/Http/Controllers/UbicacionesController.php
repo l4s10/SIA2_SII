@@ -7,10 +7,11 @@ use App\Models\Ubicacion;
 
 class UbicacionesController extends Controller
 {
-    public function getUbicaciones($id)
+    public function getUbicaciones($direccionId)
     {
-        $ubicaciones = Ubicacion::where("ID_DIRECCION", $id)->pluck("UBICACION","ID_UBICACION");
+        // Asume que tienes un modelo Ubicacion que tiene una relación con Direcciones
+        $ubicaciones = Ubicacion::where('ID_DIRECCION', $direccionId)->get();
 
-        return json_encode($ubicaciones);
+        return response()->json($ubicaciones);
     }
 }

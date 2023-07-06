@@ -8,6 +8,7 @@ use App\Http\Controllers\ReporteController;
 use App\Http\Controllers\SolicitudSalaController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\UbicacionesController;
+use App\Http\Controllers\DireccionRegionalController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -119,8 +120,9 @@ Route::resource('reserva/vehiculo', 'App\Http\Controllers\RelFunVehController')-
     'destroy' => 'solicitud.vehiculos.destroy',
 ]);
 //Endpoint para usuarios
-Route::get('/ubicaciones/{id}', [UbicacionesController::class, 'getUbicaciones']);
-Route::get('/usuarios/{id}', [UserController::class, 'getUsuarios']);
+Route::get('/direccion/{ubicacionId}', [DireccionRegionalController::class, 'getDireccion']);
+Route::get('/ubicaciones/{direccionId}', [UbicacionesController::class, 'getUbicaciones']);
+Route::get('/usuarios/{ubicacionId}', [UserController::class, 'getUsuarios']);
 
 // Route::get('funcionarios/region/{id}', 'App\Http\Controllers\UserController@getUsersByRegion')->name('funcionarios.region');
 Route::resource('funcionarios','App\Http\Controllers\UserController');
