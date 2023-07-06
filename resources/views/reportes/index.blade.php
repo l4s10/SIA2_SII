@@ -78,8 +78,7 @@
         <div class="chart-container">
             <div id="map" style="display: none;"></div>
                 <canvas id="myChart3"></canvas>
-                <button id="view-chart3" class="btn btn-primary move-right"><i class="fa-solid fa-maximize"></i></button>
-                <button id="map-open" class="btn btn-primary move-right" onclick="toggleMap()"><i class="fa-solid fa-map-location-dot"></i></button>
+
             </div>
         </div>
     </div>
