@@ -58,28 +58,28 @@
             </div>
 
 
+            {{-- **ESTADO SOLICITUD --}}
+            <div class="mb-3">
+                <label for="ESTADO_SOL_VEH" class="form-label"><i class="fa-solid fa-file-circle-check"></i> Estado de la Solicitud:</label>
+                <select id="ESTADO_SOL_VEH" name="ESTADO_SOL_VEH" class="form-control">
+                    <option value="INGRESADO" @if ($solicitud->ESTADO_SOL_VEH === 'INGRESADO') selected @endif>Ingresado</option>
+                    <option value="EN REVISION" @if ($solicitud->ESTADO_SOL_VEH === 'EN REVISION') selected @endif>En revisión</option>
+                    <option value="ACEPTADO" @if ($solicitud->ESTADO_SOL_VEH === 'ACEPTADO') selected @endif>Aceptado</option>
+                    <option value="RECHAZADO" @if ($solicitud->ESTADO_SOL_VEH === 'RECHAZADO') selected @endif>Rechazado</option>
+                </select>
+            </div>
             {{-- *CAMPO CONDUCTOR* --}}
             <div class="mb-3">
                 <label for="CONDUCTOR" class="form-label"><i class="fa-solid fa-user-plus"></i> Seleccione conductor:</label>
                 <select id="CONDUCTOR" name="CONDUCTOR" class="form-control @if($errors->has('CONDUCTOR')) is-invalid @endif" required>
                     <option value="">--Seleccione un(a) conductor(a)--</option>
                     {{-- *CORRECCION DE FILTRO ARREGLADO, AHORA SOLO MUESTRA CONDUCTORES DEL MISMO DEPARTAMENTO* --}}
-                    @foreach ($departamentos as $departamento)
-                        <optgroup label="{{ $departamento->DEPARTAMENTO }}">
-                            @foreach ($ocupantes as $ocupante)
-                                {{-- Verifica si el conductor pertenece al departamento actual --}}
-                                @if ($ocupante->ID_DEPART == $departamento->ID_DEPART)
-                                    <option value="{{$ocupante->id}}"
-                                        @if ($ocupante->id == $solicitud->CONDUCTOR)
-                                            selected
-                                        @endif
-                                    >
-                                        {{$ocupante->NOMBRES}} {{$ocupante->APELLIDOS}}
-                                    </option>
-                                @endif
-                            @endforeach
-                        </optgroup>
-                    @endforeach
+                    @foreach ($conductores as $conductor)
+                    <option value="{{$conductor->id}}" class="" {{ $conductor->id == $solicitud->CONDUCTOR ? 'selected' : '' }}>
+                        {{$conductor->NOMBRES}} {{$conductor->APELLIDOS}}
+                    </option>
+                @endforeach
+
                 </select>
 
 
@@ -146,6 +146,43 @@
                 </div>
             </div>
             <div class="row">
+                <div class="col-md-6">
+                    <label for="ID_TIPO_VEH" class="form-label"><i class="fa-solid fa-car-side"></i> Seleccione tipo de vehículo:</label>
+                    <select id="ID_TIPO_VEH" name="ID_TIPO_VEH" class="form-control @error('ID_TIPO_VEH') is-invalid @enderror" required>
+                        <option value="" selected>--Seleccione un tipo de vehículo--</option>
+
+                        @foreach ($tipo_vehiculos as $tipo_vehiculo)
+                            <option value="{{ $tipo_vehiculo['ID_TIPO_VEH'] }}" @if ($tipo_vehiculo['ID_TIPO_VEH'] === $solicitud->ID_TIPO_VEH) selected @endif>
+                                {{ $tipo_vehiculo['TIPO_VEHICULO'] }}
+                            </option>
+                        @endforeach
+                    </select>
+
+                    @error('ID_TIPO_VEH')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
+                </div>
+
+                <div class="col-md-6">
+                    <label for="PATENTE_VEHICULO" class="form-label"><i class="fa-solid fa-car-on"></i> Asignar vehículos:</label>
+                    <select id="PATENTE_VEHICULO" name="PATENTE_VEHICULO" class="form-control @if($errors->has('PATENTE_VEHICULO')) is-invalid @endif">
+                        <option value="">-- Seleccione el vehículo a asignar --</option>
+                        @foreach ($vehiculos->groupBy('UNIDAD_VEHICULO') as $grupo => $autos)
+                            <optgroup label="{{ $grupo }}">
+                                @foreach ($autos as $auto)
+                                    <option value="{{ $auto->PATENTE_VEHICULO }}" data-tipo-vehiculo="{{ $auto->tipoVehiculo->ID_TIPO_VEH }}" @if ($auto->PATENTE_VEHICULO === $solicitud->PATENTE_VEHICULO) selected @endif>
+                                        {{ $auto->PATENTE_VEHICULO }} ({{ $auto->tipoVehiculo->TIPO_VEHICULO }})
+                                    </option>
+                                @endforeach
+                            </optgroup>
+                        @endforeach
+                    </select>
+                    @if($errors->has('PATENTE_VEHICULO'))
+                        <div class="invalid-feedback">{{$errors->first('PATENTE_VEHICULO')}}</div>
+                    @endif
+                </div>
+            </div>
+            <div class="row" hidden>
                 <div class="col-md-6">
                     <div class="mb-3">
                         <!-- Solo acceso para conductores(nivel 1) y estado formulario por rendir(autorizado/rendir nivel 3) -->
@@ -230,51 +267,6 @@
                     <div class="invalid-feedback">{{ $message }}</div>
                 @enderror
             </div>
-            <div class="mb-3">
-                <label for="ID_TIPO_VEH" class="form-label"><i class="fa-solid fa-car-side"></i> Seleccione tipo de vehículo:</label>
-                <select id="ID_TIPO_VEH" name="ID_TIPO_VEH" class="form-control @error('ID_TIPO_VEH') is-invalid @enderror" required>
-                    <option value="" selected>--Seleccione un tipo de vehículo--</option>
-
-                    @foreach ($tipo_vehiculos as $tipo_vehiculo)
-                        <option value="{{ $tipo_vehiculo['ID_TIPO_VEH'] }}" @if ($tipo_vehiculo['ID_TIPO_VEH'] === $solicitud->ID_TIPO_VEH) selected @endif>
-                            {{ $tipo_vehiculo['TIPO_VEHICULO'] }}
-                        </option>
-                    @endforeach
-                </select>
-
-                @error('ID_TIPO_VEH')
-                    <div class="invalid-feedback">{{ $message }}</div>
-                @enderror
-            </div>
-
-            <div class="mb-3">
-                <label for="PATENTE_VEHICULO" class="form-label"><i class="fa-solid fa-car-on"></i> Asignar vehículos:</label>
-                <select id="PATENTE_VEHICULO" name="PATENTE_VEHICULO" class="form-control @if($errors->has('PATENTE_VEHICULO')) is-invalid @endif">
-                    <option value="">-- Seleccione el vehículo a asignar --</option>
-                    @foreach ($vehiculos->groupBy('UNIDAD_VEHICULO') as $grupo => $autos)
-                        <optgroup label="{{ $grupo }}">
-                            @foreach ($autos as $auto)
-                                <option value="{{ $auto->PATENTE_VEHICULO }}" data-tipo-vehiculo="{{ $auto->tipoVehiculo->ID_TIPO_VEH }}" @if ($auto->PATENTE_VEHICULO === $solicitud->PATENTE_VEHICULO) selected @endif>
-                                    {{ $auto->PATENTE_VEHICULO }} ({{ $auto->tipoVehiculo->TIPO_VEHICULO }})
-                                </option>
-                            @endforeach
-                        </optgroup>
-                    @endforeach
-                </select>
-                @if($errors->has('PATENTE_VEHICULO'))
-                    <div class="invalid-feedback">{{$errors->first('PATENTE_VEHICULO')}}</div>
-                @endif
-            </div>
-            {{-- **ESTADO SOLICITUD --}}
-            <div class="mb-3">
-                <label for="ESTADO_SOL_VEH" class="form-label"><i class="fa-solid fa-file-circle-check"></i> Estado de la Solicitud:</label>
-                <select id="ESTADO_SOL_VEH" name="ESTADO_SOL_VEH" class="form-control">
-                    <option value="INGRESADO" @if ($solicitud->ESTADO_SOL_VEH === 'INGRESADO') selected @endif>Ingresado</option>
-                    <option value="EN REVISION" @if ($solicitud->ESTADO_SOL_VEH === 'EN REVISION') selected @endif>En revisión</option>
-                    <option value="ACEPTADO" @if ($solicitud->ESTADO_SOL_VEH === 'ACEPTADO') selected @endif>Aceptado</option>
-                    <option value="RECHAZADO" @if ($solicitud->ESTADO_SOL_VEH === 'RECHAZADO') selected @endif>Rechazado</option>
-                </select>
-            </div>
             <a href="{{route('solicitud.vehiculos.index')}}" class="btn btn-secondary" tabindex="5">Cancelar</a>
             <button type="button" class="btn btn-info" onclick="resetFields()">Me equivoqué</button>
             <button type="submit" class="btn btn-primary">Enviar cambios</button>
@@ -355,6 +347,8 @@
             });
         });
     </script>
+    {{-- AA --}}
+
     {{-- *FUNCION PARA REFRESCAR DINAMICAMENTE EL FILTRO DE FUNCIONARIOS* --}}
         <script>
             document.addEventListener('DOMContentLoaded', function() {

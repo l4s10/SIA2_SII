@@ -40,15 +40,7 @@
             <div class="form-group row">
                 <label for="" class="col-sm-2 col-form-label">{{__('Depto/Ubicacion')}}</label>
                 <div class="col-sm-10">
-                    <p class="form-control-plaintext">
-                        @if($funcionario->entidad && get_class($funcionario->entidad) === 'App\Models\Departamento')
-                            {{$funcionario->entidad->DEPARTAMENTO}}
-                        @elseif($funcionario->entidad && get_class($funcionario->entidad) === 'App\Models\Ubicacion')
-                            {{$funcionario->entidad->UBICACION}}
-                        @else
-                            {{'No asignado'}}
-                        @endif
-                    </p>
+                    <p class="form-control-plaintext">{{$funcionario->ubicacion->UBICACION}}</p>
                 </div>
             </div>
             <div class="form-group row">

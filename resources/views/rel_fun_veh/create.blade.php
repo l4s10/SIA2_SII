@@ -38,7 +38,7 @@
                     <div class="col-md-6">
                         <div class="mb-3">
                             <label for="DEPTO" class="form-label"><i class="fa-solid fa-building-user"></i> Departamento:</label>
-                            <input type="text" id="DEPTO" name="DEPTO" class="form-control{{ $errors->has('DEPTO') ? ' is-invalid' : '' }}" value="{{ auth()->user()->getEntidadInfoAttribute() }}" placeholder="Ej: ADMINISTRACION" readonly>
+                            <input type="text" id="DEPTO" name="DEPTO" class="form-control{{ $errors->has('DEPTO') ? ' is-invalid' : '' }}" value="{{ auth()->user()->ubicacion->UBICACION }}" placeholder="Ej: ADMINISTRACION" readonly>
                             @if ($errors->has('DEPTO'))
                             <div class="invalid-feedback">
                                 {{ $errors->first('DEPTO') }}
@@ -90,7 +90,7 @@
                 <select id="conductor" name="CONDUCTOR" class="form-control{{ $errors->has('conductor') ? ' is-invalid' : '' }}">
                     <option value="" selected>Seleccione un conductor</option>
                     @foreach ($usuarios as $conductor)
-                        @if ($conductor->entidad_id === auth()->user()->entidad_id && $conductor->entidad_type === auth()->user()->entidad_type)
+                        @if ($conductor->ID_UBICACION === auth()->user()->ID_UBICACION)
                             <option value="{{ $conductor->id }}">{{ $conductor->NOMBRES }} {{ $conductor->APELLIDOS }}</option>
                         @endif
                     @endforeach
@@ -103,12 +103,6 @@
             </div>
 
             {{-- **CAMPO OCUPANTES DEL 1 AL 6 --}}
-            {{-- SELECT DIRECCION REGIONAL relacionado con la tabla region a traves de($direcciones->ID=REGION == $regiones->ID_REGION) lo mismo con la variable $usuarios->ID
-
-                campos de $usuarios (id , ID_REGION,NOMBRES Y APELLIDOS)
-                campos de $direcciones (ID_DIRECCION, DIRECCION y ID_REGION)
-                campos de $regiones (ID_REGION y REGION)
-                --}}
                 <div class="row">
                     @for ($i = 1; $i <= 6; $i++)
                     <div class="col-md-4">
@@ -124,7 +118,7 @@
                         </select>
                     </div>
                     <div class="col-md-4">
-                        <select class="usuarios{{$i}} form-control">
+                        <select class="usuarios{{$i}} form-control" name="OCUPANTE_{{$i}}">
                             <option value="">--Seleccione al ocupante n°{{$i}} --</option>
                         </select>
                     </div>

@@ -221,6 +221,7 @@
                         <option value="Ubicacion" selected>Unidad</option>
                     </select>
                 </div>
+                {{-- CAMBIAR ID Y NOMBRE POR ID_UBICACION --}}
                 <div class="col">
                     <label for="entidad_id" id="entidad_id_label">Seleccione (depto o unidad)</label>
                     <select name="entidad_id" id="entidad_id" class="form-control">

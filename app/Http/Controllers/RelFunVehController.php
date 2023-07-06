@@ -89,8 +89,9 @@ class RelFunVehController extends Controller
      */
     public function edit(string $id)
     {
-        try{
+        try {
             $solicitud = RelFunVeh::find($id);
+            $direcciones = DireccionRegional::all();
             $vehiculos = Vehiculo::all();
             $tipo_vehiculos = TipoVehiculo::all();
             $conductores = User::all();
@@ -106,15 +107,16 @@ class RelFunVehController extends Controller
 
                 // Si se encontró un ocupante válido, agrégalo al array de ocupantes
                 if ($ocupante) {
-                    $ocupantes[] = $ocupante;
+                    $ocupantes[$i] = $ocupante;
                 }
             }
-            return view('rel_fun_veh.edit',compact('solicitud','tipo_vehiculos','vehiculos','ocupantes','departamentos','comunas'));
-        }catch(\Exception $e){
-            session()->flash('error','Hubo un error al cargar la solicitud, vuelva a intentarlo mas tarde');
+            return view('rel_fun_veh.edit', compact('solicitud', 'tipo_vehiculos', 'vehiculos', 'ocupantes', 'departamentos', 'comunas', 'conductores', 'direcciones'));
+        } catch (\Exception $e) {
+            session()->flash('error', 'Hubo un error al cargar la solicitud, vuelva a intentarlo más tarde');
             return redirect(route('solicitud.vehiculos.index'));
         }
     }
+
 
     /**
      * Update the specified resource in storage.

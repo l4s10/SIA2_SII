@@ -79,13 +79,6 @@ class UserController extends Controller
         try{
             $request->validate(User::$rules, User::$messages);
             // Asignamos la entidad_type
-            if ($request->entidad_type == 'Departamento') {
-                $entidad_type = 'App\Models\Departamento';
-            } else if ($request->entidad_type == 'Ubicacion') {
-                $entidad_type = 'App\Models\Ubicacion';
-            } else {
-                // Aquí podrías agregar un mensaje de error o lanzar una excepción si se recibe un valor no esperado
-            }
             $user = User::create([
                 'NOMBRES' => $request->NOMBRES,
                 'APELLIDOS' => $request->APELLIDOS,
@@ -95,7 +88,7 @@ class UserController extends Controller
                 'ID_REGION' => $request->ID_REGION,
                 // 'entidad_id' => $request->entidad_id, // Reemplaza a ID_UBICACION y ID_DEPARTAMENTO
                 // 'entidad_type' => $entidad_type, // Reemplaza a ID_UBICACION y ID_DEPARTAMENTO
-                'ID_UBICACION' => $request->ID_UBICACION,
+                'ID_UBICACION' => $request->entidad_id,
                 'ID_GRUPO' => $request->ID_GRUPO,
                 'ID_ESCALAFON' => $request->ID_ESCALAFON,
                 'ID_GRADO' => $request->ID_GRADO,
@@ -194,9 +187,8 @@ class UserController extends Controller
         try {
             $request->validate($rules, User::$messages);
             $data = array_filter($request->all(), 'strlen');
-            $data['RUT'] = RutUtils::formatRut($request->RUT);
-            $data['entidad_id'] = $request->entidad_id; // Reemplaza a ID_UBICACION y ID_DEPARTAMENTO
-            $data['entidad_type'] = $entidad_type; // Reemplaza a ID_UBICACION y ID_DEPARTAMENTO
+            $data['RUT'] = RutUtils::formatRut($request->RUT); // Reemplaza a ID_UBICACION y ID_DEPARTAMENTO
+            // $data['entidad_type'] = $entidad_type; // Reemplaza a ID_UBICACION y ID_DEPARTAMENTO
             $funcionario->update($data);
             //En caso de que se decida actualizar la contraseña
             if ($request->password) {

@@ -20,7 +20,7 @@
                 <p>Email: {{ $solicitud->EMAIL }}</p>
                 <p>Estado: {{ $solicitud->ESTADO_SOL_VEH }}</p>
                 <p>Fecha de ingreso: {{ $solicitud->created_at->tz('America/Santiago')->format('d/m/Y H:i') }}</p>
-                <p>Fecha solicitada: {{ $solicitud->FECHA_SALIDA_SOL_VEH }} desde las {{$solicitud->HORA_SALIDA_SOL_VEH}} hasta las {{$solicitud->HORA_LLEGADA_SOL_VEH}}</p>
+                <p>Fecha solicitada: {{$solicitud->FECHA_SOL_VEH}}</p>
                 <p>Motivo de la solicitud: {{$solicitud->MOTIVO_SOL_VEH}}</p>
                 <p>Modificado por: {{$solicitud->MODIFICADO_POR_SOL_VEH}}</p>
             </div>
