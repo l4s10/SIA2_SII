@@ -100,8 +100,70 @@
     </div>
 </div>
 
-<!-- Agrega el código de la tabla de contingencia vacía -->
 
+<!-- Agrega el código de la tabla de contingencia vacía -->
+<table class="table">
+        <h3>Tabla de datos <h3>
+    <thead>
+        <tr>
+            <!-- Aqui iria el tema de filtrado por Region (ejemplo: La de Concepcion de la 8) -->
+            <select name="" id="departamentos" class="form-control">
+                <option value="">--Selecciona una region --</option>
+                @foreach ($departamentos as $departamento)
+                    <option value="{{$departamento->ID_DEPARTAMENTO}}">{{$departamento->DEPARTAMENTO}}</option>
+                @endforeach
+            </select>
+            <th>Departamentos</th>
+            <th>Hombres</th>
+            <th>Mujeres</th>
+            <th>Total</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+        <td>
+            <select name="" id="departamentos" class="form-control">
+                <option value="">--Selecciona un explorador --</option>
+                @foreach ($departamentos as $departamento)
+                    <option value="{{$departamento->ID_DEPARTAMENTO}}">{{$departamento->DEPARTAMENTO}}</option>
+                @endforeach
+            </select>
+            </td>
+            <td>ID_SEXO</td>
+            <td>ID_SEXO</td>
+            <td>*Valor Final*</td>
+        </tr>
+        <td>
+        <select name="" id="departamentos" class="form-control">
+                <option value="">--Selecciona un explorador --</option>
+                @foreach ($departamentos as $departamento)
+                    <option value="{{$departamento->ID_DEPARTAMENTO}}">{{$departamento->DEPARTAMENTO}}</option>
+                @endforeach
+            </select>
+            </td>
+            <td>ID_SEXO</td>
+            <td>ID_SEXO</td>
+            <td>*Valor Final*</td>
+        <tr>
+        <td>
+        <select name="" id="departamentos" class="form-control">
+                <option value="">--Selecciona un explorador --</option>
+                @foreach ($departamentos as $departamento)
+                    <option value="{{$departamento->ID_DEPARTAMENTO}}">{{$departamento->DEPARTAMENTO}}</option>
+                @endforeach
+            </select>
+            </td>
+            <td>ID_SEXO</td>
+            <td>ID_SEXO</td>
+            <td>*Valor Final*</td>
+        <tr>
+        <tr>
+        <td>Total funcionarios</td>
+        <td>Total_Hombres</td>
+        <td>Total_Mujeres</td>
+        <tr>
+    </tbody>
+</table>
 @endsection
 
 @section('css')
