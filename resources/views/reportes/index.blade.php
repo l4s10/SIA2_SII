@@ -71,15 +71,15 @@
         <div class="col-md-6">
             <div class="chart-container">
                 <canvas id="myChart2"></canvas>
-
+                
             </div>
         </div>
         <div class="col-md-6">
-            <div class="chart-container">
+        <div class="chart-container">
+            <div id="map" style="display: none;"></div>
                 <canvas id="myChart3"></canvas>
                 <button id="view-chart3" class="btn btn-primary move-right"><i class="fa-solid fa-maximize"></i></button>
-                <button id="map-open" class="btn btn-primary move-right" onclick="openMap()"><i class="fa-solid fa-map-location-dot"></i></button>
-                <div id="map" style="display: none"></div>
+                <button id="map-open" class="btn btn-primary move-right" onclick="toggleMap()"><i class="fa-solid fa-map-location-dot"></i></button>
             </div>
         </div>
     </div>
@@ -250,7 +250,7 @@
         };
 </script>
 
-<script src="{{asset('js/Reportes/Graficos/grafico1-config.js')}}"></script>
+<script src="{{asset('js/Reportes/Graficos/grafico1-config.js')}}"></script>  
 <script src="{{asset('js/Reportes/Graficos/grafico2-config.js')}}"></script>
 <script src="{{asset('js/Reportes/Graficos/grafico3-config.js')}}"></script>
 <script src="{{asset('js/Reportes/Graficos/grafico4-config.js')}}"></script>
@@ -272,42 +272,44 @@
 });
 </script>
 
+
 <script>
-document.addEventListener('DOMContentLoaded', function() {
-    var mapDiv = document.getElementById('map');
-    var mapOpenButton = document.getElementById('map-open');
-    var mapThumbnail = document.getElementById('map-thumbnail');
+    document.addEventListener('DOMContentLoaded', function() {
+        var mapDiv = document.getElementById('map');
+        var mapOpenButton = document.getElementById('map-open');
+        var map;
+        var featureGroup;
 
-    mapOpenButton.addEventListener('click', function() {
-        if (mapDiv.style.display === 'none') {
-            mapDiv.style.display = 'block';
-            mapDiv.requestFullscreen(); // Solicita el modo de pantalla completa para el elemento del mapa
-            initializeMap();
-            mapThumbnail.style.display = 'none'; // Oculta el mapa en miniatura
-        } else {
-            mapDiv.style.display = 'none';
-            document.exitFullscreen(); // Sale del modo de pantalla completa si el mapa ya no está visible
-            mapThumbnail.style.display = 'block'; // Muestra el mapa en miniatura
-            mapOpenButton.disabled = false; // Restablece el botón a su estado original
+        function toggleMap() {
+            if (mapDiv.style.display === 'none') {
+                mapDiv.style.display = 'block';
+                mapDiv.requestFullscreen(); // Solicita el modo de pantalla completa para el elemento del mapa
+                initializeMap();
+            } else {
+                mapDiv.style.display = 'none';
+                document.exitFullscreen(); // Sale del modo de pantalla completa si el mapa ya no está visible
+                mapOpenButton.disabled = false; // Restablece el botón a su estado original
+            }
         }
+
+        function initializeMap() {
+            map = L.map('map').setView([-36.8261, -73.0498], 13); // Coordenadas de Concepción, Chile y nivel de zoom 13
+
+            L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+            }).addTo(map);      
+            // Crea un grupo de capas
+            featureGroup = L.featureGroup().addTo(map);
+            L.marker([-38.7396, -72.5984]).addTo(map)
+            .bindPopup('Salida de Vehiculo')
+            .openPopup();
+            L.marker([-36.8261, -73.0498]).addTo(map)
+            .bindPopup('Llegada de Vehiculo')
+            .openPopup();
+            var polyline = L.polyline([[-36.8261, -73.0498], [-38.7396, -72.5984]]).addTo(featureGroup);
+        }
+        mapOpenButton.addEventListener('click', toggleMap);
     });
-});
-
-function initializeMap() {
-    var map = L.map('map').setView([-35.6751, -71.5430], 5); // Coordenadas aproximadas del centro de Chile y nivel de zoom 5
-
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        maxZoom: 19,
-        attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors'
-    }).addTo(map);
-
-    // Añade marcadores, polígonos, etc. según tus necesidades
-}
-
-// Llama a la función initializeMap() para mostrar el mapa al cargar la página
-initializeMap();
-
 </script>
-
 
 @endsection
