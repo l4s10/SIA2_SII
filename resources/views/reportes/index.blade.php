@@ -106,11 +106,12 @@
         <h3>Tabla de datos <h3>
     <thead>
         <tr>
+            <h>Direccion<h5> 
             <!-- Aqui iria el tema de filtrado por Region (ejemplo: La de Concepcion de la 8) -->
-            <select name="" id="region" class="form-control">
-                <option value="">--Selecciona una region --</option>
-                @foreach ($regiones as $region)
-                    <option value="{{$region->ID_REGION}}">{{$region->REGION}}</option>
+            <select name="" id="direcciones" class="form-control">
+                <option value="">--Selecciona una direccion --</option>
+                @foreach ($direcciones as $direccion)
+                    <option value="{{$direccion->ID_DIRECCION}}">{{$direccion->DIRECCION}}</option>
                 @endforeach
             </select>
             <th>Departamentos</th>
@@ -122,10 +123,10 @@
     <tbody>
         <tr>
         <td>
-            <select name="" id="departamentos" class="form-control">
+            <select name="" id="ubicaciones" class="form-control">
                 <option value="">--Selecciona un explorador --</option>
-                @foreach ($departamentos as $departamento)
-                    <option value="{{$departamento->ID_DEPARTAMENTO}}">{{$departamento->DEPARTAMENTO}}</option>
+                @foreach ($ubicaciones as $ubicacion)
+                    <option value="{{$ubicacion->ID_UBICACION}}">{{$ubicacion->UBICACION}}</option>
                 @endforeach
             </select>
             </td>
@@ -134,10 +135,10 @@
             <td>*Valor Final*</td>
         </tr>
         <td>
-        <select name="" id="departamentos" class="form-control">
+        <select name="" id="ubicaciones" class="form-control">
                 <option value="">--Selecciona un explorador --</option>
-                @foreach ($departamentos as $departamento)
-                    <option value="{{$departamento->ID_DEPARTAMENTO}}">{{$departamento->DEPARTAMENTO}}</option>
+                @foreach ($ubicaciones as $ubicacion)
+                    <option value="{{$ubicacion->ID_UBICACION}}">{{$ubicacion->UBICACION}}</option>
                 @endforeach
             </select>
             </td>
@@ -146,10 +147,10 @@
             <td>*Valor Final*</td>
         <tr>
         <td>
-        <select name="" id="departamentos" class="form-control">
+        <select name="" id="ubicaciones" class="form-control">
                 <option value="">--Selecciona un explorador --</option>
-                @foreach ($departamentos as $departamento)
-                    <option value="{{$departamento->ID_DEPARTAMENTO}}">{{$departamento->DEPARTAMENTO}}</option>
+                @foreach ($ubicaciones as $ubicacion)
+                    <option value="{{$ubicacion->ID_UBICACION}}">{{$ubicacion->UBICACION}}</option>
                 @endforeach
             </select>
             </td>
