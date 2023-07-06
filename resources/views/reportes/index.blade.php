@@ -107,10 +107,10 @@
     <thead>
         <tr>
             <!-- Aqui iria el tema de filtrado por Region (ejemplo: La de Concepcion de la 8) -->
-            <select name="" id="departamentos" class="form-control">
+            <select name="" id="region" class="form-control">
                 <option value="">--Selecciona una region --</option>
-                @foreach ($departamentos as $departamento)
-                    <option value="{{$departamento->ID_DEPARTAMENTO}}">{{$departamento->DEPARTAMENTO}}</option>
+                @foreach ($regiones as $region)
+                    <option value="{{$region->ID_REGION}}">{{$region->REGION}}</option>
                 @endforeach
             </select>
             <th>Departamentos</th>

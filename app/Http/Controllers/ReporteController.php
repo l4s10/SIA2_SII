@@ -21,6 +21,7 @@ use Carbon\Carbon;
 use App\Models\Vehiculo;
 //Exploradores
 use App\Models\Departamento;
+use App\Models\Region;
 
 class ReporteController extends Controller
 {
@@ -70,8 +71,10 @@ class ReporteController extends Controller
 
         //Departamentos
         $departamentos = Departamento::all();
+        //regiones
+        $regiones = Region::all();
         // Devolver la vista con los datos
-        return view('reportes.index', compact('grafico1', 'grafico2' , 'grafico3','departamentos'));
+        return view('reportes.index', compact('grafico1', 'grafico2' , 'grafico3','departamentos' , 'regiones'));
     }
 
     public function obtenerDatos(Request $request)
