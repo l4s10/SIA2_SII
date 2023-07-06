@@ -20,7 +20,8 @@ use Carbon\Carbon;
 // Cuarto Grafico.
 use App\Models\Vehiculo;
 //Exploradores
-use App\Models\Departamento;
+use App\Models\Ubicacion;
+use App\Models\DireccionRegional;
 
 class ReporteController extends Controller
 {
@@ -69,9 +70,11 @@ class ReporteController extends Controller
         ];
 
         //Departamentos
-        $departamentos = Departamento::all();
+        $ubicaciones = Ubicacion::all();
+        //regiones
+        $direcciones = DireccionRegional::all();
         // Devolver la vista con los datos
-        return view('reportes.index', compact('grafico1', 'grafico2' , 'grafico3','departamentos'));
+        return view('reportes.index', compact('grafico1', 'grafico2' , 'grafico3', 'ubicaciones', 'direcciones'));
     }
 
     public function obtenerDatos(Request $request)
