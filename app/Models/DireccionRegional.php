@@ -15,8 +15,6 @@ class DireccionRegional extends Model
     protected $fillable = [
         'DIRECCION',
         'ID_REGION'
-        //'ID_DEPARTAMENTO',
-        //'ID_UBICACION'
     ];
 
     //* Agregamos validaciones para la tabla de direcciones regionales*/

@@ -78,9 +78,11 @@ return new class extends Migration
             $table->date('FECHA_INGRESO');
             $table->string('FONO', 255);
             $table->string('ANEXO', 255);
-            //*-------------------------------------------------------- */
-            $table->unsignedInteger('entidad_id')->nullable(); // reemplaza ID_DEPARTAMENTO e ID_UBICACION
-            $table->string('entidad_type')->nullable(); // reemplaza ID_DEPARTAMENTO e ID_UBICACION
+            // //*-------------------------------------------------------- */
+            // $table->unsignedInteger('entidad_id')->nullable(); // reemplaza ID_DEPARTAMENTO e ID_UBICACION
+            // $table->string('entidad_type')->nullable(); // reemplaza ID_DEPARTAMENTO e ID_UBICACION
+            $table->unsignedInteger('ID_UBICACION');
+            $table->foreign('ID_UBICACION')->references('ID_UBICACION')->on('ubicacion');
             $table->unsignedInteger('ID_REGION');
             $table->foreign('ID_REGION')->references('ID_REGION')->on('region');
             $table->unsignedInteger('ID_GRUPO');

@@ -28,8 +28,9 @@ class User extends Authenticatable
         'email',
         'password',
         'RUT',
-        'entidad_id',
-        'entidad_type',
+        // 'entidad_id',
+        // 'entidad_type',
+        'ID_UBICACION',
         'ID_REGION',
         'ID_GRUPO',
         'ID_ESCALAFON',
@@ -50,6 +51,7 @@ class User extends Authenticatable
         'email' => 'required|string|email|max:255|unique:users,email',
         'password' => 'nullable|string|min:8|confirmed',
         'RUT' => 'required|string|max:20|unique:users',
+        'ID_UBICACION' => 'required|numeric',
         'ID_REGION' => 'required|numeric',
         'ID_GRUPO' => 'required|numeric',
         'ID_ESCALAFON' => 'required|numeric',
@@ -81,6 +83,9 @@ class User extends Authenticatable
         'RUT.string' => 'El campo RUT debe ser una cadena de texto',
         'RUT.max' => 'El campo RUT no puede tener más de 20 caracteres',
         'RUT.unique' => 'El RUT ya está registrado en el sistema',
+
+        'ID_UBICACION.required' => 'El campo ID_REGION es obligatorio',
+        'ID_UBICACION.numeric' => 'El campo ID_REGION debe ser un dato numerico',
 
         'ID_REGION.required' => 'El campo ID_REGION es obligatorio',
         'ID_REGION.numeric' => 'El campo ID_REGION debe ser un dato numerico',
@@ -136,6 +141,10 @@ class User extends Authenticatable
         return $this->belongsTo(Region::class, 'ID_REGION');
     }
 
+    public function ubicacion()
+    {
+        return $this->belongsTo(Ubicacion::class, 'ID_UBICACION');
+    }
 
     //* Obtener el grupo a través de la ID_GRUPO */
     public function grupo()
