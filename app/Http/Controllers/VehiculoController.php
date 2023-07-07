@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\Vehiculo;
 use App\Models\TipoVehiculo;
 use App\Models\Ubicacion;
-use App\Models\Departamento;
 use App\Models\Region;
 use App\Models\DireccionRegional;
 use Illuminate\Http\Request;
@@ -33,10 +32,9 @@ class VehiculoController extends Controller
     {
         $tipos = TipoVehiculo::all();
         $ubicaciones = Ubicacion::all();
-        $departamentos = Departamento::all();
         $regiones = Region::all();
         $direcciones = DireccionRegional::all();
-        return view('vehiculos.create', compact('tipos','ubicaciones','departamentos','regiones','direcciones'));
+        return view('vehiculos.create', compact('tipos','ubicaciones','regiones','direcciones'));
     }
 
     /**
@@ -47,16 +45,7 @@ class VehiculoController extends Controller
         try {
             $vehiculo = new Vehiculo();
             // Asignamos la entidad_type segun el input
-            if ($request->entidad_type == 'Departamento') {
-                $entidad_type = 'App\Models\Departamento';
-            } else if ($request->entidad_type == 'Ubicacion') {
-                $entidad_type = 'App\Models\Ubicacion';
-            } else {
-                // Aquí podrías agregar un mensaje de error o lanzar una excepción si se recibe un valor no esperado
-            }
             $vehiculo->fill($request->all());
-            //Asignamos manualmente el modelo al que apunta el tipo de entidad.
-            $vehiculo->entidad_type = $entidad_type;
             $vehiculo->save();
 
             return redirect()->route('vehiculos.index')->with('success', 'El vehículo se ha creado exitosamente.');
@@ -80,8 +69,9 @@ class VehiculoController extends Controller
     {
         $tipos = TipoVehiculo::all();
         $ubicaciones = Ubicacion::all();
-
-        return view('vehiculos.edit', compact('vehiculo', 'tipos', 'ubicaciones'));
+        $regiones = Region::all();
+        $direcciones = DireccionRegional::all();
+        return view('vehiculos.edit', compact('vehiculo', 'regiones', 'tipos', 'ubicaciones'));
     }
 
     /**

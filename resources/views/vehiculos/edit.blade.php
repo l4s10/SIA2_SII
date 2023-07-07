@@ -71,25 +71,41 @@
                 @enderror
             </div>
         </div>
+        <div class="col">
+            <label for="ANO_VEHICULO" class="form-label">Año</label>
+            <input type="number" min="1900" max="2099" step="1" id="ANO_VEHICULO" name="ANO_VEHICULO" placeholder="(1900 - 2099)" class="form-control" value="{{ $vehiculo->ANO_VEHICULO }}" />
+            @error('ANO_VEHICULO')
+                <div class="alert alert-danger mt-2">{{ $message }}</div>
+            @enderror
+        </div>
         <div class="row">
-            <div class="col">
-                <label for="ANO_VEHICULO" class="form-label">Año</label>
-                <input type="number" min="1900" max="2099" step="1" id="ANO_VEHICULO" name="ANO_VEHICULO" placeholder="(1900 - 2099)" class="form-control" value="{{ $vehiculo->ANO_VEHICULO }}" />
-                @error('ANO_VEHICULO')
-                    <div class="alert alert-danger mt-2">{{ $message }}</div>
-                @enderror
-            </div>
-            <div class="col">
-                <label for="ID_UBICACION" class="form-label">Ubicación</label>
-                <select name="ID_UBICACION" id="ID_UBICACION" class="form-control">
-                    <option value="">-- SELECCIONE UNA UBICACIÓN --</option>
-                    @foreach ($ubicaciones as $ubicacion)
-                        <option value="{{ $ubicacion->ID_UBICACION }}" {{ $ubicacion->ID_UBICACION == $vehiculo->ID_UBICACION ? 'selected' : '' }}>{{ $ubicacion->UBICACION }}</option>
+            <div class="col-md-4">
+                <label for="">Region:</label>
+                <select id="region-select" class="form-control" name="ID_REGION">
+                    <option>Selecciona una región</option>
+                    @foreach ($regiones as $region)
+                        <option value="{{$region->ID_REGION}}">{{$region->REGION}}</option>
                     @endforeach
                 </select>
-                @error('ID_UBICACION')
-                    <div class="alert alert-danger mt-2">{{ $message }}</div>
-                @enderror
+            </div>
+
+            <div class="col-md-4">
+                <label for="">Jurisdiccion: </label>
+                <select id="direccion-select" class="form-control" name="ID_DIRECCION">
+                    <option>Selecciona una dirección regional</option>
+                </select>
+            </div>
+
+            <div class="col-md-4">
+                <label for="">Ubicacion/Departamento</label>
+                <select id="ubicacion-select" class="form-control" name="ID_UBICACION">
+                    <option>Selecciona una ubicación</option>
+                    @foreach ($ubicaciones as $ubicacion)
+                        @if ($ubicacion->ID_UBICACION == $vehiculo->ID_UBICACION)
+                            <option value="{{$ubicacion->ID_UBICACION}}" selected>{{$ubicacion->UBICACION}}</option>
+                        @endif
+                    @endforeach
+                </select>
             </div>
         </div>
         <div class="mb-3">
@@ -114,4 +130,53 @@
 @stop
 
 @section('js')
+{{-- filtros de region, direccion regional y ubicacion --}}
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('#region-select').on('change', function() {
+            var regionId = $(this).val();
+
+            // Limpia los selectores de direcciones regionales y ubicaciones
+            $('#direccion-select').empty();
+            $('#direccion-select').append('<option>Selecciona una dirección regional</option>'); // Agrega nuevamente la opción predeterminada
+
+            $('#ubicacion-select').empty();
+            $('#ubicacion-select').append('<option>Selecciona una ubicación</option>'); // Agrega nuevamente la opción predeterminada
+
+            if(regionId) {
+                $.ajax({
+                    url: '/get-direcciones/'+regionId,
+                    type: 'GET',
+                    dataType: 'json',
+                    success: function(data) {
+                        $.each(data, function(key, value) {
+                            $('#direccion-select').append('<option value="'+ value.ID_DIRECCION +'">'+ value.DIRECCION +'</option>');
+                        });
+                    }
+                });
+            }
+        });
+
+        $('#direccion-select').on('change', function() {
+            var direccionId = $(this).val();
+
+            // Limpia el selector de ubicaciones
+            $('#ubicacion-select').empty();
+            $('#ubicacion-select').append('<option>Selecciona una ubicación</option>'); // Agrega nuevamente la opción predeterminada
+
+            if(direccionId) {
+                $.ajax({
+                    url: '/get-ubicaciones/'+direccionId,
+                    type: 'GET',
+                    dataType: 'json',
+                    success: function(data) {
+                        $.each(data, function(key, value) {
+                            $('#ubicacion-select').append('<option value="'+ value.ID_UBICACION +'">'+ value.UBICACION +'</option>');
+                        });
+                    }
+                });
+            }
+        });
+    });
+</script>
 @stop

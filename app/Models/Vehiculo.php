@@ -16,26 +16,9 @@ class Vehiculo extends Model
         'MARCA',
         'MODELO_VEHICULO',
         'ANO_VEHICULO',
-        // 'ID_UBICACION',
-        'entidad_id',
-        'entidad_type',
+        'ID_UBICACION',
         'ESTADO_VEHICULO',
     ];
-    public function entidad()
-    {
-        return $this->morphTo();
-    }
-    public function getEntidadInfoAttribute()
-    {
-        if ($this->entidad) {
-            if (get_class($this->entidad) === 'App\Models\Departamento') {
-                return $this->entidad->DEPARTAMENTO;
-            } else if (get_class($this->entidad) === 'App\Models\Ubicacion') {
-                return $this->entidad->UBICACION;
-            }
-        }
-        return 'No asignado';
-    }
     // Relación con el tipo de vehículo
     public function tipoVehiculo()
     {

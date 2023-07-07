@@ -84,7 +84,7 @@
                             <td>{{ $vehiculo->MARCA }}</td>
                             <td>{{ $vehiculo->MODELO_VEHICULO }}</td>
                             <td>{{ $vehiculo->ANO_VEHICULO }}</td>
-                            <td>{{ $vehiculo->entidad_info }}</td>
+                            <td>{{ $vehiculo->ubicacion->UBICACION }}</td>
                             <td>{{ $vehiculo->ESTADO_VEHICULO }}</td>
                             <td>
                                 <form action="{{ route('vehiculos.destroy',$vehiculo->ID_VEHICULO) }}" method="POST">
