@@ -63,8 +63,8 @@
                 <label for="ESTADO_SOL_VEH" class="form-label"><i class="fa-solid fa-file-circle-check"></i> Estado de la Solicitud:</label>
                 <select id="ESTADO_SOL_VEH" name="ESTADO_SOL_VEH" class="form-control">
                     <option value="INGRESADO" @if ($solicitud->ESTADO_SOL_VEH === 'INGRESADO') selected @endif>Ingresado</option>
-                    <option value="EN REVISION" @if ($solicitud->ESTADO_SOL_VEH === 'EN REVISION') selected @endif>En revisión</option>
-                    <option value="ACEPTADO" @if ($solicitud->ESTADO_SOL_VEH === 'ACEPTADO') selected @endif>Aceptado</option>
+                    <option value="SUSPENDIDO" @if ($solicitud->ESTADO_SOL_VEH === 'SUSPENDIDO') selected @endif>Suspendido</option>
+                    <option value="POR AUTORIZAR" @if ($solicitud->ESTADO_SOL_VEH === 'POR AUTORIZAR') selected @endif>Por autorizar</option>
                     <option value="RECHAZADO" @if ($solicitud->ESTADO_SOL_VEH === 'RECHAZADO') selected @endif>Rechazado</option>
                 </select>
             </div>
@@ -81,10 +81,6 @@
                 @endforeach
 
                 </select>
-
-
-
-
                 @error('CONDUCTOR')
                     <div class="invalid-feedback">{{ $message }}</div>
                 @enderror
@@ -93,7 +89,7 @@
             {{-- *CAMPO MOTIVO SOLICITUD* --}}
             <div class="mb-3">
                 <label for="MOTIVO_SOL_VEH" class="form-label"><i class="fa-solid fa-file-pen"></i> Motivo de solicitud:</label>
-                <textarea id="MOTIVO_SOL_VEH" name="MOTIVO_SOL_VEH" class="form-control @error('MOTIVO_SOL_VEH') is-invalid @enderror" aria-label="With textarea" rows="5" placeholder="Escriba el motivo de su solicitud (MÁX 1000 CARACTERES)" required autofocus>{{ $solicitud->MOTIVO_SOL_VEH }}</textarea>
+                <textarea id="MOTIVO_SOL_VEH" name="MOTIVO_SOL_VEH" class="form-control @error('MOTIVO_SOL_VEH') is-invalid @enderror" aria-label="With textarea" rows="5" placeholder="Escriba el motivo de su solicitud (MÁX 1000 CARACTERES)" readonly autofocus>{{ $solicitud->MOTIVO_SOL_VEH }}</textarea>
                 @error('MOTIVO_SOL_VEH')
                     <div class="invalid-feedback">{{ $message }}</div>
                 @enderror
@@ -112,7 +108,7 @@
                 <div class="col-md-6">
                     <div class="mb-3">
                         <label for="ORIGEN" class="form-label"><i class="fa-solid fa-map"></i> Comuna origen:</label>
-                        <select id="ORIGEN" name="ORIGEN" class="form-control @error('ORIGEN') is-invalid @enderror" required>
+                        <select id="ORIGEN" name="ORIGEN" class="form-control @error('ORIGEN') is-invalid @enderror" disabled>
                             <option value="" selected>--Seleccione una comuna--</option>
                             {{-- CAPTURAR COMUNAS Y MOSTRAR AQUI --}}
                             @foreach ($comunas as $comuna)
@@ -130,7 +126,7 @@
                 <div class="col-md-6">
                     <div class="mb-3">
                         <label for="DESTINO" class="form-label"><i class="fa-solid fa-map-location-dot"></i> Comuna destino:</label>
-                        <select id="DESTINO" name="DESTINO" class="form-control @error('DESTINO') is-invalid @enderror" required>
+                        <select id="DESTINO" name="DESTINO" class="form-control @error('DESTINO') is-invalid @enderror" disabled>
                             <option value="" selected>--Seleccione una comuna--</option>
                             @foreach ($comunas as $comuna)
                                 <option value="{{ $comuna->ID_COMUNA }}" {{ $solicitud->DESTINO == $comuna->ID_COMUNA ? 'selected' : '' }}>
