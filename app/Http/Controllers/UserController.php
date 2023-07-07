@@ -160,9 +160,15 @@ class UserController extends Controller
     public function edit(string $id)
     {
         try{
+            $funcionarios = User::all();
+            $funcionario = User::find($id);
+
+            if (!$funcionario) {
+                throw new \Exception("Funcionario con id $id no encontrado");
+            }
+
             $roles = Role::all();
             //*Recuperamos los datos y los enviamos*/
-            $departamentos = Ubicacion::all();
             $regiones = Region::all();
             $ubicaciones = Ubicacion::all();
             $grupos = Grupo::all();
@@ -171,11 +177,11 @@ class UserController extends Controller
             $cargos = Cargo::all();
             $calidadesJuridicas = CalidadJuridica::all();
             $sexos = Sexo::all();
-            $funcionario = User::find($id);
-            return view('funcionarios.edit',compact('funcionario','roles','departamentos','regiones','ubicaciones','grupos','escalafones','grados','cargos','calidadesJuridicas','sexos'));
+
+            return view('funcionarios.edit',compact('funcionario','roles','regiones','ubicaciones','grupos','escalafones','grados','cargos','calidadesJuridicas','sexos'));
         }catch(\Exception $e){
-            session()->flash('error', 'Error al acceder al funcionario seleccionado, vuelva a intentarlo más tarde.');
-            return view('funcionarios.index');
+            session()->flash('error', 'Error al acceder al funcionario seleccionado, vuelva a intentarlo más tarde. Error: ' . $e->getMessage());
+            return view('funcionarios.index', compact('funcionarios'));
         }
     }
 
@@ -183,60 +189,66 @@ class UserController extends Controller
      * Update the specified resource in storage.
      */
     public function update(Request $request, string $id)
-    {
-        $funcionario = User::find($id);
-        // Asignamos la entidad_type
-        if ($request->entidad_type == 'Departamento') {
-            $entidad_type = 'App\Models\Departamento';
-        } else if ($request->entidad_type == 'Ubicacion') {
-            $entidad_type = 'App\Models\Ubicacion';
-        } else {
-            // Aquí podrías agregar un mensaje de error o lanzar una excepción si se recibe un valor no esperado
+{
+    $funcionario = User::find($id);
+
+    // Reglas de validación de campos
+    $rules = [
+        'NOMBRES' => 'required|string|max:255',
+        'APELLIDOS' => 'required|string|max:255',
+        'email' => 'required|string|email|max:255|unique:users,email,' .$funcionario->id,
+        'password' => 'nullable|string',
+        'RUT' => 'required|string|max:20|unique:users,rut,'. $funcionario->id,
+        'FECHA_NAC' => 'required|date',
+        'FECHA_INGRESO' => 'required|date',
+        'FONO' => 'required|string|max:255',
+        'ANEXO' => 'required|string|max:255',
+        'ID_UBICACION' => 'required|integer|exists:ubicacion,ID_UBICACION',
+        'ID_REGION' => 'required|integer|exists:region,ID_REGION',
+        'ID_GRUPO' => 'required|integer|exists:grupo,ID_GRUPO',
+        'ID_ESCALAFON' => 'required|integer|exists:escalafon,ID_ESCALAFON',
+        'ID_GRADO' => 'required|integer|exists:grado,ID_GRADO',
+        'ID_CARGO' => 'required|integer|exists:cargos,ID_CARGO',
+        'ID_CALIDAD_JURIDICA' => 'required|integer|exists:calidad_juridica,ID_CALIDAD',
+        'ID_SEXO' => 'required|integer|exists:sexo,ID_SEXO',
+    ];
+
+    $messages = [
+        'required' => 'El campo :attribute es obligatorio.',
+        'string' => 'El campo :attribute debe ser una cadena de texto.',
+        'max' => 'El campo :attribute no debe exceder los :max caracteres.',
+        'unique' => 'El :attribute ya se encuentra registrado.',
+        'date' => 'El campo :attribute debe ser una fecha válida.',
+        'integer' => 'El campo :attribute debe ser un número entero.',
+        'exists' => 'El valor seleccionado para :attribute no es válido.',
+    ];
+
+    $this->validate($request, $rules, $messages);
+
+    try {
+        $data = array_filter($request->all(), 'strlen');
+        $data['RUT'] = RutUtils::formatRut($request->RUT);
+
+        if ($request->password) {
+            $data['password'] = Hash::make($request->password);
         }
-        //reglas de validacion de campos
-        $rules = [
-            'NOMBRES' => 'required|string|max:255',
-            'APELLIDOS' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users,email,' .$funcionario->id,
-            'password' => 'nullable|string|min:8|confirmed',
-            'RUT' => 'required|string|max:20|unique:users,rut,'. $funcionario->id,
-            'ID_REGION' => 'required|numeric',
-            'ID_UBICACION' => 'required|numeric',
-            'ID_GRUPO' => 'required|numeric',
-            'ID_ESCALAFON' => 'required|numeric',
-            'ID_GRADO' => 'required|numeric',
-            'ID_CARGO' => 'required|numeric',
-            'FECHA_NAC' => 'required|date',
-            'FECHA_INGRESO' => 'required|date',
-            'ID_CALIDAD_JURIDICA' => 'required|numeric',
-            'FONO' => 'required|string|max:255',
-            'ANEXO' => 'required|string|max:255',
-            'ID_SEXO' => 'required|numeric',
-        ];
-        try {
-            $request->validate($rules, User::$messages);
-            $data = array_filter($request->all(), 'strlen');
-            $data['RUT'] = RutUtils::formatRut($request->RUT); // Reemplaza a ID_UBICACION y ID_DEPARTAMENTO
-            // $data['entidad_type'] = $entidad_type; // Reemplaza a ID_UBICACION y ID_DEPARTAMENTO
-            $funcionario->update($data);
-            //En caso de que se decida actualizar la contraseña
-            if ($request->password) {
-                $funcionario->update(['password' => bcrypt($request->password)]);
-            }
-            // Asignación de rol
-            $rolSeleccionado = $request->input('rol');
-            if ($rolSeleccionado) {
-                $rol = Role::findById($rolSeleccionado);
-                if (!$funcionario->hasRole($rol)) {
-                    $funcionario->assignRole($rol);
-                }
-            }
-            session()->flash('success', 'Funcionario actualizado correctamente.');
-        } catch(\Exception $e) {
-            session()->flash('error', 'Error al actualizar el funcionario, vuelva a intentarlo más tarde.' . $e->getMessage());
+
+        $funcionario->update($data);
+
+        if($request->role){
+            $funcionario->syncRoles($request->role);
         }
-        return redirect(route('funcionarios.index'));
+
+        $funcionario->update($data);
+
+        session()->flash('success', 'Funcionario actualizado correctamente.');
+    } catch(\Exception $e) {
+        session()->flash('error', 'Error al actualizar el funcionario, vuelva a intentarlo más tarde.' . $e->getMessage());
     }
+
+    return redirect(route('funcionarios.index'));
+}
+
 
     /**
      * Remove the specified resource from storage.
