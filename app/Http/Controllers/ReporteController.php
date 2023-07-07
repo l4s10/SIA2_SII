@@ -8,7 +8,7 @@ use App\Models\SolicitudSala;
 use App\Models\SolicitudBodegas;
 use App\Models\SolicitudReparacionVehiculo;
 use App\Models\RelFunVeh;
-// Segundo Grafico
+// Segundo Grafico.
 use App\Models\RelFunRepGeneral;
 use App\Models\SolicitudEquipos;
 use App\Models\SolicitudFormulario;
@@ -42,38 +42,40 @@ class ReporteController extends Controller
 
     public function index()
     {
-        $grafico1 = [];
-        $grafico2 = [];
-        $grafico3 = [];
-
-        // Obtener y asignar los valores para el Gráfico 1
-        foreach ($this->models1 as $key => $modelClass) {
-            $model = new $modelClass;
-            $grafico1[$key] = $model->count();
-        }
-
-        // Obtener y asignar los valores para el Gráfico 2
-        foreach ($this->models2 as $key => $modelClass) {
-            $model = new $modelClass;
-            $grafico2[$key] = $model->count();
-        }
-
-        // Obtener el total de hombres y mujeres
-        $totalHombres = User::where('ID_SEXO', '=', '1')->count();
-        $totalMujeres = User::where('ID_SEXO', '=', '2')->count();
-
-        // Asignar los valores para el Gráfico 3
-        $grafico3 = [
-            'totalHombres' => $totalHombres,
-            'totalMujeres' => $totalMujeres,
-        ];
+        $grafico1 = $this->getGrafico1Data();
+        $grafico2 = $this->getGrafico2Data();
+        $grafico3 = $this->getGrafico3Data();
 
         //Departamentos
         $ubicaciones = Ubicacion::all();
+        $totals = $this->getTotalsPorUbicacion($ubicaciones);
         //regiones
         $direcciones = DireccionRegional::all();
         // Devolver la vista con los datos
-        return view('reportes.index', compact('grafico1', 'grafico2' , 'grafico3', 'ubicaciones', 'direcciones'));
+        return view('reportes.index', compact('grafico1', 'grafico2', 'grafico3', 'ubicaciones', 'direcciones', 'totals'));
+    }
+
+    private function getTotalsPorUbicacion($ubicaciones)
+    {
+        $totals = [];
+
+        foreach ($ubicaciones as $ubicacion) {
+            $cantidadHombres = User::where('ID_SEXO', '=', '1')
+                ->where('ID_UBICACION', '=', $ubicacion->ID_UBICACION)
+                ->count();
+
+            $cantidadMujeres = User::where('ID_SEXO', '=', '2')
+                ->where('ID_UBICACION', '=', $ubicacion->ID_UBICACION)
+                ->count();
+
+            $totals[$ubicacion->ID_UBICACION] = [
+                'hombres' => $cantidadHombres,
+                'mujeres' => $cantidadMujeres,
+                'total' => $cantidadHombres + $cantidadMujeres,
+            ];
+        }
+
+        return $totals;
     }
 
     public function obtenerDatos(Request $request)

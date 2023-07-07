@@ -125,8 +125,8 @@
         @endforeach
         <tr>
         <td>Total funcionarios</td>
-        <td>{{ $total['total'] }}</td>
-        <td>{{ $total['total'] }}</td>
+        <td>{{ $grafico3['totalHombres'] }}</td>
+        <td>{{ $grafico3['totalMujeres'] }}</td>
         <tr>
     </tbody>
 </table>
