@@ -74,6 +74,7 @@
                 
             </div>
         </div>
+        <!-- Base para el cuarto grafico de solicitud de vehiculos y creacion de base para georeferenciacion. -->
         <div class="col-md-6">
         <div class="chart-container">
             <div id="map" style="display: none;"></div>
@@ -220,6 +221,7 @@
     <script src="{{ asset('js/Reportes/Calendarios/range-calendar.js') }}"></script>
     {{-- !!FUNCION PARA MOSTRAR EN GRANDE --}}
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="crossorigin=""></script>
+
 <script>
     function showChart(chartId) {
         // Obtener la imagen del gráfico
@@ -250,6 +252,7 @@
         });
     });
 </script>
+<!-- Inicializacion de los graficos -->
 <script>
         window.myChartData = {
             // Primer gráfico Total de solicitudes 1
@@ -318,6 +321,7 @@
 <script src="{{asset('js/Reportes/Graficos/grafico3-config.js')}}"></script>
 <script src="{{asset('js/Reportes/Graficos/grafico4-config.js')}}"></script>
 
+<!-- Scrip para Descargar graficos -->
 <script>
     document.addEventListener('DOMContentLoaded', function () {
     const printButton = document.getElementById('print-button');
@@ -335,7 +339,7 @@
 });
 </script>
 
-
+<!-- Scrip para inicizaliar el mapa -->
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         var mapDiv = document.getElementById('map');
@@ -363,13 +367,28 @@
             }).addTo(map);      
             // Crea un grupo de capas
             featureGroup = L.featureGroup().addTo(map);
-            L.marker([-38.7396, -72.5984]).addTo(map)
-            .bindPopup('Salida de Vehiculo')
+            // Talcahuano
+            L.marker([-36.7167, -73.1167]).addTo(map)
+            .bindPopup('FJGK-74 Salida de Vehiculo')
             .openPopup();
+            // Coronel
+            L.marker([-37.0167, -73.1333]).addTo(map)
+            .bindPopup('FJGK-74 Llegada de Vehiculo')
+            .openPopup();
+            // Tome
+            L.marker([-36.6155, -72.9561]).addTo(map)
+            .bindPopup('HSHV-23 Salida de Vehiculo')
+            .openPopup();
+            //Este apartador es para mostrar los pings en el mapa (Concepcion)
             L.marker([-36.8261, -73.0498]).addTo(map)
-            .bindPopup('Llegada de Vehiculo')
+            .bindPopup('HSHV-23 Llegada de Vehiculo')
             .openPopup();
-            var polyline = L.polyline([[-36.8261, -73.0498], [-38.7396, -72.5984]]).addTo(featureGroup);
+            var polyline1 = L.polyline([[-36.8261, -73.0498], [-36.6155, -72.9561]]).addTo(featureGroup);
+            var polyline2 = L.polyline([[-36.7167, -73.1167], [-37.0167, -73.1333]]).addTo(featureGroup);
+
+            // Establecer estilo personalizado para las polilíneas
+            polyline1.setStyle({ color: 'red' });
+            polyline2.setStyle({ color: 'blue' });
         }
         mapOpenButton.addEventListener('click', toggleMap);
     });
