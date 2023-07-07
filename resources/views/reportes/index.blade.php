@@ -105,68 +105,33 @@
 
 <!-- Agrega el código de la tabla de contingencia vacía -->
 <table class="table">
-        <h3>Tabla de datos <h3>
+    <h3>Tabla de Contingencia</h3>
     <thead>
         <tr>
-            <h>Direccion<h5> 
-            <!-- Aqui iria el tema de filtrado por Region (ejemplo: La de Concepcion de la 8) -->
-            <select name="" id="direcciones" class="form-control">
-                <option value="">--Selecciona una direccion --</option>
-                @foreach ($direcciones as $direccion)
-                    <option value="{{$direccion->ID_DIRECCION}}">{{$direccion->DIRECCION}}</option>
-                @endforeach
-            </select>
-            <th>Departamentos</th>
+            <th>Ubicación</th>
             <th>Hombres</th>
             <th>Mujeres</th>
             <th>Total</th>
         </tr>
     </thead>
     <tbody>
-        <tr>
-        <td>
-            <select name="" id="ubicaciones" class="form-control">
-                <option value="">--Selecciona un explorador --</option>
-                @foreach ($ubicaciones as $ubicacion)
-                    <option value="{{$ubicacion->ID_UBICACION}}">{{$ubicacion->UBICACION}}</option>
-                @endforeach
-            </select>
-            </td>
-            <td>ID_SEXO</td>
-            <td>ID_SEXO</td>
-            <td>*Valor Final*</td>
-        </tr>
-        <td>
-        <select name="" id="ubicaciones" class="form-control">
-                <option value="">--Selecciona un explorador --</option>
-                @foreach ($ubicaciones as $ubicacion)
-                    <option value="{{$ubicacion->ID_UBICACION}}">{{$ubicacion->UBICACION}}</option>
-                @endforeach
-            </select>
-            </td>
-            <td>ID_SEXO</td>
-            <td>ID_SEXO</td>
-            <td>*Valor Final*</td>
-        <tr>
-        <td>
-        <select name="" id="ubicaciones" class="form-control">
-                <option value="">--Selecciona un explorador --</option>
-                @foreach ($ubicaciones as $ubicacion)
-                    <option value="{{$ubicacion->ID_UBICACION}}">{{$ubicacion->UBICACION}}</option>
-                @endforeach
-            </select>
-            </td>
-            <td>ID_SEXO</td>
-            <td>ID_SEXO</td>
-            <td>*Valor Final*</td>
-        <tr>
+        @foreach ($totals as $ubicacionId => $total)
+            <tr>
+                <td>{{ $ubicaciones->find($ubicacionId)->UBICACION }}</td>
+                <td id="hombres">{{ $total['hombres'] }}</td>
+                <td id="mujeres">{{ $total['mujeres'] }}</td>
+                <td id="total">{{ $total['total'] }}</td>
+            </tr>
+        @endforeach
         <tr>
         <td>Total funcionarios</td>
-        <td>Total_Hombres</td>
-        <td>Total_Mujeres</td>
+        <td>{{ $total['total'] }}</td>
+        <td>{{ $total['total'] }}</td>
         <tr>
     </tbody>
 </table>
+
+
 @endsection
 
 @section('css')
@@ -339,6 +304,7 @@
     });
 });
 </script>
+
 
 <!-- Scrip para inicizaliar el mapa -->
 <script>
