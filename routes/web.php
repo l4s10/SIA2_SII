@@ -120,7 +120,8 @@ Route::resource('reserva/vehiculo', 'App\Http\Controllers\RelFunVehController')-
 ]);
 //Endpoint para usuarios
 
-Route::get('funcionarios/region/{id}', 'App\Http\Controllers\UserController@getUsersByRegion')->name('funcionarios.region');
+Route::get('funcionarios/region', 'App\Http\Controllers\UserController@getUsersByRegion')->name('funcionarios.region');
+Route::post('funcionarios/obtener-ocupantes', 'App\Http\Controllers\UserController@obtenerOcupantes')->name('funcionarios.obtener-ocupantes');
 Route::resource('funcionarios','App\Http\Controllers\UserController');
 
 Route::post('/update-stock', [InventoryController::class, 'updateStock'])->name('update-stock');
