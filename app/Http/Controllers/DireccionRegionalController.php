@@ -117,5 +117,10 @@ class DireccionRegionalController extends Controller
         $direccion = DireccionRegional::where('ID_DIRECCION', '=', Ubicacion::find($ubicacionId)->ID_DIRECCION)->first();
         return response()->json($direccion);
     }
+    public function getDirecciones($id)
+    {
+        $direcciones = DireccionRegional::where('ID_REGION', $id)->get();
+        return response()->json($direcciones);
+    }
 }
 

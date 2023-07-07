@@ -21,7 +21,6 @@ use App\Models\Grado;
 use App\Models\CalidadJuridica;
 use App\Models\Sexo;
 use App\Models\Cargo;
-use App\Models\Departamento;
 //!!WEA LOCA
 use App\Models\DireccionRegional;
 //*IMPORTAMOS EL UTILS DE FORMATEAR RUT */
@@ -59,7 +58,6 @@ class UserController extends Controller
     {
         $roles = Role::all();
         //*Recuperamos los datos y los enviamos*/
-        $departamentos = Departamento::all();
         $regiones = Region::all();
         $ubicaciones = Ubicacion::all();
         $grupos = Grupo::all();
@@ -69,7 +67,7 @@ class UserController extends Controller
         $calidadesJuridicas = CalidadJuridica::all();
         $sexos = Sexo::all();
         $direcciones = DireccionRegional::all();
-        return view('funcionarios.create',compact('roles','ubicaciones','regiones','grupos','escalafones','grados','calidadesJuridicas','cargos','sexos','direcciones','departamentos'));
+        return view('funcionarios.create',compact('roles','ubicaciones','regiones','grupos','escalafones','grados','calidadesJuridicas','cargos','sexos','direcciones'));
     }
 
     /**
@@ -78,7 +76,37 @@ class UserController extends Controller
     public function store(Request $request)
     {
         try{
-            $request->validate(User::$rules, User::$messages);
+            $rules = [
+                'NOMBRES' => 'required|string|max:255',
+                'APELLIDOS' => 'required|string|max:255',
+                'email' => 'required|string|email|max:255|unique:users',
+                'password' => 'nullable|string',
+                'RUT' => 'required|string|max:20|unique:users',
+                'FECHA_NAC' => 'required|date',
+                'FECHA_INGRESO' => 'required|date',
+                'FONO' => 'required|string|max:255',
+                'ANEXO' => 'required|string|max:255',
+                'ID_UBICACION' => 'required|integer|exists:ubicacion,ID_UBICACION',
+                'ID_REGION' => 'required|integer|exists:region,ID_REGION',
+                'ID_GRUPO' => 'required|integer|exists:grupo,ID_GRUPO',
+                'ID_ESCALAFON' => 'required|integer|exists:escalafon,ID_ESCALAFON',
+                'ID_GRADO' => 'required|integer|exists:grado,ID_GRADO',
+                'ID_CARGO' => 'required|integer|exists:cargos,ID_CARGO',
+                'ID_CALIDAD_JURIDICA' => 'required|integer|exists:calidad_juridica,ID_CALIDAD',
+                'ID_SEXO' => 'required|integer|exists:sexo,ID_SEXO',
+            ];
+
+            $messages = [
+                'required' => 'El campo :attribute es obligatorio.',
+                'string' => 'El campo :attribute debe ser una cadena de texto.',
+                'max' => 'El campo :attribute no debe exceder los :max caracteres.',
+                'unique' => 'El :attribute ya se encuentra registrado.',
+                'date' => 'El campo :attribute debe ser una fecha válida.',
+                'integer' => 'El campo :attribute debe ser un número entero.',
+                'exists' => 'El valor seleccionado para :attribute no es válido.',
+            ];
+
+            $this->validate($request, $rules, $messages);
             // Asignamos la entidad_type
             $user = User::create([
                 'NOMBRES' => $request->NOMBRES,
@@ -89,7 +117,7 @@ class UserController extends Controller
                 'ID_REGION' => $request->ID_REGION,
                 // 'entidad_id' => $request->entidad_id, // Reemplaza a ID_UBICACION y ID_DEPARTAMENTO
                 // 'entidad_type' => $entidad_type, // Reemplaza a ID_UBICACION y ID_DEPARTAMENTO
-                'ID_UBICACION' => $request->entidad_id,
+                'ID_UBICACION' => $request->ID_UBICACION,
                 'ID_GRUPO' => $request->ID_GRUPO,
                 'ID_ESCALAFON' => $request->ID_ESCALAFON,
                 'ID_GRADO' => $request->ID_GRADO,

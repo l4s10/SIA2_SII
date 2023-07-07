@@ -120,6 +120,10 @@ Route::resource('reserva/vehiculo', 'App\Http\Controllers\RelFunVehController')-
     'destroy' => 'solicitud.vehiculos.destroy',
 ]);
 //Endpoint para usuarios
+//Para filtros de registro usuarios
+Route::get('/get-direcciones/{id}', [DireccionRegionalController::class, 'getDirecciones']);
+Route::get('/get-ubicaciones/{id}', [UbicacionesController::class, 'getUbicaciones']);
+//Para filtros de vehiculos
 Route::get('/direccion/{ubicacionId}', [DireccionRegionalController::class, 'getDireccion']);
 Route::get('/ubicaciones/{direccionId}', [UbicacionesController::class, 'getUbicaciones']);
 Route::get('/usuarios/{ubicacionId}', [UserController::class, 'getUsuarios']);

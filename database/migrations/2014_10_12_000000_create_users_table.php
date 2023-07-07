@@ -18,10 +18,10 @@ return new class extends Migration
             $table->string('REGION', 128)->nullable();
         });
 
-        Schema::create('departamento', function (Blueprint $table) {
-            $table->integer('ID_DEPARTAMENTO')->unsigned()->primary();
-            $table->string('DEPARTAMENTO', 128)->nullable();
-        });
+        // Schema::create('departamento', function (Blueprint $table) {
+        //     $table->integer('ID_DEPARTAMENTO')->unsigned()->primary();
+        //     $table->string('DEPARTAMENTO', 128)->nullable();
+        // });
 
         Schema::create('direcciones_regionales', function (Blueprint $table) {
             $table->increments('ID_DIRECCION');
