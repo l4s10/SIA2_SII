@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use App\Models\Cargo;
 use App\Models\Resolucion;
 use App\Models\User;
+use App\Models\DireccionRegional;
 
 use Illuminate\Http\Request;
 
@@ -28,18 +29,22 @@ class BusquedaFuncionarioController extends Controller
         //id del Cargo delegado de la resolución 
         $idCargo = $request->input('ID_DELEGADO');
         
-
+        //Parámetros compactados a la vista
         $resoluciones = [];
         $cargoFuncionario = null; // Valor predeterminado
         $cargoResolucion = null;
         $rutRes = null;
+        $regionSesionActiva = auth()->user()->ID_REGION;
+        $direccionesRegionales = DireccionRegional::all();
+
 
         if ($nombres && $apellidos && $rut && $idCargoFuncionario) {
-            $query = Resolucion::whereHas('delegado.users', function ($query) use ($nombres, $apellidos, $rut, $idCargoFuncionario) {
+            $query = Resolucion::whereHas('delegado.users', function ($query) use ($nombres, $apellidos, $rut, $idCargoFuncionario, $regionSesionActiva) {
                 $query->where('NOMBRES', $nombres)
                     ->where('APELLIDOS', $apellidos)
                     ->where('RUT', $rut)
-                    ->where('ID_CARGO',$idCargoFuncionario);
+                    ->where('ID_CARGO',$idCargoFuncionario)
+                    ->where('ID_REGION',$regionSesionActiva);
             });
             $resoluciones = $query->with('tipo', 'firmante', 'delegado', 'facultad')->get();
 
@@ -76,7 +81,7 @@ class BusquedaFuncionarioController extends Controller
         }
 
         $cargos = Cargo::all();
-        return view('directivos.busquedafuncionario.index', compact('resoluciones', 'cargos','nombres', 'apellidos', 'cargoFuncionario','rutRes', 'cargoResolucion','busquedaResolucionCargo','busquedaResolucionFuncionario','busquedaResolucionCargoFallida','busquedaResolucionFuncionarioFallida'));
+        return view('directivos.busquedafuncionario.index', compact('resoluciones', 'cargos','nombres', 'apellidos', 'cargoFuncionario','rutRes', 'cargoResolucion','busquedaResolucionCargo','busquedaResolucionFuncionario','busquedaResolucionCargoFallida','busquedaResolucionFuncionarioFallida','regionSesionActiva','direccionesRegionales'));
     }
 
     public function buscarFuncionarios(Request $request)

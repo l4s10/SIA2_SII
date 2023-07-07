@@ -128,7 +128,7 @@ Route::get('/direccion/{ubicacionId}', [DireccionRegionalController::class, 'get
 Route::get('/ubicaciones/{direccionId}', [UbicacionesController::class, 'getUbicaciones']);
 Route::get('/usuarios/{ubicacionId}', [UserController::class, 'getUsuarios']);
 
-// Route::get('funcionarios/region/{id}', 'App\Http\Controllers\UserController@getUsersByRegion')->name('funcionarios.region');
+Route::get('funcionarios/region/{id}', 'App\Http\Controllers\UserController@getUsersByRegion')->name('funcionarios.region');
 Route::resource('funcionarios','App\Http\Controllers\UserController');
 
 Route::post('/update-stock', [InventoryController::class, 'updateStock'])->name('update-stock');

@@ -33,16 +33,17 @@
 @endsection
 
 @section('content')
+
     <!-- Agrega los elementos input de fecha aquí -->
     <div class="container overflow-hidden">
         <div class="row gx-5 custom-row">
             <div class="col-md-3">
                 <label for="start-date">Fecha de inicio:</label>
-                <input type="date" id="start-date" class="form-control" placeholder="Indique fecha inicio">
+                <input type="date" id="start-date" name="fechaInicio" class="form-control" placeholder="Indique fecha inicio">
             </div>
             <div class="col-md-3">
                 <label for="end-date">Fecha de fin:</label>
-                <input type="date" id="end-date" class="form-control" placeholder="Indique fecha fin">
+                <input type="date" id="end-date" name="fechaFin" class="form-control" placeholder="Indique fecha fin">
             </div>
             <div class="col-md-3 custom-button">
                 <button id="refresh-button" class="btn btn-primary btn-refresh">Refrescar fechas</button>

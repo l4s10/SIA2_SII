@@ -36,7 +36,13 @@ return new class extends Migration
             $table->unsignedInteger('ID_DIRECCION');
             $table->foreign('ID_DIRECCION')->references('ID_DIRECCION')->on('direcciones_regionales');
         });
-
+        //!! SE AGREGA LA TABLA CARGOS PARA USERS
+        Schema::create('cargos', function(Blueprint $table){
+            $table->increments('ID_CARGO');
+            $table->string('CARGO', 128)->nullable();
+            $table->unsignedInteger('ID_DIRECCION');
+            $table->foreign('ID_DIRECCION')->references('ID_DIRECCION')->on('direcciones_regionales');
+        });
 
 
         //!!-----------------------------------------------------
@@ -52,11 +58,7 @@ return new class extends Migration
             $table->integer('ID_GRADO')->unsigned()->primary();
             $table->integer('GRADO')->nullable();
         });
-        //!! SE AGREGA LA TABLA CARGOS PARA USERS
-        Schema::create('cargos', function(Blueprint $table){
-            $table->increments('ID_CARGO');
-            $table->string('CARGO', 128)->nullable();
-        });
+        
         Schema::create('calidad_juridica', function (Blueprint $table) {
             $table->integer('ID_CALIDAD')->unsigned()->primary();
             $table->string('CALIDAD', 128)->nullable();
