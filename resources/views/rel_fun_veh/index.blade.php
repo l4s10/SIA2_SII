@@ -69,6 +69,7 @@
                             <th scope="col">Estado</th>
                             <th scope="col">Fecha Ingreso</th>
                             <th scope="col">Acciones</th>
+                            <th scope="col"> Exportables</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -88,6 +89,12 @@
                                         <a href="{{ route('solicitud.vehiculos.show',$sol_veh->ID_SOL_VEH) }}" class="btn btn-primary"><i class="fa-regular fa-eye"></i> Ver</a>
                                         <a href="{{route('solicitud.vehiculos.edit',$sol_veh->ID_SOL_VEH)}}" class="btn btn-info"><i class="fa-regular fa-clipboard"></i> Revisar</a>
                                         <button type="submit" class="btn btn-danger"><i class="fa-solid fa-trash"></i> Borrar</button>
+                                    </form>
+                                </td>
+                                <td>
+                                    <form action="{{ route('solicitud.vehiculos.pdf',$sol_veh->ID_SOL_VEH) }}" method="POST" target="_blank" id="pdfForm">
+                                        @csrf
+                                        <button type="submit" class="btn btn-success"><i class="fa-regular fa-file-pdf"></i> PDF</button>
                                     </form>
                                 </td>
                             </tr>
@@ -124,6 +131,17 @@
                     "url": "https://cdn.datatables.net/plug-ins/1.11.3/i18n/es_es.json"
                 },
             });
+        });
+    </script>
+    <script>
+        document.getElementById('pdfForm').addEventListener('submit', function(event) {
+            event.preventDefault(); // Evita el envío normal del formulario
+
+            // Abre el destino del formulario en una nueva pestaña o ventana
+            window.open(this.action, '_blank');
+
+            // Envía el formulario
+            this.submit();
         });
     </script>
 @stop

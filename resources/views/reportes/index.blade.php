@@ -72,7 +72,7 @@
         <div class="col-md-6">
             <div class="chart-container">
                 <canvas id="myChart2"></canvas>
-                
+
             </div>
         </div>
         <!-- Base para el cuarto grafico de solicitud de vehiculos y creacion de base para georeferenciacion. -->
@@ -102,34 +102,53 @@
     </div>
 </div>
 
-
-<!-- Agrega el código de la tabla de contingencia vacía -->
-<table class="table">
-    <h3>Tabla de Contingencia</h3>
-    <thead>
-        <tr>
-            <th>Ubicación</th>
-            <th>Hombres</th>
-            <th>Mujeres</th>
-            <th>Total</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach ($totals as $ubicacionId => $total)
+<div class="container my-5">
+    <h2>Tabla de contingencia</h2>
+    <h5>Filtros (llenar todos los campos)</h5>
+    <div class="row" style="padding-bottom:3%;">
+        <div class="col-lg-4">
+            <label for="">Region:</label>
+            <select name="region" id="region-select" class="form-control">
+                <option value="">Selecciona la región</option>
+                @foreach($regiones as $region)
+                    <option value="{{ $region->ID_REGION }}">{{ $region->REGION }}</option>
+                @endforeach
+            </select>
+        </div>
+        <div class="col-lg-4">
+            <label for="">Jurisdicción</label>
+            <select name="direccion" id="direccion-select" class="form-control">
+                <option value="">Selecciona la dirección regional</option>
+            </select>
+        </div>
+        <div class="col-lg-4">
+            <label for="">Departamento/Ubicación</label>
+            <select name="ubicacion" id="ubicacion-select" class="form-control">
+                <option value="">Selecciona la ubicación</option>
+            </select>
+        </div>
+    </div>
+    <table id="ubicaciones-table" class="table table-striped">
+        <thead>
             <tr>
-                <td>{{ $ubicaciones->find($ubicacionId)->UBICACION }}</td>
-                <td id="hombres">{{ $total['hombres'] }}</td>
-                <td id="mujeres">{{ $total['mujeres'] }}</td>
-                <td id="total">{{ $total['total'] }}</td>
+                <th>Ubicación</th>
+                <th>Hombres</th>
+                <th>Mujeres</th>
+                <th>Total</th>
             </tr>
-        @endforeach
-        <tr>
-        <td>Total funcionarios</td>
-        <td>{{ $grafico3['totalHombres'] }}</td>
-        <td>{{ $grafico3['totalMujeres'] }}</td>
-        <tr>
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+        </tbody>
+        <tfoot>
+            <tr>
+                <th>Total:</th>
+                <th id="total-hombres">0</th>
+                <th id="total-mujeres">0</th>
+                <th id="total-total">0</th>
+            </tr>
+        </tfoot>
+    </table>
+</div>
 
 
 @endsection
@@ -173,6 +192,9 @@
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     <script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/es.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> --}}
+    <!-- DataTables -->
+    <script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.11.3/datatables.min.js"></script>
+
     {{-- CHART.JS --}}
     <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -282,10 +304,122 @@
         };
 </script>
 
-<script src="{{asset('js/Reportes/Graficos/grafico1-config.js')}}"></script>  
+<script src="{{asset('js/Reportes/Graficos/grafico1-config.js')}}"></script>
 <script src="{{asset('js/Reportes/Graficos/grafico2-config.js')}}"></script>
 <script src="{{asset('js/Reportes/Graficos/grafico3-config.js')}}"></script>
 <script src="{{asset('js/Reportes/Graficos/grafico4-config.js')}}"></script>
+
+{{--!! tabla contingencia (FILTROS) --}}
+<script>
+    $(document).ready(function () {
+        var selectedUbicaciones = {};
+
+        //Datatable inicial
+        // Inicializa la tabla como DataTable
+        var table = $('#ubicaciones-table').DataTable({
+            "lengthMenu": [[5,10, 50, -1], [5, 10, 50, "All"]],
+            "responsive": true,
+            "columnDefs": [
+                { "orderable": false, "targets": 3 }
+            ],
+            "language": {
+                "url": "https://cdn.datatables.net/plug-ins/1.11.3/i18n/es_es.json"
+            },
+        });
+
+        //Select region
+        $('#region-select').on('change', function() {
+            var regionId = $(this).val();
+
+                // Limpia los selectores de direcciones regionales y ubicaciones
+            $('#direccion-select').empty();
+            $('#direccion-select').append('<option>Selecciona una dirección regional</option>'); // Agrega nuevamente la opción predeterminada
+
+            $('#ubicacion-select').empty();
+            $('#ubicacion-select').append('<option>Selecciona una ubicación</option>'); // Agrega nuevamente la opción predeterminada
+
+            if(regionId) {
+                $.ajax({
+                    url: '/get-direcciones/'+regionId,
+                    type: 'GET',
+                    dataType: 'json',
+                    success: function(data) {
+                        $.each(data, function(key, value) {
+                            $('#direccion-select').append('<option value="'+ value.ID_DIRECCION +'">'+ value.DIRECCION +'</option>');
+                        });
+                    }
+                });
+            }
+        });
+        //Select direccion regional
+        $('#direccion-select').on('change', function() {
+            var direccionId = $(this).val();
+
+            // Limpia el selector de ubicaciones
+            $('#ubicacion-select').empty();
+            $('#ubicacion-select').append('<option>Selecciona una ubicación</option>'); // Agrega nuevamente la opción predeterminada
+
+            if(direccionId) {
+                $.ajax({
+                    url: '/get-ubicaciones/'+direccionId,
+                    type: 'GET',
+                    dataType: 'json',
+                    success: function(data) {
+                        $.each(data, function(key, value) {
+                            if(!selectedUbicaciones[value.ID_UBICACION]) { // Si la ubicación no ha sido seleccionada previamente
+                                $('#ubicacion-select').append('<option value="'+ value.ID_UBICACION +'">'+ value.UBICACION +'</option>');
+                            }
+                        });
+                    }
+                });
+            }
+        });
+        //FIN FILTROS
+        //select ubicacion y filtrado
+        $('#ubicacion-select').on('change', function() {
+            var ubicacionId = $(this).val();
+
+            if(ubicacionId && !selectedUbicaciones[ubicacionId]) {
+                $.ajax({
+                    url: '/get-totals/'+ubicacionId,
+                    type: 'GET',
+                    dataType: 'json',
+                    success: function(data) {
+                        var tableRow = [data.ubicacion, data.hombres, data.mujeres, data.total];
+                        table.row.add(tableRow).draw(); // Agrega la nueva fila y re-renderiza la tabla
+                        selectedUbicaciones[ubicacionId] = true; // Agrega el ubicacionId seleccionado al objeto selectedUbicaciones
+
+                        // Actualizar los totales
+                        $('#total-hombres').text(Number($('#total-hombres').text()) + data.hombres);
+                        $('#total-mujeres').text(Number($('#total-mujeres').text()) + data.mujeres);
+                        $('#total-total').text(Number($('#total-total').text()) + data.total);
+
+                        // Obtener el ID de la dirección actualmente seleccionada
+                        var direccionId = $('#direccion-select').val();
+
+                        // Realizar una nueva solicitud AJAX para obtener las ubicaciones
+                        $.ajax({
+                            url: '/get-ubicaciones/'+direccionId,
+                            type: 'GET',
+                            dataType: 'json',
+                            success: function(data) {
+                                $('#ubicacion-select').empty();
+                                $('#ubicacion-select').append('<option>Selecciona una ubicación</option>'); // Agrega nuevamente la opción predeterminada
+
+                                $.each(data, function(key, value) {
+                                    if(!selectedUbicaciones[value.ID_UBICACION]) { // Si la ubicación no ha sido seleccionada previamente
+                                        $('#ubicacion-select').append('<option value="'+ value.ID_UBICACION +'">'+ value.UBICACION +'</option>');
+                                    }
+                                });
+                            }
+                        });
+                    }
+                });
+            }
+        });
+
+    });
+</script>
 
 <!-- Scrip para Descargar graficos -->
 <script>
@@ -331,7 +465,7 @@
 
             L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
             attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-            }).addTo(map);      
+            }).addTo(map);
             // Crea un grupo de capas
             featureGroup = L.featureGroup().addTo(map);
             // Talcahuano

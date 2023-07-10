@@ -20,6 +20,7 @@ use Carbon\Carbon;
 // Cuarto Grafico.
 use App\Models\Vehiculo;
 //Exploradores
+use App\Models\Region;
 use App\Models\Ubicacion;
 use App\Models\DireccionRegional;
 
@@ -47,35 +48,59 @@ class ReporteController extends Controller
         $grafico3 = $this->getGrafico3Data();
 
         //Departamentos
+        $regiones = Region::all();
         $ubicaciones = Ubicacion::all();
         $totals = $this->getTotalsPorUbicacion($ubicaciones);
         //regiones
         $direcciones = DireccionRegional::all();
         // Devolver la vista con los datos
-        return view('reportes.index', compact('grafico1', 'grafico2', 'grafico3', 'ubicaciones', 'direcciones', 'totals'));
+        return view('reportes.index', compact('grafico1', 'grafico2', 'grafico3', 'ubicaciones', 'regiones','direcciones', 'totals'));
     }
 
-    private function getTotalsPorUbicacion($ubicaciones)
+    // private function getTotalsPorUbicacion($ubicaciones)
+    // {
+    //     $totals = [];
+
+    //     foreach ($ubicaciones as $ubicacion) {
+    //         $cantidadHombres = User::where('ID_SEXO', '=', '1')
+    //             ->where('ID_UBICACION', '=', $ubicacion->ID_UBICACION)
+    //             ->count();
+
+    //         $cantidadMujeres = User::where('ID_SEXO', '=', '2')
+    //             ->where('ID_UBICACION', '=', $ubicacion->ID_UBICACION)
+    //             ->count();
+
+    //         $totals[$ubicacion->ID_UBICACION] = [
+    //             'hombres' => $cantidadHombres,
+    //             'mujeres' => $cantidadMujeres,
+    //             'total' => $cantidadHombres + $cantidadMujeres,
+    //         ];
+    //     }
+
+    //     return $totals;
+    // }
+    public function getTotalsPorUbicacion($ubicacionId)
     {
-        $totals = [];
+        $ubicacion = Ubicacion::find($ubicacionId);
 
-        foreach ($ubicaciones as $ubicacion) {
-            $cantidadHombres = User::where('ID_SEXO', '=', '1')
-                ->where('ID_UBICACION', '=', $ubicacion->ID_UBICACION)
-                ->count();
-
-            $cantidadMujeres = User::where('ID_SEXO', '=', '2')
-                ->where('ID_UBICACION', '=', $ubicacion->ID_UBICACION)
-                ->count();
-
-            $totals[$ubicacion->ID_UBICACION] = [
-                'hombres' => $cantidadHombres,
-                'mujeres' => $cantidadMujeres,
-                'total' => $cantidadHombres + $cantidadMujeres,
-            ];
+        if (!$ubicacion) {
+            return response()->json(['error' => 'Ubicación no encontrada'], 404);
         }
 
-        return $totals;
+        if($ubicacion instanceof \Illuminate\Database\Eloquent\Collection){
+            return response()->json(['error' => 'Esperaba un modelo de ubicación, pero se obtuvo una colección.'], 500);
+        }
+
+        $hombres = User::where('ID_UBICACION', $ubicacion->ID_UBICACION)->where('ID_SEXO', 1)->count();
+        $mujeres = User::where('ID_UBICACION', $ubicacion->ID_UBICACION)->where('ID_SEXO', 2)->count();
+        $total = $hombres + $mujeres;
+
+        return response()->json([
+            'ubicacion' => $ubicacion->UBICACION,
+            'hombres' => $hombres,
+            'mujeres' => $mujeres,
+            'total' => $total
+        ]);
     }
 
     public function obtenerDatos(Request $request)

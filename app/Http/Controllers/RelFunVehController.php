@@ -13,6 +13,10 @@ use App\Models\Region;
 use App\Models\DireccionRegional;
 use Illuminate\Support\Facades\Validator;
 
+use Dompdf\Dompdf;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\Response;
+
 class RelFunVehController extends Controller
 {
     /**
@@ -158,4 +162,56 @@ class RelFunVehController extends Controller
         }
         return redirect(route('solicitud.vehiculos.index'));
     }
+    //!!METODO DESCARGA DIRECTA
+    // public function generarPDF(Request $request, $id)
+    // {
+    //     $solicitud = RelFunVeh::findOrFail($id);
+    //     $fecha = Carbon::now()->format('d-m-Y_H-i');
+
+    //     $pdf = new Dompdf();
+    //     $pdf->loadHtml(view('rel_fun_veh.hojaSalida', compact('solicitud', 'fecha'))->render());
+    //     $pdf->setPaper('A4', 'portrait');
+
+    //     $pdf->render();
+
+    //     $nombreArchivo = $fecha . '_solicitud_vehicular.pdf';
+    //     $nombreArchivo = str_replace('/', '_', $nombreArchivo);
+    //     $nombreArchivo = str_replace('\\', '_', $nombreArchivo);
+
+    //     return response()->streamDownload(function () use ($pdf) {
+    //         echo $pdf->output();
+    //     }, $nombreArchivo);
+    // }
+    //!!METODO "STREAM"
+    public function generarPDF(Request $request, $id)
+    {
+        //Obtencion de informacion relevante
+        $solicitud = RelFunVeh::findOrFail($id);
+        $solicitante = User::findOrFail($solicitud->ID_USUARIO);
+        $comuna_destino = Comuna::findOrFail($solicitud->DESTINO);
+        //Datos con pardon
+        $ocupante_1 = User::find($solicitud->OCUPANTE_1);
+        $ocupante_2 = User::find($solicitud->OCUPANTE_2);
+        $ocupante_3 = User::find($solicitud->OCUPANTE_3);
+
+        $fecha = Carbon::now()->format('d-m-Y_H-i');
+
+        $pdf = new Dompdf();
+        $pdf->loadHtml(view('rel_fun_veh.hojaSalida', compact('solicitud', 'comuna_destino', 'solicitante','ocupante_1', 'ocupante_2', 'ocupante_3', 'fecha'))->render());
+        $pdf->setPaper('A4', 'portrait');
+
+        $pdf->render();
+
+        $nombreArchivo = $fecha . '_solicitud_vehicular.pdf';
+        $nombreArchivo = str_replace('/', '_', $nombreArchivo);
+        $nombreArchivo = str_replace('\\', '_', $nombreArchivo);
+
+        return Response::stream(function () use ($pdf) {
+            echo $pdf->output();
+        }, 200, [
+            'Content-Type' => 'application/pdf',
+            'Content-Disposition' => 'inline; filename="'.$nombreArchivo.'"'
+        ]);
+    }
+
 }

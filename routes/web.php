@@ -110,6 +110,7 @@ Route::resource('reserva/bodega', 'App\Http\Controllers\SolicitudBodegasControll
     'destroy' => 'solicitud.bodegas.destroy',
 ]);
 //**Rutas para solicitud vehiculos
+Route::post('reserva/vehiculo/{id}/pdf', 'App\Http\Controllers\RelFunVehController@generarPDF')->name('solicitud.vehiculos.pdf');
 Route::resource('reserva/vehiculo', 'App\Http\Controllers\RelFunVehController')->names([
     'index' => 'solicitud.vehiculos.index',
     'create' => 'solicitud.vehiculos.create',
@@ -138,6 +139,8 @@ Route::get('/home', [HomeController::class, 'index']);
 Route::get('/reportes', [ReporteController::class, 'index'])->name('reportes.index');
 // Esta es la ruta POST para recibir las solicitudes AJAX
 Route::post('/reportes/data', [ReporteController::class, 'obtenerDatos'])->name('reportes.data');
+//RUTA GET PARA TABLA CONTINGENCIA
+Route::get('/get-totals/{id}', [ReporteController::class, 'getTotalsPorUbicacion']);
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/dashboard', function () {
