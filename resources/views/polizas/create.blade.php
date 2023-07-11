@@ -8,7 +8,7 @@
 
 @section('content')
 <div class="container">
-    <form action="{{ route('poliza.store') }}" method="POST">
+    <form action="{{ route('polizas.store') }}" method="POST">
         @csrf
         <div class="mb-3">
             <label for="NRO_POLIZA" class="form-label"><i class="fa-solid fa-book-bookmark"></i> N° Poliza:</label>
@@ -40,8 +40,8 @@
             @endif
         </div>
 
-        <a href="{{route('poliza.index')}}" class="btn btn-secondary" tabindex="5"><i class="fa-solid fa-hand-point-left"></i> Cancelar</a>
-        <button type="submit" class="btn btn-primary" tabindex="4"><i class="fa-solid fa-floppy-disk"></i> Guardar resolución</button>
+        <a href="{{route('polizas.index')}}" class="btn btn-secondary" tabindex="5"><i class="fa-solid fa-hand-point-left"></i> Cancelar</a>
+        <button type="submit" class="btn btn-primary" tabindex="4"><i class="fa-solid fa-floppy-disk"></i> Guardar póliza</button>
     </form>
 </div>
 @stop
@@ -55,4 +55,3 @@
     <!-- CONEXION FONT-AWESOME CON TOOLKIT -->
     <script src="https://kit.fontawesome.com/742a59c628.js" crossorigin="anonymous"></script>
 @stop
-
