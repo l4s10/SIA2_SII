@@ -92,7 +92,7 @@
                                     </form>
                                 </td>
                                 <td>
-                                    <form action="{{ route('solicitud.vehiculos.pdf',$sol_veh->ID_SOL_VEH) }}" method="POST" target="_blank" id="pdfForm">
+                                    <form action="{{ route('solicitud.vehiculos.pdf',$sol_veh->ID_SOL_VEH) }}" method="GET" target="_blank" id="pdfForm">
                                         @csrf
                                         <button type="submit" class="btn btn-success"><i class="fa-regular fa-file-pdf"></i> PDF</button>
                                     </form>
