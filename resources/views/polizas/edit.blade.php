@@ -48,7 +48,7 @@
             </div>
             <div class="form-group">
                 <a href="{{route('polizas.index')}}" class="btn btn-secondary">Cancelar</a>
-                <button type="submit" class="btn btn-primary">Modificar resolución</button>
+                <button type="submit" class="btn btn-primary">Modificar póliza</button>
             </div>
         </form>
     </div>
