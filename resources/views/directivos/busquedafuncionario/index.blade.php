@@ -39,10 +39,7 @@
                         @enderror
                     </div>
 
-                    <div>
-                        ID de región: {{ $regionSesionActiva }}
-                        ID de región: {{ $direccionesRegionales}}
-                    </div>
+                
                     
                     <div class="col">
                         <label for="ID_CARGO" class="form-label">Cargo:</label>
