@@ -133,15 +133,4 @@
             });
         });
     </script>
-    <script>
-        document.getElementById('pdfForm').addEventListener('submit', function(event) {
-            event.preventDefault(); // Evita el envío normal del formulario
-
-            // Abre el destino del formulario en una nueva pestaña o ventana
-            window.open(this.action, '_blank');
-
-            // Envía el formulario
-            this.submit();
-        });
-    </script>
 @stop
