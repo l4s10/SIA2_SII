@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Validator;
 
 use Dompdf\Dompdf;
 use Carbon\Carbon;
+use Exception;
 use Illuminate\Support\Facades\Response;
 
 class RelFunVehController extends Controller
@@ -161,6 +162,57 @@ class RelFunVehController extends Controller
             session()->flash('error','Hubo un error al eliminar la solicitud, vuelva a intentarlo mas tarde');
         }
         return redirect(route('solicitud.vehiculos.index'));
+    }
+    //!!PARA ESTAS FUNCIONES REUTILIZAREMOS LA VISTA INDEX, SOLO QUE LOS DATOS ESTARAN FILTRADOS SEGUN EL ESTADO
+    //*INDEX POR AUTORIZAR */
+    public function indexAutorizar(){
+        try{
+            //IF SEGUN ROLES
+            $solicitudes = RelFunVeh::where('ESTADO_SOL_VEH', 'POR AUTORIZAR')->where('ID_USUARIO', auth()->user()->id)->get();
+            return view('rel_fun_veh.autorizar', compact('solicitudes'));
+        }catch(Exception $e){
+
+        }
+    }
+    //!!INDEX POR RENDIR
+    public function indexRendir(){
+        try{
+            $solicitudes = RelFunVeh::where('ESTADO_SOL_VEH', 'POR RENDIR')->where('ID_USUARIO', auth()->user()->id)->get();
+            return view('rel_fun_veh.rendir', compact('solicitudes'));
+        } catch (Exception $e){
+
+        }
+    }
+
+    //!!RENDICION DEL CHOFER
+    public function rendicion(string $id)
+    {
+        try {
+            $solicitud = RelFunVeh::find($id);
+            $direcciones = DireccionRegional::all();
+            $vehiculos = Vehiculo::all();
+            $tipo_vehiculos = TipoVehiculo::all();
+            $conductores = User::all();
+            $departamentos = Ubicacion::all();
+            $autos = Vehiculo::all();
+            $comunas = Comuna::all();
+            $ocupantes = [];
+            for ($i = 1; $i <= 6; $i++) {
+                $campoOcupante = "OCUPANTE_" . $i;
+
+                // Verifica si el campo OCUPANTE coincide con el ID de usuario en la solicitud
+                $ocupante = $conductores->where('id', $solicitud->$campoOcupante)->first();
+
+                // Si se encontró un ocupante válido, agrégalo al array de ocupantes
+                if ($ocupante) {
+                    $ocupantes[$i] = $ocupante;
+                }
+            }
+            return view('rel_fun_veh.rendir', compact('solicitud', 'tipo_vehiculos', 'vehiculos', 'ocupantes', 'departamentos', 'comunas', 'conductores', 'direcciones'));
+        } catch (\Exception $e) {
+            session()->flash('error', 'Hubo un error al cargar la solicitud, vuelva a intentarlo más tarde');
+            return redirect(route('solicitud.vehiculos.index'));
+        }
     }
     //!!METODO "STREAM (ver preview antes de descargar)"
     public function generarPDF(Request $request, $id)

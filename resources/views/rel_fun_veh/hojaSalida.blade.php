@@ -411,7 +411,7 @@ body { margin-left: 0.7in; margin-right: 0.7in; margin-top: 0.75in; margin-botto
           <tr class="row13">
             <td class="column0 style36 s">FECHA Y HORA DE REGRESO</td>
             <td class="column1 style33 null style33" colspan="6">{{$solicitud->FECHA_LLEGADA}}</td>
-            <td class="column7 style37 null"></td>  
+            <td class="column7 style37 null"></td>
             <td class="column8 style38 null"></td>
           </tr>
           {{-- <tr class="row14">
@@ -477,7 +477,7 @@ body { margin-left: 0.7in; margin-right: 0.7in; margin-top: 0.75in; margin-botto
             <td class="column0 style50 s">4° OCUPANTE</td>
             <td class="column1 style49 null style49" colspan="7">
               @if ($solicitud->OCUPANTE_4)
-                {{$solicitud->OCUPANTE_4}}
+                {{$ocupante_4->NOMBRES}} {{$ocupante_4->APELLIDOS}}
               @else
                 Asiento disponible
               @endif
@@ -488,7 +488,7 @@ body { margin-left: 0.7in; margin-right: 0.7in; margin-top: 0.75in; margin-botto
             <td class="column0 style50 s">5° OCUPANTE</td>
             <td class="column1 style49 null style49" colspan="7">
               @if ($solicitud->OCUPANTE_5)
-                {{$solicitud->OCUPANTE_5}}
+              {{$ocupante_5->NOMBRES}} {{$ocupante_5->APELLIDOS}}
               @else
                 Asiento disponible
               @endif
@@ -499,7 +499,7 @@ body { margin-left: 0.7in; margin-right: 0.7in; margin-top: 0.75in; margin-botto
             <td class="column0 style50 s">6° OCUPANTE</td>
             <td class="column1 style49 null style49" colspan="7">
               @if ($solicitud->OCUPANTE_6)
-                {{$solicitud->OCUPANTE_6}}
+                {{$ocupante_6->NOMBRES}} {{$ocupante_6->APELLIDOS}}
               @else
                 Asiento disponible
               @endif

@@ -324,10 +324,14 @@ return [
                 ],
                 [
                     'text'    => 'Autorizar',
-                    'url'     => 'reserva/vehiculo/edit',
+                    'url'     => 'reserva/vehiculo/autorizar',
                     'icon'    => 'fa-solid fa-file-circle-check',
                 ],
-
+                [
+                    'text'    => 'Rendir',
+                    'url'     => 'reserva/vehiculo/rendir',
+                    'icon'    => 'fas fa-fw fa-car',
+                ],
             ],
         ],
         [
