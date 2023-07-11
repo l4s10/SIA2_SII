@@ -324,7 +324,7 @@ body { margin-left: 0.7in; margin-right: 0.7in; margin-top: 0.75in; margin-botto
             <td class="column5 style5 null"></td>
             <td class="column6 style8 null"></td>
             <td class="column7 style9 s">N° Folio:</td>
-            <td class="column8 style10 null"></td>
+            <td class="column8 style10 null">{{$solicitud->ID_SOL_VEH}}</td>
           </tr>
           <tr class="row3">
             <td class="column0 style4 null"></td>
@@ -406,15 +406,15 @@ body { margin-left: 0.7in; margin-right: 0.7in; margin-top: 0.75in; margin-botto
             <td class="column0 style32 s">FECHA Y HORA DE SALIDA</td>
             <td class="column1 style33 null style33" colspan="6">{{$solicitud->FECHA_SALIDA}}</td>
             <td class="column7 style34 s">N° Orden de trabajo</td>
-            <td class="column8 style35 null"></td>
+            <td class="column8 style35 null">{{$solicitud->ID_SOL_VEH}}</td>
           </tr>
           <tr class="row13">
             <td class="column0 style36 s">FECHA Y HORA DE REGRESO</td>
             <td class="column1 style33 null style33" colspan="6">{{$solicitud->FECHA_LLEGADA}}</td>
-            <td class="column7 style37 null"></td>
+            <td class="column7 style37 null"></td>  
             <td class="column8 style38 null"></td>
           </tr>
-          <tr class="row14">
+          {{-- <tr class="row14">
             <td class="column0 style39 null"></td>
             <td class="column1 style5 null"></td>
             <td class="column2 style5 null"></td>
@@ -424,7 +424,7 @@ body { margin-left: 0.7in; margin-right: 0.7in; margin-top: 0.75in; margin-botto
             <td class="column6 style41 null"></td>
             <td class="column7 style37 null"></td>
             <td class="column8 style42 null"></td>
-          </tr>
+          </tr> --}}
           <tr class="row15">
             <td class="column0 style43 s style43" colspan="8">DATOS DE LOS OCUPANTES</td>
             <td class="column8 style44 null"></td>
@@ -497,7 +497,7 @@ body { margin-left: 0.7in; margin-right: 0.7in; margin-top: 0.75in; margin-botto
           </tr>
           <tr class="row22">
             <td class="column0 style50 s">6° OCUPANTE</td>
-            <td class="column1 style52 null style52" colspan="7">
+            <td class="column1 style49 null style49" colspan="7">
               @if ($solicitud->OCUPANTE_6)
                 {{$solicitud->OCUPANTE_6}}
               @else
@@ -505,51 +505,6 @@ body { margin-left: 0.7in; margin-right: 0.7in; margin-top: 0.75in; margin-botto
               @endif
             </td>
             <td class="column8 style51 null"></td>
-          </tr>
-          <tr class="row23">
-            <td class="column0 style53 null"></td>
-            <td class="column1 style54 null"></td>
-            <td class="column2 style54 null"></td>
-            <td class="column3 style54 null"></td>
-            <td class="column4 style55 null"></td>
-            <td class="column5 style55 null"></td>
-            <td class="column6 style55 null"></td>
-            <td class="column7 style55 null"></td>
-            <td class="column8 style6 null"></td>
-          </tr>
-          <tr class="row24">
-            <td class="column0 style53 null"></td>
-            <td class="column1 style56 null style56" colspan="3"></td>
-            <td class="column4 style55 null style55" colspan="4"></td>
-            <td class="column8 style6 null"></td>
-          </tr>
-          <tr class="row25">
-            <td class="column0 style53 null"></td>
-            <td class="column1 style56 null"></td>
-            <td class="column2 style56 null"></td>
-            <td class="column3 style56 null"></td>
-            <td class="column4 style55 null"></td>
-            <td class="column5 style55 null"></td>
-            <td class="column6 style55 null"></td>
-            <td class="column7 style55 null"></td>
-            <td class="column8 style6 null"></td>
-          </tr>
-          <tr class="row26">
-            <td class="column0 style4 null"></td>
-            <td class="column1 style57 null style57" colspan="3"></td>
-            <td class="column4 style11 null style11" colspan="4"></td>
-            <td class="column8 style6 null"></td>
-          </tr>
-          <tr class="row27">
-            <td class="column0 style39 null"></td>
-            <td class="column1 style5 null"></td>
-            <td class="column2 style5 null"></td>
-            <td class="column3 style5 null"></td>
-            <td class="column4 style5 null"></td>
-            <td class="column5 style45 null"></td>
-            <td class="column6 style5 null"></td>
-            <td class="column7 style5 null"></td>
-            <td class="column8 style6 null"></td>
           </tr>
           <tr class="row28">
             <td class="column0 style4 null"></td>

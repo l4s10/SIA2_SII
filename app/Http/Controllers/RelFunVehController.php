@@ -162,27 +162,7 @@ class RelFunVehController extends Controller
         }
         return redirect(route('solicitud.vehiculos.index'));
     }
-    //!!METODO DESCARGA DIRECTA
-    // public function generarPDF(Request $request, $id)
-    // {
-    //     $solicitud = RelFunVeh::findOrFail($id);
-    //     $fecha = Carbon::now()->format('d-m-Y_H-i');
-
-    //     $pdf = new Dompdf();
-    //     $pdf->loadHtml(view('rel_fun_veh.hojaSalida', compact('solicitud', 'fecha'))->render());
-    //     $pdf->setPaper('A4', 'portrait');
-
-    //     $pdf->render();
-
-    //     $nombreArchivo = $fecha . '_solicitud_vehicular.pdf';
-    //     $nombreArchivo = str_replace('/', '_', $nombreArchivo);
-    //     $nombreArchivo = str_replace('\\', '_', $nombreArchivo);
-
-    //     return response()->streamDownload(function () use ($pdf) {
-    //         echo $pdf->output();
-    //     }, $nombreArchivo);
-    // }
-    //!!METODO "STREAM"
+    //!!METODO "STREAM (ver preview antes de descargar)"
     public function generarPDF(Request $request, $id)
     {
         //Obtencion de informacion relevante
@@ -193,11 +173,14 @@ class RelFunVehController extends Controller
         $ocupante_1 = User::find($solicitud->OCUPANTE_1);
         $ocupante_2 = User::find($solicitud->OCUPANTE_2);
         $ocupante_3 = User::find($solicitud->OCUPANTE_3);
+        $ocupante_4 = User::find($solicitud->OCUPANTE_4);
+        $ocupante_5 = User::find($solicitud->OCUPANTE_5);
+        $ocupante_6 = User::find($solicitud->OCUPANTE_6);
 
         $fecha = Carbon::now()->format('d-m-Y_H-i');
 
         $pdf = new Dompdf();
-        $pdf->loadHtml(view('rel_fun_veh.hojaSalida', compact('solicitud', 'comuna_destino', 'solicitante','ocupante_1', 'ocupante_2', 'ocupante_3', 'fecha'))->render());
+        $pdf->loadHtml(view('rel_fun_veh.hojaSalida', compact('solicitud', 'comuna_destino', 'solicitante','ocupante_1', 'ocupante_2', 'ocupante_3', 'ocupante_4', 'ocupante_5', 'ocupante_6', 'fecha'))->render());
         $pdf->setPaper('A4', 'portrait');
 
         $pdf->render();
