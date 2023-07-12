@@ -31,7 +31,7 @@ class CamposUsuarioNormalizados extends Seeder
     {
         //* Insertamos datos en la tablas con el metodo INSERT
         // Población de la tabla 'departamento'
-        Departamento::insert([
+        /*Departamento::insert([
             ['ID_DEPARTAMENTO' => 1, 'DEPARTAMENTO' => 'GABINETE DIRECTOR'],
             ['ID_DEPARTAMENTO' => 2, 'DEPARTAMENTO' => 'DEPARTAMENTO DE ADMINISTRACIÓN'],
             ['ID_DEPARTAMENTO' => 3, 'DEPARTAMENTO' => 'DEPARTAMENTO DE FISCALIZACIÓN'],
@@ -41,7 +41,7 @@ class CamposUsuarioNormalizados extends Seeder
             ['ID_DEPARTAMENTO' => 7, 'DEPARTAMENTO' => 'DEPARTAMENTO JURÍDICO'],
             ['ID_DEPARTAMENTO' => 99, 'DEPARTAMENTO' => 'DIRECCIÓN NACIONAL'],
             ['ID_DEPARTAMENTO' => 999, 'DEPARTAMENTO' => 'EXTERNO']
-        ]);
+        ]);*/
 
         // Población de la tabla 'region'
         // Region::insert([
@@ -65,7 +65,7 @@ class CamposUsuarioNormalizados extends Seeder
 
 
         // Población de la tabla 'grupo'
-        Grupo::insert([
+        /*Grupo::insert([
             ['ID_GRUPO' => 1, 'GRUPO' => 'GRUPO N°1 FISCALIZACIÓN'],
             ['ID_GRUPO' => 2, 'GRUPO' => 'GRUPO N°2 FISCALIZACIÓN'],
             ['ID_GRUPO' => 3, 'GRUPO' => 'GRUPO N°3 FISCALIZACIÓN'],
@@ -81,7 +81,8 @@ class CamposUsuarioNormalizados extends Seeder
             ['ID_GRUPO' => 13, 'GRUPO' => 'GRUPO N°1 ATENCIÓN Y ASISTENCIA'],
             ['ID_GRUPO' => 14, 'GRUPO' => 'GRUPO CUMPLIMIENTO TRIBUTARIO EN TERRENO'],
             ['ID_GRUPO' => 15, 'GRUPO' => 'GRUPO AVALUACIONES'],
-        ]);
+            
+        ]);*/
         // Población de la tabla 'escalafon'
         Escalafon::insert([
             ['ID_ESCALAFON' => 1, 'ESCALAFON' => 'TECNICO EN FISCALIZACION'],
@@ -113,7 +114,7 @@ class CamposUsuarioNormalizados extends Seeder
             ['ID_GRADO' => 15, 'GRADO' => 20],
             ['ID_GRADO' => 16, 'GRADO' => 21],
         ]);
-        Cargo::insert([
+        /*Cargo::insert([
             ['ID_CARGO' => 1, 'CARGO' => 'DIRECTOR REGIONAL'],
             ['ID_CARGO' => 2, 'CARGO' => 'JEFE DE DEPARTAMENTO JURIDICO'],
             ['ID_CARGO' => 3, 'CARGO' => 'JEFE DE DEPARTAMENTO DE FISCALIZACION'],
@@ -148,7 +149,7 @@ class CamposUsuarioNormalizados extends Seeder
             ['ID_CARGO' => 32, 'CARGO' => 'JEFE DE UNIDAD DE SAN CARLOS'],
             ['ID_CARGO' => 99, 'CARGO' => 'FUNCIONARIO'],
             ['ID_CARGO' => 999, 'CARGO' => 'EXTERNO']
-        ]);
+        ]);*/
         // Población de la tabla 'calidad_juridica'
         CalidadJuridica::insert([
             ['ID_CALIDAD' => 1, 'CALIDAD' => 'PLANTA'],

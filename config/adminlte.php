@@ -475,22 +475,22 @@ return [
                 [
                     'text'    => 'Resoluciones',
                     'url'     => 'resolucion',
-                    'icon'    => 'fas fa-fw fa-eye',
+                    'icon'    => 'fas fa-fw fa-eye'
                 ],
                 [
                     'text'    => 'Pólizas',
                     'url'     => 'polizas',
-                    'icon'    => 'fas fa-fw fa-eye',
+                    'icon'    => 'fas fa-fw fa-eye'
                 ],
                 [
                     'text'    => 'Facultades',
                     'url'     => 'facultades',
-                    'icon'    => 'fas fa-fw fa-eye',
+                    'icon'    => 'fas fa-fw fa-eye'
                 ],
                 [
                     'text'    => 'Cargos',
                     'url'     => 'cargos',
-                    'icon'    => 'fas fa-fw fa-eye',
+                    'icon'    => 'fas fa-fw fa-eye'
                 ]
             ],
         ],
@@ -509,28 +509,33 @@ return [
                 [
                     'text'        => 'Administrar Usuarios',
                     'url'         => '/funcionarios',
-                    'icon'        => 'fas fa-fw fa-users',
+                    'icon'        => 'fas fa-fw fa-users'
                 ],
                 [
                     'text'        => 'Administrar Vehiculos',
                     'url'         => '/vehiculos',
-                    'icon'        => 'fas fa-fw fa-car',
+                    'icon'        => 'fas fa-fw fa-car'
                 ],
                 [
                     'text'        => 'Administrar Regiones',
                     'url'         => '/region',
-                    'icon'        => 'fas fa-fw fa-earth-americas',
+                    'icon'        => 'fas fa-fw fa-earth-americas'
                 ],
                 [
                     'text'        => 'Administrar Comunas',
                     'url'         => '/comuna',
-                    'icon'        => 'fas fa-fw fa-street-view',
+                    'icon'        => 'fas fa-fw fa-street-view'
                 ],
                 [
                     'text'        => 'Administrar Direcciones Regionales',
                     'url'         => '/direccionregional',
-                    'icon'        => 'fa-solid fa-location-arrow',
+                    'icon'        => 'fa-solid fa-location-arrow'
 
+                ],
+                [
+                    'text'        => 'Administrar Ubicaciones y Departamentos',
+                    'url'         => '/ubicacion',
+                    'icon'        => 'fa-solid fa-user-group'
                 ]
             ]
         ],

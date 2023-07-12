@@ -31,7 +31,7 @@ return new class extends Migration
         });
 
         Schema::create('ubicacion', function (Blueprint $table) {
-            $table->integer('ID_UBICACION')->unsigned()->primary();
+            $table->increments('ID_UBICACION');
             $table->string('UBICACION', 128)->nullable();
             $table->unsignedInteger('ID_DIRECCION');
             $table->foreign('ID_DIRECCION')->references('ID_DIRECCION')->on('direcciones_regionales');
@@ -47,24 +47,24 @@ return new class extends Migration
 
         //!!-----------------------------------------------------
         Schema::create('grupo', function (Blueprint $table) {
-            $table->integer('ID_GRUPO')->unsigned()->primary();
+            $table->increments('ID_GRUPO');
             $table->string('GRUPO', 128)->nullable();
         });
         Schema::create('escalafon', function (Blueprint $table) {
-            $table->integer('ID_ESCALAFON')->unsigned()->primary();
+            $table->increments('ID_ESCALAFON');
             $table->string('ESCALAFON', 128)->nullable();
         });
         Schema::create('grado', function (Blueprint $table) {
-            $table->integer('ID_GRADO')->unsigned()->primary();
+            $table->increments('ID_GRADO');
             $table->integer('GRADO')->nullable();
         });
         
         Schema::create('calidad_juridica', function (Blueprint $table) {
-            $table->integer('ID_CALIDAD')->unsigned()->primary();
+            $table->increments('ID_CALIDAD');
             $table->string('CALIDAD', 128)->nullable();
         });
         Schema::create('sexo', function (Blueprint $table) {
-            $table->integer('ID_SEXO')->unsigned()->primary();
+            $table->increments('ID_SEXO');
             $table->string('SEXO', 128)->nullable();
         });
 

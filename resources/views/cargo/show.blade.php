@@ -20,6 +20,14 @@
                 </div>
             </div>          
         </div>
+        <div class="card-body">
+            <div class="form-group row">
+                <label for="name" class="col-sm-2 col-form-label">{{ __('Dirección regional asociada:') }}</label>
+                <div class="col-sm-10">
+                    <p class="form-control-plaintext">{{ $cargo->direccion->DIRECCION }} </p>
+                </div>
+            </div>          
+        </div>
         <div class="card-footer">
             <form action="{{route('cargos.destroy',$cargo->ID_CARGO)}}" method="POST">
                 @csrf

@@ -20,7 +20,7 @@ class DatabaseSeeder extends Seeder
             CamposUsuarioNormalizados::class,
             RolesAndPermissionsSeeder::class,
             // FuncionariosSeeder::class,
-            PolizasSeeder::class,
+            //PolizasSeeder::class,
             FacultadesSeeder::class,
             TipoResolucionSeeder::class,
             ResolucionesSeeder::class,

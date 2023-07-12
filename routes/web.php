@@ -77,6 +77,8 @@ Route::resource('resolucion','App\Http\Controllers\ResolucionController');
 Route::resource('polizas','App\Http\Controllers\PolizaController');
 //Rutas cargo
 Route::resource('cargos','App\Http\Controllers\CargoController');
+//Rutas ubicación
+Route::resource('ubicacion','App\Http\Controllers\UbicacionesController');
 //Rutas facultad
 Route::resource('facultades','App\Http\Controllers\FacultadController');
 
