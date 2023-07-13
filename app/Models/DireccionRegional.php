@@ -41,6 +41,11 @@ class DireccionRegional extends Model
     {
         return $this->belongsTo(Region::class, 'ID_REGION');
     }
+    // Relación de uno a muchos con Ubicacion
+    public function ubicaciones()
+    {
+        return $this->hasMany(Ubicacion::class, 'ID_DIRECCION');
+    }
     /*public function ubicaciones()
     {
         return $this->hasMany(Ubicacion::class, 'ID_DIRECCION');

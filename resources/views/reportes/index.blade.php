@@ -334,10 +334,10 @@
         window.myChartData3 = {
             // Cuarto gráfico estado de solicitud de materiales.
             // Aqui irian las patentes de los vehiculos.
-            labels: ['Patente1', 'Patente1', 'Patente1', 'Patente1', 'Patente1', 'Patente1', 'Patente1', 'Patente1'],
+            labels: {!! json_encode(array_column($grafico4, 'patente')) !!},
             datasets: [{
                 label: 'Solicitudes',
-                // data: [@foreach($grafico3 as $AUX) {{ round($AUX) }}, @endforeach],
+                data: {!! json_encode(array_column($grafico4, 'conteo')) !!},
                 backgroundColor: [
                     'rgb(30, 102, 255)', // Color de fondo único para todas las barras
                 ],
@@ -345,19 +345,8 @@
                 borderWidth: 1
             }]
         };
-        window.myChartData4 = {
-            // Quinto gráfico materiales consumidos por departamento.
-            labels: ['Departamento' , 'Departamento1' ,'departamento2'],
-            datasets: [{
-                label: 'Stock total',
-                data: [@foreach($grafico4 as $AUX) {{ round($AUX) }}, @endforeach],
-                backgroundColor: [
-                    'rgb(233, 255, 166)', // Color de fondo único para todas las barras
-                ],
-                barThickness: 50, // Ajusta el valor para cambiar el ancho de la barra
-                borderWidth: 1
-            }]
-        };
+
+
         // window.myChartData5 = {
         //     // sexto gráfico materiales consumidos por departamento.
         //     labels: ['SAMUEL EDGARDO' , 'ELOISA MARIA CECILIA' ,'CAROLA OPAZO VENEGAS','ALEJANDRA IVONNE MUNOZ INZUNZA'],
@@ -419,11 +408,11 @@
             }]
         };
         window.myChartData7 = {
-            // sexto gráfico materiales consumidos por departamento.
-            labels: ['Unidad de los Angeles', 'Unidad de Lebu', 'Unidad de Talcahuano', 'No asignado', 'Gabinete director','Departamento de administracion','Departamento de Fiscalizacion','Departamento de asistencia al contribuyente','Departamento de avaluaciones','Departamento de procedimientos administrativos tributarios','Departamento juridico'],
+            // sexto gráfico materiales consumidos por ubicaciones.
+            labels: @json(array_column($grafico6, 'ubicacion')),
             datasets: [{
                 label: 'Solicitudes realizadas',
-                data: [1,1,1,1,1,1,1,1,1,1],
+                data: @json(array_column($grafico6, 'conteo')),
                 backgroundColor: [
                     'rgb(30, 102, 255)', // Color de fondo único para todas las barras
                 ],

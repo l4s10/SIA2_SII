@@ -59,6 +59,7 @@ class ReporteController extends Controller
         $grafico3 = $this->getGrafico3Data();
         $grafico4 = $this->getGrafico4Data();
         $grafico5 = $this->getGrafico5Data();
+        $grafico6 = $this->getGrafico6Data();
 
         //Departamentos
         $regiones = Region::all();
@@ -68,7 +69,7 @@ class ReporteController extends Controller
         $direcciones = DireccionRegional::all();
         // Devolver la vista con los datos
 
-        return view('reportes.index', compact('grafico1', 'grafico2', 'grafico3', 'grafico4', 'grafico5', 'ubicaciones', 'regiones','direcciones', 'totals'));
+        return view('reportes.index', compact('grafico1', 'grafico2', 'grafico3', 'grafico4', 'grafico5', 'grafico6', 'ubicaciones', 'regiones','direcciones', 'totals'));
     }
 
     public function getTotalsPorUbicacion($ubicacionId)
@@ -110,6 +111,7 @@ class ReporteController extends Controller
             'grafico3' => $this->getGrafico3Data($fechaInicio, $fechaFin),
             'grafico4' => $this->getGrafico4Data($fechaInicio, $fechaFin),
             'grafico5' => $this->getGrafico5Data($fechaInicio, $fechaFin),
+            'grafico6' => $this->getGrafico6Data($fechaInicio, $fechaFin),
         ];
 
         return response()->json($data);
@@ -167,22 +169,33 @@ class ReporteController extends Controller
 
         return $grafico3;
     }
-    private function getGrafico4Data($fechaInicio = null, $fechaFin = null)
+    public function getGrafico4Data($fechaInicio = null, $fechaFin = null)
     {
+        $solicitudesQuery = RelFunVeh::whereNotNull('PATENTE_VEHICULO');
+
+        if($fechaInicio && $fechaFin){
+            $solicitudesQuery->whereBetween('created_at', [$fechaInicio, $fechaFin]);
+        }
+
+        $solicitudes = $solicitudesQuery->get();
+
         $grafico4 = [];
 
-        foreach ($this->models3 as $key => $modelClass) {
-            $model = new $modelClass;
-            if ($fechaInicio && $fechaFin) {
-                $grafico4[$key] = $model->whereBetween('created_at', [$fechaInicio, $fechaFin])->count();
-            } else {
-                $grafico4[$key] = $model->count();
-            }
+        // Agrupa las solicitudes por patente y cuenta las filas para cada patente
+        $conteosPorPatente = $solicitudes->groupBy('PATENTE_VEHICULO')->map->count();
+
+        // Itera sobre los conteos por patente y crea el array para el gráfico
+        foreach ($conteosPorPatente as $patente => $conteo) {
+            $grafico4[] = [
+                'patente' => $patente,
+                'conteo' => $conteo
+            ];
         }
 
         return $grafico4;
     }
 
+    //*Grafico 5 : Gestionadores de solicitudes de materiales */
     public function getGrafico5Data($fechaInicio = null, $fechaFin = null)
     {
         // Obtén el rol 'SERVICIOS'
@@ -207,9 +220,50 @@ class ReporteController extends Controller
                 'conteo' => $conteo
             ];
         }
-
         // Devolver los datos para el gráfico de Chart.js
         return $grafico5;
+    }
+
+    //*Grafico 6: Solicitudes de materiales por Ubicacion/Depto */
+    //!!Agregar validacion de regiones
+    public function getGrafico6Data($fechaInicio = null, $fechaFin = null)
+    {
+        $ubicacionUser = Ubicacion::where('ID_UBICACION', auth()->user()->ID_UBICACION)->first(); //Obtuve la ubicacion del user
+        if($ubicacionUser){
+            $direccionFiltrada = DireccionRegional::where('ID_DIRECCION', $ubicacionUser->ID_DIRECCION)->first();
+            if($direccionFiltrada){
+                $ubicacionesFiltradas = Ubicacion::where('ID_DIRECCION', $direccionFiltrada->ID_DIRECCION)->get();
+                // Aquí ya tendrías tus ubicaciones filtradas
+            } else {
+                // Trata el caso en que no se encuentre la dirección
+            }
+        } else {
+            // Trata el caso en que no se encuentre la ubicación del usuario
+        }
+
+        $grafico6 = [];
+
+        // Itera sobre cada ubicación
+        foreach ($ubicacionesFiltradas as $ubicacion) {
+            // Obten todas las solicitudes para esta ubicación
+            if($fechaInicio && $fechaFin){
+                $solicitudes = SolicitudMateriales::where('DEPTO', $ubicacion->UBICACION)->whereBetween('created_at', [$fechaInicio, $fechaFin])->get();
+            }else{
+                $solicitudes = SolicitudMateriales::where('DEPTO', $ubicacion->UBICACION)->get();
+            }
+
+            // Obten el conteo de solicitudes
+            $conteo = $solicitudes->count();
+
+            // Agrega los datos de esta ubicación al array del gráfico
+            $grafico6[] = [
+                'ubicacion' => $ubicacion->UBICACION,
+                'conteo' => $conteo,
+                'region' => $ubicacion->direccion->region->REGION
+            ];
+        }
+
+        return $grafico6;
     }
 
 }

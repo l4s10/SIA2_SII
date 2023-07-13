@@ -67,13 +67,15 @@ document.addEventListener('DOMContentLoaded', (event) => {
                 fechaFin: fechaFin
             })
         })
-            .then(response => response.json())
-            .then(data => {
-                myChart3.data.labels = ['Solicitudes'];
-                myChart3.data.datasets[0].data = [
-                    Math.round(data.grafico4.solicitudMateriales),
-                ];
-                myChart3.update();
-            });
+        .then(response => response.json())
+        .then(data => {
+            // Obtiene los datos de la respuesta
+            let graficoData = data.grafico4;
+
+            // Actualiza las etiquetas y los datos del gráfico
+            myChart3.data.labels = graficoData.map(item => item.patente);
+            myChart3.data.datasets[0].data = graficoData.map(item => item.conteo);
+            myChart3.update();
+        });
     });
 });
