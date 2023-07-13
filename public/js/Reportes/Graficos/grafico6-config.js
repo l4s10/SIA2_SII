@@ -69,10 +69,9 @@ document.addEventListener('DOMContentLoaded', (event) => {
         })
             .then(response => response.json())
             .then(data => {
-                myChart5.data.datasets[0].data = [
-                    Math.round(data.stockTipoMaterial),
-                    Math.round(data.stockMaterial)
-                ];
+                // Actualizar los datos del gráfico
+                myChart5.data.labels = data.grafico5.map(item => item.nombre);
+                myChart5.data.datasets[0].data = data.grafico5.map(item => item.conteo);
                 myChart5.update();
             });
     });

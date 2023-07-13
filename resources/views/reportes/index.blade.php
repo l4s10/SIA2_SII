@@ -358,19 +358,37 @@
                 borderWidth: 1
             }]
         };
+        // window.myChartData5 = {
+        //     // sexto gráfico materiales consumidos por departamento.
+        //     labels: ['SAMUEL EDGARDO' , 'ELOISA MARIA CECILIA' ,'CAROLA OPAZO VENEGAS','ALEJANDRA IVONNE MUNOZ INZUNZA'],
+        //     datasets: [{
+        //         label: 'Solicitudes revisas',
+        //         data:[1,2,3,4],
+        //         backgroundColor: [
+        //             'rgb(30, 102, 255)', // Color de fondo único para todas las barras
+        //         ],
+        //         barThickness: 50, // Ajusta el valor para cambiar el ancho de la barra
+        //         borderWidth: 1
+        //     }]
+        // };
         window.myChartData5 = {
-            // sexto gráfico materiales consumidos por departamento.
-            labels: ['SAMUEL EDGARDO' , 'ELOISA MARIA CECILIA' ,'CAROLA OPAZO VENEGAS','ALEJANDRA IVONNE MUNOZ INZUNZA'],
+            labels: [],
             datasets: [{
-                label: 'Solicitudes revisas',
-                data:[1,2,3,4],
-                backgroundColor: [
-                    'rgb(30, 102, 255)', // Color de fondo único para todas las barras
-                ],
-                barThickness: 50, // Ajusta el valor para cambiar el ancho de la barra
+                label: 'Solicitudes revisadas',
+                data: [],
+                backgroundColor: 'rgb(30, 102, 255)',
+                barThickness: 50,
                 borderWidth: 1
             }]
         };
+
+        var grafico5Data = @json($grafico5);
+
+        grafico5Data.forEach(function(item) {
+            window.myChartData5.labels.push(item.nombre);
+            window.myChartData5.datasets[0].data.push(item.conteo);
+        });
+
         window.myChartData6 = {
             // sexto gráfico materiales consumidos por departamento.
             labels: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'],

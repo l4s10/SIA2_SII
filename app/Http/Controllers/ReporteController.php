@@ -20,6 +20,7 @@ use Carbon\Carbon;
 // Cuarto Grafico.
 use App\Models\Vehiculo;
 // Quinto Grafico.
+use Spatie\Permission\Models\Role;
 use App\Models\TipoMaterial;
 use App\Models\Material;
 //Exploradores
@@ -50,12 +51,14 @@ class ReporteController extends Controller
 
 
 
+    //obtener historico
     public function index()
     {
         $grafico1 = $this->getGrafico1Data();
         $grafico2 = $this->getGrafico2Data();
         $grafico3 = $this->getGrafico3Data();
         $grafico4 = $this->getGrafico4Data();
+        $grafico5 = $this->getGrafico5Data();
 
         //Departamentos
         $regiones = Region::all();
@@ -64,8 +67,8 @@ class ReporteController extends Controller
         //regiones
         $direcciones = DireccionRegional::all();
         // Devolver la vista con los datos
-        
-        return view('reportes.index', compact('grafico1', 'grafico2', 'grafico3', 'grafico4', 'ubicaciones', 'regiones','direcciones', 'totals'));
+
+        return view('reportes.index', compact('grafico1', 'grafico2', 'grafico3', 'grafico4', 'grafico5', 'ubicaciones', 'regiones','direcciones', 'totals'));
     }
 
     public function getTotalsPorUbicacion($ubicacionId)
@@ -92,6 +95,7 @@ class ReporteController extends Controller
         ]);
     }
 
+    //obtener por fecha
     public function obtenerDatos(Request $request)
     {
         $fechaInicio = $request->input('fechaInicio');
@@ -105,6 +109,7 @@ class ReporteController extends Controller
             'grafico2' => $this->getGrafico2Data($fechaInicio, $fechaFin),
             'grafico3' => $this->getGrafico3Data($fechaInicio, $fechaFin),
             'grafico4' => $this->getGrafico4Data($fechaInicio, $fechaFin),
+            'grafico5' => $this->getGrafico5Data($fechaInicio, $fechaFin),
         ];
 
         return response()->json($data);
@@ -177,4 +182,34 @@ class ReporteController extends Controller
 
         return $grafico4;
     }
+
+    public function getGrafico5Data($fechaInicio = null, $fechaFin = null)
+    {
+        // Obtén el rol 'SERVICIOS'
+        $rolServicios = Role::where('name', 'SERVICIOS')->first();
+
+        // Obtén la colección de usuarios con el rol 'SERVICIOS'
+        $usuariosServicios = $rolServicios->users;
+
+        $grafico5 = [];
+
+        // Iterar sobre los usuarios y realizar el conteo de solicitudes gestionadas
+        foreach ($usuariosServicios as $usuario) {
+            $nombreCompleto = $usuario->NOMBRES . ' ' . $usuario->APELLIDOS;
+            // Realizar consulta para contar las solicitudes gestionadas por el usuario
+            if ($fechaInicio && $fechaFin) {
+                $conteo = SolicitudMateriales::where('MODIFICADO_POR', $nombreCompleto)->whereBetween('created_at', [$fechaInicio, $fechaFin])->count();
+            } else {
+                $conteo = SolicitudMateriales::where('MODIFICADO_POR', $nombreCompleto)->count();
+            }
+            $grafico5[] = [
+                'nombre' => $nombreCompleto,
+                'conteo' => $conteo
+            ];
+        }
+
+        // Devolver los datos para el gráfico de Chart.js
+        return $grafico5;
+    }
+
 }
