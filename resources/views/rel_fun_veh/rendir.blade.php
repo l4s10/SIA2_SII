@@ -1,9 +1,9 @@
 @extends('adminlte::page')
 
-@section('title', 'Reservas Vehiculares')
+@section('title', 'Rendicion conductor')
 
 @section('content_header')
-    <h1 class="title">Solicitudes de vehiculos</h1>
+    <h1 class="title">Solicitudes por rendir</h1>
     @role('ADMINISTRADOR')
     <div class="alert alert-info" role="alert">
     <div><strong>Bienvenido Administrador:</strong> Acceso total al modulo.<div>
@@ -50,17 +50,6 @@
                 Swal.fire({
                     icon: 'error',
                     title: '{{ session('error') }}',
-                    confirmButtonText: 'OK',
-                    confirmButtonColor: '#0064A0'
-                });
-            });
-        </script>
-    @elseif (session('info'))
-        <script>
-            document.addEventListener('DOMContentLoaded', () => {
-                Swal.fire({
-                    icon: 'info',
-                    title: '{{ session('info') }}',
                     confirmButtonText: 'OK',
                     confirmButtonColor: '#0064A0'
                 });

@@ -30,19 +30,6 @@ class CamposUsuarioNormalizados extends Seeder
     public function run(): void
     {
         //* Insertamos datos en la tablas con el metodo INSERT
-        // Población de la tabla 'departamento'
-        Departamento::insert([
-            ['ID_DEPARTAMENTO' => 1, 'DEPARTAMENTO' => 'GABINETE DIRECTOR'],
-            ['ID_DEPARTAMENTO' => 2, 'DEPARTAMENTO' => 'DEPARTAMENTO DE ADMINISTRACIÓN'],
-            ['ID_DEPARTAMENTO' => 3, 'DEPARTAMENTO' => 'DEPARTAMENTO DE FISCALIZACIÓN'],
-            ['ID_DEPARTAMENTO' => 4, 'DEPARTAMENTO' => 'DEPARTAMENTO DE ASISTENCIA AL CONTRIBUYENTE'],
-            ['ID_DEPARTAMENTO' => 5, 'DEPARTAMENTO' => 'DEPARTAMENTO DE AVALUACIONES'],
-            ['ID_DEPARTAMENTO' => 6, 'DEPARTAMENTO' => 'DEPARTAMENTO DE PROCEDIMIENTOS TRIBUTARIOS'],
-            ['ID_DEPARTAMENTO' => 7, 'DEPARTAMENTO' => 'DEPARTAMENTO JURÍDICO'],
-            ['ID_DEPARTAMENTO' => 99, 'DEPARTAMENTO' => 'DIRECCIÓN NACIONAL'],
-            ['ID_DEPARTAMENTO' => 999, 'DEPARTAMENTO' => 'EXTERNO']
-        ]);
-
         // Población de la tabla 'region'
         // Region::insert([
         //     ['ID_REGION' => 1, 'REGION' => 'REGIÓN DE ARICA Y PARINACOTA'],
@@ -65,23 +52,23 @@ class CamposUsuarioNormalizados extends Seeder
 
 
         // Población de la tabla 'grupo'
-        Grupo::insert([
-            ['ID_GRUPO' => 1, 'GRUPO' => 'GRUPO N°1 FISCALIZACIÓN'],
-            ['ID_GRUPO' => 2, 'GRUPO' => 'GRUPO N°2 FISCALIZACIÓN'],
-            ['ID_GRUPO' => 3, 'GRUPO' => 'GRUPO N°3 FISCALIZACIÓN'],
-            ['ID_GRUPO' => 4, 'GRUPO' => 'GRUPO N°4 FISCALIZACIÓN'],
-            ['ID_GRUPO' => 5, 'GRUPO' => 'GRUPO N°5 FISCALIZACIÓN'],
-            ['ID_GRUPO' => 6, 'GRUPO' => 'GRUPO N°6 FISCALIZACIÓN'],
-            ['ID_GRUPO' => 7, 'GRUPO' => 'GRUPO N°7 FISCALIZACIÓN'],
-            ['ID_GRUPO' => 8, 'GRUPO' => 'GRUPO N°1 AVALUACIONES'],
-            ['ID_GRUPO' => 9, 'GRUPO' => 'GRUPO N°2 AVALUACIONES'],
-            ['ID_GRUPO' => 10, 'GRUPO' => 'GRUPO N°1 ATENCIÓN DE CONTRIBUYENTES'],
-            ['ID_GRUPO' => 11, 'GRUPO' => 'GRUPO N°2 ATENCIÓN DE CONTRIBUYENTES'],
-            ['ID_GRUPO' => 12, 'GRUPO' => 'GRUPO N°1 INFORMACIÓN Y ASISTENCIA'],
-            ['ID_GRUPO' => 13, 'GRUPO' => 'GRUPO N°1 ATENCIÓN Y ASISTENCIA'],
-            ['ID_GRUPO' => 14, 'GRUPO' => 'GRUPO CUMPLIMIENTO TRIBUTARIO EN TERRENO'],
-            ['ID_GRUPO' => 15, 'GRUPO' => 'GRUPO AVALUACIONES'],
-        ]);
+        // Grupo::insert([
+        //     ['ID_GRUPO' => 1, 'GRUPO' => 'GRUPO N°1 FISCALIZACIÓN'],
+        //     ['ID_GRUPO' => 2, 'GRUPO' => 'GRUPO N°2 FISCALIZACIÓN'],
+        //     ['ID_GRUPO' => 3, 'GRUPO' => 'GRUPO N°3 FISCALIZACIÓN'],
+        //     ['ID_GRUPO' => 4, 'GRUPO' => 'GRUPO N°4 FISCALIZACIÓN'],
+        //     ['ID_GRUPO' => 5, 'GRUPO' => 'GRUPO N°5 FISCALIZACIÓN'],
+        //     ['ID_GRUPO' => 6, 'GRUPO' => 'GRUPO N°6 FISCALIZACIÓN'],
+        //     ['ID_GRUPO' => 7, 'GRUPO' => 'GRUPO N°7 FISCALIZACIÓN'],
+        //     ['ID_GRUPO' => 8, 'GRUPO' => 'GRUPO N°1 AVALUACIONES'],
+        //     ['ID_GRUPO' => 9, 'GRUPO' => 'GRUPO N°2 AVALUACIONES'],
+        //     ['ID_GRUPO' => 10, 'GRUPO' => 'GRUPO N°1 ATENCIÓN DE CONTRIBUYENTES'],
+        //     ['ID_GRUPO' => 11, 'GRUPO' => 'GRUPO N°2 ATENCIÓN DE CONTRIBUYENTES'],
+        //     ['ID_GRUPO' => 12, 'GRUPO' => 'GRUPO N°1 INFORMACIÓN Y ASISTENCIA'],
+        //     ['ID_GRUPO' => 13, 'GRUPO' => 'GRUPO N°1 ATENCIÓN Y ASISTENCIA'],
+        //     ['ID_GRUPO' => 14, 'GRUPO' => 'GRUPO CUMPLIMIENTO TRIBUTARIO EN TERRENO'],
+        //     ['ID_GRUPO' => 15, 'GRUPO' => 'GRUPO AVALUACIONES'],
+        // ]);
         // Población de la tabla 'escalafon'
         Escalafon::insert([
             ['ID_ESCALAFON' => 1, 'ESCALAFON' => 'TECNICO EN FISCALIZACION'],
@@ -113,42 +100,42 @@ class CamposUsuarioNormalizados extends Seeder
             ['ID_GRADO' => 15, 'GRADO' => 20],
             ['ID_GRADO' => 16, 'GRADO' => 21],
         ]);
-        Cargo::insert([
-            ['ID_CARGO' => 1, 'CARGO' => 'DIRECTOR REGIONAL'],
-            ['ID_CARGO' => 2, 'CARGO' => 'JEFE DE DEPARTAMENTO JURIDICO'],
-            ['ID_CARGO' => 3, 'CARGO' => 'JEFE DE DEPARTAMENTO DE FISCALIZACION'],
-            ['ID_CARGO' => 4, 'CARGO' => 'JEFE DE DEPARTAMENTO DE ASISTENCIA'],
-            ['ID_CARGO' => 5, 'CARGO' => 'JEFE DE DEPARTAMENTO DE AVALUACIONES'],
-            ['ID_CARGO' => 6, 'CARGO' => 'JEFE DE DEPARTAMENTO DE PROCEDIMIENTOS ADMINISTRATIVOS'],
-            ['ID_CARGO' => 7, 'CARGO' => 'JEFE DE DEPARTAMENTO DE ADMINISTRACION'],
-            ['ID_CARGO' => 8, 'CARGO' => 'JEFE DE UNIDAD DE TALCAHUANO'],
-            ['ID_CARGO' => 9, 'CARGO' => 'JEFE DE UNIDAD DE LOS ANGELES'],
-            ['ID_CARGO' => 10, 'CARGO' => 'JEFE DE UNIDAD DE LEBU'],
-            ['ID_CARGO' => 11, 'CARGO' => 'JEFE DE GRUPO CONCEPCION 1'],
-            ['ID_CARGO' => 12, 'CARGO' => 'JEFE DE GRUPO CONCEPCION 2'],
-            ['ID_CARGO' => 13, 'CARGO' => 'JEFE DE GRUPO CONCEPCION 3'],
-            ['ID_CARGO' => 14, 'CARGO' => 'JEFE DE GRUPO CONCEPCION 4'],
-            ['ID_CARGO' => 15, 'CARGO' => 'JEFE DE GRUPO CONCEPCION 5'],
-            ['ID_CARGO' => 16, 'CARGO' => 'JEFE DE GRUPO CONCEPCION 6'],
-            ['ID_CARGO' => 17, 'CARGO' => 'JEFE DE GRUPO CONCEPCION 7'],
-            ['ID_CARGO' => 18, 'CARGO' => 'JEFE DE GRUPO CUMPLIMIENTO TRIBUTARIO EN TERRENO (CTT)'],
-            ['ID_CARGO' => 19, 'CARGO' => 'JEFE GRUPO N° 1 MEDIANAS Y GRANDES EMPRESAS SEDE REGIONAL CONCEPCION'],
-            ['ID_CARGO' => 20, 'CARGO' => 'JEFE GRUPO N° 2 MEDIANAS Y GRANDES EMPRESAS SEDE REGIONAL CONCEPCION'],
-            ['ID_CARGO' => 21, 'CARGO' => 'JEFE GRUPO N° 3 MEDIANAS Y GRANDES EMPRESAS SEDE REGIONAL CONCEPCION'],
-            ['ID_CARGO' => 22, 'CARGO' => 'JEFE GRUPO N° 1 PERSONAS Y MICRO-PEQUEÑA EMPRESAS SEDE REGIONAL CONCEPCION'],
-            ['ID_CARGO' => 23, 'CARGO' => 'JEFE GRUPO N° 2 PERSONAS Y MICRO-PEQUEÑA EMPRESAS SEDE REGIONAL CONCEPCION'],
-            ['ID_CARGO' => 24, 'CARGO' => 'JEFE GRUPO N° 3 PERSONAS Y MICRO-PEQUEÑA EMPRESAS SEDE REGIONAL CONCEPCION'],
-            ['ID_CARGO' => 25, 'CARGO' => 'JEFE GRUPO N° 4 PERSONAS Y MICRO-PEQUEÑA EMPRESAS SEDE REGIONAL CONCEPCION'],
-            ['ID_CARGO' => 26, 'CARGO' => 'JEFE GRUPO N° 1 FISCALIZACION UNIDAD DE CHILLAN'],
-            ['ID_CARGO' => 27, 'CARGO' => 'JEFE GRUPO N° 2 FISCALIZACION UNIDAD DE CHILLAN'],
-            ['ID_CARGO' => 28, 'CARGO' => 'JEFE GRUPO N° 1 FISCALIZACION UNIDAD DE LOS ANGELES'],
-            ['ID_CARGO' => 29, 'CARGO' => 'JEFE GRUPO N° 2 FISCALIZACION UNIDAD DE LOS ANGELES'],
-            ['ID_CARGO' => 30, 'CARGO' => 'JEFE GRUPO N° 1 FISCALIZACION TALCAHUANO'],
-            ['ID_CARGO' => 31, 'CARGO' => 'JEFE DE UNIDAD DE CHILLAN'],
-            ['ID_CARGO' => 32, 'CARGO' => 'JEFE DE UNIDAD DE SAN CARLOS'],
-            ['ID_CARGO' => 99, 'CARGO' => 'FUNCIONARIO'],
-            ['ID_CARGO' => 999, 'CARGO' => 'EXTERNO']
-        ]);
+        // Cargo::insert([
+        //     ['ID_CARGO' => 1, 'CARGO' => 'DIRECTOR REGIONAL'],
+        //     ['ID_CARGO' => 2, 'CARGO' => 'JEFE DE DEPARTAMENTO JURIDICO'],
+        //     ['ID_CARGO' => 3, 'CARGO' => 'JEFE DE DEPARTAMENTO DE FISCALIZACION'],
+        //     ['ID_CARGO' => 4, 'CARGO' => 'JEFE DE DEPARTAMENTO DE ASISTENCIA'],
+        //     ['ID_CARGO' => 5, 'CARGO' => 'JEFE DE DEPARTAMENTO DE AVALUACIONES'],
+        //     ['ID_CARGO' => 6, 'CARGO' => 'JEFE DE DEPARTAMENTO DE PROCEDIMIENTOS ADMINISTRATIVOS'],
+        //     ['ID_CARGO' => 7, 'CARGO' => 'JEFE DE DEPARTAMENTO DE ADMINISTRACION'],
+        //     ['ID_CARGO' => 8, 'CARGO' => 'JEFE DE UNIDAD DE TALCAHUANO'],
+        //     ['ID_CARGO' => 9, 'CARGO' => 'JEFE DE UNIDAD DE LOS ANGELES'],
+        //     ['ID_CARGO' => 10, 'CARGO' => 'JEFE DE UNIDAD DE LEBU'],
+        //     ['ID_CARGO' => 11, 'CARGO' => 'JEFE DE GRUPO CONCEPCION 1'],
+        //     ['ID_CARGO' => 12, 'CARGO' => 'JEFE DE GRUPO CONCEPCION 2'],
+        //     ['ID_CARGO' => 13, 'CARGO' => 'JEFE DE GRUPO CONCEPCION 3'],
+        //     ['ID_CARGO' => 14, 'CARGO' => 'JEFE DE GRUPO CONCEPCION 4'],
+        //     ['ID_CARGO' => 15, 'CARGO' => 'JEFE DE GRUPO CONCEPCION 5'],
+        //     ['ID_CARGO' => 16, 'CARGO' => 'JEFE DE GRUPO CONCEPCION 6'],
+        //     ['ID_CARGO' => 17, 'CARGO' => 'JEFE DE GRUPO CONCEPCION 7'],
+        //     ['ID_CARGO' => 18, 'CARGO' => 'JEFE DE GRUPO CUMPLIMIENTO TRIBUTARIO EN TERRENO (CTT)'],
+        //     ['ID_CARGO' => 19, 'CARGO' => 'JEFE GRUPO N° 1 MEDIANAS Y GRANDES EMPRESAS SEDE REGIONAL CONCEPCION'],
+        //     ['ID_CARGO' => 20, 'CARGO' => 'JEFE GRUPO N° 2 MEDIANAS Y GRANDES EMPRESAS SEDE REGIONAL CONCEPCION'],
+        //     ['ID_CARGO' => 21, 'CARGO' => 'JEFE GRUPO N° 3 MEDIANAS Y GRANDES EMPRESAS SEDE REGIONAL CONCEPCION'],
+        //     ['ID_CARGO' => 22, 'CARGO' => 'JEFE GRUPO N° 1 PERSONAS Y MICRO-PEQUEÑA EMPRESAS SEDE REGIONAL CONCEPCION'],
+        //     ['ID_CARGO' => 23, 'CARGO' => 'JEFE GRUPO N° 2 PERSONAS Y MICRO-PEQUEÑA EMPRESAS SEDE REGIONAL CONCEPCION'],
+        //     ['ID_CARGO' => 24, 'CARGO' => 'JEFE GRUPO N° 3 PERSONAS Y MICRO-PEQUEÑA EMPRESAS SEDE REGIONAL CONCEPCION'],
+        //     ['ID_CARGO' => 25, 'CARGO' => 'JEFE GRUPO N° 4 PERSONAS Y MICRO-PEQUEÑA EMPRESAS SEDE REGIONAL CONCEPCION'],
+        //     ['ID_CARGO' => 26, 'CARGO' => 'JEFE GRUPO N° 1 FISCALIZACION UNIDAD DE CHILLAN'],
+        //     ['ID_CARGO' => 27, 'CARGO' => 'JEFE GRUPO N° 2 FISCALIZACION UNIDAD DE CHILLAN'],
+        //     ['ID_CARGO' => 28, 'CARGO' => 'JEFE GRUPO N° 1 FISCALIZACION UNIDAD DE LOS ANGELES'],
+        //     ['ID_CARGO' => 29, 'CARGO' => 'JEFE GRUPO N° 2 FISCALIZACION UNIDAD DE LOS ANGELES'],
+        //     ['ID_CARGO' => 30, 'CARGO' => 'JEFE GRUPO N° 1 FISCALIZACION TALCAHUANO'],
+        //     ['ID_CARGO' => 31, 'CARGO' => 'JEFE DE UNIDAD DE CHILLAN'],
+        //     ['ID_CARGO' => 32, 'CARGO' => 'JEFE DE UNIDAD DE SAN CARLOS'],
+        //     ['ID_CARGO' => 99, 'CARGO' => 'FUNCIONARIO'],
+        //     ['ID_CARGO' => 999, 'CARGO' => 'EXTERNO']
+        // ]);
         // Población de la tabla 'calidad_juridica'
         CalidadJuridica::insert([
             ['ID_CALIDAD' => 1, 'CALIDAD' => 'PLANTA'],

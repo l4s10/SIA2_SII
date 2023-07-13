@@ -31,7 +31,7 @@ return new class extends Migration
         });
 
         Schema::create('ubicacion', function (Blueprint $table) {
-            $table->integer('ID_UBICACION')->unsigned()->primary();
+            $table->increments('ID_UBICACION');
             $table->string('UBICACION', 128)->nullable();
             $table->unsignedInteger('ID_DIRECCION');
             $table->foreign('ID_DIRECCION')->references('ID_DIRECCION')->on('direcciones_regionales');
@@ -58,7 +58,7 @@ return new class extends Migration
             $table->integer('ID_GRADO')->unsigned()->primary();
             $table->integer('GRADO')->nullable();
         });
-        
+
         Schema::create('calidad_juridica', function (Blueprint $table) {
             $table->integer('ID_CALIDAD')->unsigned()->primary();
             $table->string('CALIDAD', 128)->nullable();

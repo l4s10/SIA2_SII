@@ -118,7 +118,18 @@ Route::resource('reserva/bodega', 'App\Http\Controllers\SolicitudBodegasControll
     'destroy' => 'solicitud.bodegas.destroy',
 ]);
 //**Rutas para solicitud vehiculos
-Route::post('reserva/vehiculo/{id}/pdf', 'App\Http\Controllers\RelFunVehController@generarPDF')->name('solicitud.vehiculos.pdf');
+//Exportable
+Route::get('reserva/vehiculo/{id}/pdf', 'App\Http\Controllers\RelFunVehController@generarPDF')->name('solicitud.vehiculos.pdf');
+//Formularion de edicion del vehiculo, solo que muestra los campos de rendicion
+Route::get('reserva/vehiculo/{id}/rendicion', 'App\Http\Controllers\RelFunVehController@rendicion')->name('solicitud.vehiculos.rendicion');
+//Ver solicitudes por rendir y autorizar
+Route::get('reserva/vehiculo/rendir', 'App\Http\Controllers\RelFunVehController@indexRendir')->name('solicitud.vehiculos.rendir');
+Route::get('reserva/vehiculo/autorizar', 'App\Http\Controllers\RelFunVehController@indexAutorizar')->name('solicitud.vehiculos.autorizar');
+//POST PARA ENVIAR FIRMA -> RUT, NOMBRES Y APELLIDOS (INTEGRAR CON CLAVE UNICA)
+Route::post('/reserva/vehiculos/{id}/autorizar', [App\Http\Controllers\RelFunVehController::class, 'autorizar'])->name('solicitud.vehiculos.authorize');
+Route::post('/reserva/vehiculos/{id}/rechazar', [App\Http\Controllers\RelFunVehController::class, 'rechazar'])->name('solicitud.vehiculos.reject');
+
+
 Route::resource('reserva/vehiculo', 'App\Http\Controllers\RelFunVehController')->names([
     'index' => 'solicitud.vehiculos.index',
     'create' => 'solicitud.vehiculos.create',
