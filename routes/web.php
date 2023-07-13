@@ -73,6 +73,9 @@ Route::resource('comuna','App\Http\Controllers\ComunaController');
 Route::resource('direccionregional','App\Http\Controllers\DireccionRegionalController');
 //Rutas resolucion
 Route::resource('resolucion','App\Http\Controllers\ResolucionController');
+//Ruta para obtener documento asociado a una resolucion
+Route::get('resoluciones/{filename}', 'App\Http\Controllers\ResolucionController@showDocumento')->name('resolucion.documento');
+//
 //Rutas poliza
 Route::resource('polizas','App\Http\Controllers\PolizaController');
 //Rutas cargo

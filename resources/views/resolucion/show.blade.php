@@ -43,6 +43,15 @@
             @else
                 <p class="data"> - </p>
             @endif
+            
+            <p class="parameter"><strong>Documento:</strong></p>
+            @if ($resolucion->DOCUMENTO)
+                <a href="{{ asset('storage/'.$resolucion->DOCUMENTO) }}" class="btn btn-sia-primary" target="_blank">
+                    <i class="fa-solid fa-file-pdf"></i> Descargar documento
+                </a>
+            @else
+                <p class="data">Sin documento adjunto</p>
+            @endif
         </div>
 
         <div class="card-footer" style="background-color: #eaeaea;">
@@ -57,7 +66,6 @@
     </div>
 </div>
 @stop
-
 
 @section('css')
 {{-- styles --}}

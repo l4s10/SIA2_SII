@@ -1,9 +1,7 @@
 @extends('adminlte::page')
 
-<!-- TITULO DE LA PESTAÑA -->
 @section('title', 'Modificar Resolución Delegatoria')
 
-<!-- CABECERA DE LA PAGINA -->
 @section('content_header')
     <h1>Modificar Resolución Delegatoria</h1>
 @stop
@@ -104,6 +102,16 @@
             
                         @error('ID_DELEGADO')
                             <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="DOCUMENTO" class="form-label"><i class="fa-solid fa-book-bookmark"></i> Documento:</label>
+                        <input type="file" name="DOCUMENTO" id="DOCUMENTO" class="form-control">
+                        @error('DOCUMENTO')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
                         @enderror
                     </div>
                 </div>

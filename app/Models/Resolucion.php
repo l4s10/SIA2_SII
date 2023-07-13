@@ -23,7 +23,8 @@ class Resolucion extends Model
         'ID_TIPO',
         'ID_FIRMANTE',
         'ID_FACULTAD',
-        'ID_DELEGADO'
+        'ID_DELEGADO',
+        'DOCUMENTO'
     ];
 
     //* Agregamos validaciones para la tabla de resoluciones delegatorias*/

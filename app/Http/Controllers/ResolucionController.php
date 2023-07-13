@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 //use Illuminate\Validation\Rule;
@@ -46,21 +46,33 @@ class ResolucionController extends Controller
     {
         try {
             $request->validate(Resolucion::rules($request->input('NRO_RESOLUCION')), Resolucion::messages());
-
+    
             $fecha = $request->input('FECHA');
             if (Carbon::parse($fecha)->isAfter(Carbon::now())) {
                 throw new \Exception('. La fecha debe ser anterior o igual a la fecha actual.');
             }
-
+    
             $data = $request->only('NRO_RESOLUCION', 'FECHA', 'ID_TIPO', 'ID_FIRMANTE', 'ID_FACULTAD', 'ID_DELEGADO');
-
-            $resolucion = Resolucion::create($data);
-
+    
+            if ($request->hasFile('DOCUMENTO')) {
+                $documento = $request->file('DOCUMENTO');
+            
+                // Genera un nombre único para el archivo PDF
+                $nombreArchivo = uniqid() . '.' . $documento->getClientOriginalExtension();
+            
+                // Guarda el archivo PDF en la carpeta 'resoluciones' dentro del disco 'public'
+                $path = $documento->storeAs('resoluciones', $nombreArchivo, 'public');
+            
+                $data['DOCUMENTO'] = $nombreArchivo;
+            }
+    
+            Resolucion::create($data);
+    
             session()->flash('success', 'La resolución delegatoria fue agregada exitosamente.');
         } catch (\Exception $e) {
             session()->flash('error', 'Hubo un error al agregar la resolución delegatoria. Vuelva a intentarlo nuevamente' . $e->getMessage());
         }
-
+    
         return redirect(route('resolucion.index'));
     }
 
@@ -137,6 +149,18 @@ class ResolucionController extends Controller
             session()->flash('error','Error al eliminar la resolución delegatoria seleccionada, vuelva a intentarlo nuevamente.');
         }
         return redirect(route('resolucion.index'));
+    }
+
+    //Mostrar pdf
+    public function showDocumento($filename)
+    {
+        $path = public_path('resoluciones/' . $filename);
+
+        if (file_exists($path)) {
+            return response()->file($path);
+        }
+
+        abort(404);
     }
 }
 
