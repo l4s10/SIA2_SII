@@ -443,7 +443,7 @@
             }]
         };
         window.myChartData9 = {
-            // Noveno gráfico Solicitudes de materiales requeridos por departmaneto/unidad.
+            // Noveno gráfico Solicitudes de vehiculos requeridos por departmaneto/unidad.
             labels: ['Unidad de los Angeles', 'Unidad de Lebu', 'Unidad de Talcahuano', 'No asignado', 'Gabinete director','Departamento de administracion','Departamento de Fiscalizacion','Departamento de asistencia al contribuyente','Departamento de avaluaciones','Departamento de procedimientos administrativos tributarios','Departamento juridico'],
             datasets: [{
                 label: 'Solicitudes realizadas',
