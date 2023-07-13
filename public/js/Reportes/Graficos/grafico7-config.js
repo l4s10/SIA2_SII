@@ -1,14 +1,14 @@
 document.addEventListener('DOMContentLoaded', (event) => {
-    const ctx3 = document.getElementById('myChart3').getContext('2d');
-    const myChart3 = new Chart(ctx3, {
+    const ctx6 = document.getElementById('myChart6').getContext('2d');
+    const myChart6 = new Chart(ctx6, {
         type: 'bar',
-        data: window.myChartData3, //CARGAR VARIABLES AQUI SE DEFINE COMO LLAMAR A LOS GRAFICOS.
+        data: window.myChartData6,
         options: {
             scales: {
                 x: {
                     title: {
                         display: true,
-                        text: 'Patentes'
+                        text: 'Solicitudes'
                     }
                 },
                 y: {
@@ -31,7 +31,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
                 },
                 title: {
                     display: true,
-                    text: 'Vehiculos asignados',
+                    text: 'Estados de solicitudes de materiales',
                     padding: {
                         top: 10,
                         bottom: 30
@@ -69,11 +69,11 @@ document.addEventListener('DOMContentLoaded', (event) => {
         })
             .then(response => response.json())
             .then(data => {
-                myChart3.data.labels = ['Solicitudes'];
-                myChart3.data.datasets[0].data = [
-                    Math.round(data.grafico4.solicitudMateriales),
+                myChart6.data.datasets[0].data = [
+                    Math.round(data.stockTipoMaterial),
+                    Math.round(data.stockMaterial)
                 ];
-                myChart3.update();
+                myChart6.update();
             });
     });
 });

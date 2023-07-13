@@ -4,7 +4,7 @@
 
 @section('content_header')
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <h1>Reportes</h1>
+    <h1>Reportes del sistema</h1>
     @role('ADMINISTRADOR')
     <div class="alert alert-info" role="alert">
         <div><strong>Bienvenido Administrador:</strong> Acceso total al modulo.</div>
@@ -72,58 +72,6 @@
         <div class="col-md-6">
             <div class="chart-container">
                 <canvas id="myChart2"></canvas>
-            </div>
-        </div>
-        <!-- Base para el cuarto grafico de solicitud de vehiculos y creacion de base para georeferenciacion. -->
-        <div class="col-md-6">
-        <div class="chart-container">
-            <div id="map" style="display: none;"></div>
-                <canvas id="myChart3"></canvas>
-                <button id="view-chart3" class="btn btn-primary move-right"><i class="fa-solid fa-maximize"></i></button>
-                <button id="map-open" class="btn btn-primary move-right" onclick="toggleMap()"><i class="fa-solid fa-map-location-dot"></i></button>
-            </div>
-        </div>
-        <!-- Grafico 4 materiales -->
-        <div class="col-md-6">
-            <div class="chart-container">
-                <canvas id="myChart4"></canvas>
-                <button id="view-chart4" class="btn btn-primary move-right"><i class="fa-solid fa-maximize"></i></button>
-            </div>
-        </div>
-        <div class="col-md-6">
-            <div class="chart-container">
-                <canvas id="myChart5"></canvas>
-                <button id="view-chart4" class="btn btn-primary move-right"><i class="fa-solid fa-maximize"></i></button>
-            </div>
-        </div>
-        <div class="col-md-6">
-            <div class="chart-container">
-                <canvas id="myChart6"></canvas>
-                <button id="view-chart4" class="btn btn-primary move-right"><i class="fa-solid fa-maximize"></i></button>
-            </div>
-        </div>
-        <div class="col-md-6">
-            <div class="chart-container">
-                <canvas id="myChart7"></canvas>
-                <button id="view-chart4" class="btn btn-primary move-right"><i class="fa-solid fa-maximize"></i></button>
-            </div>
-        </div>
-        <div class="col-md-6">
-            <div class="chart-container">
-                <canvas id="myChart8"></canvas>
-                <button id="view-chart4" class="btn btn-primary move-right"><i class="fa-solid fa-maximize"></i></button>
-            </div>
-        </div>
-        <div class="col-md-6">
-            <div class="chart-container">
-                <canvas id="myChart9"></canvas>
-                <button id="view-chart4" class="btn btn-primary move-right"><i class="fa-solid fa-maximize"></i></button>
-            </div>
-        </div>
-        <div class="col-md-6">
-            <div class="chart-container">
-                <canvas id="myChart10"></canvas>
-                <button id="view-chart4" class="btn btn-primary move-right"><i class="fa-solid fa-maximize"></i></button>
             </div>
         </div>
     </div>
@@ -331,151 +279,11 @@
                 borderWidth: 1
             }]
         };
-        window.myChartData3 = {
-            // Cuarto gráfico estado de solicitud de materiales.
-            // Aqui irian las patentes de los vehiculos.
-            labels: ['Patente1', 'Patente1', 'Patente1', 'Patente1', 'Patente1', 'Patente1', 'Patente1', 'Patente1'],
-            datasets: [{
-                label: 'Solicitudes',
-                // data: [@foreach($grafico3 as $AUX) {{ round($AUX) }}, @endforeach],
-                backgroundColor: [
-                    'rgb(30, 102, 255)', // Color de fondo único para todas las barras
-                ],
-                barThickness: 50, // Ajusta el valor para cambiar el ancho de la barra
-                borderWidth: 1
-            }]
-        };
-        window.myChartData4 = {
-            // Quinto gráfico materiales consumidos por departamento.
-            labels: ['Departamento' , 'Departamento1' ,'departamento2'],
-            datasets: [{
-                label: 'Stock total',
-                data: [@foreach($grafico4 as $AUX) {{ round($AUX) }}, @endforeach],
-                backgroundColor: [
-                    'rgb(233, 255, 166)', // Color de fondo único para todas las barras
-                ],
-                barThickness: 50, // Ajusta el valor para cambiar el ancho de la barra
-                borderWidth: 1
-            }]
-        };
-        window.myChartData5 = {
-            // sexto gráfico materiales consumidos por departamento.
-            labels: ['SAMUEL EDGARDO' , 'ELOISA MARIA CECILIA' ,'CAROLA OPAZO VENEGAS','ALEJANDRA IVONNE MUNOZ INZUNZA'],
-            datasets: [{
-                label: 'Solicitudes revisas',
-                data:[1,2,3,4],
-                backgroundColor: [
-                    'rgb(30, 102, 255)', // Color de fondo único para todas las barras
-                ],
-                barThickness: 50, // Ajusta el valor para cambiar el ancho de la barra
-                borderWidth: 1
-            }]
-        };
-        window.myChartData6 = {
-            // sexto gráfico materiales consumidos por departamento.
-            labels: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'],
-            datasets: [{
-                label: 'Ingresado',
-                data: [1,1,1,1],
-                backgroundColor: 'rgb(255, 151, 0)',
-            }, {
-                label: 'En revisión',
-                data: [1,2,2,2,2],
-                backgroundColor: 'rgb(255, 255, 0 )',
-            }, {
-                label: 'Aceptado',
-                data: [3,3,3,3,1],
-                backgroundColor: 'rgb(39, 255, 0)',
-            }, {
-                label: 'En espera',
-                data: [1,1,1,1],
-                backgroundColor: 'rgb(194, 194, 194)',
-            }, {
-                label: 'Rechazado',
-                data: [1],
-                backgroundColor: 'rgb(255, 0, 0)',
-            }, {
-                label: 'Terminado',
-                data: [1,1,1,1,1,1,1,1,1,1,1,1],
-                backgroundColor: 'rgb(0, 0, 0)',
-            }]
-        };
-        window.myChartData7 = {
-            // sexto gráfico materiales consumidos por departamento.
-            labels: ['Unidad de los Angeles', 'Unidad de Lebu', 'Unidad de Talcahuano', 'No asignado', 'Gabinete director','Departamento de administracion','Departamento de Fiscalizacion','Departamento de asistencia al contribuyente','Departamento de avaluaciones','Departamento de procedimientos administrativos tributarios','Departamento juridico'],
-            datasets: [{
-                label: 'Solicitudes realizadas',
-                data: [1,1,1,1,1,1,1,1,1,1],
-                backgroundColor: [
-                    'rgb(30, 102, 255)', // Color de fondo único para todas las barras
-                ],
-                barThickness: 50, // Ajusta el valor para cambiar el ancho de la barra
-                borderWidth: 1
-            }]
-        };
-        window.myChartData8 = {
-            // sexto gráfico materiales consumidos por departamento.
-            labels: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'],
-            datasets: [{
-                label: 'Ingresado',
-                data: [1,1,1,1],
-                backgroundColor: 'rgb(255, 151, 0)',
-            }, {
-                label: 'Por autorizar',
-                data: [1,2,2,2,2],
-                backgroundColor: 'rgb(255, 255, 0 )',
-            }, {
-                label: 'Suspendido',
-                data: [1],
-                backgroundColor: 'rgb(255, 0, 0)',
-            }, {
-                label: 'Rechazado',
-                data: [1,1,1,1,1,1,1,1,1,1,1,1],
-                backgroundColor: 'rgb(0, 0, 0)',
-            }]
-        };
-        window.myChartData9 = {
-            // sexto gráfico materiales consumidos por departamento.
-            labels: ['Unidad de los Angeles', 'Unidad de Lebu', 'Unidad de Talcahuano', 'No asignado', 'Gabinete director','Departamento de administracion','Departamento de Fiscalizacion','Departamento de asistencia al contribuyente','Departamento de avaluaciones','Departamento de procedimientos administrativos tributarios','Departamento juridico'],
-            datasets: [{
-                label: 'Solicitudes realizadas',
-                data: [1,1,1,1,1,1,1,1,1,1],
-                backgroundColor: [
-                    'rgb(255, 224, 0)', // Color de fondo único para todas las barras
-                ],
-                barThickness: 50, // Ajusta el valor para cambiar el ancho de la barra
-                borderWidth: 1
-            }]
-        };
-        window.myChartData10 = {
-            // sexto gráfico materiales consumidos por departamento.
-            labels: ['ALEJANDRA IVONNE' , 'CAROLA OPAZO VENEGAS' ,'x','SAMUEL EDGARDO'],
-            datasets: [{
-                label: 'Solicitudes revisas',
-                data:[1,2,3,4],
-                backgroundColor: [
-                    'rgb(30, 102, 255)', // Color de fondo único para todas las barras
-                ],
-                barThickness: 50, // Ajusta el valor para cambiar el ancho de la barra
-                borderWidth: 1
-            }]
-        };
 </script>
 
 <script src="{{asset('js/Reportes/Graficos/grafico1-config.js')}}"></script>
 <script src="{{asset('js/Reportes/Graficos/grafico2-config.js')}}"></script>
 <script src="{{asset('js/Reportes/Graficos/grafico3-config.js')}}"></script>
-<script src="{{asset('js/Reportes/Graficos/grafico4-config.js')}}"></script>
-<script src="{{asset('js/Reportes/Graficos/grafico5-config.js')}}"></script>
-<script src="{{asset('js/Reportes/Graficos/grafico6-config.js')}}"></script>
-<script src="{{asset('js/Reportes/Graficos/grafico7-config.js')}}"></script>
-<script src="{{asset('js/Reportes/Graficos/grafico8-config.js')}}"></script>
-<script src="{{asset('js/Reportes/Graficos/grafico9-config.js')}}"></script>
-<script src="{{asset('js/Reportes/Graficos/grafico10-config.js')}}"></script>
-<script src="{{asset('js/Reportes/Graficos/grafico11-config.js')}}"></script>
-
-
-
 
 {{--!! tabla contingencia (FILTROS) --}}
 <script>

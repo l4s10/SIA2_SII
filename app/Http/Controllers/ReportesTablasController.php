@@ -19,15 +19,12 @@ use App\Models\Sexo;
 use Carbon\Carbon;
 // Cuarto Grafico.
 use App\Models\Vehiculo;
-// Quinto Grafico.
-use App\Models\TipoMaterial;
-use App\Models\Material;
 //Exploradores
 use App\Models\Region;
 use App\Models\Ubicacion;
 use App\Models\DireccionRegional;
 
-class ReporteController extends Controller
+class ReportesTablasController extends Controller
 {
     private $models1 = [
         'solicitudSala' => SolicitudSala::class,
@@ -42,20 +39,11 @@ class ReporteController extends Controller
         'solicitudFormularios' => SolicitudFormulario::class,
         'solicitudEquipos' => SolicitudEquipos::class,
     ];
-
-    private $models3 = [
-        'tipomateial' => tipoMaterial::class,
-        'material' => Material::class,
-    ];
-
-
-
     public function index()
     {
         $grafico1 = $this->getGrafico1Data();
         $grafico2 = $this->getGrafico2Data();
         $grafico3 = $this->getGrafico3Data();
-        $grafico4 = $this->getGrafico4Data();
 
         //Departamentos
         $regiones = Region::all();
@@ -64,8 +52,7 @@ class ReporteController extends Controller
         //regiones
         $direcciones = DireccionRegional::all();
         // Devolver la vista con los datos
-        
-        return view('reportes.index', compact('grafico1', 'grafico2', 'grafico3', 'grafico4', 'ubicaciones', 'regiones','direcciones', 'totals'));
+        return view('reporteshome.reportestablas.index', compact('grafico1', 'grafico2', 'grafico3', 'ubicaciones', 'regiones', 'direcciones', 'totals'));
     }
 
     public function getTotalsPorUbicacion($ubicacionId)
@@ -162,19 +149,5 @@ class ReporteController extends Controller
 
         return $grafico3;
     }
-    private function getGrafico4Data($fechaInicio = null, $fechaFin = null)
-    {
-        $grafico4 = [];
-
-        foreach ($this->models3 as $key => $modelClass) {
-            $model = new $modelClass;
-            if ($fechaInicio && $fechaFin) {
-                $grafico4[$key] = $model->whereBetween('created_at', [$fechaInicio, $fechaFin])->count();
-            } else {
-                $grafico4[$key] = $model->count();
-            }
-        }
-
-        return $grafico4;
-    }
 }
+

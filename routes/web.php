@@ -32,10 +32,18 @@ Route::get('/repyman', function(){
 Route::get('/directivos', function(){
     return view('directivos.index');
 })->name('directivos.index');
+
+//Dashboard para modulo home reportes
+Route::get('/reporteshome', function(){
+return view('reporteshome.index');
+})->name('reporteshome.index');
+
 //Dashboard para modulo reserva salas y visitas a bodega
 Route::get('/reservas', function(){
     return view('reservas.dashboard');
 })->name('reservas.dashboard');
+
+//Dasboard para el modulo de 
 //Rutas para materiales
 Route::get('materiales/exportar-pdf', 'App\Http\Controllers\MaterialController@exportToPDF')->name('materiales.exportar-pdf');
 Route::get('materiales/descargar-PDF', 'App\Http\Controllers\MaterialController@report')->name('materiales.report');
