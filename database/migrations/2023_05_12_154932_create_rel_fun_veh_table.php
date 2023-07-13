@@ -32,6 +32,11 @@ class CreateRelFunVehTable extends Migration
             $table->string('ORIGEN', 128)->nullable();
             $table->string('DESTINO', 128)->nullable();
             $table->unsignedInteger('N_ORDEN_TRABAJO')->nullable();
+
+            $table->string('FIRMA_CONDUCTOR', 128)->nullable();
+            $table->string('FIRMA_JEFE_ADMINISTRACION', 128)->nullable();
+            $table->string('FIRMA_ADMINISTRADOR', 128)->nullable();
+
             $table->string('KMS_INICIAL', 128)->nullable();
             $table->string('KMS_FINAL', 128)->nullable();
             $table->string('KMS_RECORRIDOS', 128)->nullable();

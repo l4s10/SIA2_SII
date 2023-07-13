@@ -55,6 +55,17 @@
                 });
             });
         </script>
+    @elseif (session('info'))
+        <script>
+            document.addEventListener('DOMContentLoaded', () => {
+                Swal.fire({
+                    icon: 'info',
+                    title: '{{ session('info') }}',
+                    confirmButtonText: 'OK',
+                    confirmButtonColor: '#0064A0'
+                });
+            });
+        </script>
     @endif
     <div class="container-fluid">
         <div class="table-responsive">

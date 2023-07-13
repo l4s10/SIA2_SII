@@ -47,7 +47,7 @@
 
                         <div class="mb-3">
                             <label for="EMAIL" class="form-label"><i class="fa-solid fa-envelope"></i> Email:</label>
-                            <input type="email" id="EMAIL" name="EMAIL" class="form-control{{ $errors->has('EMAIL') ? ' is-invalid' : '' }}" value="{{ auth()->user()->email }}" placeholder="Ej: demo@demo.cl" readonly>
+                            <input type="email" id="EMAIL" name="EMAIL" class="form-control{{ $errors->has('EMAIL') ? ' is-invalid' : '' }}" value="{{ $solicitud->EMAIL }}" placeholder="Ej: demo@demo.cl" readonly>
                             @if ($errors->has('EMAIL'))
                             <div class="invalid-feedback">
                                 {{ $errors->first('EMAIL') }}

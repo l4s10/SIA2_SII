@@ -118,6 +118,8 @@ Route::get('reserva/vehiculo/{id}/rendicion', 'App\Http\Controllers\RelFunVehCon
 Route::get('reserva/vehiculo/rendir', 'App\Http\Controllers\RelFunVehController@indexRendir')->name('solicitud.vehiculos.rendir');
 Route::get('reserva/vehiculo/autorizar', 'App\Http\Controllers\RelFunVehController@indexAutorizar')->name('solicitud.vehiculos.autorizar');
 //POST PARA ENVIAR FIRMA -> RUT, NOMBRES Y APELLIDOS (INTEGRAR CON CLAVE UNICA)
+Route::post('/reserva/vehiculos/{id}/autorizar', [App\Http\Controllers\RelFunVehController::class, 'autorizar'])->name('solicitud.vehiculos.authorize');
+Route::post('/reserva/vehiculos/{id}/rechazar', [App\Http\Controllers\RelFunVehController::class, 'rechazar'])->name('solicitud.vehiculos.reject');
 
 
 Route::resource('reserva/vehiculo', 'App\Http\Controllers\RelFunVehController')->names([

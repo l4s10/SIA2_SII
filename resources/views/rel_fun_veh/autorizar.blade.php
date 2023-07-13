@@ -69,7 +69,7 @@
                             <th scope="col">Estado</th>
                             <th scope="col">Fecha Ingreso</th>
                             <th scope="col">Acciones</th>
-                            <th scope="col"> Exportables</th>
+                            {{-- <th scope="col"> Exportables</th> --}}
                         </tr>
                     </thead>
                     <tbody>
@@ -83,24 +83,69 @@
                                 <!-- Carbon sirve para parsear datos, esta es una instancia de carbon -->
                                 <td>{{ $sol_veh->created_at->tz('America/Santiago')->format('d/m/Y H:i') }}</td>
                                 <td>
-                                    <form action="{{ route('solicitud.vehiculos.destroy',$sol_veh->ID_SOL_VEH) }}" method="POST">
-                                        @csrf
-                                        @method('DELETE')
-                                        <a href="{{ route('solicitud.vehiculos.show',$sol_veh->ID_SOL_VEH) }}" class="btn btn-primary"><i class="fa-regular fa-eye"></i> Ver</a>
-                                        <a href="{{route('solicitud.vehiculos.edit',$sol_veh->ID_SOL_VEH)}}" class="btn btn-info"><i class="fa-regular fa-clipboard"></i> Autorizar</a>
-                                        <button type="submit" class="btn btn-danger"><i class="fa-solid fa-trash"></i> Borrar</button>
-                                    </form>
-                                </td>
-                                <td>
                                     <form action="{{ route('solicitud.vehiculos.pdf',$sol_veh->ID_SOL_VEH) }}" method="GET" target="_blank" id="pdfForm">
                                         @csrf
+                                        <!-- Botón para abrir el modal -->
+                                        <button type="button" class="btn btn-info" data-toggle="modal" data-target="#modal{{ $sol_veh->ID_SOL_VEH }}"><i class="fa-regular fa-clipboard"></i> Acciones</button>
                                         <button type="submit" class="btn btn-success"><i class="fa-regular fa-file-pdf"></i> PDF</button>
                                     </form>
                                 </td>
+                                {{-- <td>
+
+                                </td> --}}
                             </tr>
                         @endforeach
                     </tbody>
                 </table>
+                <!-- Modal -->
+                <div class="modal fade" id="modal{{ $sol_veh->ID_SOL_VEH }}" tabindex="-1" role="dialog" aria-labelledby="modalLabel{{ $sol_veh->ID_SOL_VEH }}" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="modalLabel{{ $sol_veh->ID_SOL_VEH }}">Detalles de la solicitud</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <h5>Solicitante</h5>
+                                <p>{{ isset($sol_veh->NOMBRE_SOLICITANTE) ? $sol_veh->NOMBRE_SOLICITANTE : 'Información aún no disponible' }} - {{ isset($sol_veh->RUT) ? $sol_veh->RUT : 'Información aún no disponible' }}</p>
+                                <h5>Departamento y Email</h5>
+                                <p>{{ isset($sol_veh->DEPTO) ? $sol_veh->DEPTO : 'Información aún no disponible' }} - {{ isset($sol_veh->EMAIL) ? $sol_veh->EMAIL : 'Información aún no disponible' }}</p>
+                                <h5>Motivo de la Solicitud</h5>
+                                <p>{{ isset($sol_veh->MOTIVO_SOL_VEH) ? $sol_veh->MOTIVO_SOL_VEH : 'Información aún no disponible' }}</p>
+                                <h5>Conductor</h5>
+                                <p>
+                                    {{ isset($sol_veh->conductor->NOMBRES) ? $sol_veh->conductor->NOMBRES . ' ' . $sol_veh->conductor->APELLIDOS : 'Información aún no disponible' }}
+                                </p>
+                                <h5>Fecha de ida y vuelta</h5>
+                                <p>Salida: {{ \Carbon\Carbon::parse($sol_veh->FECHA_SALIDA)->format('d/m/Y H:i')}} - Llegada: {{ \Carbon\Carbon::parse($sol_veh->FECHA_LLEGADA)->format('d/m/Y H:i')}}</p>
+
+                                <h5>Origen y Destino</h5>
+                                <p>
+                                    {{ isset($sol_veh->comunaOrigen) ? $sol_veh->comunaOrigen->COMUNA : 'Información aún no disponible' }}
+                                    -
+                                    {{ isset($sol_veh->comunaDestino) ? $sol_veh->comunaDestino->COMUNA : 'Información aún no disponible' }}
+                                </p>
+
+                                <h5>Número de Orden de Trabajo</h5>
+                                <p>{{ isset($sol_veh->N_ORDEN_TRABAJO) ? $sol_veh->N_ORDEN_TRABAJO : 'Información aún no disponible' }}</p>
+                                <!-- Aquí puede agregar más detalles como se necesite -->
+                            </div>
+
+                            <div class="modal-footer">
+                                <form action="{{ route('solicitud.vehiculos.authorize', $sol_veh->ID_SOL_VEH) }}" method="POST" id="authorizeForm">
+                                    @csrf
+                                    <button type="button" id="authorizeBtn" class="btn btn-success"><i class="fa-solid fa-check-circle"></i> Autorizar</button>
+                                </form>
+                                <form action="{{ route('solicitud.vehiculos.reject', $sol_veh->ID_SOL_VEH) }}" method="POST" id="rejectForm">
+                                    @csrf
+                                    <button type="button" id="rejectBtn" class="btn btn-danger"><i class="fa-solid fa-ban"></i> Rechazar</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
         </div>
     </div>
 @stop
@@ -131,6 +176,46 @@
                     "url": "https://cdn.datatables.net/plug-ins/1.11.3/i18n/es_es.json"
                 },
             });
+        });
+    </script>
+
+    <script>
+        document.getElementById('authorizeBtn').addEventListener('click', function(event) {
+            event.preventDefault();
+
+            Swal.fire({
+                title: '¿Estás seguro?',
+                html: "Estos datos se enviarán como firma. <br>RUT: {{ Auth::user()->RUT }}<br>Nombre completo: {{ Auth::user()->NOMBRES }} {{ Auth::user()->APELLIDOS }}",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Sí, estoy seguro',
+                cancelButtonText: 'Cancelar'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    document.getElementById('authorizeForm').submit();
+                }
+            })
+        });
+
+        document.getElementById('rejectBtn').addEventListener('click', function(event) {
+            event.preventDefault();
+
+            Swal.fire({
+                title: 'Espera',
+                text: "¿Estás seguro de rechazar la solicitud?",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Sí, estoy seguro',
+                cancelButtonText: 'Cancelar'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    document.getElementById('rejectForm').submit();
+                }
+            })
         });
     </script>
 @stop

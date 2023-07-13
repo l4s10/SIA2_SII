@@ -11,6 +11,7 @@ use App\Models\Ubicacion;
 use App\Models\Comuna;
 use App\Models\Region;
 use App\Models\DireccionRegional;
+use App\Models\Cargo;
 use Illuminate\Support\Facades\Validator;
 
 use Dompdf\Dompdf;
@@ -163,17 +164,75 @@ class RelFunVehController extends Controller
         }
         return redirect(route('solicitud.vehiculos.index'));
     }
+    public function autorizar($id)
+    {
+        $solicitud = RelFunVeh::findOrFail($id);
+        $firmaRealizada = false; // Usamos esta variable para verificar si se ha realizado una firma
+
+        // Caso conductor (ASIGNACION POR FORMULARIO)
+        if (auth()->user()->id == $solicitud->CONDUCTOR && $solicitud->FIRMA_CONDUCTOR == null){
+            $solicitud->FIRMA_CONDUCTOR = auth()->user()->RUT . ' ' . auth()->user()->NOMBRES . ' ' . auth()->user()->APELLIDOS;
+            $firmaRealizada = true;
+        }
+
+        // Caso cargo 'JEFE DE DEPARTAMENTO ADMINISTRACION' - Damos prioridad a este rol
+        if (!$firmaRealizada && auth()->user()->cargo->CARGO == 'JEFE DE DEPARTAMENTO DE ADMINISTRACION' && $solicitud->FIRMA_JEFE_ADMINISTRACION == null) {
+            $solicitud->FIRMA_JEFE_ADMINISTRACION = auth()->user()->RUT . ' ' . auth()->user()->NOMBRES . ' ' . auth()->user()->APELLIDOS;
+            $firmaRealizada = true;
+        }
+
+        // Caso administrador (ROLES) - Solo se llegará aquí si el usuario no es un 'JEFE DE DEPARTAMENTO DE ADMINISTRACION' o si ya se ha firmado en esa capacidad
+        if (!$firmaRealizada && auth()->user()->hasRole('ADMINISTRADOR') && $solicitud->FIRMA_ADMINISTRADOR == null) {
+            $solicitud->FIRMA_ADMINISTRADOR = auth()->user()->RUT . ' ' . auth()->user()->NOMBRES . ' ' . auth()->user()->APELLIDOS;
+            $firmaRealizada = true;
+        }
+
+        if (!$firmaRealizada) {
+            // Si no se ha realizado ninguna firma, significa que ya se firmó en todas las capacidades posibles
+            return redirect()->route('solicitud.vehiculos.autorizar')->with('error', 'Esta solicitud ya ha sido firmada por ti');
+        }
+
+        // Validar si todas las firmas están presentes
+        if($solicitud->FIRMA_CONDUCTOR != null && $solicitud->FIRMA_ADMINISTRADOR != null && $solicitud->FIRMA_JEFE_ADMINISTRACION != null){
+            $solicitud->ESTADO_SOL_VEH = 'POR RENDIR';
+            $solicitud->save();
+            return redirect()->route('solicitud.vehiculos.index')->with('success', 'Firma realizada con éxito y autorizado por las 3 entidades!!');
+        }
+
+        $solicitud->save();
+
+        return redirect()->route('solicitud.vehiculos.autorizar')->with('success', 'Firma realizada con éxito');
+    }
+
+    public function rechazar($id)
+    {
+        $solicitud = RelFunVeh::findOrFail($id);
+        $solicitud->ESTADO_SOL_VEH = 'RECHAZADO';
+        //!!MANDAR AQUI DATOS DE FIRMA
+        $solicitud->save();
+
+        return redirect()->route('solicitud.vehiculos.index');
+    }
+
     //!!PARA ESTAS FUNCIONES REUTILIZAREMOS LA VISTA INDEX, SOLO QUE LOS DATOS ESTARAN FILTRADOS SEGUN EL ESTADO
     //*INDEX POR AUTORIZAR */
     public function indexAutorizar(){
         try{
-            //IF SEGUN ROLES
-            $solicitudes = RelFunVeh::where('ESTADO_SOL_VEH', 'POR AUTORIZAR')->where('ID_USUARIO', auth()->user()->id)->get();
+            $solicitudes = RelFunVeh::with(['comunaOrigen', 'comunaDestino'])
+                ->where('ESTADO_SOL_VEH', 'POR AUTORIZAR')->get();
+
+            if($solicitudes->isEmpty()) {
+                return redirect()->route('solicitud.vehiculos.index')->with('info', 'Por ahora no hay autorizaciones pendientes.');
+            }
+
             return view('rel_fun_veh.autorizar', compact('solicitudes'));
         }catch(Exception $e){
-
+            // manejo de excepción
         }
     }
+
+
+
     //!!INDEX POR RENDIR
     public function indexRendir(){
         try{
