@@ -1,3 +1,4 @@
+// Primer gráfico Total de solicitudes 1
 document.addEventListener('DOMContentLoaded', (event) => {
     const ctx = document.getElementById('myChart').getContext('2d');
     const myChart = new Chart(ctx, {

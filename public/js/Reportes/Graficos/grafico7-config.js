@@ -1,3 +1,4 @@
+// Sexto gráfico estados de solicitudes de materiales/mes.
 document.addEventListener('DOMContentLoaded', (event) => {
     const ctx6 = document.getElementById('myChart6').getContext('2d');
     const myChart6 = new Chart(ctx6, {

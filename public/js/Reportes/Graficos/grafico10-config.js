@@ -1,3 +1,4 @@
+// Noveno gráfico Solicitudes de materiales requeridos por departmaneto/unidad.
 document.addEventListener('DOMContentLoaded', (event) => {
     const ctx9 = document.getElementById('myChart9').getContext('2d');
     const myChart9 = new Chart(ctx9, {

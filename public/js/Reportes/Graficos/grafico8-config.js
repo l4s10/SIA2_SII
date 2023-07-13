@@ -1,3 +1,4 @@
+// Septimo gráfico materiales consumidos por departamento/unidad.
 document.addEventListener('DOMContentLoaded', (event) => {
     const ctx7 = document.getElementById('myChart7').getContext('2d');
     const myChart7 = new Chart(ctx7, {
