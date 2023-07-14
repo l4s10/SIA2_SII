@@ -132,6 +132,12 @@
                 <button id="view-chart4" class="btn btn-primary move-right"><i class="fa-solid fa-maximize"></i></button>
             </div>
         </div>
+        <div class="col-md-6">
+            <div class="chart-container">
+                <canvas id="myChart11"></canvas>
+                <button id="view-chart4" class="btn btn-primary move-right"><i class="fa-solid fa-maximize"></i></button>
+            </div>
+        </div>
     </div>
     <br>
     <!-- Modal para mostrar el gráfico en grande -->
@@ -231,6 +237,8 @@
 {{-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css"> --}}
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="crossorigin=""/>
 
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.2.0/dist/leaflet.css" />
+<link rel="stylesheet" href="https://unpkg.com/leaflet-routing-machine@latest/dist/leaflet-routing-machine.css" />
 @stop
 
 @section('js')
@@ -256,7 +264,10 @@
     {{-- !!LLAMAMOS A SCRIPT CALENDARIO DE RANGOS --}}
     <script src="{{ asset('js/Reportes/Calendarios/range-calendar.js') }}"></script>
     {{-- !!FUNCION PARA MOSTRAR EN GRANDE --}}
+    <!-- Leaflet version mas reciente -->
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="crossorigin=""></script>
+    <script src="https://unpkg.com/leaflet@1.2.0/dist/leaflet.js"></script>
+    <script src="https://unpkg.com/leaflet-routing-machine@latest/dist/leaflet-routing-machine.js"></script>
 
 <script>
     function showChart(chartId) {
@@ -459,6 +470,20 @@
                 borderWidth: 1
             }]
         };
+        window.myChartData11 = {
+            // Cuarto gráfico Vehiculos asignados.
+            // Aqui irian las patentes de los vehiculos.
+            labels: ['CARMEN PROSSER','VIDEO CONFERENCIA','SALA REUNION DR','HALL RENTA','SALA 1','EXTERNA' ,'OFICINA ASISTENTE SOCIAL'],
+            datasets: [{
+                label: 'Solicitudes de salas',
+                data: [1,2,3,4,5,6,7],
+                backgroundColor: [
+                    'rgb(30, 102, 255)', // Color de fondo único para todas las barras
+                ],
+                barThickness: 50, // Ajusta el valor para cambiar el ancho de la barra
+                borderWidth: 1
+            }]
+        };
 </script>
 
 <script src="{{asset('js/Reportes/Graficos/grafico-config.js')}}"></script>
@@ -472,6 +497,7 @@
 <script src="{{asset('js/Reportes/Graficos/grafico8-config.js')}}"></script>
 <script src="{{asset('js/Reportes/Graficos/grafico9-config.js')}}"></script>
 <script src="{{asset('js/Reportes/Graficos/grafico10-config.js')}}"></script>
+<script src="{{asset('js/Reportes/Graficos/grafico11-config.js')}}"></script>
 
 
 
@@ -631,35 +657,67 @@
             map = L.map('map').setView([-36.8261, -73.0498], 13); // Coordenadas de Concepción, Chile y nivel de zoom 13
 
             L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
             }).addTo(map);
+
             // Crea un grupo de capas
             featureGroup = L.featureGroup().addTo(map);
+
             // Talcahuano
             L.marker([-36.7167, -73.1167]).addTo(map)
-            .bindPopup('FJGK-74 Salida de Vehiculo')
-            .openPopup();
+                .bindPopup('FJGK-74 Salida de Vehiculo')
+                .openPopup();
+
             // Coronel
             L.marker([-37.0167, -73.1333]).addTo(map)
-            .bindPopup('FJGK-74 Llegada de Vehiculo')
-            .openPopup();
+                .bindPopup('FJGK-74 Llegada de Vehiculo')
+                .openPopup();
+
             // Tome
             L.marker([-36.6155, -72.9561]).addTo(map)
-            .bindPopup('HSHV-23 Salida de Vehiculo')
-            .openPopup();
-            //Este apartador es para mostrar los pings en el mapa (Concepcion)
-            L.marker([-36.8261, -73.0498]).addTo(map)
-            .bindPopup('HSHV-23 Llegada de Vehiculo')
-            .openPopup();
-            var polyline1 = L.polyline([[-36.8261, -73.0498], [-36.6155, -72.9561]]).addTo(featureGroup);
-            var polyline2 = L.polyline([[-36.7167, -73.1167], [-37.0167, -73.1333]]).addTo(featureGroup);
+                .bindPopup('HSHV-23 Salida de Vehiculo')
+                .openPopup();
 
-            // Establecer estilo personalizado para las polilíneas
-            polyline1.setStyle({ color: 'red' });
-            polyline2.setStyle({ color: 'blue' });
+            // Este apartado es para mostrar los pings en el mapa (Concepcion)
+            L.marker([-36.8261, -73.0498]).addTo(map)
+                .bindPopup('HSHV-23 Llegada de Vehiculo')
+                .openPopup();
+
+            // var polyline1 = L.polyline([[-36.8261, -73.0498], [-36.6155, -72.9561]]).addTo(featureGroup);
+            // var polyline2 = L.polyline([[-36.7167, -73.1167], [-37.0167, -73.1333]]).addTo(featureGroup);
+
+            // // Establecer estilo personalizado para las polilíneas
+            // polyline1.setStyle({ color: 'red' });
+            // polyline2.setStyle({ color: 'blue' });
+
+            // Agregar el control de enrutamiento
+            L.Routing.control({
+                waypoints: [
+                    L.latLng(-36.8261, -73.0498),  // Coordenadas de Concepción
+                    L.latLng(-36.6155, -72.9561)   // Coordenadas de Tome
+                ],
+                lineOptions: {
+                    styles: [
+                        { color: 'red', opacity: 0.6, weight: 4 },
+                    ]
+                }
+            }).addTo(map);
+            L.Routing.control({
+                waypoints: [
+                    L.latLng(-37.0167, -73.1333),  // Coordenadas de Coronel
+                    L.latLng(-36.7167, -73.1167)   // Coordenadas de Talcahuano
+                ],
+                lineOptions: {
+                    styles: [
+                        { color: 'blue', opacity: 0.6, weight: 4 },
+                    ]
+                }
+            }).addTo(map);
         }
+
         mapOpenButton.addEventListener('click', toggleMap);
     });
 </script>
+
 
 @endsection
