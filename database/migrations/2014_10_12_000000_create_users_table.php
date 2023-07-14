@@ -47,24 +47,24 @@ return new class extends Migration
 
         //!!-----------------------------------------------------
         Schema::create('grupo', function (Blueprint $table) {
-            $table->integer('ID_GRUPO')->unsigned()->primary();
+            $table->increments('ID_GRUPO');
             $table->string('GRUPO', 128)->nullable();
         });
         Schema::create('escalafon', function (Blueprint $table) {
-            $table->integer('ID_ESCALAFON')->unsigned()->primary();
+            $table->increments('ID_ESCALAFON');
             $table->string('ESCALAFON', 128)->nullable();
         });
         Schema::create('grado', function (Blueprint $table) {
-            $table->integer('ID_GRADO')->unsigned()->primary();
+            $table->increments('ID_GRADO');
             $table->integer('GRADO')->nullable();
         });
 
         Schema::create('calidad_juridica', function (Blueprint $table) {
-            $table->integer('ID_CALIDAD')->unsigned()->primary();
+            $table->increments('ID_CALIDAD');
             $table->string('CALIDAD', 128)->nullable();
         });
         Schema::create('sexo', function (Blueprint $table) {
-            $table->integer('ID_SEXO')->unsigned()->primary();
+            $table->increments('ID_SEXO');
             $table->string('SEXO', 128)->nullable();
         });
 

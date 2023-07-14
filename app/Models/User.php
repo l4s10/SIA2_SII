@@ -179,6 +179,11 @@ class User extends Authenticatable
     {
         return $this->belongsTo(Sexo::class, 'ID_SEXO');
     }
+    //* Asocia a los usuarios con las pólizas de seguro de conductores */
+    public function polizas()
+    {
+        return $this->hasMany(Poliza::class, 'ID');
+    }
 
     /*public function resoluciones()
     {

@@ -72,8 +72,18 @@
                             <td>{{$resolucion->facultad->NOMBRE}}</td>
                             <td>{{$resolucion->delegado->CARGO}}</td>
                             <td>
-                                <a href="" class="btn btn-sia-primary btn-block"><i class="fa-solid fa-file-pdf"></i></a></td>                        <td>
-                                <a href="{{route('resolucion.show',$resolucion->ID_RESOLUCION)}}" class="btn btn-sia-primary btn-block"><i class="fa-solid fa-gear"></i></a>
+                                @if ($resolucion->DOCUMENTO)
+                                    <a href="{{ asset('storage/resoluciones/' . $resolucion->DOCUMENTO) }}" class="btn btn-sia-primary btn-block" target="_blank">
+                                        <i class="fa-solid fa-file-pdf"></i>
+                                    </a>
+                                @else
+                                    Sin documento
+                                @endif
+                            </td>
+                            <td>
+                                <a href="{{route('resolucion.show',$resolucion->ID_RESOLUCION)}}" class="btn btn-sia-primary btn-block">
+                                    <i class="fa-solid fa-gear"></i>
+                                </a>
                             </td>
                         </tr>
                     @endforeach

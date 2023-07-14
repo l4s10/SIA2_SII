@@ -14,7 +14,7 @@
                 <legend><i class="fa-solid fa-caret-right"></i> Resoluciones asociadas a un funcionario específico</legend>
                 <div class="row g-3">
                     <input type="text" name="id" value="{{ auth()->user()->id }}" hidden>
-            
+
                     <div class="col">
                         <label for="NOMBRES" class="form-label">Nombres:</label>
                         <input type="string" class="form-control" id="NOMBRES" name="NOMBRES" value="{{ old('NOMBRES') }}" placeholder="1er NOMBRE 2do NOMBRE">
@@ -22,7 +22,7 @@
                         <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
                     </div>
-            
+
                     <div class="col">
                         <label for="APELLIDOS" class="form-label">Apellidos:</label>
                         <input type="string" class="form-control" id="APELLIDOS" name="APELLIDOS" value="{{ old('APELLIDOS') }}" placeholder="1er APELLIDO 2do APELLIDO">
@@ -30,7 +30,7 @@
                         <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
                     </div>
-            
+
                     <div class="col">
                         <label for="RUT" class="form-label">Rut:</label>
                         <input type="string" class="form-control" id="RUT" name="RUT" value="{{ old('RUT') }}" placeholder="12345678-9">
@@ -38,9 +38,6 @@
                         <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
                     </div>
-
-                
-                    
                     <div class="col">
                         <label for="ID_CARGO" class="form-label">Cargo:</label>
                         <div class="input-group">
@@ -57,7 +54,7 @@
                     </div>
                 </div>
             </fieldset>
-            
+
             <div  id="mensaje-error"></div>
 
             <div style="margin-top: 60px;"></div> <!-- Espacio entre las funcionalidades -->
@@ -85,7 +82,7 @@
                         @enderror
                     </div>
                 </div>
-            </fieldset> 
+            </fieldset>
         </form>
 
         <div style="margin-top: 60px;"></div> <!-- Espacio entre las funcionalidades -->
@@ -100,11 +97,11 @@
                 </div>
                 <div class="col">
                     <label for="CARGO_FUNCIONARIO" class="form-label"><i class="fa-solid fa-bookmark"></i> Cargo asociado:</label>
-                    <input type="text" class="form-control" id="CARGO_FUNCIONARIO" name="CARGO_FUNCIONARIO" value="{{ old('CARGO_FUNCIONARIO', $cargoFuncionario ?? '') }}" readonly>                
+                    <input type="text" class="form-control" id="CARGO_FUNCIONARIO" name="CARGO_FUNCIONARIO" value="{{ old('CARGO_FUNCIONARIO', $cargoFuncionario ?? '') }}" readonly>
                 </div>
                 <div class="col">
                     <label for="RUT" class="form-label"><i class="fa-solid fa-address-card"></i> Rut:</label>
-                    <input type="text" class="form-control" id="RUT" name="RUT" value="{{ old('RUT', $rutRes ?? '') }}" readonly>                
+                    <input type="text" class="form-control" id="RUT" name="RUT" value="{{ old('RUT', $rutRes ?? '') }}" readonly>
                 </div>
             </div>
         @else
@@ -115,7 +112,7 @@
                 <div class="col-md-6 form-group">
                     <label for="CARGO_FUNCIONARIO" class="form-label"><i class="fa-solid fa-bookmark"></i> Cargo delegado:</label>
                     <div style="margin-top: 10px;"></div> <!-- Espacio entre las funcionalidades -->
-                    <input type="text" class="form-control" id="CARGO_FUNCIONARIO" name="CARGO_FUNCIONARIO" value="{{ old('CARGO_FUNCIONARIO', $cargoResolucion ?? '') }}" readonly>                
+                    <input type="text" class="form-control" id="CARGO_FUNCIONARIO" name="CARGO_FUNCIONARIO" value="{{ old('CARGO_FUNCIONARIO', $cargoResolucion ?? '') }}" readonly>
                 </div>
             @endif
         @endif
@@ -153,11 +150,17 @@
                                     <button class="btn btn-sia-primary btn-block btn-collapse" style="display: none;">
                                         <i class="fa-solid fa-square-minus"></i>
                                     </button>
-                                    
+
                                     <span class="glosa-completa" style="display: none;">{{ $resolucion->facultad->CONTENIDO }}</span>
                                 </td>
                                 <td>
-                                    <a href="" class="btn btn-sia-primary btn-block"><i class="fa-solid fa-file-pdf"></i></a>
+                                    @if ($resolucion->DOCUMENTO)
+                                        <a href="{{ asset('storage/resoluciones/' . $resolucion->DOCUMENTO) }}" class="btn btn-sia-primary btn-block" target="_blank">
+                                            <i class="fa-solid fa-file-pdf"></i>
+                                        </a>
+                                    @else
+                                        Sin documento
+                                    @endif
                                 </td>
                             </tr>
                         @endforeach
@@ -197,7 +200,7 @@
         }
 
         .alert {
-            opacity: 0.7; 
+            opacity: 0.7;
             background-color: #99CCFF;
             color:     #000000;
         }
@@ -207,7 +210,7 @@
         }
     </style>
 
-    
+
 @stop
 
 @section('js')
@@ -229,7 +232,7 @@
                 var apellidos = $('#APELLIDOS').val();
                 var rut = $('#RUT').val();
                 var idCargoFuncionario = $('#ID_CARGO').val();
-        
+
                 if (!nombres && !apellidos && !rut && !idCargoFuncionario) {
                     // Si todos los campos están vacíos, borrar la tabla de resultados
                     $("#resultados-busqueda").empty();
@@ -265,13 +268,13 @@
                 $('#ID_DELEGADO').val("");
                 deshabilitarBotonDelegado();
             });
-        
+
             //Envía a la vista el nombre del cargo seleccionado en búsqueda
             function obtenerNombreCargo(idCargoFuncionario) {
                 var cargoSeleccionado = $('#ID_CARGO option[value="' + idCargoFuncionario + '"]').text();
                 return cargoSeleccionado;
             }
-      
+
             //Genera tabla de posibles funcionarios para realizar la búsqueda.
             function generarHTMLResultados(response) {
                 var html = '<h4>Seleccione un funcionario(a)</h4>';
@@ -284,28 +287,28 @@
                 html += '</tbody></table>';
                 return html;
             }
-      
+
             // Agregar evento de clic al botón de búsqueda por cargo
             $('#buscarPorCargo').on('click', function() {
                 $('#searchForm').submit(); // Enviar el formulario
             });
-        
+
             $(document).on('click', '.btn-buscar-datos', function() {
                 var nombres = $(this).data('nombres');
                 var apellidos = $(this).data('apellidos');
                 var rut = $(this).data('rut');
                 var idCargoFuncionario = $(this).data('id-cargo');
-        
+
                 // Asignar los valores a los campos correspondientes
                 $('#NOMBRES').val(nombres);
                 $('#APELLIDOS').val(apellidos);
                 $('#RUT').val(rut);
                 $('#ID_CARGO').val(idCargoFuncionario);
-        
+
                 // Enviar el formulario
                 $('#searchForm').submit();
             });
-        
+
             //Control del botón búsqueda por cargo
             function deshabilitarBotonDelegado() {
                 var selectedValue = $('#ID_DELEGADO').val();
@@ -316,33 +319,33 @@
                     $('#buscarPorCargo').prop('disabled', true);
                 }
             }
-        
+
             // Agrega evento de clic al botón de expansión
             $('.btn-expand').on('click', function() {
                 var glosaAbreviada = $(this).siblings('.glosa-abreviada');
                 var glosaCompleta = $(this).siblings('.glosa-completa');
                 var btnExpand = $(this);
                 var btnCollapse = $(this).siblings('.btn-collapse');
-        
+
                 glosaAbreviada.hide();
                 glosaCompleta.show();
                 btnExpand.hide();
                 btnCollapse.show();
             });
-        
+
             // Agregar evento de clic al botón de colapso
             $('.btn-collapse').on('click', function() {
                 var glosaAbreviada = $(this).siblings('.glosa-abreviada');
                 var glosaCompleta = $(this).siblings('.glosa-completa');
                 var btnExpand = $(this).siblings('.btn-expand');
                 var btnCollapse = $(this);
-        
+
                 glosaAbreviada.show();
                 glosaCompleta.hide();
                 btnExpand.show();
                 btnCollapse.hide();
             });
-        
+
             $('#resoluciones').DataTable({
                 "lengthMenu": [
                     [5, 10, 50, -1],
@@ -357,10 +360,10 @@
                     "url": "https://cdn.datatables.net/plug-ins/1.11.3/i18n/es_es.json"
                 }
             });
-        
+
             $('#ID_DELEGADO').change(function() {
                 deshabilitarBotonDelegado();
-        
+
                 // Vaciar los campos si se selecciona un ID_DELEGADO
                 if ($('#ID_DELEGADO').val() !== "") {
                     $('#NOMBRES').val("");
@@ -370,7 +373,7 @@
                     $("#resultados-busqueda").empty();
                 }
             });
-        
+
             // Deshabilita el botón al cargar la página si no hay opción seleccionada inicialmente
             if ($('#ID_DELEGADO').val() === "") {
                 $('#buscarPorCargo').prop('disabled', true);

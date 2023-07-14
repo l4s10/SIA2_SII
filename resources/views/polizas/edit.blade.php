@@ -27,14 +27,19 @@
 
                     <div class="form-group">
                         <label for="ID">Conductor:</label>
-                        <input type="number" name="ID" id="ID" class="form-control" placeholder="id Conductor (Ej: 1 (1-5) )" value="{{ $poliza->ID }}" required autofocus>
+                        <select name="ID" id="ID" class="form-control" required>
+                            <option value="" disabled>Seleccionar Conductor</option>
+                            @foreach($users as $user)
+                                <option value="{{ $user->id }}" @if($user->id == $poliza->ID) selected @endif>{{ $user->NOMBRES }} {{ $user->APELLIDOS }}</option>
+                            @endforeach
+                        </select>
                         @error('ID')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
                             </span>
                         @enderror
                     </div>
-
+                    
                     <div class="form-group">
                         <label for="FECHA_VENCIMIENTO_LICENCIA">Vencimiento licencia de conducir:</label>
                         <input type="text" name="FECHA_VENCIMIENTO_LICENCIA" id="FECHA_VENCIMIENTO_LICENCIA" class="form-control" placeholder="Fecha: (Ej 2024-24-08) " value="{{ date('d-m-Y', strtotime($poliza->FECHA_VENCIMIENTO_LICENCIA)) }}" required autofocus>
@@ -48,7 +53,7 @@
             </div>
             <div class="form-group">
                 <a href="{{route('polizas.index')}}" class="btn btn-secondary">Cancelar</a>
-                <button type="submit" class="btn btn-primary">Modificar resolución</button>
+                <button type="submit" class="btn btn-primary">Modificar póliza</button>
             </div>
         </form>
     </div>
