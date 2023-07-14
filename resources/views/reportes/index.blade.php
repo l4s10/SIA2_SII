@@ -52,7 +52,7 @@
     </div>
     <br>
     <div class="row">
-        <!-- Base para el primer Grafico solicitudes1 -->
+        <!-- Base para el Primer gráfico Total de solicitudes 1 -->
         <div class="col-md-6">
             <div class="chart-container">
                 <canvas id="myChart"></canvas>
@@ -61,20 +61,20 @@
                 <button id="download-png-button" class="btn btn-primary"><i class="fa-solid fa-image"></i></button>
             </div>
         </div>
-        <!-- Base para el segundo Grafico solicitudes2 -->
+        <!-- Base para el Segundo gráfico Total de solicitudes 2 -->
         <div class="col-md-6">
             <div class="chart-container">
                 <canvas id="myChart1"></canvas>
                 <button id="view-chart1" class="btn btn-primary move-right"><i class="fa-solid fa-maximize"></i></button>
             </div>
         </div>
-        <!-- Base para el Tercer Grafico Hombres/Mujeres-->
+        <!-- Base para el Tercer gráfico Total de Funcionarios (Hombres/mujeres)-->
         <div class="col-md-6">
             <div class="chart-container">
                 <canvas id="myChart2"></canvas>
             </div>
         </div>
-        <!-- Base para el cuarto grafico de solicitud de vehiculos y creacion de base para georeferenciacion. -->
+        <!-- Base para el Cuarto gráfico Vehiculos asignados y creacion de base para georeferenciacion. -->
         <div class="col-md-6">
         <div class="chart-container">
             <div id="map" style="display: none;"></div>
@@ -83,45 +83,49 @@
                 <button id="map-open" class="btn btn-primary move-right" onclick="toggleMap()"><i class="fa-solid fa-map-location-dot"></i></button>
             </div>
         </div>
-        <!-- Grafico 4 materiales -->
+        <!-- Grafico cuarto  materiales en espera-->
         <!-- <div class="col-md-6">
             <div class="chart-container">
                 <canvas id="myChart4"></canvas>
                 <button id="view-chart4" class="btn btn-primary move-right"><i class="fa-solid fa-maximize"></i></button>
             </div>
         </div> -->
-        <!-- Graficos 5 Vehiculos asignados -->
+        <!-- Base para el Quinto gráfico Gestionadores de solicitudes de materiales. -->
         <div class="col-md-6">
             <div class="chart-container">
                 <canvas id="myChart5"></canvas>
                 <button id="view-chart4" class="btn btn-primary move-right"><i class="fa-solid fa-maximize"></i></button>
             </div>
         </div>
-        <!-- Graficos 5 Vehiculos asignados -->
+        <!-- Base para el Sexto gráfico estados de solicitudes de materiales/mes. -->
         <div class="col-md-6">
             <div class="chart-container">
                 <canvas id="myChart6"></canvas>
                 <button id="view-chart4" class="btn btn-primary move-right"><i class="fa-solid fa-maximize"></i></button>
             </div>
         </div>
+        <!-- Base para el Septimo gráfico materiales consumidos por departamento/unidad. -->
         <div class="col-md-6">
             <div class="chart-container">
                 <canvas id="myChart7"></canvas>
                 <button id="view-chart4" class="btn btn-primary move-right"><i class="fa-solid fa-maximize"></i></button>
             </div>
         </div>
+        <!-- Base pra el Octavo gráfico Estado de solicitudes de reserva de vehiculo. -->
         <div class="col-md-6">
             <div class="chart-container">
                 <canvas id="myChart8"></canvas>
                 <button id="view-chart4" class="btn btn-primary move-right"><i class="fa-solid fa-maximize"></i></button>
             </div>
         </div>
+        <!-- Base para el Noveno gráfico Solicitudes de vehiculos requeridos por departmaneto/unidad.-->
         <div class="col-md-6">
             <div class="chart-container">
                 <canvas id="myChart9"></canvas>
                 <button id="view-chart4" class="btn btn-primary move-right"><i class="fa-solid fa-maximize"></i></button>
             </div>
         </div>
+        <!-- Base para el Decimo gráfico Gestionadores de solicitudes de reserva de vehiculo. -->
         <div class="col-md-6">
             <div class="chart-container">
                 <canvas id="myChart10"></canvas>
