@@ -61,7 +61,7 @@ class ResolucionController extends Controller
                 $nombreArchivo = uniqid() . '.' . $documento->getClientOriginalExtension();
             
                 // Guarda el archivo PDF en la carpeta 'resoluciones' dentro del disco 'public'
-                $path = $documento->storeAs('resoluciones', $nombreArchivo, 'public');
+                $documento->storeAs('resoluciones', $nombreArchivo, 'public');
             
                 $data['DOCUMENTO'] = $nombreArchivo;
             }
@@ -114,8 +114,8 @@ class ResolucionController extends Controller
     }
 
 
-     public function update(Request $request, string $id)
-     {
+    public function update(Request $request, string $id)
+    {
         try {
             $resolucion = Resolucion::find($id);
             $rules = Resolucion::rules($resolucion->ID_RESOLUCION);
@@ -128,11 +128,33 @@ class ResolucionController extends Controller
 
             $data = $request->only('NRO_RESOLUCION', 'FECHA', 'ID_TIPO', 'ID_FIRMANTE', 'ID_FACULTAD', 'ID_DELEGADO');
             $resolucion->fill($data);
+
+            // Procesar el archivo adjunto si se ha seleccionado uno
+            if ($request->hasFile('DOCUMENTO')) {
+                $documento = $request->file('DOCUMENTO');
+
+                // Genera un nombre único para el archivo PDF
+                $nombreArchivo = uniqid() . '.' . $documento->getClientOriginalExtension();
+
+                // Guarda el archivo PDF en la carpeta 'resoluciones' dentro del disco 'public'
+                $documento->storeAs('resoluciones', $nombreArchivo, 'public');
+
+                $resolucion->DOCUMENTO = $nombreArchivo;
+            }
+
+            // Verificar si se debe eliminar el archivo adjunto actual
+            if ($request->has('ELIMINAR_DOCUMENTO')) {
+                // Eliminar el archivo adjunto actual
+                Storage::disk('public')->delete('resoluciones/' . $resolucion->DOCUMENTO);
+                $resolucion->DOCUMENTO = null;
+            }
+
             $resolucion->save();
             session()->flash('success', 'La resolución delegatoria fue modificada exitosamente');
         } catch (\Exception $e) {
             session()->flash('error', 'Error al modificar la resolución delegatoria seleccionada: ' . $e->getMessage());
         }
+
         return redirect(route('resolucion.index'));
     }
 

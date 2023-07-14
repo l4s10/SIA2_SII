@@ -8,7 +8,7 @@
 
 @section('content')
     <div class="container">
-        <form action="{{ route('resolucion.update', $resolucion->ID_RESOLUCION) }}" method="POST">
+        <form action="{{ route('resolucion.update', $resolucion->ID_RESOLUCION) }}" method="POST" enctype="multipart/form-data">
             @csrf
             @method('PUT')
             <div class="row">
@@ -107,7 +107,22 @@
                     
                     <div class="mb-3">
                         <label for="DOCUMENTO" class="form-label"><i class="fa-solid fa-book-bookmark"></i> Documento:</label>
-                        <input type="file" name="DOCUMENTO" id="DOCUMENTO" class="form-control">
+                        <div class="input-group">
+                            <input type="file" name="DOCUMENTO" id="DOCUMENTO" class="input-group-text btn btn" >
+                        </div>
+                        <small id="documentoActualHelp" class="form-text text-muted">
+                            @if ($resolucion->DOCUMENTO)
+                                Archivo adjunto actual: {{ $resolucion->DOCUMENTO }}
+                            @else
+                                Ningún archivo adjunto seleccionado.
+                            @endif
+                        </small>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" name="ELIMINAR_DOCUMENTO" id="ELIMINAR_DOCUMENTO" value="1" {{ $resolucion->DOCUMENTO ? '' : 'disabled' }}>
+                            <label class="form-check-label" for="ELIMINAR_DOCUMENTO">
+                                Eliminar archivo adjunto actual
+                            </label>
+                        </div>
                         @error('DOCUMENTO')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
@@ -116,10 +131,10 @@
                     </div>
                 </div>
             </div>
-            <div class="form-group">
+            <div class="form-group text-right">
                 <a href="{{ route('resolucion.index') }}" class="btn btn-secondary">Cancelar</a>
                 <button type="submit" class="btn btn-primary">Modificar resolución</button>
-            </div>
+              </div>
         </form>
     </div>
 @endsection
@@ -144,5 +159,15 @@
                 allowInput: true,
             });
         });
+
+        document.getElementById('DOCUMENTO').addEventListener('change', function() {
+        var input = this;
+        var output = document.getElementById('documentoActualHelp');
+        if (input.files && input.files[0]) {
+            output.textContent = 'Archivo adjunto actual: ' + input.files[0].name;
+        } else {
+            output.textContent = 'Ningún archivo adjunto seleccionado.';
+        }
+    });
     </script>
 @endsection

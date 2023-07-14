@@ -38,11 +38,6 @@
                         <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
                     </div>
-
-                    <div>
-                        ID de región: {{ $regionSesionActiva }}
-                        ID de región: {{ $direccionesRegionales}}
-                    </div>
                     
                     <div class="col">
                         <label for="ID_CARGO" class="form-label">Cargo:</label>
@@ -160,7 +155,13 @@
                                     <span class="glosa-completa" style="display: none;">{{ $resolucion->facultad->CONTENIDO }}</span>
                                 </td>
                                 <td>
-                                    <a href="" class="btn btn-sia-primary btn-block"><i class="fa-solid fa-file-pdf"></i></a>
+                                    @if ($resolucion->DOCUMENTO)
+                                        <a href="{{ asset('storage/resoluciones/' . $resolucion->DOCUMENTO) }}" class="btn btn-sia-primary btn-block" target="_blank">
+                                            <i class="fa-solid fa-file-pdf"></i>
+                                        </a>
+                                    @else
+                                        Sin documento
+                                    @endif
                                 </td>
                             </tr>
                         @endforeach
