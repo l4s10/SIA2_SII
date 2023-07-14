@@ -6,6 +6,7 @@
     <h1>Ingresar Póliza</h1>
 @stop
 
+
 @section('content')
 <div class="container">
     <form action="{{ route('polizas.store') }}" method="POST">
@@ -21,8 +22,19 @@
         </div>
 
         <div class="mb-3">
-            <label for="ID" class="form-label"><i class="fa-solid fa-book-bookmark"></i> id Funcionario:</label>
-            <input type="text" class="form-control{{ $errors->has('ID') ? ' is-invalid' : '' }}" id="ID" name="ID" value="{{ old('ID') }}" placeholder="Ej: 10" required>
+            <label for="ID" class="form-label"><i class="fa-solid fa-book-bookmark"></i> Funcionario:</label>
+            <select class="form-control{{ $errors->has('ID') ? ' is-invalid' : '' }}" id="ID" name="ID" required>
+                <option value="" selected disabled>Seleccionar Funcionario</option>
+                @foreach($users->groupBy(function ($user) {
+                    return $user->ubicacion->UBICACION;
+                }) as $ubicacion => $usuarios)
+                    <optgroup label="Ubicación: {{ $ubicacion }}">
+                        @foreach($usuarios as $user)
+                            <option value="{{ $user->id }}">{{ $user->NOMBRES }} {{ $user->APELLIDOS }}</option>
+                        @endforeach
+                    </optgroup>
+                @endforeach
+            </select>
             @if ($errors->has('ID'))
                 <div class="invalid-feedback">
                     {{ $errors->first('ID') }}

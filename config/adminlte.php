@@ -466,31 +466,33 @@ return [
             'text'        => 'Directivos',
             'url'         => 'directivos',
             'icon'        => 'fa-solid fa-user-tie',
-        ],
-        [
-            'text'        => 'Repositorio',
-            'url'         => '#',
-            'icon'        => 'fa-solid fa-folder-minus',
             'submenu' => [
                 [
-                    'text'    => 'Resoluciones',
-                    'url'     => 'resolucion',
-                    'icon'    => 'fas fa-fw fa-eye'
-                ],
-                [
-                    'text'    => 'Pólizas',
-                    'url'     => 'polizas',
-                    'icon'    => 'fas fa-fw fa-eye'
-                ],
-                [
-                    'text'    => 'Facultades',
-                    'url'     => 'facultades',
-                    'icon'    => 'fas fa-fw fa-eye'
-                ],
-                [
-                    'text'    => 'Cargos',
-                    'url'     => 'cargos',
-                    'icon'    => 'fas fa-fw fa-eye'
+                    'text'    => 'Repositorio',
+                    'url'     => '#',
+                    'icon'    => 'fa-solid fa-folder-minus',
+                    'submenu' => [
+                        [
+                            'text'    => 'Resoluciones',
+                            'url'     => 'resolucion',
+                            'icon'    => 'fas fa-fw fa-eye'
+                        ],
+                        [
+                            'text'    => 'Pólizas',
+                            'url'     => 'polizas',
+                            'icon'    => 'fas fa-fw fa-eye'
+                        ],
+                        [
+                            'text'    => 'Facultades',
+                            'url'     => 'facultades',
+                            'icon'    => 'fas fa-fw fa-eye'
+                        ],
+                        [
+                            'text'    => 'Cargos',
+                            'url'     => 'cargos',
+                            'icon'    => 'fas fa-fw fa-eye'
+                        ]
+                    ],
                 ]
             ],
         ],

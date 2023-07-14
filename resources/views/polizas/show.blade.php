@@ -1,3 +1,4 @@
+{{-- show.blade.php --}}
 @extends('adminlte::page')
 
 @section('title', 'Resolución delegatoria')
@@ -22,7 +23,7 @@
             <p class="data">{{ date('d/m/Y', strtotime($poliza->FECHA_VENCIMIENTO_LICENCIA )) }}</p>
 
             <p class="parameter"><strong>Conductor:</strong></p>
-            <p class="data">{{ $poliza->ID }}</p>
+            <p class="data">{{ $poliza->user->NOMBRES }} {{ $poliza->user->APELLIDOS }}</p>
         </div>
 
         <div class="card-footer" style="background-color: #eaeaea;">
@@ -37,7 +38,6 @@
     </div>
 </div>
 @stop
-
 
 @section('css')
 {{-- styles --}}
