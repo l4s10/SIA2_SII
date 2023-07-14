@@ -460,6 +460,9 @@
                 data:[1,2,3,4],
                 backgroundColor: [
                     'rgb(30, 102, 255)', // Color de fondo único para todas las barras
+                    'rgb(255, 99, 132)', // Color para CAROLA OPAZO VENEGAS
+                    'rgb(54, 162, 235)', // Color para x
+                    'rgb(75, 192, 192)' // Color para SAMUEL EDGARDO
                 ],
                 barThickness: 50, // Ajusta el valor para cambiar el ancho de la barra
                 borderWidth: 1
