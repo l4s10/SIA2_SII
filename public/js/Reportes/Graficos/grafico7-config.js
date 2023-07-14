@@ -1,15 +1,15 @@
-// Sexto gráfico estados de solicitudes de materiales/mes.
+// Septimo gráfico materiales consumidos por departamento/unidad.
 document.addEventListener('DOMContentLoaded', (event) => {
-    const ctx6 = document.getElementById('myChart6').getContext('2d');
-    const myChart6 = new Chart(ctx6, {
-        type: 'bar',
-        data: window.myChartData6,
+    const ctx7 = document.getElementById('myChart7').getContext('2d');
+    const myChart7 = new Chart(ctx7, {
+        type: 'pie',
+        data: window.myChartData7,
         options: {
             scales: {
                 x: {
                     title: {
                         display: true,
-                        text: 'Solicitudes'
+                        text: 'Ubicaciones'
                     }
                 },
                 y: {
@@ -32,7 +32,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
                 },
                 title: {
                     display: true,
-                    text: 'Estados de solicitudes de materiales',
+                    text: 'Solicitudes de materiales requeridos por ubicacion',
                     padding: {
                         top: 10,
                         bottom: 30
@@ -68,13 +68,31 @@ document.addEventListener('DOMContentLoaded', (event) => {
                 fechaFin: fechaFin
             })
         })
-            .then(response => response.json())
-            .then(data => {
-                myChart6.data.datasets[0].data = [
-                    Math.round(data.stockTipoMaterial),
-                    Math.round(data.stockMaterial)
-                ];
-                myChart6.update();
-            });
+        .then(response => {
+            if (!response.ok) {
+                throw new Error("HTTP error " + response.status);
+            }
+            return response.json();
+        })
+        .then(data => {
+            if(data.message){
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: data.message,
+                })
+            } else {
+                myChart7.data.labels = data.grafico7.map(item => item.ubicacion);
+                myChart7.data.datasets[0].data = data.grafico7.map(item => item.conteo);
+                myChart7.update();
+            }
+        })
+        .catch(error => {
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Something went wrong!',
+            })
+        });
     });
 });

@@ -292,7 +292,7 @@
             labels: ['Solicitud Sala', 'Solicitud Bodegas', 'Reparación de Vehículos', 'Reserva de Vehículos'],
             datasets: [{
                 label: 'Cantidad de Solicitudes',
-                data: [@foreach($grafico1 as $AUX) {{ round($AUX) }}, @endforeach],
+                data: [@foreach($grafico as $AUX) {{ round($AUX) }}, @endforeach],
                 backgroundColor: [
                     'rgb(250, 215, 160)', // Color de fondo para Salas (piel)
                     'rgb(244, 0, 0)', // Color de fondo para Bodegas (rojo)
@@ -308,7 +308,7 @@
             labels: ['Solicitud de materiales', 'Solicitud de Reparación para Inmuebles', 'Formularios' ,'Equipos'],
             datasets: [{
                 label: 'Cantidad de Solicitudes',
-                data: [@foreach($grafico2 as $AUX) {{ round($AUX) }}, @endforeach],
+                data: [@foreach($grafico1 as $AUX) {{ round($AUX) }}, @endforeach],
                 backgroundColor: [
                     'rgb(194, 3, 255)', // Color de fondo para el segundo gráfico (morado)
                     'rgb(3, 41, 255)', // Color de fondo para el segundo gráfico (Azul)
@@ -324,7 +324,7 @@
             labels: ['Hombres', 'Mujeres'],
             datasets: [{
                 label: 'Cantidad Total',
-                data: [@foreach($grafico3 as $AUX) {{ round($AUX) }}, @endforeach],
+                data: [@foreach($grafico2 as $AUX) {{ round($AUX) }}, @endforeach],
                 backgroundColor: [
                     'rgb(3, 41, 255)', // Color de fondo para el segundo gráfico (Azul)
                     'rgb(19, 143, 0)', // Color de fondo para el segundo gráfico (Verde)
@@ -336,10 +336,10 @@
         window.myChartData3 = {
             // Cuarto gráfico Vehiculos asignados.
             // Aqui irian las patentes de los vehiculos.
-            labels: {!! json_encode(array_column($grafico4, 'patente')) !!},
+            labels: {!! json_encode(array_column($grafico3, 'patente')) !!},
             datasets: [{
                 label: 'Solicitudes',
-                data: {!! json_encode(array_column($grafico4, 'conteo')) !!},
+                data: {!! json_encode(array_column($grafico3, 'conteo')) !!},
                 backgroundColor: [
                     'rgb(30, 102, 255)', // Color de fondo único para todas las barras
                 ],
@@ -397,10 +397,10 @@
         };
         window.myChartData7 = {
             // sexto gráfico materiales consumidos por ubicaciones.
-            labels: @json(array_column($grafico6, 'ubicacion')),
+            labels: @json(array_column($grafico7, 'ubicacion')),
             datasets: [{
                 label: 'Solicitudes realizadas',
-                data: @json(array_column($grafico6, 'conteo')),
+                data: @json(array_column($grafico7, 'conteo')),
                 backgroundColor: [
                     'rgb(30, 102, 255)', // Color de fondo único para todas las barras
                 ],
@@ -457,17 +457,17 @@
         };
 </script>
 
+<script src="{{asset('js/Reportes/Graficos/grafico-config.js')}}"></script>
 <script src="{{asset('js/Reportes/Graficos/grafico1-config.js')}}"></script>
 <script src="{{asset('js/Reportes/Graficos/grafico2-config.js')}}"></script>
 <script src="{{asset('js/Reportes/Graficos/grafico3-config.js')}}"></script>
-<script src="{{asset('js/Reportes/Graficos/grafico4-config.js')}}"></script>
-<!-- <script src="{{asset('js/Reportes/Graficos/grafico5-config.js')}}"></script> -->
+<!-- <script src="{{asset('js/Reportes/Graficos/grafico4-config.js')}}"></script> -->
+<script src="{{asset('js/Reportes/Graficos/grafico5-config.js')}}"></script>
 <script src="{{asset('js/Reportes/Graficos/grafico6-config.js')}}"></script>
 <script src="{{asset('js/Reportes/Graficos/grafico7-config.js')}}"></script>
 <script src="{{asset('js/Reportes/Graficos/grafico8-config.js')}}"></script>
 <script src="{{asset('js/Reportes/Graficos/grafico9-config.js')}}"></script>
 <script src="{{asset('js/Reportes/Graficos/grafico10-config.js')}}"></script>
-<script src="{{asset('js/Reportes/Graficos/grafico11-config.js')}}"></script>
 
 
 

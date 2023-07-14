@@ -1,15 +1,15 @@
-// Septimo gráfico materiales consumidos por departamento/unidad.
+// Octavo gráfico Estado de solicitudes de reserva de vehiculo.
 document.addEventListener('DOMContentLoaded', (event) => {
-    const ctx7 = document.getElementById('myChart7').getContext('2d');
-    const myChart7 = new Chart(ctx7, {
-        type: 'pie',
-        data: window.myChartData7,
+    const ctx8 = document.getElementById('myChart8').getContext('2d');
+    const myChart8 = new Chart(ctx8, {
+        type: 'bar',
+        data: window.myChartData8,
         options: {
             scales: {
                 x: {
                     title: {
                         display: true,
-                        text: 'Ubicaciones'
+                        text: 'Solicitudes'
                     }
                 },
                 y: {
@@ -32,7 +32,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
                 },
                 title: {
                     display: true,
-                    text: 'Solicitudes de materiales requeridos por ubicacion',
+                    text: 'Estado de solicitudes de reserva de vehiculo',
                     padding: {
                         top: 10,
                         bottom: 30
@@ -68,31 +68,13 @@ document.addEventListener('DOMContentLoaded', (event) => {
                 fechaFin: fechaFin
             })
         })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error("HTTP error " + response.status);
-            }
-            return response.json();
-        })
-        .then(data => {
-            if(data.message){
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Oops...',
-                    text: data.message,
-                })
-            } else {
-                myChart7.data.labels = data.grafico6.map(item => item.ubicacion);
-                myChart7.data.datasets[0].data = data.grafico6.map(item => item.conteo);
-                myChart7.update();
-            }
-        })
-        .catch(error => {
-            Swal.fire({
-                icon: 'error',
-                title: 'Oops...',
-                text: 'Something went wrong!',
-            })
-        });
+            .then(response => response.json())
+            .then(data => {
+                myChart8.data.datasets[0].data = [
+                    Math.round(data.stockTipoMaterial),
+                    Math.round(data.stockMaterial)
+                ];
+                myChart8.update();
+            });
     });
 });

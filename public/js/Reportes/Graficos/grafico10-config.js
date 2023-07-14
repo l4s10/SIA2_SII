@@ -1,15 +1,15 @@
-// Noveno gráfico Solicitudes de vehiculos requeridos por departmaneto/unidad.
+// Decimo gráfico Gestionadores de solicitudes de reserva de vehiculo.
 document.addEventListener('DOMContentLoaded', (event) => {
-    const ctx9 = document.getElementById('myChart9').getContext('2d');
-    const myChart9 = new Chart(ctx9, {
+    const ctx10 = document.getElementById('myChart10').getContext('2d');
+    const myChart10 = new Chart(ctx10, {
         type: 'pie',
-        data: window.myChartData9,
+        data: window.myChartData10,
         options: {
             scales: {
                 x: {
                     title: {
                         display: true,
-                        text: 'Solicitudes'
+                        text: 'Gestionadores'
                     }
                 },
                 y: {
@@ -32,7 +32,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
                 },
                 title: {
                     display: true,
-                    text: 'Solicitudes de vehiculos requeridos por departmaneto/unidad',
+                    text: 'Gestionadores de solicitudes de reserva de vehiculo',
                     padding: {
                         top: 10,
                         bottom: 30
@@ -70,11 +70,11 @@ document.addEventListener('DOMContentLoaded', (event) => {
         })
             .then(response => response.json())
             .then(data => {
-                myChart9.data.datasets[0].data = [
+                myChart10.data.datasets[0].data = [
                     Math.round(data.stockTipoMaterial),
                     Math.round(data.stockMaterial)
                 ];
-                myChart9.update();
+                myChart10.update();
             });
     });
 });

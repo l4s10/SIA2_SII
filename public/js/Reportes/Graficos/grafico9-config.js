@@ -1,9 +1,9 @@
-// Octavo gráfico Estado de solicitudes de reserva de vehiculo.
+// Noveno gráfico Solicitudes de vehiculos requeridos por departmaneto/unidad.
 document.addEventListener('DOMContentLoaded', (event) => {
-    const ctx8 = document.getElementById('myChart8').getContext('2d');
-    const myChart8 = new Chart(ctx8, {
-        type: 'bar',
-        data: window.myChartData8,
+    const ctx9 = document.getElementById('myChart9').getContext('2d');
+    const myChart9 = new Chart(ctx9, {
+        type: 'pie',
+        data: window.myChartData9,
         options: {
             scales: {
                 x: {
@@ -32,7 +32,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
                 },
                 title: {
                     display: true,
-                    text: 'Estado de solicitudes de reserva de vehiculo',
+                    text: 'Solicitudes de vehiculos requeridos por departmaneto/unidad',
                     padding: {
                         top: 10,
                         bottom: 30
@@ -70,11 +70,11 @@ document.addEventListener('DOMContentLoaded', (event) => {
         })
             .then(response => response.json())
             .then(data => {
-                myChart8.data.datasets[0].data = [
+                myChart9.data.datasets[0].data = [
                     Math.round(data.stockTipoMaterial),
                     Math.round(data.stockMaterial)
                 ];
-                myChart8.update();
+                myChart9.update();
             });
     });
 });

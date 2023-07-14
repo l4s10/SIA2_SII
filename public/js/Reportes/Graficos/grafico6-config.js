@@ -1,15 +1,15 @@
-// Quinto gráfico estados de solicitudes de materiales.
+// Sexto gráfico estados de solicitudes de materiales/mes.
 document.addEventListener('DOMContentLoaded', (event) => {
-    const ctx5 = document.getElementById('myChart5').getContext('2d');
-    const myChart5 = new Chart(ctx5, {
-        type: 'pie',
-        data: window.myChartData5,
+    const ctx6 = document.getElementById('myChart6').getContext('2d');
+    const myChart6 = new Chart(ctx6, {
+        type: 'bar',
+        data: window.myChartData6,
         options: {
             scales: {
                 x: {
                     title: {
                         display: true,
-                        text: 'Gestionadores'
+                        text: 'Solicitudes'
                     }
                 },
                 y: {
@@ -32,7 +32,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
                 },
                 title: {
                     display: true,
-                    text: 'Gestionadores de solicitudes de materiales',
+                    text: 'Estados de solicitudes de materiales',
                     padding: {
                         top: 10,
                         bottom: 30
@@ -70,10 +70,11 @@ document.addEventListener('DOMContentLoaded', (event) => {
         })
             .then(response => response.json())
             .then(data => {
-                // Actualizar los datos del gráfico
-                myChart5.data.labels = data.grafico5.map(item => item.nombre);
-                myChart5.data.datasets[0].data = data.grafico5.map(item => item.conteo);
-                myChart5.update();
+                myChart6.data.datasets[0].data = [
+                    Math.round(data.stockTipoMaterial),
+                    Math.round(data.stockMaterial)
+                ];
+                myChart6.update();
             });
     });
 });

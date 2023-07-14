@@ -54,12 +54,18 @@ class ReporteController extends Controller
     //obtener historico
     public function index()
     {
+        // Primer gráfico Total de solicitudes 1
+        $grafico = $this->getGraficoData();
+        // Segundo gráfico Total de solicitudes 2
         $grafico1 = $this->getGrafico1Data();
+        // Tercer gráfico Total de Funcionarios (Hombres/mujeres)
         $grafico2 = $this->getGrafico2Data();
+        // Cuarto gráfico Vehiculos asignados.
         $grafico3 = $this->getGrafico3Data();
-        $grafico4 = $this->getGrafico4Data();
+        // Quinto gráfico estados de solicitudes de materiales.
         $grafico5 = $this->getGrafico5Data();
-        $grafico6 = $this->getGrafico6Data();
+        // Sexto gráfico estados de solicitudes de materiales/mes.
+        $grafico7 = $this->getGrafico7Data();
 
         //Departamentos
         $regiones = Region::all();
@@ -69,7 +75,7 @@ class ReporteController extends Controller
         $direcciones = DireccionRegional::all();
         // Devolver la vista con los datos
 
-        return view('reportes.index', compact('grafico1', 'grafico2', 'grafico3', 'grafico4', 'grafico5', 'grafico6', 'ubicaciones', 'regiones','direcciones', 'totals'));
+        return view('reportes.index', compact('grafico', 'grafico1', 'grafico2', 'grafico3', 'grafico5', 'grafico7', 'ubicaciones', 'regiones','direcciones', 'totals'));
     }
 
     public function getTotalsPorUbicacion($ubicacionId)
@@ -106,22 +112,38 @@ class ReporteController extends Controller
         $fechaFin = Carbon::parse($fechaFin)->endOfDay();
 
         $data = [
+            'grafico' => $this->getGraficoData($fechaInicio, $fechaFin),
             'grafico1' => $this->getGrafico1Data($fechaInicio, $fechaFin),
             'grafico2' => $this->getGrafico2Data($fechaInicio, $fechaFin),
             'grafico3' => $this->getGrafico3Data($fechaInicio, $fechaFin),
-            'grafico4' => $this->getGrafico4Data($fechaInicio, $fechaFin),
             'grafico5' => $this->getGrafico5Data($fechaInicio, $fechaFin),
-            'grafico6' => $this->getGrafico6Data($fechaInicio, $fechaFin),
+            'grafico7' => $this->getGrafico7Data($fechaInicio, $fechaFin),
         ];
 
         return response()->json($data);
+    }
+
+    private function getGraficoData($fechaInicio = null, $fechaFin = null)
+    {
+        $grafico = [];
+
+        foreach ($this->models1 as $key => $modelClass) {
+            $model = new $modelClass;
+            if ($fechaInicio && $fechaFin) {
+                $grafico[$key] = $model->whereBetween('created_at', [$fechaInicio, $fechaFin])->count();
+            } else {
+                $grafico[$key] = $model->count();
+            }
+        }
+
+        return $grafico;
     }
 
     private function getGrafico1Data($fechaInicio = null, $fechaFin = null)
     {
         $grafico1 = [];
 
-        foreach ($this->models1 as $key => $modelClass) {
+        foreach ($this->models2 as $key => $modelClass) {
             $model = new $modelClass;
             if ($fechaInicio && $fechaFin) {
                 $grafico1[$key] = $model->whereBetween('created_at', [$fechaInicio, $fechaFin])->count();
@@ -137,22 +159,6 @@ class ReporteController extends Controller
     {
         $grafico2 = [];
 
-        foreach ($this->models2 as $key => $modelClass) {
-            $model = new $modelClass;
-            if ($fechaInicio && $fechaFin) {
-                $grafico2[$key] = $model->whereBetween('created_at', [$fechaInicio, $fechaFin])->count();
-            } else {
-                $grafico2[$key] = $model->count();
-            }
-        }
-
-        return $grafico2;
-    }
-
-    private function getGrafico3Data($fechaInicio = null, $fechaFin = null)
-    {
-        $grafico3 = [];
-
         $totalHombres = User::where('ID_SEXO', '=', '1');
         $totalMujeres = User::where('ID_SEXO', '=', '2');
 
@@ -162,14 +168,14 @@ class ReporteController extends Controller
         }
 
 
-        $grafico3 = [
+        $grafico2 = [
             'totalHombres' => $totalHombres->count(),
             'totalMujeres' => $totalMujeres->count(),
         ];
 
-        return $grafico3;
+        return $grafico2;
     }
-    public function getGrafico4Data($fechaInicio = null, $fechaFin = null)
+    public function getGrafico3Data($fechaInicio = null, $fechaFin = null)
     {
         $solicitudesQuery = RelFunVeh::whereNotNull('PATENTE_VEHICULO');
 
@@ -179,20 +185,20 @@ class ReporteController extends Controller
 
         $solicitudes = $solicitudesQuery->get();
 
-        $grafico4 = [];
+        $grafico3 = [];
 
         // Agrupa las solicitudes por patente y cuenta las filas para cada patente
         $conteosPorPatente = $solicitudes->groupBy('PATENTE_VEHICULO')->map->count();
 
         // Itera sobre los conteos por patente y crea el array para el gráfico
         foreach ($conteosPorPatente as $patente => $conteo) {
-            $grafico4[] = [
+            $grafico3[] = [
                 'patente' => $patente,
                 'conteo' => $conteo
             ];
         }
 
-        return $grafico4;
+        return $grafico3;
     }
 
     //*Grafico 5 : Gestionadores de solicitudes de materiales */
@@ -226,7 +232,7 @@ class ReporteController extends Controller
 
     //*Grafico 6: Solicitudes de materiales por Ubicacion/Depto */
     //!!Agregar validacion de regiones
-    public function getGrafico6Data($fechaInicio = null, $fechaFin = null)
+    public function getGrafico7Data($fechaInicio = null, $fechaFin = null)
     {
         $ubicacionUser = Ubicacion::where('ID_UBICACION', auth()->user()->ID_UBICACION)->first(); //Obtuve la ubicacion del user
         if($ubicacionUser){
@@ -241,7 +247,7 @@ class ReporteController extends Controller
             // Trata el caso en que no se encuentre la ubicación del usuario
         }
 
-        $grafico6 = [];
+        $grafico7 = [];
 
         // Itera sobre cada ubicación
         foreach ($ubicacionesFiltradas as $ubicacion) {
@@ -256,14 +262,14 @@ class ReporteController extends Controller
             $conteo = $solicitudes->count();
 
             // Agrega los datos de esta ubicación al array del gráfico
-            $grafico6[] = [
+            $grafico7[] = [
                 'ubicacion' => $ubicacion->UBICACION,
                 'conteo' => $conteo,
                 'region' => $ubicacion->direccion->region->REGION
             ];
         }
 
-        return $grafico6;
+        return $grafico7;
     }
 
 }

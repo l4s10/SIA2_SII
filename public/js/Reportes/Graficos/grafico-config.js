@@ -1,9 +1,9 @@
-// Segundo gráfico Total de solicitudes 2
+// Primer gráfico Total de solicitudes 1
 document.addEventListener('DOMContentLoaded', (event) => {
-    const ctx1 = document.getElementById('myChart1').getContext('2d');
-    const myChart1 = new Chart(ctx1, {
+    const ctx = document.getElementById('myChart').getContext('2d');
+    const myChart = new Chart(ctx, {
         type: 'bar',
-        data: window.myChartData1, //CARGAR VARIABLES AQUI SE DEFINE COMO LLAMAR A LOS GRAFICOS.
+        data: window.myChartData, //CARGAR VARIABLES
         options: {
             scales: {
                 x: {
@@ -75,7 +75,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
                 Swal.showLoading();
             },
             willClose: () => {
-               // Al cerrarse
+                // Al cerrarse
             }
         });
 
@@ -92,13 +92,21 @@ document.addEventListener('DOMContentLoaded', (event) => {
         })
             .then(response => response.json())
             .then(data => {
-                myChart1.data.datasets[0].data = [
-                    Math.round(data.grafico1.solicitudMateriales),
-                    Math.round(data.grafico1.relFunRepGeneral),
-                    Math.round(data.grafico1.solicitudFormularios),
-                    Math.round(data.grafico1.solicitudEquipos),
+                myChart.data.datasets[0].data = [
+                    Math.round(data.grafico.solicitudSala),
+                    Math.round(data.grafico.solicitudBodegas),
+                    Math.round(data.grafico.solicitudReparacionVehiculo),
+                    Math.round(data.grafico.relFunVeh)
                 ];
-                myChart1.update();
+                myChart.update();
             });
     });
+    // Descargar gráfico como PNG Fondo Transparente
+    document.querySelector('#download-png-button').addEventListener('click', function () {
+        const downloadLink = document.createElement('a');
+        downloadLink.href = myChart.toBase64Image('image/png', { backgroundColor: '#FFFFFF' });
+        downloadLink.download = 'Grafico.png';
+        downloadLink.click();
+    });
+
 });
