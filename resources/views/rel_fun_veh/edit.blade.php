@@ -167,7 +167,8 @@
                         @foreach ($vehiculos->groupBy('ubicacion.UBICACION') as $ubicacion => $autos)
                             <optgroup label="{{ $ubicacion }}">
                                 @foreach ($autos as $auto)
-                                    <option value="{{ $auto->PATENTE_VEHICULO }}" data-tipo-vehiculo="{{ $auto->tipoVehiculo->ID_TIPO_VEH }}" @if ($auto->PATENTE_VEHICULO === $solicitud->PATENTE_VEHICULO) selected @endif>
+                                    <option value="{{ $auto->PATENTE_VEHICULO }}" data-tipo-vehiculo="{{ $auto->tipoVehiculo->ID_TIPO_VEH }}"
+                                        @if (trim($auto->PATENTE_VEHICULO) === trim($solicitud->PATENTE_VEHICULO)) selected @endif>
                                         {{ $auto->PATENTE_VEHICULO }} ({{ $auto->tipoVehiculo->TIPO_VEHICULO }})
                                     </option>
                                 @endforeach
@@ -178,6 +179,8 @@
                         <div class="invalid-feedback">{{$errors->first('PATENTE_VEHICULO')}}</div>
                     @endif
                 </div>
+
+
             </div>
             <div class="row" hidden>
                 <div class="col-md-6">
@@ -407,6 +410,8 @@
             // Evento change del elemento ID_TIPO_VEH
             $('#ID_TIPO_VEH').change(function() {
                 var selectedTipoVehiculo = $(this).val();
+                // Guardar el valor seleccionado antes de cambiar el tipo de vehículo
+                var previousPatenteVehiculo = $('#PATENTE_VEHICULO').val();
 
                 $('#PATENTE_VEHICULO option').each(function() {
                     var tipoVehiculoOption = $(this).data('tipo-vehiculo');
@@ -418,62 +423,24 @@
                     }
                 });
 
-                // Restablecer la selección del segundo select
-                $('#PATENTE_VEHICULO').val('');
+                // Restablecer el valor seleccionado anteriormente, en lugar de simplemente restablecer a una cadena vacía
+                $('#PATENTE_VEHICULO').val(previousPatenteVehiculo);
             });
 
             // Desencadenar el evento change al cargar la página
             $('#ID_TIPO_VEH').trigger('change');
         });
     </script>
-    {{-- *FUNCION RESETEAR SOLICITUD (DEVUELVE LOS VALORES ORIGINALES)* --}}
     <script>
-        function resetFields() {
-            // Obtener los elementos de formulario por sus IDs
-            var conductor = document.getElementById('CONDUCTOR');
-            var motivoSolicitud = document.getElementById('MOTIVO_SOL_VEH');
-            var nombreOcupantes = document.getElementById('NOMBRE_OCUPANTES');
-            var fechaSalida = document.getElementById('FECHA_SALIDA_SOL_VEH');
-            var horaSalida = document.getElementById('HORA_SALIDA_SOL_VEH');
-            var horaLlegada = document.getElementById('HORA_LLEGADA_SOL_VEH');
-            var observaciones = document.getElementById('OBSERV_SOL_VEH');
-            var tipoVehiculo = document.getElementById('ID_TIPO_VEH');
-            var patenteVehiculo = document.getElementById('PATENTE_VEHICULO');
-            var estadoSolicitud = document.getElementById('ESTADO_SOL_VEH');
-
-            // Restaurar los valores originales de los campos
-            conductor.value = "{{ $solicitud->CONDUCTOR }}";
-            motivoSolicitud.value = "{{ $solicitud->MOTIVO_SOL_VEH }}";
-            nombreOcupantes.value = "{{ $solicitud->NOMBRE_OCUPANTES }}";
-            fechaSalida.value = "{{ $solicitud->FECHA_SALIDA_SOL_VEH }}";
-            horaSalida.value = "{{ $solicitud->HORA_SALIDA_SOL_VEH }}";
-            horaLlegada.value = "{{ $solicitud->HORA_LLEGADA_SOL_VEH }}";
-            observaciones.value = "{{ $solicitud->OBSERV_SOL_VEH }}";
-            tipoVehiculo.value = "{{ $solicitud->ID_TIPO_VEH }}";
-            patenteVehiculo.value = "{{ $solicitud->PATENTE_VEHICULO }}";
-            estadoSolicitud.value = "{{ $solicitud->ESTADO_SOL_VEH }}";
-
-            // Restablecer el selector de fecha Flatpickr
-            flatpickr("#FECHA_SALIDA_SOL_VEH", {
-                dateFormat: 'Y-m-d',
-                altFormat: 'd-m-Y',
-                altInput: true,
-                locale: 'es',
-                minDate: "today",
-                showClearButton: true,
-                mode: "range"
-            });
-            // Mostrar la alerta SweetAlert2
-            Swal.fire({
-                icon: 'success',
-                title: 'Campos restablecidos',
-                text: 'Los campos se han restablecido correctamente.',
-                timer: 2000,
-                timerProgressBar: true,
-                toast: true,
-                position: 'top-end',
-                showConfirmButton: false
-            });
-        }
+        $(document).ready(function(){
+            $('#ESTADO_SOL_VEH').change(function(){
+                var estado = $(this).val();
+                if(estado === 'POR RENDIR') {
+                    $(this).prop('disabled', true);
+                } else {
+                    $(this).prop('disabled', false);
+                }
+            }).trigger('change'); // Esto va a disparar el evento de cambio al cargar la página
+        });
     </script>
 @stop
