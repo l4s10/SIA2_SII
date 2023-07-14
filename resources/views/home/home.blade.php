@@ -3,7 +3,7 @@
 @section('title', 'Menú principal')
 
 @section('content_header')
-    <h1>Calendario de eventos</h1>
+    <h1> Bienvenido -- {{auth()->user()->NOMBRES}} {{auth()->user()->APELLIDOS}} </h1>
 @endsection
 
 @section('content')
