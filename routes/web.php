@@ -43,7 +43,7 @@ Route::get('/reservas', function(){
     return view('reservas.dashboard');
 })->name('reservas.dashboard');
 
-//Dasboard para el modulo de 
+//Dasboard para el modulo de
 //Rutas para materiales
 Route::get('materiales/exportar-pdf', 'App\Http\Controllers\MaterialController@exportToPDF')->name('materiales.exportar-pdf');
 Route::get('materiales/descargar-PDF', 'App\Http\Controllers\MaterialController@report')->name('materiales.report');
@@ -147,7 +147,6 @@ Route::get('/get-ubicaciones/{id}', [UbicacionesController::class, 'getUbicacion
 Route::get('/direccion/{ubicacionId}', [DireccionRegionalController::class, 'getDireccion']);
 Route::get('/ubicaciones/{direccionId}', [UbicacionesController::class, 'getUbicaciones']);
 Route::get('/usuarios/{ubicacionId}', [UserController::class, 'getUsuarios']);
-
 Route::get('funcionarios/region/{id}', 'App\Http\Controllers\UserController@getUsersByRegion')->name('funcionarios.region');
 Route::resource('funcionarios','App\Http\Controllers\UserController');
 
