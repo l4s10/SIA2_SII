@@ -87,7 +87,7 @@
                                 </span>
                                 </td>
                                 <!-- Carbon sirve para parsear datos, esta es una instancia de carbon -->
-                                <td>{{ $sol_material->created_at->tz('America/Santiago')->format('d/m/Y H:i') }}</td>
+                                <td>{{ $sol_material->created_at ? $sol_material->created_at->format('d/m/Y H:i') : 'Fecha no disponible' }}</td>
                                 {{-- <td>{{ $sol_material->OBSERVACIONES}}</td> --}}
                                 <td>
                                     <form action="{{ route('solmaterial.destroy',$sol_material->ID_SOLICITUD) }}" method="POST">
