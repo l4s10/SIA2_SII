@@ -1,3 +1,4 @@
+// Quinto gráfico estados de solicitudes de materiales.
 document.addEventListener('DOMContentLoaded', (event) => {
     const ctx5 = document.getElementById('myChart5').getContext('2d');
     const myChart5 = new Chart(ctx5, {

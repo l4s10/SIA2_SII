@@ -15,7 +15,7 @@
             }
         }
     };
-    
+// Tercer gráfico Total de Funcionarios (Hombres/mujeres)
 document.addEventListener('DOMContentLoaded', (event) => {
     const ctx2 = document.getElementById('myChart2').getContext('2d');
     const myChart2 = new Chart(ctx2, {

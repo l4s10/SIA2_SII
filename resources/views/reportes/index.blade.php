@@ -84,18 +84,20 @@
             </div>
         </div>
         <!-- Grafico 4 materiales -->
-        <div class="col-md-6">
+        <!-- <div class="col-md-6">
             <div class="chart-container">
                 <canvas id="myChart4"></canvas>
                 <button id="view-chart4" class="btn btn-primary move-right"><i class="fa-solid fa-maximize"></i></button>
             </div>
-        </div>
+        </div> -->
+        <!-- Graficos 5 Vehiculos asignados -->
         <div class="col-md-6">
             <div class="chart-container">
                 <canvas id="myChart5"></canvas>
                 <button id="view-chart4" class="btn btn-primary move-right"><i class="fa-solid fa-maximize"></i></button>
             </div>
         </div>
+        <!-- Graficos 5 Vehiculos asignados -->
         <div class="col-md-6">
             <div class="chart-container">
                 <canvas id="myChart6"></canvas>
@@ -300,7 +302,7 @@
                 barThickness: 50, // Ajusta el valor para cambiar el ancho de la barra
                 borderWidth: 1
             }]
-        }
+        };
         window.myChartData1 = {
             // Segundo gráfico Total de solicitudes 2
             labels: ['Solicitud de materiales', 'Solicitud de Reparación para Inmuebles', 'Formularios' ,'Equipos'],
@@ -316,7 +318,7 @@
                 barThickness: 50, // Ajusta el valor para cambiar el ancho de la barra
                 borderWidth: 1
             }]
-        }
+        };
         window.myChartData2 = {
             // Tercer gráfico Total de Funcionarios (Hombres/mujeres)
             labels: ['Hombres', 'Mujeres'],
@@ -332,7 +334,7 @@
             }]
         };
         window.myChartData3 = {
-            // Cuarto gráfico estado de solicitud de materiales.
+            // Cuarto gráfico Vehiculos asignados.
             // Aqui irian las patentes de los vehiculos.
             labels: {!! json_encode(array_column($grafico4, 'patente')) !!},
             datasets: [{
@@ -345,22 +347,21 @@
                 borderWidth: 1
             }]
         };
-
-
-        // window.myChartData5 = {
-        //     // sexto gráfico materiales consumidos por departamento.
-        //     labels: ['SAMUEL EDGARDO' , 'ELOISA MARIA CECILIA' ,'CAROLA OPAZO VENEGAS','ALEJANDRA IVONNE MUNOZ INZUNZA'],
+        // window.myChartData4 = {
+        //     // Quinto gráfico materiales consumidos por departamento.
+        //     labels: ['Departamento' , 'Departamento1' ,'departamento2'],
         //     datasets: [{
-        //         label: 'Solicitudes revisas',
-        //         data:[1,2,3,4],
+        //         label: 'Stock total',
+        //         data: [@foreach($grafico4 as $AUX) {{ round($AUX) }}, @endforeach],
         //         backgroundColor: [
-        //             'rgb(30, 102, 255)', // Color de fondo único para todas las barras
+        //             'rgb(233, 255, 166)', // Color de fondo único para todas las barras
         //         ],
         //         barThickness: 50, // Ajusta el valor para cambiar el ancho de la barra
         //         borderWidth: 1
         //     }]
         // };
         window.myChartData5 = {
+            // Quinto gráfico estados de solicitudes de materiales.
             labels: [],
             datasets: [{
                 label: 'Solicitudes revisadas',
@@ -379,7 +380,7 @@
         });
 
         window.myChartData6 = {
-            // sexto gráfico materiales consumidos por departamento.
+            // Sexto gráfico estados de solicitudes de materiales/mes.
             labels: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'],
             datasets: [{
                 label: 'Ingresado',
@@ -421,7 +422,7 @@
             }]
         };
         window.myChartData8 = {
-            // sexto gráfico materiales consumidos por departamento.
+            // Octavo gráfico Estado de solicitudes de reserva de vehiculo.
             labels: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'],
             datasets: [{
                 label: 'Ingresado',
@@ -442,7 +443,7 @@
             }]
         };
         window.myChartData9 = {
-            // sexto gráfico materiales consumidos por departamento.
+            // Noveno gráfico Solicitudes de vehiculos requeridos por departmaneto/unidad.
             labels: ['Unidad de los Angeles', 'Unidad de Lebu', 'Unidad de Talcahuano', 'No asignado', 'Gabinete director','Departamento de administracion','Departamento de Fiscalizacion','Departamento de asistencia al contribuyente','Departamento de avaluaciones','Departamento de procedimientos administrativos tributarios','Departamento juridico'],
             datasets: [{
                 label: 'Solicitudes realizadas',
@@ -455,7 +456,7 @@
             }]
         };
         window.myChartData10 = {
-            // sexto gráfico materiales consumidos por departamento.
+            // Decimo gráfico Gestionadores de solicitudes de reserva de vehiculo.
             labels: ['ALEJANDRA IVONNE' , 'CAROLA OPAZO VENEGAS' ,'x','SAMUEL EDGARDO'],
             datasets: [{
                 label: 'Solicitudes revisas',
@@ -473,7 +474,7 @@
 <script src="{{asset('js/Reportes/Graficos/grafico2-config.js')}}"></script>
 <script src="{{asset('js/Reportes/Graficos/grafico3-config.js')}}"></script>
 <script src="{{asset('js/Reportes/Graficos/grafico4-config.js')}}"></script>
-<script src="{{asset('js/Reportes/Graficos/grafico5-config.js')}}"></script>
+<!-- <script src="{{asset('js/Reportes/Graficos/grafico5-config.js')}}"></script> -->
 <script src="{{asset('js/Reportes/Graficos/grafico6-config.js')}}"></script>
 <script src="{{asset('js/Reportes/Graficos/grafico7-config.js')}}"></script>
 <script src="{{asset('js/Reportes/Graficos/grafico8-config.js')}}"></script>

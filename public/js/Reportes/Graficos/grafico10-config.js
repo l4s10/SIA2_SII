@@ -1,3 +1,4 @@
+// Noveno gráfico Solicitudes de vehiculos requeridos por departmaneto/unidad.
 document.addEventListener('DOMContentLoaded', (event) => {
     const ctx9 = document.getElementById('myChart9').getContext('2d');
     const myChart9 = new Chart(ctx9, {
@@ -31,7 +32,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
                 },
                 title: {
                     display: true,
-                    text: 'Solicitudes de materiales requeridos por departmaneto/unidad',
+                    text: 'Solicitudes de vehiculos requeridos por departmaneto/unidad',
                     padding: {
                         top: 10,
                         bottom: 30
