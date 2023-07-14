@@ -347,19 +347,6 @@
                 borderWidth: 1
             }]
         };
-        // window.myChartData4 = {
-        //     // Quinto gráfico materiales consumidos por departamento.
-        //     labels: ['Departamento' , 'Departamento1' ,'departamento2'],
-        //     datasets: [{
-        //         label: 'Stock total',
-        //         data: [@foreach($grafico4 as $AUX) {{ round($AUX) }}, @endforeach],
-        //         backgroundColor: [
-        //             'rgb(233, 255, 166)', // Color de fondo único para todas las barras
-        //         ],
-        //         barThickness: 50, // Ajusta el valor para cambiar el ancho de la barra
-        //         borderWidth: 1
-        //     }]
-        // };
         window.myChartData5 = {
             // Quinto gráfico estados de solicitudes de materiales.
             labels: [],
