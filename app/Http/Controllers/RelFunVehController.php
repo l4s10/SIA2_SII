@@ -13,6 +13,8 @@ use App\Models\Region;
 use App\Models\DireccionRegional;
 use App\Models\Cargo;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Log;
+
 
 use Dompdf\Dompdf;
 use Carbon\Carbon;
@@ -236,10 +238,12 @@ class RelFunVehController extends Controller
     //!!INDEX POR RENDIR
     public function indexRendir(){
         try{
-            $solicitudes = RelFunVeh::where('ESTADO_SOL_VEH', 'POR RENDIR')->where('ID_USUARIO', auth()->user()->id)->get();
+            $solicitudes = RelFunVeh::where('ESTADO_SOL_VEH', 'POR RENDIR')->get();
             return view('rel_fun_veh.rendir', compact('solicitudes'));
         } catch (Exception $e){
-
+            // Manejar la excepción aquí, por ejemplo:
+            Log::error('Error al obtener las solicitudes por rendir: ' . $e->getMessage());
+            return redirect()->back()->with('error', 'Ocurrió un error al obtener las solicitudes por rendir.');
         }
     }
 

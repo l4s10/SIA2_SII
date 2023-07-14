@@ -370,20 +370,28 @@
             });
 
             $('.ubicaciones'+i).change(function() {
-                const ubicacionId = $(this).val();
-                if (ubicacionId) {
-                    $.get('/usuarios/'+ubicacionId, function(data) {
-                        let select = $('.usuarios'+i);
-                        select.empty();
-                        select.append('<option value="">--Seleccione al ocupante n°'+i+' --</option>');
-                        $.each(data, function(index, usuario) {
-                            select.append('<option value="'+usuario.id+'">'+usuario.NOMBRES+' '+usuario.APELLIDOS+'</option>');
-                        });
+        const ubicacionId = $(this).val();
+        if (ubicacionId) {
+            $.ajax({
+                url: '/usuarios/'+ubicacionId,
+                type: 'GET',
+                xhrFields: {
+                    withCredentials: true
+                },
+                success: function(data) {
+                    let select = $('.usuarios'+i);
+                    select.empty();
+                    select.append('<option value="">--Seleccione al ocupante n°'+i+' --</option>');
+                    $.each(data, function(index, usuario) {
+                        select.append('<option value="'+usuario.id+'">'+usuario.NOMBRES+' '+usuario.APELLIDOS+'</option>');
                     });
-                } else {
-                    $('.usuarios'+i).empty().append('<option value="">--Seleccione al ocupante n°'+i+' --</option>');
                 }
             });
+        } else {
+            $('.usuarios'+i).empty().append('<option value="">--Seleccione al ocupante n°'+i+' --</option>');
+        }
+    });
+
         }
     });
 </script>

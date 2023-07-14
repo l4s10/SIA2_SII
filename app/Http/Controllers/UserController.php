@@ -30,16 +30,19 @@ class UserController extends Controller
 {
     public function __construct()
     {
-        //*La persona debe de haber iniciado sesion */
+        // //*La persona debe de haber iniciado sesion */
+        // $this->middleware('auth');
+        // //*Solo entrarán los admin maestro */
+        // $this->middleware(function ($request, $next) {
+        //     $adminMaestro = Role::findByName('ADMINISTRADOR');
+        //     if (Auth::check() && Auth::user()->hasRole($adminMaestro)) {
+        //         return $next($request);
+        //     }
+        //     abort(403, 'Acción no autorizada');
+        // });
         $this->middleware('auth');
-        //*Solo entrarán los admin maestro */
-        $this->middleware(function ($request, $next) {
-            $adminMaestro = Role::findByName('ADMINISTRADOR');
-            if (Auth::check() && Auth::user()->hasRole($adminMaestro)) {
-                return $next($request);
-            }
-            abort(403, 'Acción no autorizada');
-        });
+        $this->middleware('checkearRol:ADMINISTRADOR')->except('getUsuarios');
+        $this->middleware('checkAnyRole')->only('getUsuarios');
     }
     /**
      * Display a listing of the resource.
