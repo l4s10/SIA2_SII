@@ -144,6 +144,12 @@
                 <button id="view-chart4" class="btn btn-primary move-right"><i class="fa-solid fa-maximize"></i></button>
             </div>
         </div>
+        <div class="col-md-6">
+            <div class="chart-container">
+                <canvas id="myChart13"></canvas>
+                <button id="view-chart4" class="btn btn-primary move-right"><i class="fa-solid fa-maximize"></i></button>
+            </div>
+        </div>
     </div>
     <br>
     <!-- Modal para mostrar el gráfico en grande -->
@@ -388,33 +394,16 @@
         });
 
         window.myChartData6 = {
-            // Sexto gráfico estados de solicitudes de materiales/mes.
-            labels: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'],
+            // Sexto gráfico estados de solicitudes de materiales.
+            labels: ['Material'],
             datasets: [{
                 label: 'Ingresado',
                 data: [1,1,1,1],
                 backgroundColor: 'rgb(255, 151, 0)',
-            }, {
-                label: 'En revisión',
-                data: [1,2,2,2,2],
-                backgroundColor: 'rgb(255, 255, 0 )',
-            }, {
-                label: 'Aceptado',
-                data: [3,3,3,3,1],
-                backgroundColor: 'rgb(39, 255, 0)',
-            }, {
-                label: 'En espera',
-                data: [1,1,1,1],
-                backgroundColor: 'rgb(194, 194, 194)',
-            }, {
-                label: 'Rechazado',
-                data: [1],
-                backgroundColor: 'rgb(255, 0, 0)',
-            }, {
-                label: 'Terminado',
-                data: [1,1,1,1,1,1,1,1,1,1,1,1],
-                backgroundColor: 'rgb(0, 0, 0)',
-            }]
+                barThickness: 50,
+                borderWidth: 1
+            }
+            ] 
         };
         window.myChartData7 = {
             // sexto gráfico materiales consumidos por ubicaciones.
@@ -503,6 +492,19 @@
                 borderWidth: 1
             }]
         };
+        window.myChartData13 = {
+            // Terceavo gráfico Gestionadores de solicitudes de reserva de salas.
+            labels: ['ADOLFO MAURICIO' , 'CARLOS ALBERTO' ,'CESAR LEONARDO','CLAUDIA CAROLINA','DAVID ESTEBAN','DIEGO','JOHANA ELIZABETH','JORGE LUIS','LILIAN','LUCILA ESTEPHANIA','LUIS ARSENIO','MAURICIO MARCELO','MIRIAM CAROLINA','SORAYA EDITH','SUSAN','VERONICA ENRIQUETA','VICTOR MANUEL','XIMENA ELIZABETH'],
+            datasets: [{
+                label: 'Solicitudes revisas',
+                data:[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18],
+                backgroundColor: [
+                    'rgb(30, 102, 255)', // Color de fondo único para todas las barras
+                ],
+                barThickness: 50, // Ajusta el valor para cambiar el ancho de la barra
+                borderWidth: 1
+            }]
+        };
 </script>
 
 <script src="{{asset('js/Reportes/Graficos/grafico-config.js')}}"></script>
@@ -518,6 +520,7 @@
 <script src="{{asset('js/Reportes/Graficos/grafico10-config.js')}}"></script>
 <script src="{{asset('js/Reportes/Graficos/grafico11-config.js')}}"></script>
 <script src="{{asset('js/Reportes/Graficos/grafico12-config.js')}}"></script>
+<script src="{{asset('js/Reportes/Graficos/grafico13-config.js')}}"></script>
 
 
 
