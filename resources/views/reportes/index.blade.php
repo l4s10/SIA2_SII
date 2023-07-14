@@ -138,6 +138,12 @@
                 <button id="view-chart4" class="btn btn-primary move-right"><i class="fa-solid fa-maximize"></i></button>
             </div>
         </div>
+        <div class="col-md-6">
+            <div class="chart-container">
+                <canvas id="myChart12"></canvas>
+                <button id="view-chart4" class="btn btn-primary move-right"><i class="fa-solid fa-maximize"></i></button>
+            </div>
+        </div>
     </div>
     <br>
     <!-- Modal para mostrar el gráfico en grande -->
@@ -356,7 +362,7 @@
                 label: 'Solicitudes',
                 data: {!! json_encode(array_column($grafico3, 'conteo')) !!},
                 backgroundColor: [
-                    'rgb(30, 102, 255)', // Color de fondo único para todas las barras
+                    'rgb(129, 255, 30)', // Color de fondo único para todas las barras
                 ],
                 barThickness: 50, // Ajusta el valor para cambiar el ancho de la barra
                 borderWidth: 1
@@ -417,7 +423,7 @@
                 label: 'Solicitudes realizadas',
                 data: @json(array_column($grafico7, 'conteo')),
                 backgroundColor: [
-                    'rgb(30, 102, 255)', // Color de fondo único para todas las barras
+                    'rgb(255, 224, 0)', // Color de fondo único para todas las barras
                 ],
                 barThickness: 50, // Ajusta el valor para cambiar el ancho de la barra
                 borderWidth: 1
@@ -471,14 +477,27 @@
             }]
         };
         window.myChartData11 = {
-            // Cuarto gráfico Vehiculos asignados.
+            // onceavo gráfico Vehiculos asignados.
             // Aqui irian las patentes de los vehiculos.
             labels: ['CARMEN PROSSER','VIDEO CONFERENCIA','SALA REUNION DR','HALL RENTA','SALA 1','EXTERNA' ,'OFICINA ASISTENTE SOCIAL'],
             datasets: [{
                 label: 'Solicitudes de salas',
                 data: [1,2,3,4,5,6,7],
                 backgroundColor: [
-                    'rgb(30, 102, 255)', // Color de fondo único para todas las barras
+                    'rgb(129, 255, 30)', // Color de fondo único para todas las barras
+                ],
+                barThickness: 50, // Ajusta el valor para cambiar el ancho de la barra
+                borderWidth: 1
+            }]
+        };
+        window.myChartData12 = {
+            // doceavo gráfico Solicitudes de vehiculos requeridos por departmaneto/unidad.
+            labels: ['Unidad de los Angeles', 'Unidad de Lebu', 'Unidad de Talcahuano', 'No asignado', 'Gabinete director','Departamento de administracion','Departamento de Fiscalizacion','Departamento de asistencia al contribuyente','Departamento de avaluaciones','Departamento de procedimientos administrativos tributarios','Departamento juridico'],
+            datasets: [{
+                label: 'Solicitudes realizadas',
+                data: [1,2,3,4,5,6,7,8,9,10,11],
+                backgroundColor: [
+                    'rgb(255, 224, 0)', // Color de fondo único para todas las barras
                 ],
                 barThickness: 50, // Ajusta el valor para cambiar el ancho de la barra
                 borderWidth: 1
@@ -498,6 +517,7 @@
 <script src="{{asset('js/Reportes/Graficos/grafico9-config.js')}}"></script>
 <script src="{{asset('js/Reportes/Graficos/grafico10-config.js')}}"></script>
 <script src="{{asset('js/Reportes/Graficos/grafico11-config.js')}}"></script>
+<script src="{{asset('js/Reportes/Graficos/grafico12-config.js')}}"></script>
 
 
 
