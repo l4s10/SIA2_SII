@@ -1,4 +1,4 @@
-// onceavo gráfico salas mas asignadas.
+// 12 gráfico salas mas asignadas.
 document.addEventListener('DOMContentLoaded', (event) => {
     const ctx11 = document.getElementById('myChart11').getContext('2d');
     const myChart11 = new Chart(ctx11, {

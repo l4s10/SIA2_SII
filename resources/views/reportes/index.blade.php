@@ -84,17 +84,16 @@
             </div>
         </div>
         <!-- Grafico cuarto  materiales en espera-->
-        <!-- <div class="col-md-6">
+        <div class="col-md-6">
             <div class="chart-container">
                 <canvas id="myChart4"></canvas>
                 <button id="view-chart4" class="btn btn-primary move-right"><i class="fa-solid fa-maximize"></i></button>
             </div>
-        </div> -->
+        </div>
         <!-- Base para el Quinto gráfico Gestionadores de solicitudes de materiales. -->
         <div class="col-md-6">
             <div class="chart-container">
                 <canvas id="myChart5"></canvas>
-                <button id="view-chart4" class="btn btn-primary move-right"><i class="fa-solid fa-maximize"></i></button>
             </div>
         </div>
         <!-- Base para el Sexto gráfico estados de solicitudes de materiales/mes. -->
@@ -108,7 +107,6 @@
         <div class="col-md-6">
             <div class="chart-container">
                 <canvas id="myChart7"></canvas>
-                <button id="view-chart4" class="btn btn-primary move-right"><i class="fa-solid fa-maximize"></i></button>
             </div>
         </div>
         <!-- Base pra el Octavo gráfico Estado de solicitudes de reserva de vehiculo. -->
@@ -122,14 +120,12 @@
         <div class="col-md-6">
             <div class="chart-container">
                 <canvas id="myChart9"></canvas>
-                <button id="view-chart4" class="btn btn-primary move-right"><i class="fa-solid fa-maximize"></i></button>
             </div>
         </div>
         <!-- Base para el Decimo gráfico Gestionadores de solicitudes de reserva de vehiculo. -->
         <div class="col-md-6">
             <div class="chart-container">
                 <canvas id="myChart10"></canvas>
-                <button id="view-chart4" class="btn btn-primary move-right"><i class="fa-solid fa-maximize"></i></button>
             </div>
         </div>
         <div class="col-md-6">
@@ -141,13 +137,75 @@
         <div class="col-md-6">
             <div class="chart-container">
                 <canvas id="myChart12"></canvas>
-                <button id="view-chart4" class="btn btn-primary move-right"><i class="fa-solid fa-maximize"></i></button>
             </div>
         </div>
         <div class="col-md-6">
             <div class="chart-container">
                 <canvas id="myChart13"></canvas>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="chart-container">
+                <canvas id="myChart14"></canvas>
                 <button id="view-chart4" class="btn btn-primary move-right"><i class="fa-solid fa-maximize"></i></button>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="chart-container">
+                <canvas id="myChart15"></canvas>
+                <button id="view-chart4" class="btn btn-primary move-right"><i class="fa-solid fa-maximize"></i></button>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="chart-container">
+                <canvas id="myChart16"></canvas>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="chart-container">
+                <canvas id="myChart17"></canvas>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="chart-container">
+                <canvas id="myChart18"></canvas>
+                <button id="view-chart4" class="btn btn-primary move-right"><i class="fa-solid fa-maximize"></i></button>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="chart-container">
+                <canvas id="myChart19"></canvas>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="chart-container">
+                <canvas id="myChart20"></canvas>
+                <button id="view-chart4" class="btn btn-primary move-right"><i class="fa-solid fa-maximize"></i></button>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="chart-container">
+                <canvas id="myChart21"></canvas>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="chart-container">
+                <canvas id="myChart22"></canvas>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="chart-container">
+                <canvas id="myChart23"></canvas>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="chart-container">
+                <canvas id="myChart24"></canvas>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="chart-container">
+                <canvas id="myChart25"></canvas>
             </div>
         </div>
     </div>
@@ -315,7 +373,7 @@
 
 <script>
         window.myChartData = {
-            // Primer gráfico Total de solicitudes 1
+            // 1 gráfico Total de solicitudes 1
             labels: ['Solicitud Sala', 'Solicitud Bodegas', 'Reparación de Vehículos', 'Reserva de Vehículos'],
             datasets: [{
                 label: 'Cantidad de Solicitudes',
@@ -331,7 +389,7 @@
             }]
         };
         window.myChartData1 = {
-            // Segundo gráfico Total de solicitudes 2
+            // 2 gráfico Total de solicitudes 2
             labels: ['Solicitud de materiales', 'Solicitud de Reparación para Inmuebles', 'Formularios' ,'Equipos'],
             datasets: [{
                 label: 'Cantidad de Solicitudes',
@@ -347,7 +405,7 @@
             }]
         };
         window.myChartData2 = {
-            // Tercer gráfico Total de Funcionarios (Hombres/mujeres)
+            // 3 gráfico Total de Funcionarios (Hombres/mujeres)
             labels: ['Hombres', 'Mujeres'],
             datasets: [{
                 label: 'Cantidad Total',
@@ -361,7 +419,7 @@
             }]
         };
         window.myChartData3 = {
-            // Cuarto gráfico Vehiculos asignados.
+            // 4 gráfico Vehiculos asignados.
             // Aqui irian las patentes de los vehiculos.
             labels: {!! json_encode(array_column($grafico3, 'patente')) !!},
             datasets: [{
@@ -374,8 +432,26 @@
                 borderWidth: 1
             }]
         };
+        window.myChartData4 = {
+            // 5 gráfico Tipo de materiales solicitados.
+            // Aqui irian las patentes de los vehiculos.
+            labels: ['ASEO','COMPUTACION','ELECTRODOMESTICOS','ESCRITORIO'],
+            datasets: [{
+                label: 'Solicitudes',
+                data: [1,2,3,4],
+                backgroundColor: [
+                    'rgb(30, 119, 255)', // Aseo
+                    'rgb(255, 129, 30)', // COMPUTACION
+                    'rgb(115, 255, 30)', // ELECTRODOMESTICOS
+                    'rgb(255, 255, 30)' // ESCRITORIO
+                ],
+                barThickness: 50, // Ajusta el valor para cambiar el ancho de la barra
+                borderWidth: 1
+            }]
+        };
+
         window.myChartData5 = {
-            // Quinto gráfico estados de solicitudes de materiales.
+            // 6 gráfico estados de solicitudes de materiales.
             labels: [],
             datasets: [{
                 label: 'Solicitudes revisadas',
@@ -385,91 +461,91 @@
                 borderWidth: 1
             }]
         };
-
         var grafico5Data = @json($grafico5);
-
         grafico5Data.forEach(function(item) {
             window.myChartData5.labels.push(item.nombre);
             window.myChartData5.datasets[0].data.push(item.conteo);
         });
 
         window.myChartData6 = {
-            // Sexto gráfico estados de solicitudes de materiales.
+            // 7 gráfico estados de solicitudes de materiales.
             labels: ['Material'],
             datasets: [{
                 label: 'Ingresado',
                 data: [1,1,1,1],
-                backgroundColor: 'rgb(255, 151, 0)',
+                backgroundColor: [
+                    'rgb(255, 151, 0)',
+                ],
                 barThickness: 50,
                 borderWidth: 1
             }
             ] 
         };
         window.myChartData7 = {
-            // sexto gráfico materiales consumidos por ubicaciones.
+            //8 gráfico materiales consumidos por ubicaciones.
             labels: @json(array_column($grafico7, 'ubicacion')),
             datasets: [{
                 label: 'Solicitudes realizadas',
                 data: @json(array_column($grafico7, 'conteo')),
                 backgroundColor: [
-                    'rgb(255, 224, 0)', // Color de fondo único para todas las barras
+                    'rgb(255, 190, 30)', // Color de fondo único para todas las barras
                 ],
                 barThickness: 50, // Ajusta el valor para cambiar el ancho de la barra
                 borderWidth: 1
             }]
         };
         window.myChartData8 = {
-            // Octavo gráfico Estado de solicitudes de reserva de vehiculo.
-            labels: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'],
+            // 9 gráfico Estado de solicitudes de reserva de vehiculo.
+            labels: ['Estados de solicitudes'],
             datasets: [{
                 label: 'Ingresado',
-                data: [1,1,1,1],
+                data: [1],
                 backgroundColor: 'rgb(255, 151, 0)',
             }, {
                 label: 'Por autorizar',
-                data: [1,2,2,2,2],
+                data: [4],
                 backgroundColor: 'rgb(255, 255, 0 )',
             }, {
                 label: 'Suspendido',
-                data: [1],
+                data: [2],
                 backgroundColor: 'rgb(255, 0, 0)',
             }, {
                 label: 'Rechazado',
-                data: [1,1,1,1,1,1,1,1,1,1,1,1],
+                data: [3],
                 backgroundColor: 'rgb(0, 0, 0)',
-            }]
+            }] 
         };
         window.myChartData9 = {
-            // Noveno gráfico Solicitudes de vehiculos requeridos por departmaneto/unidad.
+            // 10 gráfico Solicitudes de vehiculos requeridos por departmaneto/unidad.
             labels: ['Unidad de los Angeles', 'Unidad de Lebu', 'Unidad de Talcahuano', 'No asignado', 'Gabinete director','Departamento de administracion','Departamento de Fiscalizacion','Departamento de asistencia al contribuyente','Departamento de avaluaciones','Departamento de procedimientos administrativos tributarios','Departamento juridico'],
             datasets: [{
                 label: 'Solicitudes realizadas',
                 data: [1,1,1,1,1,1,1,1,1,1],
                 backgroundColor: [
-                    'rgb(255, 224, 0)', // Color de fondo único para todas las barras
+                    'rgb(255, 190, 30)', // Color de fondo único para todas las barras
                 ],
                 barThickness: 50, // Ajusta el valor para cambiar el ancho de la barra
                 borderWidth: 1
             }]
         };
         window.myChartData10 = {
-            // Decimo gráfico Gestionadores de solicitudes de reserva de vehiculo.
+            // 11 gráfico Gestionadores de solicitudes de reserva de vehiculo.
             labels: ['ALEJANDRA IVONNE' , 'CAROLA OPAZO VENEGAS' ,'x','SAMUEL EDGARDO'],
             datasets: [{
-                label: 'Solicitudes revisas',
+                label: 'Solicitudes revisadas',
                 data:[1,2,3,4],
                 backgroundColor: [
-                    'rgb(30, 102, 255)', // Color de fondo único para todas las barras
+                    'rgb(194, 3, 255)', // Color de fondo único para todas las barras
                     'rgb(255, 99, 132)', // Color para CAROLA OPAZO VENEGAS
                     'rgb(54, 162, 235)', // Color para x
-                    'rgb(75, 192, 192)' // Color para SAMUEL EDGARDO
+                    'rgb(30, 102, 255)' // Color para SAMUEL EDGARDO
                 ],
                 barThickness: 50, // Ajusta el valor para cambiar el ancho de la barra
                 borderWidth: 1
             }]
         };
         window.myChartData11 = {
-            // onceavo gráfico Vehiculos asignados.
+            // 12 gráfico Vehiculos asignados.
             // Aqui irian las patentes de los vehiculos.
             labels: ['CARMEN PROSSER','VIDEO CONFERENCIA','SALA REUNION DR','HALL RENTA','SALA 1','EXTERNA' ,'OFICINA ASISTENTE SOCIAL'],
             datasets: [{
@@ -483,26 +559,210 @@
             }]
         };
         window.myChartData12 = {
-            // doceavo gráfico Solicitudes de vehiculos requeridos por departmaneto/unidad.
+            // 13 gráfico Solicitudes de vehiculos requeridos por departmaneto/unidad.
             labels: ['Unidad de los Angeles', 'Unidad de Lebu', 'Unidad de Talcahuano', 'No asignado', 'Gabinete director','Departamento de administracion','Departamento de Fiscalizacion','Departamento de asistencia al contribuyente','Departamento de avaluaciones','Departamento de procedimientos administrativos tributarios','Departamento juridico'],
             datasets: [{
                 label: 'Solicitudes realizadas',
                 data: [1,2,3,4,5,6,7,8,9,10,11],
                 backgroundColor: [
-                    'rgb(255, 224, 0)', // Color de fondo único para todas las barras
+                    'rgb(255, 190, 30)', // Color de fondo único para todas las barras
                 ],
                 barThickness: 50, // Ajusta el valor para cambiar el ancho de la barra
                 borderWidth: 1
             }]
         };
         window.myChartData13 = {
-            // Terceavo gráfico Gestionadores de solicitudes de reserva de salas.
+            // 14 gráfico Gestionadores de solicitudes de reserva de salas.
             labels: ['ADOLFO MAURICIO' , 'CARLOS ALBERTO' ,'CESAR LEONARDO','CLAUDIA CAROLINA','DAVID ESTEBAN','DIEGO','JOHANA ELIZABETH','JORGE LUIS','LILIAN','LUCILA ESTEPHANIA','LUIS ARSENIO','MAURICIO MARCELO','MIRIAM CAROLINA','SORAYA EDITH','SUSAN','VERONICA ENRIQUETA','VICTOR MANUEL','XIMENA ELIZABETH'],
             datasets: [{
-                label: 'Solicitudes revisas',
+                label: 'Solicitudes revisadas',
                 data:[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18],
                 backgroundColor: [
                     'rgb(30, 102, 255)', // Color de fondo único para todas las barras
+                ],
+                barThickness: 50, // Ajusta el valor para cambiar el ancho de la barra
+                borderWidth: 1
+            }]
+        };
+        window.myChartData14 = {
+            // 15 gráfico Vehiculos asignados.
+            // Aqui irian las patentes de los vehiculos.
+            labels: ['AMPLIFICADOR','DATA','EQUIPO DE VIDEOCONFERENCIAS','MICROFONO','NOTEBOOK','TELON'],
+            datasets: [{
+                label: 'Solicitudes de equipos',
+                data: [1,2,3,4,5,6],
+                backgroundColor: [
+                    'rgb(129, 255, 30)', // Color de fondo único para todas las barras
+                    
+                ],
+                barThickness: 50, // Ajusta el valor para cambiar el ancho de la barra
+                borderWidth: 1
+            }]
+        };
+        window.myChartData15 = {
+            // 16 gráfico Estado de solicitudes de reserva de vehiculo.
+            labels: ['Estados de solicitudes'],
+            datasets: [{
+                label: 'Ingresado',
+                data: [1],
+                backgroundColor: 'rgb(255, 151, 0)',
+            }, {
+                label: 'Por autorizar',
+                data: [4],
+                backgroundColor: 'rgb(255, 255, 0 )',
+            }, {
+                label: 'Suspendido',
+                data: [2],
+                backgroundColor: 'rgb(255, 0, 0)',
+            }, {
+                label: 'Rechazado',
+                data: [3],
+                backgroundColor: 'rgb(0, 0, 0)',
+            }] 
+        };
+        window.myChartData16 = {
+            //17 gráfico materiales consumidos por ubicaciones.
+            labels: ['Departamentos','Departamento 2'],
+            datasets: [{
+                label: 'Solicitudes realizadas',
+                data: [1,3],
+                backgroundColor: [
+                    'rgb(255, 190, 30)', // Color de fondo único para todas las barras
+                ],
+                barThickness: 50, // Ajusta el valor para cambiar el ancho de la barra
+                borderWidth: 1
+            }]
+        };
+        window.myChartData17 = {
+            // 18 gráfico Gestionadores de solicitudes de reserva de salas.
+            labels: ['DAVID ESTEBAN' , 'FELIPE MATIAS' ,'GUSTAVO ALEXIS','HUGO EDUARDO','LUIS ARSENIO','MARIA CATALINA','PAULINA ANDREA','SUSAN'],
+            datasets: [{
+                label: 'Solicitudes revisadas',
+                data:[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18],
+                backgroundColor: [
+                    'rgb(30, 102, 255)', // Color de fondo único para todas las barras
+                ],
+                barThickness: 50, // Ajusta el valor para cambiar el ancho de la barra
+                borderWidth: 1
+            }]
+        };
+        window.myChartData18 = {
+        // 19 gráfico Vehiculos con mas reparaciones.
+            labels: ['Reparaciones'],
+            datasets: [{
+                label: 'Cantidad de reparaciones',
+                data: [1,1,1,1],
+                backgroundColor: [
+                    'rgb(129, 255, 30)',
+                ],
+                barThickness: 50,
+                borderWidth: 1
+            }
+            ] 
+        };
+        window.myChartData19 = {
+            // 20 gráfico Gestionadores de solicitudes de reserva de salas.
+            labels: ['CAROLA' , 'CAROLA OPAZO' ,'SAMUEL EDGARDO'],
+            datasets: [{
+                label: 'Solicitudes revisadas',
+                data:[1,2,3],
+                backgroundColor: [
+                    'rgb(30, 102, 255)', // Color de fondo único para todas las barras
+                ],
+                barThickness: 50, // Ajusta el valor para cambiar el ancho de la barra
+                borderWidth: 1
+            }]
+        };
+        window.myChartData20 = {
+            // 21 gráfico Estado de solicitudes de reparaciones de vehiculo.
+            labels: ['Estados de solicitudes'],
+            datasets: [{
+                label: 'Ingresado',
+                data: [1],
+                backgroundColor: 'rgb(255, 151, 0)',
+            }, {
+                label: 'Por autorizar',
+                data: [4],
+                backgroundColor: 'rgb(255, 255, 0 )',
+            }, {
+                label: 'Suspendido',
+                data: [2],
+                backgroundColor: 'rgb(255, 0, 0)',
+            }, {
+                label: 'Rechazado',
+                data: [3],
+                backgroundColor: 'rgb(0, 0, 0)',
+            }] 
+        };
+        window.myChartData21 = {
+            // 22 gráfico Gestionadores de solicitudes de reserva de salas.
+            labels: ['CONCE' , 'DEPARTAMENTO DE ADMINISTRACION' ,'DEPARTAMENTO DE ASISTENCIA AL CONTRIBUYENTE','DEPARTAMENTO DE FISCALIZACION','UNIDAD DE LOS ANGELES','UNIDAD TALCAHUANO'],
+            datasets: [{
+                label: 'Solicitudes revisadas',
+                data:[1,2,3,4,5,6],
+                backgroundColor: [
+                    'rgb(255, 190, 30)', // Color de fondo único para todas las barras
+                ],
+                barThickness: 50, // Ajusta el valor para cambiar el ancho de la barra
+                borderWidth: 1
+            }]
+        };
+        window.myChartData22 = {
+        // 23 gráfico inmuebles con mas reparaciones.
+            labels: ['Reparaciones'],
+            datasets: [{
+                label: 'Cantidad de reparaciones',
+                data: [10],
+                backgroundColor: [
+                    'rgb(129, 255, 30)',
+                ],
+                barThickness: 50,
+                borderWidth: 1
+            }
+            ] 
+        };
+        window.myChartData23 = {
+            // 24 gráfico Gestionadores de solicitudes de reserva de salas.
+            labels: ['ALEJANDRA IVONNE' , 'CAROLA' ,'CAROLA OPAZO','SAMUEL EDGARDO'],
+            datasets: [{
+                label: 'Solicitudes revisadas',
+                data:[1,2,3,4],
+                backgroundColor: [
+                    'rgb(30, 102, 255)', // Color de fondo único para todas las barras
+                ],
+                barThickness: 50, // Ajusta el valor para cambiar el ancho de la barra
+                borderWidth: 1
+            }]
+        };
+        window.myChartData24 = {
+            // 25 gráfico Estado de solicitudes de reparacion de inmuebles.
+            labels: ['Estados de solicitudes'],
+            datasets: [{
+                label: 'Ingresado',
+                data: [1],
+                backgroundColor: 'rgb(255, 151, 0)',
+            }, {
+                label: 'Por autorizar',
+                data: [4],
+                backgroundColor: 'rgb(255, 255, 0 )',
+            }, {
+                label: 'Suspendido',
+                data: [2],
+                backgroundColor: 'rgb(255, 0, 0)',
+            }, {
+                label: 'Rechazado',
+                data: [3],
+                backgroundColor: 'rgb(0, 0, 0)',
+            }] 
+        };
+        window.myChartData25 = {
+            // 26 gráfico solicitudes de reparacion de inmuebles por departamento/ubicacion.
+            labels: ['CONCE' , 'DEPARTAMENTO DE ADMINISTRACION' ,'DEPARTAMENTO DE ASISTENCIA AL CONTRIBUYENTE','DEPARTAMENTO DE FISCALIZACION','UNIDAD DE LOS ANGELES','UNIDAD TALCAHUANO'],
+            datasets: [{
+                label: 'Solicitudes revisadas',
+                data:[1,2,3,4,5,6],
+                backgroundColor: [
+                    'rgb(255, 190, 30)', // Color de fondo único para todas las barras
                 ],
                 barThickness: 50, // Ajusta el valor para cambiar el ancho de la barra
                 borderWidth: 1
@@ -514,7 +774,7 @@
 <script src="{{asset('js/Reportes/Graficos/grafico1-config.js')}}"></script>
 <script src="{{asset('js/Reportes/Graficos/grafico2-config.js')}}"></script>
 <script src="{{asset('js/Reportes/Graficos/grafico3-config.js')}}"></script>
-<!-- <script src="{{asset('js/Reportes/Graficos/grafico4-config.js')}}"></script> -->
+<script src="{{asset('js/Reportes/Graficos/grafico4-config.js')}}"></script>
 <script src="{{asset('js/Reportes/Graficos/grafico5-config.js')}}"></script>
 <script src="{{asset('js/Reportes/Graficos/grafico6-config.js')}}"></script>
 <script src="{{asset('js/Reportes/Graficos/grafico7-config.js')}}"></script>
@@ -524,6 +784,19 @@
 <script src="{{asset('js/Reportes/Graficos/grafico11-config.js')}}"></script>
 <script src="{{asset('js/Reportes/Graficos/grafico12-config.js')}}"></script>
 <script src="{{asset('js/Reportes/Graficos/grafico13-config.js')}}"></script>
+<script src="{{asset('js/Reportes/Graficos/grafico14-config.js')}}"></script>
+<script src="{{asset('js/Reportes/Graficos/grafico15-config.js')}}"></script>
+<script src="{{asset('js/Reportes/Graficos/grafico16-config.js')}}"></script>
+<script src="{{asset('js/Reportes/Graficos/grafico17-config.js')}}"></script>
+<script src="{{asset('js/Reportes/Graficos/grafico18-config.js')}}"></script>
+<script src="{{asset('js/Reportes/Graficos/grafico19-config.js')}}"></script>
+<script src="{{asset('js/Reportes/Graficos/grafico20-config.js')}}"></script>
+<script src="{{asset('js/Reportes/Graficos/grafico21-config.js')}}"></script>
+<script src="{{asset('js/Reportes/Graficos/grafico22-config.js')}}"></script>
+<script src="{{asset('js/Reportes/Graficos/grafico23-config.js')}}"></script>
+<script src="{{asset('js/Reportes/Graficos/grafico24-config.js')}}"></script>
+<script src="{{asset('js/Reportes/Graficos/grafico25-config.js')}}"></script>
+
 
 
 
@@ -708,14 +981,6 @@
             L.marker([-36.8261, -73.0498]).addTo(map)
                 .bindPopup('HSHV-23 Llegada de Vehiculo')
                 .openPopup();
-
-            // var polyline1 = L.polyline([[-36.8261, -73.0498], [-36.6155, -72.9561]]).addTo(featureGroup);
-            // var polyline2 = L.polyline([[-36.7167, -73.1167], [-37.0167, -73.1333]]).addTo(featureGroup);
-
-            // // Establecer estilo personalizado para las polilíneas
-            // polyline1.setStyle({ color: 'red' });
-            // polyline2.setStyle({ color: 'blue' });
-
             // Agregar el control de enrutamiento
             L.Routing.control({
                 waypoints: [
@@ -740,10 +1005,8 @@
                 }
             }).addTo(map);
         }
-
         mapOpenButton.addEventListener('click', toggleMap);
     });
 </script>
-
 
 @endsection

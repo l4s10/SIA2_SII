@@ -1,4 +1,4 @@
-// Octavo gráfico Estado de solicitudes de reserva de vehiculo.
+// 9 gráfico Estado de solicitudes de reserva de vehiculo.
 document.addEventListener('DOMContentLoaded', (event) => {
     const ctx8 = document.getElementById('myChart8').getContext('2d');
     const myChart8 = new Chart(ctx8, {

@@ -1,4 +1,4 @@
-// Decimo gráfico Gestionadores de solicitudes de reserva de vehiculo.
+// 11 gráfico Gestionadores de solicitudes de reserva de vehiculo.
 document.addEventListener('DOMContentLoaded', (event) => {
     const ctx10 = document.getElementById('myChart10').getContext('2d');
     const myChart10 = new Chart(ctx10, {

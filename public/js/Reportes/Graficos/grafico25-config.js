@@ -1,15 +1,15 @@
-// 21 gráfico Estado de solicitudes de reparaciones de vehiculo.
+// 26 gráfico Solicitudes de reparaciones de vehiculo por ubicacion.
 document.addEventListener('DOMContentLoaded', (event) => {
-    const ctx20 = document.getElementById('myChart20').getContext('2d');
-    const myChart20 = new Chart(ctx20, {
-        type: 'bar',
-        data: window.myChartData20, //CARGAR VARIABLES
+    const ctx25 = document.getElementById('myChart25').getContext('2d');
+    const myChart25 = new Chart(ctx25, {
+        type: 'pie',
+        data: window.myChartData25, //CARGAR VARIABLES
         options: {
             scales: {
                 x: {
                     title: {
                         display: true,
-                        text: 'Solicitudes'
+                        text: 'Ubicaciones'
                     }
                 },
                 y: {
@@ -32,7 +32,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
                 },
                 title: {
                     display: true,
-                    text: 'Estado de solicitudes de reparaciones de vehiculo.',
+                    text: 'Solicitudes de reparacion de inmuebles por ubicacion',
                     padding: {
                         top: 10,
                         bottom: 30
@@ -68,13 +68,31 @@ document.addEventListener('DOMContentLoaded', (event) => {
                 fechaFin: fechaFin
             })
         })
-            .then(response => response.json())
-            .then(data => {
-                myChart20.data.datasets[0].data = [
-                    Math.round(data.stockTipoMaterial),
-                    Math.round(data.stockMaterial)
-                ];
-                myChart20.update();
-            });
+        .then(response => {
+            if (!response.ok) {
+                throw new Error("HTTP error " + response.status);
+            }
+            return response.json();
+        })
+        .then(data => {
+            if(data.message){
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: data.message,
+                })
+            } else {
+                myChart25.data.labels = data.grafico25.map(item => item.ubicacion);
+                myChart25.data.datasets[0].data = data.grafico25.map(item => item.conteo);
+                myChart25.update();
+            }
+        })
+        .catch(error => {
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Something went wrong!',
+            })
+        });
     });
 });

@@ -1,9 +1,9 @@
-// 21 gráfico Estado de solicitudes de reparaciones de vehiculo.
+// 25 gráfico Estado de solicitudes de reparaciones de vehiculo.
 document.addEventListener('DOMContentLoaded', (event) => {
-    const ctx20 = document.getElementById('myChart20').getContext('2d');
-    const myChart20 = new Chart(ctx20, {
+    const ctx24 = document.getElementById('myChart24').getContext('2d');
+    const myChart24 = new Chart(ctx24, {
         type: 'bar',
-        data: window.myChartData20, //CARGAR VARIABLES
+        data: window.myChartData24, //CARGAR VARIABLES
         options: {
             scales: {
                 x: {
@@ -32,7 +32,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
                 },
                 title: {
                     display: true,
-                    text: 'Estado de solicitudes de reparaciones de vehiculo.',
+                    text: 'Estado de solicitudes de reparacion de inmuebles.',
                     padding: {
                         top: 10,
                         bottom: 30
@@ -70,11 +70,11 @@ document.addEventListener('DOMContentLoaded', (event) => {
         })
             .then(response => response.json())
             .then(data => {
-                myChart20.data.datasets[0].data = [
+                myChart24.data.datasets[0].data = [
                     Math.round(data.stockTipoMaterial),
                     Math.round(data.stockMaterial)
                 ];
-                myChart20.update();
+                myChart24.update();
             });
     });
 });

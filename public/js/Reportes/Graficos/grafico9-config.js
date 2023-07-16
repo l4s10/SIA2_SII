@@ -1,4 +1,4 @@
-// Noveno gráfico Solicitudes de vehiculos requeridos por departmaneto/unidad.
+//10 gráfico Solicitudes de vehiculos requeridos por departmaneto/unidad.
 document.addEventListener('DOMContentLoaded', (event) => {
     const ctx9 = document.getElementById('myChart9').getContext('2d');
     const myChart9 = new Chart(ctx9, {

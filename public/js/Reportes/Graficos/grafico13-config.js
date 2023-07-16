@@ -1,4 +1,4 @@
-// Terceavo gráfico Gestionadores de solicitudes de reserva de salas.
+// 14 gráfico Gestionadores de solicitudes de reserva de salas.
 document.addEventListener('DOMContentLoaded', (event) => {
     const ctx13 = document.getElementById('myChart13').getContext('2d');
     const myChart13 = new Chart(ctx13, {

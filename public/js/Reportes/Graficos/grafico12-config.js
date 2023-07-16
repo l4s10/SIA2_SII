@@ -1,4 +1,4 @@
-// doceavo gráfico Solicitudes de reserva de sala requeridos por departmaneto/unidad.
+// 13 gráfico Solicitudes de reserva de sala requeridos por departmaneto/unidad.
 document.addEventListener('DOMContentLoaded', (event) => {
     const ctx12 = document.getElementById('myChart12').getContext('2d');
     const myChart12 = new Chart(ctx12, {
