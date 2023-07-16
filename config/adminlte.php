@@ -470,37 +470,39 @@ return [
             'text'        => 'Directivos',
             'url'         => 'directivos',
             'icon'        => 'fa-solid fa-user-tie',
-        ],
-        [
-            'text'        => 'Repositorio',
-            'url'         => '#',
-            'icon'        => 'fa-solid fa-folder-minus',
             'submenu' => [
                 [
-                    'text'    => 'Resoluciones',
-                    'url'     => 'resolucion',
-                    'icon'    => 'fas fa-fw fa-eye',
-                ],
-                [
-                    'text'    => 'Pólizas',
-                    'url'     => 'polizas',
-                    'icon'    => 'fas fa-fw fa-eye',
-                ],
-                [
-                    'text'    => 'Facultades',
-                    'url'     => 'facultades',
-                    'icon'    => 'fas fa-fw fa-eye',
-                ],
-                [
-                    'text'    => 'Cargos',
-                    'url'     => 'cargos',
-                    'icon'    => 'fas fa-fw fa-eye',
+                    'text'    => 'Repositorio',
+                    'url'     => '#',
+                    'icon'    => 'fa-solid fa-folder-minus',
+                    'submenu' => [
+                        [
+                            'text'    => 'Resoluciones',
+                            'url'     => 'resolucion',
+                            'icon'    => 'fas fa-fw fa-eye'
+                        ],
+                        [
+                            'text'    => 'Pólizas',
+                            'url'     => 'polizas',
+                            'icon'    => 'fas fa-fw fa-eye'
+                        ],
+                        [
+                            'text'    => 'Facultades',
+                            'url'     => 'facultades',
+                            'icon'    => 'fas fa-fw fa-eye'
+                        ],
+                        [
+                            'text'    => 'Cargos',
+                            'url'     => 'cargos',
+                            'icon'    => 'fas fa-fw fa-eye'
+                        ]
+                    ],
                 ]
             ],
         ],
         [
             'text'        => 'Reportes',
-            'url'         => '/reporteshome',
+            'url'         => '/reportes',
             'icon'        => 'fas fa-fw fa-solid fa-chart-simple',
         ],
         ['header' => 'Módulos Administrador'],
@@ -513,28 +515,33 @@ return [
                 [
                     'text'        => 'Administrar Usuarios',
                     'url'         => '/funcionarios',
-                    'icon'        => 'fas fa-fw fa-users',
+                    'icon'        => 'fas fa-fw fa-users'
                 ],
                 [
                     'text'        => 'Administrar Vehiculos',
                     'url'         => '/vehiculos',
-                    'icon'        => 'fas fa-fw fa-car',
+                    'icon'        => 'fas fa-fw fa-car'
                 ],
                 [
                     'text'        => 'Administrar Regiones',
                     'url'         => '/region',
-                    'icon'        => 'fas fa-fw fa-earth-americas',
+                    'icon'        => 'fas fa-fw fa-earth-americas'
                 ],
                 [
                     'text'        => 'Administrar Comunas',
                     'url'         => '/comuna',
-                    'icon'        => 'fas fa-fw fa-street-view',
+                    'icon'        => 'fas fa-fw fa-street-view'
                 ],
                 [
                     'text'        => 'Administrar Direcciones Regionales',
                     'url'         => '/direccionregional',
-                    'icon'        => 'fa-solid fa-location-arrow',
+                    'icon'        => 'fa-solid fa-location-arrow'
 
+                ],
+                [
+                    'text'        => 'Administrar Ubicaciones y Departamentos',
+                    'url'         => '/ubicacion',
+                    'icon'        => 'fa-solid fa-user-group'
                 ]
             ]
         ],

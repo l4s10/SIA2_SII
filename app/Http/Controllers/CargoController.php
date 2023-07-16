@@ -8,6 +8,7 @@ use Carbon\Carbon;
 //use Illuminate\Validation\Rule;
 //use Illuminate\Support\Facades\Auth;
 use App\Models\Cargo;
+use App\Models\DireccionRegional;
 
 
 
@@ -19,7 +20,11 @@ class CargoController extends Controller
      */
     public function index()
     {
-        $cargos = Cargo::pluck('CARGO', 'ID_CARGO');
+        // Obtiene la dirección regional del funcionario con sesión activa
+        $direccionRegional = auth()->user()->ubicacion->ID_DIRECCION;
+        var_dump($direccionRegional);
+        $cargos = Cargo::where('ID_DIRECCION', $direccionRegional)
+            ->pluck('CARGO', 'ID_CARGO');
         return view('cargo.index', compact('cargos'));
     }
 
@@ -28,7 +33,22 @@ class CargoController extends Controller
      *///Carga formulario de creacion
      public function create()
     {
-        return view('cargo.create');
+       // Obtiene la dirección regional del funcionario con sesión activa
+        $direccionRegional = auth()->user()->ubicacion->ID_DIRECCION;
+        
+        // Obtén las direcciones regionales filtradas por la dirección regional obtenida
+        $direccion = DireccionRegional::where('ID_DIRECCION', $direccionRegional)
+            ->pluck('DIRECCION', 'ID_DIRECCION');
+        
+        return view('cargo.create', compact('direccion'));
+
+        //OPCION PARA CREAR CARGOS EN DISTINTAS DIRECCIONES REGIONALES (POR REGION):
+        //Obtiene la región del funcionario con sesión activa (quien utiliza el sw). Funcionalidad orientada a las DDRR de Stgo.       
+        /*$region = auth()->user()->region->ID_REGION;
+        //Obtiene arreglo asociativo que incluye 'DIRECCION' e 'ID_DIRECCION' desde 'direcciones_regionales', filtradas por $region
+        $direcciones = DireccionRegional::where('ID_REGION', $region)
+            ->pluck('DIRECCION', 'ID_DIRECCION');
+        return view('cargo.create', compact('direcciones'));*/
     }
 
     /**

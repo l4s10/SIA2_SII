@@ -15,8 +15,11 @@ class PolizaController extends Controller
      */
     public function index()
     {
-        $polizas = Poliza::all();
-        return view('polizas.index',compact('polizas'));
+        //
+        $usuariosConductores = User::with(['polizas' => function ($query) {
+            $query->whereNotNull('ID');
+        }])->get();
+        return view('polizas.index',compact('usuariosConductores'));
     }
 
     /**
@@ -24,8 +27,13 @@ class PolizaController extends Controller
      *///Carga formulario de creacion
     public function create()
     {
-        $users = User::all();
-        return view('polizas.create',compact('users'));
+        //Búsqueda de usuarios que podrían ser conductores (filtrados por direccion regional auth())
+        $direccionRegional = auth()->user()->ubicacion->direccion->ID_DIRECCION;
+        $users = User::whereHas('ubicacion.direccion', function ($query) use ($direccionRegional) {
+            $query->where('ID_DIRECCION', $direccionRegional);
+        })->get();
+
+        return view('polizas.create', compact('users'));
     }
 
     /**
@@ -34,12 +42,9 @@ class PolizaController extends Controller
     public function store(Request $request)
     {
         try{   
-            
             $request->validate(Poliza::rules(), Poliza::messages());
             $data = $request->except('_token');
             Poliza::create($data);
-            
-
             session()->flash('success','La póliza fue agregada exitosamente.');
         }catch(\Exception $e){
             session()->flash('error','Hubo un error al agregar la póliza. Vuelva a intentarlo nuevamente' .$e->getMessage());
@@ -50,24 +55,30 @@ class PolizaController extends Controller
     /**
      * Display the specified resource.
      *///Accede a un único registro
+    // PolizaController@show
     public function show(string $id)
     {
-        try{
-            $poliza = Poliza::find($id);
+        try {
+            $poliza = Poliza::with('user')->find($id);
             return view('polizas.show', compact('poliza'));
-        }catch(\Exception $e){
+        } catch (\Exception $e) {
             session()->flash('error', 'Error al acceder a la póliza seleccionada, vuelva a intentarlo más tarde.');
             return view('polizas.index');
         }
     }
+
 
     /**
      * Show the form for editing the specified resource.
      *///Carga el formulario de edicion
     public function edit(string $id)
     {
-        $poliza = Poliza::find($id);
-        return view('polizas.edit',compact('poliza'));
+        $poliza = Poliza::with('user')->find($id);
+        $direccionRegional = auth()->user()->ubicacion->direccion->ID_DIRECCION;
+        $users = User::whereHas('ubicacion.direccion', function ($query) use ($direccionRegional) {
+            $query->where('ID_DIRECCION', $direccionRegional);
+        })->get();
+        return view('polizas.edit',compact('poliza','users'));
     }
 
     /**

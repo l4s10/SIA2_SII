@@ -8,8 +8,7 @@
 
 @section('content')
 <div class="container">
-    <form action="{{ route('resolucion.store') }}" method="POST">
-        @csrf
+    <form action="{{ route('resolucion.store') }}" method="POST" enctype="multipart/form-data">        @csrf
         <div class="mb-3">
             <label for="NRO_RESOLUCION" class="form-label"><i class="fa-solid fa-book-bookmark"></i> N° Resolución:</label>
             <input type="text" class="form-control{{ $errors->has('NRO_RESOLUCION') ? ' is-invalid' : '' }}" id="NRO_RESOLUCION" name="NRO_RESOLUCION" value="{{ old('NRO_RESOLUCION') }}" placeholder="Ej: 1234" required>
@@ -92,6 +91,16 @@
                 <div class="invalid-feedback">{{ $message }}</div>
             @enderror
         </div>
+        
+        <div class="mb-3">
+            <label for="DOCUMENTO" class="form-label"><i class="fa-solid fa-book-bookmark"></i> Documento:</label>
+            <input type="file" name="DOCUMENTO" id="DOCUMENTO" class="form-control{{ $errors->has('DOCUMENTO') ? ' is-invalid' : '' }}">
+            @error('DOCUMENTO')
+                <span class="invalid-feedback" role="alert">
+                    <strong>{{ $message }}</strong>
+                </span>
+            @enderror
+        </div>
 
         <a href="{{ route('resolucion.index') }}" class="btn btn-secondary" tabindex="5"><i class="fa-solid fa-hand-point-left"></i> Cancelar</a>
         <button type="submit" class="btn btn-primary" tabindex="4"><i class="fa-solid fa-floppy-disk"></i> Guardar resolución</button>
@@ -122,4 +131,3 @@
         });
     </script>
 @stop
-

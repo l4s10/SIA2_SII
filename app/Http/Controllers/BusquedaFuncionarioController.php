@@ -34,17 +34,14 @@ class BusquedaFuncionarioController extends Controller
         $cargoFuncionario = null; // Valor predeterminado
         $cargoResolucion = null;
         $rutRes = null;
-        $regionSesionActiva = auth()->user()->ID_REGION;
-        $direccionesRegionales = DireccionRegional::all();
 
 
         if ($nombres && $apellidos && $rut && $idCargoFuncionario) {
-            $query = Resolucion::whereHas('delegado.users', function ($query) use ($nombres, $apellidos, $rut, $idCargoFuncionario, $regionSesionActiva) {
+            $query = Resolucion::whereHas('delegado.users', function ($query) use ($nombres, $apellidos, $rut, $idCargoFuncionario) {
                 $query->where('NOMBRES', $nombres)
                     ->where('APELLIDOS', $apellidos)
                     ->where('RUT', $rut)
-                    ->where('ID_CARGO',$idCargoFuncionario)
-                    ->where('ID_REGION',$regionSesionActiva);
+                    ->where('ID_CARGO',$idCargoFuncionario);
             });
             $resoluciones = $query->with('tipo', 'firmante', 'delegado', 'facultad')->get();
 
@@ -81,7 +78,7 @@ class BusquedaFuncionarioController extends Controller
         }
 
         $cargos = Cargo::all();
-        return view('directivos.busquedafuncionario.index', compact('resoluciones', 'cargos','nombres', 'apellidos', 'cargoFuncionario','rutRes', 'cargoResolucion','busquedaResolucionCargo','busquedaResolucionFuncionario','busquedaResolucionCargoFallida','busquedaResolucionFuncionarioFallida','regionSesionActiva','direccionesRegionales'));
+        return view('directivos.busquedafuncionario.index', compact('resoluciones', 'cargos','nombres', 'apellidos', 'cargoFuncionario','rutRes', 'cargoResolucion','busquedaResolucionCargo','busquedaResolucionFuncionario','busquedaResolucionCargoFallida','busquedaResolucionFuncionarioFallida'));
     }
 
     public function buscarFuncionarios(Request $request)
