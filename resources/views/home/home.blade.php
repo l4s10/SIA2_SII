@@ -7,6 +7,46 @@
 @endsection
 
 @section('content')
+    <!-- Contenedores para los mensajes -->
+    @if (session('success'))
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            Swal.fire({
+                icon: 'success',
+                title: '{{ session('success') }}',
+                confirmButtonText: 'OK',
+                confirmButtonColor: '#0064A0'
+            });
+        });
+    </script>
+    @elseif (session('error'))
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            Swal.fire({
+                icon: 'error',
+                title: '{{ session('error') }}',
+                confirmButtonText: 'OK',
+                confirmButtonColor: '#0064A0'
+            });
+        });
+    </script>
+    @elseif (session('info'))
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            Swal.fire({
+                icon: 'info',
+                title: '{{ session('info') }}',
+                confirmButtonText: 'OK',
+                confirmButtonColor: '#0064A0'
+            });
+        });
+    </script>
+    @endif
+    {{-- <form method="POST" action="{{ route('send.email') }}">
+        @csrf
+        <button class="btn btn-primary" type="submit">Enviar correo de prueba</button>
+    </form> --}}
+
     <div class="" id="calendar"></div>
     <!-- Carta para mostrar los detalles del evento -->
     <div class="modal fade" id="eventModal" tabindex="-1" aria-labelledby="eventModalLabel" aria-hidden="true">

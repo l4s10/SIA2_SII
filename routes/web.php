@@ -9,6 +9,7 @@ use App\Http\Controllers\SolicitudSalaController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\UbicacionesController;
 use App\Http\Controllers\DireccionRegionalController;
+use App\Http\Controllers\EmailController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -19,10 +20,11 @@ use App\Http\Controllers\DireccionRegionalController;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+Route::post('/send-email', [EmailController::class, 'sendEmail'])->name('send.email');
 
 Route::get('/', function () {
     return view('auth.login');
-});
+})->name('login');
 //Rutas para testear vistas
 Route::get('/repyman', function(){
     return view('repyman.index');
