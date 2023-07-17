@@ -131,14 +131,25 @@ class RelFunVehController extends Controller
     {
         try{
             $solicitud = RelFunVeh::find($id);
-            $rules = RelFunVeh::$rules;
+            // Crear reglas específicas para la actualización
+            $updateRules = RelFunVeh::$rules;
+
+            // Modificar las reglas que necesiten ser diferentes para la actualización
+            // Si entiendo correctamente, en tu caso los campos NOMBRE_SOLICITANTE, RUT, DEPTO, EMAIL e ID_TIPO_VEH
+            // ya no deben ser requeridos durante la actualización
+            $updateRules['NOMBRE_SOLICITANTE'] = 'sometimes|string|max:128';
+            $updateRules['RUT'] = 'sometimes|string|max:20';
+            $updateRules['DEPTO'] = 'sometimes|string|max:128';
+            $updateRules['EMAIL'] = 'sometimes|string|email|max:128';
+            $updateRules['ID_TIPO_VEH'] = 'sometimes|integer';
             $messages = RelFunVeh::$messages;
 
-            $validator = Validator::make($request->all(), $rules, $messages);
+            $validator = Validator::make($request->all(), $updateRules, $messages);
 
             if ($validator->fails()) {
+                // Redirige al usuario a la página anterior si la validación falla
                 return redirect()
-                    ->route('solicitud.vehiculos.create')
+                    ->back()
                     ->withErrors($validator)
                     ->withInput();
             }
@@ -210,7 +221,7 @@ class RelFunVehController extends Controller
     {
         $solicitud = RelFunVeh::findOrFail($id);
         $solicitud->ESTADO_SOL_VEH = 'RECHAZADO';
-        //!!MANDAR AQUI DATOS DE FIRMA
+        //!!MANDAR AQUI DATOS DE FIRMA -> YA NO ES NECESARIO...
         $solicitud->save();
 
         return redirect()->route('solicitud.vehiculos.index');
@@ -271,7 +282,7 @@ class RelFunVehController extends Controller
                     $ocupantes[$i] = $ocupante;
                 }
             }
-            return view('rel_fun_veh.rendir', compact('solicitud', 'tipo_vehiculos', 'vehiculos', 'ocupantes', 'departamentos', 'comunas', 'conductores', 'direcciones'));
+            return view('rel_fun_veh.formRendir', compact('solicitud', 'tipo_vehiculos', 'vehiculos', 'ocupantes', 'departamentos', 'comunas', 'conductores', 'direcciones'));
         } catch (\Exception $e) {
             session()->flash('error', 'Hubo un error al cargar la solicitud, vuelva a intentarlo más tarde');
             return redirect(route('solicitud.vehiculos.index'));

@@ -86,47 +86,51 @@
             </div>
             <div class="row">
                 <div class="col-md-6">
-                    <label for="ID_TIPO_VEH" class="form-label"><i class="fa-solid fa-car-side"></i> Seleccione tipo de vehículo:</label>
-                    <select id="ID_TIPO_VEH" name="ID_TIPO_VEH" class="form-control @error('ID_TIPO_VEH') is-invalid @enderror" disabled>
-                        <option value="" selected>--Seleccione un tipo de vehículo--</option>
+                    <div class="mb-3">
+                        <label for="ID_TIPO_VEH" class="form-label"><i class="fa-solid fa-car-side"></i> Seleccione tipo de vehículo:</label>
+                        <select id="ID_TIPO_VEH" name="ID_TIPO_VEH" class="form-control @error('ID_TIPO_VEH') is-invalid @enderror" disabled>
+                            <option value="" selected>--Seleccione un tipo de vehículo--</option>
 
-                        @foreach ($tipo_vehiculos as $tipo_vehiculo)
-                            <option value="{{ $tipo_vehiculo['ID_TIPO_VEH'] }}" @if ($tipo_vehiculo['ID_TIPO_VEH'] === $solicitud->ID_TIPO_VEH) selected @endif>
-                                {{ $tipo_vehiculo['TIPO_VEHICULO'] }}
-                            </option>
-                        @endforeach
-                    </select>
+                            @foreach ($tipo_vehiculos as $tipo_vehiculo)
+                                <option value="{{ $tipo_vehiculo['ID_TIPO_VEH'] }}" @if ($tipo_vehiculo['ID_TIPO_VEH'] === $solicitud->ID_TIPO_VEH) selected @endif>
+                                    {{ $tipo_vehiculo['TIPO_VEHICULO'] }}
+                                </option>
+                            @endforeach
+                        </select>
 
-                    @error('ID_TIPO_VEH')
-                        <div class="invalid-feedback">{{ $message }}</div>
-                    @enderror
+                        @error('ID_TIPO_VEH')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                    </div>
                 </div>
 
                 <div class="col-md-6">
-                    <label for="PATENTE_VEHICULO" class="form-label"><i class="fa-solid fa-car-on"></i> Asignar vehículos:</label>
-                    <select id="PATENTE_VEHICULO" name="PATENTE_VEHICULO" class="form-control @if($errors->has('PATENTE_VEHICULO')) is-invalid @endif">
-                        <option value="">-- Seleccione el vehículo a asignar --</option>
-                        @foreach ($vehiculos->groupBy('ubicacion.UBICACION') as $ubicacion => $autos)
-                            <optgroup label="{{ $ubicacion }}">
-                                @foreach ($autos as $auto)
-                                    <option value="{{ $auto->PATENTE_VEHICULO }}" data-tipo-vehiculo="{{ $auto->tipoVehiculo->ID_TIPO_VEH }}" @if ($auto->PATENTE_VEHICULO === $solicitud->PATENTE_VEHICULO) selected @endif>
-                                        {{ $auto->PATENTE_VEHICULO }} ({{ $auto->tipoVehiculo->TIPO_VEHICULO }})
-                                    </option>
-                                @endforeach
-                            </optgroup>
-                        @endforeach
-                    </select>
-                    @if($errors->has('PATENTE_VEHICULO'))
-                        <div class="invalid-feedback">{{$errors->first('PATENTE_VEHICULO')}}</div>
-                    @endif
+                    <div class="mb-3">
+                        <label for="PATENTE_VEHICULO" class="form-label"><i class="fa-solid fa-car-on"></i> Asignar vehículos:</label>
+                        <select id="PATENTE_VEHICULO" name="PATENTE_VEHICULO" class="form-control @if($errors->has('PATENTE_VEHICULO')) is-invalid @endif" disabled>
+                            <option value="">-- Seleccione el vehículo a asignar --</option>
+                            @foreach ($vehiculos->groupBy('ubicacion.UBICACION') as $ubicacion => $autos)
+                                <optgroup label="{{ $ubicacion }}">
+                                    @foreach ($autos as $auto)
+                                        <option value="{{ $auto->PATENTE_VEHICULO }}" data-tipo-vehiculo="{{ $auto->tipoVehiculo->ID_TIPO_VEH }}" @if ($auto->PATENTE_VEHICULO === $solicitud->PATENTE_VEHICULO) selected @endif>
+                                            {{ $auto->PATENTE_VEHICULO }} ({{ $auto->tipoVehiculo->TIPO_VEHICULO }})
+                                        </option>
+                                    @endforeach
+                                </optgroup>
+                            @endforeach
+                        </select>
+                        @if($errors->has('PATENTE_VEHICULO'))
+                            <div class="invalid-feedback">{{$errors->first('PATENTE_VEHICULO')}}</div>
+                        @endif
+                    </div>
                 </div>
             </div>
             <div class="row">
                 <div class="col-md-6">
-                    <div class="mb-3">
+                    <div class="mb-3" class="form-group">
                         <!-- Solo acceso para conductores(nivel 1) y estado formulario por rendir(autorizado/rendir nivel 3) -->
                         <label for="KMS_INICIAL" class="form-label"><i class="fa-solid fa-caret-down"></i> Kilometraje al partir:</label>
-                        <input type="number" id="KMS_INICIAL" name="KMS_INICIAL" class="form-control" placeholder="Ej: 99999" readonly value="{{$solicitud->KMS_INICIAL}}">
+                        <input type="number" id="KMS_INICIAL" name="KMS_INICIAL" class="form-control" placeholder="Ej: 99999" value="{{$solicitud->KMS_INICIAL}}">
                         @if ($errors->has('KMS_INICIAL'))
                         <div class="invalid-feedback">
                             {{ $errors->first('KMS_INICIAL') }}
@@ -136,9 +140,9 @@
                 </div>
 
                 <div class="col-md-6">
-                    <div class="mb-3">
+                    <div class="mb-3" class="form-group">
                         <label for="KMS_FINAL" class="form-label"><i class="fa-solid fa-caret-up"></i> Kilometraje al finalizar:</label>
-                        <input type="number" id="KMS_FINAL" name="KMS_FINAL" class="form-control" placeholder="Ej: 100000" readonly value="{{$solicitud->KMS_FINAL}}">
+                        <input type="number" id="KMS_FINAL" name="KMS_FINAL" class="form-control" placeholder="Ej: 100000" value="{{$solicitud->KMS_FINAL}}">
                         @if ($errors->has('KMS_FINAL'))
                         <div class="invalid-feedback">
                             {{ $errors->first('KMS_FINAL') }}
@@ -147,8 +151,46 @@
                     </div>
                 </div>
             </div>
+            {{-- NUM BITACORA Y FECHA LLEGADA--}}
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="mb-3" class="form-group">
+                        <label for="N_BITACORA">N° Bitacora:</label>
+                        <input type="number" id="N_BITACORA" name="N_BITACORA" class="form-control" placeholder="Ej: 1" value="{{$solicitud->N_BITACORA}}">
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="mb-3" class="form-group">
+                        <label for="FECHA_LLEGADA_CONDUCTOR">Fecha y hora de llegada:</label>
+                        <input type="date" id="FECHA_LLEGADA_CONDUCTOR" name="FECHA_LLEGADA_CONDUCTOR" class="form-control">
+                    </div>
+                </div>
+            </div>
+            {{-- ABASTECE BENCINA Y NIVEL DE COMBUSTIBLE --}}
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="mb-3" class="form-group">
+                        <label for="ABS_BENCINA">¿Abastecio bencina?: </label>
+                        <select name="ABS_BENCINA" id="ABS_BENCINA" class="form-control">
+                            <option value="SI">SI</option>
+                            <option value="NO">NO</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="mb-3" class="form-group">
+                        <label for="NIVEL_TANQUE">Estado del tanque:</label>
+                        <select name="NIVEL_TANQUE" id="NIVEL_TANQUE" class="form-control">
+                            <option value="BAJO">BAJO</option>
+                            <option value="MEDIO BAJO">MEDIO BAJO</option>
+                            <option value="MEDIO">MEDIO</option>
+                            <option value="MEDIO ALTO">MEDIO ALTO</option>
+                            <option value="ALTO">ALTO</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
             {{-- *FECHA Y HORA DE REGRESO* --}}
-
             <div class="row">
                 <div class="col-md-6">
                     {{-- Fecha y hora de inicio asignadas --}}
@@ -327,6 +369,8 @@
             // Evento change del elemento ID_TIPO_VEH
             $('#ID_TIPO_VEH').change(function() {
                 var selectedTipoVehiculo = $(this).val();
+                // Guardar el valor seleccionado antes de cambiar el tipo de vehículo
+                var previousPatenteVehiculo = $('#PATENTE_VEHICULO').val();
 
                 $('#PATENTE_VEHICULO option').each(function() {
                     var tipoVehiculoOption = $(this).data('tipo-vehiculo');
@@ -338,62 +382,24 @@
                     }
                 });
 
-                // Restablecer la selección del segundo select
-                $('#PATENTE_VEHICULO').val('');
+                // Restablecer el valor seleccionado anteriormente, en lugar de simplemente restablecer a una cadena vacía
+                $('#PATENTE_VEHICULO').val(previousPatenteVehiculo);
             });
 
             // Desencadenar el evento change al cargar la página
             $('#ID_TIPO_VEH').trigger('change');
         });
     </script>
-    {{-- *FUNCION RESETEAR SOLICITUD (DEVUELVE LOS VALORES ORIGINALES)* --}}
     <script>
-        function resetFields() {
-            // Obtener los elementos de formulario por sus IDs
-            var conductor = document.getElementById('CONDUCTOR');
-            var motivoSolicitud = document.getElementById('MOTIVO_SOL_VEH');
-            var nombreOcupantes = document.getElementById('NOMBRE_OCUPANTES');
-            var fechaSalida = document.getElementById('FECHA_SALIDA_SOL_VEH');
-            var horaSalida = document.getElementById('HORA_SALIDA_SOL_VEH');
-            var horaLlegada = document.getElementById('HORA_LLEGADA_SOL_VEH');
-            var observaciones = document.getElementById('OBSERV_SOL_VEH');
-            var tipoVehiculo = document.getElementById('ID_TIPO_VEH');
-            var patenteVehiculo = document.getElementById('PATENTE_VEHICULO');
-            var estadoSolicitud = document.getElementById('ESTADO_SOL_VEH');
-
-            // Restaurar los valores originales de los campos
-            conductor.value = "{{ $solicitud->CONDUCTOR }}";
-            motivoSolicitud.value = "{{ $solicitud->MOTIVO_SOL_VEH }}";
-            nombreOcupantes.value = "{{ $solicitud->NOMBRE_OCUPANTES }}";
-            fechaSalida.value = "{{ $solicitud->FECHA_SALIDA_SOL_VEH }}";
-            horaSalida.value = "{{ $solicitud->HORA_SALIDA_SOL_VEH }}";
-            horaLlegada.value = "{{ $solicitud->HORA_LLEGADA_SOL_VEH }}";
-            observaciones.value = "{{ $solicitud->OBSERV_SOL_VEH }}";
-            tipoVehiculo.value = "{{ $solicitud->ID_TIPO_VEH }}";
-            patenteVehiculo.value = "{{ $solicitud->PATENTE_VEHICULO }}";
-            estadoSolicitud.value = "{{ $solicitud->ESTADO_SOL_VEH }}";
-
-            // Restablecer el selector de fecha Flatpickr
-            flatpickr("#FECHA_SALIDA_SOL_VEH", {
-                dateFormat: 'Y-m-d',
-                altFormat: 'd-m-Y',
-                altInput: true,
-                locale: 'es',
-                minDate: "today",
-                showClearButton: true,
-                mode: "range"
-            });
-            // Mostrar la alerta SweetAlert2
-            Swal.fire({
-                icon: 'success',
-                title: 'Campos restablecidos',
-                text: 'Los campos se han restablecido correctamente.',
-                timer: 2000,
-                timerProgressBar: true,
-                toast: true,
-                position: 'top-end',
-                showConfirmButton: false
-            });
-        }
+        $(document).ready(function(){
+            $('#ESTADO_SOL_VEH').change(function(){
+                var estado = $(this).val();
+                if(estado === 'POR RENDIR') {
+                    $(this).prop('disabled', true);
+                } else {
+                    $(this).prop('disabled', false);
+                }
+            }).trigger('change'); // Esto va a disparar el evento de cambio al cargar la página
+        });
     </script>
 @stop

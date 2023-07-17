@@ -58,7 +58,7 @@
             </script>
         @endif
         {{-- !!GENERAR REPORTE DE MATERIALES (INVENTARIO) --}}
-        <a href="{{ route('materiales.report') }}" class="btn btn-primary" target="_blank"><i class="fa-solid fa-file-pdf"></i> Exportar PDF</a>
+        <a href="{{ route('materiales.exportar-pdf') }}" class="btn btn-primary" target="_blank"><i class="fa-solid fa-file-pdf"></i> Exportar PDF</a>
 
         <div class="table-responsive">
             <table id="materiales" class="table table-bordered mt-4">

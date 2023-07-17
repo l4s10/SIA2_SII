@@ -165,6 +165,14 @@ class MaterialController extends Controller
         }
         return redirect(route('materiales.index'));
     }
+    //!!FUNCION EXPORTABLE A PDF CON LIBRERIA "DOMPDF" (ESTA SE USARÁ)
+    /*
+        Obtenemos los materiales y los ordenamos por tipos
+        Obtenemos la fecha "actual" con la que se esta generando el exportable
+        Definimos el PDF cargandole la vista que contendrá la información del reporte
+        Definimos el nombre del archivo (Fecha + maestro_materiales)
+        Devolvemos el exportable y lo mostramos.
+    */
     public function exportToPDF()
     {
         $materiales = Material::orderBy('ID_TIPO_MAT')->get();
@@ -179,7 +187,7 @@ class MaterialController extends Controller
 
         $dompdf->stream("materiales.pdf", ["Attachment" => false]);
     }
-    //!!FUNCION EXPORTABLE A PDF
+    //!!FUNCION EXPORTABLE A PDF CON LIBRERIA BARRY-DOMPDF
     /*
         Obtenemos los materiales y los ordenamos por tipos
         Obtenemos la fecha "actual" con la que se esta generando el exportable

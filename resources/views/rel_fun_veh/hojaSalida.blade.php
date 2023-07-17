@@ -601,7 +601,7 @@ body { margin-left: 0.7in; margin-right: 0.7in; margin-top: 0.75in; margin-botto
             <td class="column4 style5 null"></td>
             <td class="column5 style5 null"></td>
             <td class="column6 style37 s">ABASTECE DE BENCINA</td>
-            <td class="column7 style29 null"></td>
+            <td class="column7 style29 null">{{$solicitud->ABS_BENCINA}}</td>
             <td class="column8 style6 null"></td>
           </tr>
           <tr class="row41">
@@ -617,11 +617,11 @@ body { margin-left: 0.7in; margin-right: 0.7in; margin-top: 0.75in; margin-botto
           </tr>
           <tr class="row42">
             <td class="column0 style84 s">KMS. INICIAL:</td>
-            <td class="column1 style85 null style85" colspan="2"></td>
+            <td class="column1 style85 null style85" colspan="2">{{$solicitud->KMS_INICIAL}}</td>
             <td class="column3 style86 s">KMS. FINAL</td>
-            <td class="column4 style85 null style85" colspan="2"></td>
+            <td class="column4 style85 null style85" colspan="2">{{$solicitud->KMS_FINAL}}</td>
             <td class="column6 style87 s">&nbsp;KM. RECORRIDO</td>
-            <td class="column7 style88 null"></td>
+            <td class="column7 style88 null">{{ $solicitud->KMS_FINAL - $solicitud->KMS_INICIAL }}</td>
             <td class="column8 style6 null"></td>
           </tr>
           <tr class="row43">
@@ -639,15 +639,15 @@ body { margin-left: 0.7in; margin-right: 0.7in; margin-top: 0.75in; margin-botto
             <td class="column0 style93 s">Tiempo Total de Hrs.</td>
             <td class="column1 style94 null style94" colspan="2"></td>
             <td class="column3 style40 s">NVL ESTANQUE</td>
-            <td class="column4 style10 null"></td>
+            <td class="column4 style10 null">{{$solicitud->NIVEL_TANQUE}}</td>
             <td class="column5 style5 null"></td>
             <td class="column6 style95 s">Número en Bitácora</td>
-            <td class="column7 style10 null"></td>
+            <td class="column7 style10 null">{{$solicitud->N_BITACORA}}</td>
             <td class="column8 style6 null"></td>
           </tr>
           <tr class="row45">
             <td class="column0 style96 s">Observaciones:</td>
-            <td class="column1 style97 null style97" colspan="7"></td>
+            <td class="column1 style97 null style97" colspan="7">{{$solicitud->OBSERV_SOL_VEH}}</td>
             <td class="column8 style98 null"></td>
           </tr>
         </tbody>
