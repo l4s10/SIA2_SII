@@ -33,11 +33,22 @@ Route::get('/directivos', function(){
     return view('directivos.index');
 })->name('directivos.index');
 
-//Dashboard para modulo home reportes
-Route::get('/reporteshome', function(){
-return view('reporteshome.index');
-})->name('reporteshome.index');
-
+//*RUTAS PARA INDEX DE GRAFICOS*/
+Route::get('/reporteshome', 'App\Http\Controllers\HomeReportesController@Home')->name('reporteshome.home');
+//Ruta para REPORTES DE VEHICULOS
+Route::get('reporteshome/Vehiculos', 'App\Http\Controllers\HomeReportesController@VehiculosReport')->name('reporteshome.vehiculos');
+//RUTAS PARA REPORTES DE MATERIALES
+Route::get('/reporteshome/Materiales', 'App\Http\Controllers\HomeReportesController@MaterialsReport')->name('reporteshome.materiales');
+//GRAFICOS REPARACIONES Y MANTENCIONES
+Route::get('/reporteshome/Repyman','App\Http\Controllers\HomeReportesController@ReparacionesMantencionesReport')->name('reporteshome.repyman');
+//GRAFICOS PARA EQUIPOS
+Route::get('/reporteshome/Equipos', 'App\Http\Controllers\HomeReportesController@EquiposReport')->name('reporteshome.equipos');
+//GRAFICOS PARA RESERVAS (SALAS Y BODEGAS)
+Route::get('/reporteshome/Reservas', 'App\Http\Controllers\HomeReportesController@ReservasReport')->name('reporteshome.reservas');
+//GRAFICOS PARA INVENTARIO
+Route::get('/reporteshome/Inventario', 'App\Http\Controllers\HomeReportesController@InventarioReport')->name('reporteshome.inventario');
+//GRAFICOS PARA SISTEMA (TABLAS DE CONTINGENCIA)
+Route::get('/reporteshome/System', 'App\Http\Controllers\HomeReportesController@SystemReport')->name('reporteshome.system');
 //Dashboard para modulo reserva salas y visitas a bodega
 Route::get('/reservas', function(){
     return view('reservas.dashboard');

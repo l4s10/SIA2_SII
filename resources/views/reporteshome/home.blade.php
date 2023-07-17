@@ -58,7 +58,7 @@
         </script>
     @endif
 
-
+        <a href="{{route('reportes.index')}}" class="btn btn-danger">Ir a Dev version report</a>
     <div class="container-fluid d-flex justify-content-center align-items-center flex-column">
         <div class="card text-bg-primary mb-3 mx-auto col-sm-12 col-md-6" style="max-width: 100%; text-align: justify;">
                 <div class="card-header">Módulo Reportes de vehiculos</div>
@@ -66,7 +66,7 @@
                     <p class="card-text">Este módulo permite ver los reportes de <strong>Vehiculos</strong>. Para saber las cantidades de solicitudes de <strong>Vehiculos</strong> del sistema completo.</p>
                 </div>
                 <div class="card-footer">
-                    <a class="btn btn-primary" href="{{route('reportes.index')}}"><i class="fa-solid fa-chart-pie"></i> Graficos</a>
+                    <a class="btn btn-primary" href="{{route('reporteshome.vehiculos')}}"><i class="fa-solid fa-chart-pie"></i> Graficos</a>
                 </div>
             </div>
         <div class="card text-bg-primary mb-3 mx-auto col-sm-12 col-md-6" style="max-width: 100%; text-align: justify;">
@@ -75,7 +75,7 @@
                     <p class="card-text">Este módulo permite ver los reportes de <strong>Materiales</strong>. Para saber las cantidades de solicitudes de <strong>Materiales</strong> del sistema completo.</p>
                 </div>
                 <div class="card-footer">
-                    <a class="btn btn-primary" href="{{route('reportestablas.index')}}"><i class="fa-solid fa-chart-pie"></i> Graficos</a>
+                    <a class="btn btn-primary" href="{{route('reporteshome.materiales')}}"><i class="fa-solid fa-chart-pie"></i> Graficos</a>
                 </div>
             </div>
         <div class="card text-bg-primary mb-3 mx-auto col-sm-12 col-md-6" style="max-width: 100%; text-align: justify;">
@@ -84,7 +84,7 @@
                     <p class="card-text">Este módulo permite ver los reportes de <strong>reparaciones y mantenciones</strong>. Para saber las cantidades de solicitudes de <strong>reparaciones y mantenciones</strong> del sistema completo.</p>
                 </div>
                 <div class="card-footer">
-                    <a class="btn btn-primary" href="{{route('reportestablas.index')}}"><i class="fa-solid fa-chart-pie"></i> Graficos</a>
+                    <a class="btn btn-primary" href="{{route('reporteshome.repyman')}}"><i class="fa-solid fa-chart-pie"></i> Graficos</a>
                 </div>
             </div>
         <div class="card text-bg-primary mb-3 mx-auto col-sm-12 col-md-6" style="max-width: 100%; text-align: justify;">
@@ -93,7 +93,7 @@
                     <p class="card-text">Este módulo permite ver los reportes de <strong>Equipos</strong>. Para saber las cantidades de solicitudes de <strong>Equipos</strong> del sistema completo.</p>
                 </div>
                 <div class="card-footer">
-                    <a class="btn btn-primary" href="{{route('reportestablas.index')}}"><i class="fa-solid fa-chart-pie"></i> Graficos</a>
+                    <a class="btn btn-primary" href="{{route('reporteshome.equipos')}}"><i class="fa-solid fa-chart-pie"></i> Graficos</a>
                 </div>
             </div>
         <div class="card text-bg-primary mb-3 mx-auto col-sm-12 col-md-6" style="max-width: 100%; text-align: justify;">
@@ -102,7 +102,7 @@
                     <p class="card-text">Este módulo permite ver los reportes de <strong>Reservas</strong>. Para saber las cantidades de solicitudes de <strong>Reservas</strong> del sistema completo.</p>
                 </div>
                 <div class="card-footer">
-                    <a class="btn btn-primary" href="{{route('reportestablas.index')}}"><i class="fa-solid fa-chart-pie"></i> Graficos</a>
+                    <a class="btn btn-primary" href="{{route('reporteshome.reservas')}}"><i class="fa-solid fa-chart-pie"></i> Graficos</a>
                 </div>
             </div>
         <div class="card text-bg-primary mb-3 mx-auto col-sm-12 col-md-6" style="max-width: 100%; text-align: justify;">
@@ -111,7 +111,7 @@
                 <p class="card-text">Este módulo permite ver los reportes de <strong>Inventario</strong>. Para saber las cantidades de solicitudes de <strong>Inventario</strong> del sistema completo.</p>
             </div>
             <div class="card-footer">
-                <a class="btn btn-primary" href="{{route('reportestablas.index')}}"><i class="fa-solid fa-chart-pie"></i> Graficos</a>
+                <a class="btn btn-primary" href="{{route('reporteshome.inventario')}}"><i class="fa-solid fa-chart-pie"></i> Graficos</a>
             </div>
         </div>
         <div class="card text-bg-primary mb-3 mx-auto col-sm-12 col-md-6" style="max-width: 100%; text-align: justify;">
@@ -120,7 +120,7 @@
                 <p class="card-text">Este módulo permite ver los reportes del <strong>Sistema</strong>. Para saber las cantidades de solicitudes del <strong>Sistema</strong> del sistema completo.</p>
             </div>
             <div class="card-footer">
-                <a class="btn btn-primary" href="{{route('reportestablas.index')}}"><i class="fa-solid fa-chart-pie"></i> Graficos</a>
+                <a class="btn btn-primary" href="{{route('reporteshome.system')}}"><i class="fa-solid fa-chart-pie"></i> Graficos</a>
             </div>
         </div>
     </div>
