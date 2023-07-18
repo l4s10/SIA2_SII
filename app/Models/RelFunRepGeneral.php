@@ -21,6 +21,7 @@ class RelFunRepGeneral extends Model
         'REP_SOL',
         'ESTADO_REP_INM',
         'OBSERV_REP_INM',
+        'MODIFICADO_POR_REP_GEN',
         'ID_TIPO_REP_GENERAL'
     ];
 

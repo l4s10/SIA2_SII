@@ -68,13 +68,24 @@ document.addEventListener('DOMContentLoaded', (event) => {
                 fechaFin: fechaFin
             })
         })
-            .then(response => response.json())
-            .then(data => {
-                myChart23.data.datasets[0].data = [
-                    Math.round(data.stockTipoMaterial),
-                    Math.round(data.stockMaterial)
-                ];
-                myChart23.update();
-            });
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Error en la consulta');
+            }
+            return response.json();
+        })
+        .then(data => {
+            // Actualizar los datos del gráfico
+            myChart23.data.labels = data.grafico23.map(item => item.nombre);
+            myChart23.data.datasets[0].data = data.grafico23.map(item => item.conteo);
+            myChart23.update();
+        })
+        .catch(error => {
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Algo salió mal en el gráfico 23!',
+            })
+        });
     });
 });

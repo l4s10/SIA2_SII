@@ -70,10 +70,8 @@ document.addEventListener('DOMContentLoaded', (event) => {
         })
             .then(response => response.json())
             .then(data => {
-                myChart17.data.datasets[0].data = [
-                    Math.round(data.stockTipoMaterial),
-                    Math.round(data.stockMaterial)
-                ];
+                myChart17.data.labels = data.grafico17.map(item => item.nombre);
+                myChart17.data.datasets[0].data = data.grafico17.map(item => item.conteo);
                 myChart17.update();
             });
     });

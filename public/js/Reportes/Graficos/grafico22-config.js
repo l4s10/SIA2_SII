@@ -1,9 +1,8 @@
-// 23 gráfico Estado de solicitudes de reparaciones de inmubles.
 document.addEventListener('DOMContentLoaded', (event) => {
     const ctx22 = document.getElementById('myChart22').getContext('2d');
     const myChart22 = new Chart(ctx22, {
         type: 'bar',
-        data: window.myChartData22, //CARGAR VARIABLES
+        data: window.myChartData22,
         options: {
             scales: {
                 x: {
@@ -70,10 +69,9 @@ document.addEventListener('DOMContentLoaded', (event) => {
         })
             .then(response => response.json())
             .then(data => {
-                myChart22.data.datasets[0].data = [
-                    Math.round(data.stockTipoMaterial),
-                    Math.round(data.stockMaterial)
-                ];
+                // Actualizar los datos del gráfico
+                myChart22.data.labels = data.map(item => item.tipo); // Obtener todos los tipos
+                myChart22.data.datasets[0].data = data.map(item => item.conteo); // Obtener todos los conteos
                 myChart22.update();
             });
     });

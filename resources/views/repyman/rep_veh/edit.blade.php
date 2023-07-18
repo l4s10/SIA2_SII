@@ -153,6 +153,16 @@
                         <option value="RECHAZADO">Rechazado</option>
                     </select>
                 </div>
+                {{-- *MODIFICADO POR* --}}
+                <div class="mb-3" hidden>
+                    <label for="MODIFICADO_POR_REP_VEH" class="form-label"><i class="fa-solid fa-user"></i> Modificado por:</label>
+                    <input type="text" id="MODIFICADO_POR_REP_VEH" name="MODIFICADO_POR_REP_VEH" class="form-control{{ $errors->has('MODIFICADO_POR_REP_VEH') ? ' is-invalid' : '' }}" value="{{ auth()->user()->NOMBRES}} {{auth()->user()->APELLIDOS}}" placeholder="Ej: ANDRES RODRIGO SUAREZ MATAMALA" readonly>
+                    @if ($errors->has('MODIFICADO_POR_REP_VEH'))
+                    <div class="invalid-feedback">
+                        {{ $errors->first('MODIFICADO_POR_REP_VEH') }}
+                    </div>
+                    @endif
+                </div>
             </div>
             <!-- Botones de envio -->
             <div class="mb-6">

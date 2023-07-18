@@ -656,11 +656,11 @@
 
         window.myChartData15 = {
             // 16 gráfico Estado de solicitudes de equipos.
-            labels: ['depa','depa1','depa2','depa3'],
+            labels: [],
             datasets: [
                 {
                     label: 'Estado de solicitudes',
-                    data: [1,2,3,4,5],
+                    data: [],
                     backgroundColor: [
                         'rgb(255, 151, 0)', // INGRESADO
                         'rgb(255, 255, 0)', // EN REVISION
@@ -672,13 +672,27 @@
                 }
             ]
         };
+        var grafico15Data = @json($grafico15);
+
+        grafico15Data.forEach(function(item) {
+            window.myChartData15.labels.push(item.estado);
+            window.myChartData15.datasets[0].data.push(item.conteo);
+        });
 
         window.myChartData16 = {
             //17 gráfico materiales consumidos por ubicaciones.
-            labels: ['Departamentos','Departamento 2'],
+            labels: [
+                @foreach ($grafico16 as $data)
+                    '{{ $data["ubicacion"] }}',
+                @endforeach
+            ],
             datasets: [{
                 label: 'Solicitudes realizadas',
-                data: [1,3],
+                data: [
+                        @foreach ($grafico16 as $data)
+                            {{ $data["conteo"] }},
+                        @endforeach
+                    ],
                 backgroundColor: [
                     'rgb(255, 190, 30)', // Color de fondo único para todas las barras
                 ],
@@ -689,10 +703,18 @@
 
         window.myChartData17 = {
             // 18 gráfico Gestionadores de solicitudes de reserva de salas.
-            labels: ['DAVID ESTEBAN' , 'FELIPE MATIAS' ,'GUSTAVO ALEXIS','HUGO EDUARDO','LUIS ARSENIO','MARIA CATALINA','PAULINA ANDREA','SUSAN'],
+            labels: [
+                @foreach ($grafico17 as $data)
+                    '{{ $data["nombre"] }}',
+                @endforeach
+            ],
             datasets: [{
                 label: 'Solicitudes revisadas',
-                data:[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18],
+                data: [
+                        @foreach ($grafico17 as $data)
+                            {{ $data["conteo"] }},
+                        @endforeach
+                    ],
                 backgroundColor: [
                     'rgb(30, 102, 255)', // Color de fondo único para todas las barras
                 ],
@@ -701,11 +723,11 @@
             }]
         };
         window.myChartData18 = {
-        // 19 gráfico Vehiculos con mas reparaciones.
-            labels: ['Reparaciones'],
+            // 19 gráfico Vehiculos con mas reparaciones.
+            labels: {!! json_encode(array_column($grafico18, 'patente')) !!},
             datasets: [{
                 label: 'Cantidad de reparaciones',
-                data: [1,1,1,1],
+                data: {!! json_encode(array_column($grafico18, 'conteo')) !!},
                 backgroundColor: [
                     'rgb(129, 255, 30)',
                 ],
@@ -716,10 +738,10 @@
         };
         window.myChartData19 = {
             // 20 gráfico Gestionadores de solicitudes de reserva de salas.
-            labels: ['CAROLA' , 'CAROLA OPAZO' ,'SAMUEL EDGARDO'],
+            labels: [],
             datasets: [{
                 label: 'Solicitudes revisadas',
-                data:[1,2,3],
+                data:[],
                 backgroundColor: [
                     'rgb(30, 102, 255)', // Color de fondo único para todas las barras
                 ],
@@ -727,60 +749,93 @@
                 borderWidth: 1
             }]
         };
+
+        var grafico19Data = @json($grafico19);
+        grafico19Data.forEach(function(item) {
+            window.myChartData19.labels.push(item.nombre);
+            window.myChartData19.datasets[0].data.push(item.conteo);
+        });
+
         window.myChartData20 = {
             // 21 gráfico Estado de solicitudes de reparaciones de vehiculo.
-            labels: ['Estados de solicitudes'],
+            labels: [],
             datasets: [{
-                label: 'Ingresado',
-                data: [1],
-                backgroundColor: 'rgb(255, 151, 0)',
-            }, {
-                label: 'Por autorizar',
-                data: [4],
-                backgroundColor: 'rgb(255, 255, 0 )',
-            }, {
-                label: 'Suspendido',
-                data: [2],
-                backgroundColor: 'rgb(255, 0, 0)',
-            }, {
-                label: 'Rechazado',
-                data: [3],
-                backgroundColor: 'rgb(0, 0, 0)',
+                label: 'Estado de solicitudes',
+                data: [],
+                backgroundColor: [
+                    'rgb(255, 151, 0)', // INGRESADO
+                    'rgb(255, 255, 0)', // EN REVISION
+                    'rgb(119, 255, 30)', // ACEPTADO
+                    'rgb(255, 0, 0)' // RECHAZADO
+                ],
+                    barThickness: 50,
+                    borderWidth: 1
             }]
         };
+
+        var grafico20Data = @json($grafico20);
+
+        grafico20Data.forEach(function(item) {
+            window.myChartData20.labels.push(item.estado);
+            window.myChartData20.datasets[0].data.push(item.conteo);
+        });
+
         window.myChartData21 = {
             // 22 gráfico Gestionadores de solicitudes de reserva de salas.
-            labels: ['CONCE' , 'DEPARTAMENTO DE ADMINISTRACION' ,'DEPARTAMENTO DE ASISTENCIA AL CONTRIBUYENTE','DEPARTAMENTO DE FISCALIZACION','UNIDAD DE LOS ANGELES','UNIDAD TALCAHUANO'],
+            labels: [
+                @foreach ($grafico21 as $data)
+                    '{{ $data["ubicacion"] }}',
+                @endforeach
+            ],
             datasets: [{
                 label: 'Solicitudes revisadas',
-                data:[1,2,3,4,5,6],
-                backgroundColor: [
-                    'rgb(255, 190, 30)', // Color de fondo único para todas las barras
-                ],
-                barThickness: 50, // Ajusta el valor para cambiar el ancho de la barra
+                data: [
+                        @foreach ($grafico21 as $data)
+                            {{ $data["conteo"] }},
+                        @endforeach
+                    ],
+                backgroundColor: 'rgb(30, 102, 255)',
+                barThickness: 50,
                 borderWidth: 1
             }]
         };
+        // Supongamos que tus datos están en una variable llamada $grafico22
+        var grafico22Data = @json($grafico22);
+
+        // Crear listas vacías para las etiquetas y los datos
+        var labels = [];
+        var data = [];
+
+        // Rellenar las listas con los datos
+        grafico22Data.forEach(function(item) {
+            labels.push(item.tipo);
+            data.push(item.conteo);
+        });
+
         window.myChartData22 = {
-        // 23 gráfico inmuebles con mas reparaciones.
-            labels: ['Reparaciones'],
+            labels: labels,
             datasets: [{
                 label: 'Cantidad de reparaciones',
-                data: [10],
-                backgroundColor: [
-                    'rgb(129, 255, 30)',
-                ],
+                data: data,
+                backgroundColor: 'rgb(129, 255, 30)',
                 barThickness: 50,
                 borderWidth: 1
-            }
-            ]
+            }]
         };
         window.myChartData23 = {
             // 24 gráfico Gestionadores de solicitudes de reserva de salas.
-            labels: ['ALEJANDRA IVONNE' , 'CAROLA' ,'CAROLA OPAZO','SAMUEL EDGARDO'],
+            labels: [
+                @foreach ($grafico23 as $data)
+                    '{{ $data["nombre"] }}',
+                @endforeach
+            ],
             datasets: [{
                 label: 'Solicitudes revisadas',
-                data:[1,2,3,4],
+                data: [
+                        @foreach ($grafico23 as $data)
+                            {{ $data["conteo"] }},
+                        @endforeach
+                    ],
                 backgroundColor: [
                     'rgb(30, 102, 255)', // Color de fondo único para todas las barras
                 ],
@@ -790,31 +845,34 @@
         };
         window.myChartData24 = {
             // 25 gráfico Estado de solicitudes de reparacion de inmuebles.
-            labels: ['Estados de solicitudes'],
-            datasets: [{
-                label: 'Ingresado',
-                data: [1],
-                backgroundColor: 'rgb(255, 151, 0)',
-            }, {
-                label: 'Por autorizar',
-                data: [4],
-                backgroundColor: 'rgb(255, 255, 0 )',
-            }, {
-                label: 'Suspendido',
-                data: [2],
-                backgroundColor: 'rgb(255, 0, 0)',
-            }, {
-                label: 'Rechazado',
-                data: [3],
-                backgroundColor: 'rgb(0, 0, 0)',
-            }]
+            labels: [],
+            datasets: [
+                {
+                    label: 'Estado de solicitudes',
+                    data: [],
+                    backgroundColor: [
+                        'rgb(255, 151, 0)', // INGRESADO
+                        'rgb(255, 255, 0)', // EN REVISION
+                        'rgb(119, 255, 30)', // ACEPTADO
+                        'rgb(255, 0, 0)' // RECHAZADO
+                    ],
+                    barThickness: 50,
+                    borderWidth: 1
+                }
+            ]
         };
+        var grafico24Data = @json($grafico24);
+
+        grafico24Data.forEach(function(item) {
+            window.myChartData24.labels.push(item.estado);
+            window.myChartData24.datasets[0].data.push(item.conteo);
+        });
         window.myChartData25 = {
             // 26 gráfico solicitudes de reparacion de inmuebles por departamento/ubicacion.
-            labels: ['CONCE' , 'DEPARTAMENTO DE ADMINISTRACION' ,'DEPARTAMENTO DE ASISTENCIA AL CONTRIBUYENTE','DEPARTAMENTO DE FISCALIZACION','UNIDAD DE LOS ANGELES','UNIDAD TALCAHUANO'],
+            labels: @json(array_column($grafico25, 'ubicacion')),
             datasets: [{
                 label: 'Solicitudes revisadas',
-                data:[1,2,3,4,5,6],
+                data: @json(array_column($grafico25, 'conteo')),
                 backgroundColor: [
                     'rgb(255, 190, 30)', // Color de fondo único para todas las barras
                 ],
