@@ -84,12 +84,12 @@
             </div>
         </div>
         <!-- Grafico cuarto  materiales en espera-->
-        {{-- <div class="col-md-6">
+        <!-- {{-- <div class="col-md-6">
             <div class="chart-container">
                 <canvas id="myChart4"></canvas>
                 <button id="view-chart4" class="btn btn-primary move-right"><i class="fa-solid fa-maximize"></i></button>
             </div>
-        </div> --}}
+        </div> --}} -->
         <!-- Base para el Quinto gráfico Gestionadores de solicitudes de materiales. -->
         <div class="col-md-6">
             <div class="chart-container">
@@ -144,12 +144,12 @@
                 <canvas id="myChart13"></canvas>
             </div>
         </div>
-        <div class="col-md-6">
+        <!-- <div class="col-md-6">
             <div class="chart-container">
                 <canvas id="myChart14"></canvas>
                 <button id="view-chart4" class="btn btn-primary move-right"><i class="fa-solid fa-maximize"></i></button>
             </div>
-        </div>
+        </div> -->
         <div class="col-md-6">
             <div class="chart-container">
                 <canvas id="myChart15"></canvas>
@@ -432,23 +432,24 @@
                 borderWidth: 1
             }]
         };
-        window.myChartData4 = {
-            // 5 gráfico Tipo de materiales solicitados.
-            // Aqui irian las patentes de los vehiculos.
-            labels: ['ASEO','COMPUTACION','ELECTRODOMESTICOS','ESCRITORIO'],
-            datasets: [{
-                label: 'Solicitudes',
-                data: [1,2,3,4],
-                backgroundColor: [
-                    'rgb(30, 119, 255)', // Aseo
-                    'rgb(255, 129, 30)', // COMPUTACION
-                    'rgb(115, 255, 30)', // ELECTRODOMESTICOS
-                    'rgb(255, 255, 30)' // ESCRITORIO
-                ],
-                barThickness: 50, // Ajusta el valor para cambiar el ancho de la barra
-                borderWidth: 1
-            }]
-        };
+
+        // window.myChartData4 = {
+        //     // 5 gráfico Tipo de materiales solicitados.
+        //     // Aqui irian las patentes de los vehiculos.
+        //     labels: ['ASEO','COMPUTACION','ELECTRODOMESTICOS','ESCRITORIO'],
+        //     datasets: [{
+        //         label: 'Solicitudes',
+        //         data: [1,2,3,4],
+        //         backgroundColor: [
+        //             'rgb(30, 119, 255)', // Aseo
+        //             'rgb(255, 129, 30)', // COMPUTACION
+        //             'rgb(115, 255, 30)', // ELECTRODOMESTICOS
+        //             'rgb(255, 255, 30)' // ESCRITORIO
+        //         ],
+        //         barThickness: 50, // Ajusta el valor para cambiar el ancho de la barra
+        //         borderWidth: 1
+        //     }]
+        // };
 
         window.myChartData5 = {
             // 6 gráfico estados de solicitudes de materiales.
@@ -473,7 +474,13 @@
             datasets: [{
                 label: 'Estado de solicitudes',
                 data: [],
-                backgroundColor: 'rgb(255, 151, 0)',
+                backgroundColor: [
+                        'rgb(255, 151, 0)', // Aseo
+                        'rgb(255, 255, 0)', // COMPUTACION
+                        'rgb(214, 255, 30)', // ELECTRODOMESTICOS
+                        'rgb(0, 0, 0)', // ESCRITORIO
+                        'rgb(255, 0, 0)' // ESCRITORIO
+                    ],
                 barThickness: 50,
                 borderWidth: 1
             }]
@@ -485,6 +492,7 @@
             window.myChartData6.labels.push(item.estado);
             window.myChartData6.datasets[0].data.push(item.conteo);
         });
+
         window.myChartData7 = {
             //8 gráfico materiales consumidos por ubicaciones.
             labels: @json(array_column($grafico7, 'ubicacion')),
@@ -498,6 +506,7 @@
                 borderWidth: 1
             }]
         };
+
         window.myChartData8 = {
             labels: [],
             datasets: [
@@ -516,13 +525,13 @@
                 }
             ]
         };
-
         var grafico8Data = @json($grafico8);
 
         grafico8Data.forEach(function(item) {
             window.myChartData8.labels.push(item.estado);
             window.myChartData8.datasets[0].data.push(item.conteo);
         });
+
         window.myChartData9 = {
             labels: [
                 @foreach ($grafico9 as $data)
@@ -543,6 +552,7 @@
                 }
             ]
         };
+
         window.myChartData10 = {
             labels: [
                 @foreach ($grafico10 as $data)
@@ -568,6 +578,7 @@
                 }
             ]
         };
+
         window.myChartData11 = {
             // 12 gráfico Vehiculos asignados.
             // Aqui irian las patentes de los vehiculos.
@@ -582,6 +593,7 @@
                 borderWidth: 1
             }]
         };
+
         window.myChartData12 = {
             // 13 gráfico Solicitudes de vehiculos requeridos por departmaneto/unidad.
             labels: [
@@ -603,6 +615,7 @@
                 borderWidth: 1
             }]
         };
+
         window.myChartData13 = {
             // 14 gráfico Gestionadores de solicitudes de reserva de salas.
             labels: [
@@ -624,42 +637,42 @@
                 borderWidth: 1
             }]
         };
-        window.myChartData14 = {
-            // 15 gráfico Vehiculos asignados.
-            // Aqui irian las patentes de los vehiculos.
-            labels: ['AMPLIFICADOR','DATA','EQUIPO DE VIDEOCONFERENCIAS','MICROFONO','NOTEBOOK','TELON'],
-            datasets: [{
-                label: 'Solicitudes de equipos',
-                data: [1,2,3,4,5,6],
-                backgroundColor: [
-                    'rgb(129, 255, 30)', // Color de fondo único para todas las barras
 
-                ],
-                barThickness: 50, // Ajusta el valor para cambiar el ancho de la barra
-                borderWidth: 1
-            }]
-        };
+        // window.myChartData14 = {
+        //     // 15 gráfico Vehiculos asignados.
+        //     // Aqui irian las patentes de los vehiculos.
+        //     labels: ['AMPLIFICADOR','DATA','EQUIPO DE VIDEOCONFERENCIAS','MICROFONO','NOTEBOOK','TELON'],
+        //     datasets: [{
+        //         label: 'Solicitudes de equipos',
+        //         data: [1,2,3,4,5,6],
+        //         backgroundColor: [
+        //             'rgb(129, 255, 30)', // Color de fondo único para todas las barras
+
+        //         ],
+        //         barThickness: 50, // Ajusta el valor para cambiar el ancho de la barra
+        //         borderWidth: 1
+        //     }]
+        // };
+
         window.myChartData15 = {
-            // 16 gráfico Estado de solicitudes de reserva de vehiculo.
-            labels: ['Estados de solicitudes'],
-            datasets: [{
-                label: 'Ingresado',
-                data: [1],
-                backgroundColor: 'rgb(255, 151, 0)',
-            }, {
-                label: 'Por autorizar',
-                data: [4],
-                backgroundColor: 'rgb(255, 255, 0 )',
-            }, {
-                label: 'Suspendido',
-                data: [2],
-                backgroundColor: 'rgb(255, 0, 0)',
-            }, {
-                label: 'Rechazado',
-                data: [3],
-                backgroundColor: 'rgb(0, 0, 0)',
-            }]
+            // 16 gráfico Estado de solicitudes de equipos.
+            labels: ['depa','depa1','depa2','depa3'],
+            datasets: [
+                {
+                    label: 'Estado de solicitudes',
+                    data: [1,2,3,4,5],
+                    backgroundColor: [
+                        'rgb(255, 151, 0)', // INGRESADO
+                        'rgb(255, 255, 0)', // EN REVISION
+                        'rgb(119, 255, 30)', // ACEPTADO
+                        'rgb(255, 0, 0)' // RECHAZADO
+                    ],
+                    barThickness: 50,
+                    borderWidth: 1
+                }
+            ]
         };
+
         window.myChartData16 = {
             //17 gráfico materiales consumidos por ubicaciones.
             labels: ['Departamentos','Departamento 2'],
@@ -673,6 +686,7 @@
                 borderWidth: 1
             }]
         };
+
         window.myChartData17 = {
             // 18 gráfico Gestionadores de solicitudes de reserva de salas.
             labels: ['DAVID ESTEBAN' , 'FELIPE MATIAS' ,'GUSTAVO ALEXIS','HUGO EDUARDO','LUIS ARSENIO','MARIA CATALINA','PAULINA ANDREA','SUSAN'],
