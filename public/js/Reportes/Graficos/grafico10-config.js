@@ -1,4 +1,3 @@
-// 11 gráfico Gestionadores de solicitudes de reserva de vehiculo.
 document.addEventListener('DOMContentLoaded', (event) => {
     const ctx10 = document.getElementById('myChart10').getContext('2d');
     const myChart10 = new Chart(ctx10, {
@@ -70,10 +69,8 @@ document.addEventListener('DOMContentLoaded', (event) => {
         })
             .then(response => response.json())
             .then(data => {
-                myChart10.data.datasets[0].data = [
-                    Math.round(data.stockTipoMaterial),
-                    Math.round(data.stockMaterial)
-                ];
+                myChart10.data.labels = data.grafico10.map(item => item.nombre);
+                myChart10.data.datasets[0].data = data.grafico10.map(item => item.conteo);
                 myChart10.update();
             });
     });

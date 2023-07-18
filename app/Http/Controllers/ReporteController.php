@@ -69,6 +69,18 @@ class ReporteController extends Controller
 
         $grafico7 = $this->getGrafico7Data();
 
+        $grafico8 = $this->getGrafico8Data();
+
+        $grafico9 = $this->getGrafico9Data();
+
+        $grafico10 = $this->getGrafico10Data();
+
+        $grafico11 = $this->getGrafico11Data();
+
+        $grafico12 = $this->getGrafico12Data();
+
+        $grafico13 = $this->getGrafico13Data();
+
         //Departamentos
         $regiones = Region::all();
         $ubicaciones = Ubicacion::all();
@@ -77,7 +89,7 @@ class ReporteController extends Controller
         $direcciones = DireccionRegional::all();
         // Devolver la vista con los datos
 
-        return view('reportes.index', compact('grafico', 'grafico1', 'grafico2', 'grafico3', 'grafico5', 'grafico6','grafico7', 'ubicaciones', 'regiones','direcciones', 'totals'));
+        return view('reportes.index', compact('grafico', 'grafico1', 'grafico2', 'grafico3', 'grafico5', 'grafico6','grafico7', 'grafico8', 'grafico9','grafico10', 'grafico11', 'grafico12', 'grafico13', 'ubicaciones', 'regiones','direcciones', 'totals'));
     }
 
     public function getTotalsPorUbicacion($ubicacionId)
@@ -121,6 +133,12 @@ class ReporteController extends Controller
             'grafico5' => $this->getGrafico5Data($fechaInicio, $fechaFin),
             'grafico6' => $this->getGrafico6Data($fechaInicio, $fechaFin),
             'grafico7' => $this->getGrafico7Data($fechaInicio, $fechaFin),
+            'grafico8' => $this->getGrafico8Data($fechaInicio, $fechaFin),
+            'grafico9' => $this->getGrafico9Data($fechaInicio, $fechaFin),
+            'grafico10' => $this->getGrafico10Data($fechaInicio, $fechaFin),
+            'grafico11' => $this->getGrafico11Data($fechaInicio, $fechaFin),
+            'grafico12' => $this->getGrafico12Data($fechaInicio, $fechaFin),
+            'grafico13' => $this->getGrafico13Data($fechaInicio, $fechaFin),
         ];
 
         return response()->json($data);
@@ -247,6 +265,7 @@ class ReporteController extends Controller
 
                 foreach ($estados as $estado) {
                     if ($fechaInicio && $fechaFin) {
+
                         $conteo = SolicitudMateriales::whereBetween('created_at', [$fechaInicio, $fechaFin])
                                                     ->where('ESTADO_SOL', $estado)
                                                     ->count();
@@ -313,6 +332,202 @@ class ReporteController extends Controller
         return $grafico7;
     }
 
+    //Grafico 8
+    public function getGrafico8Data($fechaInicio = null, $fechaFin = null){
+        $ubicacionUser = Ubicacion::where('ID_UBICACION', auth()->user()->ID_UBICACION)->first();
+        $grafico8 = [];
 
+        if($ubicacionUser){
+            $direccionFiltrada = DireccionRegional::where('ID_DIRECCION', $ubicacionUser->ID_DIRECCION)->first();
+            if($direccionFiltrada){
+                $ubicacionesFiltradas = Ubicacion::where('ID_DIRECCION', $direccionFiltrada->ID_DIRECCION)->pluck('ID_UBICACION');
+                // Definimos los estados que necesitamos contar
+                $estados = ['INGRESADO', 'POR AUTORIZAR', 'SUSPENDIDO', 'RECHAZADO', 'POR RENDIR'];
 
+                foreach ($estados as $estado) {
+                    if ($fechaInicio && $fechaFin) {
+
+                        $conteo = RelFunVeh::whereBetween('created_at', [$fechaInicio, $fechaFin])
+                                                    ->where('ESTADO_SOL_VEH', $estado)
+                                                    ->count();
+                    } else {
+                        $conteo = RelFunVeh::where('ESTADO_SOL_VEH', $estado)
+                                                    ->count();
+                    }
+
+                    $grafico8[] = [
+                        'estado' => $estado,
+                        'conteo' => $conteo,
+                    ];
+                }
+
+                return $grafico8;
+            } else {
+                return ['error' => 'No se pudo encontrar la dirección regional'];
+            }
+        } else {
+            return ['error' => 'No se pudo encontrar la ubicación del usuario'];
+        }
+    }
+
+    //!!Grafico 9
+    public function getGrafico9Data($fechaInicio = null, $fechaFin = null){
+        $ubicacionUser = Ubicacion::where('ID_UBICACION', auth()->user()->ID_UBICACION)->first(); //Obtuve la ubicacion del user
+        if($ubicacionUser){
+            $direccionFiltrada = DireccionRegional::where('ID_DIRECCION', $ubicacionUser->ID_DIRECCION)->first();
+            if($direccionFiltrada){
+                $ubicacionesFiltradas = Ubicacion::where('ID_DIRECCION', $direccionFiltrada->ID_DIRECCION)->get();
+                // Aquí ya tendrías tus ubicaciones filtradas
+            } else {
+                // Trata el caso en que no se encuentre la dirección
+            }
+        } else {
+            // Trata el caso en que no se encuentre la ubicación del usuario
+        }
+
+        $grafico9 = [];
+
+        // Itera sobre cada ubicación
+        foreach ($ubicacionesFiltradas as $ubicacion) {
+            // Obten todas las solicitudes para esta ubicación
+            if($fechaInicio && $fechaFin){
+                $solicitudes = RelFunVeh::where('DEPTO', $ubicacion->UBICACION)->whereBetween('created_at', [$fechaInicio, $fechaFin])->get();
+            }else{
+                $solicitudes = RelFunVeh::where('DEPTO', $ubicacion->UBICACION)->get();
+            }
+
+            // Obten el conteo de solicitudes
+            $conteo = $solicitudes->count();
+
+            // Agrega los datos de esta ubicación al array del gráfico
+            $grafico9[] = [
+                'ubicacion' => $ubicacion->UBICACION,
+                'conteo' => $conteo,
+                'region' => $ubicacion->direccion->region->REGION
+            ];
+        }
+
+        return $grafico9;
+    }
+    //!!Grafico 10
+    public function getGrafico10Data($fechaInicio = null, $fechaFin = null){
+        // Obtén el rol 'SERVICIOS'
+        $rolServicios = Role::where('name', 'SERVICIOS')->first();
+
+        // Obtén la colección de usuarios con el rol 'SERVICIOS'
+        $usuariosServicios = $rolServicios->users;
+
+        $grafico10 = [];
+
+        // Iterar sobre los usuarios y realizar el conteo de solicitudes gestionadas
+        foreach ($usuariosServicios as $usuario) {
+            $nombreCompleto = $usuario->NOMBRES . ' ' . $usuario->APELLIDOS;
+            // Realizar consulta para contar las solicitudes gestionadas por el usuario
+            if ($fechaInicio && $fechaFin) {
+                $conteo = RelFunVeh::where('MODIFICADO_POR_SOL_VEH', $nombreCompleto)->whereBetween('created_at', [$fechaInicio, $fechaFin])->count();
+            } else {
+                $conteo = RelFunVeh::where('MODIFICADO_POR_SOL_VEH', $nombreCompleto)->count();
+            }
+            $grafico10[] = [
+                'nombre' => $nombreCompleto,
+                'conteo' => $conteo
+            ];
+        }
+        // Devolver los datos para el gráfico de Chart.js
+        return $grafico10;
+    }
+
+    //!! Grafico11
+    public function getGrafico11Data($fechaInicio = null, $fechaFin = null){
+        $solicitudesQuery = SolicitudSala::whereNotNull('SALA_A_ASIGNAR');
+
+        if($fechaInicio && $fechaFin){
+            $solicitudesQuery->whereBetween('created_at', [$fechaInicio, $fechaFin]);
+        }
+
+        $solicitudes = $solicitudesQuery->get();
+
+        $grafico11 = [];
+
+        // Agrupa las solicitudes por sala y cuenta las filas para cada sala
+        $conteosPorSala = $solicitudes->groupBy('SALA_A_ASIGNAR')->map->count();
+
+        // Itera sobre los conteos por sala y crea el array para el gráfico
+        foreach ($conteosPorSala as $sala => $conteo) {
+            $grafico11[] = [
+                'sala' => $sala,
+                'conteo' => $conteo
+            ];
+        }
+
+        return $grafico11;
+    }
+
+    //!! Grafico12
+    public function getGrafico12Data($fechaInicio = null, $fechaFin = null){
+        $ubicacionUser = Ubicacion::where('ID_UBICACION', auth()->user()->ID_UBICACION)->first(); //Obtuve la ubicacion del user
+        if($ubicacionUser){
+            $direccionFiltrada = DireccionRegional::where('ID_DIRECCION', $ubicacionUser->ID_DIRECCION)->first();
+            if($direccionFiltrada){
+                $ubicacionesFiltradas = Ubicacion::where('ID_DIRECCION', $direccionFiltrada->ID_DIRECCION)->get();
+                // Aquí ya tendrías tus ubicaciones filtradas
+            } else {
+                // Trata el caso en que no se encuentre la dirección
+            }
+        } else {
+            // Trata el caso en que no se encuentre la ubicación del usuario
+        }
+
+        $grafico12 = [];
+
+        // Itera sobre cada ubicación
+        foreach ($ubicacionesFiltradas as $ubicacion) {
+            // Obten todas las solicitudes para esta ubicación
+            if($fechaInicio && $fechaFin){
+                $solicitudes = SolicitudSala::where('DEPTO', $ubicacion->UBICACION)->whereBetween('created_at', [$fechaInicio, $fechaFin])->get();
+            }else{
+                $solicitudes = SolicitudSala::where('DEPTO', $ubicacion->UBICACION)->get();
+            }
+
+            // Obten el conteo de solicitudes
+            $conteo = $solicitudes->count();
+
+            // Agrega los datos de esta ubicación al array del gráfico
+            $grafico12[] = [
+                'ubicacion' => $ubicacion->UBICACION,
+                'conteo' => $conteo,
+                'region' => $ubicacion->direccion->region->REGION
+            ];
+        }
+
+        return $grafico12;
+    }
+
+    //!! Grafico13
+    public function getGrafico13Data($fechaInicio = null, $fechaFin = null){
+        // Obtén el rol 'SERVICIOS'
+        $rolServicios = Role::where('name', 'INFORMATICA')->first();
+
+        // Obtén la colección de usuarios con el rol 'SERVICIOS'
+        $usuariosServicios = $rolServicios->users;
+
+        $grafico13 = [];
+
+        // Iterar sobre los usuarios y realizar el conteo de solicitudes gestionadas
+        foreach ($usuariosServicios as $usuario) {
+            $nombreCompleto = $usuario->NOMBRES . ' ' . $usuario->APELLIDOS;
+            // Realizar consulta para contar las solicitudes gestionadas por el usuario
+            if ($fechaInicio && $fechaFin) {
+                $conteo = SolicitudSala::where('MODIFICADO_POR_SOL_SALA', $nombreCompleto)->whereBetween('created_at', [$fechaInicio, $fechaFin])->count();
+            } else {
+                $conteo = SolicitudSala::where('MODIFICADO_POR_SOL_SALA', $nombreCompleto)->count();
+            }
+            $grafico13[] = [
+                'nombre' => $nombreCompleto,
+                'conteo' => $conteo
+            ];
+        }
+        // Devolver los datos para el gráfico de Chart.js
+        return $grafico13;
+    }
 }

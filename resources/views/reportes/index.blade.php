@@ -499,62 +499,82 @@
             }]
         };
         window.myChartData8 = {
-            // 9 gráfico Estado de solicitudes de reserva de vehiculo.
-            labels: ['Estados de solicitudes'],
-            datasets: [{
-                label: 'Ingresado',
-                data: [1],
-                backgroundColor: 'rgb(255, 151, 0)',
-            }, {
-                label: 'Por autorizar',
-                data: [4],
-                backgroundColor: 'rgb(255, 255, 0 )',
-            }, {
-                label: 'Suspendido',
-                data: [2],
-                backgroundColor: 'rgb(255, 0, 0)',
-            }, {
-                label: 'Rechazado',
-                data: [3],
-                backgroundColor: 'rgb(0, 0, 0)',
-            }]
+            labels: [],
+            datasets: [
+                {
+                    label: 'Estado de solicitudes',
+                    data: [],
+                    backgroundColor: [
+                        'rgb(255, 151, 0)', // Aseo
+                        'rgb(255, 255, 0)', // COMPUTACION
+                        'rgb(255, 0, 0)', // ELECTRODOMESTICOS
+                        'rgb(0, 0, 0)', // ESCRITORIO
+                        'rgb(214, 255, 30)' // ESCRITORIO
+                    ],
+                    barThickness: 50,
+                    borderWidth: 1
+                }
+            ]
         };
+
+        var grafico8Data = @json($grafico8);
+
+        grafico8Data.forEach(function(item) {
+            window.myChartData8.labels.push(item.estado);
+            window.myChartData8.datasets[0].data.push(item.conteo);
+        });
         window.myChartData9 = {
-            // 10 gráfico Solicitudes de vehiculos requeridos por departmaneto/unidad.
-            labels: ['Unidad de los Angeles', 'Unidad de Lebu', 'Unidad de Talcahuano', 'No asignado', 'Gabinete director','Departamento de administracion','Departamento de Fiscalizacion','Departamento de asistencia al contribuyente','Departamento de avaluaciones','Departamento de procedimientos administrativos tributarios','Departamento juridico'],
-            datasets: [{
-                label: 'Solicitudes realizadas',
-                data: [1,1,1,1,1,1,1,1,1,1],
-                backgroundColor: [
-                    'rgb(255, 190, 30)', // Color de fondo único para todas las barras
-                ],
-                barThickness: 50, // Ajusta el valor para cambiar el ancho de la barra
-                borderWidth: 1
-            }]
+            labels: [
+                @foreach ($grafico9 as $data)
+                    '{{ $data["ubicacion"] }}',
+                @endforeach
+            ],
+            datasets: [
+                {
+                    label: 'Solicitudes realizadas',
+                    data: [
+                        @foreach ($grafico9 as $data)
+                            {{ $data["conteo"] }},
+                        @endforeach
+                    ],
+                    backgroundColor: 'rgb(255, 190, 30)',
+                    barThickness: 50,
+                    borderWidth: 1
+                }
+            ]
         };
         window.myChartData10 = {
-            // 11 gráfico Gestionadores de solicitudes de reserva de vehiculo.
-            labels: ['ALEJANDRA IVONNE' , 'CAROLA OPAZO VENEGAS' ,'x','SAMUEL EDGARDO'],
-            datasets: [{
-                label: 'Solicitudes revisadas',
-                data:[1,2,3,4],
-                backgroundColor: [
-                    'rgb(194, 3, 255)', // Color de fondo único para todas las barras
-                    'rgb(255, 99, 132)', // Color para CAROLA OPAZO VENEGAS
-                    'rgb(54, 162, 235)', // Color para x
-                    'rgb(30, 102, 255)' // Color para SAMUEL EDGARDO
-                ],
-                barThickness: 50, // Ajusta el valor para cambiar el ancho de la barra
-                borderWidth: 1
-            }]
+            labels: [
+                @foreach ($grafico10 as $data)
+                    '{{ $data["nombre"] }}',
+                @endforeach
+            ],
+            datasets: [
+                {
+                    label: 'Solicitudes revisadas',
+                    data: [
+                        @foreach ($grafico10 as $data)
+                            {{ $data["conteo"] }},
+                        @endforeach
+                    ],
+                    backgroundColor: [
+                        'rgb(194, 3, 255)',
+                        'rgb(255, 99, 132)',
+                        'rgb(54, 162, 235)',
+                        'rgb(30, 102, 255)'
+                    ],
+                    barThickness: 50,
+                    borderWidth: 1
+                }
+            ]
         };
         window.myChartData11 = {
             // 12 gráfico Vehiculos asignados.
             // Aqui irian las patentes de los vehiculos.
-            labels: ['CARMEN PROSSER','VIDEO CONFERENCIA','SALA REUNION DR','HALL RENTA','SALA 1','EXTERNA' ,'OFICINA ASISTENTE SOCIAL'],
+            labels: {!! json_encode(array_column($grafico11, 'sala')) !!},
             datasets: [{
                 label: 'Solicitudes de salas',
-                data: [1,2,3,4,5,6,7],
+                data: {!! json_encode(array_column($grafico11, 'conteo')) !!},
                 backgroundColor: [
                     'rgb(129, 255, 30)', // Color de fondo único para todas las barras
                 ],
@@ -564,10 +584,18 @@
         };
         window.myChartData12 = {
             // 13 gráfico Solicitudes de vehiculos requeridos por departmaneto/unidad.
-            labels: ['Unidad de los Angeles', 'Unidad de Lebu', 'Unidad de Talcahuano', 'No asignado', 'Gabinete director','Departamento de administracion','Departamento de Fiscalizacion','Departamento de asistencia al contribuyente','Departamento de avaluaciones','Departamento de procedimientos administrativos tributarios','Departamento juridico'],
+            labels: [
+                @foreach ($grafico12 as $data)
+                    '{{ $data["ubicacion"] }}',
+                @endforeach
+            ],
             datasets: [{
                 label: 'Solicitudes realizadas',
-                data: [1,2,3,4,5,6,7,8,9,10,11],
+                data: [
+                        @foreach ($grafico12 as $data)
+                            {{ $data["conteo"] }},
+                        @endforeach
+                    ],
                 backgroundColor: [
                     'rgb(255, 190, 30)', // Color de fondo único para todas las barras
                 ],
@@ -577,10 +605,18 @@
         };
         window.myChartData13 = {
             // 14 gráfico Gestionadores de solicitudes de reserva de salas.
-            labels: ['ADOLFO MAURICIO' , 'CARLOS ALBERTO' ,'CESAR LEONARDO','CLAUDIA CAROLINA','DAVID ESTEBAN','DIEGO','JOHANA ELIZABETH','JORGE LUIS','LILIAN','LUCILA ESTEPHANIA','LUIS ARSENIO','MAURICIO MARCELO','MIRIAM CAROLINA','SORAYA EDITH','SUSAN','VERONICA ENRIQUETA','VICTOR MANUEL','XIMENA ELIZABETH'],
+            labels: [
+                @foreach ($grafico13 as $data)
+                    '{{ $data["nombre"] }}',
+                @endforeach
+            ],
             datasets: [{
                 label: 'Solicitudes revisadas',
-                data:[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18],
+                data: [
+                        @foreach ($grafico13 as $data)
+                            {{ $data["conteo"] }},
+                        @endforeach
+                    ],
                 backgroundColor: [
                     'rgb(30, 102, 255)', // Color de fondo único para todas las barras
                 ],

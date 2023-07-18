@@ -1,4 +1,3 @@
-//10 gráfico Solicitudes de vehiculos requeridos por departmaneto/unidad.
 document.addEventListener('DOMContentLoaded', (event) => {
     const ctx9 = document.getElementById('myChart9').getContext('2d');
     const myChart9 = new Chart(ctx9, {
@@ -70,10 +69,8 @@ document.addEventListener('DOMContentLoaded', (event) => {
         })
             .then(response => response.json())
             .then(data => {
-                myChart9.data.datasets[0].data = [
-                    Math.round(data.stockTipoMaterial),
-                    Math.round(data.stockMaterial)
-                ];
+                myChart9.data.labels = data.grafico9.map(item => item.ubicacion);
+                myChart9.data.datasets[0].data = data.grafico9.map(item => item.conteo);
                 myChart9.update();
             });
     });

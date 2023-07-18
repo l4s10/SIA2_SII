@@ -1,4 +1,3 @@
-// 9 gráfico Estado de solicitudes de reserva de vehiculo.
 document.addEventListener('DOMContentLoaded', (event) => {
     const ctx8 = document.getElementById('myChart8').getContext('2d');
     const myChart8 = new Chart(ctx8, {
@@ -70,10 +69,8 @@ document.addEventListener('DOMContentLoaded', (event) => {
         })
             .then(response => response.json())
             .then(data => {
-                myChart8.data.datasets[0].data = [
-                    Math.round(data.stockTipoMaterial),
-                    Math.round(data.stockMaterial)
-                ];
+                myChart8.data.labels = data.grafico8.map(item => item.estado);
+                myChart8.data.datasets[0].data = data.grafico8.map(item => item.conteo);
                 myChart8.update();
             });
     });

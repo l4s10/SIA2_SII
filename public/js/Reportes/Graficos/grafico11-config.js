@@ -71,10 +71,10 @@ document.addEventListener('DOMContentLoaded', (event) => {
         .then(response => response.json())
         .then(data => {
             // Obtiene los datos de la respuesta
-            let graficoData = data.grafico3;
+            let graficoData = data.grafico11;
 
             // Actualiza las etiquetas y los datos del gráfico
-            myChart11.data.labels = graficoData.map(item => item.patente);
+            myChart11.data.labels = graficoData.map(item => item.sala);
             myChart11.data.datasets[0].data = graficoData.map(item => item.conteo);
             myChart11.update();
         });
