@@ -65,6 +65,8 @@ class ReporteController extends Controller
         // Quinto gráfico estados de solicitudes de materiales.
         $grafico5 = $this->getGrafico5Data();
         // Sexto gráfico estados de solicitudes de materiales/mes.
+        $grafico6 = $this->getGrafico6Data();
+
         $grafico7 = $this->getGrafico7Data();
 
         //Departamentos
@@ -75,7 +77,7 @@ class ReporteController extends Controller
         $direcciones = DireccionRegional::all();
         // Devolver la vista con los datos
 
-        return view('reportes.index', compact('grafico', 'grafico1', 'grafico2', 'grafico3', 'grafico5', 'grafico7', 'ubicaciones', 'regiones','direcciones', 'totals'));
+        return view('reportes.index', compact('grafico', 'grafico1', 'grafico2', 'grafico3', 'grafico5', 'grafico6','grafico7', 'ubicaciones', 'regiones','direcciones', 'totals'));
     }
 
     public function getTotalsPorUbicacion($ubicacionId)
@@ -117,6 +119,7 @@ class ReporteController extends Controller
             'grafico2' => $this->getGrafico2Data($fechaInicio, $fechaFin),
             'grafico3' => $this->getGrafico3Data($fechaInicio, $fechaFin),
             'grafico5' => $this->getGrafico5Data($fechaInicio, $fechaFin),
+            'grafico6' => $this->getGrafico6Data($fechaInicio, $fechaFin),
             'grafico7' => $this->getGrafico7Data($fechaInicio, $fechaFin),
         ];
 
@@ -230,7 +233,45 @@ class ReporteController extends Controller
         return $grafico5;
     }
 
-    //*Grafico 6: Solicitudes de materiales por Ubicacion/Depto */
+    //!!Grafico 6
+    public function getGrafico6Data($fechaInicio = null, $fechaFin = null) {
+        $ubicacionUser = Ubicacion::where('ID_UBICACION', auth()->user()->ID_UBICACION)->first();
+        $grafico6 = [];
+
+        if($ubicacionUser){
+            $direccionFiltrada = DireccionRegional::where('ID_DIRECCION', $ubicacionUser->ID_DIRECCION)->first();
+            if($direccionFiltrada){
+                $ubicacionesFiltradas = Ubicacion::where('ID_DIRECCION', $direccionFiltrada->ID_DIRECCION)->pluck('ID_UBICACION');
+                // Definimos los estados que necesitamos contar
+                $estados = ['INGRESADO', 'EN REVISION', 'ACEPTADO', 'EN ESPERA', 'RECHAZADO', 'TERMINADO'];
+
+                foreach ($estados as $estado) {
+                    if ($fechaInicio && $fechaFin) {
+                        $conteo = SolicitudMateriales::whereBetween('created_at', [$fechaInicio, $fechaFin])
+                                                    ->where('ESTADO_SOL', $estado)
+                                                    ->count();
+                    } else {
+                        $conteo = SolicitudMateriales::where('ESTADO_SOL', $estado)
+                                                    ->count();
+                    }
+
+                    $grafico6[] = [
+                        'estado' => $estado,
+                        'conteo' => $conteo,
+                    ];
+                }
+
+                return $grafico6;
+            } else {
+                return ['error' => 'No se pudo encontrar la dirección regional'];
+            }
+        } else {
+            return ['error' => 'No se pudo encontrar la ubicación del usuario'];
+        }
+    }
+
+
+    //*Grafico 7: Solicitudes de materiales por Ubicacion/Depto */
     //!!Agregar validacion de regiones
     public function getGrafico7Data($fechaInicio = null, $fechaFin = null)
     {
@@ -271,5 +312,7 @@ class ReporteController extends Controller
 
         return $grafico7;
     }
+
+
 
 }

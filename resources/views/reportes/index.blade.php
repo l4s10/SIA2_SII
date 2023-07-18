@@ -84,12 +84,12 @@
             </div>
         </div>
         <!-- Grafico cuarto  materiales en espera-->
-        <div class="col-md-6">
+        {{-- <div class="col-md-6">
             <div class="chart-container">
                 <canvas id="myChart4"></canvas>
                 <button id="view-chart4" class="btn btn-primary move-right"><i class="fa-solid fa-maximize"></i></button>
             </div>
-        </div>
+        </div> --}}
         <!-- Base para el Quinto gráfico Gestionadores de solicitudes de materiales. -->
         <div class="col-md-6">
             <div class="chart-container">
@@ -468,19 +468,23 @@
         });
 
         window.myChartData6 = {
-            // 7 gráfico estados de solicitudes de materiales.
-            labels: ['Material'],
+            // 6 gráfico estados de solicitudes de materiales.
+            labels: [],
             datasets: [{
-                label: 'Ingresado',
-                data: [1,1,1,1],
-                backgroundColor: [
-                    'rgb(255, 151, 0)',
-                ],
+                label: 'Estado de solicitudes',
+                data: [],
+                backgroundColor: 'rgb(255, 151, 0)',
                 barThickness: 50,
                 borderWidth: 1
-            }
-            ] 
+            }]
         };
+
+        var grafico6Data = @json($grafico6);
+
+        grafico6Data.forEach(function(item) {
+            window.myChartData6.labels.push(item.estado);
+            window.myChartData6.datasets[0].data.push(item.conteo);
+        });
         window.myChartData7 = {
             //8 gráfico materiales consumidos por ubicaciones.
             labels: @json(array_column($grafico7, 'ubicacion')),
@@ -513,7 +517,7 @@
                 label: 'Rechazado',
                 data: [3],
                 backgroundColor: 'rgb(0, 0, 0)',
-            }] 
+            }]
         };
         window.myChartData9 = {
             // 10 gráfico Solicitudes de vehiculos requeridos por departmaneto/unidad.
@@ -593,7 +597,7 @@
                 data: [1,2,3,4,5,6],
                 backgroundColor: [
                     'rgb(129, 255, 30)', // Color de fondo único para todas las barras
-                    
+
                 ],
                 barThickness: 50, // Ajusta el valor para cambiar el ancho de la barra
                 borderWidth: 1
@@ -618,7 +622,7 @@
                 label: 'Rechazado',
                 data: [3],
                 backgroundColor: 'rgb(0, 0, 0)',
-            }] 
+            }]
         };
         window.myChartData16 = {
             //17 gráfico materiales consumidos por ubicaciones.
@@ -658,7 +662,7 @@
                 barThickness: 50,
                 borderWidth: 1
             }
-            ] 
+            ]
         };
         window.myChartData19 = {
             // 20 gráfico Gestionadores de solicitudes de reserva de salas.
@@ -692,7 +696,7 @@
                 label: 'Rechazado',
                 data: [3],
                 backgroundColor: 'rgb(0, 0, 0)',
-            }] 
+            }]
         };
         window.myChartData21 = {
             // 22 gráfico Gestionadores de solicitudes de reserva de salas.
@@ -719,7 +723,7 @@
                 barThickness: 50,
                 borderWidth: 1
             }
-            ] 
+            ]
         };
         window.myChartData23 = {
             // 24 gráfico Gestionadores de solicitudes de reserva de salas.
@@ -753,7 +757,7 @@
                 label: 'Rechazado',
                 data: [3],
                 backgroundColor: 'rgb(0, 0, 0)',
-            }] 
+            }]
         };
         window.myChartData25 = {
             // 26 gráfico solicitudes de reparacion de inmuebles por departamento/ubicacion.

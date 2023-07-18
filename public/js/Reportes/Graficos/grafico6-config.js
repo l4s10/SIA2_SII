@@ -1,4 +1,3 @@
-// 7 gráfico estados de solicitudes de materiales.
 document.addEventListener('DOMContentLoaded', (event) => {
     const ctx6 = document.getElementById('myChart6').getContext('2d');
     const myChart6 = new Chart(ctx6, {
@@ -68,13 +67,29 @@ document.addEventListener('DOMContentLoaded', (event) => {
                 fechaFin: fechaFin
             })
         })
-            .then(response => response.json())
-            .then(data => {
-                myChart6.data.datasets[0].data = [
-                    Math.round(data.stockTipoMaterial),
-                    Math.round(data.stockMaterial)
-                ];
-                myChart6.update();
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Error en la consulta');
+            }
+            return response.json();
+        })
+        .then(data => {
+            myChart6.data.labels = [];
+            myChart6.data.datasets[0].data = [];
+
+            data.grafico6.forEach(function(item) {
+                myChart6.data.labels.push(item.estado);
+                myChart6.data.datasets[0].data.push(item.conteo);
             });
+
+            myChart6.update();
+        })
+        .catch(error => {
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Algo salió mal en el gráfico 6!',
+            })
+        });
     });
 });

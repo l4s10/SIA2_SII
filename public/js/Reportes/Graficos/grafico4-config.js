@@ -1,4 +1,3 @@
-// 5 gráfico Tipo de materiales solicitados por Departamentos.
 document.addEventListener('DOMContentLoaded', (event) => {
     const ctx4 = document.getElementById('myChart4').getContext('2d');
     const myChart4 = new Chart(ctx4, {
@@ -61,8 +60,9 @@ document.addEventListener('DOMContentLoaded', (event) => {
                         bottom: 30
                     }
                 }
+
             },
-            
+
         }
     });
 
@@ -92,11 +92,23 @@ document.addEventListener('DOMContentLoaded', (event) => {
                 fechaFin: fechaFin
             })
         })
-            .then(response => response.json())
-            .then(data => {
-                myChart4.data.datasets[0].data = [
-                ];
-                myChart4.update();
-            });
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Error en la consulta');
+            }
+            return response.json();
+        })
+        .then(data => {
+            myChart4.data.datasets[0].data = [
+            ];
+            myChart4.update();
+        })
+        .catch(error => {
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Algo salió mal en el gráfico 4!',
+            })
+        });
     });
 });
