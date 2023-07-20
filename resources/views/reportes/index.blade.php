@@ -137,6 +137,12 @@
         <!-- Base para el Tercer gráfico Total de Funcionarios (Hombres/mujeres)-->
         <div class="col-md-6">
             <div class="chart-container">
+            <canvas id="myChart24"></canvas>
+            </div>
+        </div>
+        <!-- Base para el Tercer gráfico Total de Funcionarios (Hombres/mujeres)-->
+        <div class="col-md-6">
+            <div class="chart-container">
                 <canvas id="myChart2"></canvas>
             </div>
         </div>
@@ -212,6 +218,7 @@
                 <canvas id="myChart25"></canvas>
             </div>
         </div>
+    
     </div>
     <br>
     <!-- Modal para mostrar el gráfico en grande -->
