@@ -794,7 +794,7 @@
                             {{ $data["conteo"] }},
                         @endforeach
                     ],
-                backgroundColor: 'rgb(30, 102, 255)',
+                backgroundColor: 'rgb(255, 190, 30)',
                 barThickness: 50,
                 borderWidth: 1
             }]
