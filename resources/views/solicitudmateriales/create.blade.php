@@ -6,6 +6,9 @@
 <!-- CABECERA DE LA PAGINA -->
 @section('content_header')
     <h1>Solicitar Materiales</h1>
+    <div class="alert alert-info" role="alert">
+    <div>Bienvenido al modulo de <strong>solicitud de materiales</strong> en este módulo usted podrá pedir a través del carro de compras los distintos materiales catalogados, en caso de requerir otro material favor contactar al Departamento de Administración.<div>
+    </div>
 @stop
 
 @section('content')
@@ -149,6 +152,13 @@
 @section('css')
     <link rel="stylesheet" href="/css/admin_custom.css">
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4/dt-1.11.3/r-2.2.9/datatables.min.css"/>
+    <style>
+        .alert {
+        opacity: 0.7; /* Ajusta la opacidad a tu gusto */
+        background-color: #99CCFF;
+        color:     #000000;
+        }
+    </style>
 @stop
 
 @section('js')

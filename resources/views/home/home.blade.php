@@ -4,6 +4,32 @@
 
 @section('content_header')
     <h1> Bienvenido -- {{auth()->user()->NOMBRES}} {{auth()->user()->APELLIDOS}} </h1>
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    @role('ADMINISTRADOR')
+    <div class="alert alert-info" role="alert">
+        <div><strong>Bienvenido Administrador:</strong> En esta pantalla usted podrá verificar las reservas de salas, vehículos y visitas a bodegas, ya programadas, en caso de mayor información, consulte al Departamento de Administración.</div>
+    </div>
+    @endrole
+    @role('SERVICIOS')
+    <div class="alert alert-info" role="alert">
+        <div><strong>Bienvenido Servicio:</strong> En esta pantalla usted podrá verificar las reservas de salas, vehículos y visitas a bodegas, ya programadas, en caso de mayor información, consulte al Departamento de Administración.</div>
+    </div>
+    @endrole
+    @role('INFORMATICA')
+    <div class="alert alert-info" role="alert">
+        <div><strong>Bienvenido Informatica:</strong> En esta pantalla usted podrá verificar las reservas de salas, vehículos y visitas a bodegas, ya programadas, en caso de mayor información, consulte al Departamento de Administración.</div>
+    </div>
+    @endrole
+    @role('JURIDICO')
+    <div class="alert alert-info" role="alert">
+        <div><strong>Bienvenido Juridico:</strong> En esta pantalla usted podrá verificar las reservas de salas, vehículos y visitas a bodegas, ya programadas, en caso de mayor información, consulte al Departamento de Administración.</div>
+    </div>
+    @endrole
+    @role('FUNCIONARIO')
+    <div class="alert alert-info" role="alert">
+        <div><strong>Bienvenido Funcionario:</strong> Aqui iria el texto donde le corresponde el rol FUNCIONARIO.</div>
+    </div>
+    @endrole
 @endsection
 
 @section('content')
@@ -76,6 +102,14 @@
 
 @section('css')
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <style>
+        .alert {
+            opacity: 0.7;
+            /* Ajusta la opacidad a tu gusto */
+            background-color: #99CCFF;
+            color: #000000;
+        }
+    </style>
 @endsection
 
 @section('js')
