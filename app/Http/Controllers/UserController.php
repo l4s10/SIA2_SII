@@ -31,17 +31,10 @@ class UserController extends Controller
     public function __construct()
     {
         // //*La persona debe de haber iniciado sesion */
-        // $this->middleware('auth');
-        // //*Solo entrarán los admin maestro */
-        // $this->middleware(function ($request, $next) {
-        //     $adminMaestro = Role::findByName('ADMINISTRADOR');
-        //     if (Auth::check() && Auth::user()->hasRole($adminMaestro)) {
-        //         return $next($request);
-        //     }
-        //     abort(403, 'Acción no autorizada');
-        // });
         $this->middleware('auth');
+        // * SI LA PERSONA ES ADMINISTRADOR TIENE ACCESO A TODOS LAS RUTAS* (le quitamos get usuarios pero se la volvemos a asignar en la siguiente)
         $this->middleware('checkearRol:ADMINISTRADOR')->except('getUsuarios');
+        // * SI LA PERSONA TIENE CUALQUIER ROL, SOLO PODRAN ACCEDER AL METODO "getUsuarios" (ESTA FUNCION ES EL DESPLEGABLE DE TODAS LAS PAGINAS QUE PERMITEN SELECCIONAR USUARIOS PARA SOLICITUDES)*
         $this->middleware('checkAnyRole')->only('getUsuarios');
     }
     /**

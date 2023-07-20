@@ -23,6 +23,11 @@ use Illuminate\Support\Facades\Response;
 
 class RelFunVehController extends Controller
 {
+    //Funcion para acceder a las rutas SOLO SI los usuarios estan logueados
+    public function __construct(){
+        $this->middleware( ['auth', 'checkRelFunWithServicesPermissions'] );
+    }
+
     /**
      * Display a listing of the resource.
      */

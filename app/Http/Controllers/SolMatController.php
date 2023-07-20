@@ -19,24 +19,8 @@ class SolMatController extends Controller
     //JURIDICO (igual que INFORMATICA)
     public function __construct()
     {
-        $this->middleware('auth');
-        $this->middleware(function ($request, $next) {
-            $user = Auth::user();
+        $this->middleware(['auth', 'checkRelFunWithServicesPermissions']);
 
-            if ($user->hasRole('ADMINISTRADOR')) {
-                return $next($request);
-            } elseif ($user->hasRole('SERVICIOS')) {
-                if ($request->route()->getActionMethod() === 'destroy') {
-                    abort(403, 'Acceso no autorizado');
-                }
-                return $next($request);
-            } else {
-                if ($request->route()->getActionMethod() !== 'index' && $request->route()->getActionMethod() !== 'create' && $request->route()->getActionMethod() !== 'store' && $request->route()->getActionMethod() !== 'show') {
-                    abort(403, 'Acceso no autorizado');
-                }
-                return $next($request);
-            }
-        });
     }
     /**
      * Display a listing of the resource.

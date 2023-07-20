@@ -21,24 +21,7 @@ class SolicitudEquiposController extends Controller
     //Funcion para acceder a las rutas SOLO SI los usuarios estan logueados
     public function __construct()
     {
-        $this->middleware('auth');
-        $this->middleware(function ($request, $next) {
-            $user = Auth::user();
-
-            if ($user->hasRole('ADMINISTRADOR')) {
-                return $next($request);
-            } elseif ($user->hasRole('INFORMATICA')) {
-                if ($request->route()->getActionMethod() === 'destroy') {
-                    abort(403, 'Acceso no autorizado');
-                }
-                return $next($request);
-            } else {
-                if ($request->route()->getActionMethod() !== 'index' && $request->route()->getActionMethod() !== 'create' && $request->route()->getActionMethod() !== 'store' && $request->route()->getActionMethod() !== 'show') {
-                    abort(403, 'Acceso no autorizado');
-                }
-                return $next($request);
-            }
-        });
+        $this->middleware(['auth', 'checkRelFunWithSupportPermissions']);
     }
 
     public function index()

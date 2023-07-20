@@ -20,16 +20,7 @@ class MaterialController extends Controller
     // Esta funcion protege nuestro controlador para que solo las personas logueadas puedan entrar
     public function __construct()
     {
-        $this->middleware('auth');
-        $this->middleware(function ($request, $next) {
-            $user = Auth::user();
-
-            if ($user->hasRole('ADMINISTRADOR') || $user->hasRole('SERVICIOS')) {
-                return $next($request);
-            } else {
-                abort(403, 'Acceso no autorizado');
-            }
-        });
+        $this->middleware(['auth', 'roleAdminAndServices']);
     }
     /**
      * Display a listing of the resource.

@@ -11,22 +11,14 @@ use Illuminate\Support\Facades\Validator;
 
 class TipoEquiposController extends Controller
 {
+    //Protegemos las rutas para que solo los usuarios autentificados entren (ademas de los roles requeridos)
+    public function __construct()
+    {
+        $this->middleware(['auth' , 'roleAdminAndSupport']);
+    }
     /**
      * Display a listing of the resource.
      */
-    public function __construct()
-    {
-        $this->middleware('auth');
-        $this->middleware(function ($request, $next) {
-            $user = Auth::user();
-
-            if ($user->hasRole('ADMINISTRADOR') || $user->hasRole('INFORMATICA')) {
-                return $next($request);
-            } else {
-                abort(403, 'Acceso no autorizado');
-            }
-        });
-    }
     public function index()
     {
         $tipos = TipoEquipo::all();

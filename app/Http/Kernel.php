@@ -23,10 +23,15 @@ class Kernel extends HttpKernel
         \Illuminate\Foundation\Http\Middleware\ConvertEmptyStringsToNull::class,
     ];
     protected $routeMiddleware = [
-        // ...
+        // ...AQUI PODEMOS COLOCAR TODOS LOS MIDDLEWARE QUE VAYAMOS CREANDO
         'checkUserPermission' => \App\Http\Middleware\CheckUserPermission::class,
         'checkearRol' => \App\Http\Middleware\CheckearRol::class,
         'checkAnyRole' => \App\Http\Middleware\CheckAnyRole::class,
+        'roleAdminAndSupport' => \App\Http\Middleware\RoleAdminAndSupport::class,
+        'roleAdminAndServices' => \App\Http\Middleware\RoleAdminAndServices::class,
+        'checkRelFunWithServicesPermissions' => \App\Http\Middleware\CheckRelFunWithServicesPermissions::class,
+        'checkRelFunWithSupportPermissions' => \App\Http\Middleware\CheckRelFunWithSupportPermissions::class,
+        
     ];
 
 
