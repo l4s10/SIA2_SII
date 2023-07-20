@@ -50,6 +50,10 @@ class ReporteController extends Controller
         'material' => Material::class,
     ];
 
+    //DE MOMENTO SOLO EL ADMINISTRADOR PUEDE ENTRAR
+    public function __construct(){
+        $this->middleware( ['auth', 'checkearRol:ADMINISTRADOR'] );
+    }
 
 
     //obtener historico

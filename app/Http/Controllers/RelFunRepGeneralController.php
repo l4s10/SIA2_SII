@@ -12,32 +12,17 @@ class RelFunRepGeneralController extends Controller
 {
     //Funcion para acceder a las rutas SOLO SI los usuarios estan logueados
     public function __construct(){
-        $this->middleware('auth');
-        //Tambien aqui podremos agregar que roles son los que pueden ingresar
-        $this->middleware(function ($request, $next) {
-            $user = Auth::user();
-
-            if ($user->hasRole('ADMINISTRADOR')) {
-                return $next($request);
-            } elseif ($user->hasRole('SERVICIOS')) {
-                if ($request->route()->getActionMethod() === 'destroy') {
-                    abort(403, 'Acceso no autorizado');
-                }
-                return $next($request);
-            } else {
-                if ($request->route()->getActionMethod() !== 'index' && $request->route()->getActionMethod() !== 'create' && $request->route()->getActionMethod() !== 'store' && $request->route()->getActionMethod() !== 'show') {
-                    abort(403, 'Acceso no autorizado');
-                }
-                return $next($request);
-            }
-        });
+        $this->middleware( ['auth', 'checkRelFunWithServicesPermissions'] );
     }
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
+        //Obtenemos al usuario
         $user = Auth::user();
+        //Si tiene los roles solicitados pueden ver todas las solicitudes.
+        //En caso contrario, solo las propias de el mismo.
         if($user->hasAnyRole(['ADMINISTRADOR','SERVICIOS'])){
             $sol_reparaciones = RelFunRepGeneral::all();
         } else {
