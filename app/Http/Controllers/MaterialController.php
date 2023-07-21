@@ -28,6 +28,7 @@ class MaterialController extends Controller
     public function index()
     {
         //Funcion que lista elementos de la tabla de la BDD.
+        //!!MOSTRAR LOGS DE INVENTARIO + EXPORTABLE
         $materiales = Material::all();
         return view('materiales.index',compact('materiales'));
     }

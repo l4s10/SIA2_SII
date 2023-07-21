@@ -25,6 +25,7 @@ class RelFunVehController extends Controller
 {
     //Funcion para acceder a las rutas SOLO SI los usuarios estan logueados
     public function __construct(){
+        //!!AGREGAR MIDDLEWARE PARA DAR ACCESO AL USUARIO A RENDIR
         $this->middleware( ['auth', 'checkRelFunWithServicesPermissions'] );
     }
 
@@ -34,6 +35,8 @@ class RelFunVehController extends Controller
     public function index()
     {
         //*Listar las solicitudes*/
+        //!!eliminar EMAIL y RUT -> MOSTRAR N FOLIO Y PATENTE ASIGNADA.
+        //!!EXPORTABLE A EXCEL
         $solicitudes = RelFunVeh::all();
         return view('rel_fun_veh.index',compact('solicitudes'));
     }
@@ -199,8 +202,8 @@ class RelFunVehController extends Controller
             $firmaRealizada = true;
         }
 
-        // Caso administrador (ROLES) - Solo se llegará aquí si el usuario no es un 'JEFE DE DEPARTAMENTO DE ADMINISTRACION' o si ya se ha firmado en esa capacidad
-        if (!$firmaRealizada && auth()->user()->hasRole('ADMINISTRADOR') && $solicitud->FIRMA_ADMINISTRADOR == null) {
+        // Caso administrador (ROLES) - Solo se llegará aquí si el usuario no es un 'JEFE DE DEPARTAMENTO DE ADMINISTRACION' o si ya se ha firmado en esa capacidad (REQUIRIENTE O CAROLA, O NV 2)
+        if (!$firmaRealizada && auth()->user()->hasRole('SERVICIOS') && $solicitud->FIRMA_ADMINISTRADOR == null) {
             $solicitud->FIRMA_ADMINISTRADOR = auth()->user()->RUT . ' ' . auth()->user()->NOMBRES . ' ' . auth()->user()->APELLIDOS;
             $firmaRealizada = true;
         }
@@ -254,6 +257,7 @@ class RelFunVehController extends Controller
     //!!INDEX POR RENDIR
     public function indexRendir(){
         try{
+            //!!AGREGAR LAS QUE ESTAN RELACIONADAS A EL "id" ->where('ID_USUARIO', session()->user()->id)
             $solicitudes = RelFunVeh::where('ESTADO_SOL_VEH', 'POR RENDIR')->get();
             return view('rel_fun_veh.rendir', compact('solicitudes'));
         } catch (Exception $e){
@@ -264,6 +268,7 @@ class RelFunVehController extends Controller
     }
 
     //!!RENDICION DEL CHOFER
+    //!!AQUI ENVIAR LA FIRMA DEL CONDUCTOR
     public function rendicion(string $id)
     {
         try {
