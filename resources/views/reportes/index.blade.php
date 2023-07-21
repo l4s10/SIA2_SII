@@ -68,6 +68,12 @@
                 <button id="view-chart1" class="btn btn-primary move-right"><i class="fa-solid fa-maximize"></i></button>
             </div>
         </div>
+        <!-- Base para el Tercer gráfico Total de Funcionarios (Hombres/mujeres)-->
+        <div class="col-md-6">
+            <div class="chart-container">
+                <canvas id="myChart2"></canvas>
+            </div>
+        </div>
         <!-- Base para el Cuarto gráfico Vehiculos asignados y creacion de base para georeferenciacion. -->
         <div class="col-md-6">
         <div class="chart-container">
@@ -77,18 +83,30 @@
                 <button id="map-open" class="btn btn-primary move-right" onclick="toggleMap()"><i class="fa-solid fa-map-location-dot"></i></button>
             </div>
         </div>
-        <!-- Grafico +cuarto+  materiales en espera-->
+        <!-- Grafico cuarto  materiales en espera-->
         <!-- {{-- <div class="col-md-6">
             <div class="chart-container">
                 <canvas id="myChart4"></canvas>
                 <button id="view-chart4" class="btn btn-primary move-right"><i class="fa-solid fa-maximize"></i></button>
             </div>
         </div> --}} -->
+        <!-- Base para el Quinto gráfico Gestionadores de solicitudes de materiales. -->
+        <div class="col-md-6">
+            <div class="chart-container">
+                <canvas id="myChart5"></canvas>
+            </div>
+        </div>
         <!-- Base para el Sexto gráfico estados de solicitudes de materiales/mes. -->
         <div class="col-md-6">
             <div class="chart-container">
                 <canvas id="myChart6"></canvas>
                 <button id="view-chart4" class="btn btn-primary move-right"><i class="fa-solid fa-maximize"></i></button>
+            </div>
+        </div>
+        <!-- Base para el Septimo gráfico materiales consumidos por departamento/unidad. -->
+        <div class="col-md-6">
+            <div class="chart-container">
+                <canvas id="myChart7"></canvas>
             </div>
         </div>
         <!-- Base pra el Octavo gráfico Estado de solicitudes de reserva de vehiculo. -->
@@ -98,11 +116,32 @@
                 <button id="view-chart4" class="btn btn-primary move-right"><i class="fa-solid fa-maximize"></i></button>
             </div>
         </div>
-        <!-- Base para el Primer gráfico Total de solicitudes 1 -->
+        <!-- Base para el Noveno gráfico Solicitudes de vehiculos requeridos por departmaneto/unidad.-->
+        <div class="col-md-6">
+            <div class="chart-container">
+                <canvas id="myChart9"></canvas>
+            </div>
+        </div>
+        <!-- Base para el Decimo gráfico Gestionadores de solicitudes de reserva de vehiculo. -->
+        <div class="col-md-6">
+            <div class="chart-container">
+                <canvas id="myChart10"></canvas>
+            </div>
+        </div>
         <div class="col-md-6">
             <div class="chart-container">
                 <canvas id="myChart11"></canvas>
                 <button id="view-chart4" class="btn btn-primary move-right"><i class="fa-solid fa-maximize"></i></button>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="chart-container">
+                <canvas id="myChart12"></canvas>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="chart-container">
+                <canvas id="myChart13"></canvas>
             </div>
         </div>
         <!-- <div class="col-md-6">
@@ -119,8 +158,23 @@
         </div>
         <div class="col-md-6">
             <div class="chart-container">
+                <canvas id="myChart16"></canvas>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="chart-container">
+                <canvas id="myChart17"></canvas>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="chart-container">
                 <canvas id="myChart18"></canvas>
                 <button id="view-chart4" class="btn btn-primary move-right"><i class="fa-solid fa-maximize"></i></button>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="chart-container">
+                <canvas id="myChart19"></canvas>
             </div>
         </div>
         <div class="col-md-6">
@@ -131,94 +185,29 @@
         </div>
         <div class="col-md-6">
             <div class="chart-container">
-                <canvas id="myChart22"></canvas>
-            </div>
-        </div>
-        <!-- Base para el Tercer gráfico Total de Funcionarios (Hombres/mujeres)-->
-        <div class="col-md-6">
-            <div class="chart-container">
-            <canvas id="myChart24"></canvas>
-            </div>
-        </div>
-        <!-- Base para el Tercer gráfico Total de Funcionarios (Hombres/mujeres)-->
-        <div class="col-md-6">
-            <div class="chart-container">
-                <canvas id="myChart2"></canvas>
-            </div>
-        </div>
-        <!-- Base para el Tercer gráfico Total de Funcionarios (Hombres/mujeres)-->
-        <div class="col-md-6">
-            <div class="chart-container">
-                <canvas id="myChart5"></canvas>
-            </div>
-        </div>
-        <!-- Base para el Tercer gráfico Total de Funcionarios (Hombres/mujeres)-->
-        <div class="col-md-6">
-            <div class="chart-container">
-                <canvas id="myChart7"></canvas>
-            </div>
-        </div>
-        <!-- Base para el Tercer gráfico Total de Funcionarios (Hombres/mujeres)-->
-        <div class="col-md-6">
-            <div class="chart-container">
-                <canvas id="myChart9"></canvas>
-            </div>
-        </div>
-        <!-- Base para el Tercer gráfico Total de Funcionarios (Hombres/mujeres)-->
-        <div class="col-md-6">
-            <div class="chart-container">
-                <canvas id="myChart10"></canvas>
-            </div>
-        </div>
-        <!-- Base para el Tercer gráfico Total de Funcionarios (Hombres/mujeres)-->
-        <div class="col-md-6">
-            <div class="chart-container">
-                <canvas id="myChart12"></canvas>
-            </div>
-        </div>
-        <!-- Base para el Tercer gráfico Total de Funcionarios (Hombres/mujeres)-->
-        <div class="col-md-6">
-            <div class="chart-container">
-                <canvas id="myChart13"></canvas>
-            </div>
-        </div>
-        <!-- Base para el Tercer gráfico Total de Funcionarios (Hombres/mujeres)-->
-        <div class="col-md-6">
-            <div class="chart-container">
-                <canvas id="myChart16"></canvas>
-            </div>
-        </div>
-        <!-- Base para el Tercer gráfico Total de Funcionarios (Hombres/mujeres)-->
-        <div class="col-md-6">
-            <div class="chart-container">
-                <canvas id="myChart17"></canvas>
-            </div>
-        </div>
-        <!-- Base para el Tercer gráfico Total de Funcionarios (Hombres/mujeres)-->
-        <div class="col-md-6">
-            <div class="chart-container">
-                <canvas id="myChart19"></canvas>
-            </div>
-        </div>
-        <!-- Base para el Tercer gráfico Total de Funcionarios (Hombres/mujeres)-->
-        <div class="col-md-6">
-            <div class="chart-container">
                 <canvas id="myChart21"></canvas>
             </div>
         </div>
-        <!-- Base para el Tercer gráfico Total de Funcionarios (Hombres/mujeres)-->
+        <div class="col-md-6">
+            <div class="chart-container">
+                <canvas id="myChart22"></canvas>
+            </div>
+        </div>
         <div class="col-md-6">
             <div class="chart-container">
                 <canvas id="myChart23"></canvas>
             </div>
         </div>
-        <!-- Base para el Tercer gráfico Total de Funcionarios (Hombres/mujeres)-->
+        <div class="col-md-6">
+            <div class="chart-container">
+                <canvas id="myChart24"></canvas>
+            </div>
+        </div>
         <div class="col-md-6">
             <div class="chart-container">
                 <canvas id="myChart25"></canvas>
             </div>
         </div>
-    
     </div>
     <br>
     <!-- Modal para mostrar el gráfico en grande -->
