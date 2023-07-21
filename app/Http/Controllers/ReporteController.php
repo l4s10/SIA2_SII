@@ -183,7 +183,7 @@ class ReporteController extends Controller
 
         return response()->json($data);
     }
-
+    //!! Grafico 
     private function getGraficoData($fechaInicio = null, $fechaFin = null)
     {
         $grafico = [];
@@ -199,7 +199,7 @@ class ReporteController extends Controller
 
         return $grafico;
     }
-
+    //!! Grafico 1
     private function getGrafico1Data($fechaInicio = null, $fechaFin = null)
     {
         $grafico1 = [];
@@ -215,7 +215,7 @@ class ReporteController extends Controller
 
         return $grafico1;
     }
-
+    //!! Grafico 2
     private function getGrafico2Data($fechaInicio = null, $fechaFin = null)
     {
         $grafico2 = [];
@@ -236,6 +236,7 @@ class ReporteController extends Controller
 
         return $grafico2;
     }
+    //!! Grafico 3
     public function getGrafico3Data($fechaInicio = null, $fechaFin = null)
     {
         $solicitudesQuery = RelFunVeh::whereNotNull('PATENTE_VEHICULO');
@@ -262,7 +263,7 @@ class ReporteController extends Controller
         return $grafico3;
     }
 
-    //*Grafico 5 : Gestionadores de solicitudes de materiales */
+    //!! Grafico 5
     public function getGrafico5Data($fechaInicio = null, $fechaFin = null)
     {
         // Obtén los roles 'SERVICIOS' y 'ADMINISTRADOR'
@@ -331,7 +332,7 @@ class ReporteController extends Controller
     }
 
 
-    //*Grafico 7: Solicitudes de materiales por Ubicacion/Depto */
+    //!! Grafico 7
     //!!Agregar validacion de regiones
     public function getGrafico7Data($fechaInicio = null, $fechaFin = null)
     {
@@ -373,7 +374,7 @@ class ReporteController extends Controller
         return $grafico7;
     }
 
-    //Grafico 8
+    //!! Grafico 8
     public function getGrafico8Data($fechaInicio = null, $fechaFin = null){
         $ubicacionUser = Ubicacion::where('ID_UBICACION', auth()->user()->ID_UBICACION)->first();
         $grafico8 = [];
@@ -823,7 +824,7 @@ class ReporteController extends Controller
 
         return $grafico21;
     }
-
+    //!! Grafico 22
     public function getGrafico22Data($fechaInicio = null, $fechaFin = null){
         $query = RelFunRepGeneral::query();
 
@@ -854,7 +855,7 @@ class ReporteController extends Controller
 
         return $grafico22;
     }
-
+    //!! Grafico 23
     public function getGrafico23Data($fechaInicio = null, $fechaFin = null){
         // Obtén los roles 'SERVICIOS' y 'ADMINISTRADOR'
         $rolServicios = Role::where('name', 'SERVICIOS')->first();
@@ -882,7 +883,7 @@ class ReporteController extends Controller
         // Devolver los datos para el gráfico de Chart.js
         return $grafico23;
     }
-
+    //!! Grafico 24
     public function getGrafico24Data($fechaInicio = null, $fechaFin = null){
         $ubicacionUser = Ubicacion::where('ID_UBICACION', auth()->user()->ID_UBICACION)->first();
         $grafico24 = [];
@@ -919,7 +920,7 @@ class ReporteController extends Controller
             return ['error' => 'No se pudo encontrar la ubicación del usuario'];
         }
     }
-
+    //!! Grafico 25
     public function getGrafico25Data($fechaInicio = null, $fechaFin = null){
         $ubicacionUser = Ubicacion::where('ID_UBICACION', auth()->user()->ID_UBICACION)->first(); //Obtuve la ubicacion del user
         if($ubicacionUser){
