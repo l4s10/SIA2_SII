@@ -129,6 +129,7 @@
                             <th scope="col">Firmante</th>
                             <th scope="col">Delegado</th>
                             <th scope="col">Facultad</th>
+                            <th scope="col">Ley asociada</th>
                             <th scope="col">Glosa</th>
                             <th scope="col">Documento</th>
                         </tr>
@@ -142,6 +143,7 @@
                                 <td>{{ $resolucion->firmante->CARGO }}</td>
                                 <td>{{ $resolucion->delegado->CARGO }}</td>
                                 <td>{{ $resolucion->facultad->NOMBRE }}</td>
+                                <td>{{ $resolucion->facultad->LEY_ASOCIADA }}</td>
                                 <td>
                                     <span class="glosa-abreviada">{{ substr($resolucion->facultad->CONTENIDO, 0, 0) }}</span>
                                     <button class="btn btn-sia-primary btn-block btn-expand" data-glosa="{{ $resolucion->facultad->CONTENIDO }}">
@@ -354,7 +356,7 @@
                 "responsive": true,
                 "columnDefs": [{
                     "orderable": false,
-                    "targets": 7
+                    "targets": 8
                 }], // La séptima columna no es ordenable
                 "language": {
                     "url": "https://cdn.datatables.net/plug-ins/1.11.3/i18n/es_es.json"

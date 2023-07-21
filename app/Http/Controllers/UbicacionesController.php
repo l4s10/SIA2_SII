@@ -12,10 +12,10 @@ class UbicacionesController extends Controller
      */
     public function index()
     {
-        // Obtiene la dirección regional del funcionario con sesión activa
+        // Obtiene la dirección regional del funcionario autenticado
         $direccionRegional = auth()->user()->ubicacion->ID_DIRECCION;
         
-        // Obtiene las ubicaciones y el nombre de la dirección regional asociada según DR en sesión activa
+        // Obtiene las ubicaciones y el nombre de la dirección regional asociada según DR del funcionario autenticado
         $ubicaciones = Ubicacion::join('direcciones_regionales', 'ubicacion.ID_DIRECCION', '=', 'direcciones_regionales.ID_DIRECCION')
             ->where('ubicacion.ID_DIRECCION', $direccionRegional)
             ->select('ubicacion.ID_UBICACION', 'ubicacion.UBICACION', 'direcciones_regionales.DIRECCION')
@@ -29,14 +29,15 @@ class UbicacionesController extends Controller
      *///Carga formulario de creacion
      public function create()
     {
+        // Obtiene la dirección regional asociada al usuario autenticado
+        $direccionId = auth()->user()->ubicacion->ID_DIRECCION;
+        
+        // Obtiene la dirección regional utilizando el ID del usuario autenticado
+        $direccionRegional = DireccionRegional::select('ID_DIRECCION', 'DIRECCION')
+            ->where('ID_DIRECCION', $direccionId)
+            ->first();
 
-        //OPCION PARA CREAR UBICACIONES EN DISTINTAS DIRECCIONES REGIONALES (POR REGION):
-        //Obtiene la región del funcionario con sesión activa (quien utiliza el sw). Funcionalidad orientada a las DDRR de Stgo.       
-        $region = auth()->user()->region->ID_REGION;
-        //Obtiene arreglo asociativo que incluye 'DIRECCION' e 'ID_DIRECCION' desde 'direcciones_regionales', filtradas por $region
-        $direcciones = DireccionRegional::where('ID_REGION', $region)
-            ->pluck('DIRECCION', 'ID_DIRECCION');
-        return view('ubicacion.create', compact('direcciones'));
+        return view('ubicacion.create', compact('direccionRegional'));
     }
 
     /**

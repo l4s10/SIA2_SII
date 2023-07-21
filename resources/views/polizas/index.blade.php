@@ -1,7 +1,7 @@
 @extends('adminlte::page')
 
 <!-- TITULO DE LA PESTAÑA -->
-@section('title', 'Mostrar resoluciones')
+@section('title', 'Mostrar pólizas')
 
 <!-- CABECERA DE LA PAGINA -->
 @section('content_header')
