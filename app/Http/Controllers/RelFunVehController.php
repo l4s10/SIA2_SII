@@ -12,6 +12,7 @@ use App\Models\Comuna;
 use App\Models\Region;
 use App\Models\DireccionRegional;
 use App\Models\Cargo;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Log;
 
@@ -37,7 +38,14 @@ class RelFunVehController extends Controller
         //*Listar las solicitudes*/
         //!!eliminar EMAIL y RUT -> MOSTRAR N FOLIO Y PATENTE ASIGNADA.
         //!!EXPORTABLE A EXCEL
-        $solicitudes = RelFunVeh::all();
+        $user = Auth::user();
+
+        if ($user->hasAnyRole(['ADMINISTRADOR', 'SERVICIOS'])) {
+            $solicitudes = RelFunVeh::all();
+        } else {
+            $solicitudes = RelFunVeh::where('ID_USUARIO', $user->id)->get();
+        }
+
         return view('rel_fun_veh.index',compact('solicitudes'));
     }
 
@@ -229,7 +237,6 @@ class RelFunVehController extends Controller
     {
         $solicitud = RelFunVeh::findOrFail($id);
         $solicitud->ESTADO_SOL_VEH = 'RECHAZADO';
-        //!!MANDAR AQUI DATOS DE FIRMA -> YA NO ES NECESARIO...
         $solicitud->save();
 
         return redirect()->route('solicitud.vehiculos.index');
@@ -258,7 +265,13 @@ class RelFunVehController extends Controller
     public function indexRendir(){
         try{
             //!!AGREGAR LAS QUE ESTAN RELACIONADAS A EL "id" ->where('ID_USUARIO', session()->user()->id)
-            $solicitudes = RelFunVeh::where('ESTADO_SOL_VEH', 'POR RENDIR')->get();
+            $user = Auth::user();
+
+            if($user->hasAnyRole(['ADMINISTRADOR', 'SERVICIOS'])){
+                $solicitudes = RelFunVeh::where('ESTADO_SOL_VEH', 'POR RENDIR')->get();
+            } else {
+                $solicitudes = RelFunVeh::where('ESTADO_SOL_VEH', 'POR RENDIR')->where('ID_USUARIO', $user->id)->get();
+            }
             return view('rel_fun_veh.rendir', compact('solicitudes'));
         } catch (Exception $e){
             // Manejar la excepción aquí, por ejemplo:
