@@ -49,6 +49,7 @@ class CreateRelFunVehTable extends Migration
             $table->string('FECHA_SOL_VEH', 128)->nullable();
             $table->timestamp('FECHA_SALIDA')->nullable();
             $table->timestamp('FECHA_LLEGADA')->nullable();
+            $table->timestamp('FECHA_LLEGADA_CONDUCTOR')->nullable();
             $table->string('NOMBRE_OCUPANTES', 1000)->nullable();
             $table->string('ESTADO_SOL_VEH', 128)->default('INGRESADO');
             $table->string('MODIFICADO_POR_SOL_VEH', 128)->nullable();
