@@ -502,7 +502,7 @@ return [
         ],
         [
             'text'        => 'Reportes',
-            'url'         => '/reportes',
+            'url'         => '/reporteshome',
             'icon'        => 'fas fa-fw fa-solid fa-chart-simple',
         ],
         ['header' => 'Módulos Administrador'],

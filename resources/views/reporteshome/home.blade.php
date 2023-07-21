@@ -57,8 +57,6 @@
             });
         </script>
     @endif
-
-        <a href="{{route('reportes.index')}}" class="btn btn-danger">Ir a Dev version report</a>
     <div class="container-fluid d-flex justify-content-center align-items-center flex-column">
         <div class="card text-bg-primary mb-3 mx-auto col-sm-12 col-md-6" style="max-width: 100%; text-align: justify;">
                 <div class="card-header">Módulo Reportes de vehiculos</div>

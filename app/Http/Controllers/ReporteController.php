@@ -59,53 +59,53 @@ class ReporteController extends Controller
     //obtener historico
     public function index()
     {
-        // Primer gráfico Total de solicitudes 1
+        // gráfico Total de solicitudes 1
         $grafico = $this->getGraficoData();
-        // Segundo gráfico Total de solicitudes 2
+        // gráfico Total de solicitudes 2
         $grafico1 = $this->getGrafico1Data();
-        // Tercer gráfico Total de Funcionarios (Hombres/mujeres)
+        // gráfico Total de Funcionarios (Hombres/mujeres)
         $grafico2 = $this->getGrafico2Data();
-        // Cuarto gráfico Vehiculos asignados.
+        // gráfico Vehiculos asignados.
         $grafico3 = $this->getGrafico3Data();
-        // Quinto gráfico estados de solicitudes de materiales.
+        // gráfico estados de solicitudes de materiales.
         $grafico5 = $this->getGrafico5Data();
-        // Sexto gráfico estados de solicitudes de materiales/mes.
+        // gráfico estados de solicitudes de materiales/mes.
         $grafico6 = $this->getGrafico6Data();
-
+        // gráfico Total de solicitudes 1
         $grafico7 = $this->getGrafico7Data();
-
+        // gráfico Total de solicitudes 1
         $grafico8 = $this->getGrafico8Data();
-
+        // gráfico Total de solicitudes 1
         $grafico9 = $this->getGrafico9Data();
-
+        // gráfico Total de solicitudes 1
         $grafico10 = $this->getGrafico10Data();
-
+        // gráfico Total de solicitudes 1
         $grafico11 = $this->getGrafico11Data();
-
+        // gráfico Total de solicitudes 1
         $grafico12 = $this->getGrafico12Data();
-
+        // gráfico Total de solicitudes 1
         $grafico13 = $this->getGrafico13Data();
-
+        // gráfico Total de solicitudes 1
         $grafico15 = $this->getGrafico15Data();
-
+        // gráfico Total de solicitudes 1
         $grafico16 = $this->getGrafico16Data();
-
+        // gráfico Total de solicitudes 1
         $grafico17 = $this->getGrafico17Data();
-
+        // gráfico Total de solicitudes 1
         $grafico18 = $this->getGrafico18Data();
-
+        // gráfico Total de solicitudes 1
         $grafico19 = $this->getGrafico19Data();
-
+        // gráfico Total de solicitudes 1
         $grafico20 = $this->getGrafico20Data();
-
+        // gráfico Total de solicitudes 1
         $grafico21 = $this->getGrafico21Data();
-
+        // gráfico Total de solicitudes 1
         $grafico22 = $this->getGrafico22Data();
-
+        // gráfico Total de solicitudes 1
         $grafico23 = $this->getGrafico23Data();
-
+        // gráfico Total de solicitudes 1
         $grafico24 = $this->getGrafico24Data();
-
+        // gráfico Total de solicitudes 1
         $grafico25 = $this->getGrafico25Data();
 
 
@@ -142,6 +142,8 @@ class ReporteController extends Controller
             'total' => $total
         ]);
     }
+
+    
 
     //obtener por fecha
     public function obtenerDatos(Request $request)
