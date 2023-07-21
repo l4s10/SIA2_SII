@@ -26,9 +26,17 @@ class CheckRelFunWithServicesPermissions
             }
             return $next($request);
         } else {
-            if ($request->route()->getActionMethod() !== 'index' && $request->route()->getActionMethod() !== 'create' && $request->route()->getActionMethod() !== 'store' && $request->route()->getActionMethod() !== 'show') {
-                abort(403, 'Acceso no autorizado');
-            }
+            if ($request->route()->getActionMethod() !== 'index' &&
+                $request->route()->getActionMethod() !== 'create' &&
+                $request->route()->getActionMethod() !== 'store' &&
+                $request->route()->getActionMethod() !== 'show'&&
+                $request->route()->getActionMethod() !== 'indexRendir' &&
+                $request->route()->getActionMethod() !== 'indexAutorizar' &&
+                $request->route()->getActionMethod() !== 'rendicion' &&
+                $request->route()->getActionMethod() !== 'update') {
+                    //!! ACCESO SOLO PARA ESTAS RUTAS, EN CASO CONTRARIO REDIRIGIR A 403.
+                    abort(403, 'Acceso no autorizado');
+                }
             return $next($request);
         }
     }
