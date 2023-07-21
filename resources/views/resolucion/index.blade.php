@@ -48,29 +48,41 @@
 
         <div class="table-responsive">
             <table id="resoluciones" class="table table-bordered mt-4 custom-table">
-                
                 <thead class="bg-primary text-white">
                     <tr>
                         <th scope="col">Resolución</th>
                         <th scope="col">Fecha</th>
-                        <th scope="col">Tipo</th>
+                        <th scope="col">Tipo Resolucion</th>
                         <th scope="col">Firmante</th>
-                        <th scope="col">Facultad</th>
                         <th scope="col">Delegado</th>
-                        <th scope='col'>Documento</th>
+                        <th scope="col">Facultad</th>
+                        <th scope="col">Ley asociada</th>
+                        <th scope="col">Glosa</th>
+                        <th scope="col">Documento</th>
                         <th scope="col">Administrar</th>
                     </tr>
                 </thead>
-
                 <tbody>
                     @foreach($resoluciones as $resolucion)
                         <tr>
-                            <td>{{$resolucion->NRO_RESOLUCION}}</td>
+                            <td>{{ $resolucion->NRO_RESOLUCION }}</td>
                             <td>{{ date('d/m/Y', strtotime($resolucion->FECHA)) }}</td>
-                            <td>{{$resolucion->tipo->NOMBRE}}</td>
-                            <td>{{$resolucion->firmante->CARGO}}</td>
-                            <td>{{$resolucion->facultad->NOMBRE}}</td>
-                            <td>{{$resolucion->delegado->CARGO}}</td>
+                            <td>{{ $resolucion->tipo->NOMBRE }}</td>
+                            <td>{{ $resolucion->firmante->CARGO }}</td>
+                            <td>{{ $resolucion->delegado->CARGO }}</td>
+                            <td>{{ $resolucion->facultad->NOMBRE }}</td>
+                            <td>{{ $resolucion->facultad->LEY_ASOCIADA }}</td>
+                            <td>
+                                <span class="glosa-abreviada">{{ substr($resolucion->facultad->CONTENIDO, 0, 0) }}</span>
+                                <button class="btn btn-sia-primary btn-block btn-expand" data-glosa="{{ $resolucion->facultad->CONTENIDO }}">
+                                    <i class="fa-solid fa-square-plus"></i>
+                                </button>
+                                <button class="btn btn-sia-primary btn-block btn-collapse" style="display: none;">
+                                    <i class="fa-solid fa-square-minus"></i>
+                                </button>
+                                
+                                <span class="glosa-completa" style="display: none;">{{ $resolucion->facultad->CONTENIDO }}</span>
+                            </td>
                             <td>
                                 @if ($resolucion->DOCUMENTO)
                                     <a href="{{ asset('storage/resoluciones/' . $resolucion->DOCUMENTO) }}" class="btn btn-sia-primary btn-block" target="_blank">
@@ -81,9 +93,7 @@
                                 @endif
                             </td>
                             <td>
-                                <a href="{{route('resolucion.show',$resolucion->ID_RESOLUCION)}}" class="btn btn-sia-primary btn-block">
-                                    <i class="fa-solid fa-gear"></i>
-                                </a>
+                                <a href="{{ route('resolucion.show', $resolucion->ID_RESOLUCION) }}" class="btn btn-sia-primary btn-block"><i class="fa-solid fa-gear"></i></a>
                             </td>
                         </tr>
                     @endforeach
@@ -118,6 +128,32 @@
                     "url": "https://cdn.datatables.net/plug-ins/1.11.3/i18n/es_es.json"
                 },
             });
+        });
+
+        // Agrega evento de clic al botón de expansión
+        $('.btn-expand').on('click', function() {
+            var glosaAbreviada = $(this).siblings('.glosa-abreviada');
+            var glosaCompleta = $(this).siblings('.glosa-completa');
+            var btnExpand = $(this);
+            var btnCollapse = $(this).siblings('.btn-collapse');
+    
+            glosaAbreviada.hide();
+            glosaCompleta.show();
+            btnExpand.hide();
+            btnCollapse.show();
+        });
+        
+        // Agrega evento de clic al botón de colapso
+        $('.btn-collapse').on('click', function() {
+            var glosaAbreviada = $(this).siblings('.glosa-abreviada');
+            var glosaCompleta = $(this).siblings('.glosa-completa');
+            var btnExpand = $(this).siblings('.btn-expand');
+            var btnCollapse = $(this);
+    
+            glosaAbreviada.show();
+            glosaCompleta.hide();
+            btnExpand.show();
+            btnCollapse.hide();
         });
     </script>
 @endsection

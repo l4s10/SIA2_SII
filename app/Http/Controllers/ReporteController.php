@@ -59,53 +59,53 @@ class ReporteController extends Controller
     //obtener historico
     public function index()
     {
-        // Primer gráfico Total de solicitudes 1
+        // gráfico Total de solicitudes 1
         $grafico = $this->getGraficoData();
-        // Segundo gráfico Total de solicitudes 2
+        // gráfico Total de solicitudes 2
         $grafico1 = $this->getGrafico1Data();
-        // Tercer gráfico Total de Funcionarios (Hombres/mujeres)
+        // gráfico Total de Funcionarios (Hombres/mujeres)
         $grafico2 = $this->getGrafico2Data();
-        // Cuarto gráfico Vehiculos asignados.
+        // gráfico Vehiculos asignados.
         $grafico3 = $this->getGrafico3Data();
-        // Quinto gráfico estados de solicitudes de materiales.
+        // gráfico estados de solicitudes de materiales.
         $grafico5 = $this->getGrafico5Data();
-        // Sexto gráfico estados de solicitudes de materiales/mes.
+        // gráfico estados de solicitudes de materiales/mes.
         $grafico6 = $this->getGrafico6Data();
-
+        // gráfico Total de solicitudes 1
         $grafico7 = $this->getGrafico7Data();
-
+        // gráfico Total de solicitudes 1
         $grafico8 = $this->getGrafico8Data();
-
+        // gráfico Total de solicitudes 1
         $grafico9 = $this->getGrafico9Data();
-
+        // gráfico Total de solicitudes 1
         $grafico10 = $this->getGrafico10Data();
-
+        // gráfico Total de solicitudes 1
         $grafico11 = $this->getGrafico11Data();
-
+        // gráfico Total de solicitudes 1
         $grafico12 = $this->getGrafico12Data();
-
+        // gráfico Total de solicitudes 1
         $grafico13 = $this->getGrafico13Data();
-
+        // gráfico Total de solicitudes 1
         $grafico15 = $this->getGrafico15Data();
-
+        // gráfico Total de solicitudes 1
         $grafico16 = $this->getGrafico16Data();
-
+        // gráfico Total de solicitudes 1
         $grafico17 = $this->getGrafico17Data();
-
+        // gráfico Total de solicitudes 1
         $grafico18 = $this->getGrafico18Data();
-
+        // gráfico Total de solicitudes 1
         $grafico19 = $this->getGrafico19Data();
-
+        // gráfico Total de solicitudes 1
         $grafico20 = $this->getGrafico20Data();
-
+        // gráfico Total de solicitudes 1
         $grafico21 = $this->getGrafico21Data();
-
+        // gráfico Total de solicitudes 1
         $grafico22 = $this->getGrafico22Data();
-
+        // gráfico Total de solicitudes 1
         $grafico23 = $this->getGrafico23Data();
-
+        // gráfico Total de solicitudes 1
         $grafico24 = $this->getGrafico24Data();
-
+        // gráfico Total de solicitudes 1
         $grafico25 = $this->getGrafico25Data();
 
 
@@ -142,6 +142,8 @@ class ReporteController extends Controller
             'total' => $total
         ]);
     }
+
+    
 
     //obtener por fecha
     public function obtenerDatos(Request $request)
@@ -183,7 +185,7 @@ class ReporteController extends Controller
 
         return response()->json($data);
     }
-
+    //!! Grafico 
     private function getGraficoData($fechaInicio = null, $fechaFin = null)
     {
         $grafico = [];
@@ -199,7 +201,7 @@ class ReporteController extends Controller
 
         return $grafico;
     }
-
+    //!! Grafico 1
     private function getGrafico1Data($fechaInicio = null, $fechaFin = null)
     {
         $grafico1 = [];
@@ -215,7 +217,7 @@ class ReporteController extends Controller
 
         return $grafico1;
     }
-
+    //!! Grafico 2
     private function getGrafico2Data($fechaInicio = null, $fechaFin = null)
     {
         $grafico2 = [];
@@ -236,6 +238,7 @@ class ReporteController extends Controller
 
         return $grafico2;
     }
+    //!! Grafico 3
     public function getGrafico3Data($fechaInicio = null, $fechaFin = null)
     {
         $solicitudesQuery = RelFunVeh::whereNotNull('PATENTE_VEHICULO');
@@ -262,7 +265,7 @@ class ReporteController extends Controller
         return $grafico3;
     }
 
-    //*Grafico 5 : Gestionadores de solicitudes de materiales */
+    //!! Grafico 5
     public function getGrafico5Data($fechaInicio = null, $fechaFin = null)
     {
         // Obtén los roles 'SERVICIOS' y 'ADMINISTRADOR'
@@ -331,7 +334,7 @@ class ReporteController extends Controller
     }
 
 
-    //*Grafico 7: Solicitudes de materiales por Ubicacion/Depto */
+    //!! Grafico 7
     //!!Agregar validacion de regiones
     public function getGrafico7Data($fechaInicio = null, $fechaFin = null)
     {
@@ -373,7 +376,7 @@ class ReporteController extends Controller
         return $grafico7;
     }
 
-    //Grafico 8
+    //!! Grafico 8
     public function getGrafico8Data($fechaInicio = null, $fechaFin = null){
         $ubicacionUser = Ubicacion::where('ID_UBICACION', auth()->user()->ID_UBICACION)->first();
         $grafico8 = [];
@@ -823,7 +826,7 @@ class ReporteController extends Controller
 
         return $grafico21;
     }
-
+    //!! Grafico 22
     public function getGrafico22Data($fechaInicio = null, $fechaFin = null){
         $query = RelFunRepGeneral::query();
 
@@ -854,7 +857,7 @@ class ReporteController extends Controller
 
         return $grafico22;
     }
-
+    //!! Grafico 23
     public function getGrafico23Data($fechaInicio = null, $fechaFin = null){
         // Obtén los roles 'SERVICIOS' y 'ADMINISTRADOR'
         $rolServicios = Role::where('name', 'SERVICIOS')->first();
@@ -882,7 +885,7 @@ class ReporteController extends Controller
         // Devolver los datos para el gráfico de Chart.js
         return $grafico23;
     }
-
+    //!! Grafico 24
     public function getGrafico24Data($fechaInicio = null, $fechaFin = null){
         $ubicacionUser = Ubicacion::where('ID_UBICACION', auth()->user()->ID_UBICACION)->first();
         $grafico24 = [];
@@ -919,7 +922,7 @@ class ReporteController extends Controller
             return ['error' => 'No se pudo encontrar la ubicación del usuario'];
         }
     }
-
+    //!! Grafico 25
     public function getGrafico25Data($fechaInicio = null, $fechaFin = null){
         $ubicacionUser = Ubicacion::where('ID_UBICACION', auth()->user()->ID_UBICACION)->first(); //Obtuve la ubicacion del user
         if($ubicacionUser){

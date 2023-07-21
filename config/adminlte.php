@@ -472,6 +472,23 @@ return [
             'icon'        => 'fa-solid fa-user-tie',
             'submenu' => [
                 [
+                    'text'    => 'Búsqueda Resoluciones',
+                    'url'     => '#',
+                    'icon'    => 'fa-solid fa-folder-minus',
+                    'submenu' => [
+                        [
+                            'text'    => 'Por Funcionario',
+                            'url'     => 'busquedafuncionario',
+                            'icon'    => 'fas fa-fw fa-eye'
+                        ],
+                        [
+                            'text'    => 'Avanzada',
+                            'url'     => 'busquedaavanzada',
+                            'icon'    => 'fas fa-fw fa-eye'
+                        ]
+                    ],
+                ],
+                [
                     'text'    => 'Repositorio',
                     'url'     => '#',
                     'icon'    => 'fa-solid fa-folder-minus',
@@ -496,13 +513,13 @@ return [
                             'url'     => 'cargos',
                             'icon'    => 'fas fa-fw fa-eye'
                         ]
-                    ],
+                    ]
                 ]
             ],
         ],
         [
             'text'        => 'Reportes',
-            'url'         => '/reportes',
+            'url'         => '/reporteshome',
             'icon'        => 'fas fa-fw fa-solid fa-chart-simple',
         ],
         ['header' => 'Módulos Administrador'],
