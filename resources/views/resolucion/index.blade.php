@@ -59,6 +59,7 @@
                         <th scope="col">Ley asociada</th>
                         <th scope="col">Glosa</th>
                         <th scope="col">Documento</th>
+                        <th scope="col">Administrar</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -90,6 +91,9 @@
                                 @else
                                     Sin documento
                                 @endif
+                            </td>
+                            <td>
+                                <a href="{{ route('resolucion.show', $resolucion->ID_RESOLUCION) }}" class="btn btn-sia-primary btn-block"><i class="fa-solid fa-gear"></i></a>
                             </td>
                         </tr>
                     @endforeach
