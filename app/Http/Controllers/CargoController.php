@@ -21,10 +21,14 @@ class CargoController extends Controller
     public function index()
     {
         // Obtiene la dirección regional del funcionario con sesión activa
-        $direccionRegional = auth()->user()->ubicacion->ID_DIRECCION;
-        var_dump($direccionRegional);
-        $cargos = Cargo::where('ID_DIRECCION', $direccionRegional)
-            ->pluck('CARGO', 'ID_CARGO');
+        $direccionRegional = auth()->user()->cargo->ID_DIRECCION;
+        /*$cargos = Cargo::where('ID_DIRECCION', $direccionRegional)
+            ->pluck('CARGO', 'ID_CARGO');*/
+
+        $cargos = Cargo::join('direcciones_regionales', 'cargos.ID_DIRECCION', '=', 'direcciones_regionales.ID_DIRECCION')
+        ->where('cargos.ID_DIRECCION', $direccionRegional)
+        ->select('cargos.ID_CARGO', 'cargos.CARGO', 'direcciones_regionales.DIRECCION')
+        ->get();
         return view('cargo.index', compact('cargos'));
     }
 
@@ -36,19 +40,12 @@ class CargoController extends Controller
        // Obtiene la dirección regional del funcionario con sesión activa
         $direccionRegional = auth()->user()->ubicacion->ID_DIRECCION;
         
-        // Obtén las direcciones regionales filtradas por la dirección regional obtenida
+        // Obtén las direcciones regionales filtradas por la dirección regional sesión autenticada
         $direccion = DireccionRegional::where('ID_DIRECCION', $direccionRegional)
             ->pluck('DIRECCION', 'ID_DIRECCION');
         
         return view('cargo.create', compact('direccion'));
 
-        //OPCION PARA CREAR CARGOS EN DISTINTAS DIRECCIONES REGIONALES (POR REGION):
-        //Obtiene la región del funcionario con sesión activa (quien utiliza el sw). Funcionalidad orientada a las DDRR de Stgo.       
-        /*$region = auth()->user()->region->ID_REGION;
-        //Obtiene arreglo asociativo que incluye 'DIRECCION' e 'ID_DIRECCION' desde 'direcciones_regionales', filtradas por $region
-        $direcciones = DireccionRegional::where('ID_REGION', $region)
-            ->pluck('DIRECCION', 'ID_DIRECCION');
-        return view('cargo.create', compact('direcciones'));*/
     }
 
     /**

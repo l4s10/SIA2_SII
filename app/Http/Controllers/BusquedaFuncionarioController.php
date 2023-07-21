@@ -77,7 +77,12 @@ class BusquedaFuncionarioController extends Controller
             
         }
 
-        $cargos = Cargo::all();
+        //Cargos asociados a la dirección regional del usuario autenticado, para ser enviados a la vista
+        $exclusionCargos = ['FUNCIONARIO', 'EXTERNO']; // Cargos a excluir
+        $direccionRegionalAutenticada = auth()->user()->cargo->ID_DIRECCION;
+        $cargos = Cargo::where('ID_DIRECCION', $direccionRegionalAutenticada)
+            ->whereNotIn('CARGO', $exclusionCargos)
+            ->get();
         return view('directivos.busquedafuncionario.index', compact('resoluciones', 'cargos','nombres', 'apellidos', 'cargoFuncionario','rutRes', 'cargoResolucion','busquedaResolucionCargo','busquedaResolucionFuncionario','busquedaResolucionCargoFallida','busquedaResolucionFuncionarioFallida'));
     }
 
@@ -89,7 +94,7 @@ class BusquedaFuncionarioController extends Controller
         $rut = strtolower($request->input('rut'));
         $idCargoFuncionario = $request->input('idCargoFuncionario');
 
-        // Realizar la búsqueda de funcionarios en la base de datos según los nombres, apellidos, rut y cargo registrados
+        // Realizar la búsqueda de funcionarios según los nombres, apellidos, rut y cargo registrados
         $funcionarios = User::query();
 
         if (!empty($nombres)) {
@@ -104,15 +109,22 @@ class BusquedaFuncionarioController extends Controller
             $funcionarios->where('RUT', 'LIKE', strtolower($rut) . '%');
         }
 
+        $direccionRegionalAutenticada = auth()->user()->cargo->ID_DIRECCION; // dirección regional sesión autenticada
+        // Cargos a excluir de la búsqueda: ['FUNCIONARIO', 'EXTERNO']; 
+
+        // Función callback para aplicar condición de filtro al obtener colección de funcionarios
+        $funcionarios = $funcionarios->whereHas('cargo', function ($query) {
+            $query->whereNotIn('CARGO', ['FUNCIONARIO', 'EXTERNO']);
+        })->whereHas('cargo.direccion', function ($query) use ($direccionRegionalAutenticada) {
+            $query->where('ID_DIRECCION', $direccionRegionalAutenticada);
+        });
+
         if (!empty($idCargoFuncionario)) {
-            $funcionarios->whereHas('cargo', function ($query) use ($idCargoFuncionario) {
-                //Accedo al método 'cargo' del modelo 'user'
-                $query->where('ID_CARGO', $idCargoFuncionario);
-            });
+            $funcionarios->where('ID_CARGO', $idCargoFuncionario);
         }
 
+        //Obtención de colección de posibles funcionarios
         $funcionarios = $funcionarios->get();
-
 
         // Validación para controlar el mensaje de error de búsqueda de resoluciones
         // Luego cargamos la nueva variable "busquedaAjax"
@@ -120,5 +132,6 @@ class BusquedaFuncionarioController extends Controller
         // Retorna los resultados de búsqueda en formato JSON
         return response()->json($funcionarios);
     }
+
    
 }
