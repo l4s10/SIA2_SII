@@ -4,6 +4,31 @@
 
 @section('content_header')
     <h1>Solicitud de Reserva de Vehíchulos</h1>
+    @role('ADMINISTRADOR')
+    <div class="alert alert-info alert1" role="alert">
+        <div><strong>Bienvenido Administrador:</strong> En esta pantalla usted podrá verificar las reservas de salas, vehículos y visitas a bodegas, ya programadas, en caso de mayor información, consulte al Departamento de Administración.</div>
+    </div>
+    @endrole
+    @role('SERVICIOS')
+    <div class="alert alert-info" role="alert">
+        <div><strong>Bienvenido Servicio:</strong> En esta pantalla usted podrá verificar las reservas de salas, vehículos y visitas a bodegas, ya programadas, en caso de mayor información, consulte al Departamento de Administración.</div>
+    </div>
+    @endrole
+    @role('INFORMATICA')
+    <div class="alert alert-info" role="alert">
+        <div><strong>Bienvenido Informatica:</strong> En esta pantalla usted podrá verificar las reservas de salas, vehículos y visitas a bodegas, ya programadas, en caso de mayor información, consulte al Departamento de Administración.</div>
+    </div>
+    @endrole
+    @role('JURIDICO')
+    <div class="alert alert-info" role="alert">
+        <div><strong>Bienvenido Juridico:</strong> En esta pantalla usted podrá verificar las reservas de salas, vehículos y visitas a bodegas, ya programadas, en caso de mayor información, consulte al Departamento de Administración.</div>
+    </div>
+    @endrole
+    @role('FUNCIONARIO')
+    <div class="alert alert-info" role="alert">
+        <div><strong>Bienvenido Funcionario:</strong> En esta pantalla usted podrá verificar las reservas de salas, vehículos y visitas a bodegas, ya programadas, en caso de mayor información, consulte al Departamento de Administración.</div>
+    </div>
+    @endrole
 @stop
 
 @section('content')
@@ -275,6 +300,23 @@
     <style>
         .textarea-container {
             margin-top: 10px; /* Ajusta el valor según sea necesario */
+        }
+    </style>
+        <style>
+        .alert {
+        opacity: 0.7; /* Ajusta la opacidad a tu gusto */
+        background-color: #99CCFF;
+        color:     #000000;
+        }
+    </style>
+    
+    <style>
+        .alert1 {
+            opacity: 0.7;
+            /* Ajusta la opacidad a tu gusto */
+            background-color: #FF8C40;
+            /* Color naranjo claro (RGB: 255, 214, 153) */
+            color: #000000;
         }
     </style>
 @stop

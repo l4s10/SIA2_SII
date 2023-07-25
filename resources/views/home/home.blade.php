@@ -6,7 +6,7 @@
     <h1> Bienvenido -- {{auth()->user()->NOMBRES}} {{auth()->user()->APELLIDOS}} </h1>
     <meta name="csrf-token" content="{{ csrf_token() }}">
     @role('ADMINISTRADOR')
-    <div class="alert alert-info" role="alert">
+    <div class="alert alert-info alert1" role="alert">
         <div><strong>Bienvenido Administrador:</strong> En esta pantalla usted podrá verificar las reservas de salas, vehículos y visitas a bodegas, ya programadas, en caso de mayor información, consulte al Departamento de Administración.</div>
     </div>
     @endrole
@@ -27,7 +27,7 @@
     @endrole
     @role('FUNCIONARIO')
     <div class="alert alert-info" role="alert">
-        <div><strong>Bienvenido Funcionario:</strong> Aqui iria el texto donde le corresponde el rol FUNCIONARIO.</div>
+        <div><strong>Bienvenido Funcionario:</strong> En esta pantalla usted podrá verificar las reservas de salas, vehículos y visitas a bodegas, ya programadas, en caso de mayor información, consulte al Departamento de Administración.</div>
     </div>
     @endrole
 @endsection
@@ -107,6 +107,15 @@
             opacity: 0.7;
             /* Ajusta la opacidad a tu gusto */
             background-color: #99CCFF;
+            color: #000000;
+        }
+    </style>
+        <style>
+        .alert1 {
+            opacity: 0.7;
+            /* Ajusta la opacidad a tu gusto */
+            background-color: #FF8C40;
+            /* Color naranjo claro (RGB: 255, 214, 153) */
             color: #000000;
         }
     </style>
