@@ -21,7 +21,11 @@
                 {{-- Configured sidebar links --}}
                 @each('adminlte::partials.sidebar.menu-item', $adminlte->menu('sidebar'), 'item')
 
-                <!-- Módulo de Directivos -->
+                 <!-- Header Administrador -->
+                 @hasanyrole('ADMINISTRADOR|INFORMATICA|JURIDICO|SERVICIOS')
+                 <li class="nav-header">Módulos Administrador</li>
+                 @endhasanyrole
+
                 @hasanyrole('ADMINISTRADOR|INFORMATICA|JURIDICO')
                 <li class="nav-item has-treeview">
                     <a href="#" class="nav-link">

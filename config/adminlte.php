@@ -519,8 +519,7 @@ return [
             'url'         => '/reportes',
             'icon'        => 'fas fa-fw fa-solid fa-chart-simple',
         ],
-        ['header' => 'Módulos Administrador'],
-        /*
+        /*['header' => 'Módulos Administrador'],
         [
             'text'        => 'Panel de control',
             'url'         => '#',
