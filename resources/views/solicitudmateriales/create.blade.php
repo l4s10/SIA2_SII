@@ -6,9 +6,15 @@
 <!-- CABECERA DE LA PAGINA -->
 @section('content_header')
     <h1>Solicitar Materiales</h1>
-    <div class="alert alert-info" role="alert">
-    <div>Bienvenido al modulo de <strong>solicitud de materiales</strong> en este módulo usted podrá pedir a través del carro de compras los distintos materiales catalogados, en caso de requerir otro material favor contactar al Departamento de Administración.<div>
+    @role('ADMINISTRADOR')
+    <div class="alert alert-info alert1" role="alert">
+        <div>Bienvenido al módulo de <strong>solicitud de materiales</strong>. En este módulo, usted podrá pedir a través del carro de compras los distintos materiales catalogados. En caso de requerir otro material, favor contactar al Departamento de Administración.</div>
     </div>
+    @else
+    <div class="alert alert-info" role="alert">
+        <div>Bienvenido al módulo de <strong>solicitud de materiales</strong>. En este módulo, usted podrá pedir a través del carro de compras los distintos materiales catalogados. En caso de requerir otro material, favor contactar al Departamento de Administración.</div>
+    </div>
+    @endrole
 @stop
 
 @section('content')
@@ -157,6 +163,15 @@
         opacity: 0.7; /* Ajusta la opacidad a tu gusto */
         background-color: #99CCFF;
         color:     #000000;
+        }
+    </style>
+        <style>
+        .alert1 {
+            opacity: 0.7;
+            /* Ajusta la opacidad a tu gusto */
+            background-color: #FF8C40;
+            /* Color naranjo claro (RGB: 255, 214, 153) */
+            color: #000000;
         }
     </style>
 @stop
