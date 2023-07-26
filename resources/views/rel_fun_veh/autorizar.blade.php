@@ -136,7 +136,10 @@
                             <div class="modal-footer">
                                 <form action="{{ route('solicitud.vehiculos.authorize', $sol_veh->ID_SOL_VEH) }}" method="POST" id="authorizeForm">
                                     @csrf
-                                    <button type="button" id="authorizeBtn" class="btn btn-success"><i class="fa-solid fa-check-circle"></i> Autorizar</button>
+                                    <!-- Campo oculto para almacenar la contraseña -->
+                                    <input type="hidden" name="password" id="passwordInput">
+                                    <!-- Botón para abrir el modal -->
+                                    <button type="button" class="btn btn-success" id="authorizeBtn" data-dismiss="modal"><i class="fa-solid fa-check-circle"></i> Autorizar</button>
                                 </form>
                                 <form action="{{ route('solicitud.vehiculos.reject', $sol_veh->ID_SOL_VEH) }}" method="POST" id="rejectForm">
                                     @csrf
@@ -178,25 +181,46 @@
             });
         });
     </script>
-
     <script>
-        document.getElementById('authorizeBtn').addEventListener('click', function(event) {
+        document.getElementById('authorizeBtn').addEventListener('click', async function(event) {
             event.preventDefault();
 
-            Swal.fire({
+            // Mostrar u ocultar el modal actual
+            $('#modal{{ $sol_veh->ID_SOL_VEH }}').modal('toggle');
+
+            const { value: password } = await Swal.fire({
                 title: '¿Estás seguro?',
-                html: "Estos datos se enviarán como firma. <br>RUT: {{ Auth::user()->RUT }}<br>Nombre completo: {{ Auth::user()->NOMBRES }} {{ Auth::user()->APELLIDOS }}",
+                html: `
+                    Estos datos se enviarán como firma. <br>
+                    RUT: {{ Auth::user()->RUT }}<br>
+                    Nombre completo: {{ Auth::user()->NOMBRES }} {{ Auth::user()->APELLIDOS }}<br>
+                `,
+                input: 'password',
+                inputAttributes: {
+                    autocapitalize: 'off',
+                    required: 'true',
+                    placeholder: 'Ingrese su contraseña'
+                },
                 icon: 'warning',
                 showCancelButton: true,
                 confirmButtonColor: '#3085d6',
                 cancelButtonColor: '#d33',
                 confirmButtonText: 'Sí, estoy seguro',
-                cancelButtonText: 'Cancelar'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    document.getElementById('authorizeForm').submit();
-                }
-            })
+                cancelButtonText: 'Cancelar',
+                inputValidator: (value) => {
+                    if (!value) {
+                        return 'Por favor, ingrese una contraseña válida';
+                    }
+                },
+            });
+
+            if (password) {
+                document.getElementById('passwordInput').value = password;
+                document.getElementById('authorizeForm').submit();
+            } else {
+                // Si el usuario cancela o no ingresa una contraseña, volvemos a mostrar el modal
+                $('#modal{{ $sol_veh->ID_SOL_VEH }}').modal('toggle');
+            }
         });
 
         document.getElementById('rejectBtn').addEventListener('click', function(event) {
