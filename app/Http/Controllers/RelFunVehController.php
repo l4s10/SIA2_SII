@@ -12,7 +12,8 @@ use App\Models\Comuna;
 use App\Models\Region;
 use App\Models\DireccionRegional;
 use App\Models\Cargo;
-use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Auth;    //PARA VALIDAR SESION DE USUARIO
+use Illuminate\Support\Facades\Hash;    //PARA VALIDAR CONTRASEÑA
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Log;
 
@@ -20,6 +21,7 @@ use Illuminate\Support\Facades\Log;
 use Dompdf\Dompdf;
 use Carbon\Carbon;
 use Exception;
+use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Response;
 
 class RelFunVehController extends Controller
@@ -197,6 +199,11 @@ class RelFunVehController extends Controller
     {
         $solicitud = RelFunVeh::findOrFail($id);
         $firmaRealizada = false; // Usamos esta variable para verificar si se ha realizado una firma
+        //!!AGREGAR UN IF ANIDADO DONDE SE VERIFIQUE LA CONTRASEÑA DEL USUARIO
+        //*SI LA CONTRASEÑA NO ES VALIDA */
+        if(!Hash::check(request('password'), Auth::user()->password)){
+            return Redirect::back()->with('error','La contraseña proporcionada no es correcta');
+        }
 
         // Caso conductor (ASIGNACION POR FORMULARIO)
         if (auth()->user()->id == $solicitud->CONDUCTOR && $solicitud->FIRMA_CONDUCTOR == null){
@@ -215,7 +222,7 @@ class RelFunVehController extends Controller
             $solicitud->FIRMA_ADMINISTRADOR = auth()->user()->RUT . ' ' . auth()->user()->NOMBRES . ' ' . auth()->user()->APELLIDOS;
             $firmaRealizada = true;
         }
-
+        
         if (!$firmaRealizada) {
             // Si no se ha realizado ninguna firma, significa que ya se firmó en todas las capacidades posibles
             return redirect()->route('solicitud.vehiculos.autorizar')->with('error', 'Esta solicitud ya ha sido firmada por ti');
