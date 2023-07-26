@@ -197,7 +197,7 @@ class HomeReportesController extends Controller
         return response()->json($data);
     }
 
-//!! Grafico 
+//!! Grafico
 private function getGraficoData($fechaInicio = null, $fechaFin = null)
 {
     $grafico = [];
@@ -745,10 +745,13 @@ public function getGrafico19Data($fechaInicio = null, $fechaFin = null){
 
     // Iterar sobre los usuarios y realizar el conteo de solicitudes gestionadas
     foreach ($usuariosServicios as $usuario) {
-        $nombreCompleto = $usuario->NOMBRES . ' ' . $usuario->APELLIDOS;
+        $nombreCompleto = $usuario->NOMBRES . ' ' . trim($usuario->APELLIDOS); // Eliminar espacios adicionales de los apellidos
+        print_r($nombreCompleto);
         // Realizar consulta para contar las solicitudes gestionadas por el usuario
         if ($fechaInicio && $fechaFin) {
-            $conteo = SolicitudReparacionVehiculo::where('MODIFICADO_POR_REP_VEH', $nombreCompleto)->whereBetween('created_at', [$fechaInicio, $fechaFin])->count();
+            $conteo = SolicitudReparacionVehiculo::where('MODIFICADO_POR_REP_VEH', $nombreCompleto)
+                ->whereBetween('created_at', [$fechaInicio, $fechaFin])
+                ->count();
         } else {
             $conteo = SolicitudReparacionVehiculo::where('MODIFICADO_POR_REP_VEH', $nombreCompleto)->count();
         }
@@ -760,6 +763,8 @@ public function getGrafico19Data($fechaInicio = null, $fechaFin = null){
     // Devolver los datos para el gráfico de Chart.js
     return $grafico19;
 }
+
+
 
 //!! Grafico 20
 public function getGrafico20Data($fechaInicio = null, $fechaFin = null){
