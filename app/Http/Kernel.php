@@ -25,6 +25,9 @@ class Kernel extends HttpKernel
     protected $routeMiddleware = [
         // ...
         'checkUserPermission' => \App\Http\Middleware\CheckUserPermission::class,
+        //'checkUserRole' => \App\Http\Middleware\CheckUserRole::class,
+
+
     ];
 
 
@@ -41,6 +44,7 @@ class Kernel extends HttpKernel
             \Illuminate\View\Middleware\ShareErrorsFromSession::class,
             \App\Http\Middleware\VerifyCsrfToken::class,
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
+            //\App\Http\Middleware\CheckUserRole::class,
         ],
 
         'api' => [

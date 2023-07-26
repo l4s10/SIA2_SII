@@ -8,7 +8,6 @@ use Illuminate\Support\Facades\Hash;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Spatie\Permission\Models\Role;
-use Illuminate\Support\Facades\Log;
 
 
 //*Importamos modelos de las tablas normalizadas para enviarlas a las vistas*/
@@ -28,17 +27,18 @@ use App\Utils\RutUtils;
 
 class UserController extends Controller
 {
-    public function __construct()
-    {
-        //*La persona debe de haber iniciado sesion */
+    //Funcion para acceder a las rutas SOLO SI los usuarios estan logueados
+    public function __construct(){
         $this->middleware('auth');
-        //*Solo entrarán los admin maestro */
+        //Tambien aqui podremos agregar que roles son los que pueden ingresar
         $this->middleware(function ($request, $next) {
-            $adminMaestro = Role::findByName('ADMINISTRADOR');
-            if (Auth::check() && Auth::user()->hasRole($adminMaestro)) {
+            $user = Auth::user();
+
+            if ($user->hasRole('ADMINISTRADOR') || $user->hasRole('SERVICIOS') || $user->hasRole('INFORMATICA')) {
                 return $next($request);
+            } else {
+                abort(403, 'Acceso no autorizado');
             }
-            abort(403, 'Acción no autorizada');
         });
     }
     /**
