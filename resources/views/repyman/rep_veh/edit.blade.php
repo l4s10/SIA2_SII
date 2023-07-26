@@ -39,7 +39,7 @@
 
                     <div class="mb-3">
                         <label for="RUT" class="form-label"><i class="fa-solid fa-id-card"></i> RUT:</label>
-                        <input type="text" id="RUT" name="RUT" class="form-control{{ $errors->has('RUT') ? ' is-invalid' : '' }}" value="{{ $solicitud->RUT }}" placeholder="Sin puntos con guión (Ej: 16738235-5)">
+                        <input type="text" id="RUT" name="RUT" class="form-control{{ $errors->has('RUT') ? ' is-invalid' : '' }}" value="{{ $solicitud->RUT }}" placeholder="Sin puntos con guión (Ej: 16738235-5)" readonly>
                         @if ($errors->has('RUT'))
                         <div class="invalid-feedback">
                             {{ $errors->first('RUT') }}
@@ -51,7 +51,7 @@
                 <div class="col-md-6">
                     <div class="mb-3">
                         <label for="DEPTO" class="form-label"><i class="fa-solid fa-building-user"></i> Departamento:</label>
-                        <input type="text" id="DEPTO" name="DEPTO" class="form-control{{ $errors->has('DEPTO') ? ' is-invalid' : '' }}" value="{{ $solicitud->DEPTO }}" placeholder="Ej: ADMINISTRACION">
+                        <input type="text" id="DEPTO" name="DEPTO" class="form-control{{ $errors->has('DEPTO') ? ' is-invalid' : '' }}" value="{{ $solicitud->DEPTO }}" placeholder="Ej: ADMINISTRACION" readonly>
                         @if ($errors->has('DEPTO'))
                         <div class="invalid-feedback">
                             {{ $errors->first('DEPTO') }}
@@ -76,10 +76,11 @@
                     <label for="PATENTE_VEHICULO" class="form-label"><i class="fa-solid fa-car-on"></i> Información del vehiculo:</label>
                     <select id="PATENTE_VEHICULO" name="PATENTE_VEHICULO" class="form-control{{ $errors->has('PATENTE_VEHICULO') ? ' is-invalid' : '' }}">
                         <option value="">-- Seleccione el vehículo con problemas --</option>
-                        @foreach ($vehiculos->groupBy('UNIDAD_VEHICULO') as $grupo => $autos)
-                            <optgroup label="{{ $grupo }}">
+                        @foreach ($vehiculos->groupBy('ubicacion.UBICACION') as $ubicacion => $autos)
+                            <optgroup label="{{ $ubicacion }}">
                                 @foreach ($autos as $auto)
-                                    <option value="{{ $auto->PATENTE_VEHICULO }}" {{ $auto->PATENTE_VEHICULO == $solicitud->PATENTE_VEHICULO ? 'selected' : '' }}>
+                                    <option value="{{ $auto->PATENTE_VEHICULO }}" data-tipo-vehiculo="{{ $auto->tipoVehiculo->ID_TIPO_VEH }}"
+                                        @if (trim($auto->PATENTE_VEHICULO) === trim($solicitud->PATENTE_VEHICULO)) selected @endif>
                                         {{ $auto->PATENTE_VEHICULO }} ({{ $auto->tipoVehiculo->TIPO_VEHICULO }})
                                     </option>
                                 @endforeach
