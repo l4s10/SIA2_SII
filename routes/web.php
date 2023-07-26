@@ -28,12 +28,12 @@ Route::get('/', function () {
 //Rutas para testear vistas
 Route::get('/repyman', function(){
     return view('repyman.index');
-})->name('repyman.index');
+})->name('repyman.index')->middleware('auth');
 
 //Ruta para acceder al módulo de directivos:
 Route::get('/directivos', function(){
     return view('directivos.index');
-})->name('directivos.index');
+})->name('directivos.index')->middleware('auth');
 
 //*RUTAS PARA INDEX DE GRAFICOS*/
 Route::get('/reporteshome', 'App\Http\Controllers\HomeReportesController@Home')->name('reporteshome.home');
@@ -54,7 +54,7 @@ Route::get('/reporteshome/System', 'App\Http\Controllers\HomeReportesController@
 //Dashboard para modulo reserva salas y visitas a bodega
 Route::get('/reservas', function(){
     return view('reservas.dashboard');
-})->name('reservas.dashboard');
+})->name('reservas.dashboard')->middleware('auth');
 
 //Dasboard para el modulo de
 //Rutas para materiales
@@ -178,11 +178,11 @@ Route::post('/reportes/data', [ReporteController::class, 'obtenerDatos'])->name(
 //RUTA GET PARA TABLA CONTINGENCIA
 Route::get('/get-totals/{id}', [ReporteController::class, 'getTotalsPorUbicacion']);
 
-Route::middleware(['auth'])->group(function () {
-    Route::get('/dashboard', function () {
-        return redirect()->route(config('adminlte.dashboard_url'));
-    })->name('dashboard');
-});
+// Route::middleware(['auth'])->group(function () {
+//     Route::get('/dashboard', function () {
+//         return redirect()->route(config('adminlte.dashboard_url'));
+//     })->name('dashboard');
+// });
 
 //Route::group(['middleware' => 'checkUserRole'], function () {
     // Rutas que cargan las vistas del adminlte
