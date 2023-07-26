@@ -103,10 +103,14 @@ class UserController extends Controller
             ];
 
             $this->validate($request, $rules, $messages);
+            // Eliminar espacios adicionales en NOMBRES y APELLIDOS antes de guardarlos
+            $nombres = preg_replace('/\s+/', ' ', trim($request->NOMBRES));
+            $apellidos = preg_replace('/\s+/', ' ', trim($request->APELLIDOS));
+
             // Asignamos la entidad_type
             $user = User::create([
-                'NOMBRES' => $request->NOMBRES,
-                'APELLIDOS' => $request->APELLIDOS,
+                'NOMBRES' => $nombres,
+                'APELLIDOS' => $apellidos,
                 'email' => $request->email,
                 'password' => Hash::make($request->password),
                 'RUT' => RutUtils::formatRut($request->RUT),
