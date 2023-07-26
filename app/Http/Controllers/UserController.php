@@ -8,7 +8,6 @@ use Illuminate\Support\Facades\Hash;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Spatie\Permission\Models\Role;
-use Illuminate\Support\Facades\Log;
 
 
 //*Importamos modelos de las tablas normalizadas para enviarlas a las vistas*/

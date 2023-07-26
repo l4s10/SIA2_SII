@@ -466,64 +466,64 @@ return [
                         ],
                     ],
         ],
-        [
-            'text'        => 'Directivos',
-            'url'         => 'directivos',
-            'icon'        => 'fa-solid fa-user-tie',
+        /*[
+            'text' => 'Directivos',
+            'url' => 'directivos',
+            'icon' => 'fa-solid fa-user-tie',
+            'can' => ['ADMINISTRADOR', 'INFORMATICA', 'JURIDICO'],
             'submenu' => [
                 [
-                    'text'    => 'Búsqueda Resoluciones',
-                    'url'     => '#',
-                    'icon'    => 'fa-solid fa-folder-minus',
+                    'text' => 'Búsqueda Resoluciones',
+                    'url' => '#',
+                    'icon' => 'fa-solid fa-folder-minus',
                     'submenu' => [
                         [
-                            'text'    => 'Por Funcionario',
-                            'url'     => 'busquedafuncionario',
-                            'icon'    => 'fas fa-fw fa-eye'
+                            'text' => 'Por Funcionario',
+                            'url' => 'busquedafuncionario',
+                            'icon' => 'fas fa-fw fa-eye',
                         ],
                         [
-                            'text'    => 'Avanzada',
-                            'url'     => 'busquedaavanzada',
-                            'icon'    => 'fas fa-fw fa-eye'
-                        ]
+                            'text' => 'Avanzada',
+                            'url' => 'busquedaavanzada',
+                            'icon' => 'fas fa-fw fa-eye',
+                        ],
                     ],
                 ],
                 [
-                    'text'    => 'Repositorio',
-                    'url'     => '#',
-                    'icon'    => 'fa-solid fa-folder-minus',
+                    'text' => 'Repositorio',
+                    'url' => '#',
+                    'icon' => 'fa-solid fa-folder-minus',
                     'submenu' => [
                         [
-                            'text'    => 'Resoluciones',
-                            'url'     => 'resolucion',
-                            'icon'    => 'fas fa-fw fa-eye'
+                            'text' => 'Resoluciones',
+                            'url' => 'resolucion',
+                            'icon' => 'fas fa-fw fa-eye',
                         ],
                         [
-                            'text'    => 'Pólizas',
-                            'url'     => 'polizas',
-                            'icon'    => 'fas fa-fw fa-eye'
+                            'text' => 'Pólizas',
+                            'url' => 'polizas',
+                            'icon' => 'fas fa-fw fa-eye',
                         ],
                         [
-                            'text'    => 'Facultades',
-                            'url'     => 'facultades',
-                            'icon'    => 'fas fa-fw fa-eye'
+                            'text' => 'Facultades',
+                            'url' => 'facultades',
+                            'icon' => 'fas fa-fw fa-eye',
                         ],
                         [
-                            'text'    => 'Cargos',
-                            'url'     => 'cargos',
-                            'icon'    => 'fas fa-fw fa-eye'
-                        ]
-                    ]
-                ]
+                            'text' => 'Cargos',
+                            'url' => 'cargos',
+                            'icon' => 'fas fa-fw fa-eye',
+                        ],
+                    ],
+                ],
             ],
-        ],
+        ],*/
         [
             'text'        => 'Reportes',
             'url'         => '/reporteshome',
             'icon'        => 'fas fa-fw fa-solid fa-chart-simple',
         ],
-        ['header' => 'Módulos Administrador'],
-
+        /*['header' => 'Módulos Administrador'],
         [
             'text'        => 'Panel de control',
             'url'         => '#',
@@ -562,7 +562,7 @@ return [
                 ]
             ]
         ],
-
+        */
         // [
         //     'text'       => 'important',
         //     'icon_color' => 'red',

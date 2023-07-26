@@ -1,6 +1,9 @@
 <?php
 
 namespace App\Http\Controllers;
+use Illuminate\Support\Facades\Auth;
+
+
 use App\Models\Cargo;
 use App\Models\Resolucion;
 use App\Models\User;
@@ -10,6 +13,20 @@ use Illuminate\Http\Request;
 
 class BusquedaFuncionarioController extends Controller
 {
+    //Funcion para acceder a las rutas SOLO SI los usuarios estan logueados
+    public function __construct(){
+        $this->middleware('auth');
+        //Tambien aqui podremos agregar que roles son los que pueden ingresar
+        $this->middleware(function ($request, $next) {
+            $user = Auth::user();
+
+            if ($user->hasRole('ADMINISTRADOR') || $user->hasRole('JURIDICO') || $user->hasRole('INFORMATICA')) {
+                return $next($request);
+            } else {
+                abort(403, 'Acceso no autorizado');
+            }
+        });
+    }
     /**
      * Display a listing of the resource.
      */
@@ -34,7 +51,6 @@ class BusquedaFuncionarioController extends Controller
         $cargoFuncionario = null; // Valor predeterminado
         $cargoResolucion = null;
         $rutRes = null;
-
 
         if ($nombres && $apellidos && $rut && $idCargoFuncionario) {
             $query = Resolucion::whereHas('delegado.users', function ($query) use ($nombres, $apellidos, $rut, $idCargoFuncionario) {

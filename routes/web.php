@@ -184,6 +184,10 @@ Route::middleware(['auth'])->group(function () {
     })->name('dashboard');
 });
 
+//Route::group(['middleware' => 'checkUserRole'], function () {
+    // Rutas que cargan las vistas del adminlte
+//});
+
 // Método Route::get
 // Route::get('/home', function () {
 //     return view('home.home');
