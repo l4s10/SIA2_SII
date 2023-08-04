@@ -177,13 +177,20 @@ class ResolucionController extends Controller
      */
     public function destroy(string $id)
     {
-        try{
+        try {
             $resolucion = Resolucion::find($id);
+
+            // Eliminar el documento asociado si existe
+            if ($resolucion->DOCUMENTO) {
+                Storage::disk('public')->delete('resoluciones/' . $resolucion->DOCUMENTO);
+            }
+
             $resolucion->delete();
-            session()->flash('success','La resolución delegatoria ha sido eliminada correctamente.');
-        }catch(\Exception $e){
-            session()->flash('error','Error al eliminar la resolución delegatoria seleccionada, vuelva a intentarlo nuevamente.');
+            session()->flash('success', 'La resolución delegatoria ha sido eliminada correctamente.');
+        } catch (\Exception $e) {
+            session()->flash('error', 'Error al eliminar la resolución delegatoria seleccionada, vuelva a intentarlo nuevamente.');
         }
+        
         return redirect(route('resolucion.index'));
     }
 
