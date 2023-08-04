@@ -24,7 +24,8 @@ class Resolucion extends Model
         'ID_FIRMANTE',
         'ID_FACULTAD',
         'ID_DELEGADO',
-        'DOCUMENTO'
+        'DOCUMENTO',
+        'OBSERVACIONES'
     ];
 
     //* Agregamos validaciones para la tabla de resoluciones delegatorias*/
@@ -36,6 +37,7 @@ class Resolucion extends Model
             'ID_FIRMANTE' => 'required|integer|exists:cargos,ID_CARGO',
             'ID_FACULTAD' => 'required|integer|exists:facultades,ID_FACULTAD',
             'ID_DELEGADO' => 'required|integer|exists:cargos,ID_CARGO',
+            'OBSERVACIONES' => 'string|max:512'
         ];
     }
     public static function messages(){
