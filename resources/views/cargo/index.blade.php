@@ -50,15 +50,17 @@
                 <thead class="bg-primary text-white">
                     <tr>
                         <th scope="col">Cargo</th>
+                        <th scope="col">Dependencia</th>
                         <th scope="col">Administrar</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach($cargos as $id => $cargo)
+                    @foreach($cargos as $cargo)
                         <tr>
-                            <td>{{ $cargo }}</td>
+                            <td>{{ $cargo->CARGO }}</td>
+                            <td>{{ $cargo->DIRECCION }}</td>
                             <td>
-                                <a href="{{ route('cargos.show', $id) }}" class="btn btn-sia-primary btn-block"><i class="fa-solid fa-gear"></i></a>
+                                <a href="{{ route('cargos.show', $cargo->ID_CARGO) }}" class="btn btn-sia-primary btn-block"><i class="fa-solid fa-gear"></i></a>
                             </td>
                         </tr>
                     @endforeach
@@ -87,7 +89,7 @@
                 "lengthMenu": [[5,10, 50, -1], [5, 10, 50, "All"]],
                 "responsive": true,
                 "columnDefs": [
-                    { "orderable": false, "targets": 1 } // La séptima columna no es ordenable
+                    { "orderable": false, "targets": 2 } // La séptima columna no es ordenable
                 ],
                 "language": {
                     "url": "https://cdn.datatables.net/plug-ins/1.11.3/i18n/es_es.json"

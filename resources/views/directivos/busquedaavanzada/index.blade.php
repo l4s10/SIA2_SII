@@ -3,7 +3,7 @@
 @section('title', 'busqueda de resoluciones')
 
 @section('content_header')
-    <h1>Búsqueda avanzada de resoluciones delegatorias</h1>
+    <h1>Búsqueda Avanzada de Resoluciones Delegatorias de Facultades</h1>
 @stop
 
 @section('content')
@@ -186,7 +186,13 @@
                                     <span class="glosa-completa" style="display: none;">{{ $resolucion->facultad->CONTENIDO }}</span>
                                 </td>
                                 <td>
-                                    <a href="" class="btn btn-sia-primary btn-block"><i class="fa-solid fa-file-pdf"></i></a>
+                                    @if ($resolucion->DOCUMENTO)
+                                        <a href="{{ asset('storage/resoluciones/' . $resolucion->DOCUMENTO) }}" class="btn btn-sia-primary btn-block" target="_blank">
+                                            <i class="fa-solid fa-file-pdf"></i>
+                                        </a>
+                                    @else
+                                        Sin documento
+                                    @endif
                                 </td>
                             </tr>
                         @endforeach
