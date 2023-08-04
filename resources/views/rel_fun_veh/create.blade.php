@@ -85,7 +85,7 @@
 
 
             {{-- *ASIGNACION DE CONDUCTOR (LIMITAR AL ROL NUEVO "SOLICITANTE")* --}}
-            <div class="mb-3">
+            {{-- <div class="mb-3">
                 <label for="conductor" class="form-label"><i class="fa-solid fa-user"></i> Conductor:</label>
                 <select id="conductor" name="CONDUCTOR" class="form-control{{ $errors->has('conductor') ? ' is-invalid' : '' }}">
                     <option value="" selected>Seleccione un conductor</option>
@@ -100,42 +100,54 @@
                         {{ $errors->first('conductor') }}
                     </div>
                 @endif
-            </div>
+            </div> --}}
 
-
-
-            <!-- **CAMPO OCUPANTES DEL 1 AL 6 -->
-            <div class="row">
-                @for ($i = 1; $i <= 6; $i++)
-                <div class="col-md-4">
-                    <div class="form-group">
-                        <label for="direcciones{{$i}}"><i class="fas fa-map-marker-alt"></i> Dirección Regional {{$i}}</label>
-                        <select id="direcciones{{$i}}" class="direcciones{{$i}} form-control">
-                            <option value="" selected>-- Seleccione una direccion regional --</option>
-                            @foreach ($direcciones as $direccion)
-                                <option value="{{$direccion->ID_DIRECCION}}">{{$direccion->DIRECCION}}</option>
-                            @endforeach
-                        </select>
+                <!-- **CAMPO OCUPANTES DEL 1 AL 6 -->
+                <div class="row">
+                    @for ($i = 1; $i <= 6; $i++)
+                    {{-- <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="direcciones{{$i}}"><i class="fas fa-map-marker-alt"></i> Dirección Regional {{$i}}</label>
+                            <select id="direcciones{{$i}}" class="direcciones{{$i}} form-control">
+                                <option value="" selected>-- Seleccione una direccion regional --</option>
+                                @foreach ($direcciones as $direccion)
+                                    <option value="{{$direccion->ID_DIRECCION}}" selected>{{$direccion->DIRECCION}}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div> --}}
+                    {{-- !!CREAR VARIABLE BACKEND (DIRECCION OBTENIDA/FILTRADA) Y FILTRAR UBICACIONES --}}
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="ubicaciones{{$i}}"><i class="fas fa-location-arrow"></i> Ubicación {{$i}}</label>
+                            <select id="ubicaciones{{$i}}" class="ubicaciones{{$i}} form-control">
+                                {{-- !!CARGAR UBICACIONES FILTRADAS --}}
+                                <option value="">-- Seleccione una ubicacion --</option>
+                                @foreach ($ubicacionesFiltradas as $ubicacion)
+                                    <option value="{{$ubicacion->ID_UBICACION}}">{{$ubicacion->UBICACION}}</option>
+                                @endforeach
+                            </select>
+                        </div>
                     </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="form-group">
-                        <label for="ubicaciones{{$i}}"><i class="fas fa-location-arrow"></i> Ubicación {{$i}}</label>
-                        <select id="ubicaciones{{$i}}" class="ubicaciones{{$i}} form-control">
-                            <option value="">-- Seleccione una ubicacion --</option>
-                        </select>
+                    <div class="col-md-6">
+                        @if($i==1)
+                            <div class="form-group">
+                                <label for="usuarios{{$i}}"><i class="fas fa-user"></i> Ocupante {{$i}} / Conductor</label>
+                                <select id="usuarios{{$i}}" class="usuarios{{$i}} form-control" name="OCUPANTE_{{$i}}">
+                                    <option value="">--Seleccione al ocupante n°{{$i}} --</option>
+                                </select>
+                            </div>
+                        @else
+                            <div class="form-group">
+                                <label for="usuarios{{$i}}"><i class="fas fa-user"></i> Ocupante {{$i}}</label>
+                                <select id="usuarios{{$i}}" class="usuarios{{$i}} form-control" name="OCUPANTE_{{$i}}">
+                                    <option value="">--Seleccione al ocupante n°{{$i}} --</option>
+                                </select>
+                            </div>
+                        @endif
                     </div>
+                    @endfor
                 </div>
-                <div class="col-md-4">
-                    <div class="form-group">
-                        <label for="usuarios{{$i}}"><i class="fas fa-user"></i> Ocupante {{$i}}</label>
-                        <select id="usuarios{{$i}}" class="usuarios{{$i}} form-control" name="OCUPANTE_{{$i}}">
-                            <option value="">--Seleccione al ocupante n°{{$i}} --</option>
-                        </select>
-                    </div>
-                </div>
-                @endfor
-            </div>
 
 
             {{-- *FECHA Y HORA DE SALIDA SOLICITADA* --}}
@@ -223,33 +235,6 @@
                         @error('DESTINO')
                             <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
-                    </div>
-                </div>
-            </div>
-            {{-- !!CAMPO DISPONIBLE SOLO PARA CONDUCTOR --}}
-            <div class="row" hidden>
-                <div class="col-md-6">
-                    <div class="mb-3">
-                        <!-- Solo acceso para conductores(nivel 1) y estado formulario por rendir(autorizado/rendir nivel 3) -->
-                        <label for="KMS_INICIAL" class="form-label"><i class="fa-solid fa-caret-down"></i> Kilometraje al partir:</label>
-                        <input type="number" id="KMS_INICIAL" name="KMS_INICIAL" class="form-control" placeholder="Ej: 60"">
-                        @if ($errors->has('KMS_INICIAL'))
-                        <div class="invalid-feedback">
-                            {{ $errors->first('KMS_INICIAL') }}
-                        </div>
-                        @endif
-                    </div>
-                </div>
-
-                <div class="col-md-6">
-                    <div class="mb-3">
-                        <label for="KMS_FINAL" class="form-label"><i class="fa-solid fa-caret-up"></i> Kilometraje al finalizar:</label>
-                        <input type="number" id="KMS_FINAL" name="KMS_FINAL" class="form-control" placeholder="Ej: 80"">
-                        @if ($errors->has('KMS_FINAL'))
-                        <div class="invalid-feedback">
-                            {{ $errors->first('KMS_FINAL') }}
-                        </div>
-                        @endif
                     </div>
                 </div>
             </div>
@@ -344,53 +329,53 @@
 <script>
     $(document).ready(function() {
         for (let i = 1; i <= 6; i++) {
-            $('.direcciones'+i).change(function() {
-                const direccionId = $(this).val();
+            // $('.direcciones'+i).change(function() {
+            //     const direccionId = $(this).val();
 
-                let selectUbicaciones = $('.ubicaciones'+i);
-                let selectUsuarios = $('.usuarios'+i);
+            //     let selectUbicaciones = $('.ubicaciones'+i);
+            //     let selectUsuarios = $('.usuarios'+i);
 
-                // Vaciamos el select de ubicaciones y usuarios cuando no hay ninguna dirección seleccionada.
-                if (!direccionId) {
-                    selectUbicaciones.empty();
-                    selectUbicaciones.append('<option value="">-- Seleccione una ubicacion --</option>');
-                    selectUsuarios.empty();
-                    selectUsuarios.append('<option value="">--Seleccione al ocupante n°'+i+' --</option>');
-                } else {
-                    $.get('/ubicaciones/'+direccionId, function(data) {
-                        selectUbicaciones.empty();
-                        selectUbicaciones.append('<option value="">-- Seleccione una ubicacion --</option>');
+            //     // Vaciamos el select de ubicaciones y usuarios cuando no hay ninguna dirección seleccionada.
+            //     if (!direccionId) {
+            //         selectUbicaciones.empty();
+            //         selectUbicaciones.append('<option value="">-- Seleccione una ubicacion --</option>');
+            //         selectUsuarios.empty();
+            //         selectUsuarios.append('<option value="">--Seleccione al ocupante n°'+i+' --</option>');
+            //     } else {
+            //         $.get('/ubicaciones/'+direccionId, function(data) {
+            //             selectUbicaciones.empty();
+            //             selectUbicaciones.append('<option value="">-- Seleccione una ubicacion --</option>');
 
-                        $.each(data, function(index, ubicacion) {
-                            let option = $('<option>', { value: ubicacion.ID_UBICACION, text: ubicacion.UBICACION });
-                            selectUbicaciones.append(option);
-                        });
-                    });
-                }
-            });
+            //             $.each(data, function(index, ubicacion) {
+            //                 let option = $('<option>', { value: ubicacion.ID_UBICACION, text: ubicacion.UBICACION });
+            //                 selectUbicaciones.append(option);
+            //             });
+            //         });
+            //     }
+            // });
 
             $('.ubicaciones'+i).change(function() {
-        const ubicacionId = $(this).val();
-        if (ubicacionId) {
-            $.ajax({
-                url: '/usuarios/'+ubicacionId,
-                type: 'GET',
-                xhrFields: {
-                    withCredentials: true
-                },
-                success: function(data) {
-                    let select = $('.usuarios'+i);
-                    select.empty();
-                    select.append('<option value="">--Seleccione al ocupante n°'+i+' --</option>');
-                    $.each(data, function(index, usuario) {
-                        select.append('<option value="'+usuario.id+'">'+usuario.NOMBRES+' '+usuario.APELLIDOS+'</option>');
+                const ubicacionId = $(this).val();
+                if (ubicacionId) {
+                    $.ajax({
+                        url: '/usuarios/'+ubicacionId,
+                        type: 'GET',
+                        xhrFields: {
+                            withCredentials: true
+                        },
+                        success: function(data) {
+                            let select = $('.usuarios'+i);
+                            select.empty();
+                            select.append('<option value="">--Seleccione al ocupante n°'+i+' --</option>');
+                            $.each(data, function(index, usuario) {
+                                select.append('<option value="'+usuario.id+'">'+usuario.NOMBRES+' '+usuario.APELLIDOS+'</option>');
+                            });
+                        }
                     });
+                } else {
+                    $('.usuarios'+i).empty().append('<option value="">--Seleccione al ocupante n°'+i+' --</option>');
                 }
             });
-        } else {
-            $('.usuarios'+i).empty().append('<option value="">--Seleccione al ocupante n°'+i+' --</option>');
-        }
-    });
 
         }
     });

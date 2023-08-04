@@ -56,15 +56,19 @@ class RelFunVehController extends Controller
      */
     public function create()
     {
+        // Cargar usuario
+        $ubicacionUser = Ubicacion::findOrFail(Auth::user()->ID_UBICACION);
+        $direccionFiltrada = $ubicacionUser->direccion;
+        $ubicacionesFiltradas = $direccionFiltrada->ubicaciones;
         //*Crear solicitud
         $vehiculos = Vehiculo::all();
         $tipo_vehiculos = TipoVehiculo::all();
         $usuarios = User::all();
         $regiones = Region::all();
-        $direcciones = DireccionRegional::all();
-        $ubicaciones = Ubicacion::all();
+        // $direcciones = DireccionRegional::all();
+        // $ubicaciones = Ubicacion::where('ID_DIRECCION', );
         $comunas = Comuna::all();
-        return view('rel_fun_veh.create', compact('vehiculos','tipo_vehiculos','usuarios','regiones','direcciones','ubicaciones','comunas'));
+        return view('rel_fun_veh.create', compact('vehiculos','tipo_vehiculos','usuarios','regiones','direccionFiltrada','ubicacionesFiltradas','comunas'));
     }
 
     /**
@@ -222,7 +226,7 @@ class RelFunVehController extends Controller
             $solicitud->FIRMA_ADMINISTRADOR = auth()->user()->RUT . ' ' . auth()->user()->NOMBRES . ' ' . auth()->user()->APELLIDOS;
             $firmaRealizada = true;
         }
-        
+
         if (!$firmaRealizada) {
             // Si no se ha realizado ninguna firma, significa que ya se firmó en todas las capacidades posibles
             return redirect()->route('solicitud.vehiculos.autorizar')->with('error', 'Esta solicitud ya ha sido firmada por ti');
