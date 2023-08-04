@@ -31,7 +31,7 @@ class Kernel extends HttpKernel
         'roleAdminAndServices' => \App\Http\Middleware\RoleAdminAndServices::class,
         'checkRelFunWithServicesPermissions' => \App\Http\Middleware\CheckRelFunWithServicesPermissions::class,
         'checkRelFunWithSupportPermissions' => \App\Http\Middleware\CheckRelFunWithSupportPermissions::class,
-        
+
     ];
 
 
@@ -48,6 +48,7 @@ class Kernel extends HttpKernel
             \Illuminate\View\Middleware\ShareErrorsFromSession::class,
             \App\Http\Middleware\VerifyCsrfToken::class,
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
+            //\App\Http\Middleware\CheckUserRole::class,
         ],
 
         'api' => [

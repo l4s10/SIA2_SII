@@ -31,6 +31,11 @@ use App\Models\TipoReparacion;
 
 class HomeReportesController extends Controller
 {
+    //protege las rutas  DE MOMENTO SOLO ADMINISTADOR
+    public function __construct(){
+        $this->middleware(['auth', 'checkearRol:ADMINISTRADOR']);
+    }
+
     private $models1 = [
         'solicitudSala' => SolicitudSala::class,
         'solicitudBodegas' => SolicitudBodegas::class,

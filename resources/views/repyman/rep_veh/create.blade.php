@@ -77,7 +77,7 @@
                         <label for="PATENTE_VEHICULO" class="form-label"><i class="fa-solid fa-car-on"></i> Información del vehiculo:</label>
                         <select id="PATENTE_VEHICULO" name="PATENTE_VEHICULO" class="form-control @if($errors->has('PATENTE_VEHICULO')) is-invalid @endif">
                             <option value="">-- Seleccione el vehículo con problemas --</option>
-                            @foreach ($vehiculos->groupBy('UNIDAD_VEHICULO') as $grupo => $autos)
+                            @foreach ($vehiculos->groupBy('ubicacion.UBICACION') as $grupo => $autos)
                                 <optgroup label="{{ $grupo }}">
                                     @foreach ($autos as $auto)
                                     <option value="{{ $auto->PATENTE_VEHICULO }}">{{ $auto->PATENTE_VEHICULO }} ({{ $auto->tipoVehiculo->TIPO_VEHICULO }})</option>

@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+use Illuminate\Support\Facades\Auth;
 
 use App\Models\Vehiculo;
 use App\Models\TipoVehiculo;
@@ -11,7 +12,7 @@ use Illuminate\Http\Request;
 
 class VehiculoController extends Controller
 {
-    // Esta funcion protege nuestro controlador para que solo las personas logueadas puedan entrar
+    //Funcion para acceder a las rutas SOLO SI los usuarios estan logueados
     public function __construct(){
         $this->middleware(['auth', 'roleAdminAndServices']);
     }

@@ -5,7 +5,7 @@
 @section('content_header')
     <h1>Listado solicitudes formulario</h1>
     @role('ADMINISTRADOR')
-    <div class="alert alert-info" role="alert">
+    <div class="alert alert-info alert1" role="alert">
     <div><strong>Bienvenido Administrador:</strong> Acceso total al modulo.<div>
     </div>
     @endrole
@@ -26,14 +26,20 @@
     @endrole
     @role('FUNCIONARIO')
     <div class="alert alert-info" role="alert">
-    <div><strong>Bienvenido Funcionario:</strong> Aqui iria el texto donde le corresponde el rol FUNCIONARIO.<div>
+    <div><strong>Bienvenido Funcionario:</strong> En el presente módulo usted podrá solicitar formularios, según sea el caso el Departamento de Administración analizará los antecedentes, y podrá aceptar o rechazar la solicitud.<div>
     </div>
     @endrole
 
 @stop
 
 @section('content')
-<div class="container-fluid">
+    <div class="verde">
+        <div>
+            <i class="fas fa-seedling"></i> Cuidemos el medio ambiente <i class="fas fa-seedling"></i>. Recuerde que se debe priorizar los formularios con uso cero papel.
+        </div>
+    </div>
+
+    <div class="container-fluid">
     @if (session('success'))
         <script>
             document.addEventListener('DOMContentLoaded', () => {
@@ -102,13 +108,34 @@
 
 @section('css')
     <link rel="stylesheet" href="/css/admin_custom.css">
-    <style>
+<style>
         .alert {
-        opacity: 0.7; /* Ajusta la opacidad a tu gusto */
-        background-color: #99CCFF;
-        color:     #000000;
+            opacity: 0.7; /* Ajusta la opacidad a tu gusto */
+            background-color: #99CCFF;
+            color: #000000;
         }
-    </style>
+
+        .alert1 {
+            opacity: 0.7; /* Ajusta la opacidad a tu gusto */
+            background-color: #FF8C40;
+            color: #000000;
+        }
+
+        .verde {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 10px;
+            background-color: #40C47C;
+            color: #FFFFFF;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .verde i {
+            margin-right: 10px;
+        }
+</style>
 @stop
 
 @section('js')

@@ -4,9 +4,8 @@ namespace App\Http\Controllers;
 
 
 use Illuminate\Http\Request;
-use Carbon\Carbon;
-//use Illuminate\Validation\Rule;
-//use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Auth;
+
 use App\Models\Facultad;
 
 
@@ -14,6 +13,20 @@ use App\Models\Facultad;
 
 class FacultadController extends Controller
 {
+    //Funcion para acceder a las rutas SOLO SI los usuarios estan logueados
+    public function __construct(){
+        $this->middleware('auth');
+        //Tambien aqui podremos agregar que roles son los que pueden ingresar
+        $this->middleware(function ($request, $next) {
+            $user = Auth::user();
+
+            if ($user->hasRole('ADMINISTRADOR') || $user->hasRole('JURIDICO') || $user->hasRole('INFORMATICA')) {
+                return $next($request);
+            } else {
+                abort(403, 'Acceso no autorizado');
+            }
+        });
+    }
     /**
      * Display a listing of the resource.
      */

@@ -46,7 +46,7 @@
         
         <a href="{{route('resolucion.create')}}" class="btn" style="background-color: #0099FF; color: white;">Ingresar nueva resolución delegatoria</a>
 
-        <div class="table-responsive">
+        <div class="table custom-table-responsive">
             <table id="resoluciones" class="table table-bordered mt-4 custom-table">
                 <thead class="bg-primary text-white">
                     <tr>
@@ -110,7 +110,8 @@
     opacity: 0.7; 
     background-color: #99CCFF;
     color:     #000000;
-    }
+    };
+
 </style>
 @endsection
 
@@ -120,9 +121,9 @@
         $(document).ready(function () {
             $('#resoluciones').DataTable({
                 "lengthMenu": [[5,10, 50, -1], [5, 10, 50, "All"]],
-                "responsive": true,
+                "responsive": false,
                 "columnDefs": [
-                    { "orderable": false, "targets": 7 } // La séptima columna no es ordenable
+                    { "orderable": false, "targets": 9 } // La séptima columna no es ordenable
                 ],
                 "language": {
                     "url": "https://cdn.datatables.net/plug-ins/1.11.3/i18n/es_es.json"
