@@ -11,7 +11,9 @@ class TipoResolucionSeeder extends Seeder
     {
         $tipos = [
             ['ID_TIPO' => 1, 'NOMBRE' => 'DELEGATORIA'],
-            ['ID_TIPO' => 2, 'NOMBRE' => 'NOMBRAMIENTO']
+            ['ID_TIPO' => 2, 'NOMBRE' => 'NOMBRAMIENTO'],
+            ['ID_TIPO' => 3, 'NOMBRE' => 'AUTORIZACIÓN DE DELEGACIÓN']
+
         ];
         
         //Población de la tabla 'resoluciones' con RESOLUCIONES DELEGATORIAS

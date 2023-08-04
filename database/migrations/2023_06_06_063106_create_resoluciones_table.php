@@ -20,6 +20,7 @@ return new class extends Migration
             $table->integer('ID_FACULTAD')->unsigned();
             $table->integer('ID_DELEGADO')->unsigned();
             $table->string('DOCUMENTO')->nullable();
+            $table->string('OBSERVACIONES')->nullable();
         });
     }
 
