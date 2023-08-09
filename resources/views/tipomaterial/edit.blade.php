@@ -18,6 +18,14 @@
                     <div class="invalid-feedback">{{ $message }}</div>
                 @enderror
             </div>
+
+            <div class="mb-3">
+                <label for="ID_DIRECCION" class="form-label"><i class="fa-solid fa-person-chalkboard"></i> Direccion Regional:</label>
+                <select id="ID_DIRECCION" name="ID_DIRECCION" class="form-control" disabled>
+                    <option value="{{$tipo->ID_DIRECCION}}" selected>{{$tipo->direccionRegional->DIRECCION}}</option>
+                </select>
+            </div>
+            
             <a href="{{route('tipomaterial.index')}}" class="btn btn-secondary" tabindex="5"><i class="fa-solid fa-hand-point-left"></i> Cancelar</a>
             <button type="submit" class="btn btn-primary" tabindex="4"><i class="fa-solid fa-floppy-disk"></i> Guardar tipo</button>
         </form>

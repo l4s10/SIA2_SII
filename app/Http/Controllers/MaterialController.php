@@ -7,9 +7,13 @@ use Illuminate\Http\Request;
 //Importamos el modelo de Material
 use App\Models\Material;
 use App\Models\TipoMaterial;
+//Importando otros modelos
+use App\Models\Ubicacion;
+use App\Models\DireccionRegional;
 //Importamos paquete de validacion
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
 use Dompdf\Dompdf;
 
 use Barryvdh\DomPDF\Facade\Pdf;
@@ -27,9 +31,12 @@ class MaterialController extends Controller
      */
     public function index()
     {
-        //Funcion que lista elementos de la tabla de la BDD.
-        //!!MOSTRAR LOGS DE INVENTARIO + EXPORTABLE
-        $materiales = Material::all();
+        // Cargar direccion regional automáticamente a través de usuario
+        $ubicacionUser = Ubicacion::findOrFail(Auth::user()->ID_UBICACION);
+        $direccionFiltradaId = $ubicacionUser->direccion->ID_DIRECCION;
+        $direccionFiltradaNombre = $ubicacionUser->direccion->DIRECCION;
+        //Funcion que lista elementos
+        $materiales = Material::where('ID_DIRECCION', $direccionFiltradaId)->get();
         return view('materiales.index',compact('materiales'));
     }
 
@@ -38,8 +45,15 @@ class MaterialController extends Controller
      */
     public function create()
     {
-        $tipos = TipoMaterial::all();
-        return view('materiales.create',compact('tipos'));
+        // Cargar direccion regional automáticamente a través de usuario
+        $ubicacionUser = Ubicacion::findOrFail(Auth::user()->ID_UBICACION);
+        $direccionFiltradaId = $ubicacionUser->direccion->ID_DIRECCION;
+        $direccionFiltradaNombre = $ubicacionUser->direccion->DIRECCION;
+
+        // Filtrar tipos de material por la direccion del usuario
+        $tipos = TipoMaterial::where('ID_DIRECCION', $direccionFiltradaId)->get();
+
+        return view('materiales.create',compact('tipos','direccionFiltradaId','direccionFiltradaNombre'));
     }
 
     /**
@@ -49,7 +63,8 @@ class MaterialController extends Controller
     {
         // Especificamos las reglas del campo
         $rules = [
-            'NOMBRE_MATERIAL' => ['required', 'string', 'max:255', Rule::unique('materiales')],
+            // 'NOMBRE_MATERIAL' => ['required', 'string', 'max:255', Rule::unique('materiales')],
+            'NOMBRE_MATERIAL' => ['required', 'string', 'max:255'],
             'ID_TIPO_MAT' => ['required'],
             'STOCK' => ['required', 'numeric'],
         ];
@@ -57,7 +72,7 @@ class MaterialController extends Controller
         // Especificamos los mensajes personalizados de validación
         $messages = [
             'NOMBRE_MATERIAL.required' => 'El campo Nombre material es obligatorio',
-            'NOMBRE_MATERIAL.unique' => 'Este material ya existe',
+            // 'NOMBRE_MATERIAL.unique' => 'Este material ya existe',
             'NOMBRE_MATERIAL.string' => 'El campo Nombre material debe ser una cadena de texto',
             'ID_TIPO_MAT.required' => 'Debe seleccionar un tipo de material',
             'STOCK.required' => 'El campo STOCK es requerido',
@@ -65,15 +80,18 @@ class MaterialController extends Controller
         ];
 
         // Validamos los datos recibidos del formulario
-        $request->validate($rules, $messages);
+        $validator = Validator::make($request->all(), $rules, $messages);
+
+        if ($validator->fails()) {
+            return redirect()
+                ->route('material.create')
+                ->withErrors($validator)
+                ->withInput();
+        }
 
         // Creamos el nuevo material
         try {
-            $material = new Material();
-            $material->NOMBRE_MATERIAL = $request->NOMBRE_MATERIAL;
-            $material->ID_TIPO_MAT = $request->ID_TIPO_MAT;
-            $material->STOCK = $request->STOCK;
-            $material->save();
+            Material::create($request->all());
             session()->flash('success', 'El material fue creado exitosamente');
         } catch (\Exception $e) {
             session()->flash('error', 'Error al crear el material');
@@ -123,18 +141,19 @@ class MaterialController extends Controller
             'STOCK.numeric' => 'El campo Stock debe ser numérico',
         ];
 
-        // Validamos los campos
-        // $request->merge(['ID_TIPO_MAT' => $request->ID_TIPO_MAT]);
-        $request->validate($rules, $messages);
+        // Validamos la request
+        $validator = Validator::make($request->all(), $rules, $messages);
+
+        if ($validator->fails()) {
+            return redirect()
+                ->route('materiales.edit', $id)
+                ->withErrors($validator)
+                ->withInput();
+        }
 
         try {
             $material = Material::find($id);
-            $material->fill([
-                'NOMBRE_MATERIAL' => $request->input('NOMBRE_MATERIAL'),
-                'ID_TIPO_MAT' => $request->input('ID_TIPO_MAT'),
-                'STOCK' => $request->input('STOCK'),
-            ]);
-            $material->save();
+            $material->update($request->all());
             session()->flash('success', 'El material fue modificado exitosamente');
         } catch(\Exception $e) {
             session()->flash('error', 'Error al modificar el material seleccionado: ' . $e->getMessage());

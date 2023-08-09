@@ -11,7 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        
+        Schema::create('movimientos_materiales', function (Blueprint $table) {
+            $table->id();
+            $table->timestamps();
+        });
     }
 
     /**
@@ -19,6 +22,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('direcciones_regionales');
+        Schema::dropIfExists('movimientos_materiales');
     }
 };

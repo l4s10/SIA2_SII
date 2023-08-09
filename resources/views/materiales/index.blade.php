@@ -108,17 +108,17 @@
         <!-- Para inicializar -->
         <script>
             $(document).ready(function () {
-            $('#materiales').DataTable({
-                "lengthMenu": [[5,10, 50, -1], [5, 10, 50, "All"]],
-                "responsive": true,
-                "columnDefs": [
-                    { "orderable": false, "targets": 3 }
-                ],
-                "language": {
-                    "url": "https://cdn.datatables.net/plug-ins/1.11.3/i18n/es_es.json"
-                },
+                $('#materiales').DataTable({
+                    "lengthMenu": [[5,10, 50, -1], [5, 10, 50, "All"]],
+                    "responsive": true,
+                    "columnDefs": [
+                        { "orderable": false, "targets": 3 }
+                    ],
+                    "language": {
+                        "url": "https://cdn.datatables.net/plug-ins/1.11.3/i18n/es_es.json"
+                    },
+                });
             });
-        });
         </script>
 
 @stop
