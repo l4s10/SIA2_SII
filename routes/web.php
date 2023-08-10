@@ -13,6 +13,7 @@ use App\Http\Controllers\EmailController;
 use Illuminate\Support\Facades\Auth;
 
 require __DIR__.'/reportes.php';
+require __DIR__.'/movimientosMateriales.php';
 /*
 |--------------------------------------------------------------------------
 | Web Routes

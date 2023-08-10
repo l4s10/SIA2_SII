@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 //Importamos el modelo de Material
 use App\Models\Material;
 use App\Models\TipoMaterial;
+use App\Models\MovimientoMaterial;
 //Importando otros modelos
 use App\Models\Ubicacion;
 use App\Models\DireccionRegional;
@@ -63,20 +64,23 @@ class MaterialController extends Controller
     {
         // Especificamos las reglas del campo
         $rules = [
-            // 'NOMBRE_MATERIAL' => ['required', 'string', 'max:255', Rule::unique('materiales')],
             'NOMBRE_MATERIAL' => ['required', 'string', 'max:255'],
             'ID_TIPO_MAT' => ['required'],
             'STOCK' => ['required', 'numeric'],
+            'TIPO_MOVIMIENTO' => 'required|string|max:10',
+            'DETALLE_MOVIMIENTO' => 'required|string|max:1000', // Asumiendo un máximo de 1000 caracteres.
         ];
 
         // Especificamos los mensajes personalizados de validación
         $messages = [
             'NOMBRE_MATERIAL.required' => 'El campo Nombre material es obligatorio',
-            // 'NOMBRE_MATERIAL.unique' => 'Este material ya existe',
             'NOMBRE_MATERIAL.string' => 'El campo Nombre material debe ser una cadena de texto',
             'ID_TIPO_MAT.required' => 'Debe seleccionar un tipo de material',
             'STOCK.required' => 'El campo STOCK es requerido',
             'STOCK.numeric' => 'El campo STOCK debe ser numérico',
+            'TIPO_MOVIMIENTO.required' => 'El campo Tipo de movimiento es obligatorio',
+            'DETALLE_MOVIMIENTO.required' => 'El detalle del movimiento es obligatorio',
+            'DETALLE_MOVIMIENTO.string' => 'El detalle del movimiento debe ser una cadena de texto',
         ];
 
         // Validamos los datos recibidos del formulario
@@ -84,17 +88,39 @@ class MaterialController extends Controller
 
         if ($validator->fails()) {
             return redirect()
-                ->route('material.create')
+                ->route('materiales.create')
                 ->withErrors($validator)
                 ->withInput();
         }
 
-        // Creamos el nuevo material
+        // Creamos el nuevo material (hacemos el try catch para material)
         try {
-            Material::create($request->all());
-            session()->flash('success', 'El material fue creado exitosamente');
+            $newMaterial = Material::create($request->all());
+
+            // Si el material se crea exitosamente, registramos el movimiento
+            if ($newMaterial) {
+                $data = [
+                    'ID_MATERIAL' => $newMaterial->ID_MATERIAL,
+                    'ID_MODIFICANTE' => Auth::user()->id,
+                    'TIPO_MOVIMIENTO' => 'INGRESO',
+                    'STOCK_PREVIO' => 0, // Como es un nuevo material, asumimos que el stock previo es 0
+                    'STOCK_NUEVO' => $request->input('STOCK'),
+                    'DETALLE_MOVIMIENTO' => $request->input('DETALLE_MOVIMIENTO')
+                ];
+                //Hacemos el try catch para el movimiento del material
+                try {
+                    MovimientoMaterial::create($data);
+                    session()->flash('success', 'El material fue creado exitosamente');
+                } catch (\Exception $e) {
+                    session()->flash('error', 'El material se creó, pero hubo un error al crear el registro de movimiento');
+                    // Para un manejo más detallado en desarrollo puedes usar:
+                    // session()->flash('error', 'Error al crear el registro de movimiento: ' . $e->getMessage());
+                }
+            }
         } catch (\Exception $e) {
             session()->flash('error', 'Error al crear el material');
+            // Para un manejo más detallado en desarrollo puedes usar:
+            // session()->flash('error', 'Error al crear el material: ' . $e->getMessage());
         }
 
         // Redirigimos al listado de materiales
@@ -131,6 +157,9 @@ class MaterialController extends Controller
             'NOMBRE_MATERIAL' => ['required', 'string', 'max:255', Rule::unique('materiales')->ignore($id,'ID_MATERIAL')],
             'ID_TIPO_MAT' => ['required'],
             'STOCK' => ['required', 'numeric'],
+            'STOCK_NUEVO' => 'required|numeric',
+            'TIPO_MOVIMIENTO' => 'required|string|max:10',
+            'DETALLE_MOVIMIENTO' => 'required|string|max:1000' // Asumiendo un max de 1000 caracteres.
         ];
         $messages = [
             'NOMBRE_MATERIAL.required' => 'El campo Nombre material es obligatorio',
@@ -139,6 +168,11 @@ class MaterialController extends Controller
             'ID_TIPO_MAT.required' => 'El campo Tipo de material es obligatorio',
             'STOCK.required' => 'El campo Stock es requerido',
             'STOCK.numeric' => 'El campo Stock debe ser numérico',
+            'STOCK_NUEVO.required' => 'El campo Stock nuevo es requerido',
+            'STOCK_NUEVO.numeric' => 'El campo Stock nuevo debe ser numérico',
+            'TIPO_MOVIMIENTO.required' => 'El campo Tipo de movimiento es obligatorio',
+            'DETALLE_MOVIMIENTO.required' => 'El detalle del movimiento es obligatorio',
+            'DETALLE_MOVIMIENTO.string' => 'El detalle del movimiento debe ser una cadena de texto',
         ];
 
         // Validamos la request
@@ -151,12 +185,31 @@ class MaterialController extends Controller
                 ->withInput();
         }
 
+        //Guardamos los cambios de material
         try {
             $material = Material::find($id);
-            $material->update($request->all());
-            session()->flash('success', 'El material fue modificado exitosamente');
+            $stock_previo = $material->STOCK;
+
+            // Cambiamos el valor de STOCK por el de STOCK_NUEVO antes de actualizar
+            $dataToUpdate = $request->all();
+            $dataToUpdate['STOCK'] = $dataToUpdate['STOCK_NUEVO'];
+            $material->update($dataToUpdate);
+
+            // Registrar el movimiento
+            $data = [
+                'ID_MATERIAL' => $material->ID_MATERIAL,
+                'ID_MODIFICANTE' => Auth::user()->id,
+                'TIPO_MOVIMIENTO' => $request->input('TIPO_MOVIMIENTO'),
+                'STOCK_PREVIO' => $stock_previo,
+                'STOCK_NUEVO' => $request->input('STOCK_NUEVO'),
+                'DETALLE_MOVIMIENTO' => $request->input('DETALLE_MOVIMIENTO')
+            ];
+            MovimientoMaterial::create($data);
+
+            session()->flash('success', 'El material y su movimiento asociado fueron modificados y guardados exitosamente');
         } catch(\Exception $e) {
-            session()->flash('error', 'Error al modificar el material seleccionado: ' . $e->getMessage());
+            session()->flash('error', 'Error al modificar el material y/o su movimiento: ' . $e->getMessage());
+            // session()->flash('error', 'Error al modificar el material y/o su movimiento: ' . $e->getMessage());
         }
         return redirect(route('materiales.index'));
     }
