@@ -29,7 +29,7 @@ class Material extends Model
     //!!Ahora materiales tiene movimientos, por lo que necesitamos crearle el hasMany
     public function movimientos()
     {
-        return $this->hasMany(Movimiento::class, 'ID_MATERIAL');
+        return $this->hasMany(MovimientoMaterial::class, 'ID_MATERIAL');
     }
 
 }

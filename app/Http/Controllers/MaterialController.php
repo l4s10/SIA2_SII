@@ -221,14 +221,23 @@ class MaterialController extends Controller
     public function destroy(string $id)
     {
         $material = Material::find($id);
-        try{
+
+        // Verifica si hay registros de movimientos asociados a este material
+        // if ($material->movimientos && $material->movimientos->count() > 0) {
+        //     session()->flash('error', 'No se puede eliminar el material ya que tiene registros de movimientos asociados.');
+        //     return redirect(route('materiales.index'));
+        // }
+
+        try {
             $material->delete();
-            session()->flash('success','El material fue eliminado exitosamente');
-        }catch(\Exception $e){
-            session()->flash('error','Error al eliminar el material seleccionado');
+            session()->flash('success', 'El material fue eliminado exitosamente');
+        } catch (\Exception $e) {
+            session()->flash('error', 'Error al eliminar el material seleccionado');
         }
+
         return redirect(route('materiales.index'));
     }
+
     //!!FUNCION EXPORTABLE A PDF CON LIBRERIA "DOMPDF" (ESTA SE USARÁ)
     /*
         Obtenemos los materiales y los ordenamos por tipos
