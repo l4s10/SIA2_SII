@@ -15,10 +15,12 @@ class CreateFacultadesTable extends Migration
     {
         Schema::create('facultades', function (Blueprint $table) {
             $table->increments('ID_FACULTAD');
-            $table->string('NOMBRE', 128);
+            $table->integer('NRO')->unsigned();
+            $table->string('NOMBRE', 256);
             $table->text('CONTENIDO');
             $table->string('LEY_ASOCIADA', 128);
             $table->string('ART_LEY_ASOCIADA', 128);
+            $table->text('REFERENCIA_LEGAL');
         });
     }
 

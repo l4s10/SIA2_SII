@@ -21,9 +21,9 @@ class DatabaseSeeder extends Seeder
             RolesAndPermissionsSeeder::class,
             // FuncionariosSeeder::class,
             //PolizasSeeder::class,
-            FacultadesSeeder::class,
+            //FacultadesSeeder::class,
             TipoResolucionSeeder::class,
-            ResolucionesSeeder::class,
+            //ResolucionesSeeder::class,
             //*Llamar primero a los tipos de objetos*/
             MaterialTipoSeeder::class,
             TipoEquiposSeeder::class,

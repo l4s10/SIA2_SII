@@ -11,6 +11,16 @@
     <form action="{{ route('facultades.store') }}" method="POST">
         @csrf
         <div class="mb-3">
+            <label for="NRO" class="form-label"><i class="fa-solid fa-book-bookmark"></i> Número de Facultad:</label>
+            <input type="text" class="form-control{{ $errors->has('NRO') ? ' is-invalid' : '' }}" id="NRO" name="NRO" value="{{ old('NRO') }}" placeholder="Ej: 12345" required>
+            @if ($errors->has('NRO'))
+                <div class="invalid-feedback">
+                    {{ $errors->first('NRO') }}
+                </div>
+            @endif
+        </div>
+
+        <div class="mb-3">
             <label for="NOMBRE" class="form-label"><i class="fa-solid fa-book-bookmark"></i> Nombre:</label>
             <input type="text" class="form-control{{ $errors->has('NOMBRE') ? ' is-invalid' : '' }}" id="NOMBRE" name="NOMBRE" value="{{ old('NOMBRE') }}" placeholder="Ej: APLICAR SANCIONES ADMINISTRATIVAS" required>
             @if ($errors->has('NOMBRE'))
@@ -50,10 +60,18 @@
             @endif
         </div>
 
-
+        <div class="mb-3">
+            <label for="REFERENCIA_LEGAL" class="form-label"><i class="fa-solid fa-book-bookmark"></i> Referencia Legal:</label>
+            <input type="text" class="form-control{{ $errors->has('REFERENCIA_LEGAL') ? ' is-invalid' : '' }}" id="REFERENCIA_LEGAL" name="REFERENCIA_LEGAL" value="{{ old('REFERENCIA_LEGAL') }}" placeholder="Ej: Ley X, Decreto Y" required>
+            @if ($errors->has('REFERENCIA_LEGAL'))
+                <div class="invalid-feedback">
+                    {{ $errors->first('REFERENCIA_LEGAL') }}
+                </div>
+            @endif
+        </div>
 
         <a href="{{route('facultades.index')}}" class="btn btn-secondary" tabindex="5"><i class="fa-solid fa-hand-point-left"></i> Cancelar</a>
-        <button type="submit" class="btn btn-primary" tabindex="4"><i class="fa-solid fa-floppy-disk"></i> Guardar facultad</button>
+        <button type="submit" class="btn btn-primary" tabindex="4"><i class="fa-solid fa-floppy-disk"></i> Registrar</button>
     </form>
 </div>
 @stop

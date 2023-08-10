@@ -10,7 +10,7 @@
 <div class="container">
     <div class="card" style="background-color: #f7f7f7; border: 1px solid #ccc;">
         <div class="card-header" style="background-color: #eaeaea;">
-            <h3 class="card-title" style="color: #333;">{{ __('Información de la resolución delegatoria registrada con n°')}} {{$resolucion->ID_RESOLUCION}}</h3>
+            <h3 class="card-title" style="color: #333;">{{ __('Información de la resolución delegatoria registrada con n°')}} {{$resolucion->NRO_RESOLUCION}}</h3>
         </div>
 
         <div class="card-body">
@@ -37,6 +37,7 @@
             @else
                 <p class="data"> - </p>
             @endif
+            
             <p class="parameter"><strong>Facultad:</strong></p>
             @if ($resolucion->facultad)
                 <p class="data">{{ $resolucion->facultad->NOMBRE }}</p>
@@ -44,10 +45,13 @@
                 <p class="data"> - </p>
             @endif
             
+            <p class="parameter"><strong>Observaciones:</strong></p>
+            <p class="data">{{ $resolucion->OBSERVACIONES }}</p>
+
             <p class="parameter"><strong>Documento:</strong></p>
             @if ($resolucion->DOCUMENTO)
                 <a href="{{ asset('storage/'.$resolucion->DOCUMENTO) }}" class="btn btn-sia-primary" target="_blank">
-                    <i class="fa-solid fa-file-pdf"></i> Descargar documento
+                    <i class="fa-solid fa-file-pdf" style="color: green;"></i> Descargar documento
                 </a>
             @else
                 <p class="data">Sin documento adjunto</p>
@@ -58,7 +62,7 @@
             <form action="{{route('resolucion.destroy',$resolucion->ID_RESOLUCION)}}" method="POST">
                 @csrf
                 @method('DELETE')
-                <a href="{{route('resolucion.index')}}" class="btn btn-secondary" style="margin-right: 5px;">Volver</a>
+                <a href="{{route('resolucion.index')}}" class="btn btn-secondary" style="margin-right: 5px;"><i class="fa-solid fa-hand-point-left"></i>Volver</a>
                 <a href="{{route('resolucion.edit',$resolucion->ID_RESOLUCION)}}" class="btn btn-primary" style="margin-right: 5px;"><i class="fa-solid fa-pen-to-square"></i> Modificar</a>
                 <button type="submit" href="{{route('resolucion.destroy',$resolucion->ID_RESOLUCION)}}" class="btn btn-danger"><i class="fa-solid fa-trash"></i> Eliminar</button>
             </form>

@@ -15,6 +15,16 @@
         @method('PUT')
         <div class="row">
             <div class="col">
+                
+                <div class="mb-3">
+                    <label for="NRO" class="form-label">Número de Facultad:</label>
+                    <input type="text" class="form-control{{ $errors->has('NRO') ? ' is-invalid' : '' }}" id="NRO" name="NRO" value="{{ $facultad->NRO }}" placeholder="Ej: 123" required>
+                    @if ($errors->has('NRO'))
+                        <div class="invalid-feedback">
+                            {{ $errors->first('NRO') }}
+                        </div>
+                    @endif
+                </div>
 
                 <div class="mb-3">
                     <label for="NOMBRE" class="form-label">Nombre:</label>
@@ -28,7 +38,7 @@
         
                 <div class="mb-3">
                     <label for="CONTENIDO" class="form-label">Contenido:</label>
-                    <input type="text" class="form-control{{ $errors->has('CONTENIDO') ? ' is-invalid' : '' }}" id="CONTENIDO" name="CONTENIDO" value="{{ $facultad->CONTENIDO }}" placeholder="Ej: La facultad de aplicar las sanciones..." required>
+                    <textarea class="form-control{{ $errors->has('CONTENIDO') ? ' is-invalid' : '' }}" id="CONTENIDO" name="CONTENIDO" rows="4" required>{{ $facultad->CONTENIDO }}</textarea>
                     @if ($errors->has('CONTENIDO'))
                         <div class="invalid-feedback">
                             {{ $errors->first('CONTENIDO') }}
@@ -55,11 +65,21 @@
                         </div>
                     @endif
                 </div>
+
+                <div class="mb-3">
+                    <label for="REFERENCIA_LEGAL" class="form-label">Referencia Legal:</label>
+                    <textarea class="form-control{{ $errors->has('REFERENCIA_LEGAL') ? ' is-invalid' : '' }}" id="REFERENCIA_LEGAL" name="REFERENCIA_LEGAL" rows="4" required>{{ $facultad->REFERENCIA_LEGAL }}</textarea>
+                    @if ($errors->has('REFERENCIA_LEGAL'))
+                        <div class="invalid-feedback">
+                            {{ $errors->first('REFERENCIA_LEGAL') }}
+                        </div>
+                    @endif
+                </div>
             </div>
         </div>
         <div class="form-group">
-            <a href="{{route('facultades.index')}}" class="btn btn-secondary">Cancelar</a>
-            <button type="submit" class="btn btn-primary">Modificar facultad</button>
+            <a href="{{route('facultades.index')}}" class="btn btn-secondary" tabindex="5"><i class="fa-solid fa-hand-point-left"></i> Cancelar</a>
+            <button type="submit" class="btn btn-primary" tabindex="4"><i class="fa-solid fa-floppy-disk"></i> Guardar</button>
         </div>
     </form>
 </div>

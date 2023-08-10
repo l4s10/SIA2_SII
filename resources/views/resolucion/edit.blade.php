@@ -104,6 +104,14 @@
                             <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
                     </div>
+
+                    <div class="mb-3">
+                        <label for="OBSERVACIONES" class="form-label"><i class="fa-solid fa-book-bookmark"></i> Observaciones:</label>
+                        <textarea class="form-control @error('OBSERVACIONES') is-invalid @enderror" id="OBSERVACIONES" name="OBSERVACIONES" placeholder="Observaciones">{{ old('OBSERVACIONES', $resolucion->OBSERVACIONES) }}</textarea>
+                        @error('OBSERVACIONES')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                    </div>
                     
                     <div class="mb-3">
                         <label for="DOCUMENTO" class="form-label"><i class="fa-solid fa-book-bookmark"></i> Documento:</label>
@@ -132,9 +140,9 @@
                 </div>
             </div>
             <div class="form-group text-right">
-                <a href="{{ route('resolucion.index') }}" class="btn btn-secondary">Cancelar</a>
-                <button type="submit" class="btn btn-primary">Modificar resolución</button>
-              </div>
+                <a href="{{ route('resolucion.index') }}" class="btn btn-secondary" tabindex="5"><i class="fa-solid fa-hand-point-left"></i> Cancelar</a>
+                <button type="submit" class="btn btn-primary" tabindex="4"><i class="fa-solid fa-floppy-disk"></i> Guardar</button>
+            </div>
         </form>
     </div>
 @endsection

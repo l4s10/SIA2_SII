@@ -28,7 +28,5 @@ class Region extends Model
         'REGION.max' => 'El campo Región no debe exceder los 128 caracteres.'
     ];
 
-    // $request 
-    // $data = $request->validate(Region::$rules, Region::$messages);
 
 }
