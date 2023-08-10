@@ -11,6 +11,8 @@ use App\Http\Controllers\UbicacionesController;
 use App\Http\Controllers\DireccionRegionalController;
 use App\Http\Controllers\EmailController;
 use Illuminate\Support\Facades\Auth;
+
+require __DIR__.'/reportes.php';
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -41,22 +43,7 @@ Route::get('/directivos', function(){
     return view('directivos.index');
 })->name('directivos.index')->middleware('auth');
 
-//*RUTAS PARA INDEX DE GRAFICOS*/
-Route::get('/reporteshome', 'App\Http\Controllers\HomeReportesController@Home')->name('reporteshome.home');
-//Ruta para REPORTES DE VEHICULOS
-Route::get('reporteshome/Vehiculos', 'App\Http\Controllers\HomeReportesController@VehiculosReport')->name('reporteshome.vehiculos');
-//RUTAS PARA REPORTES DE MATERIALES
-Route::get('/reporteshome/Materiales', 'App\Http\Controllers\HomeReportesController@MaterialsReport')->name('reporteshome.materiales');
-//GRAFICOS REPARACIONES Y MANTENCIONES
-Route::get('/reporteshome/Repyman','App\Http\Controllers\HomeReportesController@ReparacionesMantencionesReport')->name('reporteshome.repyman');
-//GRAFICOS PARA EQUIPOS
-Route::get('/reporteshome/Equipos', 'App\Http\Controllers\HomeReportesController@EquiposReport')->name('reporteshome.equipos');
-//GRAFICOS PARA RESERVAS (SALAS Y BODEGAS)
-Route::get('/reporteshome/Reservas', 'App\Http\Controllers\HomeReportesController@ReservasReport')->name('reporteshome.reservas');
-//GRAFICOS PARA INVENTARIO
-Route::get('/reporteshome/Inventario', 'App\Http\Controllers\HomeReportesController@InventarioReport')->name('reporteshome.inventario');
-//GRAFICOS PARA SISTEMA (TABLAS DE CONTINGENCIA)
-Route::get('/reporteshome/System', 'App\Http\Controllers\HomeReportesController@SystemReport')->name('reporteshome.system');
+
 //Dashboard para modulo reserva salas y visitas a bodega
 Route::get('/reservas', function(){
     return view('reservas.dashboard');
@@ -177,10 +164,7 @@ Route::resource('funcionarios','App\Http\Controllers\UserController');
 Route::post('/update-stock', [InventoryController::class, 'updateStock'])->name('update-stock');
 
 Route::get('/home', [HomeController::class, 'index']);
-// Esta es la ruta GET para mostrar la página
-Route::get('/reportes', [ReporteController::class, 'index'])->name('reportes.index');
-// Esta es la ruta POST para recibir las solicitudes AJAX
-Route::post('/reportes/data', [ReporteController::class, 'obtenerDatos'])->name('reportes.data');
+
 //RUTA GET PARA TABLA CONTINGENCIA
 Route::get('/get-totals/{id}', [ReporteController::class, 'getTotalsPorUbicacion']);
 
