@@ -9,7 +9,7 @@
     {{-- Sidebar menu --}}
     <div class="sidebar">
         <nav class="pt-2">
-            
+
             {{-- LeftBar --}}
             <ul class="nav nav-pills nav-sidebar flex-column {{ config('adminlte.classes_sidebar_nav', '') }}"
                 data-widget="treeview" role="menu"
@@ -24,11 +24,11 @@
                 @each('adminlte::partials.sidebar.menu-item', $adminlte->menu('sidebar'), 'item')
 
                 <!-- Header Módulos Funcionario -->
-                @role('ADMINISTRADOR|FUNCIONARIO|SERVICIOS|INFORMÁTICA')
+                @role('ADMINISTRADOR|FUNCIONARIO|SERVICIOS|INFORMATICA')
                 <li class="nav-header">Módulos Funcionario</li>
                 @endrole
 
-                @role('ADMINISTRADOR|FUNCIONARIO|SERVICIOS|INFORMÁTICA')
+                @role('ADMINISTRADOR|FUNCIONARIO|SERVICIOS|INFORMATICA')
                 <!-- Solicitudes vehiculares -->
                 <li class="nav-item has-treeview">
                     <a href="#" class="nav-link">
@@ -142,7 +142,7 @@
                         </li>
                     </ul>
                 </li>
-                
+
                 <!-- Reservas -->
                 <li class="nav-item">
                     <a href="{{ url('reservas') }}" class="nav-link">
@@ -152,14 +152,14 @@
                 </li>
                 @endrole
 
-                @role('ADMINISTRADOR|SERVICIOS|INFORMÁTICA')
+                @role('ADMINISTRADOR|SERVICIOS|INFORMATICA')
                 <!-- Inventario -->
                 <li class="nav-item has-treeview">
                     <a href="#" class="nav-link">
                         <i class="fas fa-fw fa-boxes nav-icon"></i>
                         <p>Inventario <i class="right fas fa-angle-left"></i></p>
                     </a>
-                    
+
                     <ul class="nav nav-treeview">
                         @role('ADMINISTRADOR|SERVICIOS')
                         <!-- Submenú 1 - Ver Materiales -->
@@ -316,7 +316,7 @@
                     </ul>
                 </li>
                 @endrole
-                
+
                 <!-- Panel de control -->
                 @role('ADMINISTRADOR|INFORMATICA|SERVICIOS')
                 <li class="nav-item has-treeview">
