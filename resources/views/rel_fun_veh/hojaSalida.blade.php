@@ -596,7 +596,7 @@ body { margin-left: 0.7in; margin-right: 0.7in; margin-top: 0.75in; margin-botto
           </tr>
           <tr class="row40">
             <td class="column0 style80 s">Fecha y Hr de regreso:</td>
-            <td class="column1 style81 null style81" colspan="2"></td>
+            <td class="column1 style81 null style81" colspan="2">{{$solicitud->FECHA_LLEGADA_CONDUCTOR}}</td>
             <td class="column3 style5 null"></td>
             <td class="column4 style5 null"></td>
             <td class="column5 style5 null"></td>

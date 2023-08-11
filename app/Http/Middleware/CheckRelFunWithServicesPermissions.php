@@ -32,6 +32,8 @@ class CheckRelFunWithServicesPermissions
                 $request->route()->getActionMethod() !== 'show'&&
                 $request->route()->getActionMethod() !== 'indexRendir' &&
                 $request->route()->getActionMethod() !== 'indexAutorizar' &&
+                $request->route()->getActionMethod() !== 'autorizar' &&
+                $request->route()->getActionMethod() !== 'generarPDF' &&
                 $request->route()->getActionMethod() !== 'rendicion' &&
                 $request->route()->getActionMethod() !== 'update') {
                     //!! ACCESO SOLO PARA ESTAS RUTAS, EN CASO CONTRARIO REDIRIGIR A 403.

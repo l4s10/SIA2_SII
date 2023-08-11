@@ -1,9 +1,9 @@
 @extends('adminlte::page')
 
-@section('title', 'Revisar reserva')
+@section('title', 'Rendición chofer')
 
 @section('content_header')
-    <h1>Revisar solicitud de reserva de vehíchulos</h1>
+    <h1>Formulario rendición chofer</h1>
 @stop
 
 @section('content')
@@ -13,7 +13,7 @@
             @method('PUT')
             {{-- *CAMPO CONDUCTOR* --}}
             <div class="mb-3">
-                <label for="CONDUCTOR" class="form-label"><i class="fa-solid fa-user-plus"></i> Seleccione conductor:</label>
+                <label for="CONDUCTOR" class="form-label"><i class="fa-solid fa-user-plus"></i> Conductor:</label>
                 <select id="CONDUCTOR" name="CONDUCTOR" class="form-control @if($errors->has('CONDUCTOR')) is-invalid @endif" disabled>
                     <option value="">--Seleccione un(a) conductor(a)--</option>
                     {{-- *CORRECCION DE FILTRO ARREGLADO, AHORA SOLO MUESTRA CONDUCTORES DEL MISMO DEPARTAMENTO* --}}
@@ -159,11 +159,9 @@
                         <input type="number" id="N_BITACORA" name="N_BITACORA" class="form-control" placeholder="Ej: 1" value="{{$solicitud->N_BITACORA}}">
                     </div>
                 </div>
-                <div class="col-md-6">
-                    <div class="mb-3" class="form-group">
-                        <label for="FECHA_LLEGADA_CONDUCTOR">Fecha y hora de llegada:</label>
-                        <input type="date" id="FECHA_LLEGADA_CONDUCTOR" name="FECHA_LLEGADA_CONDUCTOR" class="form-control">
-                    </div>
+                <div class="col-md-6" class="form-group">
+                    <label for="FECHA_LLEGADA_CONDUCTOR">Fecha y hora de llegada:</label>
+                    <input type="text" id="FECHA_LLEGADA_CONDUCTOR" name="FECHA_LLEGADA_CONDUCTOR" class="form-control">
                 </div>
             </div>
             {{-- ABASTECE BENCINA Y NIVEL DE COMBUSTIBLE --}}
@@ -366,6 +364,20 @@
     {{-- *FUNCION PARA REFRESCAR DINAMICAMENTE LOS VEHICULOS A ASIGNAR* --}}
     <script>
         $(document).ready(function() {
+            $('#FECHA_LLEGADA_CONDUCTOR').flatpickr({
+                dateFormat: 'Y-m-d H:i',
+                altFormat: 'd-m-Y H:i',
+                altInput: true,
+                enableTime: true,
+                time_24hr: true,  // Si prefieres el formato de 24 horas, si no, quítalo.
+                locale: 'es',
+                showClearButton: true,
+                onReady: function(selectedDates, dateStr, instance) {
+                    $('#clearButton').on('click', function() {
+                        instance.clear();
+                    });
+                }
+            });
             // Evento change del elemento ID_TIPO_VEH
             $('#ID_TIPO_VEH').change(function() {
                 var selectedTipoVehiculo = $(this).val();

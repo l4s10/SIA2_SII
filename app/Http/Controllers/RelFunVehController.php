@@ -37,19 +37,26 @@ class RelFunVehController extends Controller
      */
     public function index()
     {
-        //*Listar las solicitudes*/
-        //!!eliminar EMAIL y RUT -> MOSTRAR N FOLIO Y PATENTE ASIGNADA.
-        //!!EXPORTABLE A EXCEL
         $user = Auth::user();
 
         if ($user->hasAnyRole(['ADMINISTRADOR', 'SERVICIOS'])) {
             $solicitudes = RelFunVeh::all();
         } else {
-            $solicitudes = RelFunVeh::where('ID_USUARIO', $user->id)->get();
+            $solicitudes = RelFunVeh::where(function($query) use ($user) {
+                $query->where('ID_USUARIO', $user->id)  // Solicitudes creadas por el usuario
+                    ->orWhere('CONDUCTOR', $user->id)  // Solicitudes donde el usuario es conductor
+                    ->orWhere('OCUPANTE_1', $user->id)
+                    ->orWhere('OCUPANTE_2', $user->id)
+                    ->orWhere('OCUPANTE_3', $user->id)
+                    ->orWhere('OCUPANTE_4', $user->id)
+                    ->orWhere('OCUPANTE_5', $user->id)
+                    ->orWhere('OCUPANTE_6', $user->id);  // Solicitudes donde el usuario es ocupante
+            })->get();
         }
 
-        return view('rel_fun_veh.index',compact('solicitudes'));
+        return view('rel_fun_veh.index', compact('solicitudes'));
     }
+
 
     /**
      * Show the form for creating a new resource.
@@ -89,7 +96,10 @@ class RelFunVehController extends Controller
                     ->withErrors($validator)
                     ->withInput();
             }
+            $conductor = $request->input('OCUPANTE_1');
             $data = $request->except('_token');
+            $data['CONDUCTOR'] = $conductor;
+
             RelFunVeh::create($data);
             session()->flash('success','La solicitud se ha enviado exitosamente');
         }catch(\Exception $e){
@@ -257,35 +267,64 @@ class RelFunVehController extends Controller
     //*INDEX POR AUTORIZAR */
     public function indexAutorizar(){
         try{
-            $solicitudes = RelFunVeh::with(['comunaOrigen', 'comunaDestino'])
-                ->where('ESTADO_SOL_VEH', 'POR AUTORIZAR')->get();
+            $user = auth()->user(); // Obtener el usuario autenticado
+
+            $query = RelFunVeh::with(['comunaOrigen', 'comunaDestino'])
+                ->where('ESTADO_SOL_VEH', 'POR AUTORIZAR');
+
+            if($user->hasRole(['ADMINISTRADOR', 'SERVICIOS'])) {
+                // Si es administrador o servicios, muestra todas las solicitudes con ese estado
+            } else {
+                // Si no, muestra sólo las solicitudes en las que participa como ocupante
+                $query->where(function($q) use ($user) {
+                    $q->where('CONDUCTOR', $user->id)
+                      ->orWhere('OCUPANTE_1', $user->id)
+                      ->orWhere('OCUPANTE_2', $user->id)
+                      ->orWhere('OCUPANTE_3', $user->id)
+                      ->orWhere('OCUPANTE_4', $user->id)
+                      ->orWhere('OCUPANTE_5', $user->id)
+                      ->orWhere('OCUPANTE_6', $user->id);
+                });
+            }
+
+            $solicitudes = $query->get();
 
             if($solicitudes->isEmpty()) {
                 return redirect()->route('solicitud.vehiculos.index')->with('info', 'Por ahora no hay autorizaciones pendientes.');
             }
 
             return view('rel_fun_veh.autorizar', compact('solicitudes'));
-        }catch(Exception $e){
+        } catch(Exception $e){
             // manejo de excepción
+            // Sería bueno agregar un log o una respuesta para que sepas qué error ocurrió
+            return redirect()->route('solicitud.vehiculos.index')->with('error', 'Ha ocurrido un error inesperado.');
         }
     }
+
 
 
 
     //!!INDEX POR RENDIR
     public function indexRendir(){
         try{
-            //!!AGREGAR LAS QUE ESTAN RELACIONADAS A EL "id" ->where('ID_USUARIO', session()->user()->id)
             $user = Auth::user();
 
-            if($user->hasAnyRole(['ADMINISTRADOR', 'SERVICIOS'])){
-                $solicitudes = RelFunVeh::where('ESTADO_SOL_VEH', 'POR RENDIR')->get();
-            } else {
-                $solicitudes = RelFunVeh::where('ESTADO_SOL_VEH', 'POR RENDIR')->where('ID_USUARIO', $user->id)->get();
+            // Creas el constructor de la consulta básica con el estado 'POR RENDIR'
+            $query = RelFunVeh::where('ESTADO_SOL_VEH', 'POR RENDIR');
+
+            if(!$user->hasAnyRole(['ADMINISTRADOR', 'SERVICIOS'])){
+                // Si NO es ADMINISTRADOR o SERVICIOS, entonces filtra también por usuario o por conductor
+                $query->where(function($q) use ($user) {
+                    $q->where('ID_USUARIO', $user->id)
+                      ->orWhere('CONDUCTOR', $user->id);
+                });
             }
+
+            $solicitudes = $query->get();
+
             return view('rel_fun_veh.rendir', compact('solicitudes'));
         } catch (Exception $e){
-            // Manejar la excepción aquí, por ejemplo:
+            // Manejar la excepción aquí
             Log::error('Error al obtener las solicitudes por rendir: ' . $e->getMessage());
             return redirect()->back()->with('error', 'Ocurrió un error al obtener las solicitudes por rendir.');
         }
