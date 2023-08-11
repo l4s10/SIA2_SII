@@ -58,6 +58,7 @@
                         <th scope="col">Facultad</th>
                         <th scope="col">Ley asociada</th>
                         <th scope="col">Glosa</th>
+                        <th scope="col">Observación</th>
                         <th scope="col">Documento</th>
                         <th scope="col">Administrar</th>
                     </tr>
@@ -84,9 +85,20 @@
                                 <span class="glosa-completa" style="display: none;">{{ $resolucion->facultad->CONTENIDO }}</span>
                             </td>
                             <td>
+                                <span class="observaciones-abreviada">{{ substr($resolucion->OBSERVACIONES, 0, 0) }}</span>
+                                <button class="btn btn-sia-primary btn-block btn-expand-obs" data-obs="{{ $resolucion->OBSERVACIONES }}">
+                                    <i class="fa-solid fa-square-plus"></i>
+                                </button>
+                                <button class="btn btn-sia-primary btn-block btn-collapse-obs" style="display: none;">
+                                    <i class="fa-solid fa-square-minus"></i>
+                                </button>
+                                
+                                <span class="observaciones-completa" style="display: none;">{{ $resolucion->OBSERVACIONES }}</span>
+                            </td>
+                            <td>
                                 @if ($resolucion->DOCUMENTO)
                                     <a href="{{ asset('storage/resoluciones/' . $resolucion->DOCUMENTO) }}" class="btn btn-sia-primary btn-block" target="_blank">
-                                        <i class="fa-solid fa-file-pdf"></i>
+                                        <i class="fa-solid fa-file-pdf" style="color: green;"></i>
                                     </a>
                                 @else
                                     Sin documento
@@ -123,7 +135,7 @@
                 "lengthMenu": [[5,10, 50, -1], [5, 10, 50, "All"]],
                 "responsive": false,
                 "columnDefs": [
-                    { "orderable": false, "targets": 9 } // La séptima columna no es ordenable
+                    { "orderable": false, "targets": 10 } // La séptima columna no es ordenable
                 ],
                 "language": {
                     "url": "https://cdn.datatables.net/plug-ins/1.11.3/i18n/es_es.json"
@@ -156,5 +168,22 @@
             btnExpand.show();
             btnCollapse.hide();
         });
+
+
+        // Código para expandir y colapsar las observaciones
+        $('.btn-expand-obs').click(function() {
+            $(this).hide();
+            $(this).siblings('.btn-collapse-obs').show();
+            $(this).siblings('.observaciones-abreviada').hide();
+            $(this).siblings('.observaciones-completa').show();
+        });
+
+        $('.btn-collapse-obs').click(function() {
+            $(this).hide();
+            $(this).siblings('.btn-expand-obs').show();
+            $(this).siblings('.observaciones-abreviada').show();
+            $(this).siblings('.observaciones-completa').hide();
+        });
+
     </script>
 @endsection

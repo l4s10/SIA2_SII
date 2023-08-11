@@ -51,7 +51,8 @@ class FacultadController extends Controller
     public function store(Request $request)
     {
         try {
-            $request->validate(Facultad::rules(), Facultad::messages());
+            $request->validate(Facultad::rules($request->input('NRO')), Facultad::messages());
+            //$request->validate(Facultad::rules(), Facultad::messages());
             $data = $request->except('_token');
             Facultad::create($data);
 
@@ -100,10 +101,12 @@ class FacultadController extends Controller
 
     public function update(Request $request, string $id)
     {
-        $request->validate(Facultad::rules(), Facultad::messages());
+        //$request->validate(Facultad::rules(), Facultad::messages());
         try {
-            $data = $request->only('NOMBRE', 'CONTENIDO', 'LEY_ASOCIADA', 'ART_LEY_ASOCIADA');
             $facultad = Facultad::find($id);
+            $rules = Facultad::rules($facultad->ID_FACULTAD);
+            $request->validate($rules, Facultad::messages());
+            $data = $request->only('NRO','NOMBRE', 'CONTENIDO', 'LEY_ASOCIADA', 'ART_LEY_ASOCIADA', 'REFERENCIA_LEGAL');
             $facultad->fill($data);
             $facultad->save();
             session()->flash('success', 'La facultad fue modificada exitosamente');

@@ -29,9 +29,9 @@ class Resolucion extends Model
     ];
 
     //* Agregamos validaciones para la tabla de resoluciones delegatorias*/
-    public static function rules($resolucionId){
+    public static function rules(){
         return[
-            'NRO_RESOLUCION' => 'required|unique:resoluciones,NRO_RESOLUCION,'.$resolucionId.',ID_RESOLUCION|integer',
+            'NRO_RESOLUCION' => 'required|integer',
             'FECHA' => 'required|string',
             'ID_TIPO' => 'required|integer|exists:tipo_resoluciones,ID_TIPO',
             'ID_FIRMANTE' => 'required|integer|exists:cargos,ID_CARGO',

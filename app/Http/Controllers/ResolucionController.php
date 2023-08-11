@@ -59,14 +59,14 @@ class ResolucionController extends Controller
     public function store(Request $request)
     {
         try {
-            $request->validate(Resolucion::rules($request->input('NRO_RESOLUCION')), Resolucion::messages());
+        $request->validate(Resolucion::rules(), Resolucion::messages());
     
             $fecha = $request->input('FECHA');
             if (Carbon::parse($fecha)->isAfter(Carbon::now())) {
                 throw new \Exception('. La fecha debe ser anterior o igual a la fecha actual.');
             }
     
-            $data = $request->only('NRO_RESOLUCION', 'FECHA', 'ID_TIPO', 'ID_FIRMANTE', 'ID_FACULTAD', 'ID_DELEGADO');
+            $data = $request->only('NRO_RESOLUCION', 'FECHA', 'ID_TIPO', 'ID_FIRMANTE', 'ID_FACULTAD', 'ID_DELEGADO', 'OBSERVACIONES');
     
             if ($request->hasFile('DOCUMENTO')) {
                 $documento = $request->file('DOCUMENTO');
@@ -103,16 +103,7 @@ class ResolucionController extends Controller
             return redirect(route('resolucion.index'));
         }
     }
-/*
-    public function show(string $id)
-    {
-        try {
-            $resolucion = Resolucion::with('cargo')->find($id);
-            return view('resolucion.show', compact('resolucion'));
-        } catch (\Exception $e) {
-            session()->flash('error', 'Error al acceder a la resolución delegatoria seleccionada, vuelva a intentarlo más tarde.');
-        }
-    }*/
+
     /**
      * Show the form for editing the specified resource.
      *///Carga el formulario de edicion
@@ -132,15 +123,14 @@ class ResolucionController extends Controller
     {
         try {
             $resolucion = Resolucion::find($id);
-            $rules = Resolucion::rules($resolucion->ID_RESOLUCION);
-            $request->validate($rules, Resolucion::messages());
+            $request->validate(Resolucion::rules(), Resolucion::messages());
 
             $fecha = $request->input('FECHA');
             if (strtotime($fecha) > time()) {
                 throw new \Exception('. La fecha debe ser anterior o igual a la fecha actual');
             }
 
-            $data = $request->only('NRO_RESOLUCION', 'FECHA', 'ID_TIPO', 'ID_FIRMANTE', 'ID_FACULTAD', 'ID_DELEGADO');
+            $data = $request->only('NRO_RESOLUCION', 'FECHA', 'ID_TIPO', 'ID_FIRMANTE', 'ID_FACULTAD', 'ID_DELEGADO', 'OBSERVACIONES');
             $resolucion->fill($data);
 
             // Procesar el archivo adjunto si se ha seleccionado uno
@@ -177,13 +167,20 @@ class ResolucionController extends Controller
      */
     public function destroy(string $id)
     {
-        try{
+        try {
             $resolucion = Resolucion::find($id);
+
+            // Eliminar el documento asociado si existe
+            if ($resolucion->DOCUMENTO) {
+                Storage::disk('public')->delete('resoluciones/' . $resolucion->DOCUMENTO);
+            }
+
             $resolucion->delete();
-            session()->flash('success','La resolución delegatoria ha sido eliminada correctamente.');
-        }catch(\Exception $e){
-            session()->flash('error','Error al eliminar la resolución delegatoria seleccionada, vuelva a intentarlo nuevamente.');
+            session()->flash('success', 'La resolución delegatoria ha sido eliminada correctamente.');
+        } catch (\Exception $e) {
+            session()->flash('error', 'Error al eliminar la resolución delegatoria seleccionada, vuelva a intentarlo nuevamente.');
         }
+        
         return redirect(route('resolucion.index'));
     }
 
