@@ -7,23 +7,24 @@ use Illuminate\Database\Eloquent\Model;
 
 class Comuna extends Model
 {
-    //ID_COMUNA, COMUNA, ID_REGION;
     use HasFactory;
     protected $table = 'comunas';
-    // Se cambia el ID predefinico por el nombre del ID de la tabla.
     protected $primaryKey = 'ID_COMUNA';
     public $timestamps = false;
 
+     //* Atributos Fillables*/
     protected $fillable = [
         'COMUNA',
         'ID_REGION',
     ];
-
+    
+    //* Validaciones para la tabla de comunas*/
     public static $rules = [
         'COMUNA' => 'required|unique:comunas,COMUNA|max:128',
         'ID_REGION' => 'required|exists:region,ID_REGION',
     ];
 
+    //* Mensajes de validación*/
     public static $messages = [
         'COMUNA.required' => 'El campo "nombre comuna" es requerido.',
         'COMUNA.unique' => 'La comuna ingresada ya existe.',
