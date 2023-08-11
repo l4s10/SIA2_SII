@@ -2,21 +2,15 @@
 
 namespace App\Http\Controllers;
 
-
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-
 use App\Models\Facultad;
-
-
-
-
 class FacultadController extends Controller
 {
     //Funcion para acceder a las rutas SOLO SI los usuarios estan logueados
     public function __construct(){
         $this->middleware('auth');
-        //Tambien aqui podremos agregar que roles son los que pueden ingresar
+        // Roles que pueden ingresar a la url
         $this->middleware(function ($request, $next) {
             $user = Auth::user();
 
