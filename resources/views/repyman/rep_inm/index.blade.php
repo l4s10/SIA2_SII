@@ -81,8 +81,12 @@
                                         @csrf
                                         @method('DELETE')
                                         <a href="{{ route('reparaciones.show', $sol_reparacion->ID_REP_INM) }}" class="btn btn-primary"><i class="fa-solid fa-eye"></i> Ver</a>
-                                        <a href="{{route('reparaciones.edit', $sol_reparacion->ID_REP_INM)}}" class="btn btn-info"><i class="fa-regular fa-clipboard"></i> Revisar</a>
-                                        <button type="submit" class="btn btn-danger"><i class="fa-solid fa-trash"></i> Borrar</button>
+                                        @role('ADMINISTRADOR|SERVICIOS')
+                                            <a href="{{route('reparaciones.edit', $sol_reparacion->ID_REP_INM)}}" class="btn btn-info"><i class="fa-regular fa-clipboard"></i> Revisar</a>
+                                        @endrole
+                                        @role('ADMINISTRADOR')
+                                            <button type="submit" class="btn btn-danger"><i class="fa-solid fa-trash"></i> Borrar</button>
+                                        @endrole
                                     </form>
                                 </td>
                             </tr>

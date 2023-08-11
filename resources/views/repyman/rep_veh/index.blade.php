@@ -67,7 +67,9 @@
                         <th>Email</th>
                         <th>Fecha</th>
                         <th>Estado</th>
-                        <th>Acciones</th>
+                        @role('ADMINSTRADOR|SERVICIOS')
+                            <th>Acciones</th>
+                        @endrole
                     </tr>
                 </thead>
                 <tbody>
@@ -79,14 +81,18 @@
                             <td>{{$solicitud->EMAIL}}</td>
                             <td>{{ $solicitud->created_at->tz('America/Santiago')->format('d/m/Y H:i') }}</td>
                             <td>{{$solicitud->ESTADO_SOL_REP_VEH}}</td>
+                            @role('ADMINISTRADOR|SERVICIOS')
                             <td>
                                 <form action="{{ route('repvehiculos.destroy',$solicitud->ID_SOL_REP_VEH) }}" method="POST">
                                     @csrf
                                     @method('DELETE')
                                     <a href="{{route('repvehiculos.edit', $solicitud->ID_SOL_REP_VEH)}}" class="btn btn-info"><i class="fa-solid fa-pen-to-square"></i> Editar</a>
-                                    <button type="submit" class="btn btn-danger"><i class="fa-solid fa-trash"></i> Borrar</button>
+                                    @role('ADMINISTRADOR')
+                                        <button type="submit" class="btn btn-danger"><i class="fa-solid fa-trash"></i> Borrar</button>
+                                    @endrole
                                 </form>
                             </td>
+                            @endrole
                         </tr>
                     @endforeach
                 </tbody>
