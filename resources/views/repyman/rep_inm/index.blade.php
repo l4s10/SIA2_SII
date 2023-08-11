@@ -64,6 +64,7 @@
                             <th scope="col">Rut</th>
                             <th scope="col">Departamento</th>
                             <th scope="col">Email</th>
+                            <th scope="col">Estado</th>
                             <th scope="col">Fecha</th>
                             <th scope="col">Acciones</th>
                         </tr>
@@ -75,7 +76,8 @@
                                 <td>{{ $sol_reparacion->RUT }}</td>
                                 <td>{{ $sol_reparacion->DEPTO}}</td>
                                 <td>{{ $sol_reparacion->EMAIL}}</td>
-                                <td>{{ $sol_reparacion->created_at->tz('America/Santiago')->format('d/m/Y H:i') }}</td>
+                                <td>{{ $sol_reparacion->ESTADO_REP_INM }}</td>
+                                <td>{{ $sol_reparacion->created_at}}</td>
                                 <td>
                                     <form action="{{ route('reparaciones.destroy',$sol_reparacion->ID_REP_INM) }}" method="POST">
                                         @csrf

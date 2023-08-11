@@ -67,7 +67,6 @@ class MaterialController extends Controller
             'NOMBRE_MATERIAL' => ['required', 'string', 'max:255'],
             'ID_TIPO_MAT' => ['required'],
             'STOCK' => ['required', 'numeric'],
-            'TIPO_MOVIMIENTO' => 'required|string|max:10',
             'DETALLE_MOVIMIENTO' => 'required|string|max:1000', // Asumiendo un máximo de 1000 caracteres.
         ];
 
@@ -78,7 +77,6 @@ class MaterialController extends Controller
             'ID_TIPO_MAT.required' => 'Debe seleccionar un tipo de material',
             'STOCK.required' => 'El campo STOCK es requerido',
             'STOCK.numeric' => 'El campo STOCK debe ser numérico',
-            'TIPO_MOVIMIENTO.required' => 'El campo Tipo de movimiento es obligatorio',
             'DETALLE_MOVIMIENTO.required' => 'El detalle del movimiento es obligatorio',
             'DETALLE_MOVIMIENTO.string' => 'El detalle del movimiento debe ser una cadena de texto',
         ];
@@ -220,8 +218,6 @@ class MaterialController extends Controller
      */
     public function destroy(string $id)
     {
-        $material = Material::find($id);
-
         // Verifica si hay registros de movimientos asociados a este material
         // if ($material->movimientos && $material->movimientos->count() > 0) {
         //     session()->flash('error', 'No se puede eliminar el material ya que tiene registros de movimientos asociados.');
@@ -229,6 +225,7 @@ class MaterialController extends Controller
         // }
 
         try {
+            $material = Material::find($id);
             $material->delete();
             session()->flash('success', 'El material fue eliminado exitosamente');
         } catch (\Exception $e) {
