@@ -16,7 +16,7 @@
         <div class="row">
             <div class="col">
                 <div class="form-group">
-                    <label for="DIRECCION">Nombre dirección regional:</label>
+                    <label for="DIRECCION"><i class="fa-solid fa-book-bookmark"></i> Nombre dirección regional:</label>
                     <input type="text" name="DIRECCION" id="DIRECCION" class="form-control" placeholder="Nombre de la dirección regional" value="{{ $direcciones->DIRECCION }}" required autofocus>
 
                     @error('DIRECCION')
@@ -26,7 +26,7 @@
                     @enderror
                 </div>
                 <div class="mb-3">
-                    <label for="ID_REGION" class="form-label"><i class="fa-solid fa-person-chalkboard"></i> Región asociada:</label>
+                    <label for="ID_REGION" class="form-label"><i class="fa-solid fa-book-bookmark"></i> Región asociada:</label>
                     <select id="ID_REGION" name="ID_REGION" class="form-control @error('ID_REGION') is-invalid @enderror">
                         @foreach($regiones as $region)
                             @if($direcciones->ID_REGION == $region->ID_REGION)

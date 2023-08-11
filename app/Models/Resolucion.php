@@ -17,6 +17,7 @@ class Resolucion extends Model
     protected $primaryKey = 'ID_RESOLUCION';
     public $timestamps = false;
 
+     //* Atributos Fillables*/
     protected $fillable = [
         'NRO_RESOLUCION',
         'FECHA',
@@ -28,7 +29,7 @@ class Resolucion extends Model
         'OBSERVACIONES'
     ];
 
-    //* Agregamos validaciones para la tabla de resoluciones delegatorias*/
+    //* Validaciones para la tabla de resoluciones*/
     public static function rules(){
         return[
             'NRO_RESOLUCION' => 'required|integer',
@@ -40,6 +41,8 @@ class Resolucion extends Model
             'OBSERVACIONES' => 'string|max:512'
         ];
     }
+
+    //* Mensajes de validación*/
     public static function messages(){
         return[
             'required' => 'El campo :attribute es obligatorio.',
@@ -50,7 +53,7 @@ class Resolucion extends Model
         ];
     }
 
-
+    //* Métodos para conexiones foráneas*/
     public function firmante()
     {
         return $this->belongsTo(Cargo::class, 'ID_FIRMANTE', 'ID_CARGO');

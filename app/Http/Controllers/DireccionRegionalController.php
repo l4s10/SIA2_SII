@@ -15,7 +15,7 @@ class DireccionRegionalController extends Controller
     //Funcion para acceder a las rutas SOLO SI los usuarios estan logueados
     public function __construct(){
         $this->middleware('auth');
-        //Tambien aqui podremos agregar que roles son los que pueden ingresar
+        //Roles que pueden ingresar a la url
         $this->middleware(function ($request, $next) {
             $user = Auth::user();
 
@@ -93,11 +93,8 @@ class DireccionRegionalController extends Controller
      *///Guarda el formulario de edicion en la bd
     public function update(Request $request, string $id)
     {
-        //dd($request->all());
-
         $request->validate(DireccionRegional::$rules, DireccionRegional::$messages);
         try {
-            //dd($request->input('ID_REGION'));
             $direcciones = DireccionRegional::find($id);
             $direcciones->fill([
                 'DIRECCION' => $request->input('DIRECCION'),
@@ -105,11 +102,9 @@ class DireccionRegionalController extends Controller
             ]);
             $direcciones->save();
             session()->flash('success', 'La dirección regional fue modificada exitosamente');
-            //dd($request->input('ID_REGION'));
         } catch(\Exception $e) {
             session()->flash('error', 'Error al modificar la dirección regional seleccionado: ' . $e->getMessage());
         }
-        //dd($request->input('ID_REGION'));
         return redirect(route('direccionregional.index'));
     }
 

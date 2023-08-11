@@ -13,15 +13,17 @@ class Region extends Model
     protected $primaryKey = 'ID_REGION';
     public $timestamps = false;
 
+    //* Atributos Fillables*/
     protected $fillable = [
         'REGION'
     ];
 
-    //* Agregamos validaciones para la tabla de regiones*/
+    //* Validaciones para la tabla de regiones*/
     public static $rules = [
         'REGION' => 'required|unique:region,REGION|max:128'
     ];
 
+    //* Mensajes de validación*/
     public static $messages = [
         'REGION.required' => 'El campo Región es requerido.',
         'REGION.unique' => 'La región ingresada ya existe.',

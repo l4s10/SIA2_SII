@@ -1,13 +1,8 @@
 <?php
 
 namespace App\Http\Controllers;
-
-
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Carbon\Carbon;
-//use Illuminate\Validation\Rule;
-//use Illuminate\Support\Facades\Auth;
 use App\Models\Cargo;
 use App\Models\DireccionRegional;
 
@@ -19,7 +14,7 @@ class CargoController extends Controller
     //Funcion para acceder a las rutas SOLO SI los usuarios estan logueados
     public function __construct(){
         $this->middleware('auth');
-        //Tambien aqui podremos agregar que roles son los que pueden ingresar
+        // Roles que pueden ingresar a la url
         $this->middleware(function ($request, $next) {
             $user = Auth::user();
 
@@ -37,9 +32,6 @@ class CargoController extends Controller
     {
         // Obtiene la dirección regional del funcionario con sesión activa
         $direccionRegional = auth()->user()->cargo->ID_DIRECCION;
-        /*$cargos = Cargo::where('ID_DIRECCION', $direccionRegional)
-            ->pluck('CARGO', 'ID_CARGO');*/
-
         $cargos = Cargo::join('direcciones_regionales', 'cargos.ID_DIRECCION', '=', 'direcciones_regionales.ID_DIRECCION')
         ->where('cargos.ID_DIRECCION', $direccionRegional)
         ->select('cargos.ID_CARGO', 'cargos.CARGO', 'direcciones_regionales.DIRECCION')
@@ -55,7 +47,7 @@ class CargoController extends Controller
        // Obtiene la dirección regional del funcionario con sesión activa
         $direccionRegional = auth()->user()->ubicacion->ID_DIRECCION;
         
-        // Obtén las direcciones regionales filtradas por la dirección regional sesión autenticada
+        // Obtiene las direcciones regionales filtradas por la dirección regional sesión autenticada
         $direccion = DireccionRegional::where('ID_DIRECCION', $direccionRegional)
             ->pluck('DIRECCION', 'ID_DIRECCION');
         
