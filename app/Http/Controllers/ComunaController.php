@@ -13,7 +13,7 @@ class ComunaController extends Controller
     //Funcion para acceder a las rutas SOLO SI los usuarios estan logueados
     public function __construct(){
         $this->middleware('auth');
-        //Tambien aqui podremos agregar que roles son los que pueden ingresar
+        // Roles que pueden ingresar a la url
         $this->middleware(function ($request, $next) {
             $user = Auth::user();
 
@@ -48,7 +48,7 @@ class ComunaController extends Controller
     public function store(Request $request)
     {
         try{
-            // Validamos los datos recibidos del formulario
+            // Validación de datos recibidos del formulario
             $request->validate(Comuna::$rules, Comuna::$messages);
             $data = $request -> except('_token');
             Comuna::create($data);

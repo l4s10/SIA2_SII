@@ -12,17 +12,16 @@ class DireccionRegional extends Model
     protected $primaryKey = 'ID_DIRECCION';
     public $timestamps = false;
 
+     //* Atributos Fillables*/
     protected $fillable = [
         'DIRECCION',
         'ID_REGION'
     ];
 
-    //* Agregamos validaciones para la tabla de direcciones regionales*/
+    //* Validaciones para la tabla de direcciones regionales*/
     public static $rules = [
         'DIRECCION' => 'required|unique:direcciones_regionales,DIRECCION|max:128',
         'ID_REGION' => 'required|exists:region,ID_REGION',
-        //'ID_DEPARTAMENTO' => 'required|exists:departamento,ID_DEPARTAMENTO',
-        //'ID_UBICACION' => 'required|exists:ubicacion,ID_UBICACION',
     ];
 
     public static $messages = [
@@ -31,10 +30,6 @@ class DireccionRegional extends Model
         'DIRECCION.max' => 'El campo "Dirección Regional" no debe exceder los 128 caracteres.',
         'ID_REGION.required' => 'El campo "region asociada" es requerido.',
         'ID_REGION.exists' => 'El valor seleccionado para "region asociada" no es válido.'
-        //'ID_DEPARTAMENTO.required' => 'El campo " Departamento asociado" es requerido.',
-        //'ID_DEPARTAMENTO.exists' => 'El valor seleccionado para " Departamento asociado" no es válido.'
-        //'ID_UBICACION.required' => 'El campo " Ubicación asociada" es requerido.',
-        //'ID_UBICACION.exists' => 'El valor seleccionado para  " Ubicación asociada" no es válido.',
     ];
 
     public function region()
