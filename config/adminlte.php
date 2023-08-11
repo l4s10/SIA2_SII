@@ -305,7 +305,7 @@ return [
         [
             'type' => 'sidebar-menu-search',
             'text' => 'Buscar módulos',
-        ],
+        ],/*
         ['header' => 'Módulos Funcionario'],
         [
             'text'        => 'Solicitudes vehiculares',
@@ -462,7 +462,7 @@ return [
                         ],
                     ],
         ],
-        /*[
+        [
             'text' => 'Directivos',
             'url' => 'directivos',
             'icon' => 'fa-solid fa-user-tie',
@@ -513,13 +513,13 @@ return [
                     ],
                 ],
             ],
-        ],*/
+        ],
         [
             'text'        => 'Reportes',
             'url'         => '/reportes',
             'icon'        => 'fas fa-fw fa-solid fa-chart-simple',
         ],
-        /*['header' => 'Módulos Administrador'],
+        ['header' => 'Módulos Administrador'],
         [
             'text'        => 'Panel de control',
             'url'         => '#',

@@ -13,6 +13,7 @@ class Facultad extends Model
     protected $primaryKey = 'ID_FACULTAD';
     public $timestamps = false;
 
+     //* Atributos Fillables*/
     protected $fillable = [
         'NRO',
         'NOMBRE',
@@ -22,7 +23,7 @@ class Facultad extends Model
         'REFERENCIA_LEGAL'
     ];
 
-    //* Agregamos validaciones para la tabla de resoluciones delegatorias*/
+    //* Validaciones para la tabla de facultades*/
     public static function rules($facultadId){
         return[
             'NRO' => 'required|unique:facultades,NRO,'.$facultadId.',ID_FACULTAD|integer',
@@ -33,6 +34,8 @@ class Facultad extends Model
             'REFERENCIA_LEGAL' => 'required|string|max:2000'
         ];
     }
+
+    //* Mensajes de validación*/
     public static function messages(){
         return[
             'required' => ' El campo ":attribute" es obligatorio.',

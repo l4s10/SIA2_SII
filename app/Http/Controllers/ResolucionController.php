@@ -19,7 +19,7 @@ class ResolucionController extends Controller
     //Funcion para acceder a las rutas SOLO SI los usuarios estan logueados
     public function __construct(){
         $this->middleware('auth');
-        //Tambien aqui podremos agregar que roles son los que pueden ingresar
+        // Roles que pueden ingresar a la url
         $this->middleware(function ($request, $next) {
             $user = Auth::user();
 
@@ -40,17 +40,17 @@ class ResolucionController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
+    * Show the form for creating a new resource.
      *///Carga formulario de creacion
-     public function create()
-     {
-        $tiposResolucion = TipoResolucion::pluck('NOMBRE', 'ID_TIPO');
-        $facultades = Facultad::pluck('NOMBRE', 'ID_FACULTAD');
-        $firmantes = Cargo::pluck('CARGO', 'ID_CARGO');
-        $delegados = Cargo::pluck('CARGO', 'ID_CARGO');
+    public function create()
+    {
+    $tiposResolucion = TipoResolucion::pluck('NOMBRE', 'ID_TIPO');
+    $facultades = Facultad::pluck('NOMBRE', 'ID_FACULTAD');
+    $firmantes = Cargo::pluck('CARGO', 'ID_CARGO');
+    $delegados = Cargo::pluck('CARGO', 'ID_CARGO');
 
-         return view('resolucion.create', compact('tiposResolucion', 'facultades','firmantes','delegados'));
-     }
+        return view('resolucion.create', compact('tiposResolucion', 'facultades','firmantes','delegados'));
+    }
 
     /**
      * Store a newly created resource in storage.
