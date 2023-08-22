@@ -87,10 +87,10 @@
                                         @method('DELETE')
                                         <a href="{{ route('solicitud.salas.show',$sol_sala->ID_SOL_SALA) }}" class="btn btn-primary"><i class="fa-regular fa-eye"></i> Ver</a>
                                         @role('ADMINISTRADOR|INFORMATICA')
-                                        <a href="{{route('solicitud.salas.edit',$sol_sala->ID_SOL_SALA)}}" class="btn btn-info"><i class="fa-regular fa-clipboard"></i> Revisar</a>
+                                            <a href="{{route('solicitud.salas.edit',$sol_sala->ID_SOL_SALA)}}" class="btn btn-info"><i class="fa-regular fa-clipboard"></i> Revisar</a>
                                         @endrole
                                         @role('ADMINISTRADOR')
-                                        <button type="submit" class="btn btn-danger"><i class="fa-solid fa-trash"></i> Borrar</button>
+                                            <button type="submit" class="btn btn-danger"><i class="fa-solid fa-trash"></i> Borrar</button>
                                         @endrole
                                     </form>
                                 </td>

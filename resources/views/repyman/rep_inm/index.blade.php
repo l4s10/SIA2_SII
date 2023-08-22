@@ -64,6 +64,7 @@
                             <th scope="col">Rut</th>
                             <th scope="col">Departamento</th>
                             <th scope="col">Email</th>
+                            <th scope="col">Estado</th>
                             <th scope="col">Fecha</th>
                             <th scope="col">Acciones</th>
                         </tr>
@@ -75,14 +76,19 @@
                                 <td>{{ $sol_reparacion->RUT }}</td>
                                 <td>{{ $sol_reparacion->DEPTO}}</td>
                                 <td>{{ $sol_reparacion->EMAIL}}</td>
-                                <td>{{ $sol_reparacion->created_at->tz('America/Santiago')->format('d/m/Y H:i') }}</td>
+                                <td>{{ $sol_reparacion->ESTADO_REP_INM }}</td>
+                                <td>{{ $sol_reparacion->created_at}}</td>
                                 <td>
                                     <form action="{{ route('reparaciones.destroy',$sol_reparacion->ID_REP_INM) }}" method="POST">
                                         @csrf
                                         @method('DELETE')
                                         <a href="{{ route('reparaciones.show', $sol_reparacion->ID_REP_INM) }}" class="btn btn-primary"><i class="fa-solid fa-eye"></i> Ver</a>
-                                        <a href="{{route('reparaciones.edit', $sol_reparacion->ID_REP_INM)}}" class="btn btn-info"><i class="fa-regular fa-clipboard"></i> Revisar</a>
-                                        <button type="submit" class="btn btn-danger"><i class="fa-solid fa-trash"></i> Borrar</button>
+                                        @role('ADMINISTRADOR|SERVICIOS')
+                                            <a href="{{route('reparaciones.edit', $sol_reparacion->ID_REP_INM)}}" class="btn btn-info"><i class="fa-regular fa-clipboard"></i> Revisar</a>
+                                        @endrole
+                                        @role('ADMINISTRADOR')
+                                            <button type="submit" class="btn btn-danger"><i class="fa-solid fa-trash"></i> Borrar</button>
+                                        @endrole
                                     </form>
                                 </td>
                             </tr>

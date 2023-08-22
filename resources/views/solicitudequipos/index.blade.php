@@ -86,8 +86,12 @@
                                     @csrf
                                     @method('DELETE')
                                     <a href="{{ route('solequipos.show',$solicitud->ID_SOL_EQUIPOS) }}" class="btn btn-primary"><i class="fa-regular fa-eye"></i> Ver</a>
-                                    <a href="{{route('solequipos.edit', $solicitud->ID_SOL_EQUIPOS)}}" class="btn btn-info"><i class="fa-solid fa-pen-to-square"></i> Editar</a>
-                                    <button type="submit" class="btn btn-danger"><i class="fa-solid fa-trash"></i> Borrar</button>
+                                    @role('ADMINISTRADOR|SERVICIOS')
+                                        <a href="{{route('solequipos.edit', $solicitud->ID_SOL_EQUIPOS)}}" class="btn btn-info"><i class="fa-solid fa-pen-to-square"></i> Editar</a>
+                                    @endrole
+                                    @role('ADMINISTRADOR')
+                                        <button type="submit" class="btn btn-danger"><i class="fa-solid fa-trash"></i> Borrar</button>
+                                    @endrole
                                 </form>
                             </td>
                         </tr>

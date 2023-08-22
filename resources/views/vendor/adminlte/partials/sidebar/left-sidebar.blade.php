@@ -325,12 +325,14 @@
                         <p>Panel de control <i class="right fas fa-angle-left"></i></p>
                     </a>
                     <ul class="nav nav-treeview">
-                        <li class="nav-item">
-                            <a href="/funcionarios" class="nav-link">
-                                <i class="fas fa-fw fa-users nav-icon"></i>
-                                <p>Administrar Usuarios</p>
-                            </a>
-                        </li>
+                        @role('ADMINISTRADOR')
+                            <li class="nav-item">
+                                <a href="/funcionarios" class="nav-link">
+                                    <i class="fas fa-fw fa-users nav-icon"></i>
+                                    <p>Administrar Usuarios</p>
+                                </a>
+                            </li>
+                        @endrole
                         <li class="nav-item">
                             <a href="/vehiculos" class="nav-link">
                                 <i class="fas fa-fw fa-car nav-icon"></i>

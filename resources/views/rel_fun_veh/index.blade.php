@@ -98,8 +98,12 @@
                                         @csrf
                                         @method('DELETE')
                                         <a href="{{ route('solicitud.vehiculos.show',$sol_veh->ID_SOL_VEH) }}" class="btn btn-primary"><i class="fa-regular fa-eye"></i> Ver</a>
-                                        <a href="{{route('solicitud.vehiculos.edit',$sol_veh->ID_SOL_VEH)}}" class="btn btn-info"><i class="fa-regular fa-clipboard"></i> Revisar</a>
-                                        <button type="submit" class="btn btn-danger"><i class="fa-solid fa-trash"></i> Borrar</button>
+                                        @role('ADMINISTRADOR|SERVICIOS')
+                                            <a href="{{route('solicitud.vehiculos.edit',$sol_veh->ID_SOL_VEH)}}" class="btn btn-info"><i class="fa-regular fa-clipboard"></i> Revisar</a>
+                                        @endrole
+                                        @role('ADMINISTRADOR')
+                                            <button type="submit" class="btn btn-danger"><i class="fa-solid fa-trash"></i> Borrar</button>
+                                        @endrole
                                     </form>
                                 </td>
                                 <td>
@@ -125,7 +129,7 @@
         color:     #000000;
         }
     </style>
-    
+
     <style>
         .alert1 {
             opacity: 0.7;

@@ -70,11 +70,10 @@
                 </select>
             </div>
             {{-- *CAMPO CONDUCTOR* --}}
-            <div class="mb-3">
+            {{-- <div class="mb-3">
                 <label for="CONDUCTOR" class="form-label"><i class="fa-solid fa-user-plus"></i> Seleccione conductor:</label>
                 <select id="CONDUCTOR" name="CONDUCTOR" class="form-control @if($errors->has('CONDUCTOR')) is-invalid @endif" required>
                     <option value="">--Seleccione un(a) conductor(a)--</option>
-                    {{-- *CORRECCION DE FILTRO ARREGLADO, AHORA SOLO MUESTRA CONDUCTORES DEL MISMO DEPARTAMENTO* --}}
                     @foreach ($conductores as $conductor)
                     <option value="{{$conductor->id}}" class="" {{ $conductor->id == $solicitud->CONDUCTOR ? 'selected' : '' }}>
                         {{$conductor->NOMBRES}} {{$conductor->APELLIDOS}}
@@ -85,7 +84,7 @@
                 @error('CONDUCTOR')
                     <div class="invalid-feedback">{{ $message }}</div>
                 @enderror
-            </div>
+            </div> --}}
 
             {{-- *CAMPO MOTIVO SOLICITUD* --}}
             <div class="mb-3">
