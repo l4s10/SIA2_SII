@@ -35,4 +35,19 @@ class SolicitudMateriales extends Model
             return null;
         }
     }
+    public function diasSinAtender()
+    {
+        $fechaInicio = new Carbon($this->created_at); // Usando el timestamp de creación
+        $fechaActual = Carbon::now(); // Fecha y hora actual
+        $dias = 0;
+
+        while ($fechaInicio->lt($fechaActual)) {
+            if (!$fechaInicio->isWeekend()) {
+                $dias++;
+            }
+            $fechaInicio->addDay();
+        }
+
+        return $dias;  // Diferencia en días hábiles
+    }
 }
