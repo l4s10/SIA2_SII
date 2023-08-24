@@ -69,6 +69,7 @@
                             {{-- <th scope="col">Materiales</th> --}}
                             <th scope="col">Estado</th>
                             <th scope="col">Fecha Ingreso</th>
+                            <th scope="col">Dias de tramitacion</th>
                             {{-- <th scope="col">Observaciones</th> --}}
                             <th scope="col">Acciones</th>
                         </tr>
@@ -88,6 +89,7 @@
                                 </td>
                                 <!-- Carbon sirve para parsear datos, esta es una instancia de carbon -->
                                 <td>{{ $sol_material->created_at ? $sol_material->created_at->format('d/m/Y H:i') : 'Fecha no disponible' }}</td>
+                                <td>{{ $sol_material->diasDeTramitacion()}} dias en despachar</td>
                                 {{-- <td>{{ $sol_material->OBSERVACIONES}}</td> --}}
                                 <td>
                                     <form action="{{ route('solmaterial.destroy',$sol_material->ID_SOLICITUD) }}" method="POST">
@@ -169,7 +171,7 @@
                 "responsive": true,
                 "order": [[5, "desc"]], // La columna 5 contiene la fecha de creación
                 "columnDefs": [
-                    { "orderable": false, "targets": 6 } // La séptima columna no es ordenable
+                    { "orderable": false, "targets": 7 } // La séptima columna no es ordenable
                 ],
                 "language": {
                     "url": "https://cdn.datatables.net/plug-ins/1.11.3/i18n/es_es.json"
