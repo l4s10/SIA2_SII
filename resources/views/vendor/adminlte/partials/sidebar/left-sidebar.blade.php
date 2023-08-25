@@ -49,7 +49,7 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="{{ url('reserva/vehiculo/edit') }}" class="nav-link">
+                            <a href="{{ url('reserva/vehiculo/autorizar') }}" class="nav-link">
                                 <i class="fa-solid fa-file-circle-check nav-icon"></i>
                                 <p>Autorizar</p>
                             </a>
