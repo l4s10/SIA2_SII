@@ -29,9 +29,10 @@ class Ubicacion extends Model
         'UBICACION.max' => 'El campo "Ubicación" no debe exceder los 128 caracteres.',
         'ID_DIRECCION.required' => 'El campo "dirección regional asociada" es requerido.'
     ];
+
     public function users()
     {
-        return $this->morphMany(User::class, 'entidad', 'entidad_tipo', null, 'ID_UBICACION');
+        return $this->hasMany(User::class, 'ID_UBICACION');
     }
 
     public function direccion()

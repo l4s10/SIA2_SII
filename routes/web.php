@@ -9,6 +9,11 @@ use App\Http\Controllers\SolicitudSalaController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\UbicacionesController;
 use App\Http\Controllers\DireccionRegionalController;
+use App\Http\Controllers\EmailController;
+use Illuminate\Support\Facades\Auth;
+
+require __DIR__.'/reportes.php';
+require __DIR__.'/movimientosMateriales.php';
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -19,23 +24,33 @@ use App\Http\Controllers\DireccionRegionalController;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+Route::post('/send-email', [EmailController::class, 'sendEmail'])->name('send.email');
 
 Route::get('/', function () {
+    if (Auth::check()) { // Verificar si el usuario está autenticado
+        Auth::logout(); // Si lo está, cerrar sesión
+    }
+
     return view('auth.login');
-});
+})->name('login');
+
 //Rutas para testear vistas
 Route::get('/repyman', function(){
     return view('repyman.index');
-})->name('repyman.index');
+})->name('repyman.index')->middleware('auth');
 
 //Ruta para acceder al módulo de directivos:
 Route::get('/directivos', function(){
     return view('directivos.index');
-})->name('directivos.index');
+})->name('directivos.index')->middleware('auth');
+
+
 //Dashboard para modulo reserva salas y visitas a bodega
 Route::get('/reservas', function(){
     return view('reservas.dashboard');
-})->name('reservas.dashboard');
+})->name('reservas.dashboard')->middleware('auth');
+
+//Dasboard para el modulo de
 //Rutas para materiales
 Route::get('materiales/exportar-pdf', 'App\Http\Controllers\MaterialController@exportToPDF')->name('materiales.exportar-pdf');
 Route::get('materiales/descargar-PDF', 'App\Http\Controllers\MaterialController@report')->name('materiales.report');
@@ -115,6 +130,18 @@ Route::resource('reserva/bodega', 'App\Http\Controllers\SolicitudBodegasControll
     'destroy' => 'solicitud.bodegas.destroy',
 ]);
 //**Rutas para solicitud vehiculos
+//Exportable
+Route::get('reserva/vehiculo/{id}/pdf', 'App\Http\Controllers\RelFunVehController@generarPDF')->name('solicitud.vehiculos.pdf');
+//Formularion de edicion del vehiculo, solo que muestra los campos de rendicion
+Route::get('reserva/vehiculo/{id}/rendicion', 'App\Http\Controllers\RelFunVehController@rendicion')->name('solicitud.vehiculos.rendicion');
+//Ver solicitudes por rendir y autorizar
+Route::get('reserva/vehiculo/rendir', 'App\Http\Controllers\RelFunVehController@indexRendir')->name('solicitud.vehiculos.rendir');
+Route::get('reserva/vehiculo/autorizar', 'App\Http\Controllers\RelFunVehController@indexAutorizar')->name('solicitud.vehiculos.autorizar');
+//POST PARA ENVIAR FIRMA -> RUT, NOMBRES Y APELLIDOS (INTEGRAR CON CLAVE UNICA)
+Route::post('/reserva/vehiculos/{id}/autorizar', [App\Http\Controllers\RelFunVehController::class, 'autorizar'])->name('solicitud.vehiculos.authorize');
+Route::post('/reserva/vehiculos/{id}/rechazar', [App\Http\Controllers\RelFunVehController::class, 'rechazar'])->name('solicitud.vehiculos.reject');
+
+
 Route::resource('reserva/vehiculo', 'App\Http\Controllers\RelFunVehController')->names([
     'index' => 'solicitud.vehiculos.index',
     'create' => 'solicitud.vehiculos.create',
@@ -132,23 +159,21 @@ Route::get('/get-ubicaciones/{id}', [UbicacionesController::class, 'getUbicacion
 Route::get('/direccion/{ubicacionId}', [DireccionRegionalController::class, 'getDireccion']);
 Route::get('/ubicaciones/{direccionId}', [UbicacionesController::class, 'getUbicaciones']);
 Route::get('/usuarios/{ubicacionId}', [UserController::class, 'getUsuarios']);
-
 Route::get('funcionarios/region/{id}', 'App\Http\Controllers\UserController@getUsersByRegion')->name('funcionarios.region');
 Route::resource('funcionarios','App\Http\Controllers\UserController');
 
 Route::post('/update-stock', [InventoryController::class, 'updateStock'])->name('update-stock');
 
 Route::get('/home', [HomeController::class, 'index']);
-// Esta es la ruta GET para mostrar la página
-Route::get('/reportes', [ReporteController::class, 'index'])->name('reportes.index');
-// Esta es la ruta POST para recibir las solicitudes AJAX
-Route::post('/reportes/data', [ReporteController::class, 'obtenerDatos'])->name('reportes.data');
 
-Route::middleware(['auth'])->group(function () {
-    Route::get('/dashboard', function () {
-        return redirect()->route(config('adminlte.dashboard_url'));
-    })->name('dashboard');
-});
+//RUTA GET PARA TABLA CONTINGENCIA
+Route::get('/get-totals/{id}', [ReporteController::class, 'getTotalsPorUbicacion']);
+
+// Route::middleware(['auth'])->group(function () {
+//     Route::get('/dashboard', function () {
+//         return redirect()->route(config('adminlte.dashboard_url'));
+//     })->name('dashboard');
+// });
 
 //Route::group(['middleware' => 'checkUserRole'], function () {
     // Rutas que cargan las vistas del adminlte

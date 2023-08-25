@@ -18,16 +18,10 @@ class CategoriaSalaController extends Controller
     // Esta funcion protege nuestro controlador para que solo las personas logueadas puedan entrar
     public function __construct()
     {
+        //Verificamos si la persona esta ingresada, sino. pasa a la pantalla de inicio de sesion
         $this->middleware('auth');
-        $this->middleware(function ($request, $next) {
-            $user = Auth::user();
-
-            if ($user->hasRole('ADMINISTRADOR') || $user->hasRole('INFORMATICA')) {
-                return $next($request);
-            } else {
-                abort(403, 'Acceso no autorizado');
-            }
-        });
+        //Verificamos que las personas que ingresen tengan los roles requeridos
+        $this->middleware('roleAdminAndSupport');
     }
     public function index()
     {

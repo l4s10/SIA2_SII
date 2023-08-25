@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Sala;
 use App\Models\CategoriaSala;
-use Illuminate\Support\Facades\Auth;
 
 class SalaController extends Controller
 {
@@ -15,16 +14,7 @@ class SalaController extends Controller
     // Esta funcion protege nuestro controlador para que solo las personas logueadas puedan entrar
     public function __construct()
     {
-        $this->middleware('auth');
-        $this->middleware(function ($request, $next) {
-            $user = Auth::user();
-
-            if ($user->hasRole('ADMINISTRADOR') || $user->hasRole('INFORMATICA')) {
-                return $next($request);
-            } else {
-                abort(403, 'Acceso no autorizado');
-            }
-        });
+        $this->middleware(['auth', 'roleAdminAndSupport']);
     }
     public function index()
     {

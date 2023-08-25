@@ -4,28 +4,33 @@
 @section('content_header')
     <h1 class="title">Solicitudes de Materiales</h1>
     @role('ADMINISTRADOR')
-    <div class="alert alert-info" role="alert">
+    <div class="alert alert-info alert1" role="alert">
     <div><strong>Bienvenido Administrador:</strong> Acceso total al modulo.<div>
+    </div>
+    @endrole
+    @role('REQUIRENTE')
+    <div class="alert alert-info alert1" role="alert">
+    <div><strong>Bienvenido Requirente:</strong> En este módulo usted podrá verificar el estado de sus solicitudes de materiales.<div>
     </div>
     @endrole
     @role('SERVICIOS')
     <div class="alert alert-info" role="alert">
-    <div><strong>Bienvenido Servicio:</strong> Aqui iria el texto donde le corresponde el rol SERVICIO.<div>
+    <div><strong>Bienvenido Servicio:</strong> En este módulo usted podrá administrar, modificar, las solicitudes de materiales.<div>
     </div>
     @endrole
     @role('INFORMATICA')
     <div class="alert alert-info" role="alert">
-    <div><strong>Bienvenido Informatica:</strong> Aqui iria el texto donde le corresponde el rol INFORMATICA.<div>
+    <div><strong>Bienvenido Informatica:</strong> En este módulo usted podrá verificar el estado de sus solicitudes de materiales.<div>
     </div>
     @endrole
     @role('JURIDICO')
     <div class="alert alert-info" role="alert">
-    <div><strong>Bienvenido Juridico:</strong> Aqui iria el texto donde le corresponde el rol JURIDICO.<div>
+    <div><strong>Bienvenido Juridico:</strong> En este módulo usted podrá verificar el estado de sus solicitudes de materiales.<div>
     </div>
     @endrole
     @role('FUNCIONARIO')
     <div class="alert alert-info" role="alert">
-    <div><strong>Bienvenido Funcionario:</strong> Aqui iria el texto donde le corresponde el rol FUNCIONARIO.<div>
+    <div><strong>Bienvenido Funcionario:</strong> En este módulo usted podrá verificar el estado de sus solicitudes de materiales.<div>
     </div>
     @endrole
 
@@ -69,6 +74,7 @@
                             {{-- <th scope="col">Materiales</th> --}}
                             <th scope="col">Estado</th>
                             <th scope="col">Fecha Ingreso</th>
+                            <th scope="col">Dias de tramitacion</th>
                             {{-- <th scope="col">Observaciones</th> --}}
                             <th scope="col">Acciones</th>
                         </tr>
@@ -87,7 +93,8 @@
                                 </span>
                                 </td>
                                 <!-- Carbon sirve para parsear datos, esta es una instancia de carbon -->
-                                <td>{{ $sol_material->created_at->tz('America/Santiago')->format('d/m/Y H:i') }}</td>
+                                <td>{{ $sol_material->created_at ? $sol_material->created_at->format('d/m/Y H:i') : 'Fecha no disponible' }}</td>
+                                <td>{{ $sol_material->FECHA_DESPACHO ? $sol_material->diasDeTramitacion() . ' dia/s totales' : $sol_material->diasSinAtender() . ' dia/s transcurridos'}}</td>
                                 {{-- <td>{{ $sol_material->OBSERVACIONES}}</td> --}}
                                 <td>
                                     <form action="{{ route('solmaterial.destroy',$sol_material->ID_SOLICITUD) }}" method="POST">
@@ -150,6 +157,15 @@
         color:     #000000;
         }
     </style>
+    <style>
+        .alert1 {
+            opacity: 0.7;
+            /* Ajusta la opacidad a tu gusto */
+            background-color: #FF8C40;
+            /* Color naranjo claro (RGB: 255, 214, 153) */
+            color: #000000;
+        }
+    </style>
 @stop
 
 @section('js')
@@ -160,7 +176,7 @@
                 "responsive": true,
                 "order": [[5, "desc"]], // La columna 5 contiene la fecha de creación
                 "columnDefs": [
-                    { "orderable": false, "targets": 6 } // La séptima columna no es ordenable
+                    { "orderable": false, "targets": 7 } // La séptima columna no es ordenable
                 ],
                 "language": {
                     "url": "https://cdn.datatables.net/plug-ins/1.11.3/i18n/es_es.json"

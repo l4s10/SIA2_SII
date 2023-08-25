@@ -27,19 +27,14 @@ use App\Utils\RutUtils;
 
 class UserController extends Controller
 {
-    //Funcion para acceder a las rutas SOLO SI los usuarios estan logueados
-    public function __construct(){
+    public function __construct()
+    {
+        // //*La persona debe de haber iniciado sesion */
         $this->middleware('auth');
-        //Tambien aqui podremos agregar que roles son los que pueden ingresar
-        $this->middleware(function ($request, $next) {
-            $user = Auth::user();
-
-            if ($user->hasRole('ADMINISTRADOR') || $user->hasRole('SERVICIOS') || $user->hasRole('INFORMATICA')) {
-                return $next($request);
-            } else {
-                abort(403, 'Acceso no autorizado');
-            }
-        });
+        // * SI LA PERSONA ES ADMINISTRADOR TIENE ACCESO A TODOS LAS RUTAS* (le quitamos get usuarios pero se la volvemos a asignar en la siguiente)
+        $this->middleware('checkearRol:ADMINISTRADOR')->except('getUsuarios');
+        // * SI LA PERSONA TIENE CUALQUIER ROL, SOLO PODRAN ACCEDER AL METODO "getUsuarios" (ESTA FUNCION ES EL DESPLEGABLE DE TODAS LAS PAGINAS QUE PERMITEN SELECCIONAR USUARIOS PARA SOLICITUDES)*
+        $this->middleware('checkAnyRole')->only('getUsuarios');
     }
     /**
      * Display a listing of the resource.
@@ -107,10 +102,14 @@ class UserController extends Controller
             ];
 
             $this->validate($request, $rules, $messages);
+            // Eliminar espacios adicionales en NOMBRES y APELLIDOS antes de guardarlos
+            $nombres = preg_replace('/\s+/', ' ', trim($request->NOMBRES));
+            $apellidos = preg_replace('/\s+/', ' ', trim($request->APELLIDOS));
+
             // Asignamos la entidad_type
             $user = User::create([
-                'NOMBRES' => $request->NOMBRES,
-                'APELLIDOS' => $request->APELLIDOS,
+                'NOMBRES' => $nombres,
+                'APELLIDOS' => $apellidos,
                 'email' => $request->email,
                 'password' => Hash::make($request->password),
                 'RUT' => RutUtils::formatRut($request->RUT),

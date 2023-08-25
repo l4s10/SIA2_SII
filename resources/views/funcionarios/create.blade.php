@@ -319,9 +319,10 @@
     <!-- Incluir archivos JS flatpicker -->
     {{-- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> --}}
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-
+    {{-- !!FILTRO DINAMICO REGION, DIRECCION, UBICACION --}}
     <script type="text/javascript">
         $(document).ready(function() {
+            //Select de region
             $('#region-select').on('change', function() {
                 var regionId = $(this).val();
 
@@ -345,7 +346,7 @@
                     });
                 }
             });
-
+            //Select de direccion
             $('#direccion-select').on('change', function() {
                 var direccionId = $(this).val();
 

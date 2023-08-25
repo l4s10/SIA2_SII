@@ -1,62 +1,40 @@
-    // Calcular el porcentaje para cada dato del gráfico
-    const total = window.myChartData2.datasets[0].data.reduce((accumulator, currentValue) => accumulator + currentValue, 0);
-    window.myChartData2.datasets[0].data = window.myChartData2.datasets[0].data.map(value => ((value / total) * 100).toFixed(2));
-
-    // Agregar el signo de porcentaje al formatear los valores
-    const valueFormatter = value => value + '%';
-    window.myChartData2.options = {
-        plugins: {
-            datalabels: {
-                formatter: valueFormatter,
-                color: 'black',
-                font: {
-                    weight: 'bold'
-                }
-            }
-        }
-    };
-    
 document.addEventListener('DOMContentLoaded', (event) => {
-    const ctx2 = document.getElementById('myChart2').getContext('2d');
-    const myChart2 = new Chart(ctx2, {
-        type: 'pie',
-        data: window.myChartData2,
+    const ctx3 = document.getElementById('myChart3').getContext('2d');
+    const myChart3 = new Chart(ctx3, {
+        type: 'bar',
+        data: window.myChartData3,
         options: {
+            scales: {
+                x: {
+                    title: {
+                        display: true,
+                        text: 'Patentes'
+                    }
+                },
+                y: {
+                    beginAtZero: true,
+                    title: {
+                        display: true,
+                        text: 'Cantidad'
+                    },
+                    ticks: {
+                        precision: 0
+                    }
+                }
+            },
             plugins: {
                 legend: {
                     display: true,
-                    position: 'right'
+                    labels: {
+                        // Aquí puedes configurar las etiquetas de la leyenda
+                    }
                 },
                 title: {
                     display: true,
-                    text: 'Cantidad de funcionarios',
+                    text: 'Vehiculos asignados',
                     padding: {
                         top: 10,
                         bottom: 30
-                    }
-                },
-                tooltips: {
-                    callbacks: {
-                        label: function (tooltipItem, data) {
-                            const dataset = data.datasets[tooltipItem.datasetIndex];
-                            const total = dataset.data.reduce((accumulator, currentValue) => accumulator + currentValue, 0);
-                            const currentValue = dataset.data[tooltipItem.index];
-                            const percentage = ((currentValue / total) * 100).toFixed(2) + '%';
-                            return `${currentValue} (${percentage})`;
-                        }
-                    }
-                },
-                datalabels: {
-                    formatter: (value, ctx) => {
-                        const dataset = ctx.chart.data.datasets[ctx.datasetIndex];
-                        const total = dataset.data.reduce((accumulator, currentValue) => accumulator + currentValue, 0);
-                        const currentValue = dataset.data[ctx.dataIndex];
-                        const percentage = ((currentValue / total) * 100).toFixed(2) + '%';
-                        return `${percentage}`;
-                    },
-                    color: 'black',
-                    font: {
-                        weight: 'bold'
                     }
                 }
             }
@@ -74,7 +52,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
                 Swal.showLoading();
             },
             willClose: () => {
-                // Al cerrarse
+               // Al cerrarse
             }
         });
 
@@ -89,16 +67,23 @@ document.addEventListener('DOMContentLoaded', (event) => {
                 fechaFin: fechaFin
             })
         })
-            .then(response => response.json())
-            .then(data => {
-                // Obtener los valores de sexo del objeto data
-                const totalHombres = data.grafico3.totalHombres;
-                const totalMujeres = data.grafico3.totalMujeres;
-
-                // Actualizar los datos del gráfico
-                myChart2.data.labels = ['Hombres', 'Mujeres'];
-                myChart2.data.datasets[0].data = [totalHombres, totalMujeres];
-                myChart2.update();
-            });
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Error en la consulta');
+            }
+            return response.json();
+        })
+        .then(data => {
+            myChart3.data.labels = data.grafico3.map(item => item.patente);
+            myChart3.data.datasets[0].data = data.grafico3.map(item => item.conteo);
+            myChart3.update();
+        })
+        .catch(error => {
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Algo salió mal en el gráfico 3!',
+            })
+        });
     });
 });

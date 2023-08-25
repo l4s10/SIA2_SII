@@ -5,7 +5,7 @@
 @section('content_header')
     <h1>Listado solicitudes formulario</h1>
     @role('ADMINISTRADOR')
-    <div class="alert alert-info" role="alert">
+    <div class="alert alert-info alert1" role="alert">
     <div><strong>Bienvenido Administrador:</strong> Acceso total al modulo.<div>
     </div>
     @endrole
@@ -26,14 +26,20 @@
     @endrole
     @role('FUNCIONARIO')
     <div class="alert alert-info" role="alert">
-    <div><strong>Bienvenido Funcionario:</strong> Aqui iria el texto donde le corresponde el rol FUNCIONARIO.<div>
+    <div><strong>Bienvenido Funcionario:</strong> En el presente módulo usted podrá solicitar formularios, según sea el caso el Departamento de Administración analizará los antecedentes, y podrá aceptar o rechazar la solicitud.<div>
     </div>
     @endrole
 
 @stop
 
 @section('content')
-<div class="container-fluid">
+    <div class="verde">
+        <div>
+            <i class="fas fa-seedling"></i> Cuidemos el medio ambiente <i class="fas fa-seedling"></i>. Recuerde que se debe priorizar los formularios con uso cero papel.
+        </div>
+    </div>
+
+    <div class="container-fluid">
     @if (session('success'))
         <script>
             document.addEventListener('DOMContentLoaded', () => {
@@ -77,7 +83,7 @@
                             <td>{{ $solicitud->DEPTO }}</td>
                             <td>{{ $solicitud->EMAIL }}</td>
                             <!-- Carbon sirve para parsear datos, esta es una instancia de carbon -->
-                            <td>{{ $solicitud->created_at->tz('America/Santiago')->format('d/m/Y H:i') }}</td>
+                            <td>{{ $solicitud->created_at ? $solicitud->created_at->format('d/m/Y H:i') : 'Fecha no disponible' }}</td>
 
                             <td style="text-align:center;">
                                 <form action="{{ route('formulariosSol.destroy',$solicitud->ID_SOL_FORM) }}" method="POST">
@@ -85,10 +91,10 @@
                                     @method('DELETE')
                                     <a href="{{ route('formulariosSol.show',$solicitud->ID_SOL_FORM) }}" class="btn btn-primary"><i class="fa-regular fa-eye"></i> Ver</a>
                                     @role('ADMINISTRADOR|SERVICIOS')
-                                    <a href="{{route('formulariosSol.edit',$solicitud->ID_SOL_FORM)}}" class="btn btn-info"><i class="fa-solid fa-pen-to-square"></i> Editar</a>
+                                        <a href="{{route('formulariosSol.edit',$solicitud->ID_SOL_FORM)}}" class="btn btn-info"><i class="fa-solid fa-pen-to-square"></i> Editar</a>
                                     @endrole
                                     @role('ADMINISTRADOR')
-                                    <button type="submit" class="btn btn-danger"><i class="fa-solid fa-trash"></i> Borrar</button>
+                                        <button type="submit" class="btn btn-danger"><i class="fa-solid fa-trash"></i> Borrar</button>
                                     @endrole
                                 </form>
                             </td>
@@ -102,13 +108,34 @@
 
 @section('css')
     <link rel="stylesheet" href="/css/admin_custom.css">
-    <style>
+<style>
         .alert {
-        opacity: 0.7; /* Ajusta la opacidad a tu gusto */
-        background-color: #99CCFF;
-        color:     #000000;
+            opacity: 0.7; /* Ajusta la opacidad a tu gusto */
+            background-color: #99CCFF;
+            color: #000000;
         }
-    </style>
+
+        .alert1 {
+            opacity: 0.7; /* Ajusta la opacidad a tu gusto */
+            background-color: #FF8C40;
+            color: #000000;
+        }
+
+        .verde {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 10px;
+            background-color: #40C47C;
+            color: #FFFFFF;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .verde i {
+            margin-right: 10px;
+        }
+</style>
 @stop
 
 @section('js')

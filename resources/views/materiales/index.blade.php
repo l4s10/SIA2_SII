@@ -5,13 +5,13 @@
 @section('content_header')
     <h1>Listado de materiales</h1>
     @role('ADMINISTRADOR')
-    <div class="alert alert-info" role="alert">
+    <div class="alert alert-info alert1" role="alert">
     <div><strong>Bienvenido Administrador:</strong> Acceso total al modulo.<div>
     </div>
     @endrole
     @role('SERVICIOS')
     <div class="alert alert-info" role="alert">
-    <div><strong>Bienvenido Servicio:</strong> Aqui iria el texto donde le corresponde el rol SERVICIO.<div>
+    <div><strong>Bienvenido Servicio:</strong> En este módulo usted podrá administrar, consultar, modificar (ingresos y egresos), del inventario, este módulo cuenta con un módulo de historial para consultar los movimientos de este.<div>
     </div>
     @endrole
     @role('INFORMATICA')
@@ -58,7 +58,7 @@
             </script>
         @endif
         {{-- !!GENERAR REPORTE DE MATERIALES (INVENTARIO) --}}
-        <a href="{{ route('materiales.report') }}" class="btn btn-primary" target="_blank"><i class="fa-solid fa-file-pdf"></i> Exportar PDF</a>
+        <a href="{{ route('materiales.exportar-pdf') }}" class="btn btn-primary" target="_blank"><i class="fa-solid fa-file-pdf"></i> Exportar PDF</a>
 
         <div class="table-responsive">
             <table id="materiales" class="table table-bordered mt-4">
@@ -97,9 +97,19 @@
     <link rel="stylesheet" href="/css/admin_custom.css">
     <style>
         .alert {
-        opacity: 0.7; /* Ajusta la opacidad a tu gusto */
-        background-color: #99CCFF;
-        color:     #000000;
+            opacity: 0.7;
+            /* Ajusta la opacidad a tu gusto */
+            background-color: #99CCFF;
+            color: #000000;
+        }
+    </style>
+        <style>
+        .alert1 {
+            opacity: 0.7;
+            /* Ajusta la opacidad a tu gusto */
+            background-color: #FF8C40;
+            /* Color naranjo claro (RGB: 255, 214, 153) */
+            color: #000000;
         }
     </style>
 @stop
@@ -108,17 +118,17 @@
         <!-- Para inicializar -->
         <script>
             $(document).ready(function () {
-            $('#materiales').DataTable({
-                "lengthMenu": [[5,10, 50, -1], [5, 10, 50, "All"]],
-                "responsive": true,
-                "columnDefs": [
-                    { "orderable": false, "targets": 3 }
-                ],
-                "language": {
-                    "url": "https://cdn.datatables.net/plug-ins/1.11.3/i18n/es_es.json"
-                },
+                $('#materiales').DataTable({
+                    "lengthMenu": [[5,10, 50, -1], [5, 10, 50, "All"]],
+                    "responsive": true,
+                    "columnDefs": [
+                        { "orderable": false, "targets": 3 }
+                    ],
+                    "language": {
+                        "url": "https://cdn.datatables.net/plug-ins/1.11.3/i18n/es_es.json"
+                    },
+                });
             });
-        });
         </script>
 
 @stop

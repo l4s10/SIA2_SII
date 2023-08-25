@@ -9,7 +9,7 @@
     {{-- Sidebar menu --}}
     <div class="sidebar">
         <nav class="pt-2">
-            
+
             {{-- LeftBar --}}
             <ul class="nav nav-pills nav-sidebar flex-column {{ config('adminlte.classes_sidebar_nav', '') }}"
                 data-widget="treeview" role="menu"
@@ -49,7 +49,7 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="{{ url('reserva/vehiculo/edit') }}" class="nav-link">
+                            <a href="{{ url('reserva/vehiculo/autorizar') }}" class="nav-link">
                                 <i class="fa-solid fa-file-circle-check nav-icon"></i>
                                 <p>Autorizar</p>
                             </a>
@@ -142,7 +142,7 @@
                         </li>
                     </ul>
                 </li>
-                
+
                 <!-- Reservas -->
                 <li class="nav-item">
                     <a href="{{ url('reservas') }}" class="nav-link">
@@ -159,7 +159,7 @@
                         <i class="fas fa-fw fa-boxes nav-icon"></i>
                         <p>Inventario <i class="right fas fa-angle-left"></i></p>
                     </a>
-                    
+
                     <ul class="nav nav-treeview">
                         @role('ADMINISTRADOR|SERVICIOS')
                         <!-- Submenú 1 - Ver Materiales -->
@@ -241,7 +241,7 @@
                 @role('ADMINISTRADOR')
                 <!-- Reportes -->
                 <li class="nav-item">
-                    <a href="/reportes" class="nav-link">
+                    <a href="/reporteshome" class="nav-link">
                         <i class="fas fa-fw fa-solid fa-chart-simple nav-icon"></i>
                         <p>Reportes</p>
                     </a>
@@ -316,7 +316,7 @@
                     </ul>
                 </li>
                 @endrole
-                
+
                 <!-- Panel de control -->
                 @role('ADMINISTRADOR|INFORMATICA|SERVICIOS')
                 <li class="nav-item has-treeview">
@@ -325,12 +325,14 @@
                         <p>Panel de control <i class="right fas fa-angle-left"></i></p>
                     </a>
                     <ul class="nav nav-treeview">
-                        <li class="nav-item">
-                            <a href="/funcionarios" class="nav-link">
-                                <i class="fas fa-fw fa-street-view nav-icon"></i>
-                                <p>Administrar Usuarios</p>
-                            </a>
-                        </li>
+                        @role('ADMINISTRADOR')
+                            <li class="nav-item">
+                                <a href="/funcionarios" class="nav-link">
+                                    <i class="fas fa-fw fa-users nav-icon"></i>
+                                    <p>Administrar Usuarios</p>
+                                </a>
+                            </li>
+                        @endrole
                         <li class="nav-item">
                             <a href="/vehiculos" class="nav-link">
                                 <i class="fas fa-fw fa-car nav-icon"></i>

@@ -1,8 +1,9 @@
+// Segundo gráfico Total de solicitudes 2
 document.addEventListener('DOMContentLoaded', (event) => {
-    const ctx = document.getElementById('myChart').getContext('2d');
-    const myChart = new Chart(ctx, {
+    const ctx1 = document.getElementById('myChart1').getContext('2d');
+    const myChart1 = new Chart(ctx1, {
         type: 'bar',
-        data: window.myChartData, //CARGAR VARIABLES
+        data: window.myChartData1, //CARGAR VARIABLES AQUI SE DEFINE COMO LLAMAR A LOS GRAFICOS.
         options: {
             scales: {
                 x: {
@@ -74,7 +75,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
                 Swal.showLoading();
             },
             willClose: () => {
-                // Al cerrarse
+               // Al cerrarse
             }
         });
 
@@ -91,21 +92,13 @@ document.addEventListener('DOMContentLoaded', (event) => {
         })
             .then(response => response.json())
             .then(data => {
-                myChart.data.datasets[0].data = [
-                    Math.round(data.grafico1.solicitudSala),
-                    Math.round(data.grafico1.solicitudBodegas),
-                    Math.round(data.grafico1.solicitudReparacionVehiculo),
-                    Math.round(data.grafico1.relFunVeh)
+                myChart1.data.datasets[0].data = [
+                    Math.round(data.grafico1.solicitudMateriales),
+                    Math.round(data.grafico1.relFunRepGeneral),
+                    Math.round(data.grafico1.solicitudFormularios),
+                    Math.round(data.grafico1.solicitudEquipos),
                 ];
-                myChart.update();
+                myChart1.update();
             });
     });
-    // Descargar gráfico como PNG Fondo Transparente
-    document.querySelector('#download-png-button').addEventListener('click', function () {
-        const downloadLink = document.createElement('a');
-        downloadLink.href = myChart.toBase64Image('image/png', { backgroundColor: '#FFFFFF' });
-        downloadLink.download = 'Grafico.png';
-        downloadLink.click();
-    });
-
 });

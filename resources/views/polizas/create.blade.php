@@ -67,4 +67,3 @@
     <!-- CONEXION FONT-AWESOME CON TOOLKIT -->
     <script src="https://kit.fontawesome.com/742a59c628.js" crossorigin="anonymous"></script>
 @stop
-

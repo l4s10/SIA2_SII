@@ -58,7 +58,7 @@ return new class extends Migration
             $table->increments('ID_GRADO');
             $table->integer('GRADO')->nullable();
         });
-        
+
         Schema::create('calidad_juridica', function (Blueprint $table) {
             $table->increments('ID_CALIDAD');
             $table->string('CALIDAD', 128)->nullable();

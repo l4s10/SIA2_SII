@@ -1,8 +1,8 @@
 document.addEventListener('DOMContentLoaded', (event) => {
-    const ctx3 = document.getElementById('myChart3').getContext('2d');
-    const myChart3 = new Chart(ctx3, {
+    const ctx4 = document.getElementById('myChart4').getContext('2d');
+    const myChart4 = new Chart(ctx4, {
         type: 'bar',
-        data: window.myChartData3, //CARGAR VARIABLES AQUI SE DEFINE COMO LLAMAR A LOS GRAFICOS.
+        data: window.myChartData4,
         options: {
             scales: {
                 x: {
@@ -18,26 +18,52 @@ document.addEventListener('DOMContentLoaded', (event) => {
                         text: 'Cantidad'
                     },
                     ticks: {
-                        precision: 0 // Mostrar números enteros en el eje Y
+                        precision: 0
                     }
                 }
             },
             plugins: {
                 legend: {
                     display: true,
-                    labels: {      
+                    labels: {
+                        // Aquí puedes configurar las etiquetas de la leyenda
+                        generateLabels: function (chart) {
+                            const data = chart.data;
+                            if (data.labels.length && data.datasets.length) {
+                                return data.labels.map(function (label, index) {
+                                    const dataset = data.datasets[0];
+                                    const backgroundColor = dataset.backgroundColor[index];
+                                    return {
+                                        text: label,
+                                        fillStyle: backgroundColor,
+                                        hidden: false,
+                                        lineCap: 'round',
+                                        lineDash: [],
+                                        lineDashOffset: 0,
+                                        lineJoin: 'round',
+                                        lineWidth: 1,
+                                        strokeStyle: backgroundColor,
+                                        pointStyle: 'circle',
+                                        rotation: 0
+                                    };
+                                });
+                            }
+                            return [];
+                        }
+                    }
                 },
                 title: {
                     display: true,
-                    text: 'Ranking de Patentes',
+                    text: 'Tipo de materiales solicitados',
                     padding: {
                         top: 10,
                         bottom: 30
                     }
                 }
-            } 
+
+            },
+
         }
-    }
     });
 
     document.querySelector('#refresh-button').addEventListener('click', function () {
@@ -66,13 +92,23 @@ document.addEventListener('DOMContentLoaded', (event) => {
                 fechaFin: fechaFin
             })
         })
-            .then(response => response.json())
-            .then(data => {
-                myChart3.data.labels = ['Solicitudes'];
-                myChart3.data.datasets[0].data = [
-                    Math.round(data.grafico4.solicitudMateriales),
-                ];
-                myChart3.update();
-            });
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Error en la consulta');
+            }
+            return response.json();
+        })
+        .then(data => {
+            myChart4.data.datasets[0].data = [
+            ];
+            myChart4.update();
+        })
+        .catch(error => {
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Algo salió mal en el gráfico 4!',
+            })
+        });
     });
 });

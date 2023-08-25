@@ -4,6 +4,15 @@
 
 @section('content_header')
     <h1>Solicitud de Reserva de Equipos</h1>
+    @role('ADMINISTRADOR')
+    <div class="alert alert-info alert1" role="alert">
+        <div>Bienvenido al módulo de <strong>solicitud de reservas de equipos</strong>. En este módulo, usted podrá pedir a través del carro de compras los distintos materiales catalogados. En caso de requerir otro material, favor contactar al Departamento de Administración.</div>
+    </div>
+    @else
+    <div class="alert alert-info" role="alert">
+        <div>Bienvenido al módulo de <strong>solicitud de reservas de equipos</strong>. En el presente módulo usted podrá reserva de equipos, según sea el caso el Departamento de Administración analizará los antecedentes, y podrá aceptar o rechazar la solicitud.</div>
+    </div>
+    @endrole
 @stop
 
 @section('content')
@@ -39,7 +48,7 @@
                 <div class="col-md-6">
                     <div class="mb-3">
                         <label for="DEPTO" class="form-label"><i class="fa-solid fa-building-user"></i> Departamento:</label>
-                        <input type="text" id="DEPTO" name="DEPTO" class="form-control{{ $errors->has('DEPTO') ? ' is-invalid' : '' }}" value="{{ auth()->user()->getEntidadInfoAttribute() }}" placeholder="Ej: ADMINISTRACION" readonly>
+                        <input type="text" id="DEPTO" name="DEPTO" class="form-control{{ $errors->has('DEPTO') ? ' is-invalid' : '' }}" value="{{ auth()->user()->ubicacion->UBICACION }}" placeholder="Ej: ADMINISTRACION" readonly>
                         @if ($errors->has('DEPTO'))
                         <div class="invalid-feedback">
                             {{ $errors->first('DEPTO') }}
@@ -140,6 +149,22 @@
 @section('css')
     <link rel="stylesheet" href="/css/admin_custom.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <style>
+        .alert {
+        opacity: 0.7; /* Ajusta la opacidad a tu gusto */
+        background-color: #99CCFF;
+        color:     #000000;
+        }
+    </style>
+        <style>
+        .alert1 {
+            opacity: 0.7;
+            /* Ajusta la opacidad a tu gusto */
+            background-color: #FF8C40;
+            /* Color naranjo claro (RGB: 255, 214, 153) */
+            color: #000000;
+        }
+    </style>
 @stop
 @section('js')
     <!-- CONEXION FONT-AWESOME CON TOOLKIT -->

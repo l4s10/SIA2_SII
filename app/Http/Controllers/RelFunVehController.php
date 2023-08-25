@@ -11,34 +11,71 @@ use App\Models\Ubicacion;
 use App\Models\Comuna;
 use App\Models\Region;
 use App\Models\DireccionRegional;
+use App\Models\Cargo;
+use Illuminate\Support\Facades\Auth;    //PARA VALIDAR SESION DE USUARIO
+use Illuminate\Support\Facades\Hash;    //PARA VALIDAR CONTRASEÑA
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Log;
+
+
+use Dompdf\Dompdf;
+use Carbon\Carbon;
+use Exception;
+use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Response;
 
 class RelFunVehController extends Controller
 {
+    //Funcion para acceder a las rutas SOLO SI los usuarios estan logueados
+    public function __construct(){
+        //!!AGREGAR MIDDLEWARE PARA DAR ACCESO AL USUARIO A RENDIR
+        $this->middleware( ['auth', 'checkRelFunWithServicesPermissions'] );
+    }
+
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        //*Listar las solicitudes*/
-        $solicitudes = RelFunVeh::all();
-        return view('rel_fun_veh.index',compact('solicitudes'));
+        $user = Auth::user();
+
+        if ($user->hasAnyRole(['ADMINISTRADOR', 'SERVICIOS'])) {
+            $solicitudes = RelFunVeh::all();
+        } else {
+            $solicitudes = RelFunVeh::where(function($query) use ($user) {
+                $query->where('ID_USUARIO', $user->id)  // Solicitudes creadas por el usuario
+                    ->orWhere('CONDUCTOR', $user->id)  // Solicitudes donde el usuario es conductor
+                    ->orWhere('OCUPANTE_1', $user->id)
+                    ->orWhere('OCUPANTE_2', $user->id)
+                    ->orWhere('OCUPANTE_3', $user->id)
+                    ->orWhere('OCUPANTE_4', $user->id)
+                    ->orWhere('OCUPANTE_5', $user->id)
+                    ->orWhere('OCUPANTE_6', $user->id);  // Solicitudes donde el usuario es ocupante
+            })->get();
+        }
+
+        return view('rel_fun_veh.index', compact('solicitudes'));
     }
+
 
     /**
      * Show the form for creating a new resource.
      */
     public function create()
     {
+        // Cargar usuario
+        $ubicacionUser = Ubicacion::findOrFail(Auth::user()->ID_UBICACION);
+        $direccionFiltrada = $ubicacionUser->direccion;
+        $ubicacionesFiltradas = $direccionFiltrada->ubicaciones;
         //*Crear solicitud
         $vehiculos = Vehiculo::all();
         $tipo_vehiculos = TipoVehiculo::all();
         $usuarios = User::all();
         $regiones = Region::all();
-        $direcciones = DireccionRegional::all();
-        $ubicaciones = Ubicacion::all();
+        // $direcciones = DireccionRegional::all();
+        // $ubicaciones = Ubicacion::where('ID_DIRECCION', );
         $comunas = Comuna::all();
-        return view('rel_fun_veh.create', compact('vehiculos','tipo_vehiculos','usuarios','regiones','direcciones','ubicaciones','comunas'));
+        return view('rel_fun_veh.create', compact('vehiculos','tipo_vehiculos','usuarios','regiones','direccionFiltrada','ubicacionesFiltradas','comunas'));
     }
 
     /**
@@ -59,7 +96,10 @@ class RelFunVehController extends Controller
                     ->withErrors($validator)
                     ->withInput();
             }
+            $conductor = $request->input('OCUPANTE_1');
             $data = $request->except('_token');
+            $data['CONDUCTOR'] = $conductor;
+
             RelFunVeh::create($data);
             session()->flash('success','La solicitud se ha enviado exitosamente');
         }catch(\Exception $e){
@@ -123,14 +163,25 @@ class RelFunVehController extends Controller
     {
         try{
             $solicitud = RelFunVeh::find($id);
-            $rules = RelFunVeh::$rules;
+            // Crear reglas específicas para la actualización
+            $updateRules = RelFunVeh::$rules;
+
+            // Modificar las reglas que necesiten ser diferentes para la actualización
+            // Si entiendo correctamente, en tu caso los campos NOMBRE_SOLICITANTE, RUT, DEPTO, EMAIL e ID_TIPO_VEH
+            // ya no deben ser requeridos durante la actualización
+            $updateRules['NOMBRE_SOLICITANTE'] = 'sometimes|string|max:128';
+            $updateRules['RUT'] = 'sometimes|string|max:20';
+            $updateRules['DEPTO'] = 'sometimes|string|max:128';
+            $updateRules['EMAIL'] = 'sometimes|string|email|max:128';
+            $updateRules['ID_TIPO_VEH'] = 'sometimes|integer';
             $messages = RelFunVeh::$messages;
 
-            $validator = Validator::make($request->all(), $rules, $messages);
+            $validator = Validator::make($request->all(), $updateRules, $messages);
 
             if ($validator->fails()) {
+                // Redirige al usuario a la página anterior si la validación falla
                 return redirect()
-                    ->route('solicitud.vehiculos.create')
+                    ->back()
                     ->withErrors($validator)
                     ->withInput();
             }
@@ -158,4 +209,191 @@ class RelFunVehController extends Controller
         }
         return redirect(route('solicitud.vehiculos.index'));
     }
+    public function autorizar($id)
+    {
+        $solicitud = RelFunVeh::findOrFail($id);
+        $firmaRealizada = false; // Usamos esta variable para verificar si se ha realizado una firma
+        //!!AGREGAR UN IF ANIDADO DONDE SE VERIFIQUE LA CONTRASEÑA DEL USUARIO
+        //*SI LA CONTRASEÑA NO ES VALIDA */
+        if(!Hash::check(request('password'), Auth::user()->password)){
+            return Redirect::back()->with('error','La contraseña proporcionada no es correcta');
+        }
+
+        // Caso conductor (ASIGNACION POR FORMULARIO)
+        if (auth()->user()->id == $solicitud->CONDUCTOR && $solicitud->FIRMA_CONDUCTOR == null){
+            $solicitud->FIRMA_CONDUCTOR = auth()->user()->RUT . ' ' . auth()->user()->NOMBRES . ' ' . auth()->user()->APELLIDOS;
+            $firmaRealizada = true;
+        }
+
+        // Caso cargo 'JEFE DE DEPARTAMENTO ADMINISTRACION' - Damos prioridad a este rol
+        if (!$firmaRealizada && auth()->user()->cargo->CARGO == 'JEFE DE DEPARTAMENTO DE ADMINISTRACION' && $solicitud->FIRMA_JEFE_ADMINISTRACION == null) {
+            $solicitud->FIRMA_JEFE_ADMINISTRACION = auth()->user()->RUT . ' ' . auth()->user()->NOMBRES . ' ' . auth()->user()->APELLIDOS;
+            $firmaRealizada = true;
+        }
+
+        // Caso administrador (ROLES) - Solo se llegará aquí si el usuario no es un 'JEFE DE DEPARTAMENTO DE ADMINISTRACION' o si ya se ha firmado en esa capacidad (REQUIRIENTE O CAROLA, O NV 2)
+        if (!$firmaRealizada && auth()->user()->hasRole('SERVICIOS') && $solicitud->FIRMA_ADMINISTRADOR == null) {
+            $solicitud->FIRMA_ADMINISTRADOR = auth()->user()->RUT . ' ' . auth()->user()->NOMBRES . ' ' . auth()->user()->APELLIDOS;
+            $firmaRealizada = true;
+        }
+
+        if (!$firmaRealizada) {
+            // Si no se ha realizado ninguna firma, significa que ya se firmó en todas las capacidades posibles
+            return redirect()->route('solicitud.vehiculos.autorizar')->with('error', 'Esta solicitud ya ha sido firmada por ti');
+        }
+
+        // Validar si todas las firmas están presentes
+        if($solicitud->FIRMA_CONDUCTOR != null && $solicitud->FIRMA_ADMINISTRADOR != null && $solicitud->FIRMA_JEFE_ADMINISTRACION != null){
+            $solicitud->ESTADO_SOL_VEH = 'POR RENDIR';
+            $solicitud->save();
+            return redirect()->route('solicitud.vehiculos.index')->with('success', 'Firma realizada con éxito y autorizado por las 3 entidades!!');
+        }
+
+        $solicitud->save();
+
+        return redirect()->route('solicitud.vehiculos.autorizar')->with('success', 'Firma realizada con éxito');
+    }
+
+    public function rechazar($id)
+    {
+        $solicitud = RelFunVeh::findOrFail($id);
+        $solicitud->ESTADO_SOL_VEH = 'RECHAZADO';
+        $solicitud->save();
+
+        return redirect()->route('solicitud.vehiculos.index');
+    }
+
+    //!!PARA ESTAS FUNCIONES REUTILIZAREMOS LA VISTA INDEX, SOLO QUE LOS DATOS ESTARAN FILTRADOS SEGUN EL ESTADO
+    //*INDEX POR AUTORIZAR */
+    public function indexAutorizar(){
+        try{
+            $user = auth()->user(); // Obtener el usuario autenticado
+
+            $query = RelFunVeh::with(['comunaOrigen', 'comunaDestino'])
+                ->where('ESTADO_SOL_VEH', 'POR AUTORIZAR');
+
+            if($user->hasRole(['ADMINISTRADOR', 'SERVICIOS'])) {
+                // Si es administrador o servicios, muestra todas las solicitudes con ese estado
+            } else {
+                // Si no, muestra sólo las solicitudes en las que participa como ocupante
+                $query->where(function($q) use ($user) {
+                    $q->where('CONDUCTOR', $user->id)
+                      ->orWhere('OCUPANTE_1', $user->id)
+                      ->orWhere('OCUPANTE_2', $user->id)
+                      ->orWhere('OCUPANTE_3', $user->id)
+                      ->orWhere('OCUPANTE_4', $user->id)
+                      ->orWhere('OCUPANTE_5', $user->id)
+                      ->orWhere('OCUPANTE_6', $user->id);
+                });
+            }
+
+            $solicitudes = $query->get();
+
+            if($solicitudes->isEmpty()) {
+                return redirect()->route('solicitud.vehiculos.index')->with('info', 'Por ahora no hay autorizaciones pendientes.');
+            }
+
+            return view('rel_fun_veh.autorizar', compact('solicitudes'));
+        } catch(Exception $e){
+            // manejo de excepción
+            // Sería bueno agregar un log o una respuesta para que sepas qué error ocurrió
+            return redirect()->route('solicitud.vehiculos.index')->with('error', 'Ha ocurrido un error inesperado.');
+        }
+    }
+
+
+
+
+    //!!INDEX POR RENDIR
+    public function indexRendir(){
+        try{
+            $user = Auth::user();
+
+            // Creas el constructor de la consulta básica con el estado 'POR RENDIR'
+            $query = RelFunVeh::where('ESTADO_SOL_VEH', 'POR RENDIR');
+
+            if(!$user->hasAnyRole(['ADMINISTRADOR', 'SERVICIOS'])){
+                // Si NO es ADMINISTRADOR o SERVICIOS, entonces filtra también por usuario o por conductor
+                $query->where(function($q) use ($user) {
+                    $q->where('ID_USUARIO', $user->id)
+                      ->orWhere('CONDUCTOR', $user->id);
+                });
+            }
+
+            $solicitudes = $query->get();
+
+            return view('rel_fun_veh.rendir', compact('solicitudes'));
+        } catch (Exception $e){
+            // Manejar la excepción aquí
+            Log::error('Error al obtener las solicitudes por rendir: ' . $e->getMessage());
+            return redirect()->back()->with('error', 'Ocurrió un error al obtener las solicitudes por rendir.');
+        }
+    }
+
+    //!!RENDICION DEL CHOFER
+    //!!AQUI ENVIAR LA FIRMA DEL CONDUCTOR
+    public function rendicion(string $id)
+    {
+        try {
+            $solicitud = RelFunVeh::find($id);
+            $direcciones = DireccionRegional::all();
+            $vehiculos = Vehiculo::all();
+            $tipo_vehiculos = TipoVehiculo::all();
+            $conductores = User::all();
+            $departamentos = Ubicacion::all();
+            $autos = Vehiculo::all();
+            $comunas = Comuna::all();
+            $ocupantes = [];
+            for ($i = 1; $i <= 6; $i++) {
+                $campoOcupante = "OCUPANTE_" . $i;
+
+                // Verifica si el campo OCUPANTE coincide con el ID de usuario en la solicitud
+                $ocupante = $conductores->where('id', $solicitud->$campoOcupante)->first();
+
+                // Si se encontró un ocupante válido, agrégalo al array de ocupantes
+                if ($ocupante) {
+                    $ocupantes[$i] = $ocupante;
+                }
+            }
+            return view('rel_fun_veh.formRendir', compact('solicitud', 'tipo_vehiculos', 'vehiculos', 'ocupantes', 'departamentos', 'comunas', 'conductores', 'direcciones'));
+        } catch (\Exception $e) {
+            session()->flash('error', 'Hubo un error al cargar la solicitud, vuelva a intentarlo más tarde');
+            return redirect(route('solicitud.vehiculos.index'));
+        }
+    }
+    //!!METODO "STREAM (ver preview antes de descargar)"
+    public function generarPDF(Request $request, $id)
+    {
+        //Obtencion de informacion relevante
+        $solicitud = RelFunVeh::findOrFail($id);
+        $solicitante = User::findOrFail($solicitud->ID_USUARIO);
+        $comuna_destino = Comuna::findOrFail($solicitud->DESTINO);
+        //Datos con pardon
+        $ocupante_1 = User::find($solicitud->OCUPANTE_1);
+        $ocupante_2 = User::find($solicitud->OCUPANTE_2);
+        $ocupante_3 = User::find($solicitud->OCUPANTE_3);
+        $ocupante_4 = User::find($solicitud->OCUPANTE_4);
+        $ocupante_5 = User::find($solicitud->OCUPANTE_5);
+        $ocupante_6 = User::find($solicitud->OCUPANTE_6);
+
+        $fecha = Carbon::now()->format('d-m-Y_H-i');
+
+        $pdf = new Dompdf();
+        $pdf->loadHtml(view('rel_fun_veh.hojaSalida', compact('solicitud', 'comuna_destino', 'solicitante','ocupante_1', 'ocupante_2', 'ocupante_3', 'ocupante_4', 'ocupante_5', 'ocupante_6', 'fecha'))->render());
+        $pdf->setPaper('A4', 'portrait');
+
+        $pdf->render();
+
+        $nombreArchivo = $fecha . '_solicitud_vehicular.pdf';
+        $nombreArchivo = str_replace('/', '_', $nombreArchivo);
+        $nombreArchivo = str_replace('\\', '_', $nombreArchivo);
+
+        return Response::stream(function () use ($pdf) {
+            echo $pdf->output();
+        }, 200, [
+            'Content-Type' => 'application/pdf',
+            'Content-Disposition' => 'inline; filename="'.$nombreArchivo.'"'
+        ]);
+    }
+
 }

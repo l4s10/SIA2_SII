@@ -41,6 +41,7 @@ class RelFunVeh extends Model
         'FECHA_SOL_VEH',
         'FECHA_SALIDA',
         'FECHA_LLEGADA',
+        'FECHA_LLEGADA_CONDUCTOR',
         'NOMBRE_OCUPANTES',
         'ESTADO_SOL_VEH',
         'MODIFICADO_POR_SOL_VEH',
@@ -66,6 +67,9 @@ class RelFunVeh extends Model
         'ORIGEN' => 'nullable|string|max:128',
         'DESTINO' => 'nullable|string|max:128',
         'N_ORDEN_TRABAJO' => 'nullable|integer',
+        'FIRMA_CONDUCTOR' => 'nullable|string|max:128',
+        'FIRMA_JEFE_ADMINISTRACION' => 'nullable|string|max:128',
+        'FIRMA_ADMINISTRADOR' => 'nullable|string|max:128',
         'KMS_INICIAL' => 'nullable|string|max:128',
         'KMS_FINAL' => 'nullable|string|max:128',
         'KMS_RECORRIDOS' => 'nullable|string|max:128',
@@ -75,6 +79,7 @@ class RelFunVeh extends Model
         'ABS_BENCINA' => 'nullable|string|max:128',
         'FECHA_SALIDA' => 'nullable|date',
         'FECHA_LLEGADA' => 'nullable|date',
+        'FECHA_LLEGADA_CONDUCTOR' => 'nullable|date',
         'NOMBRE_OCUPANTES' => 'nullable|string|max:1000',
         'ESTADO_SOL_VEH' => 'nullable|string|max:128',
         'MODIFICADO_POR_SOL_VEH' => 'nullable|string|max:128',
@@ -94,6 +99,21 @@ class RelFunVeh extends Model
     public function usuario()
     {
         return $this->belongsTo(User::class, 'ID_USUARIO');
+    }
+
+    public function conductor()
+    {
+        return $this->belongsTo(User::class, 'CONDUCTOR');
+    }
+
+    public function comunaOrigen()
+    {
+        return $this->belongsTo(Comuna::class, 'ORIGEN');
+    }
+
+    public function comunaDestino()
+    {
+        return $this->belongsTo(Comuna::class, 'DESTINO');
     }
 
     public function tipoVehiculo()

@@ -103,8 +103,12 @@
         <script>
             $(document).ready(function () {
                 $('#materiales').DataTable({
-                    "lengthMenu": [[5,10, 50, -1], [5, 10, 50, "All"]]
+                    "lengthMenu": [[5,10, 50, -1], [5, 10, 50, "All"]],
+                    "language": {
+                        "url": "https://cdn.datatables.net/plug-ins/1.11.3/i18n/es_es.json"
+                    },
                 });
+
             });
         </script>
 @stop

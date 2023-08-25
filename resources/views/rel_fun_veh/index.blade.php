@@ -5,28 +5,33 @@
 @section('content_header')
     <h1 class="title">Solicitudes de vehiculos</h1>
     @role('ADMINISTRADOR')
-    <div class="alert alert-info" role="alert">
+    <div class="alert alert-info alert1" role="alert">
     <div><strong>Bienvenido Administrador:</strong> Acceso total al modulo.<div>
+    </div>
+    @endrole
+    @role('REQUIRENTE')
+        <div class="alert alert-info alert1" role="alert">
+    <div><strong>Bienvenido Requirente:</strong> En este módulo usted podrá administrar, modificar, asignar conductor y enviar a autorizar las solicitudes de vehículos.<div>
     </div>
     @endrole
     @role('SERVICIOS')
     <div class="alert alert-info" role="alert">
-    <div><strong>Bienvenido Servicio:</strong> Aqui iria el texto donde le corresponde el rol SERVICIO.<div>
+    <div><strong>Bienvenido Servicio:</strong> En este módulo usted podrá administrar, modificar, asignar conductor y enviar a autorizar las solicitudes de vehículos.<div>
     </div>
     @endrole
     @role('INFORMATICA')
     <div class="alert alert-info" role="alert">
-    <div><strong>Bienvenido Informatica:</strong> Aqui iria el texto donde le corresponde el rol INFORMATICA.<div>
+    <div><strong>Bienvenido Informatica:</strong> En este módulo usted podrá verificar el estado de sus solicitudes y obtener la hoja de salida de vehículos totalmente autorizada y tramitada.<div>
     </div>
     @endrole
     @role('JURIDICO')
     <div class="alert alert-info" role="alert">
-    <div><strong>Bienvenido Juridico:</strong> Aqui iria el texto donde le corresponde el rol JURIDICO.<div>
+    <div><strong>Bienvenido Juridico:</strong> En este módulo usted podrá verificar el estado de sus solicitudes y obtener la hoja de salida de vehículos totalmente autorizada y tramitada.<div>
     </div>
     @endrole
     @role('FUNCIONARIO')
     <div class="alert alert-info" role="alert">
-    <div><strong>Bienvenido Funcionario:</strong> Aqui iria el texto donde le corresponde el rol FUNCIONARIO.<div>
+    <div><strong>Bienvenido Funcionario:</strong> En este módulo usted podrá verificar el estado de sus solicitudes y obtener la hoja de salida de vehículos totalmente autorizada y tramitada.<div>
     </div>
     @endrole
 @stop
@@ -55,6 +60,17 @@
                 });
             });
         </script>
+    @elseif (session('info'))
+        <script>
+            document.addEventListener('DOMContentLoaded', () => {
+                Swal.fire({
+                    icon: 'info',
+                    title: '{{ session('info') }}',
+                    confirmButtonText: 'OK',
+                    confirmButtonColor: '#0064A0'
+                });
+            });
+        </script>
     @endif
     <div class="container-fluid">
         <div class="table-responsive">
@@ -69,6 +85,7 @@
                             <th scope="col">Estado</th>
                             <th scope="col">Fecha Ingreso</th>
                             <th scope="col">Acciones</th>
+                            <th scope="col"> Exportables</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -86,8 +103,18 @@
                                         @csrf
                                         @method('DELETE')
                                         <a href="{{ route('solicitud.vehiculos.show',$sol_veh->ID_SOL_VEH) }}" class="btn btn-primary"><i class="fa-regular fa-eye"></i> Ver</a>
-                                        <a href="{{route('solicitud.vehiculos.edit',$sol_veh->ID_SOL_VEH)}}" class="btn btn-info"><i class="fa-regular fa-clipboard"></i> Revisar</a>
-                                        <button type="submit" class="btn btn-danger"><i class="fa-solid fa-trash"></i> Borrar</button>
+                                        @role('ADMINISTRADOR|SERVICIOS')
+                                            <a href="{{route('solicitud.vehiculos.edit',$sol_veh->ID_SOL_VEH)}}" class="btn btn-info"><i class="fa-regular fa-clipboard"></i> Revisar</a>
+                                        @endrole
+                                        @role('ADMINISTRADOR')
+                                            <button type="submit" class="btn btn-danger"><i class="fa-solid fa-trash"></i> Borrar</button>
+                                        @endrole
+                                    </form>
+                                </td>
+                                <td>
+                                    <form action="{{ route('solicitud.vehiculos.pdf',$sol_veh->ID_SOL_VEH) }}" method="GET" target="_blank" id="pdfForm">
+                                        @csrf
+                                        <button type="submit" class="btn btn-success"><i class="fa-regular fa-file-pdf"></i> PDF</button>
                                     </form>
                                 </td>
                             </tr>
@@ -105,6 +132,16 @@
         opacity: 0.7; /* Ajusta la opacidad a tu gusto */
         background-color: #99CCFF;
         color:     #000000;
+        }
+    </style>
+
+    <style>
+        .alert1 {
+            opacity: 0.7;
+            /* Ajusta la opacidad a tu gusto */
+            background-color: #FF8C40;
+            /* Color naranjo claro (RGB: 255, 214, 153) */
+            color: #000000;
         }
     </style>
 @stop

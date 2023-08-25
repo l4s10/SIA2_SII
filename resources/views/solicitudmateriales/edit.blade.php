@@ -328,6 +328,9 @@
                 cancelButtonText: 'Cancelar'
             }).then((result) => {
                 if (result.isConfirmed) {
+                    // Cambia el estado de la solicitud a "TERMINADO" en el select
+                    document.getElementById('ESTADO_SOL').value = 'TERMINADO';
+
                     // Cambia el valor del campo oculto 'accion' y envía el formulario
                     document.getElementsByName('accion')[0].value = 'autorizar_cantidad';
                     document.getElementById('form-solicitud').submit();

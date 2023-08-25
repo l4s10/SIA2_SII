@@ -47,7 +47,7 @@
 
                         <div class="mb-3">
                             <label for="EMAIL" class="form-label"><i class="fa-solid fa-envelope"></i> Email:</label>
-                            <input type="email" id="EMAIL" name="EMAIL" class="form-control{{ $errors->has('EMAIL') ? ' is-invalid' : '' }}" value="{{ auth()->user()->email }}" placeholder="Ej: demo@demo.cl" readonly>
+                            <input type="email" id="EMAIL" name="EMAIL" class="form-control{{ $errors->has('EMAIL') ? ' is-invalid' : '' }}" value="{{ $solicitud->EMAIL }}" placeholder="Ej: demo@demo.cl" readonly>
                             @if ($errors->has('EMAIL'))
                             <div class="invalid-feedback">
                                 {{ $errors->first('EMAIL') }}
@@ -65,15 +65,15 @@
                     <option value="INGRESADO" @if ($solicitud->ESTADO_SOL_VEH === 'INGRESADO') selected @endif>Ingresado</option>
                     <option value="SUSPENDIDO" @if ($solicitud->ESTADO_SOL_VEH === 'SUSPENDIDO') selected @endif>Suspendido</option>
                     <option value="POR AUTORIZAR" @if ($solicitud->ESTADO_SOL_VEH === 'POR AUTORIZAR') selected @endif>Por autorizar</option>
+                    <option value="POR RENDIR" @if ($solicitud->ESTADO_SOL_VEH === 'POR RENDIR') selected @endif>Por rendir</option>
                     <option value="RECHAZADO" @if ($solicitud->ESTADO_SOL_VEH === 'RECHAZADO') selected @endif>Rechazado</option>
                 </select>
             </div>
             {{-- *CAMPO CONDUCTOR* --}}
-            <div class="mb-3">
+            {{-- <div class="mb-3">
                 <label for="CONDUCTOR" class="form-label"><i class="fa-solid fa-user-plus"></i> Seleccione conductor:</label>
                 <select id="CONDUCTOR" name="CONDUCTOR" class="form-control @if($errors->has('CONDUCTOR')) is-invalid @endif" required>
                     <option value="">--Seleccione un(a) conductor(a)--</option>
-                    {{-- *CORRECCION DE FILTRO ARREGLADO, AHORA SOLO MUESTRA CONDUCTORES DEL MISMO DEPARTAMENTO* --}}
                     @foreach ($conductores as $conductor)
                     <option value="{{$conductor->id}}" class="" {{ $conductor->id == $solicitud->CONDUCTOR ? 'selected' : '' }}>
                         {{$conductor->NOMBRES}} {{$conductor->APELLIDOS}}
@@ -84,7 +84,7 @@
                 @error('CONDUCTOR')
                     <div class="invalid-feedback">{{ $message }}</div>
                 @enderror
-            </div>
+            </div> --}}
 
             {{-- *CAMPO MOTIVO SOLICITUD* --}}
             <div class="mb-3">
@@ -163,10 +163,11 @@
                     <label for="PATENTE_VEHICULO" class="form-label"><i class="fa-solid fa-car-on"></i> Asignar vehículos:</label>
                     <select id="PATENTE_VEHICULO" name="PATENTE_VEHICULO" class="form-control @if($errors->has('PATENTE_VEHICULO')) is-invalid @endif">
                         <option value="">-- Seleccione el vehículo a asignar --</option>
-                        @foreach ($vehiculos->groupBy('UNIDAD_VEHICULO') as $grupo => $autos)
-                            <optgroup label="{{ $grupo }}">
+                        @foreach ($vehiculos->groupBy('ubicacion.UBICACION') as $ubicacion => $autos)
+                            <optgroup label="{{ $ubicacion }}">
                                 @foreach ($autos as $auto)
-                                    <option value="{{ $auto->PATENTE_VEHICULO }}" data-tipo-vehiculo="{{ $auto->tipoVehiculo->ID_TIPO_VEH }}" @if ($auto->PATENTE_VEHICULO === $solicitud->PATENTE_VEHICULO) selected @endif>
+                                    <option value="{{ $auto->PATENTE_VEHICULO }}" data-tipo-vehiculo="{{ $auto->tipoVehiculo->ID_TIPO_VEH }}"
+                                        @if (trim($auto->PATENTE_VEHICULO) === trim($solicitud->PATENTE_VEHICULO)) selected @endif>
                                         {{ $auto->PATENTE_VEHICULO }} ({{ $auto->tipoVehiculo->TIPO_VEHICULO }})
                                     </option>
                                 @endforeach
@@ -177,6 +178,8 @@
                         <div class="invalid-feedback">{{$errors->first('PATENTE_VEHICULO')}}</div>
                     @endif
                 </div>
+
+
             </div>
             <div class="row" hidden>
                 <div class="col-md-6">
@@ -406,6 +409,8 @@
             // Evento change del elemento ID_TIPO_VEH
             $('#ID_TIPO_VEH').change(function() {
                 var selectedTipoVehiculo = $(this).val();
+                // Guardar el valor seleccionado antes de cambiar el tipo de vehículo
+                var previousPatenteVehiculo = $('#PATENTE_VEHICULO').val();
 
                 $('#PATENTE_VEHICULO option').each(function() {
                     var tipoVehiculoOption = $(this).data('tipo-vehiculo');
@@ -417,62 +422,24 @@
                     }
                 });
 
-                // Restablecer la selección del segundo select
-                $('#PATENTE_VEHICULO').val('');
+                // Restablecer el valor seleccionado anteriormente, en lugar de simplemente restablecer a una cadena vacía
+                $('#PATENTE_VEHICULO').val(previousPatenteVehiculo);
             });
 
             // Desencadenar el evento change al cargar la página
             $('#ID_TIPO_VEH').trigger('change');
         });
     </script>
-    {{-- *FUNCION RESETEAR SOLICITUD (DEVUELVE LOS VALORES ORIGINALES)* --}}
     <script>
-        function resetFields() {
-            // Obtener los elementos de formulario por sus IDs
-            var conductor = document.getElementById('CONDUCTOR');
-            var motivoSolicitud = document.getElementById('MOTIVO_SOL_VEH');
-            var nombreOcupantes = document.getElementById('NOMBRE_OCUPANTES');
-            var fechaSalida = document.getElementById('FECHA_SALIDA_SOL_VEH');
-            var horaSalida = document.getElementById('HORA_SALIDA_SOL_VEH');
-            var horaLlegada = document.getElementById('HORA_LLEGADA_SOL_VEH');
-            var observaciones = document.getElementById('OBSERV_SOL_VEH');
-            var tipoVehiculo = document.getElementById('ID_TIPO_VEH');
-            var patenteVehiculo = document.getElementById('PATENTE_VEHICULO');
-            var estadoSolicitud = document.getElementById('ESTADO_SOL_VEH');
-
-            // Restaurar los valores originales de los campos
-            conductor.value = "{{ $solicitud->CONDUCTOR }}";
-            motivoSolicitud.value = "{{ $solicitud->MOTIVO_SOL_VEH }}";
-            nombreOcupantes.value = "{{ $solicitud->NOMBRE_OCUPANTES }}";
-            fechaSalida.value = "{{ $solicitud->FECHA_SALIDA_SOL_VEH }}";
-            horaSalida.value = "{{ $solicitud->HORA_SALIDA_SOL_VEH }}";
-            horaLlegada.value = "{{ $solicitud->HORA_LLEGADA_SOL_VEH }}";
-            observaciones.value = "{{ $solicitud->OBSERV_SOL_VEH }}";
-            tipoVehiculo.value = "{{ $solicitud->ID_TIPO_VEH }}";
-            patenteVehiculo.value = "{{ $solicitud->PATENTE_VEHICULO }}";
-            estadoSolicitud.value = "{{ $solicitud->ESTADO_SOL_VEH }}";
-
-            // Restablecer el selector de fecha Flatpickr
-            flatpickr("#FECHA_SALIDA_SOL_VEH", {
-                dateFormat: 'Y-m-d',
-                altFormat: 'd-m-Y',
-                altInput: true,
-                locale: 'es',
-                minDate: "today",
-                showClearButton: true,
-                mode: "range"
-            });
-            // Mostrar la alerta SweetAlert2
-            Swal.fire({
-                icon: 'success',
-                title: 'Campos restablecidos',
-                text: 'Los campos se han restablecido correctamente.',
-                timer: 2000,
-                timerProgressBar: true,
-                toast: true,
-                position: 'top-end',
-                showConfirmButton: false
-            });
-        }
+        $(document).ready(function(){
+            $('#ESTADO_SOL_VEH').change(function(){
+                var estado = $(this).val();
+                if(estado === 'POR RENDIR') {
+                    $(this).prop('disabled', true);
+                } else {
+                    $(this).prop('disabled', false);
+                }
+            }).trigger('change'); // Esto va a disparar el evento de cambio al cargar la página
+        });
     </script>
 @stop

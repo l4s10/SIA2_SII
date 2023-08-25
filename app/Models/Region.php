@@ -30,5 +30,10 @@ class Region extends Model
         'REGION.max' => 'El campo Región no debe exceder los 128 caracteres.'
     ];
 
+    // Definir la relación de uno a muchos con DireccionRegional
+    public function direccionesRegionales()
+    {
+        return $this->hasMany(DireccionRegional::class, 'ID_REGION');
+    }
 
 }

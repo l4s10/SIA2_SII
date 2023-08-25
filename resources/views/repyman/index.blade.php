@@ -5,7 +5,7 @@
 @section('content_header')
     <h1>Menú mantenciones y reparaciones</h1>
     @role('ADMINISTRADOR')
-    <div class="alert alert-info" role="alert">
+    <div class="alert alert-info alert1" role="alert">
     <div><strong>Bienvenido Administrador:</strong> Acceso total al modulo.<div>
     </div>
     @endrole
@@ -63,7 +63,7 @@
         <div class="card text-bg-primary mb-3 mx-auto col-sm-12 col-md-6" style="max-width: 100%; text-align: justify;">
             <div class="card-header">Módulo Muebles e Inmuebles</div>
             <div class="card-body">
-                <p class="card-text">Este módulo permite a los funcionarios reportar problemas en los <strong>muebles</strong> e <strong>inmuebles</strong>. Los funcionarios deberán proporcionar información detallada y el equipo encargado del mantenimiento o soporte técnico tomará las medidas para solucionar el problema.</p>
+                <p class="card-text">Este módulo permite a los funcionarios reportar problemas en los <strong>muebles</strong> e <strong>inmuebles</strong>. Los funcionarios deberán proporcionar información detallada y el equipo del área de servicios, se contactará para solucionar el problema.</p>
             </div>
             <div class="card-footer">
                 <a class="btn btn-primary" href="{{route('reparaciones.create')}}"><i class="fa-solid fa-file-pen"></i> Solicitar</a>
@@ -73,7 +73,7 @@
         <div class="card text-bg-primary mb-3 mx-auto col-sm-12 col-md-6" style="max-width: 100%; text-align: justify;">
             <div class="card-header">Módulo Vehículos</div>
             <div class="card-body">
-                <p class="card-text">Este módulo permite a los funcionarios reportar problemas en los <strong>vehículos</strong>. Los funcionarios deberán proporcionar información detallada y el equipo encargado del mantenimiento o soporte técnico tomará las medidas para solucionar el problema.</p>
+                <p class="card-text">Este módulo permite a los funcionarios reportar problemas en los <strong>vehículos institucionales</strong>. Los funcionarios deberán proporcionar información detallada y el equipo encargado del mantenimiento o soporte técnico tomará las medidas para solucionar el problema.</p>
             </div>
             <div class="card-footer">
                 <a class="btn btn-primary" href="{{route('repvehiculos.create')}}"><i class="fa-solid fa-car-side"></i> Solicitar</a>
@@ -92,6 +92,15 @@
         opacity: 0.7; /* Ajusta la opacidad a tu gusto */
         background-color: #99CCFF;
         color:     #000000;
+        }
+    </style>
+    <style>
+        .alert1 {
+            opacity: 0.7;
+            /* Ajusta la opacidad a tu gusto */
+            background-color: #FF8C40;
+            /* Color naranjo claro (RGB: 255, 214, 153) */
+            color: #000000;
         }
     </style>
 @stop

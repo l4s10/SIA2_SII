@@ -13,24 +13,24 @@ class SolicitudBodegasController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth');
-        $this->middleware(function ($request, $next) {
-            $user = Auth::user();
+        $this->middleware(['auth', 'checkRelFunWithSupportPermissions']);
+        // $this->middleware(function ($request, $next) {
+        //     $user = Auth::user();
 
-            if ($user->hasRole('ADMINISTRADOR')) {
-                return $next($request);
-            } elseif ($user->hasRole('INFORMATICA')) {
-                if ($request->route()->getActionMethod() === 'destroy') {
-                    abort(403, 'Acceso no autorizado');
-                }
-                return $next($request);
-            } else {
-                if ($request->route()->getActionMethod() !== 'index' && $request->route()->getActionMethod() !== 'create' && $request->route()->getActionMethod() !== 'store' && $request->route()->getActionMethod() !== 'show') {
-                    abort(403, 'Acceso no autorizado');
-                }
-                return $next($request);
-            }
-        });
+        //     if ($user->hasRole('ADMINISTRADOR')) {
+        //         return $next($request);
+        //     } elseif ($user->hasRole('INFORMATICA')) {
+        //         if ($request->route()->getActionMethod() === 'destroy') {
+        //             abort(403, 'Acceso no autorizado');
+        //         }
+        //         return $next($request);
+        //     } else {
+        //         if ($request->route()->getActionMethod() !== 'index' && $request->route()->getActionMethod() !== 'create' && $request->route()->getActionMethod() !== 'store' && $request->route()->getActionMethod() !== 'show') {
+        //             abort(403, 'Acceso no autorizado');
+        //         }
+        //         return $next($request);
+        //     }
+        // });
     }
     /**
      * Display a listing of the resource.

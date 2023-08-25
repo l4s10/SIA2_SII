@@ -324,10 +324,14 @@ return [
                 ],
                 [
                     'text'    => 'Autorizar',
-                    'url'     => 'reserva/vehiculo/edit',
+                    'url'     => 'reserva/vehiculo/autorizar',
                     'icon'    => 'fa-solid fa-file-circle-check',
                 ],
-
+                [
+                    'text'    => 'Rendir',
+                    'url'     => 'reserva/vehiculo/rendir',
+                    'icon'    => 'fas fa-fw fa-car',
+                ],
             ],
         ],
         [
@@ -516,7 +520,7 @@ return [
         ],
         [
             'text'        => 'Reportes',
-            'url'         => '/reportes',
+            'url'         => '/reporteshome',
             'icon'        => 'fas fa-fw fa-solid fa-chart-simple',
         ],
         ['header' => 'Módulos Administrador'],

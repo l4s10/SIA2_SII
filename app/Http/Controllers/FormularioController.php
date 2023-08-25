@@ -8,19 +8,9 @@ use Illuminate\Support\Facades\Auth;
 
 class FormularioController extends Controller
 {
-    //Funcion para acceder a las rutas SOLO SI los usuarios estan logueados
+    //Funcion para acceder a las rutas SOLO SI los usuarios estan logueados y con los permisos requeridos
     public function __construct(){
-        $this->middleware('auth');
-        //Tambien aqui podremos agregar que roles son los que pueden ingresar
-        $this->middleware(function ($request, $next) {
-            $user = Auth::user();
-
-            if ($user->hasRole('ADMINISTRADOR') || $user->hasRole('SERVICIOS')) {
-                return $next($request);
-            } else {
-                abort(403, 'Acceso no autorizado');
-            }
-        });
+        $this->middleware(['auth', 'roleAdminAndServices']);
     }
     /**
      * Display a listing of the resource.

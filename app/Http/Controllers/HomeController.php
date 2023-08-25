@@ -60,7 +60,7 @@ class HomeController extends Controller
             ];
         }
 
-        $solVeh = RelFunVeh::where('ESTADO_SOL_VEH','ACEPTADO')->get();
+        $solVeh = RelFunVeh::where('ESTADO_SOL_VEH','POR RENDIR')->get();
         $eventoSolVeh = [];
         //**PARSEAMOS A EVENTO FULLCALENDAR */
         foreach($solVeh as $solicitudVeh){

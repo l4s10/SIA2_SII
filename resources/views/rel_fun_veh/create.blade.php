@@ -4,6 +4,31 @@
 
 @section('content_header')
     <h1>Solicitud de Reserva de Vehíchulos</h1>
+    @role('ADMINISTRADOR')
+    <div class="alert alert-info alert1" role="alert">
+        <div><strong>Bienvenido Administrador:</strong> En esta pantalla usted podrá verificar las reservas de salas, vehículos y visitas a bodegas, ya programadas, en caso de mayor información, consulte al Departamento de Administración.</div>
+    </div>
+    @endrole
+    @role('SERVICIOS')
+    <div class="alert alert-info" role="alert">
+        <div><strong>Bienvenido Servicio:</strong> En esta pantalla usted podrá verificar las reservas de salas, vehículos y visitas a bodegas, ya programadas, en caso de mayor información, consulte al Departamento de Administración.</div>
+    </div>
+    @endrole
+    @role('INFORMATICA')
+    <div class="alert alert-info" role="alert">
+        <div><strong>Bienvenido Informatica:</strong> En esta pantalla usted podrá verificar las reservas de salas, vehículos y visitas a bodegas, ya programadas, en caso de mayor información, consulte al Departamento de Administración.</div>
+    </div>
+    @endrole
+    @role('JURIDICO')
+    <div class="alert alert-info" role="alert">
+        <div><strong>Bienvenido Juridico:</strong> En esta pantalla usted podrá verificar las reservas de salas, vehículos y visitas a bodegas, ya programadas, en caso de mayor información, consulte al Departamento de Administración.</div>
+    </div>
+    @endrole
+    @role('FUNCIONARIO')
+    <div class="alert alert-info" role="alert">
+        <div><strong>Bienvenido Funcionario:</strong> En esta pantalla usted podrá verificar las reservas de salas, vehículos y visitas a bodegas, ya programadas, en caso de mayor información, consulte al Departamento de Administración.</div>
+    </div>
+    @endrole
 @stop
 
 @section('content')
@@ -85,7 +110,7 @@
 
 
             {{-- *ASIGNACION DE CONDUCTOR (LIMITAR AL ROL NUEVO "SOLICITANTE")* --}}
-            <div class="mb-3">
+            {{-- <div class="mb-3">
                 <label for="conductor" class="form-label"><i class="fa-solid fa-user"></i> Conductor:</label>
                 <select id="conductor" name="CONDUCTOR" class="form-control{{ $errors->has('conductor') ? ' is-invalid' : '' }}">
                     <option value="" selected>Seleccione un conductor</option>
@@ -100,42 +125,41 @@
                         {{ $errors->first('conductor') }}
                     </div>
                 @endif
-            </div>
-
-
+            </div> --}}
 
             <!-- **CAMPO OCUPANTES DEL 1 AL 6 -->
-            <div class="row">
-                @for ($i = 1; $i <= 6; $i++)
-                <div class="col-md-4">
+        <div class="row">
+            @for ($i = 1; $i <= 6; $i++)
+            <div class="col-md-6 progresivo" id="ubicacion{{$i}}" @if($i == 1) style="display: block;" @endif>
+                <div class="form-group">
+                    <label for="ubicaciones{{$i}}"><i class="fas fa-location-arrow"></i> Ubicación {{$i}}</label>
+                    <select id="ubicaciones{{$i}}" class="ubicaciones{{$i}} form-control">
+                        <option value="">-- Seleccione una ubicacion --</option>
+                        @foreach ($ubicacionesFiltradas as $ubicacion)
+                            <option value="{{$ubicacion->ID_UBICACION}}">{{$ubicacion->UBICACION}}</option>
+                        @endforeach
+                    </select>
+                </div>
+            </div>
+            <div class="col-md-6 progresivo" id="ocupante{{$i}}" @if($i == 1) style="display: block;" @endif>
+                @if($i==1)
                     <div class="form-group">
-                        <label for="direcciones{{$i}}"><i class="fas fa-map-marker-alt"></i> Dirección Regional {{$i}}</label>
-                        <select id="direcciones{{$i}}" class="direcciones{{$i}} form-control">
-                            <option value="" selected>-- Seleccione una direccion regional --</option>
-                            @foreach ($direcciones as $direccion)
-                                <option value="{{$direccion->ID_DIRECCION}}">{{$direccion->DIRECCION}}</option>
-                            @endforeach
+                        <label for="usuarios{{$i}}"><i class="fas fa-user"></i> Ocupante {{$i}} / Conductor</label>
+                        <select id="usuarios{{$i}}" class="usuarios{{$i}} form-control" name="OCUPANTE_{{$i}}">
+                            <option value="">--Seleccione al ocupante n°{{$i}} --</option>
                         </select>
                     </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="form-group">
-                        <label for="ubicaciones{{$i}}"><i class="fas fa-location-arrow"></i> Ubicación {{$i}}</label>
-                        <select id="ubicaciones{{$i}}" class="ubicaciones{{$i}} form-control">
-                            <option value="">-- Seleccione una ubicacion --</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="col-md-4">
+                @else
                     <div class="form-group">
                         <label for="usuarios{{$i}}"><i class="fas fa-user"></i> Ocupante {{$i}}</label>
                         <select id="usuarios{{$i}}" class="usuarios{{$i}} form-control" name="OCUPANTE_{{$i}}">
                             <option value="">--Seleccione al ocupante n°{{$i}} --</option>
                         </select>
                     </div>
-                </div>
-                @endfor
+                @endif
             </div>
+            @endfor
+        </div>
 
 
             {{-- *FECHA Y HORA DE SALIDA SOLICITADA* --}}
@@ -226,33 +250,6 @@
                     </div>
                 </div>
             </div>
-            {{-- !!CAMPO DISPONIBLE SOLO PARA CONDUCTOR --}}
-            <div class="row" hidden>
-                <div class="col-md-6">
-                    <div class="mb-3">
-                        <!-- Solo acceso para conductores(nivel 1) y estado formulario por rendir(autorizado/rendir nivel 3) -->
-                        <label for="KMS_INICIAL" class="form-label"><i class="fa-solid fa-caret-down"></i> Kilometraje al partir:</label>
-                        <input type="number" id="KMS_INICIAL" name="KMS_INICIAL" class="form-control" placeholder="Ej: 60"">
-                        @if ($errors->has('KMS_INICIAL'))
-                        <div class="invalid-feedback">
-                            {{ $errors->first('KMS_INICIAL') }}
-                        </div>
-                        @endif
-                    </div>
-                </div>
-
-                <div class="col-md-6">
-                    <div class="mb-3">
-                        <label for="KMS_FINAL" class="form-label"><i class="fa-solid fa-caret-up"></i> Kilometraje al finalizar:</label>
-                        <input type="number" id="KMS_FINAL" name="KMS_FINAL" class="form-control" placeholder="Ej: 80"">
-                        @if ($errors->has('KMS_FINAL'))
-                        <div class="invalid-feedback">
-                            {{ $errors->first('KMS_FINAL') }}
-                        </div>
-                        @endif
-                    </div>
-                </div>
-            </div>
             {{-- !!ESTADO DE LA SOLICITUD --}}
             <div class="mb-3">
                 <label for="ESTADO_SOL_VEH" class="form-label"><i class="fa-solid fa-file-circle-check"></i> Estado de la Solicitud:</label>
@@ -277,6 +274,28 @@
             margin-top: 10px; /* Ajusta el valor según sea necesario */
         }
     </style>
+        <style>
+        .alert {
+        opacity: 0.7; /* Ajusta la opacidad a tu gusto */
+        background-color: #99CCFF;
+        color:     #000000;
+        }
+    </style>
+
+    <style>
+        .alert1 {
+            opacity: 0.7;
+            /* Ajusta la opacidad a tu gusto */
+            background-color: #FF8C40;
+            /* Color naranjo claro (RGB: 255, 214, 153) */
+            color: #000000;
+        }
+    </style>
+    <style>
+        .progresivo {
+          display: none;
+        }
+      </style>
 @stop
 @section('js')
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
@@ -344,49 +363,46 @@
 <script>
     $(document).ready(function() {
         for (let i = 1; i <= 6; i++) {
-            $('.direcciones'+i).change(function() {
-                const direccionId = $(this).val();
-
-                let selectUbicaciones = $('.ubicaciones'+i);
-                let selectUsuarios = $('.usuarios'+i);
-
-                // Vaciamos el select de ubicaciones y usuarios cuando no hay ninguna dirección seleccionada.
-                if (!direccionId) {
-                    selectUbicaciones.empty();
-                    selectUbicaciones.append('<option value="">-- Seleccione una ubicacion --</option>');
-                    selectUsuarios.empty();
-                    selectUsuarios.append('<option value="">--Seleccione al ocupante n°'+i+' --</option>');
-                } else {
-                    $.get('/ubicaciones/'+direccionId, function(data) {
-                        selectUbicaciones.empty();
-                        selectUbicaciones.append('<option value="">-- Seleccione una ubicacion --</option>');
-
-                        $.each(data, function(index, ubicacion) {
-                            let option = $('<option>', { value: ubicacion.ID_UBICACION, text: ubicacion.UBICACION });
-                            selectUbicaciones.append(option);
-                        });
-                    });
-                }
-            });
-
+            // Actualizar la lista de usuarios en base a la ubicación seleccionada
             $('.ubicaciones'+i).change(function() {
                 const ubicacionId = $(this).val();
                 if (ubicacionId) {
-                    $.get('/usuarios/'+ubicacionId, function(data) {
-                        let select = $('.usuarios'+i);
-                        select.empty();
-                        select.append('<option value="">--Seleccione al ocupante n°'+i+' --</option>');
-                        $.each(data, function(index, usuario) {
-                            select.append('<option value="'+usuario.id+'">'+usuario.NOMBRES+' '+usuario.APELLIDOS+'</option>');
-                        });
+                    $.ajax({
+                        url: '/usuarios/'+ubicacionId,
+                        type: 'GET',
+                        xhrFields: {
+                            withCredentials: true
+                        },
+                        success: function(data) {
+                            let select = $('.usuarios'+i);
+                            select.empty();
+                            select.append('<option value="">--Seleccione al ocupante n°'+i+' --</option>');
+                            $.each(data, function(index, usuario) {
+                                select.append('<option value="'+usuario.id+'">'+usuario.NOMBRES+' '+usuario.APELLIDOS+'</option>');
+                            });
+                        }
                     });
                 } else {
                     $('.usuarios'+i).empty().append('<option value="">--Seleccione al ocupante n°'+i+' --</option>');
                 }
             });
+
+            // Mostrar u ocultar los selectores de ubicación y ocupante en base al ocupante seleccionado
+            $('.usuarios'+i).change(function() {
+                if (this.value !== "" && i < 6) {
+                    $('#ubicacion'+(i+1)).show();
+                    $('#ocupante'+(i+1)).show();
+                } else if (this.value === "") {
+                    for (let j = i+1; j <= 6; j++) {
+                        $('#ubicacion'+j).hide();
+                        $('#ocupante'+j).hide();
+                    }
+                }
+            });
         }
     });
-</script>
+    </script>
+
 
 
 

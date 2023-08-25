@@ -87,6 +87,16 @@
                     <option value="RECHAZADO">Rechazado</option>
                 </select>
             </div>
+            {{-- *MODIFICADO POR* --}}
+            <div class="mb-3" hidden>
+                <label for="MODIFICADO_POR_REP_GEN" class="form-label"><i class="fa-solid fa-user"></i> Modificado por:</label>
+                <input type="text" id="MODIFICADO_POR_REP_GEN" name="MODIFICADO_POR_REP_GEN" class="form-control{{ $errors->has('MODIFICADO_POR_REP_GEN') ? ' is-invalid' : '' }}" value="{{ auth()->user()->NOMBRES}} {{auth()->user()->APELLIDOS}}" placeholder="Ej: ANDRES RODRIGO SUAREZ MATAMALA" readonly>
+                @if ($errors->has('MODIFICADO_POR_REP_GEN'))
+                <div class="invalid-feedback">
+                    {{ $errors->first('MODIFICADO_POR_REP_GEN') }}
+                </div>
+                @endif
+            </div>
             <!-- Botones de envio -->
             <div class="mb-6"">
                 <a href="{{route('repyman.index')}}" class="btn btn-secondary" tabindex="5"><i class="fa-solid fa-hand-point-left"></i> Cancelar</a>

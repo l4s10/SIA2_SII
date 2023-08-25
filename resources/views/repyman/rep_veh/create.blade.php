@@ -4,6 +4,36 @@
 
 @section('content_header')
     <h1>Solicitud Reparación/Mantención Vehicular</h1>
+    @role('ADMINISTRADOR')
+    <div class="alert alert-info alert1" role="alert">
+    <div><strong>Bienvenido Administrador:</strong> Acceso total al modulo.<div>
+    </div>
+    @endrole
+    @role('REQUIRENTE')
+    <div class="alert alert-info" role="alert">
+    <div><strong>Bienvenido Requirente:</strong> Aqui iria el texto donde le corresponde el rol REQUIRENTE.<div>
+    </div>
+    @endrole
+    @role('SERVICIOS')
+    <div class="alert alert-info" role="alert">
+    <div><strong>Bienvenido Servicio:</strong> Aqui iria el texto donde le corresponde el rol SERVICIO.<div>
+    </div>
+    @endrole
+    @role('INFORMATICA')
+    <div class="alert alert-info" role="alert">
+    <div><strong>Bienvenido Informatica:</strong> Aqui iria el texto donde le corresponde el rol INFORMATICA.<div>
+    </div>
+    @endrole
+    @role('JURIDICO')
+    <div class="alert alert-info" role="alert">
+    <div><strong>Bienvenido Juridico:</strong> Aqui iria el texto donde le corresponde el rol JURIDICO.<div>
+    </div>
+    @endrole
+    @role('FUNCIONARIO')
+    <div class="alert alert-info" role="alert">
+    <div><strong>Bienvenido Funcionario:</strong> En el presente módulo usted podrá solicitar mantenciones a los vehículos institucionales, tanto preventivas y/o correctivas, según sea el caso el Departamento de Administración analizará los antecedentes, y podrá aceptar o rechazar la solicitud.<div>
+    </div>
+    @endrole
 @stop
 
 @section('content')
@@ -51,7 +81,7 @@
             <div class="col-md-6">
                 <div class="mb-3">
                     <label for="DEPTO" class="form-label"><i class="fa-solid fa-building-user"></i> Departamento:</label>
-                    <input type="text" id="DEPTO" name="DEPTO" class="form-control{{ $errors->has('DEPTO') ? ' is-invalid' : '' }}" value="{{ auth()->user()->getEntidadInfoAttribute() }}" placeholder="Ej: ADMINISTRACION" readonly>
+                    <input type="text" id="DEPTO" name="DEPTO" class="form-control{{ $errors->has('DEPTO') ? ' is-invalid' : '' }}" value="{{ auth()->user()->ubicacion->UBICACION }}" placeholder="Ej: ADMINISTRACION" readonly>
                     @if ($errors->has('DEPTO'))
                     <div class="invalid-feedback">
                         {{ $errors->first('DEPTO') }}
@@ -77,7 +107,7 @@
                         <label for="PATENTE_VEHICULO" class="form-label"><i class="fa-solid fa-car-on"></i> Información del vehiculo:</label>
                         <select id="PATENTE_VEHICULO" name="PATENTE_VEHICULO" class="form-control @if($errors->has('PATENTE_VEHICULO')) is-invalid @endif">
                             <option value="">-- Seleccione el vehículo con problemas --</option>
-                            @foreach ($vehiculos->groupBy('UNIDAD_VEHICULO') as $grupo => $autos)
+                            @foreach ($vehiculos->groupBy('ubicacion.UBICACION') as $grupo => $autos)
                                 <optgroup label="{{ $grupo }}">
                                     @foreach ($autos as $auto)
                                     <option value="{{ $auto->PATENTE_VEHICULO }}">{{ $auto->PATENTE_VEHICULO }} ({{ $auto->tipoVehiculo->TIPO_VEHICULO }})</option>
@@ -135,6 +165,22 @@
 
 @section('css')
     <link rel="stylesheet" href="/css/admin_custom.css">
+    <style>
+        .alert {
+        opacity: 0.7; /* Ajusta la opacidad a tu gusto */
+        background-color: #99CCFF;
+        color:     #000000;
+        }
+    </style>
+    <style>
+        .alert1 {
+            opacity: 0.7;
+            /* Ajusta la opacidad a tu gusto */
+            background-color: #FF8C40;
+            /* Color naranjo claro (RGB: 255, 214, 153) */
+            color: #000000;
+        }
+    </style>
 @stop
 
 @section('js')

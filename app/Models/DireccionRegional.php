@@ -23,8 +23,7 @@ class DireccionRegional extends Model
         'DIRECCION' => 'required|unique:direcciones_regionales,DIRECCION|max:128',
         'ID_REGION' => 'required|exists:region,ID_REGION',
     ];
-    
-    //* Mensajes de validación*/
+
     public static $messages = [
         'DIRECCION.required' => 'El campo "Dirección Regional" es requerido.',
         'DIRECCION.unique' => 'La "Dirección Regional" ingresada ya existe.',
@@ -37,4 +36,18 @@ class DireccionRegional extends Model
     {
         return $this->belongsTo(Region::class, 'ID_REGION');
     }
+    // Relación de uno a muchos con Ubicacion
+    public function ubicaciones()
+    {
+        return $this->hasMany(Ubicacion::class, 'ID_DIRECCION');
+    }
+    /*public function ubicaciones()
+    {
+        return $this->hasMany(Ubicacion::class, 'ID_DIRECCION');
+    }
+    public function departamentos()
+    {
+        return $this->hasMany(Departamento::class, 'ID_DEPARTAMENTO');
+    }*/
+
 }

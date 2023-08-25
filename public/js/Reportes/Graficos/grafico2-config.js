@@ -1,62 +1,62 @@
-document.addEventListener('DOMContentLoaded', (event) => {
-    const ctx1 = document.getElementById('myChart1').getContext('2d');
-    const myChart1 = new Chart(ctx1, {
-        type: 'bar',
-        data: window.myChartData1, //CARGAR VARIABLES AQUI SE DEFINE COMO LLAMAR A LOS GRAFICOS.
-        options: {
-            scales: {
-                x: {
-                    title: {
-                        display: true,
-                        text: 'Solicitud'
-                    }
-                },
-                y: {
-                    beginAtZero: true,
-                    title: {
-                        display: true,
-                        text: 'Cantidad'
-                    },
-                    ticks: {
-                        precision: 0 // Mostrar números enteros en el eje Y
-                    }
+    // Calcular el porcentaje para cada dato del gráfico
+    const total = window.myChartData2.datasets[0].data.reduce((accumulator, currentValue) => accumulator + currentValue, 0);
+    window.myChartData2.datasets[0].data = window.myChartData2.datasets[0].data.map(value => ((value / total) * 100).toFixed(2));
+
+    // Agregar el signo de porcentaje al formatear los valores
+    const valueFormatter = value => value + '%';
+    window.myChartData2.options = {
+        plugins: {
+            datalabels: {
+                formatter: valueFormatter,
+                color: 'black',
+                font: {
+                    weight: 'bold'
                 }
-            },
+            }
+        }
+    };
+// Tercer gráfico Total de Funcionarios (Hombres/mujeres)
+document.addEventListener('DOMContentLoaded', (event) => {
+    const ctx2 = document.getElementById('myChart2').getContext('2d');
+    const myChart2 = new Chart(ctx2, {
+        type: 'pie',
+        data: window.myChartData2,
+        options: {
             plugins: {
                 legend: {
                     display: true,
-                    labels: {
-                        generateLabels: function (chart) {
-                            const data = chart.data;
-                            if (data.labels.length && data.datasets.length) {
-                                return data.labels.map(function (label, index) {
-                                    const dataset = data.datasets[0];
-                                    const backgroundColor = dataset.backgroundColor[index];
-                                    return {
-                                        text: label,
-                                        fillStyle: backgroundColor,
-                                        hidden: false,
-                                        lineCap: 'round',
-                                        lineDash: [],
-                                        lineDashOffset: 0,
-                                        lineJoin: 'round',
-                                        lineWidth: 1,
-                                        strokeStyle: backgroundColor,
-                                        pointStyle: 'circle',
-                                        rotation: 0
-                                    };
-                                });
-                            }
-                            return [];
-                        }
-                    }
+                    position: 'right'
                 },
                 title: {
                     display: true,
-                    text: 'Ranking de Solicitudes',
+                    text: 'Cantidad de funcionarios',
                     padding: {
                         top: 10,
                         bottom: 30
+                    }
+                },
+                tooltips: {
+                    callbacks: {
+                        label: function (tooltipItem, data) {
+                            const dataset = data.datasets[tooltipItem.datasetIndex];
+                            const total = dataset.data.reduce((accumulator, currentValue) => accumulator + currentValue, 0);
+                            const currentValue = dataset.data[tooltipItem.index];
+                            const percentage = ((currentValue / total) * 100).toFixed(2) + '%';
+                            return `${currentValue} (${percentage})`;
+                        }
+                    }
+                },
+                datalabels: {
+                    formatter: (value, ctx) => {
+                        const dataset = ctx.chart.data.datasets[ctx.datasetIndex];
+                        const total = dataset.data.reduce((accumulator, currentValue) => accumulator + currentValue, 0);
+                        const currentValue = dataset.data[ctx.dataIndex];
+                        const percentage = ((currentValue / total) * 100).toFixed(2) + '%';
+                        return `${percentage}`;
+                    },
+                    color: 'black',
+                    font: {
+                        weight: 'bold'
                     }
                 }
             }
@@ -74,7 +74,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
                 Swal.showLoading();
             },
             willClose: () => {
-               // Al cerrarse
+                // Al cerrarse
             }
         });
 
@@ -91,13 +91,14 @@ document.addEventListener('DOMContentLoaded', (event) => {
         })
             .then(response => response.json())
             .then(data => {
-                myChart1.data.datasets[0].data = [
-                    Math.round(data.grafico2.solicitudMateriales),
-                    Math.round(data.grafico2.relFunRepGeneral),
-                    Math.round(data.grafico2.solicitudFormularios),
-                    Math.round(data.grafico2.solicitudEquipos),
-                ];
-                myChart1.update();
+                // Obtener los valores de sexo del objeto data
+                const totalHombres = data.grafico2.totalHombres;
+                const totalMujeres = data.grafico2.totalMujeres;
+
+                // Actualizar los datos del gráfico
+                myChart2.data.labels = ['Hombres', 'Mujeres'];
+                myChart2.data.datasets[0].data = [totalHombres, totalMujeres];
+                myChart2.update();
             });
     });
 });

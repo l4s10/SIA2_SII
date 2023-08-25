@@ -3,7 +3,37 @@
 @section('title', 'Solicitudes Salas')
 
 @section('content_header')
-    <h1 class="title">Solicitudes de Salas</h1>
+    <h1 class="title">Reservas de salas</h1>
+    @role('ADMINISTRADOR')
+    <div class="alert alert-info alert1" role="alert">
+        <div><strong>Bienvenido Administrador:</strong> Acceso total al modulo.</div>
+    </div>
+    @endrole
+    @role('REQUIRENTE')
+    <div class="alert alert-info" role="alert">
+    <div><strong>Bienvenido Requirente:</strong> En este módulo usted podrá verificar el estado de sus solicitudes (tipo).<div>
+    </div>
+    @endrole
+    @role('SERVICIOS')
+    <div class="alert alert-info" role="alert">
+        <div><strong>Bienvenido Servicio:</strong> En este módulo usted podrá verificar el estado de sus solicitudes (tipo) .</div>
+    </div>
+    @endrole
+    @role('INFORMATICA')
+    <div class="alert alert-info" role="alert">
+        <div><strong>Bienvenido Informatica:</strong> En este módulo usted podrá administrar, modificar, las solicitudes de reservas de salas.</div>
+    </div>
+    @endrole
+    @role('JURIDICO')
+    <div class="alert alert-info" role="alert">
+        <div><strong>Bienvenido Juridico:</strong> En este módulo usted podrá verificar el estado de sus solicitudes (tipo).</div>
+    </div>
+    @endrole
+    @role('FUNCIONARIO')
+    <div class="alert alert-info" role="alert">
+        <div><strong>Bienvenido Funcionario:</strong> En este módulo usted podrá verificar el estado de sus solicitudes (tipo).</div>
+    </div>
+    @endrole
 @stop
 
 @section('content')
@@ -62,10 +92,10 @@
                                         @method('DELETE')
                                         <a href="{{ route('solicitud.salas.show',$sol_sala->ID_SOL_SALA) }}" class="btn btn-primary"><i class="fa-regular fa-eye"></i> Ver</a>
                                         @role('ADMINISTRADOR|INFORMATICA')
-                                        <a href="{{route('solicitud.salas.edit',$sol_sala->ID_SOL_SALA)}}" class="btn btn-info"><i class="fa-regular fa-clipboard"></i> Revisar</a>
+                                            <a href="{{route('solicitud.salas.edit',$sol_sala->ID_SOL_SALA)}}" class="btn btn-info"><i class="fa-regular fa-clipboard"></i> Revisar</a>
                                         @endrole
                                         @role('ADMINISTRADOR')
-                                        <button type="submit" class="btn btn-danger"><i class="fa-solid fa-trash"></i> Borrar</button>
+                                            <button type="submit" class="btn btn-danger"><i class="fa-solid fa-trash"></i> Borrar</button>
                                         @endrole
                                     </form>
                                 </td>
@@ -79,6 +109,23 @@
 
 @section('css')
     <link rel="stylesheet" href="/css/admin_custom.css">
+    <style>
+        .alert {
+            opacity: 0.7;
+            /* Ajusta la opacidad a tu gusto */
+            background-color: #99CCFF;
+            color: #000000;
+        }
+    </style>
+        <style>
+        .alert1 {
+            opacity: 0.7;
+            /* Ajusta la opacidad a tu gusto */
+            background-color: #FF8C40;
+            /* Color naranjo claro (RGB: 255, 214, 153) */
+            color: #000000;
+        }
+    </style>
 @stop
 
 @section('js')

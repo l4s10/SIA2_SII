@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\TipoMaterial;
 use App\Models\Material;
+use App\Models\Ubicacion;
+
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Auth;
@@ -17,21 +19,18 @@ class TipoMaterialController extends Controller
     // Esta funcion protege nuestro controlador para que solo las personas logueadas puedan entrar
     public function __construct()
     {
-        $this->middleware('auth');
-        $this->middleware(function ($request, $next) {
-            $user = Auth::user();
-
-            if ($user->hasRole('ADMINISTRADOR') || $user->hasRole('SERVICIOS')) {
-                return $next($request);
-            } else {
-                abort(403, 'Acceso no autorizado');
-            }
-        });
+        $this->middleware(['auth', 'roleAdminAndServices']);
     }
 
     public function index()
     {
-        $tipos = TipoMaterial::all();
+        // Obtener el ID_DIRECCION del usuario actual
+        $ubicacionUser = Ubicacion::findOrFail(Auth::user()->ID_UBICACION);
+        $direccionFiltradaId = $ubicacionUser->direccion->ID_DIRECCION;
+
+        // Filtrar tipos de material por la direccion del usuario
+        $tipos = TipoMaterial::where('ID_DIRECCION', $direccionFiltradaId)->get();
+
         return view('tipomaterial.index',compact('tipos'));
     }
 
@@ -40,7 +39,12 @@ class TipoMaterialController extends Controller
      */
     public function create()
     {
-        return view('tipomaterial.create');
+        // Cargar direccion regional automaticamente a traves de usuario
+        $ubicacionUser = Ubicacion::findOrFail(Auth::user()->ID_UBICACION);
+        $direccionFiltradaId = $ubicacionUser->direccion->ID_DIRECCION;
+        $direccionFiltradaNombre = $ubicacionUser->direccion->DIRECCION;
+
+        return view('tipomaterial.create', compact('direccionFiltradaId', 'direccionFiltradaNombre'));
     }
 
     /**
@@ -50,13 +54,14 @@ class TipoMaterialController extends Controller
     {
         // Especificamos la regla de los campos y los mensajes de validación
         $rules = [
-            'TIPO_MATERIAL' => ['required', 'regex:/^[A-Za-z\s]+$/', 'max:255', Rule::unique('tipo_material')],
+            // 'TIPO_MATERIAL' => ['required', 'regex:/^[A-Za-z\s]+$/', 'max:255', Rule::unique('tipo_material')],
+            'TIPO_MATERIAL' => ['required', 'regex:/^[A-Za-z\s]+$/', 'max:255'],
         ];
 
         // Mensajes de feedback para usuario
         $messages = [
             'TIPO_MATERIAL.required' => 'El campo Nombre es obligatorio.',
-            'TIPO_MATERIAL.unique' => 'Este tipo de material ya existe.',
+            // 'TIPO_MATERIAL.unique' => 'Este tipo de material ya existe.',
             'TIPO_MATERIAL.regex' => 'El campo Nombre solo puede contener letras y espacios.',
         ];
 
@@ -111,13 +116,14 @@ class TipoMaterialController extends Controller
 
         // Especificamos la regla de los campos y los mensajes de validación
         $rules = [
-            'TIPO_MATERIAL' => ['required', 'regex:/^[A-Za-z\s]+$/', 'max:255', Rule::unique('tipo_material')->ignore($id,'TIPO_MATERIAL')],
+            // 'TIPO_MATERIAL' => ['required', 'regex:/^[A-Za-z\s]+$/', 'max:255', Rule::unique('tipo_material')->ignore($id,'TIPO_MATERIAL')],
+            'TIPO_MATERIAL' => ['required', 'regex:/^[A-Za-z\s]+$/', 'max:255'],
         ];
 
         // Mensajes de feedback para usuario
         $messages = [
             'TIPO_MATERIAL.required' => 'El campo Nombre es obligatorio.',
-            'TIPO_MATERIAL.unique' => 'Este tipo de material ya existe.',
+            // 'TIPO_MATERIAL.unique' => 'Este tipo de material ya existe.',
             'TIPO_MATERIAL.regex' => 'El campo Nombre solo puede contener letras y espacios.',
         ];
 

@@ -5,8 +5,13 @@
 @section('content_header')
     <h1>Menú Salas y Bodegas</h1>
     @role('ADMINISTRADOR')
-    <div class="alert alert-info" role="alert">
+    <div class="alert alert-info alert1" role="alert">
     <div><strong>Bienvenido Administrador:</strong> Acceso total al modulo.<div>
+    </div>
+    @endrole
+    @role('REQUIRENTE')
+    <div class="alert alert-info" role="alert">
+    <div><strong>Bienvenido Requirente:</strong> En este módulo usted podrá verificar el estado de sus solicitudes (tipo).<div>
     </div>
     @endrole
     @role('SERVICIOS')
@@ -61,7 +66,7 @@
         <div class="card text-bg-primary mb-3 mx-auto col-sm-12 col-md-6" style="max-width: 100%; text-align: justify;">
             <div class="card-header">Módulo Salas</div>
             <div class="card-body">
-            <p class="card-text">Este módulo permite a los funcionarios solicitar <strong>Salas</strong>. Los funcionarios deberán proporcionar información detallada y el equipo encargado del soporte de salas te dara soporte técnico para llevar tu solicitud a realizarce.</p>
+            <p class="card-text">Este módulo permite a los funcionarios solicitar <strong>Salas</strong>. Los funcionarios deberán proporcionar información detallada y el Soporte Informático Regional, quienes se contactarán para coordinar la reserva correspondiente.</p>
             </div>
             <div class="card-footer">
                 <a class="btn btn-primary" href="{{route('solicitud.salas.create')}}"><i class="fa-solid fa-file-pen"></i> Solicitar</a>
@@ -71,7 +76,7 @@
         <div class="card text-bg-primary mb-3 mx-auto col-sm-12 col-md-6" style="max-width: 100%; text-align: justify;">
             <div class="card-header">Módulo Bodegas</div>
             <div class="card-body">
-            <p class="card-text">Este módulo permite a los funcionarios solicitar <strong>Bodegas</strong>. Los funcionarios deberán proporcionar información detallada y el equipo encargado del soporte de bodegas te dara técnico para llevar tu solicitud a realizarce.</p>
+            <p class="card-text">Este módulo permite a los funcionarios solicitar visitas a las distintas <strong>Bodegas</strong>. Los funcionarios deberán proporcionar información detallada y el equipo del área de servicios, se contactarán para coordinar la visita.</p>
             </div>
             <div class="card-footer">
                 <a class="btn btn-primary" href="{{route('solicitud.bodegas.create')}}" ><i class="fa-solid fa-shop"></i></i> Solicitar</a>
@@ -93,6 +98,15 @@
     background-color: #99CCFF; /* Color de fondo del aviso */
     color: 	#000000;
     }
+    </style>
+    <style>
+        .alert1 {
+            opacity: 0.7;
+            /* Ajusta la opacidad a tu gusto */
+            background-color: #FF8C40;
+            /* Color naranjo claro (RGB: 255, 214, 153) */
+            color: #000000;
+        }
     </style>
 @stop
 
