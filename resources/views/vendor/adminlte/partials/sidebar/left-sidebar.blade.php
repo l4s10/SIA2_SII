@@ -24,11 +24,11 @@
                 @each('adminlte::partials.sidebar.menu-item', $adminlte->menu('sidebar'), 'item')
 
                 <!-- Header Módulos Funcionario -->
-                @role('ADMINISTRADOR|FUNCIONARIO|SERVICIOS|INFORMÁTICA')
+                @role('ADMINISTRADOR|FUNCIONARIO|SERVICIOS|INFORMATICA|JURIDICO')
                 <li class="nav-header">Módulos Funcionario</li>
                 @endrole
 
-                @role('ADMINISTRADOR|FUNCIONARIO|SERVICIOS|INFORMÁTICA')
+                @role('ADMINISTRADOR|FUNCIONARIO|SERVICIOS|INFORMATICA|JURIDICO')
                 <!-- Solicitudes vehiculares -->
                 <li class="nav-item has-treeview">
                     <a href="#" class="nav-link">
@@ -152,7 +152,7 @@
                 </li>
                 @endrole
 
-                @role('ADMINISTRADOR|SERVICIOS|INFORMÁTICA')
+                @role('ADMINISTRADOR|SERVICIOS|INFORMATICA')
                 <!-- Inventario -->
                 <li class="nav-item has-treeview">
                     <a href="#" class="nav-link">
@@ -250,7 +250,7 @@
 
                 <!-- Header Administrador -->
                  @role('ADMINISTRADOR|INFORMATICA|JURIDICO|SERVICIOS')
-                 <li class="nav-header">Módulos Administrador</li>
+                 <li class="nav-header">Módulos Reservados</li>
                  @endrole
 
                 <!-- Módulo de Directivos -->
@@ -263,8 +263,8 @@
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
                             <a href="#" class="nav-link">
-                                <i class="fa-solid fa-folder-minus"></i>
-                                <p>Búsqueda Resoluciones<i class="right fas fa-angle-left"></i></p>
+                                <i class="fa-solid fa-magnifying-glass"></i>
+                                <p>Buscar Resoluciones<i class="right fas fa-angle-left"></i></p>
                             </a>
                             <ul class="nav nav-treeview">
                                 <li class="nav-item">
@@ -289,25 +289,25 @@
                             <ul class="nav nav-treeview">
                                 <li class="nav-item">
                                     <a href="{{ url('resolucion') }}" class="nav-link">
-                                        <i class="fas fa-fw fa-eye nav-icon"></i>
+                                        <i class="fas fa-fw fa-file-circle-check nav-icon"></i>
                                         <p>Resoluciones</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
                                     <a href="{{ url('polizas') }}" class="nav-link">
-                                        <i class="fas fa-fw fa-eye nav-icon"></i>
+                                        <i class="fas fa-fw fa-car-side nav-icon"></i>
                                         <p>Pólizas</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
                                     <a href="{{ url('facultades') }}" class="nav-link">
-                                        <i class="fas fa-fw fa-eye nav-icon"></i>
+                                        <i class="fas fa-fw fa-square-check nav-icon"></i>
                                         <p>Facultades</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
                                     <a href="{{ url('cargos') }}" class="nav-link">
-                                        <i class="fas fa-fw fa-eye nav-icon"></i>
+                                        <i class="fas fa-fw fa-person-rays nav-icon"></i>
                                         <p>Cargos</p>
                                     </a>
                                 </li>
@@ -327,7 +327,7 @@
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
                             <a href="/funcionarios" class="nav-link">
-                                <i class="fas fa-fw fa-users nav-icon"></i>
+                                <i class="fas fa-fw fa-street-view nav-icon"></i>
                                 <p>Administrar Usuarios</p>
                             </a>
                         </li>
@@ -339,13 +339,13 @@
                         </li>
                         <li class="nav-item">
                             <a href="/region" class="nav-link">
-                                <i class="fas fa-fw fa-earth-americas nav-icon"></i>
+                                <i class="fas fa-fw fa-map nav-icon"></i>
                                 <p>Administrar Regiones</p>
                             </a>
                         </li>
                         <li class="nav-item">
                             <a href="/comuna" class="nav-link">
-                                <i class="fas fa-fw fa-street-view nav-icon"></i>
+                                <i class="fas fa-fw fa-map-location-dot nav-icon"></i>
                                 <p>Administrar Comunas</p>
                             </a>
                         </li>
@@ -357,7 +357,7 @@
                         </li>
                         <li class="nav-item">
                             <a href="/ubicacion" class="nav-link">
-                                <i class="fa-solid fa-user-group nav-icon"></i>
+                                <i class="fas fa-fw fa-users nav-icon"></i>
                                 <p>Administrar Ubicaciones y Departamentos</p>
                             </a>
                         </li>
