@@ -256,30 +256,42 @@
         };
 
         window.myChartData10 = {
-            labels: [
-                @foreach ($grafico10 as $data)
-                    '{{ $data["nombre"] }}',
-                @endforeach
-            ],
-            datasets: [
-                {
-                    label: 'Solicitudes revisadas',
-                    data: [
-                        @foreach ($grafico10 as $data)
-                            {{ $data["conteo"] }},
-                        @endforeach
-                    ],
-                    backgroundColor: [
-                        'rgb(194, 3, 255)',
-                        'rgb(255, 99, 132)',
-                        'rgb(54, 162, 235)',
-                        'rgb(30, 102, 255)'
-                    ],
-                    barThickness: 50,
-                    borderWidth: 1
-                }
-            ]
-        };
+        labels: [
+            @foreach ($grafico10 as $data)
+                '{{ $data["nombre"] }}',
+            @endforeach
+        ],
+        datasets: [
+            {
+                label: 'Solicitudes revisadas',
+                data: [
+                    @foreach ($grafico10 as $data)
+                        {{ $data["conteo"] }},
+                    @endforeach
+                ],
+                backgroundColor: generateRandomColors({{ count($grafico10) }}),
+                barThickness: 50,
+                borderWidth: 1
+            }
+        ]
+    };
+
+        function generateRandomColors(count) {
+        var randomColors = [];
+        for (var i = 0; i < count; i++) {
+            randomColors.push(getRandomColor());
+        }
+        return randomColors;
+    }
+
+    function getRandomColor() {
+        var letters = '0123456789ABCDEF';
+        var color = '#';
+        for (var i = 0; i < 6; i++) {
+            color += letters[Math.floor(Math.random() * 16)];
+        }
+        return color;
+    }
 </script>
 
 

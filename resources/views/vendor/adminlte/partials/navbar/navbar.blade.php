@@ -53,12 +53,21 @@
         @each('adminlte::partials.navbar.menu-item', $adminlte->menu('navbar-right'), 'item')
         {{-- Notification bell icon --}}
     <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" href="#" id="notificationDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    @role('INFORMATICA')
+    <a class="nav-link dropdown-toggle" href="#" id="notificationDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <i class="fa-regular fa-bell"></i>
+        <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-primary">
+            1+
+        </span>
+    </a>
+    @else
+    <a class="nav-link dropdown-toggle" href="#" id="notificationDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
         <i class="fa-regular fa-bell"></i>
         <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
             1+
         </span>
-        </a>
+    </a>
+    @endrole
     <div div class="dropdown-menu dropdown-menu-end" aria-labelledby="notificationDropdown">
         <!-- Agrega más opciones de menú según tus necesidades -->
         <a class="dropdown-item" href="{{ route('solicitud.salas.create') }}">Solicitar Sala</a>

@@ -8,6 +8,11 @@
     <div><strong>Bienvenido Administrador:</strong> Acceso total al modulo.<div>
     </div>
     @endrole
+    @role('REQUIRENTE')
+    <div class="alert alert-info alert1" role="alert">
+    <div><strong>Bienvenido Requirente:</strong> En este módulo usted podrá verificar el estado de sus solicitudes de materiales.<div>
+    </div>
+    @endrole
     @role('SERVICIOS')
     <div class="alert alert-info" role="alert">
     <div><strong>Bienvenido Servicio:</strong> En este módulo usted podrá administrar, modificar, las solicitudes de materiales.<div>

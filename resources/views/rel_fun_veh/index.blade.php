@@ -9,6 +9,11 @@
     <div><strong>Bienvenido Administrador:</strong> Acceso total al modulo.<div>
     </div>
     @endrole
+    @role('REQUIRENTE')
+        <div class="alert alert-info alert1" role="alert">
+    <div><strong>Bienvenido Requirente:</strong> En este módulo usted podrá administrar, modificar, asignar conductor y enviar a autorizar las solicitudes de vehículos.<div>
+    </div>
+    @endrole
     @role('SERVICIOS')
     <div class="alert alert-info" role="alert">
     <div><strong>Bienvenido Servicio:</strong> En este módulo usted podrá administrar, modificar, asignar conductor y enviar a autorizar las solicitudes de vehículos.<div>
