@@ -73,7 +73,7 @@
         <div class="card text-bg-primary mb-3 mx-auto col-sm-12 col-md-6" style="max-width: 100%; text-align: justify;">
             <div class="card-header">Módulo Vehículos</div>
             <div class="card-body">
-                <p class="card-text">Este módulo permite a los funcionarios reportar problemas en los <strong>vehículos</strong>. Los funcionarios deberán proporcionar información detallada y el equipo encargado del mantenimiento o soporte técnico tomará las medidas para solucionar el problema.</p>
+                <p class="card-text">Este módulo permite a los funcionarios reportar problemas en los <strong>vehículos institucionales</strong>. Los funcionarios deberán proporcionar información detallada y el equipo encargado del mantenimiento o soporte técnico tomará las medidas para solucionar el problema.</p>
             </div>
             <div class="card-footer">
                 <a class="btn btn-primary" href="{{route('repvehiculos.create')}}"><i class="fa-solid fa-car-side"></i> Solicitar</a>

@@ -1,11 +1,11 @@
 @extends('adminlte::page')
 
-@section('title', 'Menú Reportes')
+@section('title', 'Estadísticas Generales')
 
 @section('content_header')
-    <h1>Menú reporteria general del sistema</h1>
+    <h1>Estadística y reportes generales del Sistema</h1>
     @role('ADMINISTRADOR')
-    <div class="alert alert-info" role="alert">
+    <div class="alert alert-info alert1" role="alert">
     <div><strong>Bienvenido Administrador:</strong> Acceso total al modulo.<div>
     </div>
     @endrole
@@ -59,16 +59,16 @@
     @endif
     <div class="container-fluid d-flex justify-content-center align-items-center flex-column">
         <div class="card text-bg-primary mb-3 mx-auto col-sm-12 col-md-6" style="max-width: 100%; text-align: justify;">
-                <div class="card-header">Módulo Reportes de vehiculos</div>
+                <div class="card-header">Módulo de Informes de vehículos</div>
                 <div class="card-body">
-                    <p class="card-text">Este módulo permite ver los reportes de <strong>Vehiculos</strong>. Para saber las cantidades de solicitudes de <strong>Vehiculos</strong> del sistema completo.</p>
+                    <p class="card-text">Este módulo permite ver los reportes de <strong>Vehiculos</strong>. Estadísticas de uso de vehículos, georreferenciación, este módulo permite acceder a la información relacionada con las solicitudes de salida de vehículos.</p>
                 </div>
                 <div class="card-footer">
                     <a class="btn btn-primary" href="{{route('reporteshome.vehiculos')}}"><i class="fa-solid fa-chart-pie"></i> Graficos</a>
                 </div>
             </div>
         <div class="card text-bg-primary mb-3 mx-auto col-sm-12 col-md-6" style="max-width: 100%; text-align: justify;">
-                <div class="card-header">Módulo Reportes de materiales</div>
+                <div class="card-header">Módulo de Informes sobre Materiales</div>
                 <div class="card-body">
                     <p class="card-text">Este módulo permite ver los reportes de <strong>Materiales</strong>. Para saber las cantidades de solicitudes de <strong>Materiales</strong> del sistema completo.</p>
                 </div>
@@ -77,7 +77,7 @@
                 </div>
             </div>
         <div class="card text-bg-primary mb-3 mx-auto col-sm-12 col-md-6" style="max-width: 100%; text-align: justify;">
-                <div class="card-header">Módulo Reportes de reparaciones y mantenciones</div>
+                <div class="card-header">Módulo de Informes de Reparaciones y Mantenimientos</div>
                 <div class="card-body">
                     <p class="card-text">Este módulo permite ver los reportes de <strong>reparaciones y mantenciones</strong>. Para saber las cantidades de solicitudes de <strong>reparaciones y mantenciones</strong> del sistema completo.</p>
                 </div>
@@ -86,7 +86,7 @@
                 </div>
             </div>
         <div class="card text-bg-primary mb-3 mx-auto col-sm-12 col-md-6" style="max-width: 100%; text-align: justify;">
-                <div class="card-header">Módulo Reportes de equipos</div>
+                <div class="card-header">Módulo de Informes sobre equipos</div>
                 <div class="card-body">
                     <p class="card-text">Este módulo permite ver los reportes de <strong>Equipos</strong>. Para saber las cantidades de solicitudes de <strong>Equipos</strong> del sistema completo.</p>
                 </div>
@@ -95,7 +95,7 @@
                 </div>
             </div>
         <div class="card text-bg-primary mb-3 mx-auto col-sm-12 col-md-6" style="max-width: 100%; text-align: justify;">
-                <div class="card-header">Módulo Reportes de reservas</div>
+                <div class="card-header">Módulo de Informes sobre reservas</div>
                 <div class="card-body">
                     <p class="card-text">Este módulo permite ver los reportes de <strong>Reservas</strong>. Para saber las cantidades de solicitudes de <strong>Reservas</strong> del sistema completo.</p>
                 </div>
@@ -104,7 +104,7 @@
                 </div>
             </div>
         <div class="card text-bg-primary mb-3 mx-auto col-sm-12 col-md-6" style="max-width: 100%; text-align: justify;">
-            <div class="card-header">Módulo Reporte de inventario</div>
+            <div class="card-header">Módulo de Informes sobre inventario</div>
             <div class="card-body">
                 <p class="card-text">Este módulo permite ver los reportes de <strong>Inventario</strong>. Para saber las cantidades de solicitudes de <strong>Inventario</strong> del sistema completo.</p>
             </div>
@@ -113,7 +113,7 @@
             </div>
         </div>
         <div class="card text-bg-primary mb-3 mx-auto col-sm-12 col-md-6" style="max-width: 100%; text-align: justify;">
-            <div class="card-header">Módulo Reportes del sistema</div>
+            <div class="card-header">Módulo Informes del sistema</div>
             <div class="card-body">
                 <p class="card-text">Este módulo permite ver los reportes del <strong>Sistema</strong>. Para saber las cantidades de solicitudes del <strong>Sistema</strong> del sistema completo.</p>
             </div>
@@ -129,10 +129,19 @@
     <link rel="stylesheet" href="/css/admin_custom.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.2/css/dataTables.bootstrap5.min.css">
     <style>
-        .alert {
-        opacity: 0.7; /* Ajusta la opacidad a tu gusto */
-        background-color: #99CCFF;
-        color:     #000000;
+    .alert {
+    opacity: 0.7; /* Ajusta la opacidad a tu gusto */
+    background-color: #99CCFF; /* Color de fondo del aviso */
+    color: 	#000000;
+    }
+    </style>
+    <style>
+        .alert1 {
+            opacity: 0.7;
+            /* Ajusta la opacidad a tu gusto */
+            background-color: #FF8C40;
+            /* Color naranjo claro (RGB: 255, 214, 153) */
+            color: #000000;
         }
     </style>
 @stop
