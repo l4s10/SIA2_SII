@@ -241,7 +241,7 @@
                 @role('ADMINISTRADOR')
                 <!-- Reportes -->
                 <li class="nav-item">
-                    <a href="/reportes" class="nav-link">
+                    <a href="/reporteshome" class="nav-link">
                         <i class="fas fa-fw fa-solid fa-chart-simple nav-icon"></i>
                         <p>Reportes</p>
                     </a>
