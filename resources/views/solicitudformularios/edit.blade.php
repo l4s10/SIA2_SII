@@ -59,10 +59,10 @@
             <div class="form-group">
                 <label for="ESTADO_SOL_FORM" class="form-label">Estado de la Solicitud:</label>
                 <select id="ESTADO_SOL_FORM" name="ESTADO_SOL_FORM" class="form-control">
-                    <option value="INGRESADO">Ingresado</option>
-                    <option value="EN REVISION" selected>En revisión</option>
-                    <option value="ACEPTADO">Aceptado</option>
-                    <option value="RECHAZADO">Rechazado</option>
+                    <option value="INGRESADO">🟠 Ingresado</option>
+                    <option value="EN REVISION" selected>🟡 En revisión</option>
+                    <option value="ACEPTADO">🟢 Aceptado</option>
+                    <option value="RECHAZADO">🔴 Rechazado</option>
                 </select>
             </div>
 
@@ -145,7 +145,10 @@
         <script>
             $(document).ready(function () {
                 $('#formularios').DataTable({
-                    "lengthMenu": [[5,10, 50, -1], [5, 10, 50, "All"]]
+                    "lengthMenu": [[5,10, 50, -1], [5, 10, 50, "All"]],
+                    "language": {
+                    "url": "https://cdn.datatables.net/plug-ins/1.11.3/i18n/es_es.json"
+                },
                 });
             });
         </script>

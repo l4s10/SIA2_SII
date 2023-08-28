@@ -78,7 +78,12 @@
                             <td>{{$solicitud->DEPTO}}</td>
                             <td>{{$solicitud->EMAIL}}</td>
                             <td>{{ $solicitud->created_at->tz('America/Santiago')->format('d/m/Y H:i') }}</td>
-                            <td>{{$solicitud->ESTADO_SOL_REP_VEH}}</td>
+                            <!-- Cambio de colores a los estados -->
+                            <td>
+                            <span class="badge rounded-pill estado-{{ strtolower(str_replace(' ', '-', $solicitud->ESTADO_SOL_REP_VEH)) }}">
+                            {{ $solicitud->ESTADO_SOL_REP_VEH }}
+                            </span>
+                            </td>
                             <td>
                                 <form action="{{ route('repvehiculos.destroy',$solicitud->ID_SOL_REP_VEH) }}" method="POST">
                                     @csrf
@@ -112,6 +117,37 @@
             background-color: #FF8C40;
             /* Color naranjo claro (RGB: 255, 214, 153) */
             color: #000000;
+        }
+    </style>
+            <style>
+        .estado-en-revision {
+        color: #000000;
+        background-color: #F7F70B;
+        }
+
+        .estado-aceptado {
+        color: #ffffff;
+        background-color: #0CB009;
+        }
+
+        .estado-por-rendir {
+        color: #ffffff;
+        background-color: #7E7E7E;
+        }
+
+        .estado-rechazado {
+        color: #FFFFFF;
+        background-color: #F70B0B;
+        }
+
+        .estado-por-autorizar {
+        color: #000000;
+        background-color: #d9d9d9;
+        }
+
+        .estado-ingresado {
+        color: #000000;
+        background-color: #FFA600;
         }
     </style>
 @stop

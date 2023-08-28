@@ -11,22 +11,22 @@
     @endrole
     @role('SERVICIOS')
     <div class="alert alert-info" role="alert">
-    <div><strong>Bienvenido Servicio:</strong> Aqui iria el texto donde le corresponde el rol SERVICIO.<div>
+    <div><strong>Bienvenido Servicio:</strong> En este módulo usted podrá verificar el estado de sus solicitudes de formularios.<div>
     </div>
     @endrole
     @role('INFORMATICA')
     <div class="alert alert-info" role="alert">
-    <div><strong>Bienvenido Informatica:</strong> Aqui iria el texto donde le corresponde el rol INFORMATICA.<div>
+    <div><strong>Bienvenido Informatica:</strong> En este módulo usted podrá verificar el estado de sus solicitudes de formularios.<div>
     </div>
     @endrole
     @role('JURIDICO')
     <div class="alert alert-info" role="alert">
-    <div><strong>Bienvenido Juridico:</strong> Aqui iria el texto donde le corresponde el rol JURIDICO.<div>
+    <div><strong>Bienvenido Juridico:</strong> En este módulo usted podrá verificar el estado de sus solicitudes de formularios.<div>
     </div>
     @endrole
     @role('FUNCIONARIO')
     <div class="alert alert-info" role="alert">
-    <div><strong>Bienvenido Funcionario:</strong> En el presente módulo usted podrá solicitar formularios, según sea el caso el Departamento de Administración analizará los antecedentes, y podrá aceptar o rechazar la solicitud.<div>
+    <div><strong>Bienvenido Funcionario:</strong>  En este módulo usted podrá verificar el estado de sus solicitudes de formularios.<div>
     </div>
     @endrole
 
@@ -34,11 +34,9 @@
 
 @section('content')
     <div class="verde">
-        <div>
-            <i class="fas fa-seedling"></i> Cuidemos el medio ambiente <i class="fas fa-seedling"></i>. Recuerde que se debe priorizar los formularios con uso cero papel.
-        </div>
+        <div><i class="fas fa-seedling"></i>Cuidemos el medio ambiente <i class="fas fa-seedling"></i>. Recuerde que se debe priorizar los formularios con uso cero papel.</div>
     </div>
-
+    <br>
     <div class="container-fluid">
     @if (session('success'))
         <script>
@@ -84,7 +82,6 @@
                             <td>{{ $solicitud->EMAIL }}</td>
                             <!-- Carbon sirve para parsear datos, esta es una instancia de carbon -->
                             <td>{{ $solicitud->created_at ? $solicitud->created_at->format('d/m/Y H:i') : 'Fecha no disponible' }}</td>
-
                             <td style="text-align:center;">
                                 <form action="{{ route('formulariosSol.destroy',$solicitud->ID_SOL_FORM) }}" method="POST">
                                     @csrf
@@ -124,15 +121,19 @@
         .verde {
             display: flex;
             justify-content: center;
+            height: 6vh; /* Ajusta la altura como desees */
             align-items: center;
             padding: 10px;
             background-color: #40C47C;
             color: #FFFFFF;
             border-radius: 10px;
+            font-size: 16px; /* Tamaño de fuente */
+            text-align: center; /* Alineación del texto */
             overflow: hidden;
         }
 
         .verde i {
+            margin: 0 5px; /* Espacio entre los íconos y el texto */
             margin-right: 10px;
         }
 </style>

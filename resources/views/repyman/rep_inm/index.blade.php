@@ -76,7 +76,12 @@
                                 <td>{{ $sol_reparacion->RUT }}</td>
                                 <td>{{ $sol_reparacion->DEPTO}}</td>
                                 <td>{{ $sol_reparacion->EMAIL}}</td>
-                                <td>{{ $sol_reparacion->ESTADO_REP_INM }}</td>
+                                <!-- Cambio de colores a los estados -->
+                                <td>
+                                <span class="badge rounded-pill estado-{{ strtolower(str_replace(' ', '-', $sol_reparacion->ESTADO_REP_INM)) }}">
+                                {{ $sol_reparacion->ESTADO_REP_INM }}
+                                </span>
+                                </td>
                                 <td>{{ $sol_reparacion->created_at}}</td>
                                 <td>
                                     <form action="{{ route('reparaciones.destroy',$sol_reparacion->ID_REP_INM) }}" method="POST">
@@ -116,6 +121,37 @@
             background-color: #FF8C40;
             /* Color naranjo claro (RGB: 255, 214, 153) */
             color: #000000;
+        }
+    </style>
+        <style>
+        .estado-en-revision {
+        color: #000000;
+        background-color: #F7F70B;
+        }
+
+        .estado-aceptado {
+        color: #ffffff;
+        background-color: #0CB009;
+        }
+
+        .estado-por-rendir {
+        color: #ffffff;
+        background-color: #7E7E7E;
+        }
+
+        .estado-rechazado {
+        color: #FFFFFF;
+        background-color: #F70B0B;
+        }
+
+        .estado-por-autorizar {
+        color: #000000;
+        background-color: #d9d9d9;
+        }
+
+        .estado-ingresado {
+        color: #000000;
+        background-color: #FFA600;
         }
     </style>
 @stop

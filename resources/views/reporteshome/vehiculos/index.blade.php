@@ -248,7 +248,7 @@
                             {{ $data["conteo"] }},
                         @endforeach
                     ],
-                    backgroundColor: 'rgb(255, 190, 30)',
+                    backgroundColor: generateRandomColors({{ count($grafico9) }}),
                     barThickness: 50,
                     borderWidth: 1
                 }
@@ -276,7 +276,7 @@
         ]
     };
 
-        function generateRandomColors(count) {
+    function generateRandomColors(count) {
         var randomColors = [];
         for (var i = 0; i < count; i++) {
             randomColors.push(getRandomColor());

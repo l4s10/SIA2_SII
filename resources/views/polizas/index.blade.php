@@ -7,7 +7,7 @@
 @section('content_header')
     <h1>Pólizas de Conductores</h1>
     @role('ADMINISTRADOR')
-    <div class="alert alert-info" role="alert">
+    <div class="alert alert-info alert1" role="alert">
         <div><strong>Bienvenido Administrador:</strong> Acceso total al modulo.<div>
     </div>
     @endrole
@@ -83,6 +83,15 @@
             opacity: 0.7; /* Ajusta la opacidad a tu gusto */
             background-color: #99CCFF;
             color:     #000000;
+        }
+    </style>
+    <style>
+        .alert1 {
+            opacity: 0.7;
+            /* Ajusta la opacidad a tu gusto */
+            background-color: #FF8C40;
+            /* Color naranjo claro (RGB: 255, 214, 153) */
+            color: #000000;
         }
     </style>
 @endsection
