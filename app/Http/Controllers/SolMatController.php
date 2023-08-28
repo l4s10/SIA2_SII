@@ -56,7 +56,7 @@ class SolMatController extends Controller
     {
         $rules = [
             'NOMBRE_SOLICITANTE' => ['required', 'string', 'max:255', 'regex:/^[A-Za-zñÑ\s]+$/u'],
-            'RUT' => 'required|regex:/^[0-9.-]+$/|min:7|max:12',
+            // 'RUT' => 'required|regex:/^[0-9.-]+$/|min:7|max:12',
             'DEPTO' => ['required', 'string', 'max:255'],
             'EMAIL' => 'required|email',
             'MATERIAL_SOL' => 'required|max:1000',
@@ -166,6 +166,33 @@ class SolMatController extends Controller
             session()->flash('error','Error al modificar la solicitud.' .$e->getMessage());
         }
         return redirect('/solmaterial');
+    }
+
+    public function confirmarRecepcion(Request $request, $id)
+    {
+        try {
+            $solicitud = SolicitudMateriales::find($id);
+
+            // Validamos que la solicitud exista
+            if (!$solicitud) {
+                return response()->json(['message' => 'Solicitud no encontrada'], 404);
+            }
+
+            // Validamos que se haya enviado una fecha
+            $request->validate([
+                'FECHA_RECEPCION' => 'required|date',
+            ]);
+
+            // Actualizamos la fecha de recepción
+            $solicitud->FECHA_RECEPCION = $request->FECHA_RECEPCION;
+            $solicitud->ESTADO_SOL= "TERMINADO";
+            $solicitud->save();
+
+            return response()->json(['message' => 'Fecha de recepción actualizada con éxito'], 200);
+
+        } catch (\Exception $e) {
+            return response()->json(['message' => 'Error al actualizar la fecha de recepción. ' . $e->getMessage()], 500);
+        }
     }
 
     /**

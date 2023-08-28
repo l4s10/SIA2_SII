@@ -19,6 +19,7 @@ class SolicitudMateriales extends Model
         'EMAIL',
         'MATERIAL_SOL',
         'FECHA_DESPACHO',
+        'FECHA_RECEPCION',
         'OBSERVACIONES',
         'ESTADO_SOL',
         'MODIFICADO_POR'

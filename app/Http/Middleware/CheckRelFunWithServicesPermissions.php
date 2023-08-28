@@ -30,6 +30,7 @@ class CheckRelFunWithServicesPermissions
                 $request->route()->getActionMethod() !== 'create' &&
                 $request->route()->getActionMethod() !== 'store' &&
                 $request->route()->getActionMethod() !== 'show'&&
+                $request->route()->getActionMethod() !== 'confirmarRecepcion' &&
                 $request->route()->getActionMethod() !== 'indexRendir' &&
                 $request->route()->getActionMethod() !== 'indexAutorizar' &&
                 $request->route()->getActionMethod() !== 'autorizar' &&

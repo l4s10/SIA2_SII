@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('RUT', 20);
             $table->string('DEPTO', 128);
             $table->string('EMAIL', 128);
+            $table->date('FECHA_RECEPCION')->nullable();
             //*CAMPOS PARA SERVICIOS*/
             $table->date('FECHA_DESPACHO')->nullable();
             $table->text('MATERIAL_SOL');

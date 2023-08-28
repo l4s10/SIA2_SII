@@ -10,6 +10,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\UbicacionesController;
 use App\Http\Controllers\DireccionRegionalController;
 use App\Http\Controllers\EmailController;
+use App\Http\Controllers\SolMatController;
 use Illuminate\Support\Facades\Auth;
 
 require __DIR__.'/reportes.php';
@@ -58,6 +59,8 @@ Route::resource('materiales','App\Http\Controllers\MaterialController');
 
 //Rutas para tipos de materiales.
 Route::resource('tipomaterial','App\Http\Controllers\TipoMaterialController');
+//Agregar ruta custom para "Confirmar recepcion de materiales, ANTES de definir solmaterial como recurso"
+Route::put('solmaterial/confirmar/{id}', [SolMatController::class, 'confirmarRecepcion'])->name('solmaterial.confirmar');
 //Rutas para solicitud de materiales
 Route::resource('solmaterial','App\Http\Controllers\SolMatController');
 //Rutas para reparaciones
