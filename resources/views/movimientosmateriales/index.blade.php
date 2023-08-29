@@ -36,32 +36,37 @@
                 });
             </script>
         @endif
-
-        <div class="table-responsive">
-            <table id="movimientos" class="table table-bordered mt-4">
-                <thead class="bg-primary text-white">
+    </div>
+    <div class="table-responsive">
+        <table id="movimientos" class="table table-bordered mt-4">
+            <thead class="bg-primary text-white">
+                <tr>
+                    <!-- <th scope="col">ID</th> -->
+                    <th scope="col">Usuario modificante</th>
+                    <th scope="col">Tipo de movimiento</th>
+                    <th scope="col">Stock previo</th>
+                    <th scope="col">Stock nuevo</th>
+                    <th scope="col">Detalle y/o Motivo</th>
+                    <th scope="col">Fecha programada</th>
+                    <th scope="col">Fecha creacion</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach($movimientos as $movimiento)
                     <tr>
-                        <!-- <th scope="col">ID</th> -->
-                        <th scope="col">Tipo de movimiento</th>
-                        <th scope="col">Stock previo</th>
-                        <th scope="col">Stock nuevo</th>
-                        <th scope="col">Detalle y/o Motivo</th>
-                        <th scope="col">Acciones</th>
+                        <td>{{$movimiento->modificante->NOMBRES.' '.$movimiento->modificante->APELLIDOS}}</td>
+                        <td>{{$movimiento->TIPO_MOVIMIENTO}}</td>
+                        <td>{{$movimiento->STOCK_PREVIO}}</td>
+                        <td>{{$movimiento->STOCK_NUEVO}}</td>
+                        <td>{{$movimiento->DETALLE_MOVIMIENTO}}</td>
+                        <td>
+                            {{ $movimiento->FECHA_PROGRAMADA ? \Carbon\Carbon::parse($movimiento->FECHA_PROGRAMADA)->format('d/m/Y H:i') : 'Fecha no disponible' }}
+                        </td>
+                        <td>{{ $movimiento->created_at ? $movimiento->created_at->format('d/m/Y H:i') : 'Fecha no disponible' }}</td>
                     </tr>
-                </thead>
-                <tbody>
-                    @foreach($movimientos as $movimiento)
-                        <tr>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                    @endforeach
-                </tbody>
-            </table>
-        </div>
+                @endforeach
+            </tbody>
+        </table>
     </div>
 @stop
 
@@ -93,8 +98,9 @@
                 $('#movimientos').DataTable({
                     "lengthMenu": [[5,10, 50, -1], [5, 10, 50, "All"]],
                     "responsive": true,
+                    "order": [[5, "desc"]], // La columna 5 contiene la fecha de creación
                     "columnDefs": [
-                        { "orderable": false, "targets": 3 }
+                        { "orderable": false, "targets": 4 } // La quinta columna no es ordenable
                     ],
                     "language": {
                         "url": "https://cdn.datatables.net/plug-ins/1.11.3/i18n/es_es.json"

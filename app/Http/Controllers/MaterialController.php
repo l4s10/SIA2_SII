@@ -103,6 +103,7 @@ class MaterialController extends Controller
                     'TIPO_MOVIMIENTO' => 'INGRESO',
                     'STOCK_PREVIO' => 0, // Como es un nuevo material, asumimos que el stock previo es 0
                     'STOCK_NUEVO' => $request->input('STOCK'),
+                    'FECHA_PROGRAMADA' => Carbon::now(),
                     'DETALLE_MOVIMIENTO' => $request->input('DETALLE_MOVIMIENTO')
                 ];
                 //Hacemos el try catch para el movimiento del material
