@@ -10,7 +10,7 @@
     </div>
     @endrole
     @role('REQUIRENTE')
-        <div class="alert alert-info alert1" role="alert">
+    <div class="alert alert-info alert1" role="alert">
     <div><strong>Bienvenido Requirente:</strong> En este módulo usted podrá administrar, modificar, asignar conductor y enviar a autorizar las solicitudes de vehículos.<div>
     </div>
     @endrole
@@ -95,7 +95,12 @@
                                 <td>{{ $sol_veh->RUT }}</td>
                                 <td>{{ $sol_veh->DEPTO}}</td>
                                 <td>{{ $sol_veh->EMAIL}}</td>
-                                <td>{{ $sol_veh->ESTADO_SOL_VEH}}</td>
+                                <!-- Cambio de colores a los estados -->
+                                <td>
+                                <span class="badge rounded-pill estado-{{ strtolower(str_replace(' ', '-', $sol_veh->ESTADO_SOL_VEH)) }}">
+                                {{ $sol_veh->ESTADO_SOL_VEH }}
+                                </span>
+                                </td>
                                 <!-- Carbon sirve para parsear datos, esta es una instancia de carbon -->
                                 <td>{{ $sol_veh->created_at->tz('America/Santiago')->format('d/m/Y H:i') }}</td>
                                 <td>
@@ -142,6 +147,37 @@
             background-color: #FF8C40;
             /* Color naranjo claro (RGB: 255, 214, 153) */
             color: #000000;
+        }
+    </style>
+    <style>
+        .estado-por-autorizar {
+        color: #000000;
+        background-color: #F7F70B;
+        }
+
+        .estado-aceptado {
+        color: #ffffff;
+        background-color: #0CB009;
+        }
+
+        .estado-por-rendir {
+        color: #ffffff;
+        background-color: #0036FF;
+        }
+
+        .estado-rechazado {
+        color: #FFFFFF;
+        background-color: #F70B0B;
+        }
+
+        .estado-suspendido {
+        color: #ffffff;
+        background-color: #000000;
+        }
+
+        .estado-ingresado {
+        color: #000000;
+        background-color: #FFA600;
         }
     </style>
 @stop

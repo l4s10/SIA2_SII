@@ -148,10 +148,10 @@
                 <div class="mb-3">
                     <label for="ESTADO_SOL_REP_VEH" class="form-label"><i class="fa-solid fa-file-circle-check"></i> Estado de la Solicitud:</label>
                     <select id="ESTADO_SOL_REP_VEH" name="ESTADO_SOL_REP_VEH" class="form-control">
-                        <option value="INGRESADO">Ingresado</option>
-                        <option value="EN REVISION"selected>En revisión</option>
-                        <option value="ACEPTADO">Aceptado</option>
-                        <option value="RECHAZADO">Rechazado</option>
+                        <option value="INGRESADO">🟠 Ingresado</option>
+                        <option value="EN REVISION"selected>🟡 En revisión</option>
+                        <option value="ACEPTADO">🟢 Aceptado</option>
+                        <option value="RECHAZADO">🔴 Rechazado</option>
                     </select>
                 </div>
                 {{-- *MODIFICADO POR* --}}

@@ -62,11 +62,11 @@
             <div class="mb-3">
                 <label for="ESTADO_SOL_VEH" class="form-label"><i class="fa-solid fa-file-circle-check"></i> Estado de la Solicitud:</label>
                 <select id="ESTADO_SOL_VEH" name="ESTADO_SOL_VEH" class="form-control">
-                    <option value="INGRESADO" @if ($solicitud->ESTADO_SOL_VEH === 'INGRESADO') selected @endif>Ingresado</option>
-                    <option value="SUSPENDIDO" @if ($solicitud->ESTADO_SOL_VEH === 'SUSPENDIDO') selected @endif>Suspendido</option>
-                    <option value="POR AUTORIZAR" @if ($solicitud->ESTADO_SOL_VEH === 'POR AUTORIZAR') selected @endif>Por autorizar</option>
-                    <option value="POR RENDIR" @if ($solicitud->ESTADO_SOL_VEH === 'POR RENDIR') selected @endif>Por rendir</option>
-                    <option value="RECHAZADO" @if ($solicitud->ESTADO_SOL_VEH === 'RECHAZADO') selected @endif>Rechazado</option>
+                    <option value="INGRESADO" @if ($solicitud->ESTADO_SOL_VEH === 'INGRESADO') selected @endif>🟠 Ingresado</option>
+                    <option value="SUSPENDIDO" @if ($solicitud->ESTADO_SOL_VEH === 'SUSPENDIDO') selected @endif>⚫ Suspendido</option>
+                    <option value="POR AUTORIZAR" @if ($solicitud->ESTADO_SOL_VEH === 'POR AUTORIZAR') selected @endif>🟡 Por autorizar</option>
+                    <option value="POR RENDIR" @if ($solicitud->ESTADO_SOL_VEH === 'POR RENDIR') selected @endif>🔵 Por rendir</option>
+                    <option value="RECHAZADO" @if ($solicitud->ESTADO_SOL_VEH === 'RECHAZADO') selected @endif>🔴 Rechazado</option>
                 </select>
             </div>
             {{-- *CAMPO CONDUCTOR* --}}
