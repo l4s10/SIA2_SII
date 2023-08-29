@@ -220,7 +220,7 @@
                 label: 'Cantidad de reparaciones',
                 data: {!! json_encode(array_column($grafico18, 'conteo')) !!},
                 backgroundColor: [
-                    'rgb(129, 255, 30)',
+                    'rgb(119,221,119)',
                 ],
                 barThickness: 25,
                 borderWidth: 1
@@ -252,10 +252,10 @@
                 label: 'Estado de solicitudes',
                 data: [],
                 backgroundColor: [
-                    'rgb(255, 151, 0)', // INGRESADO
-                    'rgb(255, 255, 0)', // EN REVISION
-                    'rgb(119, 255, 30)', // ACEPTADO
-                    'rgb(255, 0, 0)' // RECHAZADO
+                    'rgb(255, 215, 0)', // Ingresado
+                    'rgb(253,253,150)', // En Revision
+                    'rgb(216, 247, 154)', // Aceptado
+                    'rgb(255,105,97)', // Rechazado
                 ],
                     barThickness: 50,
                     borderWidth: 1
@@ -306,7 +306,7 @@
             datasets: [{
                 label: 'Cantidad de reparaciones',
                 data: data,
-                backgroundColor: 'rgb(129, 255, 30)',
+                backgroundColor: 'rgb(119,221,119)',
                 barThickness: 50,
                 borderWidth: 1
             }]
@@ -338,10 +338,10 @@
                     label: 'Estado de solicitudes',
                     data: [],
                     backgroundColor: [
-                        'rgb(255, 151, 0)', // INGRESADO
-                        'rgb(255, 255, 0)', // EN REVISION
-                        'rgb(119, 255, 30)', // ACEPTADO
-                        'rgb(255, 0, 0)' // RECHAZADO
+                        'rgb(255, 215, 0)', // Ingresado
+                        'rgb(253,253,150)', // En Revision
+                        'rgb(216, 247, 154)', // Aceptado
+                        'rgb(255,105,97)', // Rechazado
                     ],
                     barThickness: 50,
                     borderWidth: 1

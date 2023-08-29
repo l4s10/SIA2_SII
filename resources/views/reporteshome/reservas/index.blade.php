@@ -194,7 +194,7 @@
                 label: 'Solicitudes de salas',
                 data: {!! json_encode(array_column($grafico11, 'conteo')) !!},
                 backgroundColor: [
-                    'rgb(129, 255, 30)', // Color de fondo único para todas las barras
+                    'rgb(119,221,119)', // Color de fondo único para todas las barras
                 ],
                 barThickness: 50, // Ajusta el valor para cambiar el ancho de la barra
                 borderWidth: 1

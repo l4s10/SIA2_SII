@@ -198,11 +198,12 @@
                 label: 'Estado de solicitudes',
                 data: [],
                 backgroundColor: [
-                        'rgb(255, 151, 0)', // Aseo
-                        'rgb(255, 255, 0)', // COMPUTACION
-                        'rgb(214, 255, 30)', // ELECTRODOMESTICOS
-                        'rgb(0, 0, 0)', // ESCRITORIO
-                        'rgb(255, 0, 0)' // ESCRITORIO
+                        'rgb(255, 215, 0)', // Ingresado
+                        'rgb(253,253,150)', // En Revision
+                        'rgb(216, 247, 154)', // Aceptado
+                        'rgb(127, 129, 129)', // En espera
+                        'rgb(255,105,97)', // Rechazado
+                        'rgb(65, 65, 65)' // Terminado
                     ],
                 barThickness: 50,
                 borderWidth: 1

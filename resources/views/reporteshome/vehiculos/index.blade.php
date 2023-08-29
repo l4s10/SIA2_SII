@@ -210,11 +210,11 @@
                     label: 'Estado de solicitudes',
                     data: [],
                     backgroundColor: [
-                        'rgb(255, 151, 0)', // Aseo
-                        'rgb(255, 255, 0)', // COMPUTACION
-                        'rgb(255, 0, 0)', // ELECTRODOMESTICOS
-                        'rgb(0, 0, 0)', // ESCRITORIO
-                        'rgb(214, 255, 30)' // ESCRITORIO
+                        'rgb(255, 215, 0)', // Aseo
+                        'rgb(253,253,150)', // COMPUTACION
+                        'rgb(255,105,97)', // ELECTRODOMESTICOS
+                        'rgb(107, 107, 107)', // ESCRITORIO
+                        'rgb(216, 247, 154)' // ESCRITORIO
                     ],
                     barThickness: 50,
                     borderWidth: 1
