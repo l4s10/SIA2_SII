@@ -62,13 +62,13 @@
         <div class="col-md-6">
             <div class="chart-container">
                 <canvas id="myChart7"></canvas>
-                <button id="view-chart4" class="btn btn-primary move-right"><i class="fa-solid fa-maximize"></i></button>
             </div>
         </div>
         <!-- Base para el Septimo gráfico materiales consumidos por departamento/unidad. -->
         <div class="col-md-6">
             <div class="chart-container">
                 <canvas id="myChart6"></canvas>
+                <button id="view-chart5" class="btn btn-primary move-right"><i class="fa-solid fa-maximize"></i></button>
             </div>
         </div>
     </div>
@@ -165,21 +165,9 @@
 
     $(document).ready(function() {
         // Manejar el evento de clic en el enlace del primer gráfico
-        $('#view-chart').click(function(e) {
+        $('#view-chart5').click(function(e) {
             e.preventDefault();
-            showChart('myChart');
-        });
-
-        // Manejar el evento de clic en el enlace del segundo gráfico
-        $('#view-chart1').click(function(e) {
-            e.preventDefault();
-            showChart('myChart1');
-        });
-
-        // Manejar el evento de clic en el enlace del tercer gráfico
-        $('#view-chart2').click(function(e) {
-            e.preventDefault();
-            showChart('myChart2');
+            showChart('myChart6');
         });
     });
 </script>

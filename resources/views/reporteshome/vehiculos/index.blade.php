@@ -174,26 +174,20 @@
 
     $(document).ready(function() {
         // Manejar el evento de clic en el enlace del primer gráfico
-        $('#view-chart').click(function(e) {
+        $('#view-chart3').click(function(e) {
             e.preventDefault();
-            showChart('myChart');
+            showChart('myChart3');
         });
 
         // Manejar el evento de clic en el enlace del segundo gráfico
-        $('#view-chart1').click(function(e) {
+        $('#view-chart4').click(function(e) {
             e.preventDefault();
-            showChart('myChart1');
+            showChart('myChart8');
         });
 
-        // Manejar el evento de clic en el enlace del tercer gráfico
-        $('#view-chart2').click(function(e) {
-            e.preventDefault();
-            showChart('myChart2');
-        });
     });
 </script>
 <!-- Inicializacion de los graficos -->
-
 <script>
         window.myChartData3 = {
             // 4 gráfico Vehiculos asignados.
@@ -203,7 +197,7 @@
                 label: 'Solicitudes',
                 data: {!! json_encode(array_column($grafico3, 'conteo')) !!},
                 backgroundColor: [
-                    'rgb(129, 255, 30)', // Color de fondo único para todas las barras
+                    'rgb(119,221,119)', // Color de fondo único para todas las barras
                 ],
                 barThickness: 50, // Ajusta el valor para cambiar el ancho de la barra
                 borderWidth: 1
