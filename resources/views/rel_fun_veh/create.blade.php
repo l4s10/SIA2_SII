@@ -6,27 +6,27 @@
     <h1>Solicitud de Reserva de Vehíchulos</h1>
     @role('ADMINISTRADOR')
     <div class="alert alert-info alert1" role="alert">
-        <div><strong>Bienvenido Administrador:</strong> En esta pantalla usted podrá verificar las reservas de salas, vehículos y visitas a bodegas, ya programadas, en caso de mayor información, consulte al Departamento de Administración.</div>
+        <div><strong>Bienvenido Administrador:</strong> En esta pantalla usted podrá verificar las reservas de vehículos, ya programadas, en caso de mayor información, consulte al Departamento de Administración.</div>
     </div>
     @endrole
     @role('SERVICIOS')
     <div class="alert alert-info" role="alert">
-        <div><strong>Bienvenido Servicio:</strong> En esta pantalla usted podrá verificar las reservas de salas, vehículos y visitas a bodegas, ya programadas, en caso de mayor información, consulte al Departamento de Administración.</div>
+        <div><strong>Bienvenido Servicio:</strong> En esta pantalla usted podrá verificar las reservas de vehículos, ya programadas, en caso de mayor información, consulte al Departamento de Administración.</div>
     </div>
     @endrole
     @role('INFORMATICA')
     <div class="alert alert-info" role="alert">
-        <div><strong>Bienvenido Informatica:</strong> En esta pantalla usted podrá verificar las reservas de salas, vehículos y visitas a bodegas, ya programadas, en caso de mayor información, consulte al Departamento de Administración.</div>
+        <div><strong>Bienvenido Informatica:</strong> En esta pantalla usted podrá verificar las reservas de vehículos, ya programadas, en caso de mayor información, consulte al Departamento de Administración.</div>
     </div>
     @endrole
     @role('JURIDICO')
     <div class="alert alert-info" role="alert">
-        <div><strong>Bienvenido Juridico:</strong> En esta pantalla usted podrá verificar las reservas de salas, vehículos y visitas a bodegas, ya programadas, en caso de mayor información, consulte al Departamento de Administración.</div>
+        <div><strong>Bienvenido Juridico:</strong> En esta pantalla usted podrá verificar las reservas de vehículos, ya programadas, en caso de mayor información, consulte al Departamento de Administración.</div>
     </div>
     @endrole
     @role('FUNCIONARIO')
     <div class="alert alert-info" role="alert">
-        <div><strong>Bienvenido Funcionario:</strong> En esta pantalla usted podrá verificar las reservas de salas, vehículos y visitas a bodegas, ya programadas, en caso de mayor información, consulte al Departamento de Administración.</div>
+        <div><strong>Bienvenido Funcionario:</strong> En esta pantalla usted podrá verificar las reservas de vehículos, ya programadas, en caso de mayor información, consulte al Departamento de Administración.</div>
     </div>
     @endrole
 @stop
