@@ -225,9 +225,7 @@
                             {{ $data["conteo"] }},
                         @endforeach
                     ],
-                backgroundColor: [
-                    'rgb(255, 190, 30)', // Color de fondo único para todas las barras
-                ],
+                backgroundColor: generateRandomColors({{ count($grafico16) }}),
                 barThickness: 50, // Ajusta el valor para cambiar el ancho de la barra
                 borderWidth: 1
             }]
@@ -247,13 +245,29 @@
                             {{ $data["conteo"] }},
                         @endforeach
                     ],
-                backgroundColor: [
-                    'rgb(30, 102, 255)', // Color de fondo único para todas las barras
-                ],
+                backgroundColor: generateRandomColors({{ count($grafico17) }}),
                 barThickness: 50, // Ajusta el valor para cambiar el ancho de la barra
                 borderWidth: 1
             }]
         };
+    
+        //(generar colores aleatorios)
+    function generateRandomColors(count) {
+        var randomColors = [];
+        for (var i = 0; i < count; i++) {
+            randomColors.push(getRandomColor());
+        }
+        return randomColors;
+    }
+    //(obtener un color aleatorio)
+    function getRandomColor() {
+        var letters = '0123456789ABCDEF';
+        var color = '#';
+        for (var i = 0; i < 6; i++) {
+            color += letters[Math.floor(Math.random() * 16)];
+        }
+        return color;
+    }
 </script>
 
 <script src="{{asset('js/Reportes/Graficos/grafico15-config.js')}}"></script>

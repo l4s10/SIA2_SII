@@ -55,7 +55,7 @@
         <!-- Base para el Primer gráfico Total de solicitudes 1 -->
         <div class="col-md-6">
             <div class="chart-container">
-                <canvas id="myChart11"></canvas>
+                <canvas id="myChart13"></canvas>
                 <button id="view-chart4" class="btn btn-primary move-right"><i class="fa-solid fa-maximize"></i></button>
             </div>
         </div>
@@ -67,7 +67,7 @@
         </div>
         <div class="col-md-6">
             <div class="chart-container">
-                <canvas id="myChart13"></canvas>
+                <canvas id="myChart11"></canvas>
                 <button id="view-chart4" class="btn btn-primary move-right"><i class="fa-solid fa-maximize"></i></button>
             </div>
         </div>
@@ -215,9 +215,7 @@
                             {{ $data["conteo"] }},
                         @endforeach
                     ],
-                backgroundColor: [
-                    'rgb(255, 190, 30)', // Color de fondo único para todas las barras
-                ],
+                backgroundColor: generateRandomColors({{ count($grafico12) }}),
                 barThickness: 50, // Ajusta el valor para cambiar el ancho de la barra
                 borderWidth: 1
             }]
@@ -237,13 +235,28 @@
                             {{ $data["conteo"] }},
                         @endforeach
                     ],
-                backgroundColor: [
-                    'rgb(30, 102, 255)', // Color de fondo único para todas las barras
-                ],
+                backgroundColor: generateRandomColors({{ count($grafico13) }}),
                 barThickness: 50, // Ajusta el valor para cambiar el ancho de la barra
                 borderWidth: 1
             }]
         };
+    //(generar colores aleatorios)
+        function generateRandomColors(count) {
+        var randomColors = [];
+        for (var i = 0; i < count; i++) {
+            randomColors.push(getRandomColor());
+        }
+        return randomColors;
+    }
+    //(obtener un color aleatorio)
+    function getRandomColor() {
+        var letters = '0123456789ABCDEF';
+        var color = '#';
+        for (var i = 0; i < 6; i++) {
+            color += letters[Math.floor(Math.random() * 16)];
+        }
+        return color;
+    }
 </script>
 
 <script src="{{asset('js/Reportes/Graficos/grafico11-config.js')}}"></script>

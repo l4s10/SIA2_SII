@@ -275,7 +275,7 @@
             }
         ]
     };
-
+    //(generar colores aleatorios)
     function generateRandomColors(count) {
         var randomColors = [];
         for (var i = 0; i < count; i++) {
@@ -283,7 +283,7 @@
         }
         return randomColors;
     }
-
+    //(obtener un color aleatorio)
     function getRandomColor() {
         var letters = '0123456789ABCDEF';
         var color = '#';
