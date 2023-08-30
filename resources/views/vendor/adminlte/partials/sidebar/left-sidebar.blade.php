@@ -282,6 +282,7 @@
                             </ul>
                         </li>
                         <li class="nav-item">
+                            {{-- !!FALTA LA RUTA HACIA REPOSITORIO --}}
                             <a href="#" class="nav-link">
                                 <i class="fa-solid fa-folder-minus"></i>
                                 <p>Repositorio <i class="right fas fa-angle-left"></i></p>
@@ -327,38 +328,38 @@
                     <ul class="nav nav-treeview">
                         @role('ADMINISTRADOR')
                             <li class="nav-item">
-                                <a href="/funcionarios" class="nav-link">
+                                <a href="{{url('funcionarios')}}" class="nav-link">
                                     <i class="fas fa-fw fa-users nav-icon"></i>
                                     <p>Administrar Usuarios</p>
                                 </a>
                             </li>
                         @endrole
                         <li class="nav-item">
-                            <a href="/vehiculos" class="nav-link">
+                            <a href="{{url('vehiculos')}}" class="nav-link">
                                 <i class="fas fa-fw fa-car nav-icon"></i>
                                 <p>Administrar Vehiculos</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="/region" class="nav-link">
+                            <a href="{{url('region')}}" class="nav-link">
                                 <i class="fas fa-fw fa-earth-americas nav-icon"></i>
                                 <p>Administrar Regiones</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="/comuna" class="nav-link">
+                            <a href="{{url('comuna')}}" class="nav-link">
                                 <i class="fas fa-fw fa-street-view nav-icon"></i>
                                 <p>Administrar Comunas</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="/direccionregional" class="nav-link">
+                            <a href="{{url('direccionregional')}}" class="nav-link">
                                 <i class="fa-solid fa-location-arrow nav-icon"></i>
                                 <p>Administrar Direcciones Regionales</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="/ubicacion" class="nav-link">
+                            <a href="{{url('ubicacion')}}" class="nav-link">
                                 <i class="fa-solid fa-user-group nav-icon"></i>
                                 <p>Administrar Ubicaciones y Departamentos</p>
                             </a>
