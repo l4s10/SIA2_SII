@@ -222,14 +222,14 @@
                         </li>
                         <!-- Submenú 9 - Ver Sala/Bodega -->
                         <li class="nav-item">
-                            <a href="{{url('categoriasalas')}}" class="nav-link">
+                            <a href="{{url('salas')}}" class="nav-link">
                                 <i class="fas fa-fw fa-eye nav-icon"></i>
                                 <p>Ver Sala/Bodega</p>
                             </a>
                         </li>
                         <!-- Submenú 10 - Agregar Sala/Bodega -->
                         <li class="nav-item">
-                            <a href="{{url('categoriasalas/create')}}" class="nav-link">
+                            <a href="{{url('salas/create')}}" class="nav-link">
                                 <i class="fas fa-fw fa-plus nav-icon"></i>
                                 <p>Agregar Sala/Bodega</p>
                             </a>
