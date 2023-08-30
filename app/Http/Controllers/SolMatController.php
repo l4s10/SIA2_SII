@@ -160,7 +160,7 @@ class SolMatController extends Controller
             //Guardamos todo el formulario normalmente
             $solicitud->update($request->all());
             // Verifica si el estado ha cambiado de INGRESADO a otro estado, si es asi ya guardamos la fecha con la que se comenzo a trabajar la solicitud.
-            if ($oldEstado === 'INGRESADO' && $newEstado !== 'INGRESADO') {
+            if ($oldEstado === 'INGRESADO' && $newEstado !== 'INGRESADO' && $solicitud->FECHA_ATENCION == NULL) {
                 $solicitud->update(['FECHA_ATENCION' => Carbon::now()]);
             }
 
