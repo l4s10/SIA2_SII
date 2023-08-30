@@ -16,6 +16,7 @@ class SolicitudSala extends Model
         'RUT',
         'DEPTO',
         'EMAIL',
+        'FECHA_ATENCION',
         'EQUIPO_SALA',
         'MOTIVO_SOL_SALA',
         'CANT_PERSONAS_SOL_SALAS',
