@@ -219,13 +219,15 @@ class RelFunVehController extends Controller
             return Redirect::back()->with('error','La contraseña proporcionada no es correcta');
         }
 
+        //!!QUITAREMOS LA FIRMA DEL CONDUCTOR PARA LA AUTORIZACION, ESTE DEBE FIRMAR EN "POR RENDIR".
         // Caso conductor (ASIGNACION POR FORMULARIO)
-        if (auth()->user()->id == $solicitud->CONDUCTOR && $solicitud->FIRMA_CONDUCTOR == null){
-            $solicitud->FIRMA_CONDUCTOR = auth()->user()->RUT . ' ' . auth()->user()->NOMBRES . ' ' . auth()->user()->APELLIDOS;
-            $firmaRealizada = true;
-        }
+        // if (auth()->user()->id == $solicitud->CONDUCTOR && $solicitud->FIRMA_CONDUCTOR == null){
+        //     $solicitud->FIRMA_CONDUCTOR = auth()->user()->RUT . ' ' . auth()->user()->NOMBRES . ' ' . auth()->user()->APELLIDOS;
+        //     $firmaRealizada = true;
+        // }
 
         // Caso cargo 'JEFE DE DEPARTAMENTO ADMINISTRACION' - Damos prioridad a este rol
+        //BUSCAR POR ID EN VEZ DE COMPARAR STRINGS (->cargo->ID_CARGO == (NUM_CARGO_JEFE_DEPTO))
         if (!$firmaRealizada && auth()->user()->cargo->CARGO == 'JEFE DE DEPARTAMENTO DE ADMINISTRACION' && $solicitud->FIRMA_JEFE_ADMINISTRACION == null) {
             $solicitud->FIRMA_JEFE_ADMINISTRACION = auth()->user()->RUT . ' ' . auth()->user()->NOMBRES . ' ' . auth()->user()->APELLIDOS;
             $firmaRealizada = true;
@@ -243,10 +245,12 @@ class RelFunVehController extends Controller
         }
 
         // Validar si todas las firmas están presentes
-        if($solicitud->FIRMA_CONDUCTOR != null && $solicitud->FIRMA_ADMINISTRADOR != null && $solicitud->FIRMA_JEFE_ADMINISTRACION != null){
+        //!!AHORA VALIDAREMOS SI EXISTE SOLO LA FIRMA DEL JEFE DE DEPARTAMENTO DE ADMINISTRACION Y DE ALGUN PERSONAL DE SERVICIOS
+        //if($solicitud->FIRMA_CONDUCTOR != null && $solicitud->FIRMA_ADMINISTRADOR != null && $solicitud->FIRMA_JEFE_ADMINISTRACION != null){
+        if($solicitud->FIRMA_ADMINISTRADOR != null && $solicitud->FIRMA_JEFE_ADMINISTRACION != null){
             $solicitud->ESTADO_SOL_VEH = 'POR RENDIR';
             $solicitud->save();
-            return redirect()->route('solicitud.vehiculos.index')->with('success', 'Firma realizada con éxito y autorizado por las 3 entidades!!');
+            return redirect()->route('solicitud.vehiculos.index')->with('success', 'Firma realizada con éxito y autorizado por las 2 entidades!!');
         }
 
         $solicitud->save();
