@@ -30,7 +30,7 @@
                     -> Validar que sea la persona que solicito
                     -> Validar que el envio se haya despachado
                 --}}
-                @if ($sol_material->ID_USUARIO == auth()->user()->id && $sol_material->ESTADO_SOL !== 'TERMINADO')
+                @if ($sol_material->ID_USUARIO == auth()->user()->id && $sol_material->ESTADO_SOL !== 'TERMINADO' && $sol_material->FECHA_DESPACHO !== NULL)
                     <button id="btn-confirma-pedido" class=" btn btn-success"> Confirmar recepción </button>
                     {{-- ABRIR FORMULARIO QUE INDIQUE LA FECHA DE RECEPCION Y QUE APUNTE A 'UPDATE'
                     -> Para fecha de recepcion validar que minDate sea la fecha de despacho.
