@@ -8,6 +8,7 @@ use App\Models\TipoMaterial;
 use App\Models\Material;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\InventoryController; // Importa la clase InventoryController
+use Carbon\Carbon;
 
 class SolMatController extends Controller
 {
@@ -153,7 +154,16 @@ class SolMatController extends Controller
         $rut = intval(str_replace(['.', '-'], '', $request['RUT']));
         $request['RUT'] = $this->formatRut($rut);
         try{
+            //Verificamos los estados para compararlos y ver si se puede guardar la fecha de atencion
+            $oldEstado = $solicitud->ESTADO_SOL;
+            $newEstado = $request->ESTADO_SOL;
+            //Guardamos todo el formulario normalmente
             $solicitud->update($request->all());
+            // Verifica si el estado ha cambiado de INGRESADO a otro estado, si es asi ya guardamos la fecha con la que se comenzo a trabajar la solicitud.
+            if ($oldEstado === 'INGRESADO' && $newEstado !== 'INGRESADO') {
+                $solicitud->update(['FECHA_ATENCION' => Carbon::now()]);
+            }
+
             //verificamos si se clickeo el boton de autorizar las cantidades
             $accion = $request->input('accion');
             // Crea una instancia de InventoryController y llama al método updateStock
