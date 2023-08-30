@@ -48,12 +48,16 @@
                                 <p>Solicitar</p>
                             </a>
                         </li>
-                        <li class="nav-item">
-                            <a href="{{ url('reserva/vehiculo/autorizar') }}" class="nav-link">
-                                <i class="fa-solid fa-file-circle-check nav-icon"></i>
-                                <p>Autorizar</p>
-                            </a>
-                        </li>
+                        {{-- !!AUTORIZAR SOLO PUEDEN VER LOS DE ADMINISTRADOR|SERVICIOS --}}
+                        @role('ADMINISTRADOR|SERVICIOS')
+                            <li class="nav-item">
+                                <a href="{{ url('reserva/vehiculo/autorizar') }}" class="nav-link">
+                                    <i class="fa-solid fa-file-circle-check nav-icon"></i>
+                                    <p>Autorizar</p>
+                                </a>
+                            </li>
+                        @endrole
+                        {{-- !!RENDIR PUEDEN VER TODOS SI ES QUE TIENEN SOLICITUDES POR RENDIR --}}
                         <li class="nav-item">
                             <a href="{{url('reserva/vehiculo/rendir')}}" class="nav-link">
                                 <i class="fa-solid fa-car nav-icon"></i>
