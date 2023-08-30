@@ -31,8 +31,9 @@ class CreateRelFunVehTable extends Migration
             $table->string('OCUPANTE_6', 128)->nullable();
             $table->string('ORIGEN', 128)->nullable();
             $table->string('DESTINO', 128)->nullable();
-            $table->unsignedInteger('N_ORDEN_TRABAJO')->nullable();
-
+            $table->unsignedInteger('N_ORDEN_TRABAJO')->nullable(); //Agregar en formulario de "por rendir"?
+            //!!Falta agregar la fecha de atencion
+            $table->date('FECHA_ATENCION')->nullable(); //Fecha en la que se atiende la solicitud de alguien, cuando cambia de estado INGRESADO por primera vez.
             $table->string('FIRMA_CONDUCTOR', 128)->nullable();
             $table->string('FIRMA_JEFE_ADMINISTRACION', 128)->nullable();
             $table->string('FIRMA_ADMINISTRADOR', 128)->nullable();
@@ -47,16 +48,16 @@ class CreateRelFunVehTable extends Migration
             $table->unsignedInteger('N_BITACORA')->nullable();
             $table->string('ABS_BENCINA', 128)->nullable();
             $table->string('FECHA_SOL_VEH', 128)->nullable();
-            $table->timestamp('FECHA_SALIDA')->nullable();
+            $table->timestamp('FECHA_SALIDA')->nullable(); //!!Puede contar como "fecha despacho"
             $table->timestamp('FECHA_LLEGADA')->nullable();
-            $table->timestamp('FECHA_LLEGADA_CONDUCTOR')->nullable();
+            $table->timestamp('FECHA_LLEGADA_CONDUCTOR')->nullable();// !!Puede contar como fecha fin solicitud
             $table->string('NOMBRE_OCUPANTES', 1000)->nullable();
             $table->string('ESTADO_SOL_VEH', 128)->default('INGRESADO');
             $table->string('MODIFICADO_POR_SOL_VEH', 128)->nullable();
             $table->string('OBSERV_SOL_VEH', 1000)->nullable();
 
             $table->integer('ID_TIPO_VEH')->unsigned()->references('ID_TIPO_VEH')->on('tipo_vehiculo');
-            $table->timestamps();
+            $table->timestamps(); //Incluye fecha de creacion y de edicion.
         });
     }
 
