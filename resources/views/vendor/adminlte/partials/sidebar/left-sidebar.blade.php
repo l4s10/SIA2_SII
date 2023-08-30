@@ -54,6 +54,12 @@
                                 <p>Autorizar</p>
                             </a>
                         </li>
+                        <li class="nav-item">
+                            <a href="{{url('reserva/vehiculo/rendir')}}" class="nav-link">
+                                <i class="fa-solid fa-car nav-icon"></i>
+                                <p>Rendir</p>
+                            </a>
+                        </li>
                     </ul>
                 </li>
 
