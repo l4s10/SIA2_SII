@@ -164,28 +164,28 @@
                         @role('ADMINISTRADOR|SERVICIOS')
                         <!-- Submenú 1 - Ver Materiales -->
                         <li class="nav-item">
-                            <a href="materiales" class="nav-link">
+                            <a href="{{url('materiales')}}" class="nav-link">
                                 <i class="fas fa-fw fa-eye nav-icon"></i>
                                 <p>Ver Materiales</p>
                             </a>
                         </li>
                         <!-- Submenú 2 - Agregar Materiales -->
                         <li class="nav-item">
-                            <a href="materiales/create" class="nav-link">
+                            <a href="{{url('materiales/create')}}" class="nav-link">
                                 <i class="fas fa-fw fa-plus nav-icon"></i>
                                 <p>Agregar Materiales</p>
                             </a>
                         </li>
                         <!-- Submenú 3 - Tipos Materiales -->
                         <li class="nav-item">
-                            <a href="tipomaterial" class="nav-link">
+                            <a href="{{url('tipomaterial')}}" class="nav-link">
                                 <i class="fas fa-fw fa-eye nav-icon"></i>
                                 <p>Tipos Materiales</p>
                             </a>
                         </li>
                         <!-- Submenú 4 - Agregar Tipo Material -->
                         <li class="nav-item">
-                            <a href="tipomaterial/create" class="nav-link">
+                            <a href="{{url('tipomaterial/create')}}" class="nav-link">
                                 <i class="fas fa-fw fa-plus nav-icon"></i>
                                 <p>Agregar Tipo Material</p>
                             </a>
@@ -194,42 +194,42 @@
                         @role('ADMINISTRADOR|INFORMATICA')
                         <!-- Submenú 5 - Ver Equipos -->
                         <li class="nav-item">
-                            <a href="equipos" class="nav-link">
+                            <a href="{{url('equipos')}}" class="nav-link">
                                 <i class="fas fa-fw fa-eye nav-icon"></i>
                                 <p>Ver Equipos</p>
                             </a>
                         </li>
                         <!-- Submenú 6 - Agregar Equipo -->
                         <li class="nav-item">
-                            <a href="equipos/create" class="nav-link">
+                            <a href="{{url('equipos/create')}}" class="nav-link">
                                 <i class="fas fa-fw fa-plus nav-icon"></i>
                                 <p>Agregar Equipo</p>
                             </a>
                         </li>
                         <!-- Submenú 7 - Ver Tipo Equipos -->
                         <li class="nav-item">
-                            <a href="tipoequipos" class="nav-link">
+                            <a href="{{url('tipoequipos')}}" class="nav-link">
                                 <i class="fas fa-fw fa-eye nav-icon"></i>
                                 <p>Ver Tipo Equipos</p>
                             </a>
                         </li>
                         <!-- Submenú 8 - Agregar Tipo Equipo -->
                         <li class="nav-item">
-                            <a href="tipoequipos/create" class="nav-link">
+                            <a href="{{url('tipoequipos/create')}}" class="nav-link">
                                 <i class="fas fa-fw fa-plus nav-icon"></i>
                                 <p>Agregar Tipo Equipo</p>
                             </a>
                         </li>
                         <!-- Submenú 9 - Ver Sala/Bodega -->
                         <li class="nav-item">
-                            <a href="categoriasalas" class="nav-link">
+                            <a href="{{url('categoriasalas')}}" class="nav-link">
                                 <i class="fas fa-fw fa-eye nav-icon"></i>
                                 <p>Ver Sala/Bodega</p>
                             </a>
                         </li>
                         <!-- Submenú 10 - Agregar Sala/Bodega -->
                         <li class="nav-item">
-                            <a href="categoriasalas/create" class="nav-link">
+                            <a href="{{url('categoriasalas/create')}}" class="nav-link">
                                 <i class="fas fa-fw fa-plus nav-icon"></i>
                                 <p>Agregar Sala/Bodega</p>
                             </a>
@@ -241,7 +241,7 @@
                 @role('ADMINISTRADOR')
                 <!-- Reportes -->
                 <li class="nav-item">
-                    <a href="/reporteshome" class="nav-link">
+                    <a href="{{url('reporteshome')}}" class="nav-link">
                         <i class="fas fa-fw fa-solid fa-chart-simple nav-icon"></i>
                         <p>Reportes</p>
                     </a>
