@@ -16,6 +16,8 @@ class SolicitudFormulario extends Model
         'RUT',
         'DEPTO',
         'EMAIL',
+        'FECHA_ATENCION',
+        'FECHA_RECEPCION',
         'FORM_SOL',
         'CANT_FORM_SOL',
         'ESTADO_SOL_FORM',
