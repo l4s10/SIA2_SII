@@ -51,7 +51,7 @@
 
         {{-- Configured right links --}}
         @each('adminlte::partials.navbar.menu-item', $adminlte->menu('navbar-right'), 'item')
-        {{-- Notification bell icon --}}
+        <!-- {{-- Notification bell icon --}}
     <li class="nav-item dropdown">
     @role('INFORMATICA')
     <a class="nav-link dropdown-toggle" href="#" id="notificationDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -69,7 +69,7 @@
     </a>
     @endrole
     <div div class="dropdown-menu dropdown-menu-end" aria-labelledby="notificationDropdown">
-        <!-- Agrega más opciones de menú según tus necesidades -->
+        
         <a class="dropdown-item" href="{{ route('solicitud.salas.create') }}">Solicitar Sala</a>
         <a class="dropdown-item" href="{{ route('solicitud.bodegas.create') }}">Solicitar visita a bodega</a>
         <a class="dropdown-item" href="{{ route('solicitud.vehiculos.create') }}">Solicitud de Reservas de Vehículos</a>
@@ -88,7 +88,7 @@
         </span>
     </a>
     <div class="dropdown-menu dropdown-menu-end" aria-labelledby="flagDropdown">
-        <!-- Agrega más opciones de menú según tus necesidades -->
+        
         <a class="dropdown-item" href="{{ route('solicitud.salas.index') }}">Solicitudes de Salas</a>
         <a class="dropdown-item" href="{{ route('solicitud.bodegas.index') }}">Solicitudes de Bodegas</a>
         <a class="dropdown-item" href="{{ route('solicitud.vehiculos.index') }}">Solicitudes de vehiculos</a>
@@ -97,7 +97,7 @@
         <a class="dropdown-item" href="{{ route('formulariosSol.index') }}">Listado solicitudes formulario</a>
     </div>
 </li>
-@endrole
+@endrole -->
 
         {{-- User menu link --}}
         @if(Auth::user())
