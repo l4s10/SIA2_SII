@@ -94,7 +94,18 @@
                                 </td>
                                 <!-- Carbon sirve para parsear datos, esta es una instancia de carbon -->
                                 <td>{{ $sol_material->created_at ? $sol_material->created_at->format('d/m/Y H:i') : 'Fecha no disponible' }}</td>
-                                <td>{{ $sol_material->FECHA_DESPACHO ? $sol_material->diasDeTramitacion() . ' dia/s totales' : $sol_material->diasSinAtender() . ' dia/s transcurridos'}}</td>
+                                <td>
+                                    @if($sol_material->FECHA_RECEPCION !== NULL)
+                                        {{ $sol_material->diasTotales() . ' día/s totales' }}
+                                    @elseif($sol_material->FECHA_DESPACHO !== NULL)
+                                        {{ $sol_material->diasTotales() . ' día/s en despachar' }}
+                                    @elseif($sol_material->FECHA_ATENCION !== NULL)
+                                        {{ $sol_material->diasDeAtencion() . ' día/s de atención' }}
+                                    @else
+                                        {{ $sol_material->diasSinAtender() . ' día/s sin atender' }}
+                                    @endif
+                                </td>
+                                {{-- $sol_material->FECHA_RECEPCION ? $sol_material->diasTotales() . ' dia/s totales' : $sol_material->diasSinAtender() . ' dia/s transcurridos' --}}
                                 {{-- <td>{{ $sol_material->OBSERVACIONES}}</td> --}}
                                 <td>
                                     <form action="{{ route('solmaterial.destroy',$sol_material->ID_SOLICITUD) }}" method="POST">
