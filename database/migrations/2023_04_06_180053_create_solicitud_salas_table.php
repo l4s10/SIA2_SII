@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('RUT', 20);
             $table->string('DEPTO', 128);
             $table->string('EMAIL', 128);
+            $table->date('FECHA_ATENCION')->nullable(); //Fecha en la que se atiende la solicitud de alguien, cuando cambia de estado INGRESADO por primera vez.
             $table->string('EQUIPO_SALA', 128)->nullable();
             $table->string('MOTIVO_SOL_SALA', 1000)->nullable();
             $table->integer('CANT_PERSONAS_SOL_SALAS')->nullable();

@@ -21,4 +21,8 @@ class MovimientoMaterial extends Model
         return $this->belongsTo(Material::class, 'ID_MATERIAL');
     }
 
+    public function modificante(){
+        return $this->belongsTo(User::class, 'ID_MODIFICANTE');
+    }
+
 }

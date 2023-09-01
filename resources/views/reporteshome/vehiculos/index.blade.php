@@ -409,6 +409,7 @@
                     L.latLng(-37.0167, -73.1333),  // Coordenadas de Coronel
                     L.latLng(-36.7167, -73.1167)   // Coordenadas de Talcahuano
                 ],
+                language: 'es',
                 lineOptions: {
                     styles: [
                         { color: 'blue', opacity: 0.6, weight: 4 },

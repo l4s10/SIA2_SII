@@ -29,6 +29,7 @@ class RelFunVeh extends Model
         'ORIGEN',
         'DESTINO',
         'N_ORDEN_TRABAJO',
+        'FECHA_ATENCION',
         'KMS_INICIAL',
         'KMS_FINAL',
         'KMS_RECORRIDOS',

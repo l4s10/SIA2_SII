@@ -139,6 +139,7 @@
                                     <!-- Campo oculto para almacenar la contraseña -->
                                     <input type="hidden" name="password" id="passwordInput">
                                     <!-- Botón para abrir el modal -->
+                                    {{-- !!COPIAR BOTON PARA REEMPLAZAR SUBMIT --}}
                                     <button type="button" class="btn btn-success" id="authorizeBtn" data-dismiss="modal"><i class="fa-solid fa-check-circle"></i> Autorizar</button>
                                 </form>
                                 <form action="{{ route('solicitud.vehiculos.reject', $sol_veh->ID_SOL_VEH) }}" method="POST" id="rejectForm">

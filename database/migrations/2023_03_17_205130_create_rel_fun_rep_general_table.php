@@ -20,6 +20,9 @@ return new class extends Migration
             $table->string('DEPTO', 128);
             $table->string('EMAIL', 128);
             //---------------------------------
+            //FECHAS PARA GRAFICOS
+            $table->date('FECHA_ATENCION')->nullable(); //Fecha en la que se atiende la solicitud de alguien, cuando cambia de estado INGRESADO por primera vez.
+            $table->date('FECHA_PROGRAMADA')->nullable();//Fecha programada para la reparacion
             // $table->string('TIPO_REPARCION_REP_GEN', 128)->nullable();
             //Podemos mostrar el tipo a traves de su id como en materiales
             $table->integer('ID_TIPO_REP_GENERAL')->references('ID_TIPO_REP_GENERAL')->on('tipo_reparacion');

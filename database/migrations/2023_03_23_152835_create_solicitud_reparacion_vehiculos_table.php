@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('DEPTO', 128);
             $table->string('EMAIL', 128);
             //-------CAMPOS SOLICITUD---------//
+            $table->date('FECHA_ATENCION')->nullable(); //Fecha en la que se atiende la solicitud de alguien, cuando cambia de estado INGRESADO por primera vez.
             $table->string('PATENTE_VEHICULO', 7)->references('PATENTE_VEHICULO')->on('vehiculos');
             $table->integer('ID_TIPO_SERVICIO')->references('ID_TIPO_SERVICIO')->on('tipo_servicio');
             $table->text('DETALLE_REPARACION_REP_VEH')->nullable();

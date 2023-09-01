@@ -14,6 +14,11 @@ class MovimientoMaterialController extends Controller
         $this->middleware( ['auth', 'checkearRol:ADMINISTRADOR'] );
     }
 
+    public function index(){
+        $movimientos = MovimientoMaterial::all();
+        return view('movimientosmateriales.index', compact('movimientos'));
+    }
+
     public function create()
     {
         $materiales = Material::all();

@@ -14,6 +14,7 @@ class SolicitudEquipos extends Model
         'RUT',
         'DEPTO',
         'EMAIL',
+        'FECHA_ATENCION',
         'ID_USUARIO',
         'TIPO_EQUIPO',
         'MOTIVO_SOL_EQUIPO',

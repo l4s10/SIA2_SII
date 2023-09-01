@@ -16,6 +16,7 @@ class SolicitudBodegas extends Model
         'RUT',
         'DEPTO',
         'EMAIL',
+        'FECHA_ATENCION',
         'MOTIVO_SOL_BODEGA',
         'FECHA_SOL_BODEGA',
         'FECHA_ASIG_BODEGA',
