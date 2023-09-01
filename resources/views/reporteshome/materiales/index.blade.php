@@ -6,28 +6,18 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <h1>Reportes de materiales</h1>
     @role('ADMINISTRADOR')
-    <div class="alert alert-info" role="alert">
+    <div class="alert alert-info alert1" role="alert">
         <div><strong>Bienvenido Administrador:</strong> Acceso total al modulo.</div>
     </div>
     @endrole
     @role('SERVICIOS')
     <div class="alert alert-info" role="alert">
-        <div><strong>Bienvenido Servicio:</strong> Aqui iria el texto donde le corresponde el rol SERVICIO.</div>
+        <div><strong>Bienvenido Servicio:</strong> Acceso al modulo de reportes de materiales.</div>
     </div>
     @endrole
     @role('INFORMATICA')
     <div class="alert alert-info" role="alert">
-        <div><strong>Bienvenido Informatica:</strong> Aqui iria el texto donde le corresponde el rol INFORMATICA.</div>
-    </div>
-    @endrole
-    @role('JURIDICO')
-    <div class="alert alert-info" role="alert">
-        <div><strong>Bienvenido Juridico:</strong> Aqui iria el texto donde le corresponde el rol JURIDICO.</div>
-    </div>
-    @endrole
-    @role('FUNCIONARIO')
-    <div class="alert alert-info" role="alert">
-        <div><strong>Bienvenido Funcionario:</strong> Aqui iria el texto donde le corresponde el rol FUNCIONARIO.</div>
+        <div><strong>Bienvenido Informatica:</strong> Acceso al modulo de reportes de materiales.</div>
     </div>
     @endrole
 @endsection
@@ -99,7 +89,15 @@
             background-color: #99CCFF;
             color: #000000;
         }
-
+        
+        .alert1 {
+            opacity: 0.7;
+            /* Ajusta la opacidad a tu gusto */
+            background-color: #FF8C40;
+            /* Color naranjo claro (RGB: 255, 214, 153) */
+            color: #000000;
+        }
+        
         .chart-container {
             padding: 20px;
             border: 1px solid #ccc;

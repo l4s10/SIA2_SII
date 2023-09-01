@@ -6,28 +6,18 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <h1>Reportes de equipos</h1>
     @role('ADMINISTRADOR')
-    <div class="alert alert-info" role="alert">
+    <div class="alert alert-info alert1" role="alert">
         <div><strong>Bienvenido Administrador:</strong> Acceso total al modulo.</div>
     </div>
     @endrole
     @role('SERVICIOS')
     <div class="alert alert-info" role="alert">
-        <div><strong>Bienvenido Servicio:</strong> Aqui iria el texto donde le corresponde el rol SERVICIO.</div>
+        <div><strong>Bienvenido Servicio:</strong> Acceso al modulo de reportes de equipos.</div>
     </div>
     @endrole
     @role('INFORMATICA')
     <div class="alert alert-info" role="alert">
-        <div><strong>Bienvenido Informatica:</strong> Aqui iria el texto donde le corresponde el rol INFORMATICA.</div>
-    </div>
-    @endrole
-    @role('JURIDICO')
-    <div class="alert alert-info" role="alert">
-        <div><strong>Bienvenido Juridico:</strong> Aqui iria el texto donde le corresponde el rol JURIDICO.</div>
-    </div>
-    @endrole
-    @role('FUNCIONARIO')
-    <div class="alert alert-info" role="alert">
-        <div><strong>Bienvenido Funcionario:</strong> Aqui iria el texto donde le corresponde el rol FUNCIONARIO.</div>
+        <div><strong>Bienvenido Informatica:</strong> Acceso al modulo de reportes de equipos.</div>
     </div>
     @endrole
 @endsection
@@ -68,6 +58,7 @@
         <div class="col-md-6">
             <div class="chart-container">
                 <canvas id="myChart15"></canvas>
+                <button id="view-chart15" class="btn btn-primary move-right"><i class="fa-solid fa-maximize"></i></button>
             </div>
         </div>
     
@@ -97,6 +88,14 @@
             opacity: 0.7;
             /* Ajusta la opacidad a tu gusto */
             background-color: #99CCFF;
+            color: #000000;
+        }
+
+        .alert1 {
+            opacity: 0.7;
+            /* Ajusta la opacidad a tu gusto */
+            background-color: #FF8C40;
+            /* Color naranjo claro (RGB: 255, 214, 153) */
             color: #000000;
         }
 
@@ -165,21 +164,9 @@
 
     $(document).ready(function() {
         // Manejar el evento de clic en el enlace del primer gráfico
-        $('#view-chart').click(function(e) {
+        $('#view-chart15').click(function(e) {
             e.preventDefault();
-            showChart('myChart');
-        });
-
-        // Manejar el evento de clic en el enlace del segundo gráfico
-        $('#view-chart1').click(function(e) {
-            e.preventDefault();
-            showChart('myChart1');
-        });
-
-        // Manejar el evento de clic en el enlace del tercer gráfico
-        $('#view-chart2').click(function(e) {
-            e.preventDefault();
-            showChart('myChart2');
+            showChart('myChart15');
         });
     });
 </script>
