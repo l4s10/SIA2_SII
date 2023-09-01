@@ -110,8 +110,9 @@
                 <div class="input-group">
                     <input type="date" id="FECHA_SOL_BODEGA" name="FECHA_SOL_BODEGA" class="form-control @if($errors->has('FECHA_SOL_BODEGA')) is-invalid @endif" placeholder="Ingrese la fecha" data-input required value="{{ old('FECHA_SOL_BODEGA') }}">
                     {{-- *HORA SOLICITADA* --}}
-                    <input type="text" id="HORA_INICIO_SOL_BODEGA" name="HORA_INICIO_SOL_BODEGA" class="form-control flatpickr @if($errors->has('HORA_INICIO_SOL_BODEGA')) is-invalid @endif" placeholder="Seleccione la hora" data-input required value="{{ old('HORA_INICIO_SOL_BODEGA') }}">
-                    <button type="button" id="clearButton" class="btn btn-danger">Limpiar</button>
+                    <input type="text" id="HORA_INICIO_SOL_BODEGA" name="HORA_INICIO_SOL_BODEGA" class="form-control flatpickr @if($errors->has('HORA_INICIO_SOL_BODEGA')) is-invalid @endif" placeholder="Seleccione la hora de inicio" data-input required value="{{ old('HORA_INICIO_SOL_BODEGA') }}">
+                    <input type="text" id="HORA_TERM_SOL_BODEGA" name="HORA_TERM_SOL_BODEGA" class="form-control flatpickr @if($errors->has('HORA_TERM_SOL_BODEGA')) is-invalid @endif" placeholder="Seleccione la hora de termino" data-input required value="{{ old('HORA_TERM_SOL_BODEGA') }}">
+                    {{-- <button type="button" id="clearButton" class="btn btn-danger">Limpiar</button> --}}
                 </div>
                 @if ($errors->has('FECHA_SOL_BODEGA'))
                     <div class="invalid-feedback">{{ $errors->first('FECHA_SOL_BODEGA') }}</div>
@@ -183,6 +184,19 @@
                 }
             });
             $('#HORA_INICIO_SOL_BODEGA').flatpickr({
+                enableTime: true,
+                noCalendar: true,
+                dateFormat: "H:i",
+                time_24hr: true,
+                locale: "es",
+                placeholder: "Seleccione la hora",
+                onReady: function(selectedDates, dateStr, instance) {
+                    $('#clearButton').on('click', function() {
+                        instance.clear();
+                    });
+                }
+            });
+            $('#HORA_TERM_SOL_BODEGA').flatpickr({
                 enableTime: true,
                 noCalendar: true,
                 dateFormat: "H:i",
