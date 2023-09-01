@@ -248,7 +248,7 @@
                             {{ $data["conteo"] }},
                         @endforeach
                     ],
-                    backgroundColor: 'rgb(255, 190, 30)',
+                    backgroundColor: generateRandomColors({{ count($grafico9) }}),
                     barThickness: 50,
                     borderWidth: 1
                 }
@@ -276,7 +276,7 @@
         ]
     };
 
-        function generateRandomColors(count) {
+    function generateRandomColors(count) {
         var randomColors = [];
         for (var i = 0; i < count; i++) {
             randomColors.push(getRandomColor());
@@ -409,6 +409,7 @@
                     L.latLng(-37.0167, -73.1333),  // Coordenadas de Coronel
                     L.latLng(-36.7167, -73.1167)   // Coordenadas de Talcahuano
                 ],
+                language: 'es',
                 lineOptions: {
                     styles: [
                         { color: 'blue', opacity: 0.6, weight: 4 },

@@ -135,7 +135,7 @@
             <div class="mb-3">
                 <label for="ESTADO_SOL_EQUIPO" class="form-label"><i class="fa-solid fa-file-circle-check"></i> Estado de la Solicitud:</label>
                 <select id="ESTADO_SOL_EQUIPO" name="ESTADO_SOL_EQUIPO" class="form-control" disabled>
-                    <option value="INGRESADO" selected>Ingresado</option>
+                    <option value="INGRESADO" selected>🟠 Ingresado</option>
                     <option value="EN REVISION">En revisión</option>
                     <option value="ACEPTADO">Aceptado</option>
                     <option value="RECHAZADO">Rechazado</option>

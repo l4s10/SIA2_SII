@@ -19,8 +19,10 @@ return new class extends Migration
             $table->string('RUT', 20);
             $table->string('DEPTO', 128);
             $table->string('EMAIL', 128);
+            $table->date('FECHA_ATENCION')->nullable(); //Fecha en la que se atiende la solicitud de alguien, cuando cambia de estado INGRESADO por primera vez.
+            $table->date('FECHA_RECEPCION')->nullable(); //Fecha de confirmacion de la recepcion de productos.
             //*CAMPOS PARA SERVICIOS*/
-            $table->date('FECHA_DESPACHO')->nullable();
+            $table->date('FECHA_DESPACHO')->nullable(); // Fecha en la que el gestionador despacha los materiales solicitados.
             $table->text('MATERIAL_SOL');
             $table->text('OBSERVACIONES')->default('No existen observaciones');
             $table->string('ESTADO_SOL', 20)->default('INGRESADO');

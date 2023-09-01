@@ -11,22 +11,22 @@
     @endrole
     @role('REQUIRENTE')
     <div class="alert alert-info" role="alert">
-    <div><strong>Bienvenido Requirente:</strong> Aqui iria el texto donde le corresponde el rol REQUIRENTE.<div>
+    <div><strong>Bienvenido Requirente:</strong> En el presente módulo usted podrá solicitar mantenciones a los vehículos institucionales, tanto preventivas y/o correctivas, según sea el caso el Departamento de Administración analizará los antecedentes, y podrá aceptar o rechazar la solicitud.<div>
     </div>
     @endrole
     @role('SERVICIOS')
     <div class="alert alert-info" role="alert">
-    <div><strong>Bienvenido Servicio:</strong> Aqui iria el texto donde le corresponde el rol SERVICIO.<div>
+    <div><strong>Bienvenido Servicio:</strong> En el presente módulo usted podrá solicitar mantenciones a los vehículos institucionales, tanto preventivas y/o correctivas, según sea el caso el Departamento de Administración analizará los antecedentes, y podrá aceptar o rechazar la solicitud.<div>
     </div>
     @endrole
     @role('INFORMATICA')
     <div class="alert alert-info" role="alert">
-    <div><strong>Bienvenido Informatica:</strong> Aqui iria el texto donde le corresponde el rol INFORMATICA.<div>
+    <div><strong>Bienvenido Informatica:</strong> En el presente módulo usted podrá solicitar mantenciones a los vehículos institucionales, tanto preventivas y/o correctivas, según sea el caso el Departamento de Administración analizará los antecedentes, y podrá aceptar o rechazar la solicitud.<div>
     </div>
     @endrole
     @role('JURIDICO')
     <div class="alert alert-info" role="alert">
-    <div><strong>Bienvenido Juridico:</strong> Aqui iria el texto donde le corresponde el rol JURIDICO.<div>
+    <div><strong>Bienvenido Juridico:</strong> En el presente módulo usted podrá solicitar mantenciones a los vehículos institucionales, tanto preventivas y/o correctivas, según sea el caso el Departamento de Administración analizará los antecedentes, y podrá aceptar o rechazar la solicitud.<div>
     </div>
     @endrole
     @role('FUNCIONARIO')
@@ -144,7 +144,7 @@
                     <div class="mb-3">
                         <label for="ESTADO_SOL_REP_VEH" class="form-label"><i class="fa-solid fa-file-circle-check"></i> Estado de la Solicitud:</label>
                         <select id="ESTADO_SOL_REP_VEH" name="ESTADO_SOL_REP_VEH" class="form-control" disabled>
-                            <option value="INGRESADO" selected>Ingresado</option>
+                            <option value="INGRESADO" selected>🟠 Ingresado</option>
                             <option value="EN REVISION">En revisión</option>
                             <option value="ACEPTADO">Aceptado</option>
                             <option value="RECHAZADO">Rechazado</option>

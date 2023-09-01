@@ -103,10 +103,10 @@
             <div class="mb-3">
                 <label for="ESTADO_SOL_EQUIPO" class="form-label"><i class="fa-solid fa-file-circle-check"></i> Estado de la Solicitud:</label>
                 <select id="ESTADO_SOL_EQUIPO" name="ESTADO_SOL_EQUIPO" class="form-control">
-                    <option value="INGRESADO" {{ $solicitud->ESTADO_SOL_EQUIPO == 'INGRESADO' ? 'selected' : '' }}>Ingresado</option>
-                    <option value="EN REVISION" {{ $solicitud->ESTADO_SOL_EQUIPO == 'EN REVISION' ? 'selected' : '' }}>En revisión</option>
-                    <option value="ACEPTADO" {{ $solicitud->ESTADO_SOL_EQUIPO == 'ACEPTADO' ? 'selected' : '' }}>Aceptado</option>
-                    <option value="RECHAZADO" {{ $solicitud->ESTADO_SOL_EQUIPO == 'RECHAZADO' ? 'selected' : '' }}>Rechazado</option>
+                    <option value="INGRESADO" {{ $solicitud->ESTADO_SOL_EQUIPO == 'INGRESADO' ? 'selected' : '' }}>🟠 Ingresado</option>
+                    <option value="EN REVISION" {{ $solicitud->ESTADO_SOL_EQUIPO == 'EN REVISION' ? 'selected' : '' }}>🟡 En revisión</option>
+                    <option value="ACEPTADO" {{ $solicitud->ESTADO_SOL_EQUIPO == 'ACEPTADO' ? 'selected' : '' }}>🟢 Aceptado</option>
+                    <option value="RECHAZADO" {{ $solicitud->ESTADO_SOL_EQUIPO == 'RECHAZADO' ? 'selected' : '' }}>🔴 Rechazado</option>
                 </select>
             </div>
 

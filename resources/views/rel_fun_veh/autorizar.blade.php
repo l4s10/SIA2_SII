@@ -11,22 +11,22 @@
     @endrole
     @role('SERVICIOS')
     <div class="alert alert-info" role="alert">
-    <div><strong>Bienvenido Servicio:</strong> Aqui iria el texto donde le corresponde el rol SERVICIO.<div>
+    <div><strong>Bienvenido Servicio:</strong> En esta tabla se cargan todas las autorizaciones del sistema.<div>
     </div>
     @endrole
     @role('INFORMATICA')
     <div class="alert alert-info" role="alert">
-    <div><strong>Bienvenido Informatica:</strong> Aqui iria el texto donde le corresponde el rol INFORMATICA.<div>
+    <div><strong>Bienvenido Informatica:</strong> En esta tabla se cargan todas las autorizaciones del sistema.<div>
     </div>
     @endrole
     @role('JURIDICO')
     <div class="alert alert-info" role="alert">
-    <div><strong>Bienvenido Juridico:</strong> Aqui iria el texto donde le corresponde el rol JURIDICO.<div>
+    <div><strong>Bienvenido Juridico:</strong> En esta tabla se cargan todas las autorizaciones del sistema.<div>
     </div>
     @endrole
     @role('FUNCIONARIO')
     <div class="alert alert-info" role="alert">
-    <div><strong>Bienvenido Funcionario:</strong> Aqui iria el texto donde le corresponde el rol FUNCIONARIO.<div>
+    <div><strong>Bienvenido Funcionario:</strong> En esta tabla se cargan todas las autorizaciones del sistema.<div>
     </div>
     @endrole
 @stop
@@ -139,6 +139,7 @@
                                     <!-- Campo oculto para almacenar la contraseña -->
                                     <input type="hidden" name="password" id="passwordInput">
                                     <!-- Botón para abrir el modal -->
+                                    {{-- !!COPIAR BOTON PARA REEMPLAZAR SUBMIT --}}
                                     <button type="button" class="btn btn-success" id="authorizeBtn" data-dismiss="modal"><i class="fa-solid fa-check-circle"></i> Autorizar</button>
                                 </form>
                                 <form action="{{ route('solicitud.vehiculos.reject', $sol_veh->ID_SOL_VEH) }}" method="POST" id="rejectForm">

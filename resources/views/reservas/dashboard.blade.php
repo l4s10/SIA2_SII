@@ -16,22 +16,22 @@
     @endrole
     @role('SERVICIOS')
     <div class="alert alert-info" role="alert">
-    <div><strong>Bienvenido Servicio:</strong> Aqui iria el texto donde le corresponde el rol SERVICIO.<div>
+    <div><strong>Bienvenido Servicio:</strong> Aquí estan todas las herramientas y opciones que necesitas para gestionar y coordinar los pedidos de salas y bodegas de manera eficiente.<div>
     </div>
     @endrole
     @role('INFORMATICA')
     <div class="alert alert-info" role="alert">
-    <div><strong>Bienvenido Informatica:</strong> Aqui iria el texto donde le corresponde el rol INFORMATICA.<div>
+    <div><strong>Bienvenido Informatica:</strong> Aquí estan todas las herramientas y opciones que necesitas para gestionar y coordinar los pedidos de salas y bodegas de manera eficiente.<div>
     </div>
     @endrole
     @role('JURIDICO')
     <div class="alert alert-info" role="alert">
-    <div><strong>Bienvenido Juridico:</strong> Aqui iria el texto donde le corresponde el rol JURIDICO.<div>
+    <div><strong>Bienvenido Juridico:</strong> Aquí estan todas las herramientas y opciones que necesitas para gestionar y coordinar los pedidos de salas y bodegas de manera eficiente.<div>
     </div>
     @endrole
     @role('FUNCIONARIO')
     <div class="alert alert-info" role="alert">
-    <div><strong>Bienvenido Funcionario:</strong> Aqui iria el texto donde le corresponde el rol FUNCIONARIO.<div>
+    <div><strong>Bienvenido Funcionario:</strong> Aquí estan todas las herramientas y opciones que necesitas para gestionar y coordinar los pedidos de salas y bodegas de manera eficiente.<div>
     </div>
     @endrole
 @stop

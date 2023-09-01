@@ -8,6 +8,7 @@ use App\Models\TipoMaterial;
 use App\Models\Material;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\InventoryController; // Importa la clase InventoryController
+use Carbon\Carbon;
 
 class SolMatController extends Controller
 {
@@ -56,7 +57,7 @@ class SolMatController extends Controller
     {
         $rules = [
             'NOMBRE_SOLICITANTE' => ['required', 'string', 'max:255', 'regex:/^[A-Za-zñÑ\s]+$/u'],
-            'RUT' => 'required|regex:/^[0-9.-]+$/|min:7|max:12',
+            // 'RUT' => 'required|regex:/^[0-9.-]+$/|min:7|max:12',
             'DEPTO' => ['required', 'string', 'max:255'],
             'EMAIL' => 'required|email',
             'MATERIAL_SOL' => 'required|max:1000',
@@ -153,7 +154,16 @@ class SolMatController extends Controller
         $rut = intval(str_replace(['.', '-'], '', $request['RUT']));
         $request['RUT'] = $this->formatRut($rut);
         try{
+            //Verificamos los estados para compararlos y ver si se puede guardar la fecha de atencion
+            $oldEstado = $solicitud->ESTADO_SOL;
+            $newEstado = $request->ESTADO_SOL;
+            //Guardamos todo el formulario normalmente
             $solicitud->update($request->all());
+            // Verifica si el estado ha cambiado de INGRESADO a otro estado, si es asi ya guardamos la fecha con la que se comenzo a trabajar la solicitud.
+            if ($oldEstado === 'INGRESADO' && $newEstado !== 'INGRESADO' && $solicitud->FECHA_ATENCION == NULL) {
+                $solicitud->update(['FECHA_ATENCION' => Carbon::now()]);
+            }
+
             //verificamos si se clickeo el boton de autorizar las cantidades
             $accion = $request->input('accion');
             // Crea una instancia de InventoryController y llama al método updateStock
@@ -166,6 +176,33 @@ class SolMatController extends Controller
             session()->flash('error','Error al modificar la solicitud.' .$e->getMessage());
         }
         return redirect('/solmaterial');
+    }
+
+    public function confirmarRecepcion(Request $request, $id)
+    {
+        try {
+            $solicitud = SolicitudMateriales::find($id);
+
+            // Validamos que la solicitud exista
+            if (!$solicitud) {
+                return response()->json(['message' => 'Solicitud no encontrada'], 404);
+            }
+
+            // Validamos que se haya enviado una fecha
+            $request->validate([
+                'FECHA_RECEPCION' => 'required|date',
+            ]);
+
+            // Actualizamos la fecha de recepción
+            $solicitud->FECHA_RECEPCION = $request->FECHA_RECEPCION;
+            $solicitud->ESTADO_SOL= "TERMINADO";
+            $solicitud->save();
+
+            return response()->json(['message' => 'Fecha de recepción actualizada con éxito'], 200);
+
+        } catch (\Exception $e) {
+            return response()->json(['message' => 'Error al actualizar la fecha de recepción. ' . $e->getMessage()], 500);
+        }
     }
 
     /**

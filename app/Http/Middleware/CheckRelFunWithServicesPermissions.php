@@ -22,6 +22,7 @@ class CheckRelFunWithServicesPermissions
             return $next($request);
         } elseif ($user->hasRole('SERVICIOS')) {
             if ($request->route()->getActionMethod() === 'destroy') {
+                //cambiar por redirect back con mensaje acceso no autorizado.
                 abort(403, 'Acceso no autorizado');
             }
             return $next($request);
@@ -30,9 +31,10 @@ class CheckRelFunWithServicesPermissions
                 $request->route()->getActionMethod() !== 'create' &&
                 $request->route()->getActionMethod() !== 'store' &&
                 $request->route()->getActionMethod() !== 'show'&&
+                $request->route()->getActionMethod() !== 'confirmarRecepcion' &&
                 $request->route()->getActionMethod() !== 'indexRendir' &&
-                $request->route()->getActionMethod() !== 'indexAutorizar' &&
-                $request->route()->getActionMethod() !== 'autorizar' &&
+                // $request->route()->getActionMethod() !== 'indexAutorizar' &&
+                // $request->route()->getActionMethod() !== 'autorizar' &&
                 $request->route()->getActionMethod() !== 'generarPDF' &&
                 $request->route()->getActionMethod() !== 'rendicion' &&
                 $request->route()->getActionMethod() !== 'update') {

@@ -11,25 +11,14 @@
     @endrole
     @role('SERVICIOS')
     <div class="alert alert-info" role="alert">
-        <div><strong>Bienvenido Servicio:</strong> Aqui iria el texto donde le corresponde el rol SERVICIO.<div>
+        <div><strong>Bienvenido Servicio:</strong> En esta tabla se muestra todos los equipos ya sea <strong>DISPONIBLES/ NO DISPONIBLES</strong> del sistema.<div>
     </div>
     @endrole
     @role('INFORMATICA')
     <div class="alert alert-info" role="alert">
-        <div><strong>Bienvenido Informatica:</strong> Aqui iria el texto donde le corresponde el rol INFORMATICA.<div>
+        <div><strong>Bienvenido Informatica:</strong> En esta tabla se muestra todos los equipos ya sea <strong>DISPONIBLES/ NO DISPONIBLES</strong> del sistema.<div>
     </div>
     @endrole
-    @role('JURIDICO')
-    <div class="alert alert-info" role="alert">
-        <div><strong>Bienvenido Juridico:</strong> Aqui iria el texto donde le corresponde el rol JURIDICO.<div>
-    </div>
-    @endrole
-    @role('FUNCIONARIO')
-    <div class="alert alert-info" role="alert">
-        <div><strong>Bienvenido Funcionario:</strong> Aqui iria el texto donde le corresponde el rol FUNCIONARIO.<div>
-    </div>
-    @endrole
-
 @stop
 
 @section('content')
@@ -75,7 +64,12 @@
                             <td>{{ $equipo->MODELO_EQUIPO }}</td>
                             <td>{{ $equipo->MARCA_EQUIPO }}</td>
                             <td>{{ $equipo->tipoEquipo->TIPO_EQUIPO}}</td>
-                            <td>{{ $equipo->ESTADO_EQUIPO }}</td>
+                            <!-- Cambio de colores a los estados -->
+                            <td>
+                            <span class="badge rounded-pill estado-{{ strtolower(str_replace(' ', '-', $equipo->ESTADO_EQUIPO)) }}">
+                            {{ $equipo->ESTADO_EQUIPO }}
+                            </span>
+                            </td>
                             <td>
                                 <form action="{{ route('equipos.destroy',$equipo->ID_EQUIPO) }}" method="POST">
                                     @csrf
@@ -101,6 +95,16 @@
         color:     #000000;
         }
     </style>
+    <style>
+        .estado-disponible {
+        color: #ffffff;
+        background-color: #0CB009;
+        }
+        .estado-no-disponible {
+        color: #FFFFFF;
+        background-color: #F70B0B;
+        }
+    </style>
 @stop
 
 @section('js')
@@ -108,7 +112,10 @@
         <script>
             $(document).ready(function () {
                 $('#equipos').DataTable({
-                    "lengthMenu": [[5,10, 50, -1], [5, 10, 50, "All"]]
+                    "lengthMenu": [[5,10, 50, -1], [5, 10, 50, "All"]],
+                    "language": {
+                    "url": "https://cdn.datatables.net/plug-ins/1.11.3/i18n/es_es.json"
+                },
                 });
             });
         </script>

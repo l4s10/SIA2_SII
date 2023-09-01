@@ -11,22 +11,22 @@
     @endrole
     @role('SERVICIOS')
     <div class="alert alert-info" role="alert">
-    <div><strong>Bienvenido Servicio:</strong> Aqui iria el texto donde le corresponde el rol SERVICIO.<div>
+    <div><strong>Bienvenido Servicio:</strong> Aquí encontrarás todas las herramientas y opciones que necesitas para gestionar y coordinar las tareas de mantenimiento y reparación de manera eficiente.<div>
     </div>
     @endrole
     @role('INFORMATICA')
     <div class="alert alert-info" role="alert">
-    <div><strong>Bienvenido Informatica:</strong> Aqui iria el texto donde le corresponde el rol INFORMATICA.<div>
+    <div><strong>Bienvenido Informatica:</strong> Aquí encontrarás todas las herramientas y opciones que necesitas para gestionar y coordinar las tareas de mantenimiento y reparación de manera eficiente.<div>
     </div>
     @endrole
     @role('JURIDICO')
     <div class="alert alert-info" role="alert">
-    <div><strong>Bienvenido Juridico:</strong> Aqui iria el texto donde le corresponde el rol JURIDICO.<div>
+    <div><strong>Bienvenido Juridico:</strong> Aquí encontrarás todas las herramientas y opciones que necesitas para gestionar y coordinar las tareas de mantenimiento y reparación de manera eficiente.<div>
     </div>
     @endrole
     @role('FUNCIONARIO')
     <div class="alert alert-info" role="alert">
-    <div><strong>Bienvenido Funcionario:</strong> Aqui iria el texto donde le corresponde el rol FUNCIONARIO.<div>
+    <div><strong>Bienvenido Funcionario:</strong> Aquí encontrarás todas las herramientas y opciones que necesitas para gestionar y coordinar las tareas de mantenimiento y reparación de manera eficiente.<div>
     </div>
     @endrole
 

@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('RUT', 20);
             $table->string('DEPTO', 128);
             $table->string('EMAIL', 128);
-            //*Aqui almacenamos el nombre de quien modifica el registro*/
+            $table->date('FECHA_ATENCION')->nullable(); //Fecha en la que se atiende la solicitud de alguien, cuando cambia de estado INGRESADO por primera vez.
             $table->string('MOTIVO_SOL_BODEGA', 1000)->nullable();
             $table->string('FECHA_SOL_BODEGA')->nullable();
             $table->string('HORA_INICIO_SOL_BODEGA', 128)->nullable();
@@ -31,6 +31,7 @@ return new class extends Migration
 
             $table->string('BODEGA_PEDIDA', 128)->nullable();
             $table->string('ESTADO_SOL_BODEGA', 128)->nullable();
+            //*Aqui almacenamos el nombre de quien modifica el registro*/
             $table->string('MODIFICADO_POR_SOL_BODEGA', 128)->nullable();
             $table->string('OBSERV_SOL_BODEGA', 1000)->nullable();
             //*referenciamos la categoria*/

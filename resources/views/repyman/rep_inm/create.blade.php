@@ -11,7 +11,7 @@
     @endrole
     @role('REQUIRENTE')
     <div class="alert alert-info alert1" role="alert">
-    <div><strong>Bienvenido Requirente:</strong> En este módulo usted podrá verificar el estado de sus solicitudes (tipo).<div>
+    <div><strong>Bienvenido Requirente:</strong> En el presente módulo usted podrá solicitar Reparación para Inmuebles, tanto preventivas y/o correctivas, según sea el caso el Departamento de Administración analizará los antecedentes, y podrán aceptarla o rechazar la solicitud.<div>
     </div>
     @endrole
     @role('SERVICIOS')
@@ -21,17 +21,17 @@
     @endrole
     @role('INFORMATICA')
     <div class="alert alert-info" role="alert">
-    <div><strong>Bienvenido Informatica:</strong> En este módulo usted podrá verificar el estado de sus solicitudes (tipo).<div>
+    <div><strong>Bienvenido Informatica:</strong> En el presente módulo usted podrá solicitar Reparación para Inmuebles, tanto preventivas y/o correctivas, según sea el caso el Departamento de Administración analizará los antecedentes, y podrán aceptarla o rechazar la solicitud.<div>
     </div>
     @endrole
     @role('JURIDICO')
     <div class="alert alert-info" role="alert">
-    <div><strong>Bienvenido Juridico:</strong> En este módulo usted podrá verificar el estado de sus solicitudes (tipo).<div>
+    <div><strong>Bienvenido Juridico:</strong> En el presente módulo usted podrá solicitar Reparación para Inmuebles, tanto preventivas y/o correctivas, según sea el caso el Departamento de Administración analizará los antecedentes, y podrán aceptarla o rechazar la solicitud.<div>
     </div>
     @endrole
     @role('FUNCIONARIO')
     <div class="alert alert-info" role="alert">
-    <div><strong>Bienvenido Funcionario:</strong> En este módulo usted podrá verificar el estado de sus solicitudes (tipo).<div>
+    <div><strong>Bienvenido Funcionario:</strong> En el presente módulo usted podrá solicitar Reparación para Inmuebles, tanto preventivas y/o correctivas, según sea el caso el Departamento de Administración analizará los antecedentes, y podrán aceptarla o rechazar la solicitud.<div>
     </div>
     @endrole
 @stop
@@ -114,7 +114,7 @@
             <div class="mb-3">
                 <label for="ESTADO_REP_INM" class="form-label"><i class="fa-solid fa-file-circle-check"></i> Estado de la Solicitud:</label>
                 <select id="ESTADO_REP_INM" name="ESTADO_REP_INM" class="form-control" disabled>
-                    <option value="INGRESADO" selected>Ingresado</option>
+                    <option value="INGRESADO" selected>🟠 Ingresado</option>
                     <option value="EN REVISION">En revisión</option>
                     <option value="ACEPTADO">Aceptado</option>
                     <option value="RECHAZADO">Rechazado</option>

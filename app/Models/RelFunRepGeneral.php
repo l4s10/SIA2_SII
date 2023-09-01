@@ -18,6 +18,8 @@ class RelFunRepGeneral extends Model
         'RUT',
         'DEPTO',
         'EMAIL',
+        'FECHA_ATENCION',
+        'FECHA_PROGRAMADA',
         'REP_SOL',
         'ESTADO_REP_INM',
         'OBSERV_REP_INM',

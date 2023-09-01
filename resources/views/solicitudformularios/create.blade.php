@@ -4,9 +4,38 @@
 
 @section('content_header')
     <h1>Solicitud de Formulario</h1>
+    @role('ADMINISTRADOR')
+    <div class="alert alert-info alert1" role="alert">
+    <div><strong>Bienvenido Administrador:</strong> Acceso total al modulo.<div>
+    </div>
+    @endrole
+    @role('SERVICIOS')
+    <div class="alert alert-info" role="alert">
+    <div><strong>Bienvenido Servicio:</strong> En el presente módulo usted podrá solicitar formularios.<div>
+    </div>
+    @endrole
+    @role('INFORMATICA')
+    <div class="alert alert-info" role="alert">
+    <div><strong>Bienvenido Informatica:</strong> En el presente módulo usted podrá solicitar formularios.<div>
+    </div>
+    @endrole
+    @role('JURIDICO')
+    <div class="alert alert-info" role="alert">
+    <div><strong>Bienvenido Juridico:</strong> En el presente módulo usted podrá solicitar formularios.<div>
+    </div>
+    @endrole
+    @role('FUNCIONARIO')
+    <div class="alert alert-info" role="alert">
+    <div><strong>Bienvenido Funcionario:</strong> En el presente módulo usted podrá solicitar formularios, según sea el caso el Departamento de Administración analizará los antecedentes, y podrá aceptar o rechazar la solicitud.<div>
+    </div>
+    @endrole
 @stop
 
 @section('content')
+<div class="verde">
+        <div><i class="fas fa-seedling"></i>Cuidemos el medio ambiente <i class="fas fa-seedling"></i>. Recuerde que se debe priorizar los formularios con uso cero papel.</div>
+    </div>
+    <br>
     <div class="container">
         <form action="{{route('formulariosSol.store')}}" method="POST">
             @csrf
@@ -136,6 +165,40 @@
 @section('css')
     <link rel="stylesheet" href="/css/admin_custom.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.2/css/dataTables.bootstrap5.min.css">
+    <style>
+        .alert {
+        opacity: 0.7; /* Ajusta la opacidad a tu gusto */
+        background-color: #99CCFF;
+        color:     #000000;
+        }
+    </style>
+    <style>
+        .alert1 {
+            opacity: 0.7;
+            /* Ajusta la opacidad a tu gusto */
+            background-color: #FF8C40;
+            /* Color naranjo claro (RGB: 255, 214, 153) */
+            color: #000000;
+        }
+        .verde {
+            display: flex;
+            justify-content: center;
+            height: 6vh; /* Ajusta la altura como desees */
+            align-items: center;
+            padding: 10px;
+            background-color: #40C47C;
+            color: #FFFFFF;
+            border-radius: 10px;
+            font-size: 16px; /* Tamaño de fuente */
+            text-align: center; /* Alineación del texto */
+            overflow: hidden;
+        }
+
+        .verde i {
+            margin: 0 5px; /* Espacio entre los íconos y el texto */
+            margin-right: 10px;
+        }
+    </style>
 @stop
 
 @section('js')
@@ -148,12 +211,15 @@
     <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
         <script src="https://cdn.datatables.net/1.13.2/js/jquery.dataTables.min.js"></script>
         <script src="https://cdn.datatables.net/1.13.2/js/dataTables.bootstrap5.min.js"></script>
-
+        #formularios
         <!-- Para inicializar -->
         <script>
             $(document).ready(function () {
                 $('#formularios').DataTable({
-                    "lengthMenu": [[5,10, 50, -1], [5, 10, 50, "All"]]
+                    "lengthMenu": [[5,10, 50, -1], [5, 10, 50, "All"]],
+                    "language": {
+                    "url": "https://cdn.datatables.net/plug-ins/1.11.3/i18n/es_es.json"
+                },
                 });
             });
         </script>

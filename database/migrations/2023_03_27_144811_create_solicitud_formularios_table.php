@@ -19,6 +19,8 @@ return new class extends Migration
             $table->string('RUT', 20);
             $table->string('DEPTO', 128);
             $table->string('EMAIL', 128);
+            $table->date('FECHA_ATENCION')->nullable(); //Fecha en la que se atiende la solicitud de alguien, cuando cambia de estado INGRESADO por primera vez.
+            $table->date('FECHA_RECEPCION')->nullable(); //Fecha en la que se reciben los formularios pedidos, misma logica que materiales
             //--------FORMULARIO DE SOLICITUD
             $table->integer('ID_FORMULARIO')->nullable();
             $table->text('FORM_SOL')->nullable();
