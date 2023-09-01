@@ -11,22 +11,22 @@
     @endrole
     @role('SERVICIOS')
     <div class="alert alert-info" role="alert">
-    <div><strong>Bienvenido Servicio:</strong> En esta tabla se cargan todos los formularios registrados del sistema.<div>
+    <div><strong>Bienvenido Servicio:</strong> En esta tabla puede editar las categorías (agregar, cambiar o eliminar), y que dicha acción no puede revertirse.<div>
     </div>
     @endrole
     @role('INFORMATICA')
     <div class="alert alert-info" role="alert">
-    <div><strong>Bienvenido Informatica:</strong> En esta tabla se cargan todos los formularios registrados del sistema.<div>
+    <div><strong>Bienvenido Informatica:</strong> En esta tabla puede editar las categorías (agregar, cambiar o eliminar), y que dicha acción no puede revertirse.<div>
     </div>
     @endrole
     @role('JURIDICO')
     <div class="alert alert-info" role="alert">
-    <div><strong>Bienvenido Juridico:</strong> En esta tabla se cargan todos los formularios registrados del sistema.<div>
+    <div><strong>Bienvenido Juridico:</strong> En esta tabla puede editar las categorías (agregar, cambiar o eliminar), y que dicha acción no puede revertirse.<div>
     </div>
     @endrole
     @role('FUNCIONARIO')
     <div class="alert alert-info" role="alert">
-    <div><strong>Bienvenido Funcionario:</strong> En esta tabla se cargan todos los formularios registrados del sistema.<div>
+    <div><strong>Bienvenido Funcionario:</strong> En esta tabla puede editar las categorías (agregar, cambiar o eliminar), y que dicha acción no puede revertirse.<div>
     </div>
     @endrole
 

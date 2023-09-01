@@ -174,26 +174,20 @@
 
     $(document).ready(function() {
         // Manejar el evento de clic en el enlace del primer gráfico
-        $('#view-chart').click(function(e) {
+        $('#view-chart3').click(function(e) {
             e.preventDefault();
-            showChart('myChart');
+            showChart('myChart3');
         });
 
         // Manejar el evento de clic en el enlace del segundo gráfico
-        $('#view-chart1').click(function(e) {
+        $('#view-chart4').click(function(e) {
             e.preventDefault();
-            showChart('myChart1');
+            showChart('myChart8');
         });
 
-        // Manejar el evento de clic en el enlace del tercer gráfico
-        $('#view-chart2').click(function(e) {
-            e.preventDefault();
-            showChart('myChart2');
-        });
     });
 </script>
 <!-- Inicializacion de los graficos -->
-
 <script>
         window.myChartData3 = {
             // 4 gráfico Vehiculos asignados.
@@ -203,7 +197,7 @@
                 label: 'Solicitudes',
                 data: {!! json_encode(array_column($grafico3, 'conteo')) !!},
                 backgroundColor: [
-                    'rgb(129, 255, 30)', // Color de fondo único para todas las barras
+                    'rgb(119,221,119)', // Color de fondo único para todas las barras
                 ],
                 barThickness: 50, // Ajusta el valor para cambiar el ancho de la barra
                 borderWidth: 1
@@ -216,11 +210,11 @@
                     label: 'Estado de solicitudes',
                     data: [],
                     backgroundColor: [
-                        'rgb(255, 151, 0)', // Aseo
-                        'rgb(255, 255, 0)', // COMPUTACION
-                        'rgb(255, 0, 0)', // ELECTRODOMESTICOS
-                        'rgb(0, 0, 0)', // ESCRITORIO
-                        'rgb(214, 255, 30)' // ESCRITORIO
+                        'rgb(255, 215, 0)', // Aseo
+                        'rgb(253,253,150)', // COMPUTACION
+                        'rgb(255,105,97)', // ELECTRODOMESTICOS
+                        'rgb(107, 107, 107)', // ESCRITORIO
+                        'rgb(216, 247, 154)' // ESCRITORIO
                     ],
                     barThickness: 50,
                     borderWidth: 1
@@ -275,7 +269,7 @@
             }
         ]
     };
-
+    //(generar colores aleatorios)
     function generateRandomColors(count) {
         var randomColors = [];
         for (var i = 0; i < count; i++) {
@@ -283,7 +277,7 @@
         }
         return randomColors;
     }
-
+    //(obtener un color aleatorio)
     function getRandomColor() {
         var letters = '0123456789ABCDEF';
         var color = '#';
@@ -398,6 +392,7 @@
                     L.latLng(-36.8261, -73.0498),  // Coordenadas de Concepción
                     L.latLng(-36.6155, -72.9561)   // Coordenadas de Tome
                 ],
+                language: 'es',
                 lineOptions: {
                     styles: [
                         { color: 'red', opacity: 0.6, weight: 4 },

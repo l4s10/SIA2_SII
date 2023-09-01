@@ -16,17 +16,17 @@
     @endrole
     @role('INFORMATICA')
     <div class="alert alert-info" role="alert">
-    <div><strong>Bienvenido Informatica:</strong> En este módulo usted podrá verificar el estado de sus solicitudes (tipo).<div>
+    <div><strong>Bienvenido Equipo de Soporte STI Regional:</strong> En este módulo usted podrá verificar el estado de sus solicitudes de reparación de inmuebles.<div>
     </div>
     @endrole
     @role('JURIDICO')
     <div class="alert alert-info" role="alert">
-    <div><strong>Bienvenido Juridico:</strong> En este módulo usted podrá verificar el estado de sus solicitudes (tipo).<div>
+    <div><strong>Bienvenido Juridico:</strong> En este módulo usted podrá verificar el estado de sus solicitudes de reparación de inmuebles.<div>
     </div>
     @endrole
     @role('FUNCIONARIO')
     <div class="alert alert-info" role="alert">
-    <div><strong>Bienvenido Funcionario:</strong> En este módulo usted podrá verificar el estado de sus solicitudes (tipo).<div>
+    <div><strong>Bienvenido Funcionario:</strong> En este módulo usted podrá verificar el estado de sus solicitudes de reparación de inmuebles..<div>
     </div>
     @endrole
 @stop

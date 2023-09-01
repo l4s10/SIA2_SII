@@ -61,19 +61,7 @@
         <!-- Base para el Tercer gráfico Total de Funcionarios (Hombres/mujeres)-->
         <div class="col-md-6">
             <div class="chart-container">
-                <canvas id="myChart19"></canvas>
-            </div>
-        </div>
-        <!-- Base para el Tercer gráfico Total de Funcionarios (Hombres/mujeres)-->
-        <div class="col-md-6">
-            <div class="chart-container">
                 <canvas id="myChart20"></canvas>
-            </div>
-        </div>
-        <!-- Base para el Tercer gráfico Total de Funcionarios (Hombres/mujeres)-->
-        <div class="col-md-6">
-            <div class="chart-container">
-                <canvas id="myChart21"></canvas>
             </div>
         </div>
         <!-- Base para el Tercer gráfico Total de Funcionarios (Hombres/mujeres)-->
@@ -85,13 +73,25 @@
         <!-- Base para el Tercer gráfico Total de Funcionarios (Hombres/mujeres)-->
         <div class="col-md-6">
             <div class="chart-container">
-                <canvas id="myChart23"></canvas>
+                <canvas id="myChart24"></canvas>
             </div>
         </div>
         <!-- Base para el Tercer gráfico Total de Funcionarios (Hombres/mujeres)-->
         <div class="col-md-6">
             <div class="chart-container">
-                <canvas id="myChart24"></canvas>
+                <canvas id="myChart19"></canvas>
+            </div>
+        </div>
+        <!-- Base para el Tercer gráfico Total de Funcionarios (Hombres/mujeres)-->
+        <div class="col-md-6">
+            <div class="chart-container">
+                <canvas id="myChart21"></canvas>
+            </div>
+        </div>
+        <!-- Base para el Tercer gráfico Total de Funcionarios (Hombres/mujeres)-->
+        <div class="col-md-6">
+            <div class="chart-container">
+                <canvas id="myChart23"></canvas>
             </div>
         </div>
         <!-- Base para el Tercer gráfico Total de Funcionarios (Hombres/mujeres)-->
@@ -220,9 +220,9 @@
                 label: 'Cantidad de reparaciones',
                 data: {!! json_encode(array_column($grafico18, 'conteo')) !!},
                 backgroundColor: [
-                    'rgb(129, 255, 30)',
+                    'rgb(119,221,119)',
                 ],
-                barThickness: 50,
+                barThickness: 25,
                 borderWidth: 1
             }
             ]
@@ -233,9 +233,7 @@
             datasets: [{
                 label: 'Solicitudes revisadas',
                 data:[],
-                backgroundColor: [
-                    'rgb(30, 102, 255)', // Color de fondo único para todas las barras
-                ],
+                backgroundColor: generateRandomColors({{ count($grafico19) }}),
                 barThickness: 50, // Ajusta el valor para cambiar el ancho de la barra
                 borderWidth: 1
             }]
@@ -254,10 +252,10 @@
                 label: 'Estado de solicitudes',
                 data: [],
                 backgroundColor: [
-                    'rgb(255, 151, 0)', // INGRESADO
-                    'rgb(255, 255, 0)', // EN REVISION
-                    'rgb(119, 255, 30)', // ACEPTADO
-                    'rgb(255, 0, 0)' // RECHAZADO
+                    'rgb(255, 215, 0)', // Ingresado
+                    'rgb(253,253,150)', // En Revision
+                    'rgb(216, 247, 154)', // Aceptado
+                    'rgb(255,105,97)', // Rechazado
                 ],
                     barThickness: 50,
                     borderWidth: 1
@@ -285,7 +283,7 @@
                             {{ $data["conteo"] }},
                         @endforeach
                     ],
-                backgroundColor: 'rgb(255, 190, 30)',
+                backgroundColor: generateRandomColors({{ count($grafico21) }}),
                 barThickness: 50,
                 borderWidth: 1
             }]
@@ -308,7 +306,7 @@
             datasets: [{
                 label: 'Cantidad de reparaciones',
                 data: data,
-                backgroundColor: 'rgb(129, 255, 30)',
+                backgroundColor: 'rgb(119,221,119)',
                 barThickness: 50,
                 borderWidth: 1
             }]
@@ -327,9 +325,7 @@
                             {{ $data["conteo"] }},
                         @endforeach
                     ],
-                backgroundColor: [
-                    'rgb(30, 102, 255)', // Color de fondo único para todas las barras
-                ],
+                backgroundColor: generateRandomColors({{ count($grafico23) }}),
                 barThickness: 50, // Ajusta el valor para cambiar el ancho de la barra
                 borderWidth: 1
             }]
@@ -342,10 +338,10 @@
                     label: 'Estado de solicitudes',
                     data: [],
                     backgroundColor: [
-                        'rgb(255, 151, 0)', // INGRESADO
-                        'rgb(255, 255, 0)', // EN REVISION
-                        'rgb(119, 255, 30)', // ACEPTADO
-                        'rgb(255, 0, 0)' // RECHAZADO
+                        'rgb(255, 215, 0)', // Ingresado
+                        'rgb(253,253,150)', // En Revision
+                        'rgb(216, 247, 154)', // Aceptado
+                        'rgb(255,105,97)', // Rechazado
                     ],
                     barThickness: 50,
                     borderWidth: 1
@@ -364,13 +360,32 @@
             datasets: [{
                 label: 'Solicitudes revisadas',
                 data: @json(array_column($grafico25, 'conteo')),
-                backgroundColor: [
-                    'rgb(255, 190, 30)', // Color de fondo único para todas las barras
-                ],
+                backgroundColor: generateRandomColors({{ count($grafico25) }}),
                 barThickness: 50, // Ajusta el valor para cambiar el ancho de la barra
                 borderWidth: 1
             }]
         };
+
+
+
+
+    //(generar colores aleatorios)
+    function generateRandomColors(count) {
+        var randomColors = [];
+        for (var i = 0; i < count; i++) {
+            randomColors.push(getRandomColor());
+        }
+        return randomColors;
+    }
+    //(obtener un color aleatorio)
+    function getRandomColor() {
+        var letters = '0123456789ABCDEF';
+        var color = '#';
+        for (var i = 0; i < 6; i++) {
+            color += letters[Math.floor(Math.random() * 16)];
+        }
+        return color;
+    }
 </script>
 
 
