@@ -58,7 +58,10 @@ class UserController extends Controller
         $grupos = Grupo::all();
         $escalafones = Escalafon::all();
         $grados = Grado::all();
-        $cargos = Cargo::all();
+        //Cargos filtrar por ubicacion de usuario
+        $ubicacionUser = Ubicacion::findOrFail(Auth::user()->ID_UBICACION);
+        $direccionFiltradaId = $ubicacionUser->direccion->ID_DIRECCION;
+        $cargos = Cargo::where('ID_DIRECCION', $direccionFiltradaId)->get();
         $calidadesJuridicas = CalidadJuridica::all();
         $sexos = Sexo::all();
         $direcciones = DireccionRegional::all();
@@ -146,7 +149,8 @@ class UserController extends Controller
              // Formatear la fecha de nacimiento a un formato específico
             $fechaNacimiento = Carbon::parse($funcionario->fecha_nacimiento)->format('d/m/Y');
             $fechaIngreso = Carbon::parse($funcionario->fecha_ingreso)->format('d/m/Y');
-            return view('funcionarios.show', compact('funcionario','fechaNacimiento','fechaIngreso'));
+            $roles = $funcionario->getRoleNames()->first();
+            return view('funcionarios.show', compact('funcionario','fechaNacimiento','fechaIngreso','roles'));
         }catch(\Exception $e){
             session()->flash('error', 'Error al acceder al funcionario seleccionado, vuelva a intentarlo más tarde.');
             return view('funcionarios.index');

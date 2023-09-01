@@ -214,7 +214,7 @@
                             {{-- Busca el ID 99 y prefefinirla como seleccionada --}}
                                 <option value="{{ $grupo->ID_GRUPO }}" {{ old('ID_GRUPO') == $grupo->ID_GRUPO ? 'selected' : '' }}>{{ $grupo->GRUPO }}</option>
                             @endforeach
-                            <option value="99" selected>SIN GRUPO</option>
+                            {{-- <option value="99" selected>SIN GRUPO</option> --}}
                         </select>
 
                         @error('ID_GRUPO')
