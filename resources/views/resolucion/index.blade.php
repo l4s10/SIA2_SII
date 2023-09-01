@@ -44,7 +44,7 @@
             </script>
         @endif
         
-        <a href="{{route('resolucion.create')}}" class="btn" style="background-color: #0099FF; color: white;">Ingresar nueva resolución delegatoria</a>
+        <a href="{{route('resolucion.create')}}" class="btn" style="background-color: #0099FF; color: white;">Ingresar nueva resolución</a>
 
         <div class="table custom-table-responsive">
             <table id="resoluciones" class="table table-bordered mt-4 custom-table">
