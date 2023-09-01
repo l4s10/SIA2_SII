@@ -81,7 +81,7 @@ class SolicitudFormularioController extends Controller
         }catch(\Exception $e){
             session()->flash('error','Error al enviar la solicitud, vuelva a enviarlo más tarde.' . $e->getMessage());
         }
-        return redirect('/formulariosSol');
+        return redirect(route('formularios.index'));
     }
 
     /**
@@ -151,7 +151,7 @@ class SolicitudFormularioController extends Controller
         }catch(\Exception $e){
             session()->flash('error','Error al modificar la solicitud, vuelva a intentarlo más tarde.');
         }
-        return redirect('/formulariosSol');
+        return redirect(route('formularios.index'));
     }
 
     /**
@@ -166,7 +166,7 @@ class SolicitudFormularioController extends Controller
         }catch(\Exception $e){
             session()->flash('error','Error al eliminar la solicitud, vuelva a intentarlo mas tarde.');
         }
-        return view('/formularios');
+        return redirect(route('formularios.index'));
     }
     //-----FUNCION QUE NOS PERMITE FORMATEAR EL RUT CON  PUNTOS Y GUIÓN.------
     public function formatRut($rut) {

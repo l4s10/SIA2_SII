@@ -274,15 +274,6 @@
 
             // Capturar clic en botón "Agregar al carrito" del modal
             $('#btn-agregar-carrito').click(function() {
-                // Obtener valores del modal
-                var nombreMaterial = $('#nombre-material').text().split(': ')[1];
-                var tipoMaterial = $('#tipo-material').text().split(': ')[1];
-                var cantidad = $('#cantidad').val();
-                // Enviar información al carrito (aquí puedes hacer una petición AJAX)
-                alert('Se agregó ' + cantidad + ' unidades de "' + nombreMaterial + '" de tipo "' + tipoMaterial + '" al carrito.');
-                // Cerrar modal
-                $('#modal-carrito').modal('hide');
-                // Obtener valores del modal
                 var nombreMaterial = $('#nombre-material').text().split(': ')[1];
                 var tipoMaterial = $('#tipo-material').text().split(': ')[1];
                 var cantidad = $('#cantidad').val();
@@ -290,11 +281,23 @@
                 // Actualizar textarea con los artículos en el carrito
                 var carritoTextarea = $('#FORM_SOL');
                 var carritoActual = carritoTextarea.val();
-                var nuevoArticulo = cantidad + ' unidad(es) de "' + nombreMaterial + '" de tipo "' + tipoMaterial + '\n';
+                var nuevoArticulo = cantidad + ' unidad(es) de "' + nombreMaterial + '" de tipo "' + tipoMaterial + '"\n';
                 var nuevoCarrito = carritoActual + '- ' + nuevoArticulo;
                 carritoTextarea.val(nuevoCarrito);
-                //Reseteamos el valor
+
+                // Reseteamos el valor
                 $('#cantidad').val(1);
+
+                // Cerrar modal
+                $('#modal-carrito').modal('hide');
+
+                // Mostrar SweetAlert
+                Swal.fire({
+                    icon: 'success',
+                    title: '¡Éxito!',
+                    text: 'Se agregó ' + cantidad + ' unidades de "' + nombreMaterial + '" de tipo "' + tipoMaterial + '" al carrito.',
+                    confirmButtonColor: '#0064A0',
+                });
             });
         });
     </script>
