@@ -88,8 +88,13 @@
                                 <form action="{{ route('repvehiculos.destroy',$solicitud->ID_SOL_REP_VEH) }}" method="POST">
                                     @csrf
                                     @method('DELETE')
-                                    <a href="{{route('repvehiculos.edit', $solicitud->ID_SOL_REP_VEH)}}" class="btn btn-info"><i class="fa-solid fa-pen-to-square"></i> Editar</a>
-                                    <button type="submit" class="btn btn-danger"><i class="fa-solid fa-trash"></i> Borrar</button>
+                                    <a href="{{route('repvehiculos.show', $solicitud->ID_SOL_REP_VEH)}}" class="btn btn-primary"><i class="fa-solid fa-eye"></i> Ver</a>
+                                    @role('ADMINISTRADOR|SERVICIOS')
+                                        <a href="{{route('repvehiculos.edit', $solicitud->ID_SOL_REP_VEH)}}" class="btn btn-info"><i class="fa-solid fa-pen-to-square"></i> Editar</a>
+                                    @endrole
+                                    @role('ADMINISTRADOR')
+                                        <button type="submit" class="btn btn-danger"><i class="fa-solid fa-trash"></i> Borrar</button>
+                                    @endrole
                                 </form>
                             </td>
                         </tr>
