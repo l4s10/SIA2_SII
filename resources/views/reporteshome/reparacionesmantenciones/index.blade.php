@@ -56,24 +56,28 @@
         <div class="col-md-6">
             <div class="chart-container">
                 <canvas id="myChart18"></canvas>
+                <button id="view-chart18" class="btn btn-primary move-right"><i class="fa-solid fa-maximize"></i></button>
             </div>
         </div>
         <!-- Base para el Tercer gráfico Total de Funcionarios (Hombres/mujeres)-->
         <div class="col-md-6">
             <div class="chart-container">
                 <canvas id="myChart20"></canvas>
+                <button id="view-chart20" class="btn btn-primary move-right"><i class="fa-solid fa-maximize"></i></button>
             </div>
         </div>
         <!-- Base para el Tercer gráfico Total de Funcionarios (Hombres/mujeres)-->
         <div class="col-md-6">
             <div class="chart-container">
                 <canvas id="myChart22"></canvas>
+                <button id="view-chart22" class="btn btn-primary move-right"><i class="fa-solid fa-maximize"></i></button>
             </div>
         </div>
         <!-- Base para el Tercer gráfico Total de Funcionarios (Hombres/mujeres)-->
         <div class="col-md-6">
             <div class="chart-container">
                 <canvas id="myChart24"></canvas>
+                <button id="view-chart24" class="btn btn-primary move-right"><i class="fa-solid fa-maximize"></i></button>
             </div>
         </div>
         <!-- Base para el Tercer gráfico Total de Funcionarios (Hombres/mujeres)-->
@@ -192,21 +196,26 @@
 
     $(document).ready(function() {
         // Manejar el evento de clic en el enlace del primer gráfico
-        $('#view-chart').click(function(e) {
+        $('#view-chart18').click(function(e) {
             e.preventDefault();
-            showChart('myChart');
+            showChart('myChart18');
         });
 
         // Manejar el evento de clic en el enlace del segundo gráfico
-        $('#view-chart1').click(function(e) {
+        $('#view-chart20').click(function(e) {
             e.preventDefault();
-            showChart('myChart1');
+            showChart('myChart20');
         });
 
         // Manejar el evento de clic en el enlace del tercer gráfico
-        $('#view-chart2').click(function(e) {
+        $('#view-chart22').click(function(e) {
             e.preventDefault();
-            showChart('myChart2');
+            showChart('myChart22');
+        });
+        // Manejar el evento de clic en el enlace del tercer gráfico
+        $('#view-chart24').click(function(e) {
+            e.preventDefault();
+            showChart('myChart24');
         });
     });
 </script>

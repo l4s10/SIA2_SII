@@ -68,6 +68,7 @@
         <div class="col-md-6">
             <div class="chart-container">
                 <canvas id="myChart15"></canvas>
+                <button id="view-chart15" class="btn btn-primary move-right"><i class="fa-solid fa-maximize"></i></button>
             </div>
         </div>
     
@@ -165,21 +166,9 @@
 
     $(document).ready(function() {
         // Manejar el evento de clic en el enlace del primer gráfico
-        $('#view-chart').click(function(e) {
+        $('#view-chart15').click(function(e) {
             e.preventDefault();
-            showChart('myChart');
-        });
-
-        // Manejar el evento de clic en el enlace del segundo gráfico
-        $('#view-chart1').click(function(e) {
-            e.preventDefault();
-            showChart('myChart1');
-        });
-
-        // Manejar el evento de clic en el enlace del tercer gráfico
-        $('#view-chart2').click(function(e) {
-            e.preventDefault();
-            showChart('myChart2');
+            showChart('myChart15');
         });
     });
 </script>

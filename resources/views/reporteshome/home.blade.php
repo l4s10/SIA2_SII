@@ -103,7 +103,7 @@
                     <a class="btn btn-primary" href="{{route('reporteshome.reservas')}}"><i class="fa-solid fa-chart-pie"></i> Graficos</a>
                 </div>
             </div>
-        <div class="card text-bg-primary mb-3 mx-auto col-sm-12 col-md-6" style="max-width: 100%; text-align: justify;">
+        <!-- <div class="card text-bg-primary mb-3 mx-auto col-sm-12 col-md-6" style="max-width: 100%; text-align: justify;">
             <div class="card-header">Módulo de Informes sobre inventario</div>
             <div class="card-body">
                 <p class="card-text">Este módulo permite ver los reportes de <strong>Inventario</strong>. Para saber las cantidades de solicitudes de <strong>Inventario</strong> del sistema completo.</p>
@@ -111,7 +111,7 @@
             <div class="card-footer">
                 <a class="btn btn-primary" href="{{route('reporteshome.inventario')}}"><i class="fa-solid fa-chart-pie"></i> Graficos</a>
             </div>
-        </div>
+        </div> -->
         <div class="card text-bg-primary mb-3 mx-auto col-sm-12 col-md-6" style="max-width: 100%; text-align: justify;">
             <div class="card-header">Módulo Informes del sistema</div>
             <div class="card-body">

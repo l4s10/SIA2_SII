@@ -58,7 +58,7 @@
                 <canvas id="myChart"></canvas>
                 <button id="view-chart" class="btn btn-primary move-right"><i class="fa-solid fa-maximize"></i></button>
                 <button id="print-button" class="btn btn-primary"><i class="fa-solid fa-print"></i></button>
-                <button id="download-png-button" class="btn btn-primary"><i class="fa-solid fa-image"></i></button>
+                <button id="download-jpeg-button" class="btn btn-primary"><i class="fa-solid fa-image"></i></button>
             </div>
         </div>
         <!-- Base para el Segundo gráfico Total de solicitudes 2 -->
@@ -188,7 +188,9 @@
     <!-- DataTables -->
     <script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.11.3/datatables.min.js"></script>
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     {{-- CHART.JS --}}
+    
     <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <!-- Chart.js Plugin: Chart.js Plugin Annotations -->
@@ -415,13 +417,27 @@
     window.print();
     });
 
-    const downloadPNGButton = document.getElementById('download-png-button');
-    downloadPNGButton.addEventListener('click', function () {
-        const link = document.createElement('a');
-        link.href = myChart.toBase64Image('image/png', { backgroundColor: '#FFFFFF' });
-        link.download = 'Grafico.png';
-        link.click();
+    // Agrega un controlador de eventos al botón de descarga en formato JPEG
+    const downloadJPEGButton = document.getElementById('download-jpeg-button');
+    downloadJPEGButton.addEventListener('click', function () {
+        // Selecciona el elemento del gráfico que deseas capturar
+        const chartContainer = document.getElementById('myChart'); // Cambia 'myChart' al ID de tu gráfico
+
+        // Utiliza html2canvas para capturar el gráfico como una imagen
+        html2canvas(chartContainer).then(function (canvas) {
+            // Convierte el canvas a una imagen en formato JPEG
+            const imageDataURL = canvas.toDataURL('image/jpeg');
+
+            // Crea un enlace de descarga
+            const link = document.createElement('a');
+            link.href = imageDataURL;
+            link.download = 'Grafico.jpg'; // Cambia el nombre del archivo según tu preferencia
+
+            // Haz clic en el enlace para iniciar la descarga
+            link.click();
+        });
     });
+
 });
 </script>
 
