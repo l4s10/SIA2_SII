@@ -58,7 +58,7 @@
         <div class="mb-3">
             <div class="form-group">
                 <label for="DETALLE_MOVIMIENTO">Detalle del Movimiento</label>
-                <textarea class="form-control{{ $errors->has('DETALLE_MOVIMIENTO') ? ' is-invalid' : '' }}" name="DETALLE_MOVIMIENTO" id="DETALLE_MOVIMIENTO" cols="30" rows="5" placeholder="Recibido por x transportista con x numero de factura (MAX 1000 CARACTERES)">{{ old('DETALLE_MOVIMIENTO') }}</textarea>
+                <textarea class="form-control{{ $errors->has('DETALLE_MOVIMIENTO') ? ' is-invalid' : '' }}" name="DETALLE_MOVIMIENTO" id="DETALLE_MOVIMIENTO" cols="30" rows="5" placeholder="Especifique: N° factura, Código libro adquisiciones, Nombre y rut proveedor, N° res. exenta de compra y de orden de compra. (MAX 1000 CARACTERES)">{{ old('DETALLE_MOVIMIENTO') }}</textarea>
                 @if ($errors->has('DETALLE_MOVIMIENTO'))
                     <div class="invalid-feedback">
                         {{ $errors->first('DETALLE_MOVIMIENTO') }}

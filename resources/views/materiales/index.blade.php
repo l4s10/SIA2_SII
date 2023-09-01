@@ -6,27 +6,12 @@
     <h1>Listado de materiales</h1>
     @role('ADMINISTRADOR')
     <div class="alert alert-info alert1" role="alert">
-    <div><strong>Bienvenido Administrador:</strong> Acceso total al modulo.<div>
+    <div><strong>Bienvenido Administrador:</strong> En este módulo usted podrá administrar, consultar, modificar (ingresos y egresos), del inventario, este módulo cuenta con un módulo de historial para consultar los movimientos de este.<div>
     </div>
     @endrole
     @role('SERVICIOS')
     <div class="alert alert-info" role="alert">
     <div><strong>Bienvenido Servicio:</strong> En este módulo usted podrá administrar, consultar, modificar (ingresos y egresos), del inventario, este módulo cuenta con un módulo de historial para consultar los movimientos de este.<div>
-    </div>
-    @endrole
-    @role('INFORMATICA')
-    <div class="alert alert-info" role="alert">
-    <div><strong>Bienvenido Informatica:</strong> Aqui iria el texto donde le corresponde el rol INFORMATICA.<div>
-    </div>
-    @endrole
-    @role('JURIDICO')
-    <div class="alert alert-info" role="alert">
-    <div><strong>Bienvenido Juridico:</strong> Aqui iria el texto donde le corresponde el rol JURIDICO.<div>
-    </div>
-    @endrole
-    @role('FUNCIONARIO')
-    <div class="alert alert-info" role="alert">
-    <div><strong>Bienvenido Funcionario:</strong> Aqui iria el texto donde le corresponde el rol FUNCIONARIO.<div>
     </div>
     @endrole
 
@@ -68,7 +53,7 @@
                         <th scope="col">Tipo material</th>
                         <th scope="col">Nombre material</th>
                         <th scope="col">Stock</th>
-                        <th scope="col">Acciones</th>
+                        <th  scope="col">Acciones</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -77,7 +62,7 @@
                             <td>{{ $material->tipoMaterial->TIPO_MATERIAL }}</td>
                             <td>{{ $material->NOMBRE_MATERIAL }}</td>
                             <td>{{$material->STOCK}} </td>
-                            <td>
+                            <td style="text-align: center; vertical-align: middle;">
                                 <form action="{{ route('materiales.destroy',$material->ID_MATERIAL) }}" method="POST">
                                     @csrf
                                     @method('DELETE')
