@@ -126,6 +126,7 @@
                         <p>Formularios <i class="right fas fa-angle-left"></i></p>
                     </a>
                     <ul class="nav nav-treeview">
+                        @role('ADMINISTRADOR|SERVICIOS')
                         <li class="nav-item">
                             <a href="{{ url('formularios') }}" class="nav-link">
                                 <i class="fas fa-fw fa-eye nav-icon"></i>
@@ -138,6 +139,7 @@
                                 <p>Agregar Formularios</p>
                             </a>
                         </li>
+                        @endrole
                         <li class="nav-item">
                             <a href="{{ url('formulariosSol') }}" class="nav-link">
                                 <i class="fas fa-fw fa-eye nav-icon"></i>

@@ -25,7 +25,9 @@
             </div>
             <div class="card-footer text-center">
                 <a href="{{ route('formulariosSol.index') }}" class="btn btn-secondary"><i class="fa-solid fa-arrow-left"></i> Volver</a>
+                @role('ADMINISTRADOR|SERVICIOS')
                 <a href="{{ route('formulariosSol.edit', $solicitud->ID_SOL_FORM) }}" class="btn btn-primary"><i class="fa-regular fa-clipboard"></i> Revisar</a>
+                @endrole
             </div>
         </div>
     </div>
