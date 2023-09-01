@@ -8,7 +8,7 @@
 
 @section('content')
     <div class="container">
-        <form action="{{ route('solicitud.vehiculos.update', $solicitud->ID_SOL_VEH) }}" method="POST">
+        <form action="{{ route('solicitud.vehiculos.update', $solicitud->ID_SOL_VEH) }}" method="POST" id="rendirForm">
             @csrf
             @method('PUT')
             {{-- *CAMPO CONDUCTOR* --}}
@@ -225,8 +225,11 @@
                 @enderror
             </div>
             <a href="{{route('solicitud.vehiculos.index')}}" class="btn btn-secondary" tabindex="5">Cancelar</a>
-            <button type="button" class="btn btn-info" onclick="resetFields()">Me equivoqué</button>
-            <button type="submit" class="btn btn-primary">Enviar cambios</button>
+            {{-- !!COPIAR BOTON PARA REEMPLAZAR SUBMIT --}}
+            <button type="button" class="btn btn-success" id="rendirBtn"><i class="fa-solid fa-check-circle"></i> Enviar formulario</button>
+            <!-- Campo oculto para almacenar la contraseña -->
+            <input type="hidden" name="password" id="passwordInput">
+            {{-- <button type="submit" class="btn btn-primary">Enviar cambios</button> --}}
         </form>
     </div>
 @stop
@@ -412,6 +415,42 @@
                     $(this).prop('disabled', false);
                 }
             }).trigger('change'); // Esto va a disparar el evento de cambio al cargar la página
+        });
+    </script>
+    <script>
+        document.getElementById('rendirBtn').addEventListener('click', async function(event) {
+            event.preventDefault();
+
+            const { value: password } = await Swal.fire({
+                title: '¿Estás seguro?',
+                html: `
+                    Estos datos se enviarán como firma. <br>
+                    RUT: {{ Auth::user()->RUT }}<br>
+                    Nombre completo: {{ Auth::user()->NOMBRES }} {{ Auth::user()->APELLIDOS }}<br>
+                `,
+                input: 'password',
+                inputAttributes: {
+                    autocapitalize: 'off',
+                    required: 'true',
+                    placeholder: 'Ingrese su contraseña'
+                },
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Sí, estoy seguro',
+                cancelButtonText: 'Cancelar',
+                inputValidator: (value) => {
+                    if (!value) {
+                        return 'Por favor, ingrese una contraseña válida';
+                    }
+                },
+            });
+
+            if (password) {
+                document.getElementById('passwordInput').value = password;
+                document.getElementById('rendirForm').submit();
+            }
         });
     </script>
 @stop

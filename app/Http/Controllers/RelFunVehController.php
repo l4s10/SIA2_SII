@@ -185,6 +185,36 @@ class RelFunVehController extends Controller
                     ->withErrors($validator)
                     ->withInput();
             }
+            //!! VERIFICAR SI ESTA EN "POR RENDIR"
+            //!! LEER FIRMA Y GUARDAR AQUI (SI es el conductor designado, si la firma es nula y si el estado es por rendir)
+            //!! Crear un try-catch que se encarge de notificar el envio de la contraseña
+            //!! if hay contraseña hacer el try catch, sino. pasar de ahi.
+            if (auth()->user()->id == $solicitud->CONDUCTOR && $solicitud->FIRMA_CONDUCTOR == null && $solicitud->ESTADO_SOL_VEH == "POR RENDIR"){
+                try{
+                    $firmaRealizada = false; // Usamos esta variable para verificar si se ha realizado una firma
+                    //!!AGREGAR UN IF ANIDADO DONDE SE VERIFIQUE LA CONTRASEÑA DEL USUARIO
+                    //*SI LA CONTRASEÑA NO ES VALIDA */
+                    if(!Hash::check(request('password'), Auth::user()->password)){
+                        return Redirect::back()->with('error','La contraseña proporcionada no es correcta');
+                    }
+                    //Guardamos la firma en el campo FIRMA_CONDUCTOR.
+                    $solicitud->FIRMA_CONDUCTOR = auth()->user()->RUT . ' ' . auth()->user()->NOMBRES . ' ' . auth()->user()->APELLIDOS;
+                    $firmaRealizada = true;
+                    //Si no se hizo la firma por x motivo
+                    if (!$firmaRealizada) {
+                        // Si no se ha realizado ninguna firma, significa que ya se firmó en todas las capacidades posibles
+                        return redirect()->route('solicitud.vehiculos.autorizar')->with('error', 'Esta solicitud ya ha sido firmada por ti');
+                    }
+                    if($solicitud->FIRMA_CONDUCTOR != null && $solicitud->ESTADO_SOL_VEH == "POR RENDIR"){
+                        $solicitud->ESTADO_SOL_VEH = 'TERMINADO';
+                        $solicitud->save();
+                        return redirect()->route('solicitud.vehiculos.index')->with('success', 'Firma realizada con éxito, solicitud terminada.');
+                    }
+                }catch(\Exception $e){
+                    session()->flash('error','Hubo un error al actualizar la solicitud o ingresar la firma, vuelva a intentarlo mas tarde');
+                }
+                return redirect(route('solicitud.vehiculos.index'));
+            }
             //*ACTUALIZAR REGISTRO */
             $data = $request->except('_token');
             $solicitud->update($data);
