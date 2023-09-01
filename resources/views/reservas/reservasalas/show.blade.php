@@ -24,11 +24,13 @@
                 <p>Fecha solicitada: {{ $solicitud->FECHA_SOL_SALA }} desde las {{$solicitud->HORA_SOL_SALA}} hasta las {{$solicitud->HORA_TERM_SOL_SALA}}</p>
                 <p>Motivo de la solicitud: {{$solicitud->MOTIVO_SOL_SALA}}</p>
                 {{-- ocultar si esta vacio (PENDIENTE) --}}
-                <p>Fecha asignada: {{ $solicitud->FECHA_ASIG_SALA }} desde las {{$solicitud->HORA_ASIG_SOL_SALA}} hasta las {{$solicitud->HORA_TERM_ASIG_SALA}}</p>
+                <p>Fecha asignada: {{ $solicitud->FECHA_INICIO_ASIG_SALA ? $solicitud->FECHA_INICIO_ASIG_SALA . " hasta las " . $solicitud->FECHA_TERM_ASIG_SALA : " Aún no se ha asignado fecha"}}</p>
             </div>
             <div class="card-footer text-center">
                 <a href="{{ route('solicitud.salas.index') }}" class="btn btn-secondary"><i class="fa-solid fa-hand-point-left"></i> Volver</a>
+                @role('ADMINISTRADOR|SERVICIOS')
                 <a href="{{ route('solicitud.salas.edit', $solicitud->ID_SOL_SALA) }}" class="btn btn-primary"><i class="fa-regular fa-clipboard"></i> Revisar</a>
+                @endrole
             </div>
         </div>
     </div>
