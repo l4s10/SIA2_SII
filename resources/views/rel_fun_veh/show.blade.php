@@ -26,7 +26,9 @@
             </div>
             <div class="card-footer text-center">
                 <a href="{{ route('solicitud.vehiculos.index') }}" class="btn btn-secondary"><i class="fa-solid fa-hand-point-left"></i> Volver</a>
-                <a href="{{ route('solicitud.vehiculos.edit', $solicitud->ID_SOL_VEH) }}" class="btn btn-primary"><i class="fa-regular fa-clipboard"></i> Revisar</a>
+                @role('ADMINISTRADOR|SERVICIOS')
+                    <a href="{{ route('solicitud.vehiculos.edit', $solicitud->ID_SOL_VEH) }}" class="btn btn-primary"><i class="fa-regular fa-clipboard"></i> Revisar</a>
+                @endrole
             </div>
         </div>
     </div>

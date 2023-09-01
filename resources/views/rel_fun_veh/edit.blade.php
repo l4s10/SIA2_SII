@@ -267,7 +267,6 @@
                 @enderror
             </div>
             <a href="{{route('solicitud.vehiculos.index')}}" class="btn btn-secondary" tabindex="5">Cancelar</a>
-            <button type="button" class="btn btn-info" onclick="resetFields()">Me equivoqué</button>
             <button type="submit" class="btn btn-primary">Enviar cambios</button>
         </form>
     </div>

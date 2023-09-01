@@ -6,28 +6,18 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <h1>Reportes de reparaciones y mantenciones</h1>
     @role('ADMINISTRADOR')
-    <div class="alert alert-info" role="alert">
+    <div class="alert alert-info alert1" role="alert">
         <div><strong>Bienvenido Administrador:</strong> Acceso total al modulo.</div>
     </div>
     @endrole
     @role('SERVICIOS')
     <div class="alert alert-info" role="alert">
-        <div><strong>Bienvenido Servicio:</strong> Aqui iria el texto donde le corresponde el rol SERVICIO.</div>
+        <div><strong>Bienvenido Servicio:</strong> Acceso al modulo de reportes de reparaciones y mantenciones.</div>
     </div>
     @endrole
     @role('INFORMATICA')
     <div class="alert alert-info" role="alert">
-        <div><strong>Bienvenido Informatica:</strong> Aqui iria el texto donde le corresponde el rol INFORMATICA.</div>
-    </div>
-    @endrole
-    @role('JURIDICO')
-    <div class="alert alert-info" role="alert">
-        <div><strong>Bienvenido Juridico:</strong> Aqui iria el texto donde le corresponde el rol JURIDICO.</div>
-    </div>
-    @endrole
-    @role('FUNCIONARIO')
-    <div class="alert alert-info" role="alert">
-        <div><strong>Bienvenido Funcionario:</strong> Aqui iria el texto donde le corresponde el rol FUNCIONARIO.</div>
+        <div><strong>Bienvenido Informatica:</strong> Acceso al modulo de reportes de reparaciones y mantenciones.</div>
     </div>
     @endrole
 @endsection
@@ -56,6 +46,28 @@
         <div class="col-md-6">
             <div class="chart-container">
                 <canvas id="myChart18"></canvas>
+                <button id="view-chart18" class="btn btn-primary move-right"><i class="fa-solid fa-maximize"></i></button>
+            </div>
+        </div>
+        <!-- Base para el Tercer gráfico Total de Funcionarios (Hombres/mujeres)-->
+        <div class="col-md-6">
+            <div class="chart-container">
+                <canvas id="myChart20"></canvas>
+                <button id="view-chart20" class="btn btn-primary move-right"><i class="fa-solid fa-maximize"></i></button>
+            </div>
+        </div>
+        <!-- Base para el Tercer gráfico Total de Funcionarios (Hombres/mujeres)-->
+        <div class="col-md-6">
+            <div class="chart-container">
+                <canvas id="myChart22"></canvas>
+                <button id="view-chart22" class="btn btn-primary move-right"><i class="fa-solid fa-maximize"></i></button>
+            </div>
+        </div>
+        <!-- Base para el Tercer gráfico Total de Funcionarios (Hombres/mujeres)-->
+        <div class="col-md-6">
+            <div class="chart-container">
+                <canvas id="myChart24"></canvas>
+                <button id="view-chart24" class="btn btn-primary move-right"><i class="fa-solid fa-maximize"></i></button>
             </div>
         </div>
         <!-- Base para el Tercer gráfico Total de Funcionarios (Hombres/mujeres)-->
@@ -67,31 +79,13 @@
         <!-- Base para el Tercer gráfico Total de Funcionarios (Hombres/mujeres)-->
         <div class="col-md-6">
             <div class="chart-container">
-                <canvas id="myChart20"></canvas>
-            </div>
-        </div>
-        <!-- Base para el Tercer gráfico Total de Funcionarios (Hombres/mujeres)-->
-        <div class="col-md-6">
-            <div class="chart-container">
                 <canvas id="myChart21"></canvas>
             </div>
         </div>
         <!-- Base para el Tercer gráfico Total de Funcionarios (Hombres/mujeres)-->
         <div class="col-md-6">
             <div class="chart-container">
-                <canvas id="myChart22"></canvas>
-            </div>
-        </div>
-        <!-- Base para el Tercer gráfico Total de Funcionarios (Hombres/mujeres)-->
-        <div class="col-md-6">
-            <div class="chart-container">
                 <canvas id="myChart23"></canvas>
-            </div>
-        </div>
-        <!-- Base para el Tercer gráfico Total de Funcionarios (Hombres/mujeres)-->
-        <div class="col-md-6">
-            <div class="chart-container">
-                <canvas id="myChart24"></canvas>
             </div>
         </div>
         <!-- Base para el Tercer gráfico Total de Funcionarios (Hombres/mujeres)-->
@@ -124,6 +118,14 @@
             opacity: 0.7;
             /* Ajusta la opacidad a tu gusto */
             background-color: #99CCFF;
+            color: #000000;
+        }
+        
+        .alert1 {
+            opacity: 0.7;
+            /* Ajusta la opacidad a tu gusto */
+            background-color: #FF8C40;
+            /* Color naranjo claro (RGB: 255, 214, 153) */
             color: #000000;
         }
 
@@ -192,21 +194,26 @@
 
     $(document).ready(function() {
         // Manejar el evento de clic en el enlace del primer gráfico
-        $('#view-chart').click(function(e) {
+        $('#view-chart18').click(function(e) {
             e.preventDefault();
-            showChart('myChart');
+            showChart('myChart18');
         });
 
         // Manejar el evento de clic en el enlace del segundo gráfico
-        $('#view-chart1').click(function(e) {
+        $('#view-chart20').click(function(e) {
             e.preventDefault();
-            showChart('myChart1');
+            showChart('myChart20');
         });
 
         // Manejar el evento de clic en el enlace del tercer gráfico
-        $('#view-chart2').click(function(e) {
+        $('#view-chart22').click(function(e) {
             e.preventDefault();
-            showChart('myChart2');
+            showChart('myChart22');
+        });
+        // Manejar el evento de clic en el enlace del tercer gráfico
+        $('#view-chart24').click(function(e) {
+            e.preventDefault();
+            showChart('myChart24');
         });
     });
 </script>
@@ -220,9 +227,9 @@
                 label: 'Cantidad de reparaciones',
                 data: {!! json_encode(array_column($grafico18, 'conteo')) !!},
                 backgroundColor: [
-                    'rgb(129, 255, 30)',
+                    'rgb(119,221,119)',
                 ],
-                barThickness: 50,
+                barThickness: 25,
                 borderWidth: 1
             }
             ]
@@ -233,9 +240,7 @@
             datasets: [{
                 label: 'Solicitudes revisadas',
                 data:[],
-                backgroundColor: [
-                    'rgb(30, 102, 255)', // Color de fondo único para todas las barras
-                ],
+                backgroundColor: generateRandomColors({{ count($grafico19) }}),
                 barThickness: 50, // Ajusta el valor para cambiar el ancho de la barra
                 borderWidth: 1
             }]
@@ -254,10 +259,10 @@
                 label: 'Estado de solicitudes',
                 data: [],
                 backgroundColor: [
-                    'rgb(255, 151, 0)', // INGRESADO
-                    'rgb(255, 255, 0)', // EN REVISION
-                    'rgb(119, 255, 30)', // ACEPTADO
-                    'rgb(255, 0, 0)' // RECHAZADO
+                    'rgb(255, 215, 0)', // Ingresado
+                    'rgb(253,253,150)', // En Revision
+                    'rgb(216, 247, 154)', // Aceptado
+                    'rgb(255,105,97)', // Rechazado
                 ],
                     barThickness: 50,
                     borderWidth: 1
@@ -285,7 +290,7 @@
                             {{ $data["conteo"] }},
                         @endforeach
                     ],
-                backgroundColor: 'rgb(255, 190, 30)',
+                backgroundColor: generateRandomColors({{ count($grafico21) }}),
                 barThickness: 50,
                 borderWidth: 1
             }]
@@ -308,7 +313,7 @@
             datasets: [{
                 label: 'Cantidad de reparaciones',
                 data: data,
-                backgroundColor: 'rgb(129, 255, 30)',
+                backgroundColor: 'rgb(119,221,119)',
                 barThickness: 50,
                 borderWidth: 1
             }]
@@ -327,9 +332,7 @@
                             {{ $data["conteo"] }},
                         @endforeach
                     ],
-                backgroundColor: [
-                    'rgb(30, 102, 255)', // Color de fondo único para todas las barras
-                ],
+                backgroundColor: generateRandomColors({{ count($grafico23) }}),
                 barThickness: 50, // Ajusta el valor para cambiar el ancho de la barra
                 borderWidth: 1
             }]
@@ -342,10 +345,10 @@
                     label: 'Estado de solicitudes',
                     data: [],
                     backgroundColor: [
-                        'rgb(255, 151, 0)', // INGRESADO
-                        'rgb(255, 255, 0)', // EN REVISION
-                        'rgb(119, 255, 30)', // ACEPTADO
-                        'rgb(255, 0, 0)' // RECHAZADO
+                        'rgb(255, 215, 0)', // Ingresado
+                        'rgb(253,253,150)', // En Revision
+                        'rgb(216, 247, 154)', // Aceptado
+                        'rgb(255,105,97)', // Rechazado
                     ],
                     barThickness: 50,
                     borderWidth: 1
@@ -364,13 +367,32 @@
             datasets: [{
                 label: 'Solicitudes revisadas',
                 data: @json(array_column($grafico25, 'conteo')),
-                backgroundColor: [
-                    'rgb(255, 190, 30)', // Color de fondo único para todas las barras
-                ],
+                backgroundColor: generateRandomColors({{ count($grafico25) }}),
                 barThickness: 50, // Ajusta el valor para cambiar el ancho de la barra
                 borderWidth: 1
             }]
         };
+
+
+
+
+    //(generar colores aleatorios)
+    function generateRandomColors(count) {
+        var randomColors = [];
+        for (var i = 0; i < count; i++) {
+            randomColors.push(getRandomColor());
+        }
+        return randomColors;
+    }
+    //(obtener un color aleatorio)
+    function getRandomColor() {
+        var letters = '0123456789ABCDEF';
+        var color = '#';
+        for (var i = 0; i < 6; i++) {
+            color += letters[Math.floor(Math.random() * 16)];
+        }
+        return color;
+    }
 </script>
 
 

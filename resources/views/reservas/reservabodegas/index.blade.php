@@ -16,7 +16,7 @@
     @endrole
     @role('SERVICIOS')
     <div class="alert alert-info" role="alert">
-        <div><strong>Bienvenido Servicio:</strong> En este módulo usted podrá verificar el estado de sus solicitudes (tipo) .</div>
+        <div><strong>Bienvenido Servicio:</strong> En este módulo usted podrá verificar el estado de sus solicitudes de Visitas a las distintas bodegas.</div>
     </div>
     @endrole
     @role('INFORMATICA')
@@ -26,12 +26,12 @@
     @endrole
     @role('JURIDICO')
     <div class="alert alert-info" role="alert">
-        <div><strong>Bienvenido Juridico:</strong> En este módulo usted podrá verificar el estado de sus solicitudes (tipo).</div>
+        <div><strong>Bienvenido Juridico:</strong> En este módulo usted podrá verificar el estado de sus solicitudes de Visitas a las distintas bodegas.</div>
     </div>
     @endrole
     @role('FUNCIONARIO')
     <div class="alert alert-info" role="alert">
-        <div><strong>Bienvenido Funcionario:</strong> En este módulo usted podrá verificar el estado de sus solicitudes (tipo).</div>
+        <div><strong>Bienvenido Funcionario:</strong> En este módulo usted podrá verificar el estado de sus solicitudes de Visitas a las distintas bodegas.</div>
     </div>
     @endrole
 @stop

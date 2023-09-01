@@ -56,6 +56,18 @@
                 </div>
             </div>
             <div class="form-group row">
+                <label for="rol" class="col-sm-2 col-form-label">{{ __('Rol') }}</label>
+                <div class="col-sm-10">
+                    <p class="form-control-plaintext">{{ $roles }}</p>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="cargo" class="col-sm-2 col-form-label">{{ __('Cargo') }}</label>
+                <div class="col-sm-10">
+                    <p class="form-control-plaintext">{{ $funcionario->cargo->CARGO }}</p>
+                </div>
+            </div>
+            <div class="form-group row">
                 <label for="grado" class="col-sm-2 col-form-label">{{ __('Grado') }}</label>
                 <div class="col-sm-10">
                     <p class="form-control-plaintext">{{ $funcionario->grado->GRADO }}</p>

@@ -3,7 +3,7 @@
 @section('title', 'Menú principal')
 
 @section('content_header')
-    <h1> Bienvenido -- {{auth()->user()->NOMBRES}} {{auth()->user()->APELLIDOS}} </h1>
+    <h1> Bienvenido a SIA2 </h1>
     <meta name="csrf-token" content="{{ csrf_token() }}">
     @role('ADMINISTRADOR')
     <div class="alert alert-info alert1" role="alert">

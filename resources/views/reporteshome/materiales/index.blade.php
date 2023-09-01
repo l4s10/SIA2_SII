@@ -6,28 +6,18 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <h1>Reportes de materiales</h1>
     @role('ADMINISTRADOR')
-    <div class="alert alert-info" role="alert">
+    <div class="alert alert-info alert1" role="alert">
         <div><strong>Bienvenido Administrador:</strong> Acceso total al modulo.</div>
     </div>
     @endrole
     @role('SERVICIOS')
     <div class="alert alert-info" role="alert">
-        <div><strong>Bienvenido Servicio:</strong> Aqui iria el texto donde le corresponde el rol SERVICIO.</div>
+        <div><strong>Bienvenido Servicio:</strong> Acceso al modulo de reportes de materiales.</div>
     </div>
     @endrole
     @role('INFORMATICA')
     <div class="alert alert-info" role="alert">
-        <div><strong>Bienvenido Informatica:</strong> Aqui iria el texto donde le corresponde el rol INFORMATICA.</div>
-    </div>
-    @endrole
-    @role('JURIDICO')
-    <div class="alert alert-info" role="alert">
-        <div><strong>Bienvenido Juridico:</strong> Aqui iria el texto donde le corresponde el rol JURIDICO.</div>
-    </div>
-    @endrole
-    @role('FUNCIONARIO')
-    <div class="alert alert-info" role="alert">
-        <div><strong>Bienvenido Funcionario:</strong> Aqui iria el texto donde le corresponde el rol FUNCIONARIO.</div>
+        <div><strong>Bienvenido Informatica:</strong> Acceso al modulo de reportes de materiales.</div>
     </div>
     @endrole
 @endsection
@@ -62,13 +52,13 @@
         <div class="col-md-6">
             <div class="chart-container">
                 <canvas id="myChart7"></canvas>
-                <button id="view-chart4" class="btn btn-primary move-right"><i class="fa-solid fa-maximize"></i></button>
             </div>
         </div>
         <!-- Base para el Septimo gráfico materiales consumidos por departamento/unidad. -->
         <div class="col-md-6">
             <div class="chart-container">
                 <canvas id="myChart6"></canvas>
+                <button id="view-chart5" class="btn btn-primary move-right"><i class="fa-solid fa-maximize"></i></button>
             </div>
         </div>
     </div>
@@ -99,7 +89,15 @@
             background-color: #99CCFF;
             color: #000000;
         }
-
+        
+        .alert1 {
+            opacity: 0.7;
+            /* Ajusta la opacidad a tu gusto */
+            background-color: #FF8C40;
+            /* Color naranjo claro (RGB: 255, 214, 153) */
+            color: #000000;
+        }
+        
         .chart-container {
             padding: 20px;
             border: 1px solid #ccc;
@@ -165,21 +163,9 @@
 
     $(document).ready(function() {
         // Manejar el evento de clic en el enlace del primer gráfico
-        $('#view-chart').click(function(e) {
+        $('#view-chart5').click(function(e) {
             e.preventDefault();
-            showChart('myChart');
-        });
-
-        // Manejar el evento de clic en el enlace del segundo gráfico
-        $('#view-chart1').click(function(e) {
-            e.preventDefault();
-            showChart('myChart1');
-        });
-
-        // Manejar el evento de clic en el enlace del tercer gráfico
-        $('#view-chart2').click(function(e) {
-            e.preventDefault();
-            showChart('myChart2');
+            showChart('myChart6');
         });
     });
 </script>
@@ -192,7 +178,7 @@
             datasets: [{
                 label: 'Solicitudes revisadas',
                 data: [],
-                backgroundColor: 'rgb(30, 102, 255)',
+                backgroundColor: generateRandomColors({{ count($grafico5) }}),
                 barThickness: 50,
                 borderWidth: 1
             }]
@@ -210,11 +196,12 @@
                 label: 'Estado de solicitudes',
                 data: [],
                 backgroundColor: [
-                        'rgb(255, 151, 0)', // Aseo
-                        'rgb(255, 255, 0)', // COMPUTACION
-                        'rgb(214, 255, 30)', // ELECTRODOMESTICOS
-                        'rgb(0, 0, 0)', // ESCRITORIO
-                        'rgb(255, 0, 0)' // ESCRITORIO
+                        'rgb(255, 215, 0)', // Ingresado
+                        'rgb(253,253,150)', // En Revision
+                        'rgb(216, 247, 154)', // Aceptado
+                        'rgb(127, 129, 129)', // En espera
+                        'rgb(255,105,97)', // Rechazado
+                        'rgb(65, 65, 65)' // Terminado
                     ],
                 barThickness: 50,
                 borderWidth: 1
@@ -234,13 +221,31 @@
             datasets: [{
                 label: 'Solicitudes realizadas',
                 data: @json(array_column($grafico7, 'conteo')),
-                backgroundColor: [
-                    'rgb(255, 190, 30)', // Color de fondo único para todas las barras
-                ],
+                backgroundColor: generateRandomColors({{ count($grafico7) }}),
                 barThickness: 50, // Ajusta el valor para cambiar el ancho de la barra
                 borderWidth: 1
             }]
         };
+
+
+
+    //(generar colores aleatorios)
+    function generateRandomColors(count) {
+        var randomColors = [];
+        for (var i = 0; i < count; i++) {
+            randomColors.push(getRandomColor());
+        }
+        return randomColors;
+    }
+    //(obtener un color aleatorio)
+    function getRandomColor() {
+        var letters = '0123456789ABCDEF';
+        var color = '#';
+        for (var i = 0; i < 6; i++) {
+            color += letters[Math.floor(Math.random() * 16)];
+        }
+        return color;
+    }
 </script>
 
 <script src="{{asset('js/Reportes/Graficos/grafico5-config.js')}}"></script>

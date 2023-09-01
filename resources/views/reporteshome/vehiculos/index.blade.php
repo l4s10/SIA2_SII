@@ -6,28 +6,18 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <h1>Reportes de vehiculos</h1>
     @role('ADMINISTRADOR')
-    <div class="alert alert-info" role="alert">
+    <div class="alert alert-info alert1" role="alert">
         <div><strong>Bienvenido Administrador:</strong> Acceso total al modulo.</div>
     </div>
     @endrole
     @role('SERVICIOS')
     <div class="alert alert-info" role="alert">
-        <div><strong>Bienvenido Servicio:</strong> Aqui iria el texto donde le corresponde el rol SERVICIO.</div>
+        <div><strong>Bienvenido Servicio:</strong> Acceso al modulo de reportes de vehiculos.</div>
     </div>
     @endrole
     @role('INFORMATICA')
     <div class="alert alert-info" role="alert">
-        <div><strong>Bienvenido Informatica:</strong> Aqui iria el texto donde le corresponde el rol INFORMATICA.</div>
-    </div>
-    @endrole
-    @role('JURIDICO')
-    <div class="alert alert-info" role="alert">
-        <div><strong>Bienvenido Juridico:</strong> Aqui iria el texto donde le corresponde el rol JURIDICO.</div>
-    </div>
-    @endrole
-    @role('FUNCIONARIO')
-    <div class="alert alert-info" role="alert">
-        <div><strong>Bienvenido Funcionario:</strong> Aqui iria el texto donde le corresponde el rol FUNCIONARIO.</div>
+        <div><strong>Bienvenido Informatica:</strong> Acceso al modulo de reportes de vehiculos.</div>
     </div>
     @endrole
 @endsection
@@ -108,6 +98,14 @@
             background-color: #99CCFF;
             color: #000000;
         }
+        
+        .alert1 {
+            opacity: 0.7;
+            /* Ajusta la opacidad a tu gusto */
+            background-color: #FF8C40;
+            /* Color naranjo claro (RGB: 255, 214, 153) */
+            color: #000000;
+        }
 
         .chart-container {
             padding: 20px;
@@ -174,26 +172,20 @@
 
     $(document).ready(function() {
         // Manejar el evento de clic en el enlace del primer gráfico
-        $('#view-chart').click(function(e) {
+        $('#view-chart3').click(function(e) {
             e.preventDefault();
-            showChart('myChart');
+            showChart('myChart3');
         });
 
         // Manejar el evento de clic en el enlace del segundo gráfico
-        $('#view-chart1').click(function(e) {
+        $('#view-chart4').click(function(e) {
             e.preventDefault();
-            showChart('myChart1');
+            showChart('myChart8');
         });
 
-        // Manejar el evento de clic en el enlace del tercer gráfico
-        $('#view-chart2').click(function(e) {
-            e.preventDefault();
-            showChart('myChart2');
-        });
     });
 </script>
 <!-- Inicializacion de los graficos -->
-
 <script>
         window.myChartData3 = {
             // 4 gráfico Vehiculos asignados.
@@ -203,7 +195,7 @@
                 label: 'Solicitudes',
                 data: {!! json_encode(array_column($grafico3, 'conteo')) !!},
                 backgroundColor: [
-                    'rgb(129, 255, 30)', // Color de fondo único para todas las barras
+                    'rgb(119,221,119)', // Color de fondo único para todas las barras
                 ],
                 barThickness: 50, // Ajusta el valor para cambiar el ancho de la barra
                 borderWidth: 1
@@ -216,11 +208,11 @@
                     label: 'Estado de solicitudes',
                     data: [],
                     backgroundColor: [
-                        'rgb(255, 151, 0)', // Aseo
-                        'rgb(255, 255, 0)', // COMPUTACION
-                        'rgb(255, 0, 0)', // ELECTRODOMESTICOS
-                        'rgb(0, 0, 0)', // ESCRITORIO
-                        'rgb(214, 255, 30)' // ESCRITORIO
+                        'rgb(255, 215, 0)', // Aseo
+                        'rgb(253,253,150)', // COMPUTACION
+                        'rgb(255,105,97)', // ELECTRODOMESTICOS
+                        'rgb(107, 107, 107)', // ESCRITORIO
+                        'rgb(216, 247, 154)' // ESCRITORIO
                     ],
                     barThickness: 50,
                     borderWidth: 1
@@ -275,7 +267,7 @@
             }
         ]
     };
-
+    //(generar colores aleatorios)
     function generateRandomColors(count) {
         var randomColors = [];
         for (var i = 0; i < count; i++) {
@@ -283,7 +275,7 @@
         }
         return randomColors;
     }
-
+    //(obtener un color aleatorio)
     function getRandomColor() {
         var letters = '0123456789ABCDEF';
         var color = '#';
@@ -398,6 +390,7 @@
                     L.latLng(-36.8261, -73.0498),  // Coordenadas de Concepción
                     L.latLng(-36.6155, -72.9561)   // Coordenadas de Tome
                 ],
+                language: 'es',
                 lineOptions: {
                     styles: [
                         { color: 'red', opacity: 0.6, weight: 4 },

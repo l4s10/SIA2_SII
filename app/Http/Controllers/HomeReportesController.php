@@ -684,7 +684,6 @@ public function getGrafico17Data($fechaInicio = null, $fechaFin = null){
     // Obtén la colección de usuarios con el rol 'INFORMATICA' o 'ADMINISTRADOR'
     $usuariosServicios = $rolServicios->users->concat($rolAdmin->users)->unique('id');
 
-
     $grafico17 = [];
 
     // Iterar sobre los usuarios y realizar el conteo de solicitudes gestionadas
@@ -694,9 +693,9 @@ public function getGrafico17Data($fechaInicio = null, $fechaFin = null){
         try {
             // Realizar consulta para contar las solicitudes gestionadas por el usuario
             if ($fechaInicio && $fechaFin) {
-                $conteo = SolicitudSala::where('MODIFICADO_POR_SOL_EQUIPO', $nombreCompleto)->whereBetween('created_at', [$fechaInicio, $fechaFin])->count();
+                $conteo = SolicitudEquipos::where('MODIFICADO_POR_SOL_EQUIPO', $nombreCompleto)->whereBetween('created_at', [$fechaInicio, $fechaFin])->count();
             } else {
-                $conteo = SolicitudSala::where('MODIFICADO_POR_SOL_EQUIPO', $nombreCompleto)->count();
+                $conteo = SolicitudEquipos::where('MODIFICADO_POR_SOL_EQUIPO', $nombreCompleto)->count();
             }
         } catch (\Exception $e) {
             // En caso de error, asignar 0 a conteo
