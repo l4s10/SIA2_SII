@@ -335,6 +335,12 @@
                             </li>
                         @endrole
                         <li class="nav-item">
+                            <a href="{{url('materiales/auditoria')}}" class="nav-link">
+                                <i class="fas fa-fw fa-paperclip nav-icon"></i>
+                                <p>Auditoria Materiales</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
                             <a href="{{url('vehiculos')}}" class="nav-link">
                                 <i class="fas fa-fw fa-car nav-icon"></i>
                                 <p>Administrar Vehiculos</p>
