@@ -115,7 +115,7 @@
             {{-- !!CARGAR DATATABLE CON EQUIPOS PARA ASIGNAR
 
             !! TABLA EQUIPOS Y CAMPO EQUIPOS ASIGNADOS--}}
-            <div class="table-responsive">
+            {{-- <div class="table-responsive">
                 <table id="equipos" class="table table-bordered mt-4">
                     <thead class="bg-primary text-white">
                         <tr>
@@ -141,13 +141,13 @@
                         @endforeach
                     </tbody>
                 </table>
-            </div>
+            </div> --}}
 
             <div class="mb-3">
-                <label class="" for="EQUIPO_A_ASIGNAR"><i class="fa-sharp fa-solid fa-desktop"></i> Equipo(s) asignado(s):</label>
-                <textarea id="EQUIPO_A_ASIGNAR" name="EQUIPO_A_ASIGNAR" class="form-control" rows="3" readonly placeholder="Resumen de los equipos asignados">{{$solicitud->EQUIPO_A_ASIGNAR}}</textarea>
-                <button type="button" class="btn btn-warning mt-2" onclick="resetEquipos()">Restablecer</button>
-                <button type="button" class="btn btn-secondary mt-2" onclick="limpiarEquipos()">Limpiar</button>
+                <label class="" for="EQUIPO_A_ASIGNAR"><i class="fa-sharp fa-solid fa-desktop"></i> Equipo(s) solicitado(s):</label>
+                <textarea id="EQUIPO_A_ASIGNAR" name="EQUIPO_A_ASIGNAR" class="form-control" rows="3" readonly placeholder="Resumen de los equipos solicitados">{{$solicitud->EQUIPO_A_ASIGNAR}}</textarea>
+                {{-- <button type="button" class="btn btn-warning mt-2" onclick="resetEquipos()">Restablecer</button> --}}
+                {{-- <button type="button" class="btn btn-secondary mt-2" onclick="limpiarEquipos()">Limpiar</button> --}}
 
             </div>
 
@@ -216,6 +216,14 @@
     <script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/es.js"></script>
     <script>
         $(function () {
+            flatpickr("#FECHA_SOL_EQUIPO", {
+                locale: 'es',
+                enableTime: true,
+                dateFormat: "Y-m-d",
+                // Otras opciones y configuraciones adicionales que desees utilizar
+                altFormat: 'd-m-Y',
+                altInput: true,
+            });
              // Inicializar Flatpickr para el campo de fecha y hora de inicio
              flatpickr("#FECHA_INICIO_EQUIPO", {
                 locale: 'es',
@@ -235,16 +243,16 @@
                 altFormat: 'd-m-Y H:i',
                 altInput: true,
             });
-            $('#FECHA_SOL_EQUIPO').flatpickr({
-                dateFormat: 'Y-m-d',
-                locale: 'es',
-                minDate: "today",
-                altFormat: "d-m-Y",
-                altInput: true,
-                showClearButton: true,
-                defaultHour: 8, // Agregamos una hora predeterminada
-                mode: "range",
-            });
+            // $('#FECHA_SOL_EQUIPO').flatpickr({
+            //     dateFormat: 'Y-m-d',
+            //     locale: 'es',
+            //     minDate: "today",
+            //     altFormat: "d-m-Y",
+            //     altInput: true,
+            //     showClearButton: true,
+            //     defaultHour: 8, // Agregamos una hora predeterminada
+            //     mode: "range",
+            // });
             $('#HORA_INICIO_SOL_EQUIPO').flatpickr({
                 enableTime: true,
                 noCalendar: true,
