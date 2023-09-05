@@ -24,7 +24,7 @@ return new class extends Migration
             //*CAMPOS PARA SERVICIOS*/
             $table->date('FECHA_DESPACHO')->nullable(); // Fecha en la que el gestionador despacha los materiales solicitados.
             $table->text('MATERIAL_SOL');
-            $table->text('OBSERVACIONES')->default('No existen observaciones');
+            $table->string('OBSERVACIONES', 1000)->nullable();
             $table->string('ESTADO_SOL', 20)->default('INGRESADO');
             $table->string('MODIFICADO_POR')->nullable();
             $table->timestamps();
