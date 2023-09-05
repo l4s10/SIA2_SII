@@ -78,7 +78,7 @@
                     <label for="LEY_ASOCIADA" class="form-label"><i class="fas fa-bookmark"></i> Ley asociada:</label>
                     <select id="LEY_ASOCIADA" name="LEY_ASOCIADA" class="form-control" disabled>
                         <option value="" selected>--Seleccione Ley--</option>
-                        @foreach ($facultades->unique('LEY_ASOCIADA') as $facultad)
+                        @foreach ($facultades as $facultad)
                             <option value="{{ $facultad->ID_FACULTAD }}">{{ $facultad->LEY_ASOCIADA }}</option>
                         @endforeach
                     </select>
@@ -94,7 +94,7 @@
                     <label for="ART_LEY_ASOCIADA" class="form-label"><i class="fas fa-bookmark"></i> Artículo de ley:</label>
                     <select id="ART_LEY_ASOCIADA" name="ART_LEY_ASOCIADA" class="form-control" disabled>
                         <option value="" selected>--Seleccione Artículo--</option>
-                        @foreach ($facultades->unique('ART_LEY_ASOCIADA') as $facultad)
+                        @foreach ($facultades as $facultad)
                             <option value="{{ $facultad->ID_FACULTAD }}">{{ $facultad->ART_LEY_ASOCIADA }}</option>
                         @endforeach
                     </select>

@@ -161,7 +161,7 @@
             {{-- !!CAMPOS NIVEL 2 --}}
             {{-- Sala a asignar (depende de ID_CATEGORIA_SALA) --}}
             <div class="mb-3">
-                <label for="SALA_A_ASIGNAR" class="form-label"><i class="fa-solid fa-person-shelter"></i> Sala/Bodega a asignar:</label>
+                <label for="SALA_A_ASIGNAR" class="form-label"><i class="fa-solid fa-person-shelter"></i> Sala a asignar:</label>
                 <select id="SALA_A_ASIGNAR" name="SALA_A_ASIGNAR" class="form-control">
                     <option value="" selected>--Seleccione una sala--</option>
                     @foreach ($salas as $sala)

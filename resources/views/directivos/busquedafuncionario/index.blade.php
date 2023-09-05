@@ -158,7 +158,7 @@
                                 <td>
                                     @if ($resolucion->DOCUMENTO)
                                         <a href="{{ asset('storage/resoluciones/' . $resolucion->DOCUMENTO) }}" class="btn btn-sia-primary btn-block" target="_blank">
-                                            <i class="fa-solid fa-file-pdf"></i>
+                                            <i class="fa-solid fa-file-pdf" style="color: green;"></i>
                                         </a>
                                     @else
                                         Sin documento

@@ -106,8 +106,8 @@
             </div>
 
             <div class="form-group">
-                <label for="FECHA_SOL_EQUIPO"><i class="fa-solid fa-calendar"></i> Fecha de Inicio:</label>
-                <input type="text" id="FECHA_SOL_EQUIPO" name="FECHA_SOL_EQUIPO" class="form-control flatpickr @if($errors->has('FECHA_SOL_EQUIPO')) is-invalid @endif" placeholder="Ingrese fecha de inicio" data-input required value="{{ old('FECHA_SOL_EQUIPO') }}">
+                <label for="FECHA_SOL_EQUIPO"><i class="fa-solid fa-calendar"></i> Fechas:</label>
+                <input type="text" id="FECHA_SOL_EQUIPO" name="FECHA_SOL_EQUIPO" class="form-control flatpickr @if($errors->has('FECHA_SOL_EQUIPO')) is-invalid @endif" placeholder="Ingrese fecha de inicio y término de la solicitud" data-input required value="{{ old('FECHA_SOL_EQUIPO') }}">
                 @if ($errors->has('FECHA_SOL_EQUIPO'))
                     <div class="invalid-feedback">{{ $errors->first('FECHA_SOL_EQUIPO') }}</div>
                 @endif

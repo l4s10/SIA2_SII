@@ -71,7 +71,7 @@
                     @foreach($tipos as $tipo)
                         <tr>
                             <td>{{ $tipo->TIPO_MATERIAL }}</td>
-                            <td>
+                            <td style="text-align: center; vertical-align: middle;">
                                 <form action="{{ route('tipomaterial.destroy',$tipo->ID_TIPO_MAT) }}" method="POST">
                                     @csrf
                                     @method('DELETE')

@@ -24,11 +24,11 @@
                 @each('adminlte::partials.sidebar.menu-item', $adminlte->menu('sidebar'), 'item')
 
                 <!-- Header Módulos Funcionario -->
-                @role('ADMINISTRADOR|FUNCIONARIO|SERVICIOS|INFORMATICA')
+                @role('ADMINISTRADOR|FUNCIONARIO|SERVICIOS|INFORMATICA|JURIDICO')
                 <li class="nav-header">Módulos Funcionario</li>
                 @endrole
 
-                @role('ADMINISTRADOR|FUNCIONARIO|SERVICIOS|INFORMATICA')
+                @role('ADMINISTRADOR|FUNCIONARIO|SERVICIOS|INFORMATICA|JURIDICO')
                 <!-- Solicitudes vehiculares -->
                 <li class="nav-item has-treeview">
                     <a href="#" class="nav-link">
@@ -171,31 +171,26 @@
                         <i class="fas fa-fw fa-boxes nav-icon"></i>
                         <p>Inventario <i class="right fas fa-angle-left"></i></p>
                     </a>
-
                     <ul class="nav nav-treeview">
                         @role('ADMINISTRADOR|SERVICIOS')
-                        <!-- Submenú 1 - Ver Materiales -->
                         <li class="nav-item">
                             <a href="{{url('materiales')}}" class="nav-link">
                                 <i class="fas fa-fw fa-eye nav-icon"></i>
                                 <p>Ver Materiales</p>
                             </a>
                         </li>
-                        <!-- Submenú 2 - Agregar Materiales -->
                         <li class="nav-item">
                             <a href="{{url('materiales/create')}}" class="nav-link">
                                 <i class="fas fa-fw fa-plus nav-icon"></i>
                                 <p>Agregar Materiales</p>
                             </a>
                         </li>
-                        <!-- Submenú 3 - Tipos Materiales -->
                         <li class="nav-item">
                             <a href="{{url('tipomaterial')}}" class="nav-link">
                                 <i class="fas fa-fw fa-eye nav-icon"></i>
                                 <p>Tipos Materiales</p>
                             </a>
                         </li>
-                        <!-- Submenú 4 - Agregar Tipo Material -->
                         <li class="nav-item">
                             <a href="{{url('tipomaterial/create')}}" class="nav-link">
                                 <i class="fas fa-fw fa-plus nav-icon"></i>
@@ -204,42 +199,36 @@
                         </li>
                         @endrole
                         @role('ADMINISTRADOR|INFORMATICA')
-                        <!-- Submenú 5 - Ver Equipos -->
                         <li class="nav-item">
                             <a href="{{url('equipos')}}" class="nav-link">
                                 <i class="fas fa-fw fa-eye nav-icon"></i>
                                 <p>Ver Equipos</p>
                             </a>
                         </li>
-                        <!-- Submenú 6 - Agregar Equipo -->
                         <li class="nav-item">
                             <a href="{{url('equipos/create')}}" class="nav-link">
                                 <i class="fas fa-fw fa-plus nav-icon"></i>
                                 <p>Agregar Equipo</p>
                             </a>
                         </li>
-                        <!-- Submenú 7 - Ver Tipo Equipos -->
                         <li class="nav-item">
                             <a href="{{url('tipoequipos')}}" class="nav-link">
                                 <i class="fas fa-fw fa-eye nav-icon"></i>
                                 <p>Ver Tipo Equipos</p>
                             </a>
                         </li>
-                        <!-- Submenú 8 - Agregar Tipo Equipo -->
                         <li class="nav-item">
                             <a href="{{url('tipoequipos/create')}}" class="nav-link">
                                 <i class="fas fa-fw fa-plus nav-icon"></i>
                                 <p>Agregar Tipo Equipo</p>
                             </a>
                         </li>
-                        <!-- Submenú 9 - Ver Sala/Bodega -->
                         <li class="nav-item">
                             <a href="{{url('salas')}}" class="nav-link">
                                 <i class="fas fa-fw fa-eye nav-icon"></i>
                                 <p>Ver Sala/Bodega</p>
                             </a>
                         </li>
-                        <!-- Submenú 10 - Agregar Sala/Bodega -->
                         <li class="nav-item">
                             <a href="{{url('salas/create')}}" class="nav-link">
                                 <i class="fas fa-fw fa-plus nav-icon"></i>
@@ -251,7 +240,6 @@
                 </li>
                 @endrole
                 @role('ADMINISTRADOR')
-                <!-- Reportes -->
                 <li class="nav-item">
                     <a href="{{url('reporteshome')}}" class="nav-link">
                         <i class="fas fa-fw fa-solid fa-chart-simple nav-icon"></i>
@@ -262,7 +250,7 @@
 
                 <!-- Header Administrador -->
                  @role('ADMINISTRADOR|INFORMATICA|JURIDICO|SERVICIOS')
-                 <li class="nav-header">Módulos Administrador</li>
+                 <li class="nav-header">Módulos Reservados</li>
                  @endrole
 
                 <!-- Módulo de Directivos -->
@@ -275,8 +263,8 @@
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
                             <a href="#" class="nav-link">
-                                <i class="fa-solid fa-folder-minus"></i>
-                                <p>Búsqueda Resoluciones<i class="right fas fa-angle-left"></i></p>
+                                <i class="fa-solid fa-magnifying-glass"></i>
+                                <p>Buscar Resoluciones<i class="right fas fa-angle-left"></i></p>
                             </a>
                             <ul class="nav nav-treeview">
                                 <li class="nav-item">
@@ -302,25 +290,25 @@
                             <ul class="nav nav-treeview">
                                 <li class="nav-item">
                                     <a href="{{ url('resolucion') }}" class="nav-link">
-                                        <i class="fas fa-fw fa-eye nav-icon"></i>
+                                        <i class="fas fa-fw fa-file-circle-check nav-icon"></i>
                                         <p>Resoluciones</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
                                     <a href="{{ url('polizas') }}" class="nav-link">
-                                        <i class="fas fa-fw fa-eye nav-icon"></i>
+                                        <i class="fas fa-fw fa-car-side nav-icon"></i>
                                         <p>Pólizas</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
                                     <a href="{{ url('facultades') }}" class="nav-link">
-                                        <i class="fas fa-fw fa-eye nav-icon"></i>
+                                        <i class="fas fa-fw fa-square-check nav-icon"></i>
                                         <p>Facultades</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
                                     <a href="{{ url('cargos') }}" class="nav-link">
-                                        <i class="fas fa-fw fa-eye nav-icon"></i>
+                                        <i class="fas fa-fw fa-person-rays nav-icon"></i>
                                         <p>Cargos</p>
                                     </a>
                                 </li>
@@ -347,6 +335,12 @@
                             </li>
                         @endrole
                         <li class="nav-item">
+                            <a href="{{url('materiales/auditoria')}}" class="nav-link">
+                                <i class="fas fa-fw fa-paperclip nav-icon"></i>
+                                <p>Auditoria Materiales</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
                             <a href="{{url('vehiculos')}}" class="nav-link">
                                 <i class="fas fa-fw fa-car nav-icon"></i>
                                 <p>Administrar Vehiculos</p>
@@ -354,13 +348,13 @@
                         </li>
                         <li class="nav-item">
                             <a href="{{url('region')}}" class="nav-link">
-                                <i class="fas fa-fw fa-earth-americas nav-icon"></i>
+                                <i class="fas fa-fw fa-map nav-icon"></i>
                                 <p>Administrar Regiones</p>
                             </a>
                         </li>
                         <li class="nav-item">
                             <a href="{{url('comuna')}}" class="nav-link">
-                                <i class="fas fa-fw fa-street-view nav-icon"></i>
+                                <i class="fas fa-fw fa-map-location-dot nav-icon"></i>
                                 <p>Administrar Comunas</p>
                             </a>
                         </li>
@@ -372,7 +366,7 @@
                         </li>
                         <li class="nav-item">
                             <a href="{{url('ubicacion')}}" class="nav-link">
-                                <i class="fa-solid fa-user-group nav-icon"></i>
+                                <i class="fas fa-fw fa-users nav-icon"></i>
                                 <p>Administrar Ubicaciones y Departamentos</p>
                             </a>
                         </li>

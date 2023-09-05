@@ -118,7 +118,6 @@ class ResolucionController extends Controller
         return view('resolucion.edit', compact('resolucion', 'tiposResolucion', 'facultades', 'firmantes', 'delegados'));
     }
 
-
     public function update(Request $request, string $id)
     {
         try {
@@ -135,6 +134,10 @@ class ResolucionController extends Controller
 
             // Procesar el archivo adjunto si se ha seleccionado uno
             if ($request->hasFile('DOCUMENTO')) {
+                //Borra el archivo existente, en caso de que exista
+                if ($resolucion->DOCUMENTO) {
+                    Storage::disk('public')->delete('resoluciones/' . $resolucion->DOCUMENTO);
+                }
                 $documento = $request->file('DOCUMENTO');
 
                 // Genera un nombre único para el archivo PDF

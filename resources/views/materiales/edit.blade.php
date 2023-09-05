@@ -44,9 +44,9 @@
                         <select name="TIPO_MOVIMIENTO" id="TIPO_MOVIMIENTO" class="form-control @error('TIPO_MOVIMIENTO') is-invalid @enderror">
                             <option value="">-- Seleccione un tipo de movimiento --</option>
                             <option value="INGRESO" {{ old('TIPO_MOVIMIENTO') == 'INGRESO' ? 'selected' : '' }}>INGRESO</option>
-                            <option value="EGRESO" {{ old('TIPO_MOVIMIENTO') == 'EGRESO' ? 'selected' : '' }}>EGRESO/DESPACHO</option>
                             <option value="TRASLADO" {{ old('TIPO_MOVIMIENTO') == 'TRASLADO' ? 'selected' : '' }}>TRASLADO</option>
-                            <option value="MERMA" {{ old('TIPO_MOVIMIENTO') == 'MERMA' ? 'selected' : '' }}>PERDIDA/MERMA</option>
+                            <option value="MERMA" {{ old('TIPO_MOVIMIENTO') == 'MERMA' ? 'selected' : '' }}>MERMA</option>
+                            <option value="OTRO" {{ old('TIPO_MOVIMIENTO') == 'OTRO' ? 'selected' : '' }}>OTRO</option>
                         </select>
                         @error('TIPO_MOVIMIENTO')
                             <div class="invalid-feedback">{{ $message }}</div>
@@ -78,7 +78,12 @@
             <div class="mb-3">
                 <div class="form-group">
                     <label for="DETALLE_MOVIMIENTO">Detalle del Movimiento</label>
-                    <textarea class="form-control{{ $errors->has('DETALLE_MOVIMIENTO') ? ' is-invalid' : '' }}" name="DETALLE_MOVIMIENTO" id="DETALLE_MOVIMIENTO" cols="30" rows="5" placeholder="Indique el motivo y detalle del movimiento (MAX 1000 CARACTERES)">{{ old('DETALLE_MOVIMIENTO') }}</textarea>
+                    <textarea class="form-control{{ $errors->has('DETALLE_MOVIMIENTO') ? ' is-invalid' : '' }}" name="DETALLE_MOVIMIENTO" id="DETALLE_MOVIMIENTO" cols="30" rows="5" placeholder="Especificar según caso:
+                        - Edición: Nombre completo del editor, descripción de parámetro modificado.
+                        - Ingreso: N° factura, código libro adquisiciones, nombre y rut proveedor, N° res. exenta de compra y de orden de compra.
+                        - Traslado: Si es hacia o desde unidades, cantidad trasladada, fecha memo conductor y correo electrónico del solicitante.
+                        - Pérdida o merma: Fecha de autorización y vía de autorización, nombre del jefe de dpto que autoriza. 
+                        (MAX 1000 CARACTERES)">{{ old('DETALLE_MOVIMIENTO') }}</textarea>
                     @if ($errors->has('DETALLE_MOVIMIENTO'))
                         <div class="invalid-feedback">
                             {{ $errors->first('DETALLE_MOVIMIENTO') }}
