@@ -15,7 +15,7 @@
                 <div class="col-md-6">
                     <div class="mb-3">
                         <label for="NOMBRE_SOLICITANTE" class="form-label"><i class="fa-solid fa-user"></i> Nombre del solicitante:</label>
-                        <input type="text" id="NOMBRE_SOLICITANTE" name="NOMBRE_SOLICITANTE" class="form-control{{ $errors->has('NOMBRE_SOLICITANTE') ? ' is-invalid' : '' }}" value="{{ $reparacion->NOMBRE_SOLICITANTE }}" placeholder="Ej: ANDRES RODRIGO SUAREZ MATAMALA">
+                        <input type="text" id="NOMBRE_SOLICITANTE" name="NOMBRE_SOLICITANTE" class="form-control{{ $errors->has('NOMBRE_SOLICITANTE') ? ' is-invalid' : '' }}" value="{{ $reparacion->NOMBRE_SOLICITANTE }}" placeholder="Ej: ANDRES RODRIGO SUAREZ MATAMALA" @readonly(true)>
                         @if ($errors->has('NOMBRE_SOLICITANTE'))
                         <div class="invalid-feedback">
                             {{ $errors->first('NOMBRE_SOLICITANTE') }}
@@ -25,7 +25,7 @@
 
                     <div class="mb-3">
                         <label for="RUT" class="form-label"><i class="fa-solid fa-id-card"></i> RUT:</label>
-                        <input type="text" id="RUT" name="RUT" class="form-control{{ $errors->has('RUT') ? ' is-invalid' : '' }}" value="{{ $reparacion->RUT }}" placeholder="Sin puntos con guión (Ej: 16738235-5)">
+                        <input type="text" id="RUT" name="RUT" class="form-control{{ $errors->has('RUT') ? ' is-invalid' : '' }}" value="{{ $reparacion->RUT }}" placeholder="Sin puntos con guión (Ej: 16738235-5)" @readonly(true)>
                         @if ($errors->has('RUT'))
                         <div class="invalid-feedback">
                             {{ $errors->first('RUT') }}
@@ -37,7 +37,7 @@
                 <div class="col-md-6">
                     <div class="mb-3">
                         <label for="DEPTO" class="form-label"><i class="fa-solid fa-building-user"></i> Departamento:</label>
-                        <input type="text" id="DEPTO" name="DEPTO" class="form-control{{ $errors->has('DEPTO') ? ' is-invalid' : '' }}" value="{{ $reparacion->DEPTO }}" placeholder="Ej: ADMINISTRACION">
+                        <input type="text" id="DEPTO" name="DEPTO" class="form-control{{ $errors->has('DEPTO') ? ' is-invalid' : '' }}" value="{{ $reparacion->DEPTO }}" placeholder="Ej: ADMINISTRACION" @readonly(true)>
                         @if ($errors->has('DEPTO'))
                         <div class="invalid-feedback">
                             {{ $errors->first('DEPTO') }}
@@ -47,7 +47,7 @@
 
                     <div class="mb-3">
                         <label for="EMAIL" class="form-label"><i class="fa-solid fa-envelope"></i> Email:</label>
-                        <input type="email" id="EMAIL" name="EMAIL" class="form-control{{ $errors->has('EMAIL') ? ' is-invalid' : '' }}" value="{{ $reparacion->EMAIL }}" placeholder="Ej: demo@demo.cl">
+                        <input type="email" id="EMAIL" name="EMAIL" class="form-control{{ $errors->has('EMAIL') ? ' is-invalid' : '' }}" value="{{ $reparacion->EMAIL }}" placeholder="Ej: demo@demo.cl" @readonly(true)>
                         @if ($errors->has('EMAIL'))
                         <div class="invalid-feedback">
                             {{ $errors->first('EMAIL') }}
@@ -57,8 +57,8 @@
                 </div>
             </div>
             <div class="mb-3">
-                <label for="ID_TIPO_REP_GENERAL" class="form-label"><i class="fa-sharp fa-solid fa-building-flag"></i> Area Solicitada:</label>
-                <select id="ID_TIPO_REP_GENERAL" name="ID_TIPO_REP_GENERAL" class="form-control">
+                <label for="ID_TIPO_REP_GENERAL" class="form-label" ><i class="fa-sharp fa-solid fa-building-flag" ></i> Area Solicitada:</label>
+                <select id="ID_TIPO_REP_GENERAL" name="ID_TIPO_REP_GENERAL" class="form-control" disabled>
                     <option value="">--SELECCIONE UNA OPCION--</option>
                     @foreach ($tipos_rep as $tipo_rep)
                         @if ($reparacion->ID_TIPO_REP_GENERAL == $tipo_rep->ID_TIPO_REP_GENERAL)
@@ -70,7 +70,7 @@
             </div>
             <div class="mb-3">
                 <label for="REP_SOL" class="form-label"><i class="fa-solid fa-comments"></i> Solicitud:</label>
-                <textarea id="REP_SOL" name="REP_SOL" class="form-control" aria-label="With textarea" placeholder="Describa el problema con el inmueble (MÁX 1000 CARACTERES)">{{ $reparacion->REP_SOL}}</textarea>
+                <textarea id="REP_SOL" name="REP_SOL" class="form-control" aria-label="With textarea" placeholder="Describa el problema con el inmueble (MÁX 1000 CARACTERES)" @readonly(true)>{{ $reparacion->REP_SOL}} </textarea>
             </div>
             <div class="mb-6">
                 <div class="mb-3">

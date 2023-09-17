@@ -101,10 +101,12 @@ class SolicitudReparacionVehiculoController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(SolicitudReparacionVehiculo $solicitudReparacionVehiculo)
+    public function show($id)
     {
-        //
+        $solicitudReparacionVehiculo = SolicitudReparacionVehiculo::find($id);
+        return view('repyman.rep_veh.show',compact('solicitudReparacionVehiculo'));
     }
+
 
     /**
      * Show the form for editing the specified resource.

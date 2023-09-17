@@ -146,7 +146,7 @@
             <div class="mb-3">
                 <label class="" for="EQUIPO_A_ASIGNAR"><i class="fa-sharp fa-solid fa-desktop"></i> Equipo(s) asignado(s):</label>
                 <textarea id="EQUIPO_A_ASIGNAR" name="EQUIPO_A_ASIGNAR" class="form-control" rows="3" readonly placeholder="Resumen de los equipos asignados">{{$solicitud->EQUIPO_A_ASIGNAR}}</textarea>
-                <button type="button" class="btn btn-warning mt-2" onclick="resetEquipos()">Restablecer</button>
+                <!-- <button type="button" class="btn btn-warning mt-2" onclick="resetEquipos()">Restablecer</button> -->
                 <button type="button" class="btn btn-secondary mt-2" onclick="limpiarEquipos()">Limpiar</button>
 
             </div>

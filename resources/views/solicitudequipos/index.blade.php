@@ -91,7 +91,7 @@
                                     @csrf
                                     @method('DELETE')
                                     <a href="{{ route('solequipos.show',$solicitud->ID_SOL_EQUIPOS) }}" class="btn btn-primary"><i class="fa-regular fa-eye"></i> Ver</a>
-                                    @role('ADMINISTRADOR|SERVICIOS')
+                                    @role('ADMINISTRADOR|INFORMATICA')
                                         <a href="{{route('solequipos.edit', $solicitud->ID_SOL_EQUIPOS)}}" class="btn btn-info"><i class="fa-solid fa-pen-to-square"></i> Revisar</a>
                                     @endrole
                                     @role('ADMINISTRADOR')

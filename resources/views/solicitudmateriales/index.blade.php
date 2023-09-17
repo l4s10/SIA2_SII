@@ -187,7 +187,7 @@
                 "responsive": true,
                 "order": [[5, "desc"]], // La columna 5 contiene la fecha de creación
                 "columnDefs": [
-                    { "orderable": false, "targets": 7 } // La séptima columna no es ordenable
+                    { "orderable": true, "targets": 7 } // La séptima columna no es ordenable
                 ],
                 "language": {
                     "url": "https://cdn.datatables.net/plug-ins/1.11.3/i18n/es_es.json"

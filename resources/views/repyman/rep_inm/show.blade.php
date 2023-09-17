@@ -3,7 +3,7 @@
 @section('title', 'Solicitud de reparación')
 
 @section('content_header')
-    <h1 class="title">Detalle de la solicitud</h1>
+    <h1 class="title">Solicitud de reparación muebles/inmuebles</h1>
 @stop
 
 @section('content')
@@ -26,7 +26,10 @@
             </div>
             <div class="card-footer text-center">
                 <a href="{{ route('reparaciones.index') }}" class="btn btn-secondary"><i class="fa-solid fa-hand-point-left"></i> Volver</a>
-                <a href="{{ route('reparaciones.edit', $sol_reparacion->ID_REP_INM) }}" class="btn btn-primary"><i class="fa-regular fa-clipboard"></i> Revisar</a>
+                <!-- Sólo administradores y servicios pueden revisar -->
+                @role('ADMINISTRADOR|SERVICIOS')
+                    <a href="{{ route('reparaciones.edit', $sol_reparacion->ID_REP_INM) }}" class="btn btn-primary"><i class="fa-regular fa-clipboard"></i> Revisar</a>
+                @endrole
             </div>
         </div>
     </div>

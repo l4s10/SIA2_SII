@@ -25,7 +25,9 @@
             </div>
             <div class="card-footer text-center">
                 <a href="{{ route('solequipos.index') }}" class="btn btn-secondary"><i class="fa-solid fa-hand-point-left"></i> Volver</a>
-                <a href="{{ route('solequipos.edit', $solicitud->ID_SOL_EQUIPOS) }}" class="btn btn-primary"><i class="fa-regular fa-clipboard"></i> Revisar</a>
+                @role('ADMINISTRADOR|SERVICIOS')
+                    <a href="{{ route('solequipos.edit', $solicitud->ID_SOL_EQUIPOS) }}" class="btn btn-primary"><i class="fa-regular fa-clipboard"></i> Revisar</a>
+                @endrole
             </div>
         </div>
     </div>

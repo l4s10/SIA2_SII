@@ -3,7 +3,7 @@
 @section('title', 'Revisar Solicitud')
 
 @section('content_header')
-    <h1>Revisar Solicitud </h1>
+    <h1>Revisar solicitud n° {{$solicitud->ID_SOL_REP_VEH}} </h1>
 @stop
 
 @section('content')
@@ -74,7 +74,7 @@
                 {{-- PARA PATENTE --}}
                 <div class="mb-3">
                     <label for="PATENTE_VEHICULO" class="form-label"><i class="fa-solid fa-car-on"></i> Información del vehiculo:</label>
-                    <select id="PATENTE_VEHICULO" name="PATENTE_VEHICULO" class="form-control{{ $errors->has('PATENTE_VEHICULO') ? ' is-invalid' : '' }}">
+                    <select id="PATENTE_VEHICULO" name="PATENTE_VEHICULO" class="form-control{{ $errors->has('PATENTE_VEHICULO') ? ' is-invalid' : '' }}" disabled>
                         <option value="">-- Seleccione el vehículo con problemas --</option>
                         @foreach ($vehiculos->groupBy('ubicacion.UBICACION') as $ubicacion => $autos)
                             <optgroup label="{{ $ubicacion }}">
@@ -139,7 +139,7 @@
 
                 <div class="mb-3">
                     <label for="DETALLE_REPARACION_REP_VEH" class="form-label"><i class="fa-solid fa-location-pin-lock"></i> Motivo de reparación:</label>
-                    <textarea id="DETALLE_REPARACION_REP_VEH" name="DETALLE_REPARACION_REP_VEH" class="form-control" aria-label="With textarea" placeholder="Indique aquí que problemas tiene el vehículo">{{$solicitud->DETALLE_REPARACION_REP_VEH}}</textarea>
+                    <textarea id="DETALLE_REPARACION_REP_VEH" name="DETALLE_REPARACION_REP_VEH" class="form-control" aria-label="With textarea" placeholder="Indique aquí que problemas tiene el vehículo" @readonly(true)>{{$solicitud->DETALLE_REPARACION_REP_VEH}} </textarea>
                 <div>
                     <div class="mb-3">
                         <label for="OBSERV_REP_VEH" class="form-label"><i class="fa-solid fa-comments"></i> Observaciones:</label>
