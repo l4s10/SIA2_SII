@@ -69,6 +69,7 @@
                         <th scope="col">Rut</th>
                         <th scope="col">Depto</th>
                         <th scope="col">Email</th>
+                        <th scope="col">Estado</th>
                         <th scope="col">Fecha</th>
                         <th scope="col">Acciones</th>
                     </tr>
@@ -80,6 +81,7 @@
                             <td>{{ $solicitud->RUT }}</td>
                             <td>{{ $solicitud->DEPTO }}</td>
                             <td>{{ $solicitud->EMAIL }}</td>
+                            <td>{{ $solicitud->ESTADO_SOL_FORM}}</td>
                             <!-- Carbon sirve para parsear datos, esta es una instancia de carbon -->
                             <td>{{ $solicitud->created_at ? $solicitud->created_at->format('d/m/Y H:i') : 'Fecha no disponible' }}</td>
                             <td style="text-align:center;">
