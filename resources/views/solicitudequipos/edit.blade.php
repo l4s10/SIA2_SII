@@ -58,6 +58,17 @@
                     </div>
             </div>
 
+            {{-- ESTADO SOLICITUD --}}
+            <div class="mb-3">
+                <label for="ESTADO_SOL_EQUIPO" class="form-label"><i class="fa-solid fa-file-circle-check"></i> Estado de la Solicitud:</label>
+                <select id="ESTADO_SOL_EQUIPO" name="ESTADO_SOL_EQUIPO" class="form-control">
+                    <option value="INGRESADO" {{ $solicitud->ESTADO_SOL_EQUIPO == 'INGRESADO' ? 'selected' : '' }}>🟠 Ingresado</option>
+                    <option value="EN REVISION" {{ $solicitud->ESTADO_SOL_EQUIPO == 'EN REVISION' ? 'selected' : '' }}>🟡 En revisión</option>
+                    <option value="ACEPTADO" {{ $solicitud->ESTADO_SOL_EQUIPO == 'ACEPTADO' ? 'selected' : '' }}>🟢 Aceptado</option>
+                    <option value="RECHAZADO" {{ $solicitud->ESTADO_SOL_EQUIPO == 'RECHAZADO' ? 'selected' : '' }}>🔴 Rechazado</option>
+                </select>
+            </div>
+            {{-- EQUIPOS SOLICITADOS --}}
             <div class="mb-3">
                 <label for="EQUIPO_SOL" class="form-label"><i class="fa-sharp fa-solid fa-desktop"></i> Equipos solicitados:</label>
                 <textarea id="EQUIPO_SOL" name="EQUIPO_SOL" class="form-control @error('EQUIPO_SOL') is-invalid @enderror" aria-label="With textarea" rows="3" placeholder="Escriba el motivo de su solicitud (MÁX 1000 CARACTERES)" readonly>{{ $solicitud->EQUIPO_SOL }}</textarea>
@@ -65,7 +76,7 @@
                     <div class="invalid-feedback">{{ $message }}</div>
                 @enderror
             </div>
-
+            {{-- MOTIVO DE LA SOLICITUD --}}
             <div class="mb-3">
                 <label for="MOTIVO_SOL_EQUIPO" class="form-label"><i class="fa-solid fa-file-pen"></i> Motivo de solicitud:</label>
                 <textarea id="MOTIVO_SOL_EQUIPO" name="MOTIVO_SOL_EQUIPO" class="form-control @error('MOTIVO_SOL_EQUIPO') is-invalid @enderror" aria-label="With textarea" rows="5" placeholder="Escriba el motivo de su solicitud (MÁX 1000 CARACTERES)" readonly>{{ $solicitud->MOTIVO_SOL_EQUIPO }}</textarea>
@@ -98,16 +109,6 @@
                         <div class="invalid-feedback">{{ $errors->first('HORA_TERM_SOL_EQUIPO') }}</div>
                     @endif
                 </div>
-            </div>
-            {{-- ESTADO SOLICITUD --}}
-            <div class="mb-3">
-                <label for="ESTADO_SOL_EQUIPO" class="form-label"><i class="fa-solid fa-file-circle-check"></i> Estado de la Solicitud:</label>
-                <select id="ESTADO_SOL_EQUIPO" name="ESTADO_SOL_EQUIPO" class="form-control">
-                    <option value="INGRESADO" {{ $solicitud->ESTADO_SOL_EQUIPO == 'INGRESADO' ? 'selected' : '' }}>🟠 Ingresado</option>
-                    <option value="EN REVISION" {{ $solicitud->ESTADO_SOL_EQUIPO == 'EN REVISION' ? 'selected' : '' }}>🟡 En revisión</option>
-                    <option value="ACEPTADO" {{ $solicitud->ESTADO_SOL_EQUIPO == 'ACEPTADO' ? 'selected' : '' }}>🟢 Aceptado</option>
-                    <option value="RECHAZADO" {{ $solicitud->ESTADO_SOL_EQUIPO == 'RECHAZADO' ? 'selected' : '' }}>🔴 Rechazado</option>
-                </select>
             </div>
 
             {{-- CAMPOS PARA NIVEL 2 --}}
@@ -143,13 +144,13 @@
                 </table>
             </div> --}}
 
-            <div class="mb-3">
+            {{-- <div class="mb-3">
                 <label class="" for="EQUIPO_A_ASIGNAR"><i class="fa-sharp fa-solid fa-desktop"></i> Equipo(s) solicitado(s):</label>
                 <textarea id="EQUIPO_A_ASIGNAR" name="EQUIPO_A_ASIGNAR" class="form-control" rows="3" readonly placeholder="Resumen de los equipos solicitados">{{$solicitud->EQUIPO_A_ASIGNAR}}</textarea>
-                {{-- <button type="button" class="btn btn-warning mt-2" onclick="resetEquipos()">Restablecer</button> --}}
-                {{-- <button type="button" class="btn btn-secondary mt-2" onclick="limpiarEquipos()">Limpiar</button> --}}
+                <button type="button" class="btn btn-warning mt-2" onclick="resetEquipos()">Restablecer</button>
+                <button type="button" class="btn btn-secondary mt-2" onclick="limpiarEquipos()">Limpiar</button>
 
-            </div>
+            </div> --}}
 
             <div class="row">
                 <div class="col-md-6">
