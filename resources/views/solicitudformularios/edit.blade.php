@@ -85,7 +85,7 @@
                 </table>
             </div>
             <div class="form-group">
-                <label for="FORM_SOL">Carrito:</label>
+                <label for="FORM_SOL">Resumen:</label>
                 <textarea class="form-control" id="FORM_SOL" name="FORM_SOL" rows="3" readonly>{{$solicitud->FORM_SOL}}</textarea>
             </div>
             <div class="form-group">
@@ -103,7 +103,7 @@
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Agregar al carrito</h5>
+                        <h5 class="modal-title" id="exampleModalLabel">Agregar</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close" id="btn-cerrar-modal">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -116,7 +116,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal" id="btn-cerrar-pie-modal">Cerrar</button>
-                        <button type="button" class="btn btn-primary" id="btn-agregar-carrito">Agregar al carrito</button>
+                        <button type="button" class="btn btn-primary" id="btn-agregar-carrito">Agregar</button>
                     </div>
                 </div>
             </div>
@@ -208,7 +208,7 @@
                 var tipoMaterial = $('#tipo-material').text().split(': ')[1];
                 var cantidad = $('#cantidad').val();
                 // Enviar información al carrito (aquí puedes hacer una petición AJAX)
-                alert('Se agregó ' + cantidad + ' unidades de "' + nombreMaterial + '" de tipo "' + tipoMaterial + '" al carrito.');
+                alert('Se agregó ' + cantidad + ' unidades de "' + nombreMaterial + '" de tipo "' + tipoMaterial + '".');
                 // Cerrar modal
                 $('#modal-carrito').modal('hide');
                 // Obtener valores del modal

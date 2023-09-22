@@ -136,7 +136,7 @@
                         <li class="nav-item">
                             <a href="{{ url('formularios/create') }}" class="nav-link">
                                 <i class="fas fa-fw fa-plus nav-icon"></i>
-                                <p>Agregar Formularios</p>
+                                <p>Agregar Formulario</p>
                             </a>
                         </li>
                         @endrole

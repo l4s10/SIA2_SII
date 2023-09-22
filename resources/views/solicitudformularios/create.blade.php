@@ -119,8 +119,8 @@
                 </table>
             </div>
             <div class="form-group">
-                <label for="FORM_SOL"><i class="fa-solid fa-cart-shopping"></i> Carrito:</label>
-                <textarea class="form-control @if($errors->has('FORM_SOL')) is-invalid @endif" id="FORM_SOL" name="FORM_SOL" rows="3" placeholder="Artículos en el carrito (Máx 1000 caracteres)" readonly required></textarea>
+                <label for="FORM_SOL"><i class="fa-solid fa-cart-shopping"></i> Resumen:</label>
+                <textarea class="form-control @if($errors->has('FORM_SOL')) is-invalid @endif" id="FORM_SOL" name="FORM_SOL" rows="3" placeholder="Formularios agregados (Máx 1000 caracteres)" readonly required></textarea>
                 @if($errors->has('FORM_SOL'))
                     <div class="invalid-feedback">{{$errors->first('FORM_SOL')}}</div>
                 @endif
@@ -140,7 +140,7 @@
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Agregar al carrito</h5>
+                        <h5 class="modal-title" id="exampleModalLabel">Agregar formulario</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close" id="btn-cerrar-modal">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -153,7 +153,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal" id="btn-cerrar-pie-modal">Cerrar</button>
-                        <button type="button" class="btn btn-primary" id="btn-agregar-carrito">Agregar al carrito</button>
+                        <button type="button" class="btn btn-primary" id="btn-agregar-carrito">Aceptar</button>
                     </div>
                 </div>
             </div>
@@ -278,7 +278,7 @@
                 var tipoMaterial = $('#tipo-material').text().split(': ')[1];
                 var cantidad = $('#cantidad').val();
                 // Enviar información al carrito (aquí puedes hacer una petición AJAX)
-                alert('Se agregó ' + cantidad + ' unidades de "' + nombreMaterial + '" de tipo "' + tipoMaterial + '" al carrito.');
+                alert('Se agregó ' + cantidad + ' unidades de "' + nombreMaterial + '" de tipo "' + tipoMaterial + '".');
                 // Cerrar modal
                 $('#modal-carrito').modal('hide');
                 // Obtener valores del modal
