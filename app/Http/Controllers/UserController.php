@@ -41,9 +41,10 @@ class UserController extends Controller
      */
     public function index()
     {
-        $funcionarios = User::all();
+        //!!FILTRADO POR REGION
+        $funcionarios = User::where('ID_REGION', Auth::user()->ID_REGION)->get();
 
-        return view('funcionarios.index',compact('funcionarios'));
+        return view('funcionarios.index', compact('funcionarios'));
     }
 
     /**
