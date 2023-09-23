@@ -103,8 +103,8 @@ class SolicitudReparacionVehiculoController extends Controller
      */
     public function show($id)
     {
-        $solicitudReparacionVehiculo = SolicitudReparacionVehiculo::find($id);
-        return view('repyman.rep_veh.show',compact('solicitudReparacionVehiculo'));
+        $sol_reparacion = SolicitudReparacionVehiculo::find($id);
+        return view('repyman.rep_veh.show',compact('sol_reparacion'));
     }
 
 

@@ -185,7 +185,6 @@
                 altInput: true,
                 showClearButton: true,
                 defaultHour: 8, // Agregamos una hora predeterminada
-                mode: "range"
             });
             $('#HORA_INICIO_SOL_EQUIPO').flatpickr({
                 enableTime: true,

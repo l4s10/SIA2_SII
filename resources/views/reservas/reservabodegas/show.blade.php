@@ -26,7 +26,9 @@
             </div>
             <div class="card-footer text-center">
                 <a href="{{ route('solicitud.bodegas.index') }}" class="btn btn-secondary"><i class="fa-solid fa-hand-point-left"></i> Volver</a>
+                @role('ADMINISTRADOR|INFORMATICA')
                 <a href="{{ route('solicitud.bodegas.edit', $solicitud->ID_SOL_BODEGA) }}" class="btn btn-primary"><i class="fa-regular fa-clipboard"></i> Revisar</a>
+                @endrole
             </div>
         </div>
     </div>

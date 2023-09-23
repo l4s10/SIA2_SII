@@ -29,7 +29,7 @@ return new class extends Migration
             $table->integer('STOCK_PREVIO'); //Guarda el registro del stock antes de modificarlo
             $table->integer('STOCK_NUEVO'); //Guarda el nuevo stock -> SOBREESCRIBIR EN TABLA MATERIALES
             $table->timestamp('FECHA_PROGRAMADA')->nullable();
-            $table->text('DETALLE_MOVIMIENTO', 1000)->default('SIN DESCRIPCION');
+            $table->string('DETALLE_MOVIMIENTO', 1000)->nullable();
             $table->timestamps();// Fecha exacta de CREACION DEL REGISTRO
         });
     }
