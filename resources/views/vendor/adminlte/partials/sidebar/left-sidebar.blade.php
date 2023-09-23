@@ -239,7 +239,7 @@
                     </ul>
                 </li>
                 @endrole
-                @role('ADMINISTRADOR')
+                @role('ADMINISTRADOR|SERVICIOS|INFORMATICA|JURIDICO')
                 <li class="nav-item">
                     <a href="{{url('reporteshome')}}" class="nav-link">
                         <i class="fas fa-fw fa-solid fa-chart-simple nav-icon"></i>

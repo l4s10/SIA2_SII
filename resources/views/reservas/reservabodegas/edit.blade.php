@@ -82,7 +82,7 @@
             {{-- *SELECCIONAR BODEGA* --}}
             <div class="form-group">
                 <label for="BODEGA_PEDIDA" class="form-label"><i class="fa-solid fa-person-shelter"></i> Bodega solicitada:</label>
-                <select id="BODEGA_PEDIDA" name="BODEGA_PEDIDA" class="form-control">
+                <select id="BODEGA_PEDIDA" name="BODEGA_PEDIDA" class="form-control" disabled>
                     <option value="" selected>--Seleccione una bodega--</option>
                     @foreach ($salas as $sala)
                         @if ($sala->categoriaSala->CATEGORIA_SALA == 'BODEGAS')
@@ -101,10 +101,10 @@
             <div class="form-group">
                 <label for="FECHA_SOL_BODEGA"><i class="fa-solid fa-calendar"></i> Fecha solicitada:</label>
                 <div class="input-group">
-                    <input type="text" id="FECHA_SOL_BODEGA" name="FECHA_SOL_BODEGA" class="form-control @if($errors->has('FECHA_SOL_BODEGA')) is-invalid @endif" placeholder="Ingrese la fecha" data-input required value="{{ $solicitud->FECHA_SOL_BODEGA }}">
+                    <input type="text" id="FECHA_SOL_BODEGA" name="FECHA_SOL_BODEGA" class="form-control @if($errors->has('FECHA_SOL_BODEGA')) is-invalid @endif" placeholder="Ingrese la fecha" data-input required value="{{ $solicitud->FECHA_SOL_BODEGA }}" disabled>
                     {{-- *HORA SOLICITADA* --}}
-                    <input type="text" id="HORA_INICIO_SOL_BODEGA" name="HORA_INICIO_SOL_BODEGA" class="form-control flatpickr @if($errors->has('HORA_INICIO_SOL_BODEGA')) is-invalid @endif" placeholder="Seleccione la hora" data-input required value="{{$solicitud->HORA_INICIO_SOL_BODEGA }}">
-                    <input type="text" id="HORA_TERM_SOL_BODEGA" name="HORA_TERM_SOL_BODEGA" class="form-control flatpickr @if($errors->has('HORA_TERM_SOL_BODEGA')) is-invalid @endif" placeholder="Seleccione la hora" data-input required value="{{$solicitud->HORA_TERM_SOL_BODEGA }}">
+                    <input type="text" id="HORA_INICIO_SOL_BODEGA" name="HORA_INICIO_SOL_BODEGA" class="form-control flatpickr @if($errors->has('HORA_INICIO_SOL_BODEGA')) is-invalid @endif" placeholder="Seleccione la hora" data-input required value="{{$solicitud->HORA_INICIO_SOL_BODEGA }}" disabled>
+                    <input type="text" id="HORA_TERM_SOL_BODEGA" name="HORA_TERM_SOL_BODEGA" class="form-control flatpickr @if($errors->has('HORA_TERM_SOL_BODEGA')) is-invalid @endif" placeholder="Seleccione la hora" data-input required value="{{$solicitud->HORA_TERM_SOL_BODEGA }}" disabled>
                 </div>
                 @if ($errors->has('FECHA_SOL_BODEGA'))
                     <div class="invalid-feedback">{{ $errors->first('FECHA_SOL_BODEGA') }}</div>
@@ -150,7 +150,7 @@
 
             <div class="mb-3">
                 <a href="{{route('reservas.dashboard')}}" class="btn btn-secondary">Cancelar</a>
-                <button type="submit" class="btn btn-primary">Enviar Solicitud</button>
+                <button type="submit" class="btn btn-primary">Enviar Cambios</button>
             </div>
         </form>
     </div>

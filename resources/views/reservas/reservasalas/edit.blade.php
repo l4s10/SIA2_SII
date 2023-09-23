@@ -107,11 +107,11 @@
             <div class="form-group">
                 <label for="FECHA_SOL_SALA"><i class="fa-solid fa-calendar"></i> Fecha solicitada:</label>
                 <div class="input-group">
-                    <input type="text" id="FECHA_SOL_SALA" name="FECHA_SOL_SALA" class="form-control @error('FECHA_SOL_SALA') is-invalid @enderror" placeholder="Ingrese la fecha" data-input required value="{{ $solicitud->FECHA_SOL_SALA }}" >
+                    <input type="text" id="FECHA_SOL_SALA" name="FECHA_SOL_SALA" class="form-control @error('FECHA_SOL_SALA') is-invalid @enderror" placeholder="Ingrese la fecha" data-input required value="{{ $solicitud->FECHA_SOL_SALA }}" disabled>
                     {{-- *HORA SOLICITADA* --}}
-                    <input type="text" id="HORA_SOL_SALA" name="HORA_SOL_SALA" class="form-control flatpickr @error('HORA_SOL_SALA') is-invalid @enderror" placeholder="Seleccione la hora" data-input required value="{{ $solicitud->HORA_SOL_SALA }}">
+                    <input type="text" id="HORA_SOL_SALA" name="HORA_SOL_SALA" class="form-control flatpickr @error('HORA_SOL_SALA') is-invalid @enderror" placeholder="Seleccione la hora" data-input required value="{{ $solicitud->HORA_SOL_SALA }}" disabled>
                     {{-- Hora termino solicitada --}}
-                    <input type="text" id="HORA_TERM_SOL_SALA" name="HORA_TERM_SOL_SALA" class="form-control flatpickr @if($errors->has('HORA_TERM_SOL_SALA')) is-invalid @endif" placeholder="Seleccione la hora de término" data-input required value="{{ $solicitud->HORA_TERM_SOL_SALA }}">
+                    <input type="text" id="HORA_TERM_SOL_SALA" name="HORA_TERM_SOL_SALA" class="form-control flatpickr @if($errors->has('HORA_TERM_SOL_SALA')) is-invalid @endif" placeholder="Seleccione la hora de término" data-input required value="{{ $solicitud->HORA_TERM_SOL_SALA }}" disabled>
                 </div>
                 @error('FECHA_SOL_SALA')
                 <div class="invalid-feedback">{{ $message }}</div>
