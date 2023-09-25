@@ -3,7 +3,7 @@
 @section('title', 'Modificar sala')
 
 @section('content_header')
-    <h1>Modificar Sala</h1>
+    <h1>Modificar Sala o Bodega</h1>
 @stop
 
 @section('content')
@@ -63,8 +63,9 @@
             @endif
         </div>
 
-        <a href="{{route('salas.index')}}" class="btn btn-secondary" tabindex="5">Cancelar</a>
-        <button type="submit" class="btn btn-primary">Guardar</button>
+        <a href="{{route('salas.index')}}" class="btn btn-secondary" tabindex="5"><i class="fa-solid fa-hand-point-left"></i> Cancelar</a>
+        <button type="submit" class="btn btn-primary"><i class="fa-solid fa-floppy-disk"></i> Guardar</button>
+    </form>
     </form>
 </div>
 

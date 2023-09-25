@@ -142,7 +142,11 @@ class MaterialController extends Controller
     public function edit(string $id)
     {
         $material = Material::find($id);
-        $tipos = TipoMaterial::all();
+        //$tipos = TipoMaterial::all();
+        // Tipos por dirección regional.
+        $tipos = TipoMaterial::where('ID_DIRECCION', auth()->user()->cargo->ID_DIRECCION)
+            ->get();
+
         return view('materiales.edit',compact('material','tipos'));
     }
 

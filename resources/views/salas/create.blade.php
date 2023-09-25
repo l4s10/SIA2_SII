@@ -13,7 +13,7 @@
 
         <div class="mb-3">
             <label for="NOMBRE_SALA" class="form-label"><i class="fa-solid fa-book-bookmark"></i> Nombre de la sala o bodega:</label>
-            <input type="text" class="form-control{{ $errors->has('NOMBRE_SALA') ? ' is-invalid' : '' }}" id="NOMBRE_SALA" name="NOMBRE_SALA" value="{{ old('NOMBRE_SALA') }}" required>
+            <input type="text" class="form-control{{ $errors->has('NOMBRE_SALA') ? ' is-invalid' : '' }}" id="NOMBRE_SALA" name="NOMBRE_SALA" value="{{ old('NOMBRE_SALA') }}" placeholder="SALA N°4" required>
             @if ($errors->has('NOMBRE_SALA'))
                 <div class="invalid-feedback">
                     {{ $errors->first('NOMBRE_SALA') }}
@@ -40,7 +40,7 @@
 
         <div class="mb-3">
             <label for="CAPACIDAD_PERSONAS" class="form-label"><i class="fa-solid fa-person-shelter"></i> Capacidad personas:</label>
-            <input type="number" class="form-control{{ $errors->has('CAPACIDAD_PERSONAS') ? ' is-invalid' : '' }}" id="CAPACIDAD_PERSONAS" name="CAPACIDAD_PERSONAS" value="{{ old('CAPACIDAD_PERSONAS') }}" required>
+            <input type="number" class="form-control{{ $errors->has('CAPACIDAD_PERSONAS') ? ' is-invalid' : '' }}" id="CAPACIDAD_PERSONAS" name="CAPACIDAD_PERSONAS" value="{{ old('CAPACIDAD_PERSONAS') }}" placeholder="10" required>
             @if ($errors->has('CAPACIDAD_PERSONAS'))
                 <div class="invalid-feedback">
                     {{ $errors->first('CAPACIDAD_PERSONAS') }}
@@ -63,8 +63,8 @@
             @endif
         </div>
 
-        <a href="{{route('salas.index')}}" class="btn btn-secondary" tabindex="5">Cancelar</a>
-        <button type="submit" class="btn btn-primary">Guardar</button>
+        <a href="{{route('salas.index')}}" class="btn btn-secondary" tabindex="5"><i class="fa-solid fa-hand-point-left"></i> Cancelar</a>
+        <button type="submit" class="btn btn-primary"><i class="fa-solid fa-floppy-disk"></i> Guardar</button>
     </form>
 </div>
 @stop

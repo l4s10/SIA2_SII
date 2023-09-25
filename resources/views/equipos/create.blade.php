@@ -28,7 +28,7 @@
             </div>
             <div class="form-group">
                 <label for="MODELO_EQUIPO" class="form-label"><i class="fa-solid fa-desktop"></i> Modelo:</label>
-                <input type="text" class="form-control @error('MODELO_EQUIPO') is-invalid @enderror" name="MODELO_EQUIPO" id="MODELO_EQUIPO" value="{{old('MODELO_EQUIPO')}}" placeholder="GENERALMENTE ESTA EN LA BASE DEL EQUIPO" tabindex="2">
+                <input type="text" class="form-control @error('MODELO_EQUIPO') is-invalid @enderror" name="MODELO_EQUIPO" id="MODELO_EQUIPO" value="{{old('MODELO_EQUIPO')}}" placeholder="GENERALMENTE ESTÁ ROTULADO EN EL EQUIPO" tabindex="2">
                 @error('MODELO_EQUIPO')
                     <div class="invalid-feedback">{{$message}}</div>
                 @enderror
@@ -46,7 +46,7 @@
             </div>
 
             <a href="{{route('equipos.index')}}" class="btn btn-secondary" tabindex="5"><i class="fa-solid fa-hand-point-left"></i> Cancelar</a>
-            <button type="submit" class="btn btn-primary" tabindex="4"><i class="fa-solid fa-floppy-disk"></i> Guardar tipo</button>
+            <button type="submit" class="btn btn-primary" tabindex="4"><i class="fa-solid fa-floppy-disk"></i> Guardar Equipo</button>
         </form>
     </div>
 @stop

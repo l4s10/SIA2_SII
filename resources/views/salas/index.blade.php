@@ -3,10 +3,10 @@
 @section('title', 'Salas')
 
 @section('content_header')
-    <h1>Listado de salas</h1>
+    <h1>Listado de Salas y Bodegas</h1>
     @role('ADMINISTRADOR')
     <div class="alert alert-info" role="alert">
-    <div><strong>Bienvenido Administrador:</strong> Acceso total al modulo.<div>
+    <div><strong>Bienvenido Administrador:</strong> En esta tabla se muestran todas las salas y bodegas registradas en el sistema.<div>
     </div>
     @endrole
     @role('SERVICIOS')
@@ -16,7 +16,7 @@
     @endrole
     @role('INFORMATICA')
     <div class="alert alert-info" role="alert">
-    <div><strong>Bienvenido Informatica:</strong> Aqui iria el texto donde le corresponde el rol INFORMATICA.<div>
+    <div><strong>Bienvenido Informatica:</strong> En esta tabla se muestran todas las salas y bodegas registradas en el sistema.<div>
     </div>
     @endrole
     @role('JURIDICO')
@@ -83,7 +83,9 @@
                                     @csrf
                                     @method('DELETE')
                                     <a href="{{route('salas.edit',$sala->ID_SALA)}}" class="btn btn-info"><i class="fa-solid fa-pen-to-square"></i> Editar</a>
-                                    <button type="submit" class="btn btn-danger"><i class="fa-solid fa-trash"></i> Borrar</button>
+                                    @role('ADMINISTRADOR')
+                                        <button type="submit" class="btn btn-danger"><i class="fa-solid fa-trash"></i> Borrar</button>
+                                    @endrole
                                 </form>
                             </td>
                         </tr>
