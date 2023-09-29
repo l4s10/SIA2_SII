@@ -58,7 +58,8 @@
         </script>
     @endif
     <div class="container-fluid d-flex justify-content-center align-items-center flex-column">
-        <div class="card text-bg-primary mb-3 mx-auto col-sm-12 col-md-6" style="max-width: 100%; text-align: justify;">
+        @role('ADMINISTRADOR|SERVICIOS|JURIDICO')
+            <div class="card text-bg-primary mb-3 mx-auto col-sm-12 col-md-6" style="max-width: 100%; text-align: justify;">
                 <div class="card-header">Módulo de Informes de vehículos</div>
                 <div class="card-body">
                     <p class="card-text">Este módulo permite ver los reportes de <strong>Vehiculos</strong>. Estadísticas de uso de vehículos, georreferenciación, este módulo permite acceder a la información relacionada con las solicitudes de salida de vehículos.</p>
@@ -67,7 +68,7 @@
                     <a class="btn btn-primary" href="{{route('reporteshome.vehiculos')}}"><i class="fa-solid fa-chart-pie"></i> Graficos</a>
                 </div>
             </div>
-        <div class="card text-bg-primary mb-3 mx-auto col-sm-12 col-md-6" style="max-width: 100%; text-align: justify;">
+            <div class="card text-bg-primary mb-3 mx-auto col-sm-12 col-md-6" style="max-width: 100%; text-align: justify;">
                 <div class="card-header">Módulo de Informes sobre Materiales</div>
                 <div class="card-body">
                     <p class="card-text">Este módulo permite ver los reportes de <strong>Materiales</strong>. Para saber las cantidades de solicitudes de <strong>Materiales</strong> del sistema completo.</p>
@@ -76,7 +77,7 @@
                     <a class="btn btn-primary" href="{{route('reporteshome.materiales')}}"><i class="fa-solid fa-chart-pie"></i> Graficos</a>
                 </div>
             </div>
-        <div class="card text-bg-primary mb-3 mx-auto col-sm-12 col-md-6" style="max-width: 100%; text-align: justify;">
+            <div class="card text-bg-primary mb-3 mx-auto col-sm-12 col-md-6" style="max-width: 100%; text-align: justify;">
                 <div class="card-header">Módulo de Informes de Reparaciones y Mantenimientos</div>
                 <div class="card-body">
                     <p class="card-text">Este módulo permite ver los reportes de <strong>reparaciones y mantenciones</strong>. Para saber las cantidades de solicitudes de <strong>reparaciones y mantenciones</strong> del sistema completo.</p>
@@ -85,7 +86,9 @@
                     <a class="btn btn-primary" href="{{route('reporteshome.repyman')}}"><i class="fa-solid fa-chart-pie"></i> Graficos</a>
                 </div>
             </div>
-        <div class="card text-bg-primary mb-3 mx-auto col-sm-12 col-md-6" style="max-width: 100%; text-align: justify;">
+        @endrole
+        @role('ADMINISTRADOR|INFORMATICA|JURIDICO')
+            <div class="card text-bg-primary mb-3 mx-auto col-sm-12 col-md-6" style="max-width: 100%; text-align: justify;">
                 <div class="card-header">Módulo de Informes sobre equipos</div>
                 <div class="card-body">
                     <p class="card-text">Este módulo permite ver los reportes de <strong>Equipos</strong>. Para saber las cantidades de solicitudes de <strong>Equipos</strong> del sistema completo.</p>
@@ -94,7 +97,7 @@
                     <a class="btn btn-primary" href="{{route('reporteshome.equipos')}}"><i class="fa-solid fa-chart-pie"></i> Graficos</a>
                 </div>
             </div>
-        <div class="card text-bg-primary mb-3 mx-auto col-sm-12 col-md-6" style="max-width: 100%; text-align: justify;">
+            <div class="card text-bg-primary mb-3 mx-auto col-sm-12 col-md-6" style="max-width: 100%; text-align: justify;">
                 <div class="card-header">Módulo de Informes sobre reservas</div>
                 <div class="card-body">
                     <p class="card-text">Este módulo permite ver los reportes de <strong>Reservas</strong>. Para saber las cantidades de solicitudes de <strong>Reservas</strong> del sistema completo.</p>
@@ -103,6 +106,7 @@
                     <a class="btn btn-primary" href="{{route('reporteshome.reservas')}}"><i class="fa-solid fa-chart-pie"></i> Graficos</a>
                 </div>
             </div>
+        @endrole
         <!-- <div class="card text-bg-primary mb-3 mx-auto col-sm-12 col-md-6" style="max-width: 100%; text-align: justify;">
             <div class="card-header">Módulo de Informes sobre inventario</div>
             <div class="card-body">
@@ -112,15 +116,17 @@
                 <a class="btn btn-primary" href="{{route('reporteshome.inventario')}}"><i class="fa-solid fa-chart-pie"></i> Graficos</a>
             </div>
         </div> -->
-        <div class="card text-bg-primary mb-3 mx-auto col-sm-12 col-md-6" style="max-width: 100%; text-align: justify;">
-            <div class="card-header">Módulo Informes del sistema</div>
-            <div class="card-body">
-                <p class="card-text">Este módulo permite ver los reportes del <strong>Sistema</strong>. Para saber las cantidades de solicitudes del <strong>Sistema</strong> del sistema completo.</p>
+        @role('ADMINISTRADOR')
+            <div class="card text-bg-primary mb-3 mx-auto col-sm-12 col-md-6" style="max-width: 100%; text-align: justify;">
+                <div class="card-header">Módulo Informes del sistema</div>
+                <div class="card-body">
+                    <p class="card-text">Este módulo permite ver los reportes del <strong>Sistema</strong>. Para saber las cantidades de solicitudes del <strong>Sistema</strong> del sistema completo.</p>
+                </div>
+                <div class="card-footer">
+                    <a class="btn btn-primary" href="{{route('reporteshome.system')}}"><i class="fa-solid fa-chart-pie"></i> Graficos</a>
+                </div>
             </div>
-            <div class="card-footer">
-                <a class="btn btn-primary" href="{{route('reporteshome.system')}}"><i class="fa-solid fa-chart-pie"></i> Graficos</a>
-            </div>
-        </div>
+        @endrole
     </div>
 </div>
 @stop

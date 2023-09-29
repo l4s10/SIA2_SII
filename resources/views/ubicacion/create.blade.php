@@ -24,7 +24,7 @@
 
         {{-- OPCION QUE PERMITE SELECCIONAR DIRECCION REGIONAL (PARA REGION METROPOLITANA) --}}
         <div class="mb-3 form-group">
-            <label for="ID_DIRECCION">Dirección Regional asociada:</label>
+            <label for="ID_DIRECCION"><i class="fa-solid fa-book-bookmark"></i> Dirección Regional asociada:</label>
             <select name="ID_DIRECCION" id="ID_DIRECCION" class="form-control">
                 <option value="{{ $direccionRegional->ID_DIRECCION }}">{{ $direccionRegional->DIRECCION }}</option>
             </select>

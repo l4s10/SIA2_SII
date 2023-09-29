@@ -28,8 +28,8 @@
             </div>
         </div>
         <div class="form-group">
-            <a href="{{route('cargos.index')}}" class="btn btn-secondary">Cancelar</a>
-            <button type="submit" class="btn btn-primary">Modificar cargo</button>
+            <a href="{{route('cargos.index')}}" class="btn btn-secondary"><i class="fa-solid fa-hand-point-left"></i> Cancelar</a>
+            <button type="submit" class="btn btn-primary"><i class="fa-solid fa-floppy-disk"></i> Modificar cargo</button>
         </div>
     </form>
 </div>

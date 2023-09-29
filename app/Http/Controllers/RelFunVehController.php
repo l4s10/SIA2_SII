@@ -264,7 +264,7 @@ class RelFunVehController extends Controller
         }
 
         // Caso administrador (ROLES) - Solo se llegará aquí si el usuario no es un 'JEFE DE DEPARTAMENTO DE ADMINISTRACION' o si ya se ha firmado en esa capacidad (REQUIRIENTE O CAROLA, O NV 2)
-        if (!$firmaRealizada && auth()->user()->hasRole('SERVICIOS') && $solicitud->FIRMA_ADMINISTRADOR == null) {
+        if (!$firmaRealizada && auth()->user()->hasRole('ADMINISTRADOR') && $solicitud->FIRMA_ADMINISTRADOR == null) {
             $solicitud->FIRMA_ADMINISTRADOR = auth()->user()->RUT . ' ' . auth()->user()->NOMBRES . ' ' . auth()->user()->APELLIDOS;
             $firmaRealizada = true;
         }

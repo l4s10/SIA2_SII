@@ -19,7 +19,7 @@
             <div class="row">
                 <div class="col">
                     <div class="form-group">
-                        <label for="NOMBRES">Nombres</label>
+                        <label for="NOMBRES"><i class="fa-solid fa-address-card"></i> Nombres</label>
                         <input type="text" name="NOMBRES" id="NOMBRES" class="form-control @error('nombres') is-invalid @enderror" placeholder="Nombres" value="{{ $funcionario->NOMBRES }}" required autofocus>
                         @error('NOMBRES')
                             <span class="invalid-feedback" role="alert">
@@ -31,7 +31,7 @@
 
                 <div class="col">
                     <div class="form-group">
-                        <label for="APELLIDOS">Apellidos</label>
+                        <label for="APELLIDOS"><i class="fa-solid fa-address-card"></i> Apellidos</label>
                         <input type="text" name="APELLIDOS" id="APELLIDOS" class="form-control @error('APELLIDOS') is-invalid @enderror" placeholder="Apellido Paterno Apellido Materno" value="{{ $funcionario->APELLIDOS }}" required autofocus>
                         @error('APELLIDOS')
                             <span class="invalid-feedback" role="alert">
@@ -46,7 +46,7 @@
             <div class="row">
                 <div class="col">
                     <div class="form-group">
-                        <label for="email">Email</label>
+                        <label for="email"><i class="fa-solid fa-envelope"></i> Email</label>
                         <input type="email" name="email" id="email" class="form-control @error('email') is-invalid @enderror" value="{{ $funcionario->email }}" placeholder="funcionario@sii.cl" required>
                         @error('email')
                             <span class="invalid-feedback" role="alert">
@@ -57,7 +57,7 @@
                 </div>
                 <div class="col">
                     <div class="form-group">
-                        <label for="RUT">RUT</label>
+                        <label for="RUT"><i class="fa-solid fa-id-card"></i> RUT</label>
                         <input type="text" name="RUT" id="RUT" class="form-control" placeholder="RUT (sin puntos con guión)" value="{{ $funcionario->RUT }}" required>
                         @error('RUT')
                             <span class="invalid-feedback" role="alert">
@@ -72,7 +72,7 @@
                 <div class="col">
                     {{-- Fecha de nacimiento field --}}
                     <div class="form-group">
-                        <label for="FECHA_NAC">Fecha de nacimiento</label>
+                        <label for="FECHA_NAC"><i class="fa-solid fa-calendar-days"></i> Fecha de nacimiento</label>
                         <input type="date" id="FECHA_NAC" name="FECHA_NAC" class="form-control @error('FECHA_NAC') is-invalid @enderror"
                             value="{{ $funcionario->FECHA_NAC }}" placeholder="{{ __('Fecha de Nacimiento') }}" required autofocus>
                         @error('FECHA_NAC')
@@ -85,7 +85,7 @@
                 <div class="col">
                     {{-- Fecha de ingreso a la empresa field --}}
                     <div class="form-group">
-                        <label for="FECHA_INGRESO">Fecha ingreso</label>
+                        <label for="FECHA_INGRESO"><i class="fa-solid fa-calendar-days"></i> Fecha ingreso</label>
                         <input type="date" id="FECHA_INGRESO" name="FECHA_INGRESO" class="form-control @error('FECHA_INGRESO') is-invalid @enderror"
                             value="{{ $funcionario->FECHA_INGRESO }}" placeholder="{{ __('Fecha de Ingreso a la Empresa') }}" required autofocus>
                         @error('FECHA_INGRESO')
@@ -101,7 +101,7 @@
                 <div class="col">
                     {{-- Fono field --}}
                     <div class="form-group">
-                        <label for="FONO">Fono</label>
+                        <label for="FONO"><i class="fa-solid fa-phone"></i> Fono</label>
                         <input type="text" name="FONO" class="form-control @error('FONO') is-invalid @enderror"
                             value="{{ $funcionario->FONO }}" placeholder="{{ __('Fono') }}" required autofocus>
                         @error('FONO')
@@ -114,7 +114,7 @@
                 <div class="col">
                     {{-- Anexo field --}}
                     <div class="form-group">
-                        <label for="ANEXO">Anexo</label>
+                        <label for="ANEXO"><i class="fa-regular fa-id-badge"></i> Anexo</label>
                         <input type="text" name="ANEXO" class="form-control @error('ANEXO') is-invalid @enderror"
                             value="{{ $funcionario->ANEXO }}" placeholder="{{ __('Anexo') }}" required autofocus>
                         @error('ANEXO')
@@ -128,7 +128,7 @@
 
             {{-- Sexo field --}}
             <div class="form-group">
-                <label for="ID_SEXO">Sexo</label>
+                <label for="ID_SEXO"><i class="fa-solid fa-person-half-dress"></i> Sexo</label>
                 <select name="ID_SEXO" class="form-control @error('ID_SEXO') is-invalid @enderror" required>
                     <option value="" disabled>Seleccione un sexo</option>
                     @foreach ($sexos as $sexo)
@@ -141,13 +141,13 @@
                     </span>
                 @enderror
             </div>
-
+            <br>
             {{-- Contraseña y confirmación de contraseña --}}
             <h4>Configuración de la cuenta</h4>
             <div class="row">
                 <div class="col">
                     <div class="form-group">
-                        <label for="password">Contraseña</label>
+                        <label for="password"><i class="fa-solid fa-key"></i> Contraseña</label>
                         <input type="password" name="password" id="password" class="form-control" placeholder="Contraseña (dejar en blanco si no desea cambiar)">
                         @error('password')
                             <span class="invalid-feedback" role="alert">
@@ -158,7 +158,7 @@
                 </div>
                 <div class="col">
                     <div class="form-group">
-                        <label for="password_confirmation">Confirmar contraseña</label>
+                        <label for="password_confirmation"><i class="fa-solid fa-key"></i> Confirmar contraseña</label>
                         <input type="password" name="password_confirmation" id="password_confirmation" class="form-control" placeholder="Confirmar contraseña (dejar en blanco si no desea cambiar)">
                         @error('password_confirmation')
                             <span class="invalid-feedback" role="alert">
@@ -170,18 +170,20 @@
             </div>
             {{-- !!ROL --}}
             <div class="form-group">
-                <label for="role">Rol</label>
+                <label for="role"><i class="fa-solid fa-address-book"></i> Rol</label>
                 <select name="role" id="role" class="form-control">
                     @foreach ($roles as $role)
                         <option value="{{ $role->id }}" {{ $funcionario->hasRole($role->name) ? 'selected' : '' }}>{{ $role->name }}</option>
                     @endforeach
                 </select>
             </div>
+            <br>
 
             {{-- Ubicación --}}
             <h4>Ubicación</h4>
             <div class="row">
                 <div class="col-md-4">
+                    <label for=""><i class="fa-solid fa-map-location-dot"></i> Región </label>
                     <select id="region-select" class="form-control" name="ID_REGION">
                         <option>Selecciona una región</option>
                         @foreach ($regiones as $region)
@@ -191,12 +193,14 @@
                 </div>
 
                 <div class="col-md-4">
+                    <label for=""><i class="fa-solid fa-location-dot"></i> Jurisdicción</label>
                     <select id="direccion-select" class="form-control" name="ID_DIRECCION">
                         <option>Selecciona una dirección regional</option>
                     </select>
                 </div>
 
                 <div class="col-md-4">
+                    <label for=""><i class="fa-solid fa-street-view"></i> Ubicación/Departamento </label>
                     <select id="ubicacion-select" class="form-control" name="ID_UBICACION">
                         <option>Selecciona una ubicación</option>
                         @foreach ($ubicaciones as $ubicacion)
@@ -205,14 +209,14 @@
                     </select>
                 </div>
             </div>
-
+            <br>
 
             {{-- !!Grupo --}}
-            <div class="form-row">
+            <div class="row">
                 <div class="col">
                     {{-- Grupo field --}}
                     <div class="form-group">
-                        <label for="ID_GRUPO">Grupo</label>
+                        <label for="ID_GRUPO"><i class="fa-solid fa-user-group"></i> Grupo</label>
                         <select name="ID_GRUPO" id="ID_GRUPO" class="form-control @error('ID_GRUPO') is-invalid @enderror" required autofocus>
                             <option value="" disabled>Seleccione un grupo</option>
                             @foreach ($grupos as $grupo)
@@ -229,7 +233,7 @@
                 <div class="col">
                     {{-- Calidad Jurídica --}}
                     <div class="form-group">
-                        <label for="ID_CALIDAD_JURIDICA">Calidad Jurídica</label>
+                        <label for="ID_CALIDAD_JURIDICA"><i class="fa-solid fa-pen-to-square"></i> Calidad Jurídica</label>
                         <select name="ID_CALIDAD_JURIDICA" id="ID_CALIDAD_JURIDICA" class="form-control @error('ID_CALIDAD_JURIDICA') is-invalid @enderror">
                             <option value="">Seleccionar</option>
                             @foreach ($calidadesJuridicas as $calidadJuridica)
@@ -244,14 +248,14 @@
                     </div>
                 </div>
             </div>
-
+            <br>
             {{-- Niveles --}}
             <h4>Niveles</h4>
             <div class="row">
                 <div class="col">
                     {{-- Grado field --}}
                     <div class="form-group">
-                        <label for="ID_GRADO">Grado</label>
+                        <label for="ID_GRADO"><i class="fa-solid fa-layer-group"></i> Grado</label>
                         <select name="ID_GRADO" class="form-control @error('ID_GRADO') is-invalid @enderror" required>
                             <option value="" selected disabled>Seleccione un grado</option>
                             @foreach($grados as $grado)
@@ -268,7 +272,7 @@
                 <div class="col">
                     {{-- Escalafon field --}}
                     <div class="form-group">
-                        <label for="ID_ESCALAFON">Escalafon</label>
+                        <label for="ID_ESCALAFON"><i class="fa-solid fa-layer-group"></i> Escalafon</label>
                         <select name="ID_ESCALAFON" class="form-control @error('ID_ESCALAFON') is-invalid @enderror" required>
                             <option value="" selected disabled>Seleccione un escalafon</option>
                             @foreach($escalafones as $escalafon)
@@ -285,17 +289,18 @@
             </div>
 
             <div>
-                <label for="cargo">Cargo:</label>
+                <label for="cargo"><i class="fa-solid fa-person-circle-check"></i> Cargo:</label>
                 <select name="ID_CARGO" id="ID_CARGO" class="form-control">
                     @foreach ($cargos as $cargo)
                         <option value="{{$cargo->ID_CARGO}}" {{ $funcionario->ID_CARGO == $cargo->ID_CARGO ? 'selected' : '' }}>{{$cargo->CARGO}}</option>
                     @endforeach
                 </select>
             </div>
+            <br>
 
             <div class="form-group">
-                <a href="{{ route('funcionarios.index') }}" class="btn btn-secondary">Cancelar</a>
-                <button type="submit" class="btn btn-sia-primary">Guardar cambios</button>
+                <a href="{{route('funcionarios.index')}}" class="btn btn-secondary"><i class="fa-solid fa-hand-point-left"></i> Cancelar</a>
+                <button type="submit" class="btn btn-sia-primary"><i class="fa-solid fa-floppy-disk"></i> Guardar cambios</button>
             </div>
         </form>
     </div>

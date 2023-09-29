@@ -5,7 +5,7 @@
 
 <!-- CABECERA DE LA PAGINA -->
 @section('content_header')
-    <h1>Lista de facultades</h1>
+    <h1>Lista de Facultades</h1>
     @role('ADMINISTRADOR')
     <div class="alert alert-info alert1" role="alert">
     <div><strong>Bienvenido Administrador:</strong> Acceso total al modulo.<div>
@@ -45,6 +45,7 @@
     @endif
     
     <a href="{{route('facultades.create')}}" class="btn" style="background-color: #0099FF; color: white;">Ingresar nueva facultad</a>
+    <br><br>
         <div class="table-responsive">
             <table id="facultades" class="table text-justify table-bordered mt-4 mx-auto" >
                 <thead class="bg-primary text-white">

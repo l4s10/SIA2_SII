@@ -5,7 +5,7 @@
 
 <!-- CABECERA DE LA PAGINA -->
 @section('content_header')
-    <h1>Modificar Region</h1>
+    <h1>Modificar Facultad</h1>
 @stop
 
 @section('content')
@@ -17,7 +17,7 @@
             <div class="col">
                 
                 <div class="mb-3">
-                    <label for="NRO" class="form-label">Número de Facultad:</label>
+                    <label for="NRO" class="form-label"><i class="fa-solid fa-book-bookmark"></i> Número de Facultad:</label>
                     <input type="text" class="form-control{{ $errors->has('NRO') ? ' is-invalid' : '' }}" id="NRO" name="NRO" value="{{ $facultad->NRO }}" placeholder="Ej: 123" required>
                     @if ($errors->has('NRO'))
                         <div class="invalid-feedback">
@@ -27,7 +27,7 @@
                 </div>
 
                 <div class="mb-3">
-                    <label for="NOMBRE" class="form-label">Nombre:</label>
+                    <label for="NOMBRE" class="form-label"><i class="fa-solid fa-book-bookmark"></i> Nombre:</label>
                     <input type="text" class="form-control{{ $errors->has('NOMBRE') ? ' is-invalid' : '' }}" id="NOMBRE" name="NOMBRE" value="{{ $facultad->NOMBRE }}" placeholder="Ej: APLICAR SANCIONES ADMINISTRATIVAS" required>
                     @if ($errors->has('NOMBRE'))
                         <div class="invalid-feedback">
@@ -37,7 +37,7 @@
                 </div>
         
                 <div class="mb-3">
-                    <label for="CONTENIDO" class="form-label">Contenido:</label>
+                    <label for="CONTENIDO" class="form-label"><i class="fa-solid fa-book-bookmark"></i> Contenido:</label>
                     <textarea class="form-control{{ $errors->has('CONTENIDO') ? ' is-invalid' : '' }}" id="CONTENIDO" name="CONTENIDO" rows="4" required>{{ $facultad->CONTENIDO }}</textarea>
                     @if ($errors->has('CONTENIDO'))
                         <div class="invalid-feedback">
@@ -47,7 +47,7 @@
                 </div>
         
                 <div class="mb-3">
-                    <label for="LEY_ASOCIADA" class="form-label">Ley asociada:</label>
+                    <label for="LEY_ASOCIADA" class="form-label"><i class="fa-solid fa-book-bookmark"></i> Ley asociada:</label>
                     <input type="text" class="form-control{{ $errors->has('LEY_ASOCIADA') ? ' is-invalid' : '' }}" id="LEY_ASOCIADA" name="LEY_ASOCIADA" value="{{ $facultad->LEY_ASOCIADA }}" placeholder="Ej: Código Tributario" required>
                     @if ($errors->has('LEY_ASOCIADA'))
                         <div class="invalid-feedback">
@@ -57,7 +57,7 @@
                 </div>
         
                 <div class="mb-3">
-                    <label for="ART_LEY_ASOCIADA" class="form-label">Art. de ley asociada:</label>
+                    <label for="ART_LEY_ASOCIADA" class="form-label"><i class="fa-solid fa-book-bookmark"></i> Art. de ley asociada:</label>
                     <input type="text" class="form-control{{ $errors->has('ART_LEY_ASOCIADA') ? ' is-invalid' : '' }}" id="ART_LEY_ASOCIADA" name="ART_LEY_ASOCIADA" value="{{ $facultad->ART_LEY_ASOCIADA }}" placeholder="Ej: 165" required>
                     @if ($errors->has('ART_LEY_ASOCIADA'))
                         <div class="invalid-feedback">
@@ -67,7 +67,7 @@
                 </div>
 
                 <div class="mb-3">
-                    <label for="REFERENCIA_LEGAL" class="form-label">Referencia Legal:</label>
+                    <label for="REFERENCIA_LEGAL" class="form-label"><i class="fa-solid fa-book-bookmark"></i> Referencia Legal:</label>
                     <textarea class="form-control{{ $errors->has('REFERENCIA_LEGAL') ? ' is-invalid' : '' }}" id="REFERENCIA_LEGAL" name="REFERENCIA_LEGAL" rows="4" required>{{ $facultad->REFERENCIA_LEGAL }}</textarea>
                     @if ($errors->has('REFERENCIA_LEGAL'))
                         <div class="invalid-feedback">

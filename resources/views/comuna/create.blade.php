@@ -21,7 +21,7 @@
         </div>
 
         <div class="mb-3" class="form-group">
-            <label for="ID_REGION">Región asociada:</label>
+            <label for="ID_REGION"><i class="fa-solid fa-book-bookmark"></i> Región asociada:</label>
             <select name="ID_REGION" id="ID_REGION" class="form-control">
                 @foreach($regiones as $region)
                     <option value="{{$region->ID_REGION}}">{{$region->REGION}}</option>

@@ -46,6 +46,7 @@
 
 
             <a href="{{route('funcionarios.create')}}" class="btn btn-sia-primary"> Ingresar nuevo funcionario</a>
+            <br><br>
             <div class="table">
                 <table id="funcionarios" class="table table-bordered mt-4">
                     <thead class="bg-sia-primary">

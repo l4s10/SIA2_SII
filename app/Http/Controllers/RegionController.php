@@ -17,7 +17,7 @@ class RegionController extends Controller
         $this->middleware(function ($request, $next) {
             $user = Auth::user();
 
-            if ($user->hasRole('ADMINISTRADOR') || $user->hasRole('SERVICIOS') || $user->hasRole('INFORMATICA')) {
+            if ($user->hasRole('ADMINISTRADOR') ) {
                 return $next($request);
             } else {
                 abort(403, 'Acceso no autorizado');

@@ -18,7 +18,7 @@
             <div class="row">
                 <div class="col">
                     <div class="form-group">
-                        <label for="NOMBRES">Nombres</label>
+                        <label for="NOMBRES"><i class="fa-solid fa-address-card"></i> Nombres</label>
                         <input type="text" name="NOMBRES" id="NOMBRES" class="form-control @error('nombres') is-invalid @enderror" placeholder="Nombres" value="{{ old('NOMBRES') }}" required autofocus>
                         @error('NOMBRES')
                             <span class="invalid-feedback" role="alert">
@@ -30,7 +30,7 @@
 
                 <div class="col">
                     <div class="form-group">
-                        <label for="APELLIDOS">Apellidos</label>
+                        <label for="APELLIDOS"><i class="fa-solid fa-address-card"></i> Apellidos</label>
                         <input type="text" name="APELLIDOS" id="APELLIDOS" class="form-control @error('APELLIDOS') is-invalid @enderror" placeholder="Apellido Paterno Apellido Materno" value="{{ old('APELLIDOS') }}" required autofocus>
                         @error('APELLIDOS')
                             <span class="invalid-feedback" role="alert">
@@ -45,7 +45,7 @@
             <div class="row">
                 <div class="col">
                     <div class="form-group">
-                        <label for="email">Email</label>
+                        <label for="email"><i class="fa-solid fa-envelope"></i> Email</label>
                         <input type="email" name="email" id="email" class="form-control @error('email') is-invalid @enderror" value="{{ old('email') }}" placeholder="funcionario@sii.cl" required>
 
                         @error('email')
@@ -57,7 +57,7 @@
                 </div>
                 <div class="col">
                     <div class="form-group">
-                        <label for="RUT">RUT</label>
+                        <label for="RUT"><i class="fa-solid fa-id-card"></i> RUT</label>
                         <input type="text" name="RUT" id="RUT" class="form-control" placeholder="RUT (sin puntos con guión)" value="{{ old('RUT') }}" required>
 
                         @error('RUT')
@@ -73,7 +73,7 @@
                 <div class="col">
                     {{-- Fecha de nacimiento field --}}
                     <div class="form-group">
-                        <label for="FECHA_NAC">Fecha de nacimiento</label>
+                        <label for="FECHA_NAC"><i class="fa-solid fa-calendar-days"></i> Fecha de nacimiento</label>
                         <input type="date" id="FECHA_NAC" name="FECHA_NAC" class="form-control @error('FECHA_NAC') is-invalid @enderror"
                             value="{{ old('FECHA_NAC') }}" placeholder="{{ __('Fecha de Nacimiento') }}" required autofocus>
 
@@ -87,7 +87,7 @@
                 <div class="col">
                     {{-- Fecha de ingreso a la empresa field --}}
                     <div class="form-group">
-                        <label for="FECHA_INGRESO">Fecha ingreso</label>
+                        <label for="FECHA_INGRESO"><i class="fa-solid fa-calendar-days"></i> Fecha ingreso</label>
                         <input type="date" id="FECHA_INGRESO" name="FECHA_INGRESO" class="form-control @error('FECHA_INGRESO') is-invalid @enderror"
                             value="{{ old('FECHA_INGRESO') }}" placeholder="{{ __('Fecha de Ingreso a la Empresa') }}" required autofocus>
 
@@ -104,7 +104,7 @@
                 <div class="col">
                     {{-- Fono field --}}
                     <div class="form-group">
-                        <label for="FONO">Fono</label>
+                        <label for="FONO"><i class="fa-solid fa-phone"></i> Fono</label>
                         <input type="text" name="FONO" class="form-control @error('FONO') is-invalid @enderror"
                             value="{{ old('FONO') }}" placeholder="{{ __('Fono') }}" required autofocus>
 
@@ -118,7 +118,7 @@
                 <div class="col">
                     {{-- Anexo field --}}
                     <div class="form-group">
-                        <label for="ANEXO">Anexo</label>
+                        <label for="ANEXO"><i class="fa-regular fa-id-badge"></i> Anexo</label>
                         <input type="text" name="ANEXO" class="form-control @error('ANEXO') is-invalid @enderror"
                             value="{{ old('ANEXO') }}" placeholder="{{ __('Anexo') }}" required autofocus>
 
@@ -133,7 +133,7 @@
 
             {{-- Sexo field --}}
             <div class="form-group">
-                <label for="ID_SEXO">Sexo</label>
+                <label for="ID_SEXO"><i class="fa-solid fa-person-half-dress"></i> Sexo</label>
                 <select name="ID_SEXO" class="form-control @error('ID_SEXO') is-invalid @enderror" required>
                     <option value="" disabled {{ old('ID_SEXO') ? '' : 'selected' }}>{{ __('Sexo') }}</option>
                     @foreach ($sexos as $sexo)
@@ -146,13 +146,13 @@
                     </span>
                 @enderror
             </div>
-
+            <br>
             {{-- Contraseña y confirmación de contraseña --}}
             <h4>Contraseña</h4>
             <div class="row">
                 <div class="col">
                     <div class="form-group">
-                        <label for="password">Contraseña</label>
+                        <label for="password"><i class="fa-solid fa-key"></i> Contraseña</label>
                         <input type="password" name="password" id="password" class="form-control" placeholder="Contraseña" required>
 
                         @error('password')
@@ -164,7 +164,7 @@
                 </div>
                 <div class="col">
                     <div class="form-group">
-                        <label for="password_confirmation">Confirmar contraseña</label>
+                        <label for="password_confirmation"><i class="fa-solid fa-key"></i> Confirmar contraseña</label>
                         <input type="password" name="password_confirmation" id="password_confirmation" class="form-control" placeholder="Confirmar contraseña" required>
 
                         @error('password_confirmation')
@@ -175,11 +175,12 @@
                     </div>
                 </div>
             </div>
-
+            <br>
             {{-- !!REGION Y DIRECCION REGIONAL --}}
             <h4>Dirección Regional</h4>
             <div class="row">
                 <div class="col-md-4">
+                    <label for=""><i class="fa-solid fa-map-location-dot"></i> Región </label>
                     <select id="region-select" class="form-control" name="ID_REGION">
                         <option>Selecciona una región</option>
                         @foreach ($regiones as $region)
@@ -189,24 +190,26 @@
                 </div>
 
                 <div class="col-md-4">
+                    <label for=""><i class="fa-solid fa-location-dot"></i> Jurisdicción</label>
                     <select id="direccion-select" class="form-control">
                         <option>Selecciona una dirección regional</option>
                     </select>
                 </div>
 
                 <div class="col-md-4">
+                    <label for=""><i class="fa-solid fa-street-view"></i> Ubicación/Departamento </label>
                     <select id="ubicacion-select" class="form-control" name="ID_UBICACION">
                         <option>Selecciona una ubicación</option>
                     </select>
                 </div>
             </div>
-
+            <br>
             {{-- !!GRUPO Y CALIDAD JURIDICA --}}
             <div class="form-row">
                 <div class="col">
                     {{-- Grupo field --}}
                     <div class="form-group">
-                        <label for="ID_GRUPO">Grupo</label>
+                        <label for="ID_GRUPO"><i class="fa-solid fa-user-group"></i> Grupo</label>
                         <select name="ID_GRUPO" id="ID_GRUPO" class="form-control @error('ID_GRUPO') is-invalid @enderror" required autofocus>
                             <option value="" disabled>Seleccione un grupo</option>
                             @foreach ($grupos as $grupo)
@@ -227,7 +230,7 @@
                 <div class="col">
                     {{-- Calidad Jurídica --}}
                     <div class="form-group">
-                        <label for="ID_CALIDAD_JURIDICA">Calidad Jurídica</label>
+                        <label for="ID_CALIDAD_JURIDICA"><i class="fa-solid fa-pen-to-square"></i> Calidad Jurídica</label>
                         <select name="ID_CALIDAD_JURIDICA" id="ID_CALIDAD_JURIDICA" class="form-control @error('ID_CALIDAD_JURIDICA') is-invalid @enderror">
                             <option value="">Seleccionar</option>
                             @foreach ($calidadesJuridicas as $calidadJuridica)
@@ -242,14 +245,14 @@
                     </div>
                 </div>
             </div>
-
+            <br>
             {{-- Niveles --}}
             <h4>Niveles</h4>
             <div class="row">
                 <div class="col">
                     {{-- Grado field --}}
                     <div class="form-group">
-                        <label for="ID_GRADO">Grado</label>
+                        <label for="ID_GRADO"><i class="fa-solid fa-layer-group"></i> Grado</label>
                         <select name="ID_GRADO" class="form-control @error('ID_GRADO') is-invalid @enderror" required>
                             <option value="" selected disabled>Seleccione un grado</option>
                             @foreach($grados as $grado)
@@ -267,7 +270,7 @@
                 <div class="col">
                     {{-- Escalafon field --}}
                     <div class="form-group">
-                        <label for="ID_ESCALAFON">Escalafon</label>
+                        <label for="ID_ESCALAFON"><i class="fa-solid fa-layer-group"></i> Escalafón</label>
                         <select name="ID_ESCALAFON" class="form-control @error('ID_ESCALAFON') is-invalid @enderror" required>
                             <option value="" selected disabled>Seleccione un escalafon</option>
                             @foreach($escalafones as $escalafon)
@@ -285,7 +288,7 @@
             </div>
             {{-- !!ROL --}}
             <div class="form-group">
-                <label for="role">Rol</label>
+                <label for="role"><i class="fa-solid fa-address-book"></i> Rol</label>
                 <select name="role" id="role" class="form-control">
                     @foreach ($roles as $role)
                         <option value="{{ $role->id }}">{{ $role->name }}</option>
@@ -293,17 +296,17 @@
                 </select>
             </div>
             <div>
-                <label for="cargo">Cargo:</label>
+                <label for="cargo"><i class="fa-solid fa-person-circle-check"></i> Cargo:</label>
                 <select name="ID_CARGO" id="ID_CARGO" class="form-control">
                     @foreach ($cargos as $cargo)
                         <option value="{{$cargo->ID_CARGO}}">{{$cargo->CARGO}}</option>
                     @endforeach
                 </select>
             </div>
-
+            <br>
             <div class="form-group">
-                <a href="{{route('funcionarios.index')}}" class="btn btn-secondary">Cancelar</a>
-                <button type="submit" class="btn btn-sia-primary">Crear usuario</button>
+                <a href="{{route('funcionarios.index')}}" class="btn btn-secondary"><i class="fa-solid fa-hand-point-left"></i> Cancelar</a>
+                <button type="submit" class="btn btn-sia-primary"><i class="fa-solid fa-floppy-disk"></i> Crear usuario</button>
             </div>
         </form>
     </div>
@@ -381,6 +384,14 @@
             // Configuración de Flatpickr para las fechas
             var flatpickrConfig = {
                 locale: 'es',
+                maxDate: "today",
+                dateFormat: "Y-m-d",
+                altFormat: "d-m-Y",
+                altInput: true,
+                allowInput: true,
+            };
+            var flatpickrConfig2 = {
+                locale: 'es',
                 minDate: "1950-01-01",
                 dateFormat: "Y-m-d",
                 altFormat: "d-m-Y",
@@ -390,7 +401,7 @@
 
             // Inicializar Flatpickr en los campos de fecha
             $('#FECHA_NAC').flatpickr(flatpickrConfig);
-            $('#FECHA_INGRESO').flatpickr(flatpickrConfig);
+            $('#FECHA_INGRESO').flatpickr(flatpickrConfig2);
         });
     </script>
 

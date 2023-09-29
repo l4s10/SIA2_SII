@@ -128,9 +128,10 @@
     <script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/es.js"></script>
     <script>
         $(function () {
+            let fechaActual = new Date().toISOString().split("T")[0];
             $('#FECHA').flatpickr({
                 locale: 'es',
-                minDate: "1950-01-01",
+                minDate: fechaActual,
                 dateFormat: "Y-m-d",
                 altFormat: "d-m-Y",
                 altInput: true,

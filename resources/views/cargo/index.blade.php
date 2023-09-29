@@ -45,6 +45,7 @@
     @endif
     
     <a href="{{route('cargos.create')}}" class="btn" style="background-color: #0099FF; color: white;">Ingresar nuevo cargo</a>
+    <br><br>
         <div class="table-responsive">
             <table id="cargos" class="table table-bordered mt-4 custom-table">
                 <thead class="bg-primary text-white">

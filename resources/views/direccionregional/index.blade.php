@@ -46,6 +46,7 @@
 
 
     <a href="{{route('direccionregional.create')}}" class="btn" style="background-color: #0099FF; color: white;">Ingresar nueva dirección regional</a>
+    <br><br>
         <div class="table-responsive">
             <table id="direcciones_regionales" class="table text-justify table-bordered mt-4 mx-auto" style="white-space:nowrap;">
                 <thead class="bg-primary text-white">

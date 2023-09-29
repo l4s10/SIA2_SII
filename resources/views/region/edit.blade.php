@@ -16,7 +16,7 @@
         <div class="row">
             <div class="col">
                 <div class="form-group">
-                    <label for="REGION">Nombre región:</label>
+                    <label for="REGION"><i class="fa-solid fa-book-bookmark"></i> Nombre región:</label>
                     <input type="text" name="REGION" id="REGION" class="form-control" placeholder="Nombre de la region" value="{{ $region->REGION }}" required autofocus>
 
                     @error('REGION')

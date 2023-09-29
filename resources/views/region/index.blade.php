@@ -45,6 +45,7 @@
     @endif
     
     <a href="{{route('region.create')}}" class="btn" style="background-color: #0099FF; color: white;">Ingresar nueva región</a>
+    <br><br>
         <div class="table-responsive">
             <table id="region" class="table text-justify table-bordered mt-4 mx-auto" style="white-space:nowrap;">
                 <thead class="bg-primary text-white">

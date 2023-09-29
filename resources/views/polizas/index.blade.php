@@ -45,6 +45,7 @@
         @endif
 
         <a href="{{route('polizas.create')}}" class="btn" style="background-color: #0099FF; color: white;">Ingresar nueva póliza</a>
+        <br><br>
 
         <div class="table-responsive">
             <table id="polizas" class="table text-justify table-bordered mt-4 mx-auto" style="white-space:nowrap;">

@@ -45,6 +45,7 @@
     @endif
     
     <a href="{{route('ubicacion.create')}}" class="btn" style="background-color: #0099FF; color: white;">Ingresar nueva ubicación o departamento</a>
+    <br><br>
         <div class="table-responsive">
             <table id="ubicacion" class="table table-bordered mt-4 custom-table">
                 <thead class="bg-primary text-white">

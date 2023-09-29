@@ -3,11 +3,14 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+
 //Primer Grafico.
 use App\Models\SolicitudSala;
 use App\Models\SolicitudBodegas;
 use App\Models\SolicitudReparacionVehiculo;
 use App\Models\RelFunVeh;
+
 // Segundo Grafico.
 use App\Models\RelFunRepGeneral;
 use App\Models\SolicitudEquipos;
@@ -50,9 +53,24 @@ class ReporteController extends Controller
         'material' => Material::class,
     ];
 
-    //DE MOMENTO SOLO EL ADMINISTRADOR PUEDE ENTRAR
+    /*//DE MOMENTO SOLO EL ADMINISTRADOR PUEDE ENTRAR
     public function __construct(){
         $this->middleware( ['auth', 'checkearRol:ADMINISTRADOR'] );
+    }*/
+
+    //Funcion para acceder a las rutas SOLO SI los usuarios estan logueados
+    public function __construct(){
+        $this->middleware('auth');
+        // Roles que pueden ingresar a la url
+        $this->middleware(function ($request, $next) {
+            $user = Auth::user();
+
+            if ($user->hasRole('ADMINISTRADOR') || $user->hasRole('SERVICIOS') || $user->hasRole('JURIDICO') || $user->hasRole('INFORMATICO')) {
+                return $next($request);
+            } else {
+                abort(403, 'Acceso no autorizado');
+            }
+        });
     }
 
 

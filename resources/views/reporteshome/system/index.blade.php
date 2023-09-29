@@ -30,6 +30,7 @@
         <div><strong>Bienvenido Funcionario:</strong> Aqui iria el texto donde le corresponde el rol FUNCIONARIO.</div>
     </div>
     @endrole
+    
 @endsection
 
 @section('content')
@@ -51,14 +52,14 @@
         </div>
     </div>
     <br>
+    
     <div class="row">
         <!-- Base para el Primer gráfico Total de solicitudes 1 -->
         <div class="col-md-6">
             <div class="chart-container">
                 <canvas id="myChart"></canvas>
                 <button id="view-chart" class="btn btn-primary move-right"><i class="fa-solid fa-maximize"></i></button>
-                <button id="print-button" class="btn btn-primary"><i class="fa-solid fa-print"></i></button>
-                <button id="download-jpeg-button" class="btn btn-primary"><i class="fa-solid fa-image"></i></button>
+                <button id="download-jpeg-button" class="btn btn-primary"><i class="fa-solid fa-download"></i></button>
             </div>
         </div>
         <!-- Base para el Segundo gráfico Total de solicitudes 2 -->
@@ -90,8 +91,11 @@
                 <canvas id="modalChart"></canvas>
             </div>
         </div>
-    </div>
+    </div>    
 </div>
+
+
+
 
 <div class="container my-5">
     <h2>Tabla de contingencia</h2>
@@ -139,7 +143,14 @@
             </tr>
         </tfoot>
     </table>
+    <br><br><br>
+    <div class="row">
+        <div class="col-lg-6">
+            <button id="print-button" class="btn btn-primary"><i class="fa-solid fa-print"></i> Imprimir Reporte</button>
+        </div>
+    </div>
 </div>
+
 
 
 @endsection

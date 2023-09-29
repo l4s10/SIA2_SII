@@ -1,7 +1,7 @@
 @extends('adminlte::page')
 
 <!-- TITULO DE LA PESTAÑA -->
-@section('title', 'Modificar Cargo')
+@section('title', 'Modificar Ubicación o Dpto')
 
 <!-- CABECERA DE LA PAGINA -->
 @section('content_header')
@@ -16,7 +16,7 @@
         <div class="row">
             <div class="col">
                 <div class="form-group">
-                    <label for="UBICACION">Nombre cargo:</label>
+                    <label for="UBICACION"><i class="fa-solid fa-book-bookmark"></i> Nombre:</label>
                     <input type="text" name="UBICACION" id="UBICACION" class="form-control" placeholder="Ej: DEPARTAMENTO DE ADMINISTRACION / UNIDAD DE CONCEPCIÓN" value="{{ $ubicacion->UBICACION }}" required autofocus>
 
                     @error('UBICACION')

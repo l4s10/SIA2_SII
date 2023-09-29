@@ -43,7 +43,7 @@
         </div>
 
         <div class="mb-3">
-            <label for="FECHA_VENCIMIENTO_LICENCIA" class="form-label"><i class="fa-solid fa-book-bookmark"></i> Fecha:</label>
+            <label for="FECHA_VENCIMIENTO_LICENCIA" class="form-label"><i class="fa-solid fa-book-bookmark"></i> Fecha de vencimiento de licencia:</label>
             <input type="text" class="form-control{{ $errors->has('FECHA_VENCIMIENTO_LICENCIA') ? ' is-invalid' : '' }}" id="FECHA_VENCIMIENTO_LICENCIA" name="FECHA_VENCIMIENTO_LICENCIA" value="{{ old('FECHA_VENCIMIENTO_LICENCIA') }}" placeholder="Ej: 2024-08-24" required>
             @if ($errors->has('FECHA_VENCIMIENTO_LICENCIA'))
                 <div class="invalid-feedback">
@@ -66,4 +66,17 @@
 @section('js')
     <!-- CONEXION FONT-AWESOME CON TOOLKIT -->
     <script src="https://kit.fontawesome.com/742a59c628.js" crossorigin="anonymous"></script>
+    <script>
+        $(function () {
+            let fechaActual = new Date().toISOString().split("T")[0];
+            $('#FECHA_VENCIMIENTO_LICENCIA').flatpickr({
+                locale: 'es',
+                minDate: fechaActual,
+                dateFormat: "Y-m-d",
+                altFormat: "d-m-Y",
+                altInput: true,
+                allowInput: true,
+            });
+        });
+    </script>
 @stop

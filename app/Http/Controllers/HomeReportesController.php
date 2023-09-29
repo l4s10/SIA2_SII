@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+
 //Primer Grafico.
 use App\Models\SolicitudSala;
 use App\Models\SolicitudBodegas;
@@ -31,9 +33,24 @@ use App\Models\TipoReparacion;
 
 class HomeReportesController extends Controller
 {
-    //protege las rutas  DE MOMENTO SOLO ADMINISTADOR
+    /*//protege las rutas  DE MOMENTO SOLO ADMINISTADOR
     public function __construct(){
         $this->middleware(['auth', 'checkearRol:ADMINISTRADOR']);
+    }*/
+
+    //Funcion para acceder a las rutas SOLO SI los usuarios estan logueados
+    public function __construct(){
+        $this->middleware('auth');
+        // Roles que pueden ingresar a la url
+        $this->middleware(function ($request, $next) {
+            $user = Auth::user();
+
+            if ($user->hasRole('ADMINISTRADOR') || $user->hasRole('SERVICIOS') || $user->hasRole('JURIDICO') || $user->hasRole('INFORMATICA')) {
+                return $next($request);
+            } else {
+                abort(403, 'Acceso no autorizado');
+            }
+        });
     }
 
     private $models1 = [
