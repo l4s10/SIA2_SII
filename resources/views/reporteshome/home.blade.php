@@ -58,7 +58,7 @@
         </script>
     @endif
     <div class="container-fluid d-flex justify-content-center align-items-center flex-column">
-        @role('ADMINISTRADOR|SERVICIOS|JURIDICO')
+        @role('ADMINISTRADOR|SERVICIOS')
             <div class="card text-bg-primary mb-3 mx-auto col-sm-12 col-md-6" style="max-width: 100%; text-align: justify;">
                 <div class="card-header">Módulo de Informes de vehículos</div>
                 <div class="card-body">
@@ -87,7 +87,7 @@
                 </div>
             </div>
         @endrole
-        @role('ADMINISTRADOR|INFORMATICA|JURIDICO')
+        @role('ADMINISTRADOR|INFORMATICA')
             <div class="card text-bg-primary mb-3 mx-auto col-sm-12 col-md-6" style="max-width: 100%; text-align: justify;">
                 <div class="card-header">Módulo de Informes sobre equipos</div>
                 <div class="card-body">
