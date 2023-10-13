@@ -192,29 +192,35 @@ class RelFunVehController extends Controller
             if (auth()->user()->id == $solicitud->CONDUCTOR && $solicitud->FIRMA_CONDUCTOR == null && $solicitud->ESTADO_SOL_VEH == "POR RENDIR"){
                 try{
                     $firmaRealizada = false; // Usamos esta variable para verificar si se ha realizado una firma
-                    //!!AGREGAR UN IF ANIDADO DONDE SE VERIFIQUE LA CONTRASEÑA DEL USUARIO
-                    //*SI LA CONTRASEÑA NO ES VALIDA */
+
                     if(!Hash::check(request('password'), Auth::user()->password)){
                         return Redirect::back()->with('error','La contraseña proporcionada no es correcta');
                     }
+
                     //Guardamos la firma en el campo FIRMA_CONDUCTOR.
                     $solicitud->FIRMA_CONDUCTOR = auth()->user()->RUT . ' ' . auth()->user()->NOMBRES . ' ' . auth()->user()->APELLIDOS;
                     $firmaRealizada = true;
+
                     //Si no se hizo la firma por x motivo
                     if (!$firmaRealizada) {
-                        // Si no se ha realizado ninguna firma, significa que ya se firmó en todas las capacidades posibles
                         return redirect()->route('solicitud.vehiculos.autorizar')->with('error', 'Esta solicitud ya ha sido firmada por ti');
                     }
+
+                    //Actualizando los demás campos enviados en la request.
+                    $data = $request->except('_token', 'password'); // Excluimos el token y la contraseña, ya que estos campos no se deben guardar.
+                    $solicitud->update($data);
+
                     if($solicitud->FIRMA_CONDUCTOR != null && $solicitud->ESTADO_SOL_VEH == "POR RENDIR"){
                         $solicitud->ESTADO_SOL_VEH = 'TERMINADO';
                         $solicitud->save();
-                        return redirect()->route('solicitud.vehiculos.index')->with('success', 'Firma realizada con éxito, solicitud terminada.');
+                        return redirect()->route('solicitud.vehiculos.index')->with('success', 'Firma realizada con éxito, solicitud terminada y datos actualizados.');
                     }
                 }catch(\Exception $e){
                     session()->flash('error','Hubo un error al actualizar la solicitud o ingresar la firma, vuelva a intentarlo mas tarde');
+                    return redirect(route('solicitud.vehiculos.index'));
                 }
-                return redirect(route('solicitud.vehiculos.index'));
             }
+
             //*ACTUALIZAR REGISTRO */
             $data = $request->except('_token');
             $solicitud->update($data);
@@ -242,49 +248,41 @@ class RelFunVehController extends Controller
     public function autorizar($id)
     {
         $solicitud = RelFunVeh::findOrFail($id);
-        $firmaRealizada = false; // Usamos esta variable para verificar si se ha realizado una firma
-        //!!AGREGAR UN IF ANIDADO DONDE SE VERIFIQUE LA CONTRASEÑA DEL USUARIO
-        //*SI LA CONTRASEÑA NO ES VALIDA */
-        if(!Hash::check(request('password'), Auth::user()->password)){
-            return Redirect::back()->with('error','La contraseña proporcionada no es correcta');
+
+        // Verificar la contraseña del usuario
+        if (!Hash::check(request('password'), Auth::user()->password)) {
+            return Redirect::back()->with('error', 'La contraseña proporcionada no es correcta');
         }
 
-        //!!QUITAREMOS LA FIRMA DEL CONDUCTOR PARA LA AUTORIZACION, ESTE DEBE FIRMAR EN "POR RENDIR".
-        // Caso conductor (ASIGNACION POR FORMULARIO)
-        // if (auth()->user()->id == $solicitud->CONDUCTOR && $solicitud->FIRMA_CONDUCTOR == null){
-        //     $solicitud->FIRMA_CONDUCTOR = auth()->user()->RUT . ' ' . auth()->user()->NOMBRES . ' ' . auth()->user()->APELLIDOS;
-        //     $firmaRealizada = true;
-        // }
+        $firmaUsuario = auth()->user()->RUT . ' ' . auth()->user()->NOMBRES . ' ' . auth()->user()->APELLIDOS;
+        $firmaRealizada = false;
 
         // Caso cargo 'JEFE DE DEPARTAMENTO ADMINISTRACION' - Damos prioridad a este rol
-        //BUSCAR POR ID EN VEZ DE COMPARAR STRINGS (->cargo->ID_CARGO == (NUM_CARGO_JEFE_DEPTO))
-        if (!$firmaRealizada && auth()->user()->cargo->CARGO == 'JEFE DE DEPARTAMENTO DE ADMINISTRACION' && $solicitud->FIRMA_JEFE_ADMINISTRACION == null) {
-            $solicitud->FIRMA_JEFE_ADMINISTRACION = auth()->user()->RUT . ' ' . auth()->user()->NOMBRES . ' ' . auth()->user()->APELLIDOS;
+        // Recomiendo cambiar esto por una comparación de ID si es posible
+        if (auth()->user()->cargo->CARGO == 'JEFE DE DEPARTAMENTO DE ADMINISTRACION' && $solicitud->FIRMA_JEFE_ADMINISTRACION == null) {
+            $solicitud->FIRMA_JEFE_ADMINISTRACION = $firmaUsuario;
             $firmaRealizada = true;
         }
 
-        // Caso administrador (ROLES) - Solo se llegará aquí si el usuario no es un 'JEFE DE DEPARTAMENTO DE ADMINISTRACION' o si ya se ha firmado en esa capacidad (REQUIRIENTE O CAROLA, O NV 2)
-        if (!$firmaRealizada && auth()->user()->hasRole('ADMINISTRADOR') && $solicitud->FIRMA_ADMINISTRADOR == null) {
-            $solicitud->FIRMA_ADMINISTRADOR = auth()->user()->RUT . ' ' . auth()->user()->NOMBRES . ' ' . auth()->user()->APELLIDOS;
+        // Caso administrador (ROLES)
+        if (auth()->user()->hasRole('ADMINISTRADOR') && $solicitud->FIRMA_ADMINISTRADOR == null) {
+            $solicitud->FIRMA_ADMINISTRADOR = $firmaUsuario;
             $firmaRealizada = true;
         }
 
         if (!$firmaRealizada) {
-            // Si no se ha realizado ninguna firma, significa que ya se firmó en todas las capacidades posibles
-            return redirect()->route('solicitud.vehiculos.autorizar')->with('error', 'Esta solicitud ya ha sido firmada por ti');
+            // Si no se ha realizado ninguna firma
+            return redirect()->route('solicitud.vehiculos.autorizar')->with('error', 'Esta solicitud ya ha sido firmada por ti en todas las capacidades posibles.');
         }
 
         // Validar si todas las firmas están presentes
-        //!!AHORA VALIDAREMOS SI EXISTE SOLO LA FIRMA DEL JEFE DE DEPARTAMENTO DE ADMINISTRACION Y DE ALGUN PERSONAL DE SERVICIOS
-        //if($solicitud->FIRMA_CONDUCTOR != null && $solicitud->FIRMA_ADMINISTRADOR != null && $solicitud->FIRMA_JEFE_ADMINISTRACION != null){
-        if($solicitud->FIRMA_ADMINISTRADOR != null && $solicitud->FIRMA_JEFE_ADMINISTRACION != null){
+        if ($solicitud->FIRMA_ADMINISTRADOR != null && $solicitud->FIRMA_JEFE_ADMINISTRACION != null) {
             $solicitud->ESTADO_SOL_VEH = 'POR RENDIR';
             $solicitud->save();
             return redirect()->route('solicitud.vehiculos.index')->with('success', 'Firma realizada con éxito y autorizado por las 2 entidades!!');
         }
 
         $solicitud->save();
-
         return redirect()->route('solicitud.vehiculos.autorizar')->with('success', 'Firma realizada con éxito');
     }
 
@@ -410,10 +408,19 @@ class RelFunVehController extends Controller
         $ocupante_5 = User::find($solicitud->OCUPANTE_5);
         $ocupante_6 = User::find($solicitud->OCUPANTE_6);
 
+        // Asumiendo que $solicitud->FECHA_SALIDA y $solicitud->FECHA_LLEGADA_CONDUCTOR son instancias de Carbon (o una fecha en formato Y-m-d H:i:s)
+        $horasDiferencia = null;
+
+        if ($solicitud->FECHA_LLEGADA_CONDUCTOR) {
+            $fechaSalida = new \Carbon\Carbon($solicitud->FECHA_SALIDA);
+            $fechaLlegadaConductor = new \Carbon\Carbon($solicitud->FECHA_LLEGADA_CONDUCTOR);
+            $horasDiferencia = $fechaSalida->diffInHours($fechaLlegadaConductor);
+        }
+
         $fecha = Carbon::now()->format('d-m-Y_H-i');
 
         $pdf = new Dompdf();
-        $pdf->loadHtml(view('rel_fun_veh.hojaSalida', compact('solicitud', 'comuna_destino', 'solicitante','ocupante_1', 'ocupante_2', 'ocupante_3', 'ocupante_4', 'ocupante_5', 'ocupante_6', 'fecha'))->render());
+        $pdf->loadHtml(view('rel_fun_veh.hojaSalida', compact('solicitud', 'comuna_destino', 'solicitante','ocupante_1', 'ocupante_2', 'ocupante_3', 'ocupante_4', 'ocupante_5', 'ocupante_6', 'fecha','horasDiferencia'))->render());
         $pdf->setPaper('A4', 'portrait');
 
         $pdf->render();

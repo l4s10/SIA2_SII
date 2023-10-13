@@ -76,7 +76,9 @@
                                     @csrf
                                     @method('DELETE')
                                     <a href="{{route('vehiculos.edit',$vehiculo->ID_VEHICULO)}}" class="btn btn-info">Editar</a>
-                                    <button type="submit" class="btn btn-danger">Borrar</button>
+                                    @role('ADMINISTRADOR')
+                                        <button type="submit" class="btn btn-danger">Borrar</button>
+                                    @endrole
                                 </form>
                             </td>
                         </tr>

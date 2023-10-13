@@ -18,10 +18,17 @@ class RoleAdminAndServices
     {
         $user = Auth::user();
 
-        if ($user->hasRole('ADMINISTRADOR') || $user->hasRole('SERVICIOS')) {
-            return $next($request);
-        } else {
+        // Si es un usuario con rol 'SERVICIOS' intentando hacer un 'DELETE', se le niega el acceso
+        if ($user->hasRole('SERVICIOS') && $request->isMethod('delete')) {
             abort(403, 'Acceso no autorizado');
         }
+
+        // Si el usuario tiene rol 'ADMINISTRADOR' o 'SERVICIOS' se le permite el acceso
+        if ($user->hasRole('ADMINISTRADOR') || $user->hasRole('SERVICIOS')) {
+            return $next($request);
+        }
+
+        // En cualquier otro caso, se le niega el acceso
+        abort(403, 'Acceso no autorizado');
     }
 }
