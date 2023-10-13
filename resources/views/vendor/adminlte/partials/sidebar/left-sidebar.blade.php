@@ -48,7 +48,7 @@
                                 <p>Solicitar</p>
                             </a>
                         </li>
-                        {{-- !!AUTORIZAR SOLO PUEDEN VER LOS DE ADMINISTRADOR|SERVICIOS --}}
+                        {{-- !!AUTORIZAR SOLO PUEDEN VER LOS DE ADMINISTRADOR --}}
                         @role('ADMINISTRADOR')
                             <li class="nav-item">
                                 <a href="{{ url('reserva/vehiculo/autorizar') }}" class="nav-link">
