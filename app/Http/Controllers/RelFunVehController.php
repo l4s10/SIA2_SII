@@ -414,7 +414,7 @@ class RelFunVehController extends Controller
         // Asumiendo que $solicitud->FECHA_SALIDA y $solicitud->FECHA_LLEGADA_CONDUCTOR son instancias de Carbon (o una fecha en formato Y-m-d H:i:s)
         $horasDiferencia = null;
 
-        if ($solicitud->FECHA_LLEGADA_CONDUCTOR) {
+        if ($solicitud->FECHA_SALIDA != NULL && $solicitud->FECHA_LLEGADA_CONDUCTOR != NULL) {
             $fechaSalida = new \Carbon\Carbon($solicitud->FECHA_SALIDA);
             $fechaLlegadaConductor = new \Carbon\Carbon($solicitud->FECHA_LLEGADA_CONDUCTOR);
             $horasDiferencia = $fechaSalida->diffInHours($fechaLlegadaConductor);

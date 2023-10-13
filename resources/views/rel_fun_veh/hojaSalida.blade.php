@@ -137,13 +137,22 @@ body { margin-left: 0.7in; margin-right: 0.7in; margin-top: 0.75in; margin-botto
           </tr>
           <tr class="row12">
             <td class="column0 style32 s">FECHA Y HORA DE SALIDA</td>
-            <td class="column1 style33 null style33" colspan="6">{{ \Carbon\Carbon::parse($solicitud->FECHA_SALIDA)->format('d/m/Y H:i') }}</td>
+            <td class="column1 style33 null style33" colspan="6">@if($solicitud->FECHA_SALIDA)
+                    {{ \Carbon\Carbon::parse($solicitud->FECHA_SALIDA)->format('d/m/Y H:i') }}
+                @else
+                    N/A
+                @endif
+            </td>
             <td class="column7 style34 s">N° Orden de trabajo</td>
             <td class="column8 style35 null">{{$solicitud->ID_SOL_VEH}}</td>
             </tr>
             <tr class="row13">
                 <td class="column0 style36 s">FECHA Y HORA DE REGRESO</td>
-                <td class="column1 style33 null style33" colspan="6">{{ \Carbon\Carbon::parse($solicitud->FECHA_LLEGADA)->format('d/m/Y H:i') }}</td>
+                <td class="column1 style33 null style33" colspan="6">@if($solicitud->FECHA_LLEGADA)
+                    {{ \Carbon\Carbon::parse($solicitud->FECHA_LLEGADA)->format('d/m/Y H:i') }}
+                @else
+                    N/A
+                @endif</td>
                 <td class="column7 style37 null"></td>
                 <td class="column8 style38 null"></td>
             </tr>
