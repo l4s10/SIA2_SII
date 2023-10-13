@@ -11,7 +11,7 @@ class MovimientoMaterialController extends Controller
 {
     //DE MOMENTO SOLO EL ADMINISTRADOR PUEDE ENTRAR
     public function __construct(){
-        $this->middleware( ['auth', 'checkearRol:ADMINISTRADOR'] );
+        $this->middleware( ['auth', 'roleAdminAndServices'] );
     }
 
     public function index(){

@@ -14,15 +14,7 @@ class ComunaController extends Controller
     public function __construct(){
         $this->middleware('auth');
         // Roles que pueden ingresar a la url
-        $this->middleware(function ($request, $next) {
-            $user = Auth::user();
-
-            if ($user->hasRole('ADMINISTRADOR') ) {
-                return $next($request);
-            } else {
-                abort(403, 'Acceso no autorizado');
-            }
-        });
+        $this->middleware(['roleAdminAndSupport']);
     }
     /**
      * Display a listing of the resource.

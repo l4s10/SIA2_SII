@@ -20,7 +20,7 @@ class BusquedaAvanzadaController extends Controller
         $this->middleware(function ($request, $next) {
             $user = Auth::user();
 
-            if ($user->hasRole('ADMINISTRADOR') || $user->hasRole('JURIDICO') || $user->hasRole('INFORMATICA')) {
+            if ($user->hasRole('ADMINISTRADOR') || $user->hasRole('JURIDICO') || $user->hasRole('INFORMATICA') || $user->hasRole('SERVICIOS') || $user->hasRole('FUNCIONARIO')) {
                 return $next($request);
             } else {
                 abort(403, 'Acceso no autorizado');
@@ -41,7 +41,7 @@ class BusquedaAvanzadaController extends Controller
         $firmantes = Cargo::pluck('CARGO', 'ID_CARGO');
         $fechas = Resolucion::distinct()->get(['FECHA']);
         $nros = Resolucion::distinct()->get(['NRO_RESOLUCION']);
-        
+
         // Obtengo '0' resoluciones, entonces, no muestro tabla en la vista
         $resoluciones = [];
 
@@ -62,7 +62,7 @@ class BusquedaAvanzadaController extends Controller
         $nrosReq = $request->input('NRO_RESOLUCION');
         $leyReq = $request->input('LEY_ASOCIADA');
         $artsReq = $request->input('ART_LEY_ASOCIADA');
-        
+
         // Obtiene todos los checkboxes de seleciconados en la vista
         $selectedFilters = $request->input('selectedFilters');
 
@@ -70,7 +70,7 @@ class BusquedaAvanzadaController extends Controller
         //Valido que dado cualquier selección en estos inputs desencadene la búesqueda de resoluciones en función de sus respectivos checkboxes
         if($tiposReq || $facultadesReq || $delegadosReq || $firmantesReq || $fechasReq || $nrosReq || $leyReq || $artsReq){
             $resoluciones = Resolucion::query();
-            
+
             if ($tiposReq && isset($selectedFilters['ID_TIPO'])) {
                 $resoluciones->where('ID_TIPO', $tiposReq);
             }
