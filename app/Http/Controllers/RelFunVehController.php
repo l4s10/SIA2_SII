@@ -265,7 +265,10 @@ class RelFunVehController extends Controller
         }
 
         // Caso administrador (ROLES)
-        if (auth()->user()->hasRole('ADMINISTRADOR') && $solicitud->FIRMA_ADMINISTRADOR == null) {
+        // Aseguramos que no sea el 'JEFE DE DEPARTAMENTO DE ADMINISTRACION' quien esté firmando en esta sección
+        if (auth()->user()->hasRole('ADMINISTRADOR')
+            && auth()->user()->cargo->CARGO != 'JEFE DE DEPARTAMENTO DE ADMINISTRACION'
+            && $solicitud->FIRMA_ADMINISTRADOR == null) {
             $solicitud->FIRMA_ADMINISTRADOR = $firmaUsuario;
             $firmaRealizada = true;
         }
@@ -337,30 +340,30 @@ class RelFunVehController extends Controller
 
 
     //!!INDEX POR RENDIR
-    public function indexRendir(){
-        try{
+    public function indexRendir() {
+        try {
             $user = Auth::user();
 
             // Creas el constructor de la consulta básica con el estado 'POR RENDIR'
             $query = RelFunVeh::where('ESTADO_SOL_VEH', 'POR RENDIR');
 
-            if(!$user->hasAnyRole(['ADMINISTRADOR', 'SERVICIOS'])){
-                // Si NO es ADMINISTRADOR o SERVICIOS, entonces filtra también por usuario o por conductor
-                $query->where(function($q) use ($user) {
-                    $q->where('ID_USUARIO', $user->id)
-                      ->orWhere('CONDUCTOR', $user->id);
-                });
-            }
+            // Filtrar para que cualquier usuario pueda ver sus propias solicitudes por rendir
+            // Además, si es un conductor, podrá ver también las solicitudes donde él es el conductor
+            $query->where(function($q) use ($user) {
+                $q->where('ID_USUARIO', $user->id)
+                  ->orWhere('CONDUCTOR', $user->id);
+            });
 
             $solicitudes = $query->get();
 
             return view('rel_fun_veh.rendir', compact('solicitudes'));
-        } catch (Exception $e){
+        } catch (Exception $e) {
             // Manejar la excepción aquí
             Log::error('Error al obtener las solicitudes por rendir: ' . $e->getMessage());
             return redirect()->back()->with('error', 'Ocurrió un error al obtener las solicitudes por rendir.');
         }
     }
+
 
     //!!RENDICION DEL CHOFER
     //!!AQUI ENVIAR LA FIRMA DEL CONDUCTOR
