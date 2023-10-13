@@ -18,7 +18,7 @@ class BusquedaFuncionarioController extends Controller
         $this->middleware(function ($request, $next) {
             $user = Auth::user();
 
-            if ($user->hasRole('ADMINISTRADOR') || $user->hasRole('JURIDICO') || $user->hasRole('INFORMATICA')) {
+            if ($user->hasRole('ADMINISTRADOR') || $user->hasRole('JURIDICO') || $user->hasRole('INFORMATICA') || $user->hasRole('SERVICIOS') || $user->hasRole('FUNCIONARIO')) {
                 return $next($request);
             } else {
                 abort(403, 'Acceso no autorizado');
@@ -41,9 +41,9 @@ class BusquedaFuncionarioController extends Controller
         $apellidos = $request->input('APELLIDOS');
         $rut = $request->input('RUT');
         $idCargoFuncionario = $request->input('ID_CARGO');
-        //id del Cargo delegado de la resolución 
+        //id del Cargo delegado de la resolución
         $idCargo = $request->input('ID_DELEGADO');
-        
+
         //Parámetros compactados a la vista
         $resoluciones = [];
         $cargoFuncionario = null; // Valor predeterminado
@@ -72,14 +72,14 @@ class BusquedaFuncionarioController extends Controller
                 $cargoFuncionario = $user->cargo->CARGO;
                 $rutRes = $user->RUT;
                 $busquedaResolucionFuncionarioFallida = true;
-            }    
+            }
         }elseif ($idCargo) {
             //$resoluciones = Resolucion::where('ID_DELEGADO', $idCargo)->get();
             $query = Resolucion::whereHas('delegado', function ($query) use ($idCargo) {
                 $query->where('ID_CARGO', $idCargo);
             });
             $resoluciones = $query->with('tipo', 'firmante', 'delegado', 'facultad')->get();
-            
+
             if ($resoluciones->isNotEmpty()) {
                 $cargoResolucion = $resoluciones->first()->delegado->CARGO;
                 $busquedaResolucionCargo = true;
@@ -87,8 +87,8 @@ class BusquedaFuncionarioController extends Controller
                 $aux = Cargo::where('ID_CARGO', $idCargo)->first();
                 $cargoResolucion = $aux->CARGO;
                 $busquedaResolucionCargoFallida = true;
-            } 
-            
+            }
+
         }
 
         //Cargos asociados a la dirección regional del usuario autenticado, para ser enviados a la vista
@@ -124,7 +124,7 @@ class BusquedaFuncionarioController extends Controller
         }
 
         $direccionRegionalAutenticada = auth()->user()->cargo->ID_DIRECCION; // dirección regional sesión autenticada
-        // Cargos a excluir de la búsqueda: ['FUNCIONARIO', 'EXTERNO']; 
+        // Cargos a excluir de la búsqueda: ['FUNCIONARIO', 'EXTERNO'];
 
         // Función callback para aplicar condición de filtro al obtener colección de funcionarios
         $funcionarios = $funcionarios->whereHas('cargo', function ($query) {
@@ -147,5 +147,5 @@ class BusquedaFuncionarioController extends Controller
         return response()->json($funcionarios);
     }
 
-   
+
 }

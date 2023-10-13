@@ -12,15 +12,7 @@ class UbicacionesController extends Controller
     public function __construct(){
         $this->middleware('auth');
         //Tambien aqui podremos agregar que roles son los que pueden ingresar
-        $this->middleware(function ($request, $next) {
-            $user = Auth::user();
-
-            if ($user->hasRole('ADMINISTRADOR')) {
-                return $next($request);
-            } else {
-                abort(403, 'Acceso no autorizado');
-            }
-        });
+        $this->middleware(['roleAdminAndSupport']);
     }
     /**
      * Display a listing of the resource.
@@ -29,13 +21,13 @@ class UbicacionesController extends Controller
     {
         // Obtiene la dirección regional del funcionario autenticado
         $direccionRegional = auth()->user()->ubicacion->ID_DIRECCION;
-        
+
         // Obtiene las ubicaciones y el nombre de la dirección regional asociada según DR del funcionario autenticado
         $ubicaciones = Ubicacion::join('direcciones_regionales', 'ubicacion.ID_DIRECCION', '=', 'direcciones_regionales.ID_DIRECCION')
             ->where('ubicacion.ID_DIRECCION', $direccionRegional)
             ->select('ubicacion.ID_UBICACION', 'ubicacion.UBICACION', 'direcciones_regionales.DIRECCION')
             ->get();
-            
+
         return view('ubicacion.index', compact('ubicaciones'));
     }
 
@@ -46,7 +38,7 @@ class UbicacionesController extends Controller
     {
         // Obtiene la dirección regional asociada al usuario autenticado
         $direccionId = auth()->user()->ubicacion->ID_DIRECCION;
-        
+
         // Obtiene la dirección regional utilizando el ID del usuario autenticado
         $direccionRegional = DireccionRegional::select('ID_DIRECCION', 'DIRECCION')
             ->where('ID_DIRECCION', $direccionId)

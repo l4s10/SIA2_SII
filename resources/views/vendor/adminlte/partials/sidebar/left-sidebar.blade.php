@@ -24,11 +24,11 @@
                 @each('adminlte::partials.sidebar.menu-item', $adminlte->menu('sidebar'), 'item')
 
                 <!-- Header Módulos Funcionario -->
-                @role('ADMINISTRADOR|FUNCIONARIO|SERVICIOS|INFORMATICA|JURIDICO')
+                @role('ADMINISTRADOR|FUNCIONARIO|SERVICIOS|INFORMATICA|JURIDICO|CONDUCTOR')
                 <li class="nav-header">Módulos Funcionario</li>
                 @endrole
 
-                @role('ADMINISTRADOR|FUNCIONARIO|SERVICIOS|INFORMATICA|JURIDICO')
+                @role('ADMINISTRADOR|FUNCIONARIO|SERVICIOS|INFORMATICA|JURIDICO|CONDUCTOR')
                 <!-- Solicitudes vehiculares -->
                 <li class="nav-item has-treeview">
                     <a href="#" class="nav-link">
@@ -239,7 +239,7 @@
                     </ul>
                 </li>
                 @endrole
-                @role('ADMINISTRADOR|SERVICIOS|INFORMATICA|JURIDICO')
+                @role('ADMINISTRADOR|SERVICIOS|INFORMATICA')
                 <li class="nav-item">
                     <a href="{{url('reporteshome')}}" class="nav-link">
                         <i class="fas fa-fw fa-solid fa-chart-simple nav-icon"></i>
@@ -249,12 +249,10 @@
                 @endrole
 
                 <!-- Header Administrador -->
-                 @role('ADMINISTRADOR|INFORMATICA|JURIDICO|SERVICIOS')
-                 <li class="nav-header">Módulos Reservados</li>
-                 @endrole
+                <li class="nav-header">Módulos Reservados</li>
 
                 <!-- Módulo de Directivos -->
-                @role('ADMINISTRADOR|INFORMATICA|JURIDICO')
+                @role('ADMINISTRADOR|INFORMATICA|JURIDICO|FUNCIONARIO|SERVICIOS|CONDUCTOR')
                 <li class="nav-item has-treeview">
                     <a href="#" class="nav-link">
                         <i class="fa-solid fa-user-tie nav-icon"></i>
@@ -281,6 +279,7 @@
                                 </li>
                             </ul>
                         </li>
+                        @role('ADMINISTRADOR|JURIDICO')
                         <li class="nav-item">
                             {{-- !!FALTA LA RUTA HACIA REPOSITORIO --}}
                             <a href="#" class="nav-link">
@@ -314,61 +313,64 @@
                                 </li>
                             </ul>
                         </li>
+                        @endrole
                     </ul>
                 </li>
                 @endrole
 
                 <!-- Panel de control -->
-                @role('ADMINISTRADOR|SERVICIOS')
+                @role('ADMINISTRADOR|SERVICIOS|INFORMATICA')
                 <li class="nav-item has-treeview">
                     <a href="#" class="nav-link">
                         <i class="fa-solid fa-gears nav-icon"></i>
                         <p>Panel de control <i class="right fas fa-angle-left"></i></p>
                     </a>
                     <ul class="nav nav-treeview">
+                        @role('ADMINISTRADOR|SERVICIOS')
                         <li class="nav-item">
                             <a href="{{url('vehiculos')}}" class="nav-link">
                                 <i class="fas fa-fw fa-car nav-icon"></i>
                                 <p>Administrar Vehiculos</p>
                             </a>
-                        </li>
-                        @role('ADMINISTRADOR')
-                            <li class="nav-item">
-                                <a href="{{url('funcionarios')}}" class="nav-link">
-                                    <i class="fas fa-fw fa-users nav-icon"></i>
-                                    <p>Administrar Usuarios</p>
-                                </a>
-                            </li>
                             <li class="nav-item">
                                 <a href="{{url('materiales/auditoria')}}" class="nav-link">
                                     <i class="fas fa-fw fa-paperclip nav-icon"></i>
                                     <p>Auditoria Materiales</p>
                                 </a>
                             </li>
-                            <li class="nav-item">
-                                <a href="{{url('region')}}" class="nav-link">
-                                    <i class="fas fa-fw fa-map nav-icon"></i>
-                                    <p>Administrar Regiones</p>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="{{url('comuna')}}" class="nav-link">
-                                    <i class="fas fa-fw fa-map-location-dot nav-icon"></i>
-                                    <p>Administrar Comunas</p>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="{{url('direccionregional')}}" class="nav-link">
-                                    <i class="fa-solid fa-location-arrow nav-icon"></i>
-                                    <p>Administrar Direcciones Regionales</p>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="{{url('ubicacion')}}" class="nav-link">
-                                    <i class="fas fa-fw fa-users nav-icon"></i>
-                                    <p>Administrar Ubicaciones y Departamentos</p>
-                                </a>
-                            </li>
+                        </li>
+                        @endrole
+                        @role('ADMINISTRADOR|INFORMATICA')
+                        <li class="nav-item">
+                            <a href="{{url('funcionarios')}}" class="nav-link">
+                                <i class="fas fa-fw fa-users nav-icon"></i>
+                                <p>Administrar Usuarios</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{url('region')}}" class="nav-link">
+                                <i class="fas fa-fw fa-map nav-icon"></i>
+                                <p>Administrar Regiones</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{url('comuna')}}" class="nav-link">
+                                <i class="fas fa-fw fa-map-location-dot nav-icon"></i>
+                                <p>Administrar Comunas</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{url('direccionregional')}}" class="nav-link">
+                                <i class="fa-solid fa-location-arrow nav-icon"></i>
+                                <p>Administrar Direcciones Regionales</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{url('ubicacion')}}" class="nav-link">
+                                <i class="fas fa-fw fa-users nav-icon"></i>
+                                <p>Administrar Ubicaciones y Departamentos</p>
+                            </a>
+                        </li>
                         @endrole
                     </ul>
                 </li>

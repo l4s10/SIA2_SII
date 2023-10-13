@@ -31,8 +31,8 @@ class UserController extends Controller
     {
         // //*La persona debe de haber iniciado sesion */
         $this->middleware('auth');
-        // * SI LA PERSONA ES ADMINISTRADOR TIENE ACCESO A TODOS LAS RUTAS* (le quitamos get usuarios pero se la volvemos a asignar en la siguiente)
-        $this->middleware('checkearRol:ADMINISTRADOR')->except('getUsuarios');
+        // * SI LA PERSONA ES ADMINISTRADOR O INFORMATICO TIENE ACCESO A TODOS LAS RUTAS* (le quitamos get usuarios pero se la volvemos a asignar en la siguiente)
+        $this->middleware(['roleAdminAndSupport'])->except('getUsuarios');
         // * SI LA PERSONA TIENE CUALQUIER ROL, SOLO PODRAN ACCEDER AL METODO "getUsuarios" (ESTA FUNCION ES EL DESPLEGABLE DE TODAS LAS PAGINAS QUE PERMITEN SELECCIONAR USUARIOS PARA SOLICITUDES)*
         $this->middleware('checkAnyRole')->only('getUsuarios');
     }
