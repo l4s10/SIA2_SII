@@ -86,7 +86,7 @@
                                     <form action="{{ route('solicitud.vehiculos.pdf',$sol_veh->ID_SOL_VEH) }}" method="GET" target="_blank" id="pdfForm">
                                         @csrf
                                         <!-- Botón para abrir el modal -->
-                                        <button type="button" class="btn btn-info" data-toggle="modal" data-target="#modal{{ $sol_veh->ID_SOL_VEH }}"><i class="fa-regular fa-clipboard"></i> Acciones</button>
+                                        <button type="button" class="btn btn-success actionsBtn" data-toggle="modal" data-target="#modal{{ $sol_veh->ID_SOL_VEH }}"><i class="fa-solid fa-check-circle"></i> Acciones</button>
                                         <button type="submit" class="btn btn-success"><i class="fa-regular fa-file-pdf"></i> PDF</button>
                                     </form>
                                 </td>
@@ -94,62 +94,62 @@
 
                                 </td> --}}
                             </tr>
+                            <!-- Modal -->
+                            <div class="modal fade" id="modal{{ $sol_veh->ID_SOL_VEH }}" tabindex="-1" role="dialog" aria-labelledby="modalLabel{{ $sol_veh->ID_SOL_VEH }}" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="modalLabel{{ $sol_veh->ID_SOL_VEH }}">Detalles de la solicitud</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close" data-sol-id="{{ $sol_veh->ID_SOL_VEH }}">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <h5>Solicitante</h5>
+                                            <p>{{ isset($sol_veh->NOMBRE_SOLICITANTE) ? $sol_veh->NOMBRE_SOLICITANTE : 'Información aún no disponible' }} - {{ isset($sol_veh->RUT) ? $sol_veh->RUT : 'Información aún no disponible' }}</p>
+                                            <h5>Departamento y Email</h5>
+                                            <p>{{ isset($sol_veh->DEPTO) ? $sol_veh->DEPTO : 'Información aún no disponible' }} - {{ isset($sol_veh->EMAIL) ? $sol_veh->EMAIL : 'Información aún no disponible' }}</p>
+                                            <h5>Motivo de la Solicitud</h5>
+                                            <p>{{ isset($sol_veh->MOTIVO_SOL_VEH) ? $sol_veh->MOTIVO_SOL_VEH : 'Información aún no disponible' }}</p>
+                                            <h5>Conductor</h5>
+                                            <p>
+                                                {{ isset($sol_veh->conductor->NOMBRES) ? $sol_veh->conductor->NOMBRES . ' ' . $sol_veh->conductor->APELLIDOS : 'Información aún no disponible' }}
+                                            </p>
+                                            <h5>Fecha de ida y vuelta</h5>
+                                            <p>Salida: {{ \Carbon\Carbon::parse($sol_veh->FECHA_SALIDA)->format('d/m/Y H:i')}} - Llegada: {{ \Carbon\Carbon::parse($sol_veh->FECHA_LLEGADA)->format('d/m/Y H:i')}}</p>
+
+                                            <h5>Origen y Destino</h5>
+                                            <p>
+                                                {{ isset($sol_veh->comunaOrigen) ? $sol_veh->comunaOrigen->COMUNA : 'Información aún no disponible' }}
+                                                -
+                                                {{ isset($sol_veh->comunaDestino) ? $sol_veh->comunaDestino->COMUNA : 'Información aún no disponible' }}
+                                            </p>
+
+                                            <h5>Número de Orden de Trabajo</h5>
+                                            <p>{{ isset($sol_veh->N_ORDEN_TRABAJO) ? $sol_veh->N_ORDEN_TRABAJO : 'Información aún no disponible' }}</p>
+                                            <!-- Aquí puede agregar más detalles como se necesite -->
+                                        </div>
+
+                                        <div class="modal-footer">
+                                            <form action="{{ route('solicitud.vehiculos.authorize', $sol_veh->ID_SOL_VEH) }}" method="POST" id="authorizeForm{{ $sol_veh->ID_SOL_VEH }}">
+                                                @csrf
+                                                <!-- Campo oculto para almacenar la contraseña -->
+                                                <input type="hidden" id="passwordInput{{ $sol_veh->ID_SOL_VEH }}" name="password">
+                                                <!-- Botón para abrir el modal -->
+                                                {{-- !!COPIAR BOTON PARA REEMPLAZAR SUBMIT --}}
+                                                <button type="button" class="btn btn-success authorizeBtn" data-dismiss="modal" data-sol-id="{{ $sol_veh->ID_SOL_VEH }}"><i class="fa-solid fa-check-circle"></i> Autorizar</button>
+                                            </form>
+                                            <form action="{{ route('solicitud.vehiculos.reject', $sol_veh->ID_SOL_VEH) }}" method="POST" id="rejectForm">
+                                                @csrf
+                                                <button type="button" class="btn btn-danger rejectBtn" data-dismiss="modal" data-sol-id="{{ $sol_veh->ID_SOL_VEH }}"><i class="fa-solid fa-check-circle"></i> Rechazar</button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         @endforeach
                     </tbody>
                 </table>
-                <!-- Modal -->
-                <div class="modal fade" id="modal{{ $sol_veh->ID_SOL_VEH }}" tabindex="-1" role="dialog" aria-labelledby="modalLabel{{ $sol_veh->ID_SOL_VEH }}" aria-hidden="true">
-                    <div class="modal-dialog" role="document">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="modalLabel{{ $sol_veh->ID_SOL_VEH }}">Detalles de la solicitud</h5>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-                            <div class="modal-body">
-                                <h5>Solicitante</h5>
-                                <p>{{ isset($sol_veh->NOMBRE_SOLICITANTE) ? $sol_veh->NOMBRE_SOLICITANTE : 'Información aún no disponible' }} - {{ isset($sol_veh->RUT) ? $sol_veh->RUT : 'Información aún no disponible' }}</p>
-                                <h5>Departamento y Email</h5>
-                                <p>{{ isset($sol_veh->DEPTO) ? $sol_veh->DEPTO : 'Información aún no disponible' }} - {{ isset($sol_veh->EMAIL) ? $sol_veh->EMAIL : 'Información aún no disponible' }}</p>
-                                <h5>Motivo de la Solicitud</h5>
-                                <p>{{ isset($sol_veh->MOTIVO_SOL_VEH) ? $sol_veh->MOTIVO_SOL_VEH : 'Información aún no disponible' }}</p>
-                                <h5>Conductor</h5>
-                                <p>
-                                    {{ isset($sol_veh->conductor->NOMBRES) ? $sol_veh->conductor->NOMBRES . ' ' . $sol_veh->conductor->APELLIDOS : 'Información aún no disponible' }}
-                                </p>
-                                <h5>Fecha de ida y vuelta</h5>
-                                <p>Salida: {{ \Carbon\Carbon::parse($sol_veh->FECHA_SALIDA)->format('d/m/Y H:i')}} - Llegada: {{ \Carbon\Carbon::parse($sol_veh->FECHA_LLEGADA)->format('d/m/Y H:i')}}</p>
-
-                                <h5>Origen y Destino</h5>
-                                <p>
-                                    {{ isset($sol_veh->comunaOrigen) ? $sol_veh->comunaOrigen->COMUNA : 'Información aún no disponible' }}
-                                    -
-                                    {{ isset($sol_veh->comunaDestino) ? $sol_veh->comunaDestino->COMUNA : 'Información aún no disponible' }}
-                                </p>
-
-                                <h5>Número de Orden de Trabajo</h5>
-                                <p>{{ isset($sol_veh->N_ORDEN_TRABAJO) ? $sol_veh->N_ORDEN_TRABAJO : 'Información aún no disponible' }}</p>
-                                <!-- Aquí puede agregar más detalles como se necesite -->
-                            </div>
-
-                            <div class="modal-footer">
-                                <form action="{{ route('solicitud.vehiculos.authorize', $sol_veh->ID_SOL_VEH) }}" method="POST" id="authorizeForm">
-                                    @csrf
-                                    <!-- Campo oculto para almacenar la contraseña -->
-                                    <input type="hidden" name="password" id="passwordInput">
-                                    <!-- Botón para abrir el modal -->
-                                    {{-- !!COPIAR BOTON PARA REEMPLAZAR SUBMIT --}}
-                                    <button type="button" class="btn btn-success" id="authorizeBtn" data-dismiss="modal"><i class="fa-solid fa-check-circle"></i> Autorizar</button>
-                                </form>
-                                <form action="{{ route('solicitud.vehiculos.reject', $sol_veh->ID_SOL_VEH) }}" method="POST" id="rejectForm">
-                                    @csrf
-                                    <button type="button" id="rejectBtn" class="btn btn-danger"><i class="fa-solid fa-ban"></i> Rechazar</button>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                </div>
         </div>
     </div>
 @stop
@@ -191,7 +191,7 @@
             });
         });
     </script>
-    <script>
+    {{-- <script>
         document.getElementById('authorizeBtn').addEventListener('click', async function(event) {
             event.preventDefault();
 
@@ -250,6 +250,96 @@
                     document.getElementById('rejectForm').submit();
                 }
             })
+        });
+    </script> --}}
+
+    <script>
+        document.querySelectorAll('.authorizeBtn').forEach(function(button) {
+            button.addEventListener('click', async function(event) {
+                event.preventDefault();
+
+                // Obtener el ID de la solicitud del atributo de datos
+                var solId = button.getAttribute('data-sol-id');
+
+                const { value: password } = await Swal.fire({
+                    title: '¿Estás seguro?',
+                    html: `
+                        Estos datos se enviarán como firma. <br>
+                        RUT: {{ Auth::user()->RUT }}<br>
+                        Nombre completo: {{ Auth::user()->NOMBRES }} {{ Auth::user()->APELLIDOS }}<br>
+                    `,
+                    input: 'password',
+                    inputAttributes: {
+                        autocapitalize: 'off',
+                        required: 'true',
+                        placeholder: 'Ingrese su contraseña'
+                    },
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Sí, estoy seguro',
+                    cancelButtonText: 'Cancelar',
+                    inputValidator: (value) => {
+                        if (!value) {
+                            return 'Por favor, ingrese una contraseña válida';
+                        }
+                    },
+                });
+
+                if (password) {
+                    document.getElementById('passwordInput' + solId).value = password;
+                    document.getElementById('authorizeForm' + solId).submit();
+                } else {
+                    // Si el usuario cancela o no ingresa una contraseña, volvemos a mostrar el modal
+                    $('#modal' + solId).modal('show');
+                }
+
+            });
+        });
+
+        document.querySelectorAll('.rejectBtn').forEach(function(button) {
+            button.addEventListener('click', async function(event) {
+                event.preventDefault();
+
+                // Obtener el ID de la solicitud del atributo de datos
+                var solId = button.getAttribute('data-sol-id');
+
+                Swal.fire({
+                    title: 'Espera',
+                    text: "¿Estás seguro de rechazar la solicitud?",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Sí, estoy seguro',
+                    cancelButtonText: 'Cancelar'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        // Si el usuario confirma, ocultamos el modal
+                        $('#modal' + solId).modal('hide');
+                        document.getElementById('rejectForm').submit();
+                    } else {
+                        // Si el usuario cancela o no ingresa una contraseña, volvemos a mostrar el modal
+                        // Si el usuario cancela, mostramos el modal
+                        $('#modal' + solId).modal('show');
+                    }
+                })
+            });
+        });
+    </script>
+
+    <script>
+        document.querySelectorAll('.close').forEach(function(button) {
+            button.addEventListener('click', function(event) {
+                event.preventDefault();
+
+                // Obtener el ID de la solicitud del atributo de datos
+                var solId = button.getAttribute('data-sol-id');
+
+                // Ocultar el modal
+                $('#modal' + solId).modal('hide');
+            });
         });
     </script>
 @stop
