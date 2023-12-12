@@ -3,7 +3,7 @@
 @section('title', 'Ingreso de Tipos')
 
 @section('content_header')
-    <h1>Ingresar tipo equipo</h1>
+    <h1>Ingresar Tipo de Equipo</h1>
 @stop
 
 @section('content')

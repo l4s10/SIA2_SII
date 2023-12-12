@@ -68,10 +68,9 @@
     <script src="https://kit.fontawesome.com/742a59c628.js" crossorigin="anonymous"></script>
     <script>
         $(function () {
-            let fechaActual = new Date().toISOString().split("T")[0];
             $('#FECHA_VENCIMIENTO_LICENCIA').flatpickr({
                 locale: 'es',
-                minDate: fechaActual,
+                minDate: "1950-01-01",
                 dateFormat: "Y-m-d",
                 altFormat: "d-m-Y",
                 altInput: true,

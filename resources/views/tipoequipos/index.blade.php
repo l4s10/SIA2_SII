@@ -3,7 +3,7 @@
 @section('title', 'Tipo equipos')
 
 @section('content_header')
-    <h1>Listado tipo equipos</h1>
+    <h1>Listado Tipos de Equipos</h1>
     @role('ADMINISTRADOR')
     <div class="alert alert-info" role="alert">
     <div><strong>Bienvenido Administrador:</strong> Acceso total al modulo.<div>
