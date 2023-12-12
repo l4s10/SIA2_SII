@@ -50,7 +50,8 @@ class RelFunVehController extends Controller
                     ->orWhere('OCUPANTE_3', $user->id)
                     ->orWhere('OCUPANTE_4', $user->id)
                     ->orWhere('OCUPANTE_5', $user->id)
-                    ->orWhere('OCUPANTE_6', $user->id);  // Solicitudes donde el usuario es ocupante
+                    ->orWhere('OCUPANTE_6', $user->id)  // Solicitudes donde el usuario es ocupante
+                    ->orWhere('DEPTO', $user->ubicacion->UBICACION); //Solicitudes de un mismo departamento
             })->get();
         }
 
