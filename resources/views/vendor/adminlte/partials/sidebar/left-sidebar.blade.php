@@ -248,11 +248,11 @@
                 </li>
                 @endrole
 
+                @role('ADMINISTRADOR|INFORMATICA|JURIDICO|SERVICIOS')
                 <!-- Header Administrador -->
                 <li class="nav-header">Módulos Reservados</li>
 
                 <!-- Módulo de Directivos -->
-                @role('ADMINISTRADOR|INFORMATICA|JURIDICO|FUNCIONARIO|SERVICIOS|CONDUCTOR')
                 <li class="nav-item has-treeview">
                     <a href="#" class="nav-link">
                         <i class="fa-solid fa-user-tie nav-icon"></i>
@@ -319,7 +319,7 @@
                 @endrole
 
                 <!-- Panel de control -->
-                @role('ADMINISTRADOR|SERVICIOS|INFORMATICA')
+                @role('ADMINISTRADOR|SERVICIOS')
                 <li class="nav-item has-treeview">
                     <a href="#" class="nav-link">
                         <i class="fa-solid fa-gears nav-icon"></i>
@@ -340,7 +340,7 @@
                             </li>
                         </li>
                         @endrole
-                        @role('ADMINISTRADOR|INFORMATICA')
+                        @role('ADMINISTRADOR')
                         <li class="nav-item">
                             <a href="{{url('funcionarios')}}" class="nav-link">
                                 <i class="fas fa-fw fa-users nav-icon"></i>

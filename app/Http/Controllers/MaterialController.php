@@ -195,9 +195,16 @@ class MaterialController extends Controller
 
             // Cambiamos el valor de STOCK por el de STOCK_NUEVO antes de actualizar
             $dataToUpdate = $request->all();
-            $dataToUpdate['STOCK'] = $dataToUpdate['STOCK_NUEVO'];
-            $material->update($dataToUpdate);
+            if($dataToUpdate['TIPO_MOVIMIENTO']=='INGRESO'){
+                $dataToUpdate['STOCK'] = $dataToUpdate['STOCK'] + $dataToUpdate['STOCK_NUEVO'];
+            }elseif(($dataToUpdate['TIPO_MOVIMIENTO']=='TRASLADO')||($dataToUpdate['TIPO_MOVIMIENTO']=='MERMA')){
+                $dataToUpdate['STOCK'] = $dataToUpdate['STOCK'] - $dataToUpdate['STOCK_NUEVO'];
+            }
 
+            //$dataToUpdate['STOCK'] = $dataToUpdate['STOCK'] - $dataToUpdate['STOCK_NUEVO'];
+            //$dataToUpdate['STOCK'] = $dataToUpdate['STOCK_NUEVO'];
+            $material->update($dataToUpdate);
+            
             // Registrar el movimiento
             $data = [
                 'ID_MATERIAL' => $material->ID_MATERIAL,
@@ -211,7 +218,7 @@ class MaterialController extends Controller
 
             session()->flash('success', 'El material y su movimiento asociado fueron modificados y guardados exitosamente');
         } catch(\Exception $e) {
-            session()->flash('error', 'Error al modificar el material y/o su movimiento: ' . $e->getMessage());
+            session()->flash('error', 'Error al modificar el material y/o su movimiento: verifique el stock registrado');
             // session()->flash('error', 'Error al modificar el material y/o su movimiento: ' . $e->getMessage());
         }
         return redirect(route('materiales.index'));

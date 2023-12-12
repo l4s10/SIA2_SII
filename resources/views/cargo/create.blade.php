@@ -22,7 +22,7 @@
 
         {{-- OPCION QUE PERMITE SELECCIONAR DIRECCION REGIONAL --}}
         <div class="mb-3" class="form-group">
-            <label for="ID_DIRECCION">Direccion Regional asociada:</label>
+            <label for="ID_DIRECCION"><i class="fa-solid fa-book-bookmark"></i> Direccion Regional asociada:</label>
             <select name="ID_DIRECCION" id="ID_DIRECCION" class="form-control">
                 @foreach($direccion as $idDireccion => $direccion)
                     <option value="{{ $idDireccion }}">{{ $direccion }}</option>

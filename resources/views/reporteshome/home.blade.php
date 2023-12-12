@@ -3,7 +3,7 @@
 @section('title', 'Estadísticas Generales')
 
 @section('content_header')
-    <h1>Estadística y reportes generales del Sistema</h1>
+    <h1>Estadística y Reportes Generales del Sistema</h1>
     @role('ADMINISTRADOR')
     <div class="alert alert-info alert1" role="alert">
     <div><strong>Bienvenido Administrador:</strong> Acceso total al modulo.<div>
@@ -98,9 +98,9 @@
                 </div>
             </div>
             <div class="card text-bg-primary mb-3 mx-auto col-sm-12 col-md-6" style="max-width: 100%; text-align: justify;">
-                <div class="card-header">Módulo de Informes sobre reservas</div>
+                <div class="card-header">Módulo de Informes sobre reservas de salas</div>
                 <div class="card-body">
-                    <p class="card-text">Este módulo permite ver los reportes de <strong>Reservas</strong>. Para saber las cantidades de solicitudes de <strong>Reservas</strong> del sistema completo.</p>
+                    <p class="card-text">Este módulo permite ver los reportes de <strong>Reservas de salas</strong>. Para saber las cantidades de solicitudes de <strong>Reservas de salas</strong> del sistema completo.</p>
                 </div>
                 <div class="card-footer">
                     <a class="btn btn-primary" href="{{route('reporteshome.reservas')}}"><i class="fa-solid fa-chart-pie"></i> Graficos</a>

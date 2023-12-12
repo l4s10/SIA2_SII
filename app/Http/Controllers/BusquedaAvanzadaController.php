@@ -20,7 +20,7 @@ class BusquedaAvanzadaController extends Controller
         $this->middleware(function ($request, $next) {
             $user = Auth::user();
 
-            if ($user->hasRole('ADMINISTRADOR') || $user->hasRole('JURIDICO') || $user->hasRole('INFORMATICA') || $user->hasRole('SERVICIOS') || $user->hasRole('FUNCIONARIO')) {
+            if ($user->hasRole('ADMINISTRADOR') || $user->hasRole('JURIDICO') || $user->hasRole('INFORMATICA') || $user->hasRole('SERVICIOS')) {
                 return $next($request);
             } else {
                 abort(403, 'Acceso no autorizado');

@@ -34,7 +34,9 @@
                 @method('DELETE')
                 <a href="{{route('ubicacion.index')}}" class="btn btn-secondary">Volver</a>
                 <a href="{{route('ubicacion.edit',$ubicacion->ID_UBICACION)}}" class="btn btn-primary"><i class="fa-solid fa-pen-to-square"></i> Modificar</a>
-                <button type="submit" href="{{route('cargos.destroy',$ubicacion->ID_UBICACION)}}" class="btn btn-danger"><i class="fa-solid fa-trash"></i> Eliminar</button>
+                @role('ADMINISTRADOR')
+                    <button type="submit" href="{{route('cargos.destroy',$ubicacion->ID_UBICACION)}}" class="btn btn-danger"><i class="fa-solid fa-trash"></i> Eliminar</button>
+                @endrole
             </form>
         </div>
     </div>

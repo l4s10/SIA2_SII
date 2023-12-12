@@ -116,7 +116,9 @@
                 @method('DELETE')
                 <a href="{{route('funcionarios.index')}}" class="btn btn-secondary">Volver</a>
                 <a href="{{route('funcionarios.edit',$funcionario->id)}}" class="btn btn-primary"><i class="fa-solid fa-pen-to-square"></i> Modificar</a>
-                <button type="submit" href="{{route('funcionarios.destroy',$funcionario->id)}}" class="btn btn-danger"><i class="fa-solid fa-trash"></i> Eliminar</button>
+                @role('ADMINISTRADOR')
+                    <button type="submit" href="{{route('funcionarios.destroy',$funcionario->id)}}" class="btn btn-danger"><i class="fa-solid fa-trash"></i> Eliminar</button>
+                @endrole
             </form>
         </div>
     </div>

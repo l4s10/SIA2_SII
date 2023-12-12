@@ -26,7 +26,9 @@
                 @method('DELETE')
                 <a href="{{route('region.index')}}" class="btn btn-secondary">Volver</a>
                 <a href="{{route('region.edit',$region->ID_REGION)}}" class="btn btn-primary"><i class="fa-solid fa-pen-to-square"></i> Modificar</a>
+                @role('ADMINISTRADOR')
                 <button type="submit" href="{{route('region.destroy',$region->ID_REGION)}}" class="btn btn-danger"><i class="fa-solid fa-trash"></i> Eliminar</button>
+                @endrole
             </form>
         </div>
     </div>

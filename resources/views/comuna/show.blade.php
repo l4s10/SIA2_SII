@@ -34,7 +34,9 @@
                 @method('DELETE')
                 <a href="{{route('comuna.index')}}" class="btn btn-secondary">Volver</a>
                 <a href="{{route('comuna.edit',$comuna->ID_COMUNA)}}" class="btn btn-primary"><i class="fa-solid fa-pen-to-square"></i> Modificar</a>
+                @role('ADMINISTRADOR')
                 <button type="submit" href="{{route('comuna.destroy',$comuna->ID_COMUNA)}}" class="btn btn-danger"><i class="fa-solid fa-trash"></i> Eliminar</button>
+                @endrole
             </form>
         </div>
     </div>
