@@ -67,7 +67,7 @@
                     </div>
                     <div class="col-md-6">
                         <label for="STOCK_NUEVO"><i class="fa-solid fa-person-shelter"></i> Cantidad:</label>
-                        <input type="number" class="form-control" id="STOCK_NUEVO" name="STOCK_NUEVO" value="{{ old('STOCK_NUEVO', $material->STOCK_NUEVO ?? '') }}" required placeholder="Indicar la nueva cantidad total">
+                        <input type="number" class="form-control" id="STOCK_NUEVO" name="STOCK_NUEVO" value="{{ old('STOCK_NUEVO', $material->STOCK_NUEVO ?? '') }}" required placeholder="Indicar la cantidad">
                         @error('stock')
                             <div class="text-danger">{{ $message }}</div>
                         @enderror
@@ -82,7 +82,7 @@
                         - OTRO: Nombre completo del editor, descripción de parámetro modificado.
                         - INGRESO: N° factura, código libro adquisiciones, nombre y rut proveedor, N° res. exenta de compra y de orden de compra.
                         - TRASLADO: Si es hacia o desde unidades, cantidad trasladada, fecha memo conductor y correo electrónico del solicitante.
-                        - MERMA: Fecha de autorización y vía de autorización, nombre del jefe de dpto que autoriza. 
+                        - MERMA: Fecha de autorización y vía de autorización, nombre del jefe de dpto que autoriza.
                         (MAX 1000 CARACTERES)">{{ old('DETALLE_MOVIMIENTO') }}</textarea>
                     @if ($errors->has('DETALLE_MOVIMIENTO'))
                         <div class="invalid-feedback">
