@@ -271,10 +271,18 @@
         </form>
     </div>
 @stop
+
 @section('css')
     <link rel="stylesheet" href="/css/admin_custom.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <style>
+        #FECHA_SALIDA, #FECHA_LLEGADA {
+            background-color: white !important;
+        }
+    </style>
 @stop
+
+
 @section('js')
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
@@ -284,24 +292,47 @@
     <script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/es.js"></script>
     <script>
         $(function () {
-             // Inicializar Flatpickr para el campo de fecha y hora de inicio
-             flatpickr("#FECHA_SALIDA", {
+            // Referencias a los pickers, aún no inicializados
+            var inicioPicker, finPicker;
+
+            // Inicializar Flatpickr para el campo de fecha y hora de inicio
+            inicioPicker = flatpickr("#FECHA_SALIDA", {
                 locale: 'es',
                 enableTime: true,
                 dateFormat: "Y-m-d H:i",
-                // Otras opciones y configuraciones adicionales que desees utilizar
                 altFormat: 'd-m-Y H:i',
                 altInput: true,
+                minDate: "today",
+                onReady: function(dateObj, dateStr, instance) {
+                    var input = $(instance.altInput);
+                    input.css('background-color', 'white');
+                },
+                onChange: function(selectedDates) {
+                    if (selectedDates.length > 0) {
+                        // Actualizar minDate del picker de término
+                        finPicker.set('minDate', selectedDates[0]);
+                    }
+                }
             });
 
             // Inicializar Flatpickr para el campo de fecha y hora de término
-            flatpickr("#FECHA_LLEGADA", {
+            finPicker = flatpickr("#FECHA_LLEGADA", {
                 locale: 'es',
                 enableTime: true,
                 dateFormat: "Y-m-d H:i",
-                // Otras opciones y configuraciones adicionales que desees utilizar
                 altFormat: 'd-m-Y H:i',
                 altInput: true,
+                minDate: "today",
+                onReady: function(dateObj, dateStr, instance) {
+                    var input = $(instance.altInput);
+                    input.css('background-color', 'white');
+                },
+                onChange: function(selectedDates) {
+                    if (selectedDates.length > 0) {
+                        // Actualizar maxDate del picker de inicio
+                        inicioPicker.set('maxDate', selectedDates[0]);
+                    }
+                }
             });
             $('#FECHA_SOL_VEH').flatpickr({
                 dateFormat: 'Y-m-d',
