@@ -44,6 +44,7 @@
                     <!-- <th scope="col">ID</th> -->
                     <th scope="col">Usuario modificante</th>
                     <th scope="col">Tipo de movimiento</th>
+                    <th scope="col">Material</th>
                     <th scope="col">Stock previo</th>
                     <th scope="col">Stock nuevo</th>
                     <th scope="col">Detalle y/o Motivo</th>
@@ -56,6 +57,7 @@
                     <tr>
                         <td>{{$movimiento->modificante->NOMBRES.' '.$movimiento->modificante->APELLIDOS}}</td>
                         <td>{{$movimiento->TIPO_MOVIMIENTO}}</td>
+                        <td>{{$movimiento->material->NOMBRE_MATERIAL}}</td>
                         <td>{{$movimiento->STOCK_PREVIO}}</td>
                         <td>{{$movimiento->STOCK_NUEVO}}</td>
                         <td>{{$movimiento->DETALLE_MOVIMIENTO}}</td>
