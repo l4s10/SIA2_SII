@@ -52,16 +52,19 @@ class TipoMaterialController extends Controller
      */
     public function store(Request $request)
     {
+        //?? Convertimos en uppercase el nombre del tipo de material
+        $request->merge([
+            'TIPO_MATERIAL' => strtoupper($request->TIPO_MATERIAL),
+        ]);
         // Especificamos la regla de los campos y los mensajes de validación
         $rules = [
-            // 'TIPO_MATERIAL' => ['required', 'regex:/^[A-Za-z\s]+$/', 'max:255', Rule::unique('tipo_material')],
-            'TIPO_MATERIAL' => ['required', 'regex:/^[A-Za-z\s]+$/', 'max:255'],
+            'TIPO_MATERIAL' => ['required', 'regex:/^[^<>]*$/', 'max:255', Rule::unique('tipo_material')],
         ];
 
         // Mensajes de feedback para usuario
         $messages = [
             'TIPO_MATERIAL.required' => 'El campo Nombre es obligatorio.',
-            // 'TIPO_MATERIAL.unique' => 'Este tipo de material ya existe.',
+            'TIPO_MATERIAL.unique' => 'Este tipo de material ya existe.',
             'TIPO_MATERIAL.regex' => 'El campo Nombre solo puede contener letras y espacios.',
         ];
 
@@ -102,7 +105,7 @@ class TipoMaterialController extends Controller
             $tipo = TipoMaterial::find($id);
         }catch(\Exception $e){
             session()->flash('error','Error al acceder al tipo de material seleccionado');
-            return redirect('/tipomaterial');
+            return redirect(route('tipomaterial.index'));
         }
         return view('tipomaterial.edit')->with('tipo',$tipo);
     }
@@ -116,8 +119,8 @@ class TipoMaterialController extends Controller
 
         // Especificamos la regla de los campos y los mensajes de validación
         $rules = [
-            // 'TIPO_MATERIAL' => ['required', 'regex:/^[A-Za-z\s]+$/', 'max:255', Rule::unique('tipo_material')->ignore($id,'TIPO_MATERIAL')],
-            'TIPO_MATERIAL' => ['required', 'regex:/^[A-Za-z\s]+$/', 'max:255'],
+            'TIPO_MATERIAL' => ['required', 'regex:/^[^<>]*$/', 'max:255', Rule::unique('tipo_material')->ignore($id,'TIPO_MATERIAL')],
+            // 'TIPO_MATERIAL' => ['required', 'regex:/^[A-Za-z\s]+$/', 'max:255'],
         ];
 
         // Mensajes de feedback para usuario
