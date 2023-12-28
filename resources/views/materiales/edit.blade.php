@@ -41,7 +41,7 @@
 
                     <div class="col-md-6">
                         <label for="TIPO_MOVIMIENTO" class="form-label">Tipo de movimiento: </label>
-                        <select name="TIPO_MOVIMIENTO" id="TIPO_MOVIMIENTO" class="form-control @error('TIPO_MOVIMIENTO') is-invalid @enderror">
+                        <select name="TIPO_MOVIMIENTO" id="TIPO_MOVIMIENTO" class="form-control @error('TIPO_MOVIMIENTO') is-invalid @enderror" required>
                             <option value="">-- Seleccione un tipo de movimiento --</option>
                             <option value="INGRESO" {{ old('TIPO_MOVIMIENTO') == 'INGRESO' ? 'selected' : '' }}>INGRESO</option>
                             <option value="TRASLADO" {{ old('TIPO_MOVIMIENTO') == 'TRASLADO' ? 'selected' : '' }}>TRASLADO</option>
@@ -60,14 +60,14 @@
                 <div class="row">
                     <div class="col-md-6">
                         <label for="STOCK"><i class="fa-solid fa-person-shelter"></i> Stock actual:</label>
-                        <input type="number" class="form-control" id="STOCK" name="STOCK" value="{{ old('STOCK', $material->STOCK ?? '') }}" readonly>
+                        <input type="number" class="form-control" id="STOCK" name="STOCK" value="{{ old('STOCK', $material->STOCK ?? '') }}" min="0" readonly>
                         @error('stock')
                             <div class="text-danger">{{ $message }}</div>
                         @enderror
                     </div>
                     <div class="col-md-6">
                         <label for="STOCK_NUEVO"><i class="fa-solid fa-person-shelter"></i> Cantidad:</label>
-                        <input type="number" class="form-control" id="STOCK_NUEVO" name="STOCK_NUEVO" value="{{ old('STOCK_NUEVO', $material->STOCK_NUEVO ?? '') }}" required placeholder="Indicar la cantidad">
+                        <input type="number" class="form-control" id="STOCK_NUEVO" name="STOCK_NUEVO" value="{{ old('STOCK_NUEVO', $material->STOCK_NUEVO ?? '') }}" min="0" placeholder="Indicar la cantidad" required>
                         @error('stock')
                             <div class="text-danger">{{ $message }}</div>
                         @enderror
@@ -78,7 +78,7 @@
             <div class="mb-3">
                 <div class="form-group">
                     <label for="DETALLE_MOVIMIENTO">Detalle del Movimiento</label>
-                    <textarea class="form-control{{ $errors->has('DETALLE_MOVIMIENTO') ? ' is-invalid' : '' }}" name="DETALLE_MOVIMIENTO" id="DETALLE_MOVIMIENTO" cols="30" rows="5" placeholder="Especificar según caso:
+                    <textarea required class="form-control{{ $errors->has('DETALLE_MOVIMIENTO') ? ' is-invalid' : '' }}" name="DETALLE_MOVIMIENTO" id="DETALLE_MOVIMIENTO" cols="30" rows="5" placeholder="Especificar según caso:
                         - OTRO: Nombre completo del editor, descripción de parámetro modificado.
                         - INGRESO: N° factura, código libro adquisiciones, nombre y rut proveedor, N° res. exenta de compra y de orden de compra.
                         - TRASLADO: Si es hacia o desde unidades, cantidad trasladada, fecha memo conductor y correo electrónico del solicitante.

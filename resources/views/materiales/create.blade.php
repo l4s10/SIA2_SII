@@ -39,7 +39,7 @@
 
         <div class="mb-3">
             <label for="STOCK" class="form-label"><i class="fa-solid fa-person-shelter"></i> Stock:</label>
-            <input type="number" class="form-control{{ $errors->has('STOCK') ? ' is-invalid' : '' }}" id="STOCK" name="STOCK" value="{{ old('STOCK') }}" placeholder="Ingrese la cantidad disponible del material" required>
+            <input type="number" class="form-control{{ $errors->has('STOCK') ? ' is-invalid' : '' }}" id="STOCK" name="STOCK" value="{{ old('STOCK') }}" placeholder="Ingrese la cantidad disponible del material" min="0" required>
             @if ($errors->has('STOCK'))
                 <div class="invalid-feedback">
                     {{ $errors->first('STOCK') }}
@@ -58,7 +58,7 @@
         <div class="mb-3">
             <div class="form-group">
                 <label for="DETALLE_MOVIMIENTO">Detalle del Movimiento</label>
-                <textarea class="form-control{{ $errors->has('DETALLE_MOVIMIENTO') ? ' is-invalid' : '' }}" name="DETALLE_MOVIMIENTO" id="DETALLE_MOVIMIENTO" cols="30" rows="5" placeholder="Especifique: N° factura, Código libro adquisiciones, Nombre y rut proveedor, N° res. exenta de compra y de orden de compra. (MAX 1000 CARACTERES)">{{ old('DETALLE_MOVIMIENTO') }}</textarea>
+                <textarea required class="form-control{{ $errors->has('DETALLE_MOVIMIENTO') ? ' is-invalid' : '' }}" name="DETALLE_MOVIMIENTO" id="DETALLE_MOVIMIENTO" cols="30" rows="5" placeholder="Especifique: N° factura, Código libro adquisiciones, Nombre y rut proveedor, N° res. exenta de compra y de orden de compra. (MAX 1000 CARACTERES)">{{ old('DETALLE_MOVIMIENTO') }}</textarea>
                 @if ($errors->has('DETALLE_MOVIMIENTO'))
                     <div class="invalid-feedback">
                         {{ $errors->first('DETALLE_MOVIMIENTO') }}

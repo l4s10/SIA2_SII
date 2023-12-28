@@ -62,23 +62,33 @@ class MaterialController extends Controller
      */
     public function store(Request $request)
     {
+        //??Convertimos el nombre del material a mayúsculas
+        $request->merge(['NOMBRE_MATERIAL' => strtoupper($request->NOMBRE_MATERIAL)]);
+
         // Especificamos las reglas del campo
         $rules = [
-            'NOMBRE_MATERIAL' => ['required', 'string', 'max:255'],
-            'ID_TIPO_MAT' => ['required'],
-            'STOCK' => ['required', 'numeric'],
-            'DETALLE_MOVIMIENTO' => 'required|string|max:1000', // Asumiendo un máximo de 1000 caracteres.
+            'NOMBRE_MATERIAL' => ['required', 'string', 'max:255', 'regex:/^[^<>]*$/'],
+            'ID_TIPO_MAT' => ['required', 'exists:tipo_material,ID_TIPO_MAT'],
+            'STOCK' => ['required', 'numeric', 'between:0,1000'],
+            'DETALLE_MOVIMIENTO' => ['required', 'string', 'max:1000', 'regex:/^[^<>]*$/'],
+            'ID_DIRECCION' => ['required', 'exists:direcciones_regionales,ID_DIRECCION'],
         ];
 
         // Especificamos los mensajes personalizados de validación
         $messages = [
             'NOMBRE_MATERIAL.required' => 'El campo Nombre material es obligatorio',
             'NOMBRE_MATERIAL.string' => 'El campo Nombre material debe ser una cadena de texto',
+            'NOMBRE_MATERIAL.regex' => 'El campo Nombre material no puede contener etiquetas HTML',
             'ID_TIPO_MAT.required' => 'Debe seleccionar un tipo de material',
+            'ID_TIPO_MAT.exists' => 'El tipo de material seleccionado no es válido',
             'STOCK.required' => 'El campo STOCK es requerido',
             'STOCK.numeric' => 'El campo STOCK debe ser numérico',
+            'STOCK.between' => 'El campo STOCK debe ser un número entre 0 y 1000',
             'DETALLE_MOVIMIENTO.required' => 'El detalle del movimiento es obligatorio',
             'DETALLE_MOVIMIENTO.string' => 'El detalle del movimiento debe ser una cadena de texto',
+            'DETALLE_MOVIMIENTO.regex' => 'El detalle del movimiento no puede contener caracteres especiales',
+            'ID_DIRECCION.required' => 'Debe seleccionar una dirección regional',
+            'ID_DIRECCION.exists' => 'La dirección regional seleccionada no es válida',
         ];
 
         // Validamos los datos recibidos del formulario
@@ -155,14 +165,16 @@ class MaterialController extends Controller
      */
     public function update(Request $request, string $id)
     {
+        //??Convertimos el nombre del material a mayúsculas
+        $request->merge(['NOMBRE_MATERIAL' => strtoupper($request->NOMBRE_MATERIAL)]);
         // Especificamos las reglas de validación para los campos
         $rules = [
-            'NOMBRE_MATERIAL' => ['required', 'string', 'max:255', Rule::unique('materiales')->ignore($id,'ID_MATERIAL')],
+            'NOMBRE_MATERIAL' => ['required', 'string', 'max:255', 'regex:/^[^<>]*$/', Rule::unique('materiales')->ignore($id,'ID_MATERIAL')],
             'ID_TIPO_MAT' => ['required'],
             'STOCK' => ['required', 'numeric'],
-            'STOCK_NUEVO' => 'required|numeric',
+            'STOCK_NUEVO' => ['required', 'numeric', 'between:0,1000'],
             'TIPO_MOVIMIENTO' => 'required|string|max:10',
-            'DETALLE_MOVIMIENTO' => 'required|string|max:1000' // Asumiendo un max de 1000 caracteres.
+            'DETALLE_MOVIMIENTO' => ['required', 'string', 'max:1000', 'regex:/^[^<>]*$/']
         ];
         $messages = [
             'NOMBRE_MATERIAL.required' => 'El campo Nombre material es obligatorio',
@@ -173,9 +185,11 @@ class MaterialController extends Controller
             'STOCK.numeric' => 'El campo Stock debe ser numérico',
             'STOCK_NUEVO.required' => 'El campo Stock nuevo es requerido',
             'STOCK_NUEVO.numeric' => 'El campo Stock nuevo debe ser numérico',
+            'STOCK_NUEVO.between' => 'El campo STOCK debe ser un número entre 0 y 1000',
             'TIPO_MOVIMIENTO.required' => 'El campo Tipo de movimiento es obligatorio',
             'DETALLE_MOVIMIENTO.required' => 'El detalle del movimiento es obligatorio',
             'DETALLE_MOVIMIENTO.string' => 'El detalle del movimiento debe ser una cadena de texto',
+            'DETALLE_MOVIMIENTO.regex' => 'El detalle del movimiento no puede contener caracteres especiales',
         ];
 
         // Validamos la request
@@ -204,7 +218,7 @@ class MaterialController extends Controller
             //$dataToUpdate['STOCK'] = $dataToUpdate['STOCK'] - $dataToUpdate['STOCK_NUEVO'];
             //$dataToUpdate['STOCK'] = $dataToUpdate['STOCK_NUEVO'];
             $material->update($dataToUpdate);
-            
+
             // Registrar el movimiento
             $data = [
                 'ID_MATERIAL' => $material->ID_MATERIAL,
