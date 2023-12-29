@@ -40,7 +40,7 @@
 
         <div class="mb-3">
             <label for="CAPACIDAD_PERSONAS" class="form-label"><i class="fa-solid fa-person-shelter"></i> Capacidad personas:</label>
-            <input type="number" class="form-control{{ $errors->has('CAPACIDAD_PERSONAS') ? ' is-invalid' : '' }}" id="CAPACIDAD_PERSONAS" name="CAPACIDAD_PERSONAS" value="{{ $sala->CAPACIDAD_PERSONAS }}" required>
+            <input type="number" class="form-control{{ $errors->has('CAPACIDAD_PERSONAS') ? ' is-invalid' : '' }}" id="CAPACIDAD_PERSONAS" name="CAPACIDAD_PERSONAS" value="{{ $sala->CAPACIDAD_PERSONAS }}" min="0" required>
             @if ($errors->has('CAPACIDAD_PERSONAS'))
                 <div class="invalid-feedback">
                     {{ $errors->first('CAPACIDAD_PERSONAS') }}

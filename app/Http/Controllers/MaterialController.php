@@ -67,7 +67,7 @@ class MaterialController extends Controller
 
         // Especificamos las reglas del campo
         $rules = [
-            'NOMBRE_MATERIAL' => ['required', 'string', 'max:255', 'regex:/^[^<>]*$/'],
+            'NOMBRE_MATERIAL' => ['required', 'string', 'max:255', 'regex:/^[a-zA-Z0-9\s]+$/'],
             'ID_TIPO_MAT' => ['required', 'exists:tipo_material,ID_TIPO_MAT'],
             'STOCK' => ['required', 'numeric', 'between:0,1000'],
             'DETALLE_MOVIMIENTO' => ['required', 'string', 'max:1000', 'regex:/^[^<>]*$/'],
@@ -165,11 +165,9 @@ class MaterialController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //??Convertimos el nombre del material a mayúsculas
-        $request->merge(['NOMBRE_MATERIAL' => strtoupper($request->NOMBRE_MATERIAL)]);
         // Especificamos las reglas de validación para los campos
         $rules = [
-            'NOMBRE_MATERIAL' => ['required', 'string', 'max:255', 'regex:/^[^<>]*$/', Rule::unique('materiales')->ignore($id,'ID_MATERIAL')],
+            'NOMBRE_MATERIAL' => ['required', 'string', 'max:255', 'regex:/^[a-zA-Z0-9\s]+$/', Rule::unique('materiales')->ignore($id,'ID_MATERIAL')],
             'ID_TIPO_MAT' => ['required'],
             'STOCK' => ['required', 'numeric'],
             'STOCK_NUEVO' => ['required', 'numeric', 'between:0,1000'],
@@ -205,6 +203,8 @@ class MaterialController extends Controller
         //Guardamos los cambios de material
         try {
             $material = Material::find($id);
+            //Upper para el nombre del material
+            $material->NOMBRE_MATERIAL = strtoupper($request->input('NOMBRE_MATERIAL'));
             $stock_previo = $material->STOCK;
 
             // Cambiamos el valor de STOCK por el de STOCK_NUEVO antes de actualizar

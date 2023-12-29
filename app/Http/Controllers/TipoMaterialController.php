@@ -58,7 +58,7 @@ class TipoMaterialController extends Controller
         ]);
         // Especificamos la regla de los campos y los mensajes de validación
         $rules = [
-            'TIPO_MATERIAL' => ['required', 'regex:/^[^<>]*$/', 'max:255', Rule::unique('tipo_material')],
+            'TIPO_MATERIAL' => ['required', 'regex:/^[a-zA-Z0-9\s]+$/', 'max:255', Rule::unique('tipo_material')],
         ];
 
         // Mensajes de feedback para usuario
@@ -116,10 +116,14 @@ class TipoMaterialController extends Controller
     public function update(Request $request, string $id)
     {
         $tipo = TipoMaterial::find($id);
+        //?? Uppercase para el nombre del tipo de material
+        $tipo->merge([
+            'TIPO_MATERIAL' => strtoupper($request->TIPO_MATERIAL),
+        ]);
 
         // Especificamos la regla de los campos y los mensajes de validación
         $rules = [
-            'TIPO_MATERIAL' => ['required', 'regex:/^[^<>]*$/', 'max:255', Rule::unique('tipo_material')->ignore($id,'TIPO_MATERIAL')],
+            'TIPO_MATERIAL' => ['required', 'regex:/^[a-zA-Z0-9\s]+$/', 'max:255', Rule::unique('tipo_material')->ignore($id,'TIPO_MATERIAL')],
             // 'TIPO_MATERIAL' => ['required', 'regex:/^[A-Za-z\s]+$/', 'max:255'],
         ];
 

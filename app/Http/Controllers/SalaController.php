@@ -37,9 +37,14 @@ class SalaController extends Controller
      */
     public function store(Request $request)
     {
+        //?? Uppercase para el nombre de la sala
+        $request->merge([
+            'NOMBRE_SALA' => strtoupper($request->NOMBRE_SALA),
+        ]);
+        //Validamos los datos
         $rules = [
-            'NOMBRE_SALA' => 'required|max:128',
-            'CAPACIDAD_PERSONAS' => 'required|integer',
+            'NOMBRE_SALA' => 'required|max:128|regex:/^[a-zA-Z0-9\s]+$/',
+            'CAPACIDAD_PERSONAS' => 'required|integer|min:0',
             'ESTADO_SALA' => 'required|max:128',
             'ID_CATEGORIA_SALA' => 'required|integer',
         ];
@@ -49,6 +54,7 @@ class SalaController extends Controller
             'NOMBRE_SALA.max' => 'El nombre de la sala no debe tener más de 128 caracteres.',
             'CAPACIDAD_PERSONAS.required' => 'La capacidad de personas es obligatoria.',
             'CAPACIDAD_PERSONAS.integer' => 'La capacidad de personas debe ser un número entero.',
+            'CAPACIDAD_PERSONAS.min' => 'La capacidad de personas debe ser un número positivo.',
             'ESTADO_SALA.required' => 'El estado de la sala es obligatorio.',
             'ESTADO_SALA.max' => 'El estado de la sala no debe tener más de 128 caracteres.',
             'ID_CATEGORIA_SALA.required' => 'La categoría de la sala es obligatoria.',
@@ -90,9 +96,13 @@ class SalaController extends Controller
     public function update(Request $request, string $id)
     {
         $sala = Sala::find($id);
+        //?? Uppercase para el nombre de la sala
+        $sala->merge([
+            'NOMBRE_SALA' => strtoupper($request->NOMBRE_SALA),
+        ]);
         $rules = [
-            'NOMBRE_SALA' => 'required|max:128',
-            'CAPACIDAD_PERSONAS' => 'required|integer',
+            'NOMBRE_SALA' => 'required|max:128|regex:/^[a-zA-Z0-9\s]+$/',
+            'CAPACIDAD_PERSONAS' => 'required|integer|min:0',
             'ESTADO_SALA' => 'required|max:128',
             'ID_CATEGORIA_SALA' => 'required|integer',
         ];
@@ -102,6 +112,7 @@ class SalaController extends Controller
             'NOMBRE_SALA.max' => 'El nombre de la sala no debe tener más de 128 caracteres.',
             'CAPACIDAD_PERSONAS.required' => 'La capacidad de personas es obligatoria.',
             'CAPACIDAD_PERSONAS.integer' => 'La capacidad de personas debe ser un número entero.',
+            'CAPACIDAD_PERSONAS.min' => 'La capacidad de personas debe ser un número positivo.',
             'ESTADO_SALA.required' => 'El estado de la sala es obligatorio.',
             'ESTADO_SALA.max' => 'El estado de la sala no debe tener más de 128 caracteres.',
             'ID_CATEGORIA_SALA.required' => 'La categoría de la sala es obligatoria.',
