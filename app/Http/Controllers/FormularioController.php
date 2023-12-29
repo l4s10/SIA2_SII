@@ -34,6 +34,10 @@ class FormularioController extends Controller
      */
     public function store(Request $request)
     {
+        //?? Convertimos en uppercase el nombre del formulario
+        $request->merge([
+            'NOMBRE_FORMULARIO' => strtoupper($request->NOMBRE_FORMULARIO),
+        ]);
         //Definimos las reglas para los campos
         $rules = [
             'NOMBRE_FORMULARIO' => 'required|unique:formularios,NOMBRE_FORMULARIO|regex:/^[a-zA-Z0-9\s]+$/',
@@ -79,6 +83,10 @@ class FormularioController extends Controller
     public function update(Request $request, string $id)
     {
         $formulario = Formulario::find($id);
+        //?? Convertimos en uppercase el nombre del formulario
+        $formulario->merge([
+            'NOMBRE_FORMULARIO' => strtoupper($request->NOMBRE_FORMULARIO),
+        ]);
         $rules = [
             'NOMBRE_FORMULARIO' => 'required|unique:formularios,NOMBRE_FORMULARIO|regex:/^[a-zA-Z0-9\s]+$/',
             'TIPO_FORMULARIO' => 'required',
