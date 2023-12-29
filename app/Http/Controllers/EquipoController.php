@@ -37,11 +37,16 @@ class EquipoController extends Controller
      */
     public function store(Request $request)
     {
+        //Uppercase a marca y modelo
+        $request->merge([
+            'MARCA_EQUIPO' => strtoupper($request->MARCA_EQUIPO),
+            'MODELO_EQUIPO' => strtoupper($request->MODELO_EQUIPO),
+        ]);
         $rules = [
             'MARCA_EQUIPO' => 'required|string|max:128',
             'MODELO_EQUIPO' => 'required|string|max:128',
             'ESTADO_EQUIPO' => 'required|string|max:128',
-            'ID_TIPO_EQUIPOS' => 'required|integer',
+            'ID_TIPO_EQUIPOS' => 'required|integer|exists:tipo_equipos,ID_TIPO_EQUIPOS',
         ];
 
         $messages = [
@@ -50,6 +55,7 @@ class EquipoController extends Controller
             'ESTADO_EQUIPO.required' => 'El campo Estado es requerido.',
             'ID_TIPO_EQUIPOS.required' => 'El campo ID de Tipo de Equipo es requerido.',
             'ID_TIPO_EQUIPOS.integer' => 'El campo ID de Tipo de Equipo debe ser un número entero.',
+            'ID_TIPO_EQUIPOS.exists' => 'El ID de Tipo de Equipo proporcionado no existe.',
         ];
         $request->validate($rules,$messages);
         $data = $request->except('_token');
@@ -87,11 +93,17 @@ class EquipoController extends Controller
 
     public function update(Request $request, string $id)
     {
+        //Uppercase a marca y modelo
+        $request->merge([
+            'MARCA_EQUIPO' => strtoupper($request->MARCA_EQUIPO),
+            'MODELO_EQUIPO' => strtoupper($request->MODELO_EQUIPO),
+        ]);
+        //Reglas y regex
         $rules = [
-            'MARCA_EQUIPO' => 'required|string|max:128',
-            'MODELO_EQUIPO' => 'required|string|max:128',
+            'MARCA_EQUIPO' => 'required|string|max:128|regex:/^[a-zA-Z0-9\s]+$/',
+            'MODELO_EQUIPO' => 'required|string|max:128|regex:/^[a-zA-Z0-9\s]+$/',
             'ESTADO_EQUIPO' => 'required|string|max:128',
-            'ID_TIPO_EQUIPOS' => 'required|integer',
+            'ID_TIPO_EQUIPOS' => 'required|integer|exists:tipo_equipos,ID_TIPO_EQUIPOS',
         ];
 
         $messages = [
@@ -100,6 +112,7 @@ class EquipoController extends Controller
             'ESTADO_EQUIPO.required' => 'El campo Estado es requerido.',
             'ID_TIPO_EQUIPOS.required' => 'El campo ID de Tipo de Equipo es requerido.',
             'ID_TIPO_EQUIPOS.integer' => 'El campo ID de Tipo de Equipo debe ser un número entero.',
+            'ID_TIPO_EQUIPOS.exists' => 'El ID de Tipo de Equipo proporcionado no existe.',
         ];
 
         $request->validate($rules, $messages);

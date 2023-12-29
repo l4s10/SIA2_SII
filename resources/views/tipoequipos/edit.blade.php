@@ -13,7 +13,7 @@
             @method('PUT')
             <div class="mb-3">
                 <label for="TIPO_EQUIPO" class="form-label"><i class="fa-solid fa-person-chalkboard"></i> Nombre Tipo:</label>
-                <input id="TIPO_EQUIPO" name="TIPO_EQUIPO" type="text" class="form-control @error('TIPO_EQUIPO') is-invalid @enderror" value="{{$solicitud->TIPO_EQUIPO}}" placeholder="Ej: NOTEBOOK" tabindex="2">
+                <input id="TIPO_EQUIPO" name="TIPO_EQUIPO" type="text" class="form-control @error('TIPO_EQUIPO') is-invalid @enderror" value="{{$solicitud->TIPO_EQUIPO}}" placeholder="Ej: NOTEBOOK" tabindex="2" required>
                 @error('TIPO_EQUIPO')
                     <div class="invalid-feedback">{{$message}}</div>
                 @enderror

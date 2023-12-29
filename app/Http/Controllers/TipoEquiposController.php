@@ -38,17 +38,28 @@ class TipoEquiposController extends Controller
      */
     public function store(Request $request)
     {
+        //?? Convertimos en uppercase el nombre del tipo de equipo
+        $request->merge([
+            'TIPO_EQUIPO' => strtoupper($request->TIPO_EQUIPO),
+        ]);
+        // Especificamos la regla de los campos y los mensajes de validación
         $rules = [
             'TIPO_EQUIPO' => [
                 'required',
                 'string',
+                'max:128',
+                'min:3',
+                'regex:/^[a-zA-Z0-9\s]+$/',//Solo letras y numeros
                 Rule::unique('tipo_equipos')
             ]
         ];
         $messages = [
             'TIPO_EQUIPO.required' => 'El campo tipo de equipo es obligatorio',
             'TIPO_EQUIPO.string' => 'El campo tipo de equipo debe ser una cadena',
-            'TIPO_EQUIPO.unique' => 'El campo tipo de equipo ya existe'
+            'TIPO_EQUIPO.unique' => 'El campo tipo de equipo ya existe',
+            'TIPO_EQUIPO.max' => 'El campo tipo de equipo debe tener un máximo de 128 caracteres',
+            'TIPO_EQUIPO.min' => 'El campo tipo de equipo debe tener un mínimo de 3 caracteres',
+            'TIPO_EQUIPO.regex' => 'El campo tipo de equipo solo puede contener letras y números',
         ];
         $validator = Validator::make($request->all(), $rules, $messages);
 
@@ -94,13 +105,21 @@ class TipoEquiposController extends Controller
     {
         $solicitud = TipoEquipo::find($id);
 
+        //?? Convertimos en uppercase el nombre del tipo de equipo
+        $request->merge([
+            'TIPO_EQUIPO' => strtoupper($request->TIPO_EQUIPO),
+        ]);
+        // Especificamos la regla de los campos y los mensajes de validación
         $rules = [
-            'TIPO_EQUIPO' => 'required|unique:tipo_equipos,TIPO_EQUIPO|string',
+            'TIPO_EQUIPO' => 'required|unique:tipo_equipos,TIPO_EQUIPO|string|max:128|min:3|regex:/^[a-zA-Z0-9\s]+$/',
         ];
         $messages = [
             'TIPO_EQUIPO.required' => 'El tipo de equipo es requerido',
             'TIPO_EQUIPO.unique' => 'El tipo de equipo ya existe',
-            'TIPO_EQUIPO.string' => 'El tipo de equipo debe ser un campo de texto'
+            'TIPO_EQUIPO.string' => 'El tipo de equipo debe ser un campo de texto',
+            'TIPO_EQUIPO.max' => 'El tipo de equipo debe tener un máximo de 128 caracteres',
+            'TIPO_EQUIPO.min' => 'El tipo de equipo debe tener un mínimo de 3 caracteres',
+            'TIPO_EQUIPO.regex' => 'El tipo de equipo solo puede contener letras y números',
         ];
         $validator = Validator::make($request->all(), $rules, $messages);
 
