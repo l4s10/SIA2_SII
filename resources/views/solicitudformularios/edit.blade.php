@@ -58,7 +58,7 @@
             </div>
             <div class="form-group">
                 <label for="ESTADO_SOL_FORM" class="form-label">Estado de la Solicitud:</label>
-                <select id="ESTADO_SOL_FORM" name="ESTADO_SOL_FORM" class="form-control">
+                <select id="ESTADO_SOL_FORM" name="ESTADO_SOL_FORM" class="form-control" required>
                     <option value="INGRESADO">🟠 Ingresado</option>
                     <option value="EN REVISION" selected>🟡 En revisión</option>
                     <option value="ACEPTADO">🟢 Aceptado</option>
@@ -90,7 +90,12 @@
             </div>
             <div class="form-group">
                 <label class="form-label" for="OBSERV_SOL_FORM">Observaciones:</label>
-                <textarea class="form-control" name="OBSERV_SOL_FORM" id="OBSERV_SOL_FORM" placeholder="Escriba sus observaciones"></textarea>
+                <textarea class="form-control {{ $errors->has('OBSERV_SOL_FORM') ? 'is-invalid' : '' }}" name="OBSERV_SOL_FORM" id="OBSERV_SOL_FORM" placeholder="Escriba sus observaciones"> {{$solicitud->OBSERV_SOL_FORM}} </textarea>
+                @if ($errors->has('OBSERV_SOL_FORM'))
+                    <div class="invalid-feedback">
+                        {{ $errors->first('OBSERV_SOL_FORM') }}
+                    </div>
+                @endif
             </div>
             <!-- Botones de envio -->
             <div class="mb-6">
@@ -98,30 +103,6 @@
                 <button type="submit" class="btn btn-primary" tabindex="4"><i class="fa-sharp fa-solid fa-paper-plane"></i> Enviar Solicitud</button>
             </div>
         </form>
-        {{-- MODAL CARRITO --}}
-        <div class="modal fade" id="modal-carrito" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Agregar</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close" id="btn-cerrar-modal">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <p id="nombre-material"></p>
-                        <p id="tipo-material"></p>
-                        <label class="form-label" for="cantidad">Cantidad:</label>
-                        <input class="form-control" type="number" id="cantidad" name="cantidad" min="1" value="1">
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal" id="btn-cerrar-pie-modal">Cerrar</button>
-                        <button type="button" class="btn btn-primary" id="btn-agregar-carrito">Agregar</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-
     </div>
 @stop
 
@@ -138,92 +119,17 @@
     <!-- DATATABLES (NO TOCAR) -->
     <!-- Agregando funciones de paginacion, busqueda, etc -->
     <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
-        <script src="https://cdn.datatables.net/1.13.2/js/jquery.dataTables.min.js"></script>
-        <script src="https://cdn.datatables.net/1.13.2/js/dataTables.bootstrap5.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.2/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.2/js/dataTables.bootstrap5.min.js"></script>
 
-        <!-- Para inicializar -->
-        <script>
-            $(document).ready(function () {
-                $('#formularios').DataTable({
-                    "lengthMenu": [[5,10, 50, -1], [5, 10, 50, "All"]],
-                    "language": {
-                    "url": "https://cdn.datatables.net/plug-ins/1.11.3/i18n/es_es.json"
-                },
-                });
-            });
-        </script>
-
-    <!-- CARRITO DE COMPRAS -->
+    <!-- Para inicializar -->
     <script>
-        $(document).ready(function() {
-        // Capturar clic en botón "Agregar al carrito"
-        $(document).on('click', '.btn-agregar', function() {
-            // Obtener valores de los atributos "data" del botón
-            var nombreMaterial = $(this).data('nombre');
-            var tipoMaterial = $(this).data('tipo');
-            // Mostrar valores en el modal
-            $('#nombre-material').text('Nombre material: ' + nombreMaterial);
-            $('#tipo-material').text('Tipo material: ' + tipoMaterial);
-            // Mostrar modal
-            $('#modal-carrito').modal('show');
-            // Deshabilitar botón "Agregar al carrito"
-            $(this).prop('disabled', true);
-        });
-
-
-        // Capturar clic en botón "Eliminar"
-            $(document).on('click', '.btn-eliminar', function() {
-            var nombreMaterial = $(this).data('nombre');
-            // Eliminar el artículo del carrito
-            var carritoTextarea = $('#FORM_SOL');
-            var carritoActual = carritoTextarea.val();
-            var regex = new RegExp('- \\d+ unidad\\(es\\) de "' + nombreMaterial + '".*\n?', 'gm');
-            var nuevoCarrito = carritoActual.replace(regex, '');
-            carritoTextarea.val(nuevoCarrito);
-
-            // Habilitar el botón "Agregar al carrito" correspondiente
-            $('.btn-agregar[data-nombre="' + nombreMaterial + '"]').prop('disabled', false);
-        });
-
-        $('#btn-cerrar-modal').on('click', function() {
-            $('#modal-carrito').modal('hide');
-            var nombreMaterial = $('#nombre-material').text().split(': ')[1];
-            var tipoMaterial = $('#tipo-material').text().split(': ')[1];
-            // Volver a habilitar botón "Agregar al carrito"
-            $('.btn-agregar[data-nombre="' + nombreMaterial + '"][data-tipo="' + tipoMaterial + '"]').prop('disabled', false);
-        });
-
-        $('#btn-cerrar-pie-modal').on('click', function() {
-            $('#modal-carrito').modal('hide');
-            var nombreMaterial = $('#nombre-material').text().split(': ')[1];
-            var tipoMaterial = $('#tipo-material').text().split(': ')[1];
-            // Volver a habilitar botón "Agregar al carrito"
-            $('.btn-agregar[data-nombre="' + nombreMaterial + '"][data-tipo="' + tipoMaterial + '"]').prop('disabled', false);
-        });
-
-            // Capturar clic en botón "Agregar al carrito" del modal
-            $('#btn-agregar-carrito').click(function() {
-                // Obtener valores del modal
-                var nombreMaterial = $('#nombre-material').text().split(': ')[1];
-                var tipoMaterial = $('#tipo-material').text().split(': ')[1];
-                var cantidad = $('#cantidad').val();
-                // Enviar información al carrito (aquí puedes hacer una petición AJAX)
-                alert('Se agregó ' + cantidad + ' unidades de "' + nombreMaterial + '" de tipo "' + tipoMaterial + '".');
-                // Cerrar modal
-                $('#modal-carrito').modal('hide');
-                // Obtener valores del modal
-                var nombreMaterial = $('#nombre-material').text().split(': ')[1];
-                var tipoMaterial = $('#tipo-material').text().split(': ')[1];
-                var cantidad = $('#cantidad').val();
-
-                // Actualizar textarea con los artículos en el carrito
-                var carritoTextarea = $('#FORM_SOL');
-                var carritoActual = carritoTextarea.val();
-                var nuevoArticulo = cantidad + ' unidad(es) de "' + nombreMaterial + '" de tipo "' + tipoMaterial + '\n';
-                var nuevoCarrito = carritoActual + '- ' + nuevoArticulo;
-                carritoTextarea.val(nuevoCarrito);
-                //Reseteamos el valor
-                $('#cantidad').val(1);
+        $(document).ready(function () {
+            $('#formularios').DataTable({
+                "lengthMenu": [[5,10, 50, -1], [5, 10, 50, "All"]],
+                "language": {
+                "url": "https://cdn.datatables.net/plug-ins/1.11.3/i18n/es_es.json"
+            },
             });
         });
     </script>

@@ -119,6 +119,7 @@ class SolicitudFormularioController extends Controller
             'DEPTO' => ['required', 'string', 'max:255', 'regex:/^[A-Za-z\s]+$/'],
             'EMAIL' => 'required|email',
             'FORM_SOL' => ['required', 'string', 'max:1000'],
+            'OBSERV_SOL_FORM' => ['string', 'max:1000', 'regex:/^[^<>]*$/'],
         ];
 
         $messages = [
@@ -138,6 +139,9 @@ class SolicitudFormularioController extends Controller
             'EMAIL.email' => 'El campo Email debe ser una dirección de correo electrónico válida.',
             'FORM_SOL.required' => 'El carrito debe contener formularios.',
             'FORM_SOL.max' => 'El carrito no debe exceder los 1000 caracteres.',
+            'OBSERV_SOL_FORM.string' => 'El campo Observaciones debe ser una cadena de caracteres.',
+            'OBSERV_SOL_FORM.max' => 'El campo Observaciones no puede tener más de 1000 caracteres.',
+            'OBSERV_SOL_FORM.regex' => 'El campo Observaciones no puede contener caracteres especiales.',
         ];
         $request->validate($rules,$messages);
         $data = $request->except('_token');

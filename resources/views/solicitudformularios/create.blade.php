@@ -226,6 +226,12 @@
     <!-- CARRITO DE COMPRAS -->
     <script>
         $(document).ready(function() {
+            $('#cantidad').on('input', function() {
+                var valor = $(this).val();
+                if (valor < 1 || !$.isNumeric(valor)) {
+                    $(this).val(1);
+                }
+            });
         // Capturar clic en botón "Agregar al carrito"
         $(document).on('click', '.btn-agregar', function() {
             // Obtener valores de los atributos "data" del botón
