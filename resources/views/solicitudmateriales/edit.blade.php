@@ -48,117 +48,91 @@
                     </div>
 
                     <div class="mb-3">
-                    <label for="EMAIL" class="form-label"><i class="fa-solid fa-envelope"></i> Email:</label>
-                    <input type="email" id="EMAIL" name="EMAIL" class="form-control{{ $errors->has('EMAIL') ? ' is-invalid' : '' }}" value="{{ $solicitud->EMAIL }}" placeholder="Ej: someone@example.com" @can('Nivel 2')@readonly(true) @endcan>
-                    @if ($errors->has('EMAIL'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('EMAIL') }}
+                        <label for="EMAIL" class="form-label"><i class="fa-solid fa-envelope"></i> Email:</label>
+                        <input type="email" id="EMAIL" name="EMAIL" class="form-control{{ $errors->has('EMAIL') ? ' is-invalid' : '' }}" value="{{ $solicitud->EMAIL }}" placeholder="Ej: someone@example.com" @can('Nivel 2')@readonly(true) @endcan>
+                        @if ($errors->has('EMAIL'))
+                        <div class="invalid-feedback">
+                            {{ $errors->first('EMAIL') }}
+                        </div>
+                        @endif
                     </div>
+                </div>
+            </div>
+            {{-- *ESTADO DE SOLICITUD* --}}
+            <div class="mb-3">
+                <label for="ESTADO_SOL" class="form-label"><i class="fa-solid fa-file-circle-check"></i> Estado de la Solicitud:</label>
+                <select id="ESTADO_SOL" name="ESTADO_SOL" class="form-control">
+                    <option value="INGRESADO" @if ($solicitud->ESTADO_SOL == 'INGRESADO') selected @endif>🟠 Ingresado</option>
+                    <option value="EN REVISION" @if ($solicitud->ESTADO_SOL == 'EN REVISION') selected @endif>🟡 En revisión</option>
+                    <option value="ACEPTADO" @if ($solicitud->ESTADO_SOL == 'ACEPTADO') selected @endif>🟢 Aceptado</option>
+                    <option value="EN ESPERA" @if ($solicitud->ESTADO_SOL == 'EN ESPERA') selected @endif>⚪ En espera</option>
+                    <option value="RECHAZADO" @if ($solicitud->ESTADO_SOL == 'RECHAZADO') selected @endif>🔴 Rechazado</option>
+                    <option value="TERMINADO" @if ($solicitud->ESTADO_SOL == 'TERMINADO') selected @endif>⚫ Terminado</option>
+                </select>
+            </div>
+
+            <!-- Listado de materiales -->
+            <div class="table-responsive">
+                <table id="materiales" class="table table-bordered mt-4">
+                    <thead class="bg-primary text-white">
+                        <tr>
+                            <th scope="col">Tipo Material</th>
+                            <th scope="col">Nombre Material</th>
+                            <th scope="col">Stock</th>
+                            <th scope="col">Cantidad aprobada</th>
+                            {{-- <th scope="col" hidden>Acción</th> --}}
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach ($materiales as $material)
+                            <tr>
+                                <td>{{ $material->tipoMaterial->TIPO_MATERIAL }}</td>
+                                <td class="material-name">{{ $material->NOMBRE_MATERIAL }}</td>
+                                <td>{{ $material->STOCK }}</td>
+                                <td>
+                                    <input type="number" type="button" class="form-control cantidad-restar cantidad-autorizada" data-id="{{ $material->ID_MATERIAL }}" min="0" max="{{ $material->STOCK }}" value="0" name="cantidad_autorizada[{{ $material->ID_MATERIAL }}]">
+                                </td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
+            {{-- *CAMPO CHECKOUT* --}}
+            <div class="mb-6" style="padding: 1%;">
+                <div class="mb-3">
+                    <label for="MATERIAL_SOL" class="form-label"><i class="fa-solid fa-file-circle-question"></i> {{$solicitud->NOMBRE_SOLICITANTE}} está solicitando:</label>
+                    <textarea id="MATERIAL_SOL" name="MATERIAL_SOL" rows="5" class="form-control @if($errors->has('MATERIAL_SOL')) is-invalid @endif" placeholder="Artículos en el carrito (Máx 1000 caracteres)" readonly required>{{$solicitud->MATERIAL_SOL}}</textarea>
+                    @if($errors->has('MATERIAL_SOL'))
+                        <div class="invalid-feedback">{{$errors->first('MATERIAL_SOL')}}</div>
                     @endif
                 </div>
-            </div>
-        </div>
-        {{-- *ESTADO DE SOLICITUD* --}}
-        <div class="mb-3">
-            <label for="ESTADO_SOL" class="form-label"><i class="fa-solid fa-file-circle-check"></i> Estado de la Solicitud:</label>
-            <select id="ESTADO_SOL" name="ESTADO_SOL" class="form-control">
-                <option value="INGRESADO" @if ($solicitud->ESTADO_SOL == 'INGRESADO') selected @endif>🟠 Ingresado</option>
-                <option value="EN REVISION" @if ($solicitud->ESTADO_SOL == 'EN REVISION') selected @endif>🟡 En revisión</option>
-                <option value="ACEPTADO" @if ($solicitud->ESTADO_SOL == 'ACEPTADO') selected @endif>🟢 Aceptado</option>
-                <option value="EN ESPERA" @if ($solicitud->ESTADO_SOL == 'EN ESPERA') selected @endif>⚪ En espera</option>
-                <option value="RECHAZADO" @if ($solicitud->ESTADO_SOL == 'RECHAZADO') selected @endif>🔴 Rechazado</option>
-                <option value="TERMINADO" @if ($solicitud->ESTADO_SOL == 'TERMINADO') selected @endif>⚫ Terminado</option>
-            </select>
-        </div>
-
-        <!-- Carrito de compras -->
-        <div class="table-responsive">
-            <table id="materiales" class="table table-bordered mt-4">
-                <thead class="bg-primary text-white">
-                    <tr>
-                        <th scope="col">Tipo Material</th>
-                        <th scope="col">Nombre Material</th>
-                        <th scope="col">Stock</th>
-                        <th scope="col">Cantidad aprobada</th>
-                        {{-- <th scope="col" hidden>Acción</th> --}}
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach ($materiales as $material)
-                        <tr>
-                            <td>{{ $material->tipoMaterial->TIPO_MATERIAL }}</td>
-                            <td class="material-name">{{ $material->NOMBRE_MATERIAL }}</td>
-                            <td>{{ $material->STOCK }}</td>
-                            <td>
-                                <input type="number" type="button" class="form-control cantidad-restar cantidad-autorizada" data-id="{{ $material->ID_MATERIAL }}" min="0" max="{{ $material->STOCK }}" value="0" name="cantidad_autorizada[{{ $material->ID_MATERIAL }}]">
-                            </td>
-                            {{-- <td>
-                                <button class="btn btn-primary btn-restar" data-id="{{ $material->ID_MATERIAL }}" hidden>Restar</button>
-                            </td> --}}
-                        </tr>
-                    @endforeach
-                </tbody>
-            </table>
-        </div>
-        {{-- *CAMPO CHECKOUT* --}}
-        <div class="mb-6" style="padding: 1%;">
-            <div class="mb-3">
-                <label for="MATERIAL_SOL" class="form-label"><i class="fa-solid fa-file-circle-question"></i> {{$solicitud->NOMBRE_SOLICITANTE}} está solicitando:</label>
-                <textarea id="MATERIAL_SOL" name="MATERIAL_SOL" rows="5" class="form-control @if($errors->has('MATERIAL_SOL')) is-invalid @endif" placeholder="Artículos en el carrito (Máx 1000 caracteres)" readonly required>{{$solicitud->MATERIAL_SOL}}</textarea>
-                @if($errors->has('MATERIAL_SOL'))
-                    <div class="invalid-feedback">{{$errors->first('MATERIAL_SOL')}}</div>
-                @endif
-            </div>
-            {{-- *CAMPO FECHA DESPACHO* --}}
-            <div class="form-group">
-                <label for="FECHA_DESPACHO"><i class="fa-solid fa-calendar"></i> Fecha de despacho:</label>
-                <input type="text" id="FECHA_DESPACHO" name="FECHA_DESPACHO" class="form-control flatpickr @if($errors->has('FECHA_DESPACHO')) is-invalid @endif" placeholder="Ingrese fecha de despacho" data-input required value="{{ $solicitud->FECHA_DESPACHO}}">
-                @if ($errors->has('FECHA_DESPACHO'))
-                    <div class="invalid-feedback">{{ $errors->first('FECHA_DESPACHO') }}</div>
-                @endif
-            </div>
-            {{-- *CAMPO OBSERVACIONES* --}}
-            <div class="mb-3">
-                <label for="OBSERVACIONES" class="form-label"><i class="fa-solid fa-comments"></i>  Observaciones:</label>
-                <textarea id="OBSERVACIONES" name="OBSERVACIONES" class="form-control" placeholder="Solo el encargado puede ingresar observaciones">{{$solicitud->OBSERVACIONES}}</textarea>
-            </div>
-            {{-- *CAMPO ESCONDIDO QUE ALMACENA QUIEN REVISA SOLICITUD* --}}
-            <div class="mb-3" hidden>
-                <label for="MODIFICADO_POR" class="form-label">Revisado por:</label>
-                <input type="text" id="MODIFICADO_POR" name="MODIFICADO_POR" value="{{ auth()->user()->NOMBRES}} {{auth()->user()->APELLIDOS}}">
-            </div>
-        </div>
-        {{-- *BOTONES DE ENVIO* --}}
-        <div class="mb-6">
-            <!-- Campo oculto para almacenar qué botón se presionó -->
-            <input type="hidden" name="accion" value="">
-            <a href="{{route('solmaterial.index')}}" class="btn btn-secondary" tabindex="5"><i class="fa-solid fa-hand-point-left"></i> Cancelar</a>
-            <button id="btn-enviar-cambios" type="submit" class="btn btn-primary" tabindex="4"><i class="fa-sharp fa-solid fa-paper-plane"></i> Guardar observaciones</button>
-            <button id="btn-autorizar-cantidad" id="btn-restar-general" type="button" class="btn btn-info"><i class="fa-sharp fa-solid fa-paper-plane"></i> Autorizar cantidad y terminar</button>
-        </div>
-
-        <div class="modal fade" id="modal-carrito" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Agregar al carrito</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close" id="btn-cerrar-modal">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <p id="nombre-material"></p>
-                        <p id="tipo-material"></p>
-                        <label for="cantidad">Cantidad:</label>
-                        <input type="number" id="cantidad" name="cantidad" min="1" value="1">
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal" id="btn-cerrar-pie-modal">Cerrar</button>
-                        <button type="button" class="btn btn-primary" id="btn-agregar-carrito">Agregar al carrito</button>
-                    </div>
+                {{-- *CAMPO FECHA DESPACHO* --}}
+                <div class="form-group">
+                    <label for="FECHA_DESPACHO"><i class="fa-solid fa-calendar"></i> Fecha de despacho:</label>
+                    <input type="text" id="FECHA_DESPACHO" name="FECHA_DESPACHO" class="form-control flatpickr @if($errors->has('FECHA_DESPACHO')) is-invalid @endif" placeholder="Ingrese fecha de despacho" data-input required value="{{ $solicitud->FECHA_DESPACHO}}">
+                    @if ($errors->has('FECHA_DESPACHO'))
+                        <div class="invalid-feedback">{{ $errors->first('FECHA_DESPACHO') }}</div>
+                    @endif
+                </div>
+                {{-- *CAMPO OBSERVACIONES* --}}
+                <div class="mb-3">
+                    <label for="OBSERVACIONES" class="form-label"><i class="fa-solid fa-comments"></i>  Observaciones:</label>
+                    <textarea id="OBSERVACIONES" name="OBSERVACIONES" class="form-control" placeholder="Solo el encargado puede ingresar observaciones">{{$solicitud->OBSERVACIONES}}</textarea>
+                </div>
+                {{-- *CAMPO ESCONDIDO QUE ALMACENA QUIEN REVISA SOLICITUD* --}}
+                <div class="mb-3" hidden>
+                    <label for="MODIFICADO_POR" class="form-label">Revisado por:</label>
+                    <input type="text" id="MODIFICADO_POR" name="MODIFICADO_POR" value="{{ auth()->user()->NOMBRES}} {{auth()->user()->APELLIDOS}}">
                 </div>
             </div>
-        </div>
+            {{-- *BOTONES DE ENVIO* --}}
+            <div class="mb-6">
+                <!-- Campo oculto para almacenar qué botón se presionó -->
+                <input type="hidden" name="accion" value="">
+                <a href="{{route('solmaterial.index')}}" class="btn btn-secondary" tabindex="5"><i class="fa-solid fa-hand-point-left"></i> Cancelar</a>
+                <button id="btn-enviar-cambios" type="submit" class="btn btn-primary" tabindex="4"><i class="fa-sharp fa-solid fa-paper-plane"></i> Guardar observaciones</button>
+                <button id="btn-autorizar-cantidad" id="btn-restar-general" type="button" class="btn btn-info"><i class="fa-sharp fa-solid fa-paper-plane"></i> Autorizar cantidad y terminar</button>
+            </div>
         </form>
     </div>
 @stop
@@ -202,78 +176,7 @@
         });
     </script>
 
-    <!-- CARRITO DE COMPRAS -->
-    <script>
-        $(document).ready(function() {
-        // Capturar clic en botón "Agregar al carrito"
-        $('.btn-agregar').click(function() {
-            // Obtener valores de los atributos "data" del botón
-            var nombreMaterial = $(this).data('nombre');
-            var tipoMaterial = $(this).data('tipo');
-            // Mostrar valores en el modal
-            $('#nombre-material').text('Nombre material: ' + nombreMaterial);
-            $('#tipo-material').text('Tipo material: ' + tipoMaterial);
-            // Mostrar modal
-            $('#modal-carrito').modal('show');
-            // Deshabilitar botón "Agregar al carrito"
-            $(this).prop('disabled', true);
-        });
 
-        $('.btn-eliminar').click(function() {
-            var nombreMaterial = $(this).data('nombre');
-            // Eliminar el artículo del carrito
-            var carritoTextarea = $('#MATERIAL_SOL');
-            var carritoActual = carritoTextarea.val();
-            var regex = new RegExp('- \\d+ unidad\\(es\\) de "' + nombreMaterial + '".*\n?', 'gm');
-            var nuevoCarrito = carritoActual.replace(regex, '');
-            carritoTextarea.val(nuevoCarrito);
-
-            // Habilitar el botón "Agregar al carrito" correspondiente
-            $('.btn-agregar[data-nombre="' + nombreMaterial + '"]').prop('disabled', false);
-        });
-
-
-
-        $('#btn-cerrar-modal').on('click', function() {
-            $('#modal-carrito').modal('hide');
-            var nombreMaterial = $('#nombre-material').text().split(': ')[1];
-            var tipoMaterial = $('#tipo-material').text().split(': ')[1];
-            // Volver a habilitar botón "Agregar al carrito"
-            $('.btn-agregar[data-nombre="' + nombreMaterial + '"][data-tipo="' + tipoMaterial + '"]').prop('disabled', false);
-        });
-
-        $('#btn-cerrar-pie-modal').on('click', function() {
-            $('#modal-carrito').modal('hide');
-            var nombreMaterial = $('#nombre-material').text().split(': ')[1];
-            var tipoMaterial = $('#tipo-material').text().split(': ')[1];
-            // Volver a habilitar botón "Agregar al carrito"
-            $('.btn-agregar[data-nombre="' + nombreMaterial + '"][data-tipo="' + tipoMaterial + '"]').prop('disabled', false);
-        });
-
-        // Capturar clic en botón "Agregar al carrito" del modal
-        $('#btn-agregar-carrito').click(function() {
-            // Obtener valores del modal
-            var nombreMaterial = $('#nombre-material').text().split(': ')[1];
-            var tipoMaterial = $('#tipo-material').text().split(': ')[1];
-            var cantidad = $('#cantidad').val();
-            // Enviar información al carrito (aquí puedes hacer una petición AJAX)
-            alert('Se agregó ' + cantidad + ' unidades de "' + nombreMaterial + '" de tipo "' + tipoMaterial + '" al carrito.');
-            // Cerrar modal
-            $('#modal-carrito').modal('hide');
-            // Obtener valores del modal
-            var nombreMaterial = $('#nombre-material').text().split(': ')[1];
-            var tipoMaterial = $('#tipo-material').text().split(': ')[1];
-            var cantidad = $('#cantidad').val();
-
-            // Actualizar textarea con los artículos en el carrito
-            var carritoTextarea = $('#MATERIAL_SOL');
-            var carritoActual = carritoTextarea.val();
-            var nuevoArticulo = cantidad + ' unidad(es) de "' + nombreMaterial + '" de tipo "' + tipoMaterial + '"';
-            var nuevoCarrito = carritoActual + '\n- ' + nuevoArticulo;
-            carritoTextarea.val(nuevoCarrito);
-        });
-        });
-    </script>
     {{-- PARA VERIFICAR BOTON PRESIONADO --}}
     <script>
         document.getElementById('btn-enviar-cambios').addEventListener('click', function() {

@@ -118,10 +118,6 @@
                     <div class="invalid-feedback">{{$errors->first('MATERIAL_SOL')}}</div>
                 @endif
             </div>
-            <div class="form-group" hidden>
-                <label for="OBSERVACIONES" class="form-label"><i class="fa-solid fa-comments"></i> Observaciones:</label>
-                <textarea id="OBSERVACIONES" name="OBSERVACIONES" class="form-control" placeholder="Solo el encargado puede ingresar observaciones" readonly>No existen observaciones por ahora</textarea>
-            </div>
         </div>
         <!-- Botones de envio -->
         <div class="mb-6">
@@ -202,6 +198,12 @@
 
     <!-- CARRITO DE COMPRAS -->
     <script>
+        $('#cantidad').on('input', function() {
+            var valor = $(this).val();
+            if (valor < 1 || !$.isNumeric(valor)) {
+                $(this).val(1);
+            }
+        });
         $(document).ready(function() {
         // Capturar clic en botón "Agregar al carrito"
         $(document).on('click', '.btn-agregar', function() {

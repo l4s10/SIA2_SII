@@ -20,7 +20,8 @@
                 <p>Email: {{ $sol_material->EMAIL }}</p>
                 <p>Estado: {{ $sol_material->ESTADO_SOL }}</p>
                 <p>Fecha de ingreso: {{ $sol_material->created_at->tz('America/Santiago')->format('d/m/Y H:i:s') }}</p>
-                <p>Pedido: {{ $sol_material->MATERIAL_SOL}}</p>
+                {{-- ** Formatea el pedido para que se vea con espacios --}}
+                <p>Pedido: <br>{!! nl2br(e($sol_material->MATERIAL_SOL)) !!}</p>
                 <p>Observaciones: {{ $sol_material->OBSERVACIONES }}</p>
                 <p>Revisado por: {{$sol_material->MODIFICADO_POR}}</p>
             </div>

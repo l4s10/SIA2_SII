@@ -60,7 +60,7 @@ class SolMatController extends Controller
             // 'RUT' => 'required|regex:/^[0-9.-]+$/|min:7|max:12',
             'DEPTO' => ['required', 'string', 'max:255'],
             'EMAIL' => 'required|email',
-            'MATERIAL_SOL' => 'required|max:1000',
+            'MATERIAL_SOL' => 'required|max:1000|regex:/^- (\d+) unidad\(es\) de ".*?" de tipo ".*?"/m',
         ];
 
         $messages = [
@@ -79,14 +79,12 @@ class SolMatController extends Controller
             'EMAIL.email' => 'El campo Email debe ser una dirección de correo electrónico válida.',
             'MATERIAL_SOL.required' => 'El carrito debe contener materiales',
             'MATERIAL_SOL.max' => 'El carrito no puede tener más de 1000 caracteres',
+            'MATERIAL_SOL.regex' => 'El carrito debe tener el formato correcto',
         ];
 
         $request->validate($rules, $messages);
 
         $data = $request->except('_token');
-        // Formatear el RUT antes de almacenarlo en la base de datos
-        $rut = intval(str_replace(['.', '-'], '', $data['RUT']));
-        $data['RUT'] = $this->formatRut($rut);
         try {
             SolicitudMateriales::create($data);
             session()->flash('success', 'La solicitud de materiales ha sido enviada exitosamente');
@@ -128,7 +126,7 @@ class SolMatController extends Controller
             'RUT' => 'required|regex:/^[0-9.-]+$/|min:7|max:12',
             'DEPTO' => ['required', 'string', 'max:255'],
             'EMAIL' => 'required|email',
-            'MATERIAL_SOL' => 'required|max:1000',
+            'MATERIAL_SOL' => 'required|max:1000|regex:/^- (\d+) unidad\(es\) de ".*?" de tipo ".*?"/m',
         ];
 
         $messages = [
@@ -147,12 +145,11 @@ class SolMatController extends Controller
             'EMAIL.email' => 'El campo Email debe ser una dirección de correo electrónico válida.',
             'MATERIAL_SOL.required' => 'El campo de checkout de materiales solicitados es requerido',
             'MATERIAL_SOL.max' => 'El campo de checkout de materiales solicitados no puede tener más de 1000 caracteres',
+            'MATERIAL_SOL.regex' => 'El campo de checkout de materiales solicitados debe tener el formato correcto',
         ];
 
         $request->validate($rules, $messages);
-        // Formatear el RUT antes de almacenarlo en la base de datos
-        $rut = intval(str_replace(['.', '-'], '', $request['RUT']));
-        $request['RUT'] = $this->formatRut($rut);
+
         try{
             //Verificamos los estados para compararlos y ver si se puede guardar la fecha de atencion
             $oldEstado = $solicitud->ESTADO_SOL;
@@ -173,9 +170,9 @@ class SolMatController extends Controller
             }
             session()->flash('success','Solicitud modificada exitosamente!.');
         }catch(\Exception $e){
-            session()->flash('error','Error al modificar la solicitud.' .$e->getMessage());
+            session()->flash('error','Error al modificar la solicitud.');
         }
-        return redirect('/solmaterial');
+        return redirect(route('solmaterial.index'));
     }
 
     public function confirmarRecepcion(Request $request, $id)
@@ -217,17 +214,6 @@ class SolMatController extends Controller
         }catch(\Exception $e){
             session()->flash('error','Error al eliminar la solicitud de materiales seleccionada');
         }
-        return redirect('/solmaterial');
+        return redirect(route('solmaterial.index'));
     }
-
-    //-----FUNCION QUE NOS PERMITE FORMATEAR EL RUT CON  PUNTOS Y GUIÓN.------
-    public function formatRut($rut) {
-        $rut = preg_replace('/[^0-9kK]/', '', $rut); // Remueve todos los caracteres excepto los números y la letra K
-        $dv = substr($rut, -1); // Obtiene el dígito verificador
-        $rut = substr($rut, 0, -1); // Remueve el dígito verificador del número completo
-        $rut_array = str_split(strrev($rut), 3); // Divide el número completo en grupos de 3 dígitos, comenzando desde el final
-        $rut = implode('.', $rut_array); // Une los grupos de 3 dígitos con un punto
-        return strrev($rut) . '-' . strtoupper($dv); // Retorna el RUT con guion y el dígito verificador en mayúscula
-    }
-
 }
