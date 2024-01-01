@@ -98,7 +98,7 @@
                 {{-- TIPO SERVICIO --}}
                 <div class="mb-3">
                     <label for="ID_TIPO_SERVICIO" class="form-label"><i class="fa-solid fa-shop-lock"></i> Tipo de reparación:</label>
-                    <select id="ID_TIPO_SERVICIO" name="ID_TIPO_SERVICIO" class="form-control {{ $errors->has('ID_TIPO_SERVICIO') ? 'is-invalid' : '' }}">
+                    <select id="ID_TIPO_SERVICIO" name="ID_TIPO_SERVICIO" class="form-control {{ $errors->has('ID_TIPO_SERVICIO') ? 'is-invalid' : '' }}" disabled>
                         <option value="">-- Seleccione un tipo --</option>
                         @foreach ($tipos_servicio as $tipo_servicio)
                             @if ($solicitud->ID_TIPO_SERVICIO == $tipo_servicio->ID_TIPO_SERVICIO)
@@ -194,22 +194,32 @@
 
     <script>
         $(function () {
-            $('#FECHA_INICIO_REP_VEH').flatpickr({
-                enableTime: true,
-                dateFormat: 'Y-m-d H:i',
+            // Inicializar Flatpickr para el campo de fecha y hora de inicio
+            let inicioFlatpickr = flatpickr("#FECHA_INICIO_REP_VEH", {
                 locale: 'es',
-                minDate: 'today',
-                showClearButton: true,
-                defaultHour: 8 // Agregamos una hora predeterminada
+                enableTime: true,
+                dateFormat: "Y-m-d H:i",
+                altFormat: 'd-m-Y H:i',
+                altInput: true,
+                minDate: "today", // La fecha de inicio mínimo será hoy
+                minTime: '08:00',
+                maxTime: '18:00',
+                onChange: function(selectedDates, dateStr, instance) {
+                    if (terminoFlatpickr.selectedDates[0] && selectedDates[0] > terminoFlatpickr.selectedDates[0]) {
+                        terminoFlatpickr.setDate(selectedDates[0]);
+                    }
+                    terminoFlatpickr.set('minDate', dateStr);
+                },
             });
 
-            $('#FECHA_TERMINO_REP_VEH').flatpickr({
-                enableTime: true,
-                dateFormat: 'Y-m-d H:i',
+            let terminoFlatpickr = flatpickr("#FECHA_TERMINO_REP_VEH", {
                 locale: 'es',
-                minDate: 'today',
-                showClearButton: true,
-                defaultHour: 8 // Agregamos una hora predeterminada
+                enableTime: true,
+                dateFormat: "Y-m-d H:i",
+                altFormat: 'd-m-Y H:i',
+                altInput: true,
+                minTime: '08:00',
+                maxTime: '18:00',
             });
 
              // Agregamos la siguiente línea para cambiar el fondo del campo

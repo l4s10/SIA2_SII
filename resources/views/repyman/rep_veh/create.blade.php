@@ -105,7 +105,7 @@
                     {{-- PARA PATENTE --}}
                     <div class="mb-3">
                         <label for="PATENTE_VEHICULO" class="form-label"><i class="fa-solid fa-car-on"></i> Información del vehiculo:</label>
-                        <select id="PATENTE_VEHICULO" name="PATENTE_VEHICULO" class="form-control @if($errors->has('PATENTE_VEHICULO')) is-invalid @endif">
+                        <select id="PATENTE_VEHICULO" name="PATENTE_VEHICULO" class="form-control @if($errors->has('PATENTE_VEHICULO')) is-invalid @endif" required>
                             <option value="">-- Seleccione el vehículo con problemas --</option>
                             @foreach ($vehiculos->groupBy('ubicacion.UBICACION') as $grupo => $autos)
                                 <optgroup label="{{ $grupo }}">
@@ -122,7 +122,7 @@
 
                     <div class="mb-3">
                         <label for="ID_TIPO_SERVICIO" class="form-label"><i class="fa-solid fa-shop-lock"></i> Tipo de reparacion:</label>
-                        <select id="ID_TIPO_SERVICIO" name="ID_TIPO_SERVICIO" class="form-control @if($errors->has('ID_TIPO_SERVICIO')) is-invalid @endif">
+                        <select id="ID_TIPO_SERVICIO" name="ID_TIPO_SERVICIO" class="form-control @if($errors->has('ID_TIPO_SERVICIO')) is-invalid @endif" required>
                             <option value="">-- Seleccione --</option>
                             @foreach ($tipos_servicio as $tipo_servicio)
                                 <option value="{{$tipo_servicio->ID_TIPO_SERVICIO}}">{{$tipo_servicio->TIPO_SERVICIO}}</option>
@@ -135,7 +135,7 @@
 
                     <div class="mb-3">
                         <label for="DETALLE_REPARACION_REP_VEH" class="form-label"><i class="fa-solid fa-location-pin-lock"></i> Motivo de reparación:</label>
-                        <textarea id="DETALLE_REPARACION_REP_VEH" name="DETALLE_REPARACION_REP_VEH" class="form-control @if($errors->has('DETALLE_REPARACION_REP_VEH')) is-invalid @endif" aria-label="With textarea" placeholder="Indique aquí que problemas tiene el vehículo"></textarea>
+                        <textarea id="DETALLE_REPARACION_REP_VEH" name="DETALLE_REPARACION_REP_VEH" class="form-control @if($errors->has('DETALLE_REPARACION_REP_VEH')) is-invalid @endif" aria-label="With textarea" placeholder="Indique aquí que problemas tiene el vehículo" required></textarea>
                         @if($errors->has('DETALLE_REPARACION_REP_VEH'))
                             <div class="invalid-feedback">{{$errors->first('DETALLE_REPARACION_REP_VEH')}}</div>
                         @endif
@@ -143,12 +143,7 @@
 
                     <div class="mb-3">
                         <label for="ESTADO_SOL_REP_VEH" class="form-label"><i class="fa-solid fa-file-circle-check"></i> Estado de la Solicitud:</label>
-                        <select id="ESTADO_SOL_REP_VEH" name="ESTADO_SOL_REP_VEH" class="form-control" disabled>
-                            <option value="INGRESADO" selected>🟠 Ingresado</option>
-                            <option value="EN REVISION">En revisión</option>
-                            <option value="ACEPTADO">Aceptado</option>
-                            <option value="RECHAZADO">Rechazado</option>
-                        </select>
+                        <input type="text" class="form-control" id="ESTADO_SOL_REP_VEH" name="ESTADO_SOL_REP_VEH" value="INGRESADO" readonly>
                     </div>
                 </div>
             </div>
