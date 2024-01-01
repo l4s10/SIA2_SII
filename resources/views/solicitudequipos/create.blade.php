@@ -90,8 +90,8 @@
             </table>
 
             <div class="mb-3">
-                <label for="EQUIPO_SOL" class="form-label"><i class="fa-solid fa-file-pen"></i> Motivo de solicitud:</label>
-                <textarea id="EQUIPO_SOL" name="EQUIPO_SOL" class="form-control @error('EQUIPO_SOL') is-invalid @enderror" aria-label="With textarea" rows="2" placeholder="Escriba el motivo de su solicitud (MÁX 1000 CARACTERES)" readonly required>{{ old('EQUIPO_SOL') }}</textarea>
+                <label for="EQUIPO_SOL" class="form-label"><i class="fa-solid fa-file-pen"></i> Equipos a solicitar:</label>
+                <textarea id="EQUIPO_SOL" name="EQUIPO_SOL" class="form-control @error('EQUIPO_SOL') is-invalid @enderror" aria-label="With textarea" rows="2" placeholder="Resumen de su pedido" readonly required>{{ old('EQUIPO_SOL') }}</textarea>
                 @error('EQUIPO_SOL')
                     <div class="invalid-feedback">{{ $message }}</div>
                 @enderror
@@ -134,7 +134,7 @@
 
             <div class="mb-3">
                 <label for="ESTADO_SOL_EQUIPO" class="form-label"><i class="fa-solid fa-file-circle-check"></i> Estado de la Solicitud:</label>
-                <input type="text" id="ESTADO_SOL_EQUIPO" name="ESTADO_SOL_EQUIPO" class="form-control" readonly value="INGRESADO" readonly>
+                <input type="text" id="ESTADO_SOL_EQUIPO" name="ESTADO_SOL_EQUIPO" class="form-control" value="INGRESADO" readonly>
             </div>
 
             <a href="{{route('solequipos.index')}}" class="btn btn-secondary" tabindex="5">Cancelar</a>

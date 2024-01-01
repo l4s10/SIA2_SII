@@ -69,9 +69,8 @@
                         @endforeach
                     </select>
                 </div>
-                <input type="text" name="ID_TIPO_EQUIPOS" value="1">
             </div>
-            <div class="row" hidden>
+            {{-- <div class="row" hidden>
                 <div class="col-md-6 mb-3">
                     <label for="ID_TIPO_EQUIPOS">¿Necesita equipo?</label>
                     <select name="ID_TIPO_EQUIPOS" id="ID_TIPO_EQUIPOS" class="form-control" hidden>
@@ -81,11 +80,11 @@
                         @endforeach
                     </select>
                 </div>
-            </div>
+            </div> --}}
             {{-- *EQUIPOS SOLICITADOS* --}}
             <div class="form-group">
                 <label for="EQUIPO_SALA">Equipos solicitados</label>
-                <input type="text" class="form-control" name="EQUIPO_SALA" value="{{$solicitud->EQUIPO_SALA}}" readonly>
+                <input type="text" class="form-control" name="EQUIPO_SALA" value="{{ empty($solicitud->EQUIPO_SALA) ? 'El solicitante no pidió equipos' : $solicitud->EQUIPO_SALA }}" readonly>
             </div>
             {{-- *CANTIDAD PERSONAS* --}}
             <div class="form-group">
@@ -109,9 +108,9 @@
                 <div class="input-group">
                     <input type="text" id="FECHA_SOL_SALA" name="FECHA_SOL_SALA" class="form-control @error('FECHA_SOL_SALA') is-invalid @enderror" placeholder="Ingrese la fecha" data-input required value="{{ $solicitud->FECHA_SOL_SALA }}" disabled>
                     {{-- *HORA SOLICITADA* --}}
-                    <input type="text" id="HORA_SOL_SALA" name="HORA_SOL_SALA" class="form-control flatpickr @error('HORA_SOL_SALA') is-invalid @enderror" placeholder="Seleccione la hora" data-input required value="{{ $solicitud->HORA_SOL_SALA }}" disabled>
+                    <input type="text" id="HORA_SOL_SALA" name="HORA_SOL_SALA" class="form-control flatpickr @error('HORA_SOL_SALA') is-invalid @enderror" placeholder="Seleccione la hora" data-input required value="{{ $solicitud->HORA_SOL_SALA }}" readonly>
                     {{-- Hora termino solicitada --}}
-                    <input type="text" id="HORA_TERM_SOL_SALA" name="HORA_TERM_SOL_SALA" class="form-control flatpickr @if($errors->has('HORA_TERM_SOL_SALA')) is-invalid @endif" placeholder="Seleccione la hora de término" data-input required value="{{ $solicitud->HORA_TERM_SOL_SALA }}" disabled>
+                    <input type="text" id="HORA_TERM_SOL_SALA" name="HORA_TERM_SOL_SALA" class="form-control flatpickr @if($errors->has('HORA_TERM_SOL_SALA')) is-invalid @endif" placeholder="Seleccione la hora de término" data-input required value="{{ $solicitud->HORA_TERM_SOL_SALA }}" readonly>
                 </div>
                 @error('FECHA_SOL_SALA')
                 <div class="invalid-feedback">{{ $message }}</div>
@@ -127,7 +126,7 @@
                     <div class="form-group">
                         <label for="FECHA_INICIO_ASIG_SALA"><i class="fa-solid fa-calendar"></i> Fecha y hora de inicio asignada:</label>
                         <div class="input-group">
-                            <input type="text" id="FECHA_INICIO_ASIG_SALA" name="FECHA_INICIO_ASIG_SALA" class="form-control @error('FECHA_INICIO_ASIG_SALA') is-invalid @enderror" placeholder="Seleccione fecha y hora de inicio" required value="{{$solicitud->FECHA_INICIO_ASIG_SALA}}">
+                            <input type="text" id="FECHA_INICIO_ASIG_SALA" name="FECHA_INICIO_ASIG_SALA" class="form-control @error('FECHA_INICIO_ASIG_SALA') is-invalid @enderror" placeholder="Seleccione fecha y hora de inicio" required value="{{ old('FECHA_INICIO_ASIG_SALA', $solicitud->FECHA_INICIO_ASIG_SALA) }}">
                         </div>
                         @error('FECHA_INICIO_ASIG_SALA')
                         <div class="invalid-feedback">{{ $message }}</div>
@@ -139,7 +138,7 @@
                     <div class="form-group">
                         <label for="FECHA_TERM_ASIG_SALA"><i class="fa-solid fa-calendar"></i> Fecha y hora de término asignada:</label>
                         <div class="input-group">
-                            <input type="text" id="FECHA_TERM_ASIG_SALA" name="FECHA_TERM_ASIG_SALA" class="form-control @error('FECHA_TERM_ASIG_SALA') is-invalid @enderror" placeholder="Seleccione fecha y hora de término" required value="{{$solicitud->FECHA_TERM_ASIG_SALA }}">
+                            <input type="text" id="FECHA_TERM_ASIG_SALA" name="FECHA_TERM_ASIG_SALA" class="form-control @error('FECHA_TERM_ASIG_SALA') is-invalid @enderror" placeholder="Seleccione fecha y hora de término" required value="{{ old('FECHA_TERM_ASIG_SALA', $solicitud->FECHA_TERM_ASIG_SALA) }}">
                         </div>
                         @error('FECHA_TERM_ASIG_SALA')
                         <div class="invalid-feedback">{{ $message }}</div>
@@ -162,19 +161,25 @@
             {{-- Sala a asignar (depende de ID_CATEGORIA_SALA) --}}
             <div class="mb-3">
                 <label for="SALA_A_ASIGNAR" class="form-label"><i class="fa-solid fa-person-shelter"></i> Sala a asignar:</label>
-                <select id="SALA_A_ASIGNAR" name="SALA_A_ASIGNAR" class="form-control">
+                <select id="SALA_A_ASIGNAR" name="SALA_A_ASIGNAR" class="form-control @error('SALA_A_ASIGNAR') is-invalid @enderror">
                     <option value="" selected>--Seleccione una sala--</option>
                     @foreach ($salas as $sala)
                         @if ($sala->ESTADO_SALA == 'DISPONIBLE' && $sala->ID_CATEGORIA_SALA == $solicitud->ID_CATEGORIA_SALA)
-                            <option value="{{ $sala->NOMBRE_SALA }}" @if ($solicitud->SALA_A_ASIGNAR == $sala->NOMBRE_SALA) selected @endif>{{ $sala->NOMBRE_SALA }} ({{ $sala->CAPACIDAD_PERSONAS }} personas)</option>
+                            <option value="{{ $sala->NOMBRE_SALA }}" @if (old('SALA_A_ASIGNAR', $solicitud->SALA_A_ASIGNAR) == $sala->NOMBRE_SALA) selected @endif>{{ $sala->NOMBRE_SALA }} ({{ $sala->CAPACIDAD_PERSONAS }} personas)</option>
                         @endif
                     @endforeach
                 </select>
+                @error('SALA_A_ASIGNAR')
+                <div class="invalid-feedback">{{ $message }}</div>
+                @enderror
             </div>
             {{-- Observaciones --}}
             <div class="mb-3">
                 <label for="OBSERV_SOL_SALA" class="form-label"><i class="fa-solid fa-file-pen"></i> Observaciones:</label>
-                <textarea class="form-control" id="OBSERV_SOL_SALA" name="OBSERV_SOL_SALA" placeholder="Escriba sus observaciones" aria-label="With textarea">{{$solicitud->OBSERV_SOL_SALA}}</textarea>
+                <textarea class="form-control @error('OBSERV_SOL_SALA') is-invalid @enderror" id="OBSERV_SOL_SALA" name="OBSERV_SOL_SALA" placeholder="Escriba sus observaciones" aria-label="With textarea">{{ old('OBSERV_SOL_SALA', $solicitud->OBSERV_SOL_SALA) }}</textarea>
+                @error('OBSERV_SOL_SALA')
+                <div class="invalid-feedback">{{ $message }}</div>
+                @enderror
             </div>
             {{-- Modificado por --}}
             <div class="mb-3" hidden>
@@ -212,25 +217,7 @@
 
     <script>
         $(function () {
-             // Inicializar Flatpickr para el campo de fecha y hora de inicio
-            flatpickr("#FECHA_INICIO_ASIG_SALA", {
-                locale: 'es',
-                enableTime: true,
-                dateFormat: "Y-m-d H:i",
-                // Otras opciones y configuraciones adicionales que desees utilizar
-                altFormat: 'd-m-Y H:i',
-                altInput: true,
-            });
-
             // Inicializar Flatpickr para el campo de fecha y hora de término
-            flatpickr("#FECHA_TERM_ASIG_SALA", {
-                locale: 'es',
-                enableTime: true,
-                dateFormat: "Y-m-d H:i",
-                // Otras opciones y configuraciones adicionales que desees utilizar
-                altFormat: 'd-m-Y H:i',
-                altInput: true,
-            });
             $('#FECHA_SOL_SALA').flatpickr({
                 dateFormat: 'Y-m-d',
                 altFormat: 'd-m-Y',
@@ -239,49 +226,44 @@
                 minDate: "today",
                 showClearButton: true,
                 mode: "range",
+                onReady: function(selectedDates, dateStr, instance) {
+                    $('#clearButton').on('click', function() {
+                        instance.clear();
+                    });
+                }
             });
+            let terminoFlatpickr;
 
-
-            $('#FECHA_ASIG_SALA').flatpickr({
-                dateFormat: 'Y-m-d',
-                altFormat: 'd-m-Y',
+            let inicioFlatpickr = flatpickr('#FECHA_INICIO_ASIG_SALA', {
+                dateFormat: 'Y-m-d H:i',
+                altFormat: 'd-m-Y H:i',
                 altInput: true,
                 locale: 'es',
+                enableTime: true,
                 minDate: "today",
-                showClearButton: true,
-                mode: "multiple",
-                onReady: function(selectedDates, dateStr, instance) {
-                    $('#clearButton').on('click', function() {
-                        instance.clear();
-                    });
-                }
+                minTime: "08:00",
+                maxTime: "18:00",
+                onChange: function(selectedDates, dateStr, instance) {
+                    if (selectedDates.length > 0) {
+                        // Actualiza la fecha mínima de terminoFlatpickr para que sea igual a la fecha de inicio seleccionada
+                        terminoFlatpickr.set('minDate', selectedDates[0]);
+
+                        // Actualiza la hora mínima de terminoFlatpickr para que sea igual a la hora de inicio seleccionada
+                        let selectedTime = instance.altInput.value.split(' ')[1];
+                        terminoFlatpickr.set('minTime', selectedTime);
+                    }
+                },
             });
 
-            $('#HORA_SOL_SALA').flatpickr({
+            terminoFlatpickr = flatpickr("#FECHA_TERM_ASIG_SALA", {
+                dateFormat: "Y-m-d H:i",
+                altFormat: 'd-m-Y H:i',
+                altInput: true,
+                locale: 'es',
                 enableTime: true,
-                noCalendar: true,
-                dateFormat: "H:i",
-                time_24hr: true,
-                locale: "es",
-                placeholder: "Seleccione la hora",
-                onReady: function(selectedDates, dateStr, instance) {
-                    $('#clearButton').on('click', function() {
-                        instance.clear();
-                    });
-                }
-            });
-            $('#HORA_TERM_SOL_SALA').flatpickr({
-                enableTime: true,
-                noCalendar: true,
-                dateFormat: "H:i",
-                time_24hr: true,
-                locale: "es",
-                placeholder: "Seleccione la hora",
-                onReady: function(selectedDates, dateStr, instance) {
-                    $('#clearButton').on('click', function() {
-                        instance.clear();
-                    });
-                }
+                minDate: "today",
+                minTime: "08:00",
+                maxTime: "18:00",
             });
         });
     </script>

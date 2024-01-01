@@ -21,10 +21,16 @@
                 {{-- <p>Tipo de solicitud: {{ $solicitud->categoriaSala->CATEGORIA_SALA}}</p> --}}
                 <p>Estado: {{ $solicitud->ESTADO_SOL_SALA }}</p>
                 <p>Fecha de ingreso: {{ $solicitud->created_at->tz('America/Santiago')->format('d/m/Y H:i') }}</p>
-                <p>Fecha solicitada: {{ $solicitud->FECHA_SOL_SALA }} desde las {{$solicitud->HORA_SOL_SALA}} hasta las {{$solicitud->HORA_TERM_SOL_SALA}}</p>
+                @php
+                    $fechas = explode(' a ', $solicitud->FECHA_SOL_SALA);
+                    $fechaInicio = \Carbon\Carbon::parse($fechas[0])->format('d/m/Y');
+                    $fechaFin = isset($fechas[1]) ? \Carbon\Carbon::parse($fechas[1])->format('d/m/Y') : '';
+                @endphp
+                <p>Fecha solicitada: {{ $fechaInicio }} a {{ $fechaFin }}  desde las {{$solicitud->HORA_SOL_SALA}} hasta las {{$solicitud->HORA_TERM_SOL_SALA}}</p>
                 <p>Motivo de la solicitud: {{$solicitud->MOTIVO_SOL_SALA}}</p>
                 {{-- ocultar si esta vacio (PENDIENTE) --}}
-                <p>Fecha asignada: {{ $solicitud->FECHA_INICIO_ASIG_SALA ? $solicitud->FECHA_INICIO_ASIG_SALA . " hasta las " . $solicitud->FECHA_TERM_ASIG_SALA : " Aún no se ha asignado fecha"}}</p>
+                <p> Sala asignada: {{ $solicitud->sala ? $solicitud->sala->NOMBRE_SALA : "Aún no se ha asignado sala"}}</p>
+                <p>Fecha asignada: {{ $solicitud->FECHA_INICIO_ASIG_SALA ? \Carbon\Carbon::parse($solicitud->FECHA_INICIO_ASIG_SALA)->format('d/m/Y') . " hasta las " . \Carbon\Carbon::parse($solicitud->FECHA_TERM_ASIG_SALA)->format('d/m/Y') : " Aún no se ha asignado fecha"}}</p>
             </div>
             <div class="card-footer text-center">
                 <a href="{{ route('solicitud.salas.index') }}" class="btn btn-secondary"><i class="fa-solid fa-hand-point-left"></i> Volver</a>

@@ -37,7 +37,7 @@ return new class extends Migration
             $table->string('MODIFICADO_POR_SOL_SALA', 128)->nullable();
             $table->string('OBSERV_SOL_SALA', 1000)->nullable();
             $table->integer('ID_CATEGORIA_SALA')->references('ID_CATEGORIA_SALA')->on('categoria_salas');
-            $table->integer('ID_TIPO_EQUIPOS')->references('ID_TIPO_EQUIPOS')->on('tipo_equipos');
+            // $table->integer('ID_TIPO_EQUIPOS')->references('ID_TIPO_EQUIPOS')->on('tipo_equipos');
             $table->timestamps();
         });
     }

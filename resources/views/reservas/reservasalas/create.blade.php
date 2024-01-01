@@ -86,7 +86,6 @@
                         @endforeach
                     </select>
                 </div>
-                <input type="text" name="ID_TIPO_EQUIPOS" value="1">
             </div>
             {{-- *CARRITO DE COMPRAS* --}}
             <table id="equipos" class="table table-bordered">
@@ -120,7 +119,7 @@
             {{--**LISTO**--}}
             <div class="mb-3">
                 <label for="CANT_PERSONAS_SOL_SALAS" class="form-label"><i class="fa-solid fa-people-line"></i> Cantidad de personas:</label>
-                <input type="number" class="form-control" id="CANT_PERSONAS_SOL_SALAS" name="CANT_PERSONAS_SOL_SALAS" placeholder="Escriba la cantidad de personas para el uso de la sala" min="1" max="100" value="1" required>
+                <input type="number" class="form-control" id="CANT_PERSONAS_SOL_SALAS" name="CANT_PERSONAS_SOL_SALAS" placeholder="Escriba la cantidad de personas para el uso de la sala" min="1" max="100" value="1" required oninput="validity.valid||(value='');">
             </div>
             {{-- *FECHA SOLICITADA* --}}
             <div class="form-group">
@@ -139,41 +138,14 @@
             </div>
 
             {{-- **LISTO** --}}
-            <div class="mb-3" hidden>
+
+            <div class="mb-3">
                 <label for="ESTADO_SOL_SALA" class="form-label"><i class="fa-solid fa-file-circle-check"></i> Estado de la Solicitud:</label>
-                <select id="ESTADO_SOL_SALA" name="ESTADO_SOL_SALA" class="form-control">
-                    <option value="INGRESADO" selected>Ingresado</option>
-                    <option value="EN REVISION">En revisión</option>
-                    <option value="ACEPTADO">Aceptado</option>
-                    <option value="RECHAZADO">Rechazado</option>
-                </select>
+                <input type="text" id="ESTADO_SOL_SALA" name="ESTADO_SOL_SALA" class="form-control" value="INGRESADO" readonly>
             </div>
             <div class="mb-3">
                 <a href="{{route('reservas.dashboard')}}" class="btn btn-secondary">Cancelar</a>
                 <button type="submit" class="btn btn-primary">Enviar Solicitud</button>
-            </div>
-            {{-- *MODALES Y DEMAS* --}}
-            <div class="modal fade" id="modal-carrito" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel">Agregar al carrito</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close" id="btn-cerrar-modal">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div class="modal-body">
-                            <p id="nombre-material"></p>
-                            <p id="tipo-material"></p>
-                            <label for="cantidad">Cantidad:</label>
-                            <input type="number" id="cantidad" name="cantidad" min="1" value="1">
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal" id="btn-cerrar-pie-modal">Cerrar</button>
-                            <button type="button" class="btn btn-primary" id="btn-agregar-carrito">Agregar al carrito</button>
-                        </div>
-                    </div>
-                </div>
             </div>
         </form>
     </div>
@@ -226,7 +198,7 @@
                     });
                 }
             });
-            $('#HORA_SOL_SALA').flatpickr({
+            let inicioFlatpickr = $('#HORA_SOL_SALA').flatpickr({
                 enableTime: true,
                 noCalendar: true,
                 dateFormat: "H:i",
@@ -237,9 +209,16 @@
                     $('#clearButton').on('click', function() {
                         instance.clear();
                     });
-                }
+                },
+                onChange: function(selectedDates, dateStr, instance) {
+                    if (terminoFlatpickr.selectedDates[0] && selectedDates[0] > terminoFlatpickr.selectedDates[0]) {
+                        terminoFlatpickr.setDate(selectedDates[0]);
+                    }
+                    terminoFlatpickr.set('minTime', dateStr);
+                },
             });
-            $('#HORA_TERM_SOL_SALA').flatpickr({
+
+            let terminoFlatpickr = $('#HORA_TERM_SOL_SALA').flatpickr({
                 enableTime: true,
                 noCalendar: true,
                 dateFormat: "H:i",
@@ -250,7 +229,7 @@
                     $('#clearButton').on('click', function() {
                         instance.clear();
                     });
-                }
+                },
             });
             $('form').on('submit', function (e) {
                 var fecha = $('#FECHA_SOL_SALA').val();
