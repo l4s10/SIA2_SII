@@ -88,7 +88,7 @@
             </div>
             <div class="mb-3">
                 <label for="ID_TIPO_REP_GENERAL" class="form-label"><i class="fa-sharp fa-solid fa-building-flag"></i> Area Solicitada:</label>
-                <select id="ID_TIPO_REP_GENERAL" name="ID_TIPO_REP_GENERAL" class="form-control @if($errors->has('ID_TIPO_REP_GENERAL')) is-invalid @endif">
+                <select id="ID_TIPO_REP_GENERAL" name="ID_TIPO_REP_GENERAL" class="form-control @if($errors->has('ID_TIPO_REP_GENERAL')) is-invalid @endif" required>
                     <option value="" selected>--SELECCIONE UNA OPCION--</option>
                     @foreach ($tipos_rep as $tipo_rep)
                         <option value="{{$tipo_rep->ID_TIPO_REP_GENERAL}}">{{$tipo_rep->TIPO_REP}}</option>
@@ -100,7 +100,7 @@
             </div>
             <div class="mb-3">
                 <label for="REP_SOL" class="form-label"><i class="fa-solid fa-comments"></i> Solicitud:</label>
-                <textarea id="REP_SOL" name="REP_SOL" class="form-control @if($errors->has('REP_SOL')) is-invalid @endif" aria-label="With textarea" placeholder="Describa el problema con el inmueble (MÁX 1000 CARACTERES)"></textarea>
+                <textarea id="REP_SOL" name="REP_SOL" class="form-control @if($errors->has('REP_SOL')) is-invalid @endif" aria-label="With textarea" placeholder="Describa el problema con el inmueble (MÁX 1000 CARACTERES)" required></textarea>
                 @if($errors->has('REP_SOL'))
                     <div class="invalid-feedback">{{$errors->first('REP_SOL')}}</div>
                 @endif

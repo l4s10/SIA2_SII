@@ -7,6 +7,29 @@
 @stop
 
 @section('content')
+    @if (session('success'))
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            Swal.fire({
+                icon: 'success',
+                title: '{{ session('success') }}',
+                confirmButtonText: 'OK',
+                confirmButtonColor: '#0064A0'
+            });
+        });
+    </script>
+    @elseif (session('error'))
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            Swal.fire({
+                icon: 'error',
+                title: '{{ session('error') }}',
+                confirmButtonText: 'OK',
+                confirmButtonColor: '#0064A0'
+            });
+        });
+    </script>
+    @endif
     <div class="container">
         <form action="{{route('reparaciones.update', $reparacion->ID_REP_INM)}}" method="POST">
             @csrf
@@ -67,6 +90,9 @@
                         <option value="{{$tipo_rep->ID_TIPO_REP_GENERAL}}">{{$tipo_rep->TIPO_REP}}</option>
                     @endforeach
                 </select>
+                @if ($errors->has('ID_TIPO_REP_GENERAL'))
+                    <span class="text-danger">{{ $errors->first('ID_TIPO_REP_GENERAL') }}</span>
+                @endif
             </div>
             <div class="mb-3">
                 <label for="REP_SOL" class="form-label"><i class="fa-solid fa-comments"></i> Solicitud:</label>
@@ -76,6 +102,9 @@
                 <div class="mb-3">
                     <label for="OBSERV_REP_INM" class="form-label"><i class="fa-solid fa-comments"></i> Observaciones:</label>
                     <textarea id="OBSERV_REP_INM" name="OBSERV_REP_INM" class="form-control" aria-label="With textarea" placeholder="Escriba aquí sus observaciones">{{$reparacion->OBSERV_REP_INM}}</textarea>
+                    @if ($errors->has('OBSERV_REP_INM'))
+                        <span class="text-danger">{{ $errors->first('OBSERV_REP_INM') }}</span>
+                    @endif
                 </div>
             </div>
             <div class="mb-3">

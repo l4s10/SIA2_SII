@@ -82,7 +82,7 @@
                                 {{ $sol_reparacion->ESTADO_REP_INM }}
                                 </span>
                                 </td>
-                                <td>{{ $sol_reparacion->created_at}}</td>
+                                <td>{{ $sol_reparacion->created_at ? $sol_reparacion->created_at->format('d/m/Y H:i') : 'Fecha no disponible' }}</td>
                                 <td>
                                     <form action="{{ route('reparaciones.destroy',$sol_reparacion->ID_REP_INM) }}" method="POST">
                                         @csrf

@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 //Agregamos el modelo de tipo de reparacion (para el desplegable)
 use App\Models\TipoReparacion;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
 
 class RelFunRepGeneralController extends Controller
 {
@@ -52,7 +53,7 @@ class RelFunRepGeneralController extends Controller
             'DEPTO' => ['required', 'string', 'max:255', 'regex:/^[A-Za-z\s]+$/'],
             'EMAIL' => 'required|email',
             'ID_TIPO_REP_GENERAL' => 'required',
-            'REP_SOL' => 'required|max:1000',
+            'REP_SOL' => ['required', 'max:1000', 'regex:/^[A-Za-z0-9ñÑ.,\s]+$/u'],
         ];
 
         $messages = [
@@ -73,7 +74,7 @@ class RelFunRepGeneralController extends Controller
             'ID_TIPO_REP_GENERAL.required' => 'El campo "Area Solicitada" es obligatorio.',
             'REP_SOL.required' => 'El campo "Solicitud" es obligatorio.',
             'REP_SOL.max' => 'El campo "Solicitud" no debe exceder los 1000 caracteres.',
-
+            'REP_SOL.regex' => 'El campo "Solicitud" solo puede contener letras, números, puntos, comas y espacios.',
         ];
         //Funcion que valida nuestros datos enviados en el formulario en base a las reglas.
         $request->validate($rules, $messages);
@@ -125,8 +126,9 @@ class RelFunRepGeneralController extends Controller
             'RUT' => 'required|regex:/^[0-9.-]+$/|min:7|max:12',
             'DEPTO' => ['required', 'string', 'max:255', 'regex:/^[A-Za-z\s]+$/'],
             'EMAIL' => 'required|email',
-            'ID_TIPO_REP_GENERAL' => 'required',
-            'REP_SOL' => 'required|max:1000',
+            'ID_TIPO_REP_GENERAL' => 'nullable',
+            'REP_SOL' => ['required', 'max:1000', 'regex:/^[A-Za-z0-9ñÑ.,\s]+$/u'],
+            'OBSERV_REP_INM' => ['nullable', 'max:1000', 'regex:/^[A-Za-z0-9ñÑ.,\s]+$/u'],
         ];
 
         $messages = [
@@ -147,9 +149,24 @@ class RelFunRepGeneralController extends Controller
             'ID_TIPO_REP_GENERAL.required' => 'El campo "Area Solicitada" es obligatorio.',
             'REP_SOL.required' => 'El campo "Solicitud" es obligatorio.',
             'REP_SOL.max' => 'El campo "Solicitud" no debe exceder los 1000 caracteres.',
+            'REP_SOL.regex' => 'El campo "Solicitud" solo puede contener letras, números, puntos, comas y espacios.',
+            'OBSERV_REP_INM.max' => 'El campo "Observaciones" no debe exceder los 1000 caracteres.',
+            'OBSERV_REP_INM.regex' => 'El campo "Observaciones" solo puede contener letras, números, puntos, comas y espacios.',
         ];
         //Funcion que valida nuestros datos enviados en el formulario en base a las reglas.
-        $request->validate($rules, $messages);
+        // Crear una instancia del validador
+        $validator = Validator::make($request->all(), $rules, $messages);
+
+        // Verificar si la validación falla
+        if ($validator->fails()) {
+            // Flash message con errores personalizados (DESCOMENTAR PARA DEBUG)
+            // session()->flash('error', 'Error en la validación: verifica los datos ingresados.' . $validator->errors());
+
+            // Redireccionar al formulario con los errores y los datos antiguos
+            return redirect()->back()
+                            ->withErrors($validator)
+                            ->withInput();
+        }
         //Se crea la variable data que almacena los datos validados (excepto el token de verificacion)
         $data = $request->except('_token');
         // Formatear el RUT antes de almacenarlo en la base de datos
@@ -161,7 +178,8 @@ class RelFunRepGeneralController extends Controller
             $solicitud_reparacion->update($request->all());
             session()->flash('success','La solicitud de reparacion ha sido modificada exitosamente.');
         }catch(\Exception $e){
-            session()->flash('error','Error al crear la solicitud, vuelva a intentarlo más tarde.');
+            session()->flash('error', 'Error al modificar la solicitud: ' . $e->getMessage());
+            return redirect()->back();
         }
         return redirect(route('reparaciones.index'));
     }
