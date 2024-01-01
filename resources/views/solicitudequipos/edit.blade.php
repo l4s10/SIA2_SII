@@ -1,9 +1,9 @@
 @extends('adminlte::page')
 
-@section('title', 'Solicitar equipo')
+@section('title', 'Revisar solicitud equipo')
 
 @section('content_header')
-    <h1>Revisar solicitud n°{{$solicitud->ID_SOL_EQUIPOS}}</h1>
+    <h1>Revisar solicitud</h1>
 @stop
 
 @section('content')
@@ -61,7 +61,7 @@
             {{-- ESTADO SOLICITUD --}}
             <div class="mb-3">
                 <label for="ESTADO_SOL_EQUIPO" class="form-label"><i class="fa-solid fa-file-circle-check"></i> Estado de la Solicitud:</label>
-                <select id="ESTADO_SOL_EQUIPO" name="ESTADO_SOL_EQUIPO" class="form-control">
+                <select id="ESTADO_SOL_EQUIPO" name="ESTADO_SOL_EQUIPO" class="form-control" required>
                     <option value="INGRESADO" {{ $solicitud->ESTADO_SOL_EQUIPO == 'INGRESADO' ? 'selected' : '' }}>🟠 Ingresado</option>
                     <option value="EN REVISION" {{ $solicitud->ESTADO_SOL_EQUIPO == 'EN REVISION' ? 'selected' : '' }}>🟡 En revisión</option>
                     <option value="ACEPTADO" {{ $solicitud->ESTADO_SOL_EQUIPO == 'ACEPTADO' ? 'selected' : '' }}>🟢 Aceptado</option>
@@ -87,7 +87,7 @@
 
             <div class="form-group">
                 <label for="FECHA_SOL_EQUIPO"><i class="fa-solid fa-calendar"></i> Fecha de Inicio:</label>
-                <input type="text" id="FECHA_SOL_EQUIPO" name="FECHA_SOL_EQUIPO" class="form-control flatpickr @if($errors->has('FECHA_SOL_EQUIPO')) is-invalid @endif" placeholder="Ingrese fecha de inicio" data-input disabled value=" {{($solicitud->FECHA_SOL_EQUIPO)}}">
+                <input type="text" id="FECHA_SOL_EQUIPO" name="FECHA_SOL_EQUIPO" class="form-control flatpickr @if($errors->has('FECHA_SOL_EQUIPO')) is-invalid @endif" placeholder="Ingrese fecha de inicio" data-input readonly value=" {{($solicitud->FECHA_SOL_EQUIPO)}}">
                 @if ($errors->has('FECHA_SOL_EQUIPO'))
                     <div class="invalid-feedback">{{ $errors->first('FECHA_SOL_EQUIPO') }}</div>
                 @endif
@@ -96,7 +96,7 @@
             <div class="row">
                 <div class="form-group col-md-6">
                     <label for="HORA_INICIO_SOL_EQUIPO"><i class="fa-solid fa-clock"></i> Hora de Inicio:</label>
-                    <input type="text" id="HORA_INICIO_SOL_EQUIPO" name="HORA_INICIO_SOL_EQUIPO" class="form-control flatpickr @if($errors->has('HORA_INICIO_SOL_EQUIPO')) is-invalid @endif" placeholder="Ingrese hora de inicio" data-input value="{{ $solicitud->HORA_INICIO_SOL_EQUIPO }}" disabled>
+                    <input type="text" id="HORA_INICIO_SOL_EQUIPO" name="HORA_INICIO_SOL_EQUIPO" class="form-control flatpickr @if($errors->has('HORA_INICIO_SOL_EQUIPO')) is-invalid @endif" placeholder="Ingrese hora de inicio" data-input value="{{ $solicitud->HORA_INICIO_SOL_EQUIPO }}" readonly>
                     @if ($errors->has('HORA_INICIO_SOL_EQUIPO'))
                         <div class="invalid-feedback">{{ $errors->first('HORA_INICIO_SOL_EQUIPO') }}</div>
                     @endif
@@ -104,53 +104,12 @@
 
                 <div class="form-group col-md-6">
                     <label for="HORA_TERM_SOL_EQUIPO"><i class="fa-solid fa-clock"></i> Hora de Término:</label>
-                    <input type="text" id="HORA_TERM_SOL_EQUIPO" name="HORA_TERM_SOL_EQUIPO" class="form-control flatpickr @if($errors->has('HORA_TERM_SOL_EQUIPO')) is-invalid @endif" placeholder="Ingrese hora de término" data-input value="{{ $solicitud->HORA_TERM_SOL_EQUIPO }}" disabled>
+                    <input type="text" id="HORA_TERM_SOL_EQUIPO" name="HORA_TERM_SOL_EQUIPO" class="form-control flatpickr @if($errors->has('HORA_TERM_SOL_EQUIPO')) is-invalid @endif" placeholder="Ingrese hora de término" data-input value="{{ $solicitud->HORA_TERM_SOL_EQUIPO }}" readonly>
                     @if ($errors->has('HORA_TERM_SOL_EQUIPO'))
                         <div class="invalid-feedback">{{ $errors->first('HORA_TERM_SOL_EQUIPO') }}</div>
                     @endif
                 </div>
             </div>
-
-            {{-- CAMPOS PARA NIVEL 2 --}}
-            {{-- EQUIPO A ASIGNAR --}}
-            {{-- !!CARGAR DATATABLE CON EQUIPOS PARA ASIGNAR
-
-            !! TABLA EQUIPOS Y CAMPO EQUIPOS ASIGNADOS--}}
-            {{-- <div class="table-responsive">
-                <table id="equipos" class="table table-bordered mt-4">
-                    <thead class="bg-primary text-white">
-                        <tr>
-                            <th scope="col">Modelo</th>
-                            <th scope="col">Marca</th>
-                            <th scope="col">Tipo</th>
-                            <th scope="col">Estado</th>
-                            <th scope="col">Acciones</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach($equipos as $index => $equipo)
-                            <tr>
-                                <td>{{ $equipo->MODELO_EQUIPO }}</td>
-                                <td>{{ $equipo->MARCA_EQUIPO }}</td>
-                                <td>{{ $equipo->tipoEquipo->TIPO_EQUIPO }}</td>
-                                <td>{{ $equipo->ESTADO_EQUIPO }}</td>
-                                <td>
-                                    <button type="button" id="agregar_{{ $index }}" class="btn btn-primary" onclick="agregarEquipo('{{ $equipo->MODELO_EQUIPO }}', '{{ $equipo->tipoEquipo->TIPO_EQUIPO }}', {{ $index }})">Agregar</button>
-                                    <button type="button" id="eliminar_{{ $index }}" class="btn btn-danger d-none" onclick="eliminarEquipo('{{ $equipo->MODELO_EQUIPO }}', '{{ $equipo->tipoEquipo->TIPO_EQUIPO }}', {{ $index }})">Eliminar</button>
-                                </td>
-                            </tr>
-                        @endforeach
-                    </tbody>
-                </table>
-            </div> --}}
-
-            {{-- <div class="mb-3">
-                <label class="" for="EQUIPO_A_ASIGNAR"><i class="fa-sharp fa-solid fa-desktop"></i> Equipo(s) asignado(s):</label>
-                <textarea id="EQUIPO_A_ASIGNAR" name="EQUIPO_A_ASIGNAR" class="form-control" rows="3" readonly placeholder="Resumen de los equipos asignados">{{$solicitud->EQUIPO_A_ASIGNAR}}</textarea>
-                <!-- <button type="button" class="btn btn-warning mt-2" onclick="resetEquipos()">Restablecer</button> -->
-                <button type="button" class="btn btn-secondary mt-2" onclick="limpiarEquipos()">Limpiar</button>
-
-            </div> --}}
 
             <div class="row">
                 <div class="col-md-6">
@@ -158,7 +117,7 @@
                     <div class="form-group">
                         <label for="FECHA_INICIO_EQUIPO"><i class="fa-solid fa-calendar"></i> Fecha y hora de inicio asignada:</label>
                         <div class="input-group">
-                            <input type="text" id="FECHA_INICIO_EQUIPO" name="FECHA_INICIO_EQUIPO" class="form-control @error('FECHA_INICIO_EQUIPO') is-invalid @enderror" placeholder="Seleccione fecha y hora de inicio" required value="{{$solicitud->FECHA_INICIO_EQUIPO}}">
+                            <input type="text" id="FECHA_INICIO_EQUIPO" name="FECHA_INICIO_EQUIPO" class="form-control @error('FECHA_INICIO_EQUIPO') is-invalid @enderror" placeholder="Seleccione fecha y hora de inicio" required value="{{ old('FECHA_INICIO_EQUIPO', $solicitud->FECHA_INICIO_EQUIPO) }}">
                         </div>
                         @error('FECHA_INICIO_EQUIPO')
                         <div class="invalid-feedback">{{ $message }}</div>
@@ -170,7 +129,7 @@
                     <div class="form-group">
                         <label for="FECHA_FIN_EQUIPO"><i class="fa-solid fa-calendar"></i> Fecha y hora de término asignada:</label>
                         <div class="input-group">
-                            <input type="text" id="FECHA_FIN_EQUIPO" name="FECHA_FIN_EQUIPO" class="form-control @error('FECHA_FIN_EQUIPO') is-invalid @enderror" placeholder="Seleccione fecha y hora de término" required value="{{$solicitud->FECHA_FIN_EQUIPO }}">
+                            <input type="text" id="FECHA_FIN_EQUIPO" name="FECHA_FIN_EQUIPO" class="form-control @error('FECHA_FIN_EQUIPO') is-invalid @enderror" placeholder="Seleccione fecha y hora de término" required value="{{ old('FECHA_FIN_EQUIPO', $solicitud->FECHA_FIN_EQUIPO) }}">
                         </div>
                         @error('FECHA_FIN_EQUIPO')
                         <div class="invalid-feedback">{{ $message }}</div>
@@ -226,21 +185,25 @@
                 altInput: true,
             });
              // Inicializar Flatpickr para el campo de fecha y hora de inicio
-             flatpickr("#FECHA_INICIO_EQUIPO", {
+            let inicioFlatpickr = flatpickr("#FECHA_INICIO_EQUIPO", {
                 locale: 'es',
                 enableTime: true,
                 dateFormat: "Y-m-d H:i",
-                // Otras opciones y configuraciones adicionales que desees utilizar
                 altFormat: 'd-m-Y H:i',
                 altInput: true,
+                minDate: "today", // La fecha de inicio mínimo será hoy
+                onChange: function(selectedDates, dateStr, instance) {
+                    if (terminoFlatpickr.selectedDates[0] && selectedDates[0] > terminoFlatpickr.selectedDates[0]) {
+                        terminoFlatpickr.setDate(selectedDates[0]);
+                    }
+                    terminoFlatpickr.set('minDate', dateStr);
+                },
             });
 
-            // Inicializar Flatpickr para el campo de fecha y hora de término
-            flatpickr("#FECHA_FIN_EQUIPO", {
+            let terminoFlatpickr = flatpickr("#FECHA_FIN_EQUIPO", {
                 locale: 'es',
                 enableTime: true,
                 dateFormat: "Y-m-d H:i",
-                // Otras opciones y configuraciones adicionales que desees utilizar
                 altFormat: 'd-m-Y H:i',
                 altInput: true,
             });
@@ -269,64 +232,6 @@
                 locale: 'es',
                 time_24hr: true,
                 defaultHour: 9 // Agregamos una hora predeterminadas
-            });
-        });
-    </script>
-    <!-- Para inicializar -->
-    <script>
-        var EQUIPO_A_ASIGNARTextarea = document.getElementById('EQUIPO_A_ASIGNAR');
-        var EQUIPO_A_ASIGNAR = [];
-        var equiposOriginales = EQUIPO_A_ASIGNARTextarea.value;
-
-        function agregarEquipo(modelo, tipo, index) {
-            var equipo = modelo + ' - ' + tipo;
-            EQUIPO_A_ASIGNAR.push(equipo);
-            document.getElementById('agregar_'+index).classList.add('d-none');
-            document.getElementById('eliminar_'+index).classList.remove('d-none');
-            actualizarTextarea();
-        }
-
-        function eliminarEquipo(modelo, tipo, index) {
-            var equipo = modelo + ' - ' + tipo;
-            var equipoIndex = EQUIPO_A_ASIGNAR.indexOf(equipo);
-            if (equipoIndex > -1) {
-                EQUIPO_A_ASIGNAR.splice(equipoIndex, 1);
-                document.getElementById('agregar_'+index).classList.remove('d-none');
-                document.getElementById('eliminar_'+index).classList.add('d-none');
-                actualizarTextarea();
-            }
-        }
-
-        function actualizarTextarea() {
-            EQUIPO_A_ASIGNARTextarea.value = EQUIPO_A_ASIGNAR.join('\n');
-        }
-
-        function limpiarEquipos() {
-            EQUIPO_A_ASIGNARTextarea.value = '';
-            EQUIPO_A_ASIGNAR = [];
-            var agregarButtons = document.getElementsByClassName('btn-primary');
-            var eliminarButtons = document.getElementsByClassName('btn-danger');
-            for (var i = 0; i < agregarButtons.length; i++) {
-                agregarButtons[i].classList.remove('d-none');
-                eliminarButtons[i].classList.add('d-none');
-            }
-        }
-
-        function resetEquipos() {
-            EQUIPO_A_ASIGNARTextarea.value = equiposOriginales;
-            EQUIPO_A_ASIGNAR = equiposOriginales.split('\n');
-        }
-
-        $(document).ready(function () {
-            $('#equipos').DataTable({
-                "lengthMenu": [[5, 10, 50, -1], [5, 10, 50, "All"]],
-                "columnDefs": [{
-                    "orderable": false,
-                    "targets": 4 // Esto asume que la columna de Acciones es la quinta columna (la indexación comienza en 0)
-                }],
-                "language": {
-                    "url": "https://cdn.datatables.net/plug-ins/1.11.3/i18n/es_es.json"
-                },
             });
         });
     </script>

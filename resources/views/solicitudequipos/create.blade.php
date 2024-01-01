@@ -90,8 +90,8 @@
             </table>
 
             <div class="mb-3">
-                <label for="EQUIPO_SOL" class="form-label"><i class="fa-solid fa-file-pen"></i> Resumen:</label>
-                <textarea id="EQUIPO_SOL" name="EQUIPO_SOL" class="form-control @error('EQUIPO_SOL') is-invalid @enderror" aria-label="With textarea" rows="1" placeholder="Resumen de su pedido" readonly>{{ old('EQUIPO_SOL') }}</textarea>
+                <label for="EQUIPO_SOL" class="form-label"><i class="fa-solid fa-file-pen"></i> Motivo de solicitud:</label>
+                <textarea id="EQUIPO_SOL" name="EQUIPO_SOL" class="form-control @error('EQUIPO_SOL') is-invalid @enderror" aria-label="With textarea" rows="2" placeholder="Escriba el motivo de su solicitud (MÁX 1000 CARACTERES)" readonly required>{{ old('EQUIPO_SOL') }}</textarea>
                 @error('EQUIPO_SOL')
                     <div class="invalid-feedback">{{ $message }}</div>
                 @enderror
@@ -99,24 +99,24 @@
 
             <div class="mb-3">
                 <label for="MOTIVO_SOL_EQUIPO" class="form-label"><i class="fa-solid fa-file-pen"></i> Motivo de solicitud:</label>
-                <textarea id="MOTIVO_SOL_EQUIPO" name="MOTIVO_SOL_EQUIPO" class="form-control @error('MOTIVO_SOL_EQUIPO') is-invalid @enderror" aria-label="With textarea" rows="5" placeholder="Escriba el motivo de su solicitud (MÁX 1000 CARACTERES)">{{ old('MOTIVO_SOL_EQUIPO') }}</textarea>
+                <textarea id="MOTIVO_SOL_EQUIPO" name="MOTIVO_SOL_EQUIPO" class="form-control @error('MOTIVO_SOL_EQUIPO') is-invalid @enderror" aria-label="With textarea" rows="5" placeholder="Escriba el motivo de su solicitud (MÁX 1000 CARACTERES)" required>{{ old('MOTIVO_SOL_EQUIPO') }}</textarea>
                 @error('MOTIVO_SOL_EQUIPO')
                     <div class="invalid-feedback">{{ $message }}</div>
                 @enderror
             </div>
 
             <div class="form-group">
-                <label for="FECHA_SOL_EQUIPO"><i class="fa-solid fa-calendar"></i> Fechas:</label>
-                <input type="text" id="FECHA_SOL_EQUIPO" name="FECHA_SOL_EQUIPO" class="form-control flatpickr @if($errors->has('FECHA_SOL_EQUIPO')) is-invalid @endif" placeholder="Ingrese fecha de inicio y término de la solicitud" data-input required value="{{ old('FECHA_SOL_EQUIPO') }}">
-                @if ($errors->has('FECHA_SOL_EQUIPO'))
-                    <div class="invalid-feedback">{{ $errors->first('FECHA_SOL_EQUIPO') }}</div>
-                @endif
+                <label for="FECHA_SOL_EQUIPO"><i class="fa-solid fa-calendar"></i> Fecha:</label>
+                <input type="text" id="FECHA_SOL_EQUIPO" name="FECHA_SOL_EQUIPO" class="form-control flatpickr @error('FECHA_SOL_EQUIPO') is-invalid @enderror" placeholder="Indique la fecha" data-input value="{{ old('FECHA_SOL_EQUIPO') }}" required>
+                @error ('FECHA_SOL_EQUIPO')
+                    <div class="invalid-feedback">{{ $message }}</div>
+                @enderror
             </div>
 
             <div class="row">
                 <div class="form-group col-md-6">
                     <label for="HORA_INICIO_SOL_EQUIPO"><i class="fa-solid fa-clock"></i> Hora de Inicio:</label>
-                    <input type="text" id="HORA_INICIO_SOL_EQUIPO" name="HORA_INICIO_SOL_EQUIPO" class="form-control flatpickr @if($errors->has('HORA_INICIO_SOL_EQUIPO')) is-invalid @endif" placeholder="Ingrese hora de inicio" data-input required value="{{ old('HORA_INICIO_SOL_EQUIPO') }}">
+                    <input type="text" id="HORA_INICIO_SOL_EQUIPO" name="HORA_INICIO_SOL_EQUIPO" class="form-control flatpickr @if($errors->has('HORA_INICIO_SOL_EQUIPO')) is-invalid @endif" placeholder="Ingrese hora de inicio" data-input value="{{ old('HORA_INICIO_SOL_EQUIPO') }}" required>
                     @if ($errors->has('HORA_INICIO_SOL_EQUIPO'))
                         <div class="invalid-feedback">{{ $errors->first('HORA_INICIO_SOL_EQUIPO') }}</div>
                     @endif
@@ -124,7 +124,7 @@
 
                 <div class="form-group col-md-6">
                     <label for="HORA_TERM_SOL_EQUIPO"><i class="fa-solid fa-clock"></i> Hora de Término:</label>
-                    <input type="text" id="HORA_TERM_SOL_EQUIPO" name="HORA_TERM_SOL_EQUIPO" class="form-control flatpickr @if($errors->has('HORA_TERM_SOL_EQUIPO')) is-invalid @endif" placeholder="Ingrese hora de término" data-input required value="{{ old('HORA_TERM_SOL_EQUIPO') }}">
+                    <input type="text" id="HORA_TERM_SOL_EQUIPO" name="HORA_TERM_SOL_EQUIPO" class="form-control flatpickr @if($errors->has('HORA_TERM_SOL_EQUIPO')) is-invalid @endif" placeholder="Ingrese hora de término" data-input value="{{ old('HORA_TERM_SOL_EQUIPO') }}" required>
                     @if ($errors->has('HORA_TERM_SOL_EQUIPO'))
                         <div class="invalid-feedback">{{ $errors->first('HORA_TERM_SOL_EQUIPO') }}</div>
                     @endif
@@ -134,13 +134,9 @@
 
             <div class="mb-3">
                 <label for="ESTADO_SOL_EQUIPO" class="form-label"><i class="fa-solid fa-file-circle-check"></i> Estado de la Solicitud:</label>
-                <select id="ESTADO_SOL_EQUIPO" name="ESTADO_SOL_EQUIPO" class="form-control" disabled>
-                    <option value="INGRESADO" selected>🟠 Ingresado</option>
-                    <option value="EN REVISION">En revisión</option>
-                    <option value="ACEPTADO">Aceptado</option>
-                    <option value="RECHAZADO">Rechazado</option>
-                </select>
+                <input type="text" id="ESTADO_SOL_EQUIPO" name="ESTADO_SOL_EQUIPO" class="form-control" readonly value="INGRESADO" readonly>
             </div>
+
             <a href="{{route('solequipos.index')}}" class="btn btn-secondary" tabindex="5">Cancelar</a>
             <button type="submit" class="btn btn-primary">Enviar solicitud</button>
         </form>
@@ -186,23 +182,30 @@
                 showClearButton: true,
                 defaultHour: 8, // Agregamos una hora predeterminada
             });
-            $('#HORA_INICIO_SOL_EQUIPO').flatpickr({
+            let inicioFlatpickr = $('#HORA_INICIO_SOL_EQUIPO').flatpickr({
                 enableTime: true,
                 noCalendar: true,
                 dateFormat: 'H:i',
                 locale: 'es',
                 time_24hr: true,
-                defaultHour: 8 // Agregamos una hora predeterminadas
+                defaultHour: 8, // Agregamos una hora predeterminadas
+                onChange: function(selectedDates, dateStr, instance) {
+                    if (terminoFlatpickr.selectedDates[0] && selectedDates[0] > terminoFlatpickr.selectedDates[0]) {
+                        terminoFlatpickr.setDate(selectedDates[0]);
+                    }
+                    terminoFlatpickr.set('minTime', dateStr);
+                },
             });
-            $('#HORA_TERM_SOL_EQUIPO').flatpickr({
+
+            let terminoFlatpickr = $('#HORA_TERM_SOL_EQUIPO').flatpickr({
                 enableTime: true,
                 noCalendar: true,
                 dateFormat: 'H:i',
                 locale: 'es',
                 time_24hr: true,
-                defaultHour: 9 // Agregamos una hora predeterminadas
+                defaultHour: 9, // Agregamos una hora predeterminadas
             });
-            $('#FECHA_SOL_EQUIPO, #HORA_INICIO_SOL_EQUIPO, #HORA_TERM_SOL_EQUIPO').css('background-color', 'white');
+            $('#HORA_INICIO_SOL_EQUIPO, #HORA_TERM_SOL_EQUIPO, #FECHA_SOL_EQUIPO').css('background-color', 'white');
         });
     </script>
     <script>
