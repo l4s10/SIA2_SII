@@ -173,24 +173,32 @@
     <script>
         $(function () {
              // Inicializar Flatpickr para el campo de fecha y hora de inicio
-             flatpickr("#FECHA_INICIO_ASIG_BODEGA", {
+            let inicioFlatpickr = flatpickr("#FECHA_INICIO_ASIG_BODEGA", {
                 locale: 'es',
                 enableTime: true,
                 dateFormat: "Y-m-d H:i",
-                // Otras opciones y configuraciones adicionales que desees utilizar
                 altFormat: 'd-m-Y H:i',
                 altInput: true,
+                minDate: "today", // La fecha mínima será hoy
+                onChange: function(selectedDates, dateStr, instance) {
+                    if (terminoFlatpickr.selectedDates[0] && selectedDates[0] > terminoFlatpickr.selectedDates[0]) {
+                        terminoFlatpickr.setDate(selectedDates[0]);
+                    }
+                    terminoFlatpickr.set('minDate', dateStr);
+                }
             });
 
-            // Inicializar Flatpickr para el campo de fecha y hora de término
-            flatpickr("#FECHA_TERM_ASIG_BODEGA", {
+            let terminoFlatpickr = flatpickr("#FECHA_TERM_ASIG_BODEGA", {
                 locale: 'es',
                 enableTime: true,
                 dateFormat: "Y-m-d H:i",
-                // Otras opciones y configuraciones adicionales que desees utilizar
                 altFormat: 'd-m-Y H:i',
                 altInput: true,
+                minDate: "today", // La fecha mínima será hoy
             });
+
+            // Actualizar la configuración de terminoFlatpickr
+            terminoFlatpickr.set('minDate', inicioFlatpickr.selectedDates[0] ? inicioFlatpickr.selectedDates[0] : "today");
             $('#FECHA_SOL_BODEGA').flatpickr({
                 dateFormat: 'Y-m-d',
                 altFormat: 'd-m-Y',

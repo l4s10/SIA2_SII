@@ -121,12 +121,7 @@
             {{-- **LISTO** --}}
             <div class="mb-3" hidden>
                 <label for="ESTADO_SOL_BODEGA" class="form-label"><i class="fa-solid fa-file-circle-check"></i> Estado de la Solicitud:</label>
-                <select id="ESTADO_SOL_BODEGA" name="ESTADO_SOL_BODEGA" class="form-control">
-                    <option value="INGRESADO" selected>Ingresado</option>
-                    <option value="EN REVISION">En revisión</option>
-                    <option value="ACEPTADO">Aceptado</option>
-                    <option value="RECHAZADO">Rechazado</option>
-                </select>
+                <input type="text" id="ESTADO_SOL_BODEGA" name="ESTADO_SOL_BODEGA" class="form-control" value="INGRESADO" readonly>
             </div>
             <div class="mb-3">
                 <a href="{{route('reservas.dashboard')}}" class="btn btn-secondary">Cancelar</a>
@@ -183,32 +178,44 @@
                     });
                 }
             });
-            $('#HORA_INICIO_SOL_BODEGA').flatpickr({
+            let terminoFlatpickr = $('#HORA_TERM_SOL_BODEGA').flatpickr({
                 enableTime: true,
                 noCalendar: true,
                 dateFormat: "H:i",
                 time_24hr: true,
                 locale: "es",
                 placeholder: "Seleccione la hora",
+                minTime: "08:00",
+                maxTime: "18:00",
                 onReady: function(selectedDates, dateStr, instance) {
                     $('#clearButton').on('click', function() {
                         instance.clear();
                     });
                 }
             });
-            $('#HORA_TERM_SOL_BODEGA').flatpickr({
+
+            let inicioFlatpickr = $('#HORA_INICIO_SOL_BODEGA').flatpickr({
                 enableTime: true,
                 noCalendar: true,
                 dateFormat: "H:i",
                 time_24hr: true,
                 locale: "es",
                 placeholder: "Seleccione la hora",
+                minTime: "08:00",
+                maxTime: "18:00",
                 onReady: function(selectedDates, dateStr, instance) {
                     $('#clearButton').on('click', function() {
                         instance.clear();
                     });
+                },
+                onChange: function(selectedDates, dateStr, instance) {
+                    if (terminoFlatpickr.selectedDates[0] && selectedDates[0] > terminoFlatpickr.selectedDates[0]) {
+                        terminoFlatpickr.setDate(selectedDates[0]);
+                    }
+                    terminoFlatpickr.set('minTime', dateStr);
                 }
             });
+
             $('form').on('submit', function (e) {
                 var fecha = $('#FECHA_SOL_BODEGA').val();
                 var hora = $('#HORA_INICIO_SOL_BODEGA').val();
@@ -226,20 +233,6 @@
                         confirmButtonText: 'Aceptar'
                     });
                 }
-            });
-        });
-    </script>
-    <!-- Para inicializar -->
-    <script>
-        $(document).ready(function () {
-            $('#equipos').DataTable({
-                "lengthMenu": [[5,10, 50, -1], [5, 10, 50, "All"]],
-                "columnDefs": [
-                    { "orderable": false, "targets": 1 } // La séptima columna no es ordenable
-                ],
-                "language": {
-                    "url": "https://cdn.datatables.net/plug-ins/1.11.3/i18n/es_es.json"
-                },
             });
         });
     </script>
