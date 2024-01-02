@@ -41,7 +41,7 @@
                         <input type="text" name="ID_USUARIO" value="{{auth()->user()->id}}" hidden>
                         <div class="mb-3">
                             <label for="NOMBRE_SOLICITANTE" class="form-label"><i class="fa-solid fa-user"></i> Nombre del solicitante:</label>
-                            <input type="text" id="NOMBRE_SOLICITANTE" name="NOMBRE_SOLICITANTE" class="form-control{{ $errors->has('NOMBRE_SOLICITANTE') ? ' is-invalid' : '' }}" value="{{ auth()->user()->NOMBRES }} {{auth()->user()->APELLIDOS}}" placeholder="Ej: ANDRES RODRIGO SUAREZ MATAMALA" readonly>
+                            <input type="text" id="NOMBRE_SOLICITANTE" name="NOMBRE_SOLICITANTE" class="form-control{{ $errors->has('NOMBRE_SOLICITANTE') ? ' is-invalid' : '' }}" value="{{ auth()->user()->NOMBRES }} {{auth()->user()->APELLIDOS}}" placeholder="Ej: ANDRES RODRIGO SUAREZ MATAMALA" readonly required>
                             @if ($errors->has('NOMBRE_SOLICITANTE'))
                             <div class="invalid-feedback">
                                 {{ $errors->first('NOMBRE_SOLICITANTE') }}
@@ -51,7 +51,7 @@
 
                         <div class="mb-3">
                             <label for="RUT" class="form-label"><i class="fa-solid fa-id-card"></i> RUT:</label>
-                            <input type="text" id="RUT" name="RUT" class="form-control{{ $errors->has('RUT') ? ' is-invalid' : '' }}" value="{{ auth()->user()->RUT }}" placeholder="Sin puntos con guion (Ej: 12345678-9)" readonly>
+                            <input type="text" id="RUT" name="RUT" class="form-control{{ $errors->has('RUT') ? ' is-invalid' : '' }}" value="{{ auth()->user()->RUT }}" placeholder="Sin puntos con guion (Ej: 12345678-9)" readonly required>
                             @if ($errors->has('RUT'))
                             <div class="invalid-feedback">
                                 {{ $errors->first('RUT') }}
@@ -63,7 +63,7 @@
                     <div class="col-md-6">
                         <div class="mb-3">
                             <label for="DEPTO" class="form-label"><i class="fa-solid fa-building-user"></i> Departamento:</label>
-                            <input type="text" id="DEPTO" name="DEPTO" class="form-control{{ $errors->has('DEPTO') ? ' is-invalid' : '' }}" value="{{ auth()->user()->ubicacion->UBICACION }}" placeholder="Ej: ADMINISTRACION" readonly>
+                            <input type="text" id="DEPTO" name="DEPTO" class="form-control{{ $errors->has('DEPTO') ? ' is-invalid' : '' }}" value="{{ auth()->user()->ubicacion->UBICACION }}" placeholder="Ej: ADMINISTRACION" readonly required>
                             @if ($errors->has('DEPTO'))
                             <div class="invalid-feedback">
                                 {{ $errors->first('DEPTO') }}
@@ -73,7 +73,7 @@
 
                         <div class="mb-3">
                             <label for="EMAIL" class="form-label"><i class="fa-solid fa-envelope"></i> Email:</label>
-                            <input type="email" id="EMAIL" name="EMAIL" class="form-control{{ $errors->has('EMAIL') ? ' is-invalid' : '' }}" value="{{ auth()->user()->email }}" placeholder="Ej: demo@demo.cl" readonly>
+                            <input type="email" id="EMAIL" name="EMAIL" class="form-control{{ $errors->has('EMAIL') ? ' is-invalid' : '' }}" value="{{ auth()->user()->email }}" placeholder="Ej: demo@demo.cl" readonly required>
                             @if ($errors->has('EMAIL'))
                             <div class="invalid-feedback">
                                 {{ $errors->first('EMAIL') }}
@@ -128,38 +128,40 @@
             </div> --}}
 
             <!-- **CAMPO OCUPANTES DEL 1 AL 6 -->
-        <div class="row">
-            @for ($i = 1; $i <= 6; $i++)
-            <div class="col-md-6 progresivo" id="ubicacion{{$i}}" @if($i == 1) style="display: block;" @endif>
-                <div class="form-group">
-                    <label for="ubicaciones{{$i}}"><i class="fas fa-location-arrow"></i> Ubicación {{$i}}</label>
-                    <select id="ubicaciones{{$i}}" class="ubicaciones{{$i}} form-control">
-                        <option value="">-- Seleccione una ubicacion --</option>
-                        @foreach ($ubicacionesFiltradas as $ubicacion)
-                            <option value="{{$ubicacion->ID_UBICACION}}">{{$ubicacion->UBICACION}}</option>
-                        @endforeach
-                    </select>
+            <div class="row">
+                @for ($i = 1; $i <= 6; $i++)
+                <div class="col-md-6 progresivo" id="ubicacion{{$i}}" @if($i == 1) style="display: block;" @endif>
+                    <div class="form-group">
+                        <label for="ubicaciones{{$i}}"><i class="fas fa-location-arrow"></i> Ubicación {{$i}}</label>
+                        <select id="ubicaciones{{$i}}" class="ubicaciones{{$i}} form-control" @if($i == 1) required @endif> // Validar ingreso de al menos una ubicación 
+                            <option value="">-- Seleccione una ubicacion --</option>
+                            @foreach ($ubicacionesFiltradas as $ubicacion)
+                                <option value="{{$ubicacion->ID_UBICACION}}">{{$ubicacion->UBICACION}}</option>
+                            @endforeach
+                        </select>
+                    </div>
                 </div>
+                <div class="col-md-6 progresivo" id="ocupante{{$i}}" @if($i == 1) style="display: block;" @endif>
+                    @if($i==1)
+                        <div class="form-group">
+                            <label for="usuarios{{$i}}"><i class="fas fa-user"></i> Ocupante {{$i}} / Conductor</label>
+                            <select id="usuarios{{$i}}" class="usuarios{{$i}} form-control" name="OCUPANTE_{{$i}}" required> // Validar ingreso del primer ocupante para primera ubicación
+                                <option value="">--Seleccione al ocupante n°{{$i}} --</option>
+                            </select>
+                        </div>
+                    @else
+                        <div class="form-group">
+                            <label for="usuarios{{$i}}"><i class="fas fa-user"></i> Ocupante {{$i}}</label>
+                            <select id="usuarios{{$i}}" class="usuarios{{$i}} form-control" name="OCUPANTE_{{$i}}">
+                                <option value="">--Seleccione al ocupante n°{{$i}} --</option>
+                            </select>
+                        </div>
+                    @endif
+                </div>
+                @endfor
             </div>
-            <div class="col-md-6 progresivo" id="ocupante{{$i}}" @if($i == 1) style="display: block;" @endif>
-                @if($i==1)
-                    <div class="form-group">
-                        <label for="usuarios{{$i}}"><i class="fas fa-user"></i> Ocupante {{$i}} / Conductor</label>
-                        <select id="usuarios{{$i}}" class="usuarios{{$i}} form-control" name="OCUPANTE_{{$i}}">
-                            <option value="">--Seleccione al ocupante n°{{$i}} --</option>
-                        </select>
-                    </div>
-                @else
-                    <div class="form-group">
-                        <label for="usuarios{{$i}}"><i class="fas fa-user"></i> Ocupante {{$i}}</label>
-                        <select id="usuarios{{$i}}" class="usuarios{{$i}} form-control" name="OCUPANTE_{{$i}}">
-                            <option value="">--Seleccione al ocupante n°{{$i}} --</option>
-                        </select>
-                    </div>
-                @endif
-            </div>
-            @endfor
-        </div>
+
+
 
 
             {{-- *FECHA Y HORA DE SALIDA SOLICITADA* --}}
@@ -178,6 +180,7 @@
                     <div class="invalid-feedback">{{ $errors->first('FECHA_SOL_VEH') }}</div>
                 @endif
             </div>
+
             {{-- !!SELECT PARA REGIONES --}}
             <div class="row">
                 {{-- *SELECT PARA REGION ORIGEN* --}}
@@ -297,17 +300,38 @@
         }
       </style>
 @stop
+
 @section('js')
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    
     {{-- !!CONFIG FLATPICKR --}}
     <script>
-        $(function () {
+         $(function () {
+            // Configuración de Flatpickr para la selección de fechas y horas en la solicitud de vehículos
+
+            // Validaciones: solo permitir solicitudes para el año actual en horario laboral,
+            // a menos que la solicitud sea realizada en diciembre,
+            // en cuyo caso se permitirá seleccionar un período de uso hasta enero y febrero del año siguiente.
+            
+            // Crear objeto que almacena la fecha y hora actual
+            let today = new Date();
+            // Crear variable que recibe el límite superior del calendario.
+            let maxDate;
+            if (today.getMonth() === 11) {
+                // Si estamos en diciembre, permitir hasta febrero del año siguiente
+                maxDate = new Date(today.getFullYear() + 1, 1, 28); // maxDate = año actual + 1, mes 1 (contando de 0), día 28.
+            } else {
+                // En cualquier otro mes, permitir hasta el último día de este año
+                maxDate = new Date(today.getFullYear(), 11, 31); // maxDate = Último día del año actual
+            }
+
             $('#FECHA_SOL_VEH').flatpickr({
                 dateFormat: 'Y-m-d',
                 altFormat: 'd-m-Y',
                 altInput: true,
                 locale: 'es',
-                minDate: "today",
+                minDate: today,  // No permitir fechas anteriores al día actual
+                maxDate: maxDate,  // Permitir fechas según las condiciones especificadas
                 showClearButton: true,
                 mode: "range",
                 onReady: function(selectedDates, dateStr, instance) {
@@ -316,91 +340,109 @@
                     });
                 }
             });
-            $('#HORA_SALIDA').flatpickr({
-                enableTime: true,
-                noCalendar: true,
-                dateFormat: "H:i",
-                time_24hr: true,
-                locale: "es",
-                placeholder: "Seleccione la hora",
-                onReady: function(selectedDates, dateStr, instance) {
-                    $('#clearButton').on('click', function() {
-                        instance.clear();
-                    });
-                }
+            // Flatpickr para la hora de salida
+            function configureTimePicker(selector) {
+                $(selector).flatpickr({
+                    enableTime: true,
+                    noCalendar: true,
+                    dateFormat: "H:i",
+                    time_24hr: true,
+                    locale: "es",
+                    placeholder: "Seleccione la hora",
+                    minTime: "07:00",
+                    maxTime: "19:00",
+                    onReady: function (selectedDates, dateStr, instance) {
+                        $('#clearButton').on('click', function () {
+                            instance.clear();
+                        });
+                    }
+                });
+            }
+
+            configureTimePicker('#HORA_SALIDA');
+            configureTimePicker('#HORA_LLEGADA');
+
+            
             });
-            $('#HORA_LLEGADA').flatpickr({
-                enableTime: true,
-                noCalendar: true,
-                dateFormat: "H:i",
-                time_24hr: true,
-                locale: "es",
-                placeholder: "Seleccione la hora",
-                onReady: function(selectedDates, dateStr, instance) {
-                    $('#clearButton').on('click', function() {
-                        instance.clear();
-                    });
-                }
-            });
-        });
     </script>
 
 
-<script>
-    $(document).ready(function() {
-        $('#conductor').change(function() {
-            var conductorSeleccionado = $(this).find(":selected");
-            var idConductor = conductorSeleccionado.val();
-            var nombreConductor = conductorSeleccionado.data('nombres');
-            var apellidosConductor = conductorSeleccionado.data('apellidos');
-            if(idConductor != "") {
-                $('.usuarios1').empty().append(new Option(nombreConductor + ' ' + apellidosConductor, idConductor)).trigger('change');
+    <script>
+
+        $(document).ready(function() {
+            $('#conductor').change(function() {
+                let conductorSeleccionado = $(this).find(":selected");
+                let idConductor = conductorSeleccionado.val();
+                let nombreConductor = conductorSeleccionado.data('nombres');
+                let apellidosConductor = conductorSeleccionado.data('apellidos');
+                if(idConductor != "") {
+                    $('.usuarios1').empty().append(new Option(nombreConductor + ' ' + apellidosConductor, idConductor)).trigger('change');
+                }
+            });
+            // Llamar a la función cuando cambien los campos relevantes
+            $('#FECHA_SOL_VEH, #HORA_SALIDA, #HORA_LLEGADA').on('change', function () {
+                if ($('#FECHA_SOL_VEH').val() === '' || $('#HORA_SALIDA').val() === '' || $('#HORA_LLEGADA').val() === '') {
+                    // Deshabilitar el botón de enviar si algún campo no está lleno
+                    $('#FECHA_SOL_VEH').attr('required', 'required');
+                } else {
+                    // Habilitar el botón de enviar si todos los campos están llenos
+                    $('#FECHA_SOL_VEH').removeAttr('required');
+                }
+            });
+
+            // Función para actualizar la validación de ocupantes al cambiar la ubicación
+            function actualizarValidacionOcupante(idUbicacion, selectOcupante) {
+                let ubicacionSeleccionada = $('#ubicaciones' + idUbicacion).val();
+                let requerido = ubicacionSeleccionada !== '';
+
+                if (requerido) {
+                    selectOcupante.attr('required', 'required');
+                } else {
+                    selectOcupante.removeAttr('required');
+                }
+            }
+
+
+            for (let i = 1; i <= 6; i++) {
+                // Actualizar la lista de usuarios en base a la ubicación seleccionada
+                $('.ubicaciones'+i).change(function() {
+                    actualizarValidacionOcupante(i, $('#usuarios' + i)); // Validar ingreso de ocupante por ubicación ingresada
+                    const ubicacionId = $(this).val();
+                    if (ubicacionId) {
+                        $.ajax({
+                            url: '/usuarios/'+ubicacionId,
+                            type: 'GET',
+                            xhrFields: {
+                                withCredentials: true
+                            },
+                            success: function(data) {
+                                let select = $('.usuarios'+i);
+                                select.empty();
+                                select.append('<option value="">--Seleccione al ocupante n°'+i+' --</option>');
+                                $.each(data, function(index, usuario) {
+                                    select.append('<option value="'+usuario.id+'">'+usuario.NOMBRES+' '+usuario.APELLIDOS+'</option>');
+                                });
+                            }
+                        });
+                    } else {
+                        $('.usuarios'+i).empty().append('<option value="">--Seleccione al ocupante n°'+i+' --</option>');
+                    }
+                });
+
+                // Mostrar u ocultar los selectores de ubicación y ocupante en base al ocupante seleccionado
+                $('.usuarios'+i).change(function() {
+                    if (this.value !== "" && i < 6) {
+                        $('#ubicacion'+(i+1)).show();
+                        $('#ocupante'+(i+1)).show();
+                    } else if (this.value === "") {
+                        for (let j = i+1; j <= 6; j++) {
+                            $('#ubicacion'+j).hide();
+                            $('#ocupante'+j).hide();
+                        }
+                    }
+                });
             }
         });
-    });
-</script>
-
-<script>
-    $(document).ready(function() {
-        for (let i = 1; i <= 6; i++) {
-            // Actualizar la lista de usuarios en base a la ubicación seleccionada
-            $('.ubicaciones'+i).change(function() {
-                const ubicacionId = $(this).val();
-                if (ubicacionId) {
-                    $.ajax({
-                        url: '/usuarios/'+ubicacionId,
-                        type: 'GET',
-                        xhrFields: {
-                            withCredentials: true
-                        },
-                        success: function(data) {
-                            let select = $('.usuarios'+i);
-                            select.empty();
-                            select.append('<option value="">--Seleccione al ocupante n°'+i+' --</option>');
-                            $.each(data, function(index, usuario) {
-                                select.append('<option value="'+usuario.id+'">'+usuario.NOMBRES+' '+usuario.APELLIDOS+'</option>');
-                            });
-                        }
-                    });
-                } else {
-                    $('.usuarios'+i).empty().append('<option value="">--Seleccione al ocupante n°'+i+' --</option>');
-                }
-            });
-
-            // Mostrar u ocultar los selectores de ubicación y ocupante en base al ocupante seleccionado
-            $('.usuarios'+i).change(function() {
-                if (this.value !== "" && i < 6) {
-                    $('#ubicacion'+(i+1)).show();
-                    $('#ocupante'+(i+1)).show();
-                } else if (this.value === "") {
-                    for (let j = i+1; j <= 6; j++) {
-                        $('#ubicacion'+j).hide();
-                        $('#ocupante'+j).hide();
-                    }
-                }
-            });
-        }
-    });
     </script>
 
 

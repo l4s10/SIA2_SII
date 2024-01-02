@@ -36,14 +36,14 @@
         <div class="row"> 
             <div class="col">
                 <label for="PATENTE_VEHICULO" class="form-label"><i class="fa-solid fa-credit-card"></i> Patente</label>
-                <input id="PATENTE_VEHICULO" name="PATENTE_VEHICULO" type="text" class="form-control" tabindex="1" placeholder="Ej: AB1234">
+                <input id="PATENTE_VEHICULO" name="PATENTE_VEHICULO" type="text" class="form-control" tabindex="1" placeholder="Ej: AB1234" required>
                 @error('PATENTE_VEHICULO')
                     <div class="alert alert-danger mt-2">{{ $message }}</div>
                 @enderror
             </div>
             <div class="col">
                 <label for="ID_TIPO_VEH" class="form-label"><i class="fa-solid fa-circle-info"></i> Tipo</label>
-                <select name="ID_TIPO_VEH" id="ID_TIPO_VEH" class="form-control">
+                <select name="ID_TIPO_VEH" id="ID_TIPO_VEH" class="form-control" required>
                     <option value="">-- SELECCIONE UN TIPO DE VEHÍCULO --</option>
                     @foreach ($tipos as $tipo)
                         <option value="{{$tipo->ID_TIPO_VEH}}">{{ $tipo->TIPO_VEHICULO}}</option>
@@ -58,21 +58,21 @@
         <div class="row">
             <div class="col">
                 <label for="MARCA" class="form-label"><i class="fa-solid fa-circle-info"></i> Marca</label>
-                <input id="MARCA" name="MARCA" type="text" class="form-control" tabindex="3" placeholder="Toyota">
+                <input id="MARCA" name="MARCA" type="text" class="form-control" tabindex="3" placeholder="Toyota" required>
                 @error('MARCA')
                     <div class="alert alert-danger mt-2">{{ $message }}</div>
                 @enderror
             </div>
             <div class="col">
                 <label for="MODELO_VEHICULO" class="form-label"><i class="fa-solid fa-circle-info"></i> Modelo</label>
-                <input id="MODELO_VEHICULO" name="MODELO_VEHICULO" type="text" class="form-control" tabindex="4" placeholder="Corolla">
+                <input id="MODELO_VEHICULO" name="MODELO_VEHICULO" type="text" class="form-control" tabindex="4" placeholder="Corolla" required>
                 @error('MODELO_VEHICULO')
                     <div class="alert alert-danger mt-2">{{ $message }}</div>
                 @enderror
             </div>
             <div class="col">
                 <label for="ANO_VEHICULO" class="form-label"><i class="fa-regular fa-calendar-days"></i> Año</label>
-                <input type="number" min="2000" max="2099" step="1" id="ANO_VEHICULO" name="ANO_VEHICULO" placeholder="(2000 - 2099)" class="form-control"/>
+                <input type="number" min="2010" step="1" id="ANO_VEHICULO" name="ANO_VEHICULO" placeholder="(2000 - 2099)" required class="form-control"/>
                 @error('ANO_VEHICULO')
                     <div class="alert alert-danger mt-2">{{ $message }}</div>
                 @enderror
@@ -80,35 +80,36 @@
         </div>
         <br>
         {{-- !!REGION Y DIRECCION REGIONAL --}}
-        <div class="row">
-            <div class="col-md-4">
-                <label for=""><i class="fa-solid fa-map-location-dot"></i> Región </label>
-                <select id="region-select" class="form-control" name="ID_REGION">
-                    <option>Selecciona una región</option>
-                    @foreach ($regiones as $region)
-                        <option value="{{$region->ID_REGION}}">{{$region->REGION}}</option>
-                    @endforeach
-                </select>
-            </div>
+<div class="row">
+    <div class="col-md-4">
+        <label for="region-select"><i class="fa-solid fa-map-location-dot"></i> Región </label>
+        <select id="region-select" class="form-control" name="ID_REGION" required>
+            <option>Selecciona una región</option>
+            @foreach ($regiones as $region)
+                <option value="{{$region->ID_REGION}}">{{$region->REGION}}</option>
+            @endforeach
+        </select>
+    </div>
 
-            <div class="col-md-4">
-                <label for=""><i class="fa-solid fa-location-dot"></i> Jurisdicción</label>
-                <select id="direccion-select" class="form-control">
-                    <option>Selecciona una dirección regional</option>
-                </select>
-            </div>
+    <div class="col-md-4">
+        <label for="direccion-select"><i class="fa-solid fa-location-dot"></i> Jurisdicción</label>
+        <select id="direccion-select" class="form-control" name="ID_DIRECCION" required>
+            <option>Selecciona una dirección regional</option>
+        </select>
+    </div>
 
-            <div class="col-md-4">
-                <label for=""><i class="fa-solid fa-street-view"></i> Ubicación/Departamento </label>
-                <select id="ubicacion-select" class="form-control" name="ID_UBICACION">
-                    <option>Selecciona una ubicación</option>
-                </select>
-            </div>
-        </div>
+    <div class="col-md-4">
+        <label for="ubicacion-select"><i class="fa-solid fa-street-view"></i> Ubicación/Departamento </label>
+        <select id="ubicacion-select" class="form-control" name="ID_UBICACION" required>
+            <option>Selecciona una ubicación</option>
+        </select>
+    </div>
+</div>
+
         <br>
         <div class="mb-3">
             <label for="ESTADO_VEHICULO" class="form-label"><i class="fa-solid fa-square-check"></i> Estado</label>
-            <select name="ESTADO_VEHICULO" id="ESTADO_VEHICULO" class="form-control">
+            <select name="ESTADO_VEHICULO" id="ESTADO_VEHICULO" class="form-control" required>
                 <option value="">-- SELECCIONE UN ESTADO --</option>
                 <option value="DISPONIBLE">DISPONIBLE</option>
                 <option value="OCUPADO">OCUPADO</option>
@@ -147,6 +148,10 @@
         $('#FECHA_NAC').flatpickr(flatpickrConfig);
         $('#FECHA_INGRESO').flatpickr(flatpickrConfig);
     });
+
+    // Obtener el año actual y establecerlo como el valor máximo del campo de entrada ANO_VEHICULO
+    let year = new Date().getFullYear();
+    document.getElementById('ANO_VEHICULO').setAttribute('max', year);
 </script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 

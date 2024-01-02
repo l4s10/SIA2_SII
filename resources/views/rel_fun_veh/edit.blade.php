@@ -15,7 +15,7 @@
                     <div class="col-md-6">
                         <div class="mb-3">
                             <label for="NOMBRE_SOLICITANTE" class="form-label"><i class="fa-solid fa-user"></i> Nombre del solicitante:</label>
-                            <input type="text" id="NOMBRE_SOLICITANTE" name="NOMBRE_SOLICITANTE" class="form-control{{ $errors->has('NOMBRE_SOLICITANTE') ? ' is-invalid' : '' }}" value="{{ $solicitud->NOMBRE_SOLICITANTE}}" placeholder="Ej: ANDRES RODRIGO SUAREZ MATAMALA" readonly>
+                            <input type="text" id="NOMBRE_SOLICITANTE" name="NOMBRE_SOLICITANTE" class="form-control{{ $errors->has('NOMBRE_SOLICITANTE') ? ' is-invalid' : '' }}" value="{{ $solicitud->NOMBRE_SOLICITANTE}}" placeholder="Ej: ANDRES RODRIGO SUAREZ MATAMALA" required readonly>
                             @if ($errors->has('NOMBRE_SOLICITANTE'))
                             <div class="invalid-feedback">
                                 {{ $errors->first('NOMBRE_SOLICITANTE') }}
@@ -25,7 +25,7 @@
 
                         <div class="mb-3">
                             <label for="RUT" class="form-label"><i class="fa-solid fa-id-card"></i> RUT:</label>
-                            <input type="text" id="RUT" name="RUT" class="form-control{{ $errors->has('RUT') ? ' is-invalid' : '' }}" value="{{ $solicitud->RUT }}" placeholder="Sin puntos con guion (Ej: 12345678-9)" readonly>
+                            <input type="text" id="RUT" name="RUT" class="form-control{{ $errors->has('RUT') ? ' is-invalid' : '' }}" value="{{ $solicitud->RUT }}" placeholder="Sin puntos con guion (Ej: 12345678-9)" required readonly>
                             @if ($errors->has('RUT'))
                             <div class="invalid-feedback">
                                 {{ $errors->first('RUT') }}
@@ -37,7 +37,7 @@
                     <div class="col-md-6">
                         <div class="mb-3">
                             <label for="DEPTO" class="form-label"><i class="fa-solid fa-building-user"></i> Departamento:</label>
-                            <input type="text" id="DEPTO" name="DEPTO" class="form-control{{ $errors->has('DEPTO') ? ' is-invalid' : '' }}" value="{{ $solicitud->DEPTO }}" placeholder="Ej: ADMINISTRACION" readonly>
+                            <input type="text" id="DEPTO" name="DEPTO" class="form-control{{ $errors->has('DEPTO') ? ' is-invalid' : '' }}" value="{{ $solicitud->DEPTO }}" placeholder="Ej: ADMINISTRACION" required readonly>
                             @if ($errors->has('DEPTO'))
                             <div class="invalid-feedback">
                                 {{ $errors->first('DEPTO') }}
@@ -47,7 +47,7 @@
 
                         <div class="mb-3">
                             <label for="EMAIL" class="form-label"><i class="fa-solid fa-envelope"></i> Email:</label>
-                            <input type="email" id="EMAIL" name="EMAIL" class="form-control{{ $errors->has('EMAIL') ? ' is-invalid' : '' }}" value="{{ $solicitud->EMAIL }}" placeholder="Ej: demo@demo.cl" readonly>
+                            <input type="email" id="EMAIL" name="EMAIL" class="form-control{{ $errors->has('EMAIL') ? ' is-invalid' : '' }}" value="{{ $solicitud->EMAIL }}" placeholder="Ej: demo@demo.cl" required readonly>
                             @if ($errors->has('EMAIL'))
                             <div class="invalid-feedback">
                                 {{ $errors->first('EMAIL') }}
@@ -61,7 +61,7 @@
             {{-- **ESTADO SOLICITUD --}}
             <div class="mb-3">
                 <label for="ESTADO_SOL_VEH" class="form-label"><i class="fa-solid fa-file-circle-check"></i> Estado de la Solicitud:</label>
-                <select id="ESTADO_SOL_VEH" name="ESTADO_SOL_VEH" class="form-control">
+                <select id="ESTADO_SOL_VEH" name="ESTADO_SOL_VEH" class="form-control" required>
                     <option value="INGRESADO" @if ($solicitud->ESTADO_SOL_VEH === 'INGRESADO') selected @endif>🟠 Ingresado</option>
                     <option value="SUSPENDIDO" @if ($solicitud->ESTADO_SOL_VEH === 'SUSPENDIDO') selected @endif>⚫ Suspendido</option>
                     <option value="POR AUTORIZAR" @if ($solicitud->ESTADO_SOL_VEH === 'POR AUTORIZAR') selected @endif>🟡 Por autorizar</option>
@@ -89,7 +89,7 @@
             {{-- *CAMPO MOTIVO SOLICITUD* --}}
             <div class="mb-3">
                 <label for="MOTIVO_SOL_VEH" class="form-label"><i class="fa-solid fa-file-pen"></i> Motivo de solicitud:</label>
-                <textarea id="MOTIVO_SOL_VEH" name="MOTIVO_SOL_VEH" class="form-control @error('MOTIVO_SOL_VEH') is-invalid @enderror" aria-label="With textarea" rows="5" placeholder="Escriba el motivo de su solicitud (MÁX 1000 CARACTERES)" readonly autofocus>{{ $solicitud->MOTIVO_SOL_VEH }}</textarea>
+                <textarea id="MOTIVO_SOL_VEH" name="MOTIVO_SOL_VEH" class="form-control @error('MOTIVO_SOL_VEH') is-invalid @enderror" aria-label="With textarea" rows="5" placeholder="Escriba el motivo de su solicitud (MÁX 1000 CARACTERES)" readonly required autofocus>{{ $solicitud->MOTIVO_SOL_VEH }}</textarea>
                 @error('MOTIVO_SOL_VEH')
                     <div class="invalid-feedback">{{ $message }}</div>
                 @enderror
@@ -108,7 +108,7 @@
                 <div class="col-md-6">
                     <div class="mb-3">
                         <label for="ORIGEN" class="form-label"><i class="fa-solid fa-map"></i> Comuna origen:</label>
-                        <select id="ORIGEN" name="ORIGEN" class="form-control @error('ORIGEN') is-invalid @enderror" disabled>
+                        <select id="ORIGEN" name="ORIGEN" class="form-control @error('ORIGEN') is-invalid @enderror" required disabled>
                             <option value="" selected>--Seleccione una comuna--</option>
                             {{-- CAPTURAR COMUNAS Y MOSTRAR AQUI --}}
                             @foreach ($comunas as $comuna)
@@ -126,7 +126,7 @@
                 <div class="col-md-6">
                     <div class="mb-3">
                         <label for="DESTINO" class="form-label"><i class="fa-solid fa-map-location-dot"></i> Comuna destino:</label>
-                        <select id="DESTINO" name="DESTINO" class="form-control @error('DESTINO') is-invalid @enderror" disabled>
+                        <select id="DESTINO" name="DESTINO" class="form-control @error('DESTINO') is-invalid @enderror" required disabled>
                             <option value="" selected>--Seleccione una comuna--</option>
                             @foreach ($comunas as $comuna)
                                 <option value="{{ $comuna->ID_COMUNA }}" {{ $solicitud->DESTINO == $comuna->ID_COMUNA ? 'selected' : '' }}>
@@ -161,7 +161,7 @@
 
                 <div class="col-md-6">
                     <label for="PATENTE_VEHICULO" class="form-label"><i class="fa-solid fa-car-on"></i> Asignar vehículos:</label>
-                    <select id="PATENTE_VEHICULO" name="PATENTE_VEHICULO" class="form-control @if($errors->has('PATENTE_VEHICULO')) is-invalid @endif">
+                    <select id="PATENTE_VEHICULO" name="PATENTE_VEHICULO" class="form-control @if($errors->has('PATENTE_VEHICULO')) is-invalid @endif" required>
                         <option value="">-- Seleccione el vehículo a asignar --</option>
                         @foreach ($vehiculos->groupBy('ubicacion.UBICACION') as $ubicacion => $autos)
                             <optgroup label="{{ $ubicacion }}">
@@ -211,36 +211,36 @@
             <div class="form-group mt-3">
                 <label for="FECHA_SOL_VEH"><i class="fa-solid fa-calendar"></i> Fecha de inicio y término:</label>
                 <div class="input-group">
-                    <input type="text" id="FECHA_SOL_VEH" name="FECHA_SOL_VEH" class="form-control @if($errors->has('FECHA_SOL_VEH')) is-invalid @endif" placeholder="Ingrese la fecha" data-input disabled value="{{$solicitud->FECHA_SOL_VEH }}">
+                    <input type="text" id="FECHA_SOL_VEH" name="FECHA_SOL_VEH" class="form-control @if($errors->has('FECHA_SOL_VEH')) is-invalid @endif" required placeholder="Ingrese la fecha" data-input disabled value="{{$solicitud->FECHA_SOL_VEH }}">
                     {{-- *HORA SOLICITADA* --}}
-                    <input type="text" id="HORA_SALIDA" name="HORA_SALIDA" class="form-control flatpickr @if($errors->has('HORA_SALIDA')) is-invalid @endif" placeholder="Seleccione la hora de salida" data-input disabled value="{{ $solicitud->HORA_SALIDA }}">
-                    <input type="text" id="HORA_LLEGADA" name="HORA_LLEGADA" class="form-control flatpickr @if($errors->has('HORA_LLEGADA')) is-invalid @endif" placeholder="Seleccione la hora de llegada" data-input disabled value="{{ $solicitud->HORA_LLEGADA }}">
+                    <input type="text" id="HORA_SALIDA" name="HORA_SALIDA" class="form-control flatpickr @if($errors->has('HORA_SALIDA')) is-invalid @endif" required placeholder="Seleccione la hora de salida" data-input disabled value="{{ $solicitud->HORA_SALIDA }}">
+                    <input type="text" id="HORA_LLEGADA" name="HORA_LLEGADA" class="form-control flatpickr @if($errors->has('HORA_LLEGADA')) is-invalid @endif" required placeholder="Seleccione la hora de llegada" data-input disabled value="{{ $solicitud->HORA_LLEGADA }}">
                 </div>
                 @if ($errors->has('FECHA_SOL_VEH'))
                     <div class="invalid-feedback">{{ $errors->first('FECHA_SOL_VEH') }}</div>
                 @endif
             </div>
             {{-- *FECHAS AUTORIZADAS* --}}
-            {{-- COPIAR DE SOL_SALAS --}}
             <div class="row">
                 <div class="col-md-6">
                     {{-- Fecha y hora de inicio asignadas --}}
                     <div class="form-group">
                         <label for="FECHA_SALIDA"><i class="fa-solid fa-calendar"></i> Fecha y hora de inicio asignada:</label>
                         <div class="input-group">
-                            <input type="text" id="FECHA_SALIDA" name="FECHA_SALIDA" class="form-control @error('FECHA_SALIDA') is-invalid @enderror" placeholder="Seleccione fecha y hora de inicio" required value="{{$solicitud->FECHA_SALIDA}}">
+                            <input type="date" id="FECHA_SALIDA" name="FECHA_SALIDA" class="form-control @error('FECHA_SALIDA') is-invalid @enderror" placeholder="Seleccione fecha y hora de inicio" required value="{{ $solicitud->FECHA_SALIDA }}">
                         </div>
                         @error('FECHA_SALIDA')
-                        <div class="invalid-feedback">{{ $message }}</div>
+                            <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
                     </div>
                 </div>
+                
                 <div class="col-md-6">
                     {{-- **Fecha y hora de término asignadas **--}}
                     <div class="form-group">
                         <label for="FECHA_LLEGADA"><i class="fa-solid fa-calendar"></i> Fecha y hora de término asignada:</label>
                         <div class="input-group">
-                            <input type="text" id="FECHA_LLEGADA" name="FECHA_LLEGADA" class="form-control @error('FECHA_LLEGADA') is-invalid @enderror" placeholder="Seleccione fecha y hora de término" required value="{{$solicitud->FECHA_LLEGADA }}">
+                            <input type="date" id="FECHA_LLEGADA" name="FECHA_LLEGADA" class="form-control @error('FECHA_LLEGADA') is-invalid @enderror" placeholder="Seleccione fecha y hora de término" required value="{{$solicitud->FECHA_LLEGADA }}">
                         </div>
                         @error('FECHA_LLEGADA')
                         <div class="invalid-feedback">{{ $message }}</div>
@@ -261,7 +261,7 @@
             {{-- *OBSERVACIONES* --}}
             <div class="mb-3">
                 <label for="OBSERV_SOL_VEH" class="form-label"><i class="fa-solid fa-file-pen"></i> Observaciones:</label>
-                <textarea id="OBSERV_SOL_VEH" name="OBSERV_SOL_VEH" class="form-control @error('OBSERV_SOL_VEH') is-invalid @enderror" aria-label="With textarea" rows="5" placeholder="Escriba sus observaciones (MÁX 1000 CARACTERES)">{{ $solicitud->OBSERV_SOL_VEH }}</textarea>
+                <textarea id="OBSERV_SOL_VEH" name="OBSERV_SOL_VEH" class="form-control @error('OBSERV_SOL_VEH') is-invalid @enderror" aria-label="With textarea" rows="5" placeholder="Escriba sus observaciones (MÁX 1000 CARACTERES)" required>{{ $solicitud->OBSERV_SOL_VEH }}</textarea>
                 @error('OBSERV_SOL_VEH')
                     <div class="invalid-feedback">{{ $message }}</div>
                 @enderror
