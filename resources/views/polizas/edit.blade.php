@@ -28,7 +28,7 @@
                     <div class="form-group">
                         <label for="ID"><i class="fa-solid fa-book-bookmark"></i>  Conductor:</label>
                         <select name="ID" id="ID" class="form-control" required>
-                            <option value="" disabled>Seleccionar Conductor</option>
+                            <option value="" >Seleccionar Conductor</option>
                             @foreach($users as $user)
                                 <option value="{{ $user->id }}" @if($user->id == $poliza->ID) selected @endif>{{ $user->NOMBRES }} {{ $user->APELLIDOS }}</option>
                             @endforeach
@@ -72,9 +72,20 @@
     <script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/es.js"></script>
     <script>
         $(function () {
+            let fechaActual = new Date();
+
+            // Calcular la fecha de inicio (1 año antes del día actual)
+            let fechaInicio = new Date();
+            fechaInicio.setFullYear(fechaInicio.getFullYear() - 1);
+
+            // Calcular la fecha de fin (2 años después del día actual)
+            let fechaFin = new Date();
+            fechaFin.setFullYear(fechaFin.getFullYear() + 2);
+
             $('#FECHA_VENCIMIENTO_LICENCIA').flatpickr({
                 locale: 'es',
-                minDate: "1950-01-01",
+                minDate: fechaInicio.toISOString().split("T")[0],
+                maxDate: fechaFin.toISOString().split("T")[0],
                 dateFormat: "Y-m-d",
                 altFormat: "d-m-Y",
                 altInput: true,

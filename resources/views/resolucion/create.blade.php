@@ -128,10 +128,20 @@
     <script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/es.js"></script>
     <script>
         $(function () {
-            let fechaActual = new Date().toISOString().split("T")[0];
+            let fechaActual = new Date();
+
+            // Calcular la fecha de inicio (un año atrás)
+            let fechaInicio = new Date();
+            fechaInicio.setFullYear(fechaInicio.getFullYear() - 1);
+
+            // Calcular la fecha de fin (un mes adelante)
+            let fechaFin = new Date();
+            fechaFin.setMonth(fechaFin.getMonth() + 1);
+
             $('#FECHA').flatpickr({
                 locale: 'es',
-                minDate: fechaActual,
+                minDate: fechaInicio.toISOString().split("T")[0],
+                maxDate: fechaFin.toISOString().split("T")[0],
                 dateFormat: "Y-m-d",
                 altFormat: "d-m-Y",
                 altInput: true,

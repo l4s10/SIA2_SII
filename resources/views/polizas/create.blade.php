@@ -68,9 +68,14 @@
     <script src="https://kit.fontawesome.com/742a59c628.js" crossorigin="anonymous"></script>
     <script>
         $(function () {
+            // Calcular la fecha de fin (dos años después del día actual)
+            let fechaFin = new Date();
+            fechaFin.setFullYear(fechaFin.getFullYear() + 2);
+
             $('#FECHA_VENCIMIENTO_LICENCIA').flatpickr({
                 locale: 'es',
-                minDate: "1950-01-01",
+                minDate: "today",
+                maxDate: fechaFin.toISOString().split("T")[0],
                 dateFormat: "Y-m-d",
                 altFormat: "d-m-Y",
                 altInput: true,

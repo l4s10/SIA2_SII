@@ -97,8 +97,15 @@ class UbicacionesController extends Controller
      *///Carga el formulario de edicion
      public function edit(string $id)
     {
+        // Obtiene la dirección regional asociada al usuario autenticado
+        $direccionId = auth()->user()->ubicacion->ID_DIRECCION;
+
+        // Obtiene la dirección regional utilizando el ID del usuario autenticado
+        $direccionRegional = DireccionRegional::select('ID_DIRECCION', 'DIRECCION')
+            ->where('ID_DIRECCION', $direccionId)
+            ->first();
         $ubicacion = Ubicacion::find($id);
-        return view('ubicacion.edit',compact('ubicacion'));
+        return view('ubicacion.edit',compact('ubicacion','direccionRegional'));
     }
 
     public function update(Request $request, string $id)

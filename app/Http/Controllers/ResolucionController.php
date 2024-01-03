@@ -62,8 +62,16 @@ class ResolucionController extends Controller
         $request->validate(Resolucion::rules(), Resolucion::messages());
     
             $fecha = $request->input('FECHA');
-            if (Carbon::parse($fecha)->isAfter(Carbon::now())) {
-                throw new \Exception('. La fecha debe ser anterior o igual a la fecha actual.');
+            $fechaSeleccionada = strtotime($fecha);
+
+            // Calcular la fecha de inicio (un año atrás)
+            $fechaInicio = strtotime('-1 year');
+
+            // Calcular la fecha de fin (31 días después del día actual)
+            $fechaFin = strtotime('+31 days');
+
+            if ($fechaSeleccionada < $fechaInicio || $fechaSeleccionada > $fechaFin) {
+                throw new \Exception('La fecha debe ser anterior a un año a partir del día actual o hasta 31 días después del día actual');
             }
     
             $data = $request->only('NRO_RESOLUCION', 'FECHA', 'ID_TIPO', 'ID_FIRMANTE', 'ID_FACULTAD', 'ID_DELEGADO', 'OBSERVACIONES');
@@ -125,8 +133,16 @@ class ResolucionController extends Controller
             $request->validate(Resolucion::rules(), Resolucion::messages());
 
             $fecha = $request->input('FECHA');
-            if (strtotime($fecha) > time()) {
-                throw new \Exception('. La fecha debe ser anterior o igual a la fecha actual');
+            $fechaSeleccionada = strtotime($fecha);
+
+            // Calcular la fecha de inicio (un año atrás)
+            $fechaInicio = strtotime('-1 year');
+
+            // Calcular la fecha de fin (31 días después del día actual)
+            $fechaFin = strtotime('+31 days');
+
+            if ($fechaSeleccionada < $fechaInicio || $fechaSeleccionada > $fechaFin) {
+                throw new \Exception('La fecha debe ser anterior a un año a partir del día actual o hasta 31 días después del día actual');
             }
 
             $data = $request->only('NRO_RESOLUCION', 'FECHA', 'ID_TIPO', 'ID_FIRMANTE', 'ID_FACULTAD', 'ID_DELEGADO', 'OBSERVACIONES');

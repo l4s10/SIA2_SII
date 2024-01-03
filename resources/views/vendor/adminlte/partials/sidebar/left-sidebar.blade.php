@@ -268,13 +268,13 @@
                                 <li class="nav-item">
                                     <a href="{{ url('busquedafuncionario') }}" class="nav-link">
                                         <i class="fas fa-fw fa-eye nav-icon"></i>
-                                        <p>Por funcionario</p>
+                                        <p>Avanzada</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
                                     <a href="{{ url('busquedaavanzada') }}" class="nav-link">
                                         <i class="fas fa-fw fa-eye nav-icon"></i>
-                                        <p>Avanzada</p>
+                                        <p>Básica </p>
                                     </a>
                                 </li>
                             </ul>

@@ -27,6 +27,17 @@
                 </div>
             </div>
         </div>
+
+        {{-- OPCION QUE PERMITE SELECCIONAR DIRECCION REGIONAL --}}
+        <div class="mb-3" class="form-group">
+            <label for="ID_DIRECCION"><i class="fa-solid fa-book-bookmark"></i> Direccion Regional asociada:</label>
+            <select name="ID_DIRECCION" id="ID_DIRECCION" class="form-control">
+                @foreach($direccion as $idDireccion => $direccion)
+                    <option value="{{ $idDireccion }}">{{ $direccion }}</option>
+                @endforeach
+            </select>
+        </div>
+        
         <div class="form-group">
             <a href="{{route('cargos.index')}}" class="btn btn-secondary"><i class="fa-solid fa-hand-point-left"></i> Cancelar</a>
             <button type="submit" class="btn btn-primary"><i class="fa-solid fa-floppy-disk"></i> Modificar cargo</button>
