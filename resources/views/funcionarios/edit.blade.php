@@ -170,7 +170,7 @@
             </div>
             {{-- !!ROL --}}
             <div class="form-group">
-                <label for="role"><i class="fa-solid fa-address-book"></i> Rol</label>
+                <label for="role"><i class="fa-solid fa-address-book"></i> Rol en sistema</label>
                 <select name="role" id="role" class="form-control">
                     @foreach ($roles as $role)
                         <option value="{{ $role->id }}" {{ $funcionario->hasRole($role->name) ? 'selected' : '' }}>{{ $role->name }}</option>
@@ -184,27 +184,30 @@
             <div class="row">
                 <div class="col-md-4">
                     <label for=""><i class="fa-solid fa-map-location-dot"></i> Región </label>
-                    <select id="region-select" class="form-control" name="ID_REGION">
-                        <option>Selecciona una región</option>
+                    <select id="region-select" class="form-control" name="ID_REGION" required>
+                        <option value="" >Selecciona una región</option>
                         @foreach ($regiones as $region)
-                            <option value="{{$region->ID_REGION}}" {{ $funcionario->ID_REGION == $region->ID_REGION ? 'selected' : '' }}>{{$region->REGION}}</option>
+                            <option value="{{ $region->ID_REGION }}" {{ $funcionario->ID_REGION == $region->ID_REGION ? 'selected' : '' }}>{{ $region->REGION }}</option>
                         @endforeach
                     </select>
                 </div>
-
+            
                 <div class="col-md-4">
                     <label for=""><i class="fa-solid fa-location-dot"></i> Jurisdicción</label>
-                    <select id="direccion-select" class="form-control" name="ID_DIRECCION">
-                        <option>Selecciona una dirección regional</option>
+                    <select id="direccion-select" class="form-control" name="ID_DIRECCION" required>
+                        <option value="" >Selecciona una dirección regional</option>
+                        @if($funcionario->ubicacion && $funcionario->ubicacion->direccion)
+                            <option value="{{ $funcionario->ubicacion->direccion->ID_DIRECCION }}" selected>{{ $funcionario->ubicacion->direccion->DIRECCION }}</option>
+                        @endif
                     </select>
                 </div>
-
+            
                 <div class="col-md-4">
                     <label for=""><i class="fa-solid fa-street-view"></i> Ubicación/Departamento </label>
-                    <select id="ubicacion-select" class="form-control" name="ID_UBICACION">
-                        <option>Selecciona una ubicación</option>
+                    <select id="ubicacion-select" class="form-control" name="ID_UBICACION" required>
+                        <option value="" >Selecciona una ubicación</option>
                         @foreach ($ubicaciones as $ubicacion)
-                            <option value="{{$ubicacion->ID_UBICACION}}" {{ $funcionario->ID_UBICACION == $ubicacion->ID_UBICACION ? 'selected' : '' }}>{{$ubicacion->UBICACION}}</option>
+                            <option value="{{ $ubicacion->ID_UBICACION }}" {{ $funcionario->ID_UBICACION == $ubicacion->ID_UBICACION ? 'selected' : '' }}>{{ $ubicacion->UBICACION }}</option>
                         @endforeach
                     </select>
                 </div>
@@ -218,7 +221,7 @@
                     <div class="form-group">
                         <label for="ID_GRUPO"><i class="fa-solid fa-user-group"></i> Grupo</label>
                         <select name="ID_GRUPO" id="ID_GRUPO" class="form-control @error('ID_GRUPO') is-invalid @enderror" required autofocus>
-                            <option value="" disabled>Seleccione un grupo</option>
+                            <option value="" >Seleccione un grupo</option>
                             @foreach ($grupos as $grupo)
                                 <option value="{{ $grupo->ID_GRUPO }}" {{ $funcionario->ID_GRUPO == $grupo->ID_GRUPO ? 'selected' : '' }}>{{ $grupo->GRUPO }}</option>
                             @endforeach
@@ -234,7 +237,7 @@
                     {{-- Calidad Jurídica --}}
                     <div class="form-group">
                         <label for="ID_CALIDAD_JURIDICA"><i class="fa-solid fa-pen-to-square"></i> Calidad Jurídica</label>
-                        <select name="ID_CALIDAD_JURIDICA" id="ID_CALIDAD_JURIDICA" class="form-control @error('ID_CALIDAD_JURIDICA') is-invalid @enderror">
+                        <select name="ID_CALIDAD_JURIDICA" id="ID_CALIDAD_JURIDICA" class="form-control @error('ID_CALIDAD_JURIDICA') is-invalid @enderror" required autofocus>
                             <option value="">Seleccionar</option>
                             @foreach ($calidadesJuridicas as $calidadJuridica)
                                 <option value="{{ $calidadJuridica->ID_CALIDAD }}" {{ $funcionario->ID_CALIDAD_JURIDICA == $calidadJuridica->ID_CALIDAD ? 'selected' : '' }}>{{ $calidadJuridica->CALIDAD }}</option>
@@ -257,7 +260,7 @@
                     <div class="form-group">
                         <label for="ID_GRADO"><i class="fa-solid fa-layer-group"></i> Grado</label>
                         <select name="ID_GRADO" class="form-control @error('ID_GRADO') is-invalid @enderror" required>
-                            <option value="" selected disabled>Seleccione un grado</option>
+                            <option value="" selected >Seleccione un grado</option>
                             @foreach($grados as $grado)
                                 <option value="{{ $grado->ID_GRADO }}" {{ $funcionario->ID_GRADO == $grado->ID_GRADO ? 'selected' : '' }}>{{ $grado->GRADO }}</option>
                             @endforeach
@@ -274,7 +277,7 @@
                     <div class="form-group">
                         <label for="ID_ESCALAFON"><i class="fa-solid fa-layer-group"></i> Escalafon</label>
                         <select name="ID_ESCALAFON" class="form-control @error('ID_ESCALAFON') is-invalid @enderror" required>
-                            <option value="" selected disabled>Seleccione un escalafon</option>
+                            <option value="" selected >Seleccione un escalafon</option>
                             @foreach($escalafones as $escalafon)
                                 <option value="{{ $escalafon->ID_ESCALAFON }}" {{ $funcionario->ID_ESCALAFON == $escalafon->ID_ESCALAFON ? 'selected' : '' }}>{{ $escalafon->ESCALAFON }}</option>
                             @endforeach
@@ -287,14 +290,19 @@
                     </div>
                 </div>
             </div>
-
             <div>
-                <label for="cargo"><i class="fa-solid fa-person-circle-check"></i> Cargo:</label>
-                <select name="ID_CARGO" id="ID_CARGO" class="form-control">
+                <label for="ID_CARGO"><i class="fa-solid fa-person-circle-check"></i> Cargo</label>
+                <select name="ID_CARGO" id="ID_CARGO" class="form-control @error('ID_CARGO') is-invalid @enderror" required>
+                    <option value="" selected >Seleccione un cargo</option>
                     @foreach ($cargos as $cargo)
-                        <option value="{{$cargo->ID_CARGO}}" {{ $funcionario->ID_CARGO == $cargo->ID_CARGO ? 'selected' : '' }}>{{$cargo->CARGO}}</option>
+                        <option value="{{ $cargo->ID_CARGO }}" {{ old('ID_CARGO', $funcionario->ID_CARGO) == $cargo->ID_CARGO ? 'selected' : '' }}>{{ $cargo->CARGO }}</option>
                     @endforeach
                 </select>
+                @error('ID_CARGO')
+                    <span class="invalid-feedback" role="alert">
+                        <strong>{{ $message }}</strong>
+                    </span>
+                @enderror
             </div>
             <br>
 
@@ -319,30 +327,41 @@
     <script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/es.js"></script>
     <script>
         $(function () {
-            $('#FECHA_NAC').flatpickr({
+            // Configuración de Flatpickr para las fechas
+            let flatpickrConfig = {
                 locale: 'es',
-                minDate: "1950-01-01",
+                maxDate: "today",
                 dateFormat: "Y-m-d",
                 altFormat: "d-m-Y",
                 altInput: true,
                 allowInput: true,
-            });
-            $('#FECHA_INGRESO').flatpickr({
+                minDate: "1940-01-01",
+                maxDate: new Date(new Date().getFullYear() - 18, 11, 31).toISOString().split('T')[0], // Validar 18 años - a partir del día actual, en los 12 meses (contando de 0) hasta el día 31.
+            };
+
+            // Obtener la fecha actual
+            let currentDate = new Date();
+
+            // Calcular la fecha de inicio (hoy - 1 año)
+            let fechaInicio = new Date(currentDate.getFullYear() - 1, currentDate.getMonth(), currentDate.getDate());
+
+            // Calcular la fecha de fin (hoy + 31 días)
+            let fechaFin = new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate() + 31);
+
+            // Configuración para Flatpickr
+            let flatpickrConfig2 = {
                 locale: 'es',
-                minDate: "1950-01-01",
+                minDate: fechaInicio.toISOString().split('T')[0],
+                maxDate: fechaFin.toISOString().split('T')[0],
                 dateFormat: "Y-m-d",
                 altFormat: "d-m-Y",
                 altInput: true,
                 allowInput: true,
-            });
-            $('#fecha_asim_planta').flatpickr({
-                locale: 'es',
-                minDate: "1950-01-01",
-                dateFormat: "Y-m-d",
-                altFormat: "d-m-Y",
-                altInput: true,
-                allowInput: true,
-            });
+            };
+
+            // Inicializar Flatpickr en los campos de fecha
+            $('#FECHA_NAC').flatpickr(flatpickrConfig);
+            $('#FECHA_INGRESO').flatpickr(flatpickrConfig2);
         });
     </script>
     {{-- filtros de region, direccion regional y ubicacion --}}
@@ -353,10 +372,10 @@
 
                 // Limpia los selectores de direcciones regionales y ubicaciones
                 $('#direccion-select').empty();
-                $('#direccion-select').append('<option>Selecciona una dirección regional</option>'); // Agrega nuevamente la opción predeterminada
+                $('#direccion-select').append('<option value="" disabled selected>Selecciona una dirección regional</option>'); // Agrega nuevamente la opción predeterminada
 
                 $('#ubicacion-select').empty();
-                $('#ubicacion-select').append('<option>Selecciona una ubicación</option>'); // Agrega nuevamente la opción predeterminada
+                $('#ubicacion-select').append('<option value="" disabled selected>Selecciona una ubicación</option>'); // Agrega nuevamente la opción predeterminada
 
                 if(regionId) {
                     $.ajax({
@@ -377,7 +396,7 @@
 
                 // Limpia el selector de ubicaciones
                 $('#ubicacion-select').empty();
-                $('#ubicacion-select').append('<option>Selecciona una ubicación</option>'); // Agrega nuevamente la opción predeterminada
+                $('#ubicacion-select').append('<option value="" disabled selected>Selecciona una ubicación</option>'); // Agrega nuevamente la opción predeterminada
 
                 if(direccionId) {
                     $.ajax({
