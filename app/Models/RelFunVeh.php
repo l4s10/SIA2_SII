@@ -50,6 +50,7 @@ class RelFunVeh extends Model
         'ID_TIPO_VEH',
     ];
 
+    //!! De momento no se estan usando estas (Revisar controlador STORE && UPDATE)
     public static $rules = [
         'PATENTE_VEHICULO' => 'nullable|string|max:7',
         'ID_USUARIO' => 'nullable|integer',

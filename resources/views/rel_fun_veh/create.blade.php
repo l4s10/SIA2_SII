@@ -133,7 +133,7 @@
                 <div class="col-md-6 progresivo" id="ubicacion{{$i}}" @if($i == 1) style="display: block;" @endif>
                     <div class="form-group">
                         <label for="ubicaciones{{$i}}"><i class="fas fa-location-arrow"></i> Ubicación {{$i}}</label>
-                        <select id="ubicaciones{{$i}}" class="ubicaciones{{$i}} form-control" @if($i == 1) required @endif> // Validar ingreso de al menos una ubicación 
+                        <select id="ubicaciones{{$i}}" class="ubicaciones{{$i}} form-control" @if($i == 1) required @endif> // Validar ingreso de al menos una ubicación
                             <option value="">-- Seleccione una ubicacion --</option>
                             @foreach ($ubicacionesFiltradas as $ubicacion)
                                 <option value="{{$ubicacion->ID_UBICACION}}">{{$ubicacion->UBICACION}}</option>
@@ -256,12 +256,7 @@
             {{-- !!ESTADO DE LA SOLICITUD --}}
             <div class="mb-3">
                 <label for="ESTADO_SOL_VEH" class="form-label"><i class="fa-solid fa-file-circle-check"></i> Estado de la Solicitud:</label>
-                <select id="ESTADO_SOL_VEH" name="ESTADO_SOL_VEH" class="form-control" disabled>
-                    <option value="INGRESADO" selected>🟠 Ingresado</option>
-                    <option value="EN REVISION">🟡 En revisión</option>
-                    <option value="ACEPTADO">🟢 Aceptado</option>
-                    <option value="RECHAZADO">🔴 Rechazado</option>
-                </select>
+                <input type="text" id="ESTADO_SOL_VEH" name="ESTADO_SOL_VEH" class="form-control" value="INGRESADO" readonly>
             </div>
             {{-- !!BOTONES DE ENVIO --}}
             <a href="{{route('solicitud.vehiculos.index')}}" class="btn btn-secondary" tabindex="5">Cancelar</a>
@@ -303,7 +298,7 @@
 
 @section('js')
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    
+
     {{-- !!CONFIG FLATPICKR --}}
     <script>
          $(function () {
@@ -312,7 +307,7 @@
             // Validaciones: solo permitir solicitudes para el año actual en horario laboral,
             // a menos que la solicitud sea realizada en diciembre,
             // en cuyo caso se permitirá seleccionar un período de uso hasta enero y febrero del año siguiente.
-            
+
             // Crear objeto que almacena la fecha y hora actual
             let today = new Date();
             // Crear variable que recibe el límite superior del calendario.
@@ -349,8 +344,8 @@
                     time_24hr: true,
                     locale: "es",
                     placeholder: "Seleccione la hora",
-                    minTime: "07:00",
-                    maxTime: "19:00",
+                    minTime: "08:00",
+                    maxTime: "18:00",
                     onReady: function (selectedDates, dateStr, instance) {
                         $('#clearButton').on('click', function () {
                             instance.clear();
@@ -362,7 +357,7 @@
             configureTimePicker('#HORA_SALIDA');
             configureTimePicker('#HORA_LLEGADA');
 
-            
+
             });
     </script>
 

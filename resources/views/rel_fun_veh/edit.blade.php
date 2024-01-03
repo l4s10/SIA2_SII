@@ -181,32 +181,7 @@
 
 
             </div>
-            <div class="row" hidden>
-                <div class="col-md-6">
-                    <div class="mb-3">
-                        <!-- Solo acceso para conductores(nivel 1) y estado formulario por rendir(autorizado/rendir nivel 3) -->
-                        <label for="KMS_INICIAL" class="form-label"><i class="fa-solid fa-caret-down"></i> Kilometraje al partir:</label>
-                        <input type="number" id="KMS_INICIAL" name="KMS_INICIAL" class="form-control" placeholder="Ej: 99999" readonly value="{{$solicitud->KMS_INICIAL}}">
-                        @if ($errors->has('KMS_INICIAL'))
-                        <div class="invalid-feedback">
-                            {{ $errors->first('KMS_INICIAL') }}
-                        </div>
-                        @endif
-                    </div>
-                </div>
-
-                <div class="col-md-6">
-                    <div class="mb-3">
-                        <label for="KMS_FINAL" class="form-label"><i class="fa-solid fa-caret-up"></i> Kilometraje al finalizar:</label>
-                        <input type="number" id="KMS_FINAL" name="KMS_FINAL" class="form-control" placeholder="Ej: 100000" readonly value="{{$solicitud->KMS_FINAL}}">
-                        @if ($errors->has('KMS_FINAL'))
-                        <div class="invalid-feedback">
-                            {{ $errors->first('KMS_FINAL') }}
-                        </div>
-                        @endif
-                    </div>
-                </div>
-            </div>
+            
             {{-- *FECHA DE SALIDA SOLICITADA* --}}
             <div class="form-group mt-3">
                 <label for="FECHA_SOL_VEH"><i class="fa-solid fa-calendar"></i> Fecha de inicio y término:</label>
@@ -234,7 +209,7 @@
                         @enderror
                     </div>
                 </div>
-                
+
                 <div class="col-md-6">
                     {{-- **Fecha y hora de término asignadas **--}}
                     <div class="form-group">

@@ -129,7 +129,7 @@
                 <div class="col-md-6">
                     <div class="mb-3" class="form-group">
                         <label for="KMS_INICIAL" class="form-label"><i class="fa-solid fa-caret-down"></i> Kilometraje al partir:</label>
-                        <input type="number" min="0" id="KMS_INICIAL" name="KMS_INICIAL" class="form-control" placeholder="Ej: 99999" value="{{$solicitud->KMS_INICIAL}}" required>
+                        <input type="number" min="1" max="1000000" id="KMS_INICIAL" name="KMS_INICIAL" class="form-control" placeholder="Ej: 99999" value="{{$solicitud->KMS_INICIAL}}" required pattern="\d{1,7}">
                         @if ($errors->has('KMS_INICIAL'))
                             <div class="invalid-feedback">
                                 {{ $errors->first('KMS_INICIAL') }}
@@ -137,11 +137,11 @@
                         @endif
                     </div>
                 </div>
-            
+
                 <div class="col-md-6">
                     <div class="mb-3" class="form-group">
                         <label for="KMS_FINAL" class="form-label"><i class="fa-solid fa-caret-up"></i> Kilometraje al finalizar:</label>
-                        <input type="number" min="0" id="KMS_FINAL" name="KMS_FINAL" class="form-control" placeholder="Ej: 100000" value="{{$solicitud->KMS_FINAL}}" required>
+                        <input type="number" min="1" max="1000000" id="KMS_FINAL" name="KMS_FINAL" class="form-control" placeholder="Ej: 100000" value="{{$solicitud->KMS_FINAL}}" required pattern="\d{1,7}">
                         @if ($errors->has('KMS_FINAL'))
                             <div class="invalid-feedback">
                                 {{ $errors->first('KMS_FINAL') }}
@@ -160,7 +160,7 @@
                 </div>
                 <div class="col-md-6" class="form-group">
                     <label for="FECHA_LLEGADA_CONDUCTOR">Fecha y hora de llegada:</label>
-                    <input type="text" id="FECHA_LLEGADA_CONDUCTOR" name="FECHA_LLEGADA_CONDUCTOR" class="form-control" required>
+                    <input type="text" id="FECHA_LLEGADA_CONDUCTOR" name="FECHA_LLEGADA_CONDUCTOR" class="form-control" placeholder="Indique la fecha en que usted llegó" required>
                 </div>
             </div>
             {{-- ABASTECE BENCINA Y NIVEL DE COMBUSTIBLE --}}
@@ -243,6 +243,48 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     <script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/es.js"></script>
+
+    <script>
+        const kmsInicialInput = document.getElementById('KMS_INICIAL');
+        const kmsFinalInput = document.getElementById('KMS_FINAL');
+
+        const validateInput = (input) => {
+            const value = parseInt(input.value);
+
+            // Validación de rango (1 a 1.000.000)
+            if (value < 1 || value > 1000000) {
+                input.value = input.defaultValue; // Restaurar valor anterior
+
+                // Cambiar el mensaje de alerta
+                const swal = Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: 'El valor debe estar entre 1 KM y 1.000.000 KM',
+                    autoclose: 5000, // Cerrar automáticamente en 5 segundos
+                });
+            }
+
+            // Validación de relación entre KMS_INICIAL y KMS_FINAL
+            if (input === kmsInicialInput) {
+                const kmsFinal = parseInt(kmsFinalInput.value);
+                if (value > kmsFinal) {
+                    kmsFinalInput.value = value; // Actualizar KMS_FINAL
+                } else {
+                    kmsFinalInput.min = value; // Actualizar valor mínimo de KMS_FINAL
+                }
+            } else {
+                const kmsInicial = parseInt(kmsInicialInput.value);
+                if (value < kmsInicial) {
+                    input.value = kmsInicial; // Establecer KMS_FINAL igual a KMS_INICIAL
+                } else {
+                    kmsInicialInput.max = value; // Actualizar valor máximo de KMS_INICIAL
+                }
+            }
+        };
+
+        kmsInicialInput.addEventListener('input', () => validateInput(kmsInicialInput));
+        kmsFinalInput.addEventListener('input', () => validateInput(kmsFinalInput));
+    </script>
     <script>
         $(function () {
              // Inicializar Flatpickr para el campo de fecha y hora de inicio
@@ -306,64 +348,7 @@
             });
         });
     </script>
-    {{-- AA --}}
 
-    {{-- *FUNCION PARA REFRESCAR DINAMICAMENTE EL FILTRO DE FUNCIONARIOS* --}}
-        <script>
-            document.addEventListener('DOMContentLoaded', function() {
-                var departamentosSelect = document.getElementById('departamentos');
-                var ocupanteSelect = document.getElementById('ocupante');
-                var agregarOcupanteBtn = document.getElementById('agregarOcupante');
-                var limpiarCampoBtn = document.getElementById('limpiarCampo');
-                var nombreOcupantesTextarea = document.getElementById('NOMBRE_OCUPANTES');
-
-                // Obtener las opciones correspondientes al departamento seleccionado al cargar la página
-                var usuarios = @json($ocupantes);
-                var departamentoSeleccionado = departamentosSelect.value;
-                var options = ocupanteSelect.options;
-
-                // Filtrar usuarios por departamento seleccionado al cargar la página
-                var usuariosFiltradosInicial = usuarios.filter(function(usuario) {
-                    return usuario.ID_DEPART == departamentoSeleccionado;
-                });
-
-                // Agregar las opciones de usuarios al select de ocupantes al cargar la página
-                usuariosFiltradosInicial.forEach(function(usuario) {
-                    options.add(new Option(usuario.NOMBRES + ' ' + usuario.APELLIDOS, usuario.id));
-                });
-
-                departamentosSelect.addEventListener('change', function() {
-                    var departamentoId = this.value;
-                    var options = ocupanteSelect.options;
-
-                    // Limpiar opciones anteriores
-                    options.length = 0;
-                    options.add(new Option('-- Seleccione un compañero --', ''));
-
-                    // Filtrar usuarios por departamento seleccionado
-                    var usuariosFiltrados = usuarios.filter(function(usuario) {
-                        return usuario.ID_DEPART == departamentoId;
-                    });
-
-                    // Agregar las opciones de usuarios al select de ocupantes
-                    usuariosFiltrados.forEach(function(usuario) {
-                        options.add(new Option(usuario.NOMBRES + ' ' + usuario.APELLIDOS, usuario.id));
-                    });
-                });
-
-                agregarOcupanteBtn.addEventListener('click', function() {
-                    var ocupanteNombre = ocupanteSelect.options[ocupanteSelect.selectedIndex].text;
-                    var departamentoNombre = departamentosSelect.options[departamentosSelect.selectedIndex].text;
-                    var nombreCompleto = ocupanteNombre + ' (' + departamentoNombre + ')';
-                    nombreOcupantesTextarea.value += nombreCompleto + '\n';
-                });
-
-                limpiarCampoBtn.addEventListener('click', function() {
-                    nombreOcupantesTextarea.value = '';
-                });
-            });
-        </script>
-    {{-- *FUNCION PARA REFRESCAR DINAMICAMENTE LOS VEHICULOS A ASIGNAR* --}}
     <script>
         $(document).ready(function() {
             // Validar fecha y hora de llegada
@@ -372,7 +357,7 @@
                 altFormat: 'd-m-Y H:i',
                 altInput: true,
                 enableTime: true,
-                time_24hr: true, 
+                time_24hr: true,
                 locale: 'es',
                 maxDate: 'today', // Establecer la fecha máxima como hoy
                 minDate: new Date().fp_incr(-14), // Establecer la fecha mínima como hoy - 14 días
@@ -402,17 +387,11 @@
                 // Restablecer el valor seleccionado anteriormente, en lugar de simplemente restablecer a una cadena vacía
                 $('#PATENTE_VEHICULO').val(previousPatenteVehiculo);
             });
-
-            // Validar rendición de kilómetros al partir y finalizar (coherencia entre rangos)
-            $('#KMS_INICIAL').on('input', function() {
-                let kmsInicial = $(this).val();
-                $('#KMS_FINAL').attr('min', kmsInicial);
-             });
-
             // Desencadenar el evento change al cargar la página
             $('#ID_TIPO_VEH').trigger('change');
         });
     </script>
+
     <script>
         $(document).ready(function(){
             $('#ESTADO_SOL_VEH').change(function(){
@@ -425,11 +404,11 @@
             }).trigger('change'); // Esto va a disparar el evento de cambio al cargar la página
         });
     </script>
+
     <script>
         document.getElementById('rendirBtn').addEventListener('click', async function(event) {
             event.preventDefault();
 
-            
             if (!validarCampos()) {
                 // Mostrar un mensaje de error si la validación falla
                 alert('Por favor, complete todos los campos requeridos antes de rendir.');

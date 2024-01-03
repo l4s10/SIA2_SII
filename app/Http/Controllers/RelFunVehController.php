@@ -16,7 +16,7 @@ use Illuminate\Support\Facades\Auth;    //PARA VALIDAR SESION DE USUARIO
 use Illuminate\Support\Facades\Hash;    //PARA VALIDAR CONTRASEÑA
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Log;
-
+use App\Rules\RutRule;
 
 use Dompdf\Dompdf;
 use Carbon\Carbon;
@@ -86,8 +86,32 @@ class RelFunVehController extends Controller
     {
         //*Guardar solicitud
         try{
-            $rules = RelFunVeh::$rules;
-            $messages = RelFunVeh::$messages;
+
+            $rules = [
+                'NOMBRE_SOLICITANTE' => 'required|string|max:255',
+                'RUT' => ['required', 'string', 'max:12', 'regex:/^[0-9]{7,8}-[0-9kK]{1}$/i', new RutRule], // Asume que RutRule es una regla personalizada que valida el dígito verificador del RUT
+                'DEPTO' => 'required|string|max:255',
+                'EMAIL' => 'required|email|max:255',
+                'ID_TIPO_VEH' => 'required|exists:tipo_vehiculo,ID_TIPO_VEH',
+                'MOTIVO_SOL_VEH' => 'required|string|max:1000',
+                'FECHA_SOL_VEH' => 'required|string|max:255',
+                'HORA_SALIDA' => 'required|date_format:H:i',
+                'HORA_LLEGADA' => 'required|date_format:H:i',
+                'REGION_ORIGEN' => 'required|exists:region,ID_REGION',
+                'REGION_DESTINO' => 'required|exists:region,ID_REGION',
+                'ORIGEN' => 'required|exists:comunas,ID_COMUNA',
+                'DESTINO' => 'required|exists:comunas,ID_COMUNA',
+                'ESTADO_SOL_VEH' => 'required|string|in:INGRESADO', // Asume que 'estado1', 'estado2' y 'estado3' son los únicos estados válidos
+            ];
+
+            $messages = [
+                'RUT.regex' => 'El formato del RUT no es válido. Debe ser en el formato XXXXXXXX-X.',
+                'required' => 'El campo :attribute es obligatorio.',
+                'exists' => 'El campo :attribute no existe en la base de datos.',
+                'string' => 'El campo :attribute debe ser una cadena de texto.',
+                'max' => 'El campo :attribute no debe exceder :max caracteres.',
+                'email' => 'El campo :attribute debe ser una dirección de correo válida.',
+            ];
 
             $validator = Validator::make($request->all(), $rules, $messages);
 
@@ -166,32 +190,54 @@ class RelFunVehController extends Controller
         try{
             $solicitud = RelFunVeh::find($id);
             // Crear reglas específicas para la actualización
-            $updateRules = RelFunVeh::$rules;
+            $updateRules = [
+                'ESTADO_SOL_VEH' => 'required|in:INGRESADO,SUSPENDIDO,POR AUTORIZAR,RECHAZADO',
+                'FECHA_SOL_VEH' => 'nullable|string|max:255',
+                'FECHA_SALIDA' => 'required|string|max:255',
+                'FECHA_LLEGADA' => 'required|string|max:255',
+                'HORA_SALIDA' => 'nullable|date_format:H:i',
+                'HORA_LLEGADA' => 'nullable|date_format:H:i',
+                'OBSERV_SOL_VEH' => 'nullable|string|max:1000',
+                'PATENTE_VEHICULO' => 'required|string',
+                'NOMBRE_OCUPANTES' => 'required|string|max:1000',
+                'NOMBRE_SOLICITANTE' => 'sometimes|string|max:128',
+                'RUT' => 'sometimes|string|max:20',
+                'DEPTO' => 'sometimes|string|max:128',
+                'EMAIL' => 'sometimes|string|email|max:128',
+                'ID_TIPO_VEH' => 'sometimes|integer',
+            ];
 
-            // Modificar las reglas que necesiten ser diferentes para la actualización
-            // Si entiendo correctamente, en tu caso los campos NOMBRE_SOLICITANTE, RUT, DEPTO, EMAIL e ID_TIPO_VEH
-            // ya no deben ser requeridos durante la actualización
-            $updateRules['NOMBRE_SOLICITANTE'] = 'sometimes|string|max:128';
-            $updateRules['RUT'] = 'sometimes|string|max:20';
-            $updateRules['DEPTO'] = 'sometimes|string|max:128';
-            $updateRules['EMAIL'] = 'sometimes|string|email|max:128';
-            $updateRules['ID_TIPO_VEH'] = 'sometimes|integer';
-            $messages = RelFunVeh::$messages;
+            $messages = [
+                'required' => 'El campo :attribute es obligatorio.',
+                'in' => 'El campo :attribute debe ser uno de los siguientes valores: :values',
+                'string' => 'El campo :attribute debe ser una cadena de texto.',
+                'max' => 'El campo :attribute no debe exceder :max caracteres.',
+                'email' => 'El campo :attribute debe ser una dirección de correo válida.',
+                'date_format' => 'El campo :attribute debe tener el formato HH:mm',
+            ];
 
-            $validator = Validator::make($request->all(), $updateRules, $messages);
-
-            if ($validator->fails()) {
-                // Redirige al usuario a la página anterior si la validación falla
-                return redirect()
-                    ->back()
-                    ->withErrors($validator)
-                    ->withInput();
-            }
             //!! VERIFICAR SI ESTA EN "POR RENDIR"
             //!! LEER FIRMA Y GUARDAR AQUI (SI es el conductor designado, si la firma es nula y si el estado es por rendir)
             //!! Crear un try-catch que se encarge de notificar el envio de la contraseña
             //!! if hay contraseña hacer el try catch, sino. pasar de ahi.
             if (auth()->user()->id == $solicitud->CONDUCTOR && $solicitud->FIRMA_CONDUCTOR == null && $solicitud->ESTADO_SOL_VEH == "POR RENDIR"){
+                // $rules para el formulario de rendición de chofer
+                $rules = [
+                    'N_BITACORA' => 'required|integer|min:0',
+                    'FECHA_LLEGADA_CONDUCTOR' => 'required|string|max:255',
+                    'ABS_BENCINA' => 'required|in:SI,NO',
+                    'NIVEL_TANQUE' => 'required|in:BAJO,MEDIO BAJO,MEDIO,MEDIO ALTO,ALTO',
+                    'KMS_INICIAL' => 'required|integer|min:0|max:1000000',
+                    'KMS_FINAL' => 'required|integer|min:0|max:1000000',
+                ];
+                $validator = Validator::make($request->all(), $rules, $messages);
+                if ($validator->fails()) {
+                    // Redirige al usuario a la página anterior si la validación falla
+                    return redirect()
+                        ->back()
+                        ->withErrors($validator)
+                        ->withInput();
+                }
                 try{
                     $firmaRealizada = false; // Usamos esta variable para verificar si se ha realizado una firma
 
@@ -221,6 +267,16 @@ class RelFunVehController extends Controller
                     session()->flash('error','Hubo un error al actualizar la solicitud o ingresar la firma, vuelva a intentarlo mas tarde');
                     return redirect(route('solicitud.vehiculos.index'));
                 }
+            }
+            //** Validar informacion para actualizar despues de verificar si esta en rendicion */
+            $validator = Validator::make($request->all(), $updateRules, $messages);
+
+            if ($validator->fails()) {
+                // Redirige al usuario a la página anterior si la validación falla
+                return redirect()
+                    ->back()
+                    ->withErrors($validator)
+                    ->withInput();
             }
 
             //*ACTUALIZAR REGISTRO */
