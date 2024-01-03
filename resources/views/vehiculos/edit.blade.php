@@ -38,6 +38,7 @@
         <div class="row">
             <div class="col">
                 <label for="PATENTE_VEHICULO" class="form-label"><i class="fa-solid fa-credit-card"></i> Patente</label>
+<<<<<<< HEAD
                 <input id="PATENTE_VEHICULO" name="PATENTE_VEHICULO" type="text" class="form-control" tabindex="1" placeholder="Ej: AB12-34" value="{{ $vehiculo->PATENTE_VEHICULO }}" oninput="this.value = this.value.toUpperCase()" required>
                 @error('PATENTE_VEHICULO')
                     <div class="alert alert-danger mt-2">{{ $message }}</div>
@@ -60,6 +61,7 @@
         <div class="row">
             <div class="col">
                 <label for="MARCA" class="form-label"><i class="fa-solid fa-circle-info"></i> Marca</label>
+<<<<<<< HEAD
                 <input id="MARCA" name="MARCA" type="text" class="form-control" tabindex="3" placeholder="Toyota" value="{{ $vehiculo->MARCA }}" oninput="this.value = this.value.toUpperCase()" required>
                 @error('MARCA')
                     <div class="alert alert-danger mt-2">{{ $message }}</div>
@@ -67,6 +69,7 @@
             </div>
             <div class="col">
                 <label for="MODELO_VEHICULO" class="form-label"><i class="fa-solid fa-circle-info"></i> Modelo</label>
+<<<<<<< HEAD
                 <input id="MODELO_VEHICULO" name="MODELO_VEHICULO" type="text" class="form-control" tabindex="4" placeholder="Corolla" value="{{ $vehiculo->MODELO_VEHICULO }}" oninput="this.value = this.value.toUpperCase()" required>
                 @error('MODELO_VEHICULO')
                     <div class="alert alert-danger mt-2">{{ $message }}</div>
@@ -74,7 +77,8 @@
             </div>
             <div class="col">
                 <label for="ANO_VEHICULO" class="form-label"><i class="fa-regular fa-calendar-days"></i> Año</label>
-                <input type="number" min="1900" max="2099" step="1" id="ANO_VEHICULO" name="ANO_VEHICULO" placeholder="(1900 - 2099)" class="form-control" value="{{ $vehiculo->ANO_VEHICULO }}" required/>
+                <input type="number" min="2010" step="1" id="ANO_VEHICULO" name="ANO_VEHICULO" placeholder="(2018)" required class="form-control" value="{{ $vehiculo->ANO_VEHICULO }}" />
+>>>>>>> origin/Ricardo3
                 @error('ANO_VEHICULO')
                     <div class="alert alert-danger mt-2">{{ $message }}</div>
                 @enderror
@@ -133,11 +137,13 @@
     <link rel="stylesheet" href="/css/admin_custom.css">
 @stop
 
+
 @section('js')
 {{-- filtros de region, direccion regional y ubicacion --}}
 <script type="text/javascript">
     $(document).ready(function() {
         $('#region-select').on('change', function() {
+
             var regionId = $(this).val();
 
             // Limpia los selectores de direcciones regionales y ubicaciones
@@ -161,6 +167,7 @@
             }
         });
 
+
         $('#direccion-select').on('change', function() {
             var direccionId = $(this).val();
 
@@ -181,6 +188,9 @@
                 });
             }
         });
+
+        let year = new Date().getFullYear();
+        document.getElementById('ANO_VEHICULO').setAttribute('max', year);
     });
 </script>
 @stop

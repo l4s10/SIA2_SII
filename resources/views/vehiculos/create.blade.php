@@ -72,7 +72,7 @@
             </div>
             <div class="col">
                 <label for="ANO_VEHICULO" class="form-label"><i class="fa-regular fa-calendar-days"></i> Año</label>
-                <input type="number" min="2000" max="2099" step="1" id="ANO_VEHICULO" name="ANO_VEHICULO" placeholder="(2000 - 2099)" class="form-control" required/>
+                <input type="number" min="2000" step="1" id="ANO_VEHICULO" name="ANO_VEHICULO" placeholder="(2000 - 2099)" required class="form-control"/>
                 @error('ANO_VEHICULO')
                     <div class="alert alert-danger mt-2">{{ $message }}</div>
                 @enderror
@@ -147,6 +147,10 @@
         $('#FECHA_NAC').flatpickr(flatpickrConfig);
         $('#FECHA_INGRESO').flatpickr(flatpickrConfig);
     });
+
+    // Obtener el año actual y establecerlo como el valor máximo del campo de entrada ANO_VEHICULO
+    let year = new Date().getFullYear();
+    document.getElementById('ANO_VEHICULO').setAttribute('max', year);
 </script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 

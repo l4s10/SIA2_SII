@@ -128,25 +128,24 @@
             <div class="row">
                 <div class="col-md-6">
                     <div class="mb-3" class="form-group">
-                        <!-- Solo acceso para conductores(nivel 1) y estado formulario por rendir(autorizado/rendir nivel 3) -->
                         <label for="KMS_INICIAL" class="form-label"><i class="fa-solid fa-caret-down"></i> Kilometraje al partir:</label>
-                        <input type="number" id="KMS_INICIAL" name="KMS_INICIAL" class="form-control" placeholder="Ej: 99999" value="{{$solicitud->KMS_INICIAL}}">
+                        <input type="number" min="0" id="KMS_INICIAL" name="KMS_INICIAL" class="form-control" placeholder="Ej: 99999" value="{{$solicitud->KMS_INICIAL}}" required>
                         @if ($errors->has('KMS_INICIAL'))
-                        <div class="invalid-feedback">
-                            {{ $errors->first('KMS_INICIAL') }}
-                        </div>
+                            <div class="invalid-feedback">
+                                {{ $errors->first('KMS_INICIAL') }}
+                            </div>
                         @endif
                     </div>
                 </div>
-
+            
                 <div class="col-md-6">
                     <div class="mb-3" class="form-group">
                         <label for="KMS_FINAL" class="form-label"><i class="fa-solid fa-caret-up"></i> Kilometraje al finalizar:</label>
-                        <input type="number" id="KMS_FINAL" name="KMS_FINAL" class="form-control" placeholder="Ej: 100000" value="{{$solicitud->KMS_FINAL}}">
+                        <input type="number" min="0" id="KMS_FINAL" name="KMS_FINAL" class="form-control" placeholder="Ej: 100000" value="{{$solicitud->KMS_FINAL}}" required>
                         @if ($errors->has('KMS_FINAL'))
-                        <div class="invalid-feedback">
-                            {{ $errors->first('KMS_FINAL') }}
-                        </div>
+                            <div class="invalid-feedback">
+                                {{ $errors->first('KMS_FINAL') }}
+                            </div>
                         @endif
                     </div>
                 </div>
@@ -156,20 +155,20 @@
                 <div class="col-md-6">
                     <div class="mb-3" class="form-group">
                         <label for="N_BITACORA">N° Bitacora:</label>
-                        <input type="number" id="N_BITACORA" name="N_BITACORA" class="form-control" placeholder="Ej: 1" value="{{$solicitud->N_BITACORA}}">
+                        <input type="number" min="0" id="N_BITACORA" name="N_BITACORA" class="form-control" placeholder="Ej: 1" value="{{$solicitud->N_BITACORA}}" required>
                     </div>
                 </div>
                 <div class="col-md-6" class="form-group">
                     <label for="FECHA_LLEGADA_CONDUCTOR">Fecha y hora de llegada:</label>
-                    <input type="text" id="FECHA_LLEGADA_CONDUCTOR" name="FECHA_LLEGADA_CONDUCTOR" class="form-control">
+                    <input type="text" id="FECHA_LLEGADA_CONDUCTOR" name="FECHA_LLEGADA_CONDUCTOR" class="form-control" required>
                 </div>
             </div>
             {{-- ABASTECE BENCINA Y NIVEL DE COMBUSTIBLE --}}
             <div class="row">
                 <div class="col-md-6">
                     <div class="mb-3" class="form-group">
-                        <label for="ABS_BENCINA">¿Abastecio bencina?: </label>
-                        <select name="ABS_BENCINA" id="ABS_BENCINA" class="form-control">
+                        <label for="ABS_BENCINA">¿Abasteció bencina?: </label>
+                        <select name="ABS_BENCINA" id="ABS_BENCINA" class="form-control" required>
                             <option value="SI">SI</option>
                             <option value="NO">NO</option>
                         </select>
@@ -178,7 +177,7 @@
                 <div class="col-md-6">
                     <div class="mb-3" class="form-group">
                         <label for="NIVEL_TANQUE">Estado del tanque:</label>
-                        <select name="NIVEL_TANQUE" id="NIVEL_TANQUE" class="form-control">
+                        <select name="NIVEL_TANQUE" id="NIVEL_TANQUE" class="form-control" required>
                             <option value="BAJO">BAJO</option>
                             <option value="MEDIO BAJO">MEDIO BAJO</option>
                             <option value="MEDIO">MEDIO</option>
@@ -195,7 +194,7 @@
                     <div class="form-group">
                         <label for="FECHA_SALIDA"><i class="fa-solid fa-calendar"></i> Fecha y hora de inicio asignada:</label>
                         <div class="input-group">
-                            <input type="text" id="FECHA_SALIDA" name="FECHA_SALIDA" class="form-control @error('FECHA_SALIDA') is-invalid @enderror" placeholder="Seleccione fecha y hora de inicio" disabled value="{{$solicitud->FECHA_SALIDA}}">
+                            <input type="text" id="FECHA_SALIDA" name="FECHA_SALIDA" class="form-control @error('FECHA_SALIDA') is-invalid @enderror" placeholder="Seleccione fecha y hora de inicio" required disabled value="{{$solicitud->FECHA_SALIDA}}">
                         </div>
                         @error('FECHA_SALIDA')
                         <div class="invalid-feedback">{{ $message }}</div>
@@ -207,7 +206,7 @@
                     <div class="form-group">
                         <label for="FECHA_LLEGADA"><i class="fa-solid fa-calendar"></i> Fecha y hora de término asignada:</label>
                         <div class="input-group">
-                            <input type="text" id="FECHA_LLEGADA" name="FECHA_LLEGADA" class="form-control @error('FECHA_LLEGADA') is-invalid @enderror" placeholder="Seleccione fecha y hora de término" disabled value="{{$solicitud->FECHA_LLEGADA }}">
+                            <input type="text" id="FECHA_LLEGADA" name="FECHA_LLEGADA" class="form-control @error('FECHA_LLEGADA') is-invalid @enderror" placeholder="Seleccione fecha y hora de término" required disabled value="{{$solicitud->FECHA_LLEGADA }}">
                         </div>
                         @error('FECHA_LLEGADA')
                         <div class="invalid-feedback">{{ $message }}</div>
@@ -219,7 +218,7 @@
             {{-- *OBSERVACIONES* --}}
             <div class="mb-3">
                 <label for="OBSERV_SOL_VEH" class="form-label"><i class="fa-solid fa-file-pen"></i> Observaciones:</label>
-                <textarea id="OBSERV_SOL_VEH" name="OBSERV_SOL_VEH" class="form-control @error('OBSERV_SOL_VEH') is-invalid @enderror" aria-label="With textarea" rows="5" placeholder="Escriba sus observaciones (MÁX 1000 CARACTERES)">{{ $solicitud->OBSERV_SOL_VEH }}</textarea>
+                <textarea id="OBSERV_SOL_VEH" name="OBSERV_SOL_VEH" class="form-control @error('OBSERV_SOL_VEH') is-invalid @enderror" aria-label="With textarea" rows="5" placeholder="Escriba sus observaciones (MÁX 1000 CARACTERES)" required>{{ $solicitud->OBSERV_SOL_VEH }}</textarea>
                 @error('OBSERV_SOL_VEH')
                     <div class="invalid-feedback">{{ $message }}</div>
                 @enderror
@@ -367,13 +366,16 @@
     {{-- *FUNCION PARA REFRESCAR DINAMICAMENTE LOS VEHICULOS A ASIGNAR* --}}
     <script>
         $(document).ready(function() {
+            // Validar fecha y hora de llegada
             $('#FECHA_LLEGADA_CONDUCTOR').flatpickr({
                 dateFormat: 'Y-m-d H:i',
                 altFormat: 'd-m-Y H:i',
                 altInput: true,
                 enableTime: true,
-                time_24hr: true,  // Si prefieres el formato de 24 horas, si no, quítalo.
+                time_24hr: true, 
                 locale: 'es',
+                maxDate: 'today', // Establecer la fecha máxima como hoy
+                minDate: new Date().fp_incr(-14), // Establecer la fecha mínima como hoy - 14 días
                 showClearButton: true,
                 onReady: function(selectedDates, dateStr, instance) {
                     $('#clearButton').on('click', function() {
@@ -401,6 +403,12 @@
                 $('#PATENTE_VEHICULO').val(previousPatenteVehiculo);
             });
 
+            // Validar rendición de kilómetros al partir y finalizar (coherencia entre rangos)
+            $('#KMS_INICIAL').on('input', function() {
+                let kmsInicial = $(this).val();
+                $('#KMS_FINAL').attr('min', kmsInicial);
+             });
+
             // Desencadenar el evento change al cargar la página
             $('#ID_TIPO_VEH').trigger('change');
         });
@@ -420,6 +428,13 @@
     <script>
         document.getElementById('rendirBtn').addEventListener('click', async function(event) {
             event.preventDefault();
+
+            
+            if (!validarCampos()) {
+                // Mostrar un mensaje de error si la validación falla
+                alert('Por favor, complete todos los campos requeridos antes de rendir.');
+                return;
+            }
 
             const { value: password } = await Swal.fire({
                 title: '¿Estás seguro?',
@@ -452,5 +467,17 @@
                 document.getElementById('rendirForm').submit();
             }
         });
+
+        // Función para validar campos
+        function validarCampos() {
+            // Verificar que todos los campos requeridos estén completos
+            let camposRequeridos = document.querySelectorAll('[required]');
+            for (let campo of camposRequeridos) {
+                if (!campo.value) {
+                    return false; // Devolver falso si algún campo requerido está vacío
+                }
+            }
+            return true; // Devolver verdadero si todos los campos requeridos están completos
+        }
     </script>
 @stop
