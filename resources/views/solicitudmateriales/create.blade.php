@@ -199,28 +199,28 @@
     <!-- CARRITO DE COMPRAS -->
     <script>
         $('#cantidad').on('input', function() {
-            var valor = $(this).val();
-            if (valor < 1 || !$.isNumeric(valor)) {
+            var valor = Number($(this).val());
+            if (valor < 1 || valor > 1000 || !$.isNumeric(valor)) {
                 $(this).val(1);
             }
         });
         $(document).ready(function() {
-        // Capturar clic en botón "Agregar al carrito"
-        $(document).on('click', '.btn-agregar', function() {
-            // Obtener valores de los atributos "data" del botón
-            var nombreMaterial = $(this).data('nombre');
-            var tipoMaterial = $(this).data('tipo');
-            // Mostrar valores en el modal
-            $('#nombre-material').text('Nombre material: ' + nombreMaterial);
-            $('#tipo-material').text('Tipo material: ' + tipoMaterial);
-            // Mostrar modal
-            $('#modal-carrito').modal('show');
-            // Deshabilitar botón "Agregar al carrito"
-            $(this).prop('disabled', true);
-        });
+            // Capturar clic en botón "Agregar al carrito"
+            $(document).on('click', '.btn-agregar', function() {
+                // Obtener valores de los atributos "data" del botón
+                var nombreMaterial = $(this).data('nombre');
+                var tipoMaterial = $(this).data('tipo');
+                // Mostrar valores en el modal
+                $('#nombre-material').text('Nombre material: ' + nombreMaterial);
+                $('#tipo-material').text('Tipo material: ' + tipoMaterial);
+                // Mostrar modal
+                $('#modal-carrito').modal('show');
+                // Deshabilitar botón "Agregar al carrito"
+                $(this).prop('disabled', true);
+            });
 
 
-        // Capturar clic en botón "Eliminar"
+            // Capturar clic en botón "Eliminar"
             $(document).on('click', '.btn-eliminar', function() {
             var nombreMaterial = $(this).data('nombre');
             // Eliminar el artículo del carrito
