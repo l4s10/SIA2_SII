@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
+
 
 use App\Models\Ubicacion;
 use App\Models\DireccionRegional;
@@ -51,20 +53,30 @@ class UbicacionesController extends Controller
      * Store a newly created resource in storage.
      *///Guarda los datos del formulario
 
-    public function store(Request $request)
-    {
-        try{
-
-            $request->validate(Ubicacion::$rules, Ubicacion::$messages);
-            $data = $request->except('_token');
-            Ubicacion::create($data);
-
-            session()->flash('success','La ubicacion fue agregada exitosamente.');
-        }catch(\Exception $e){
-            session()->flash('error','Hubo un error al agregar la ubicacion. Vuelva a intentarlo nuevamente' .$e->getMessage());
-        }
-        return redirect(route('ubicacion.index'));
-    }
+     public function store(Request $request)
+     {
+         try {
+             $request->validate(Ubicacion::$rules, Ubicacion::$messages);
+             $data = $request->except('_token');
+     
+             // Mensaje de depuración antes de la creación
+             Log::debug('Antes de crear la ubicación. Datos: ' . json_encode($data));
+     
+             Ubicacion::create($data);
+     
+             // Mensaje de depuración después de la creación
+             Log::debug('Ubicación creada exitosamente.');
+     
+             session()->flash('success', 'La ubicación fue agregada exitosamente.');
+         } catch (\Exception $e) {
+             // Mensaje de depuración en caso de error
+             Log::error('Error al agregar la ubicación: ' . $e->getMessage());
+     
+             session()->flash('error', 'Hubo un error al agregar la ubicación. Vuelva a intentarlo nuevamente' . $e->getMessage());
+         }
+     
+         return redirect(route('ubicacion.index'));
+     }
 
     /**
      * Display the specified resource.

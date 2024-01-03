@@ -25,21 +25,21 @@
                         </span>
                     @enderror
                 </div>
-                <div class="mb-3">
+                <div class="mb-3 form-group">
                     <label for="ID_REGION" class="form-label"><i class="fa-solid fa-book-bookmark"></i> Región asociada:</label>
-                    <select id="ID_REGION" name="ID_REGION" class="form-control @error('ID_REGION') is-invalid @enderror">
+                    <select id="ID_REGION" name="ID_REGION" class="form-control @error('ID_REGION') is-invalid @enderror" required>
+                        <option value="" >Selecciona una región</option>
                         @foreach($regiones as $region)
-                            @if($direcciones->ID_REGION == $region->ID_REGION)
-                                <option value="{{$region->ID_REGION}}" selected>{{$region->REGION}}</option>
-                            @else
-                                <option value="{{$region->ID_REGION}}">{{$region->REGION}}</option>
-                            @endif
+                            <option value="{{ $region->ID_REGION }}" {{ $direcciones->ID_REGION == $region->ID_REGION ? 'selected' : '' }}>{{ $region->REGION }}</option>
                         @endforeach
                     </select>
                     @error('ID_REGION')
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
                 </div>
+                
+
+                
                 
             </div>
         </div>
