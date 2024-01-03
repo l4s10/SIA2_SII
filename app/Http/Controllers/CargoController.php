@@ -93,25 +93,38 @@ class CargoController extends Controller
      *///Carga el formulario de edicion
      public function edit(string $id)
     {
+        // Obtiene la dirección regional del funcionario con sesión activa
+        $direccionRegional = auth()->user()->ubicacion->ID_DIRECCION;
+        // Obtiene las direcciones regionales filtradas por la dirección regional sesión autenticada
+        $direccion = DireccionRegional::where('ID_DIRECCION', $direccionRegional)
+            ->pluck('DIRECCION', 'ID_DIRECCION');
         $cargo = Cargo::find($id);
-        return view('cargo.edit',compact('cargo'));
+        return view('cargo.edit',compact('cargo','direccion'));
     }
 
     public function update(Request $request, string $id)
     {
-        $request->validate(Cargo::$rules, Cargo::$messages);
         try {
+            // Imprime los datos para verificar qué se está enviando al servidor
+            //dd($request->all());
+
+            $request->validate(Cargo::$rules, Cargo::$messages);
+
             $cargo = Cargo::find($id);
-            $cargo->fill([
-                'CARGO' => $request->input('CARGO'),
-            ]);
-            $cargo->save();
+            $cargo->update($request->only('CARGO'));
+
             session()->flash('success', 'El cargo fue modificado exitosamente');
         } catch(\Exception $e) {
+            // Imprime información de error para depuración
+            dd($e->getMessage());
+
             session()->flash('error', 'Error al modificar el cargo seleccionado: ' . $e->getMessage());
         }
+
         return redirect(route('cargos.index'));
     }
+
+
 
     /**
      * Remove the specified resource from storage.

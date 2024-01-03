@@ -20,14 +20,21 @@
             @endif
         </div>
 
-        <div class="mb-3" class="form-group">
+        <div class="mb-3 form-group">
             <label for="ID_REGION"><i class="fa-solid fa-book-bookmark"></i> Región asociada:</label>
-            <select name="ID_REGION" id="ID_REGION" class="form-control">
+            <select name="ID_REGION" id="ID_REGION" class="form-control @error('ID_REGION') is-invalid @enderror" required>
+                <option value="" disabled selected>Selecciona una región</option>
                 @foreach($regiones as $region)
-                    <option value="{{$region->ID_REGION}}">{{$region->REGION}}</option>
+                    <option value="{{ $region->ID_REGION }}" {{ old('ID_REGION') == $region->ID_REGION ? 'selected' : '' }}>{{ $region->REGION }}</option>
                 @endforeach
             </select>
+            @error('ID_REGION')
+                <span class="invalid-feedback" role="alert">
+                    <strong>{{ $message }}</strong>
+                </span>
+            @enderror
         </div>
+       
 
         <a href="{{route('comuna.index')}}" class="btn btn-secondary" tabindex="5"><i class="fa-solid fa-hand-point-left"></i> Cancelar</a>
         <button type="submit" class="btn btn-primary" tabindex="4"><i class="fa-solid fa-floppy-disk"></i> Guardar comuna</button>
