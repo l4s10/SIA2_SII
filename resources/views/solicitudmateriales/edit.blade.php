@@ -90,7 +90,7 @@
                                 <td class="material-name">{{ $material->NOMBRE_MATERIAL }}</td>
                                 <td>{{ $material->STOCK }}</td>
                                 <td>
-                                    <input type="number" type="button" class="form-control cantidad-restar cantidad-autorizada" data-id="{{ $material->ID_MATERIAL }}" min="0" max="{{ $material->STOCK }}" value="0" name="cantidad_autorizada[{{ $material->ID_MATERIAL }}]">
+                                    <input type="number" class="form-control cantidad-autorizada-input" data-id="{{ $material->ID_MATERIAL }}" min="0" max="{{ $material->STOCK }}" value="0" name="cantidad_autorizada[{{ $material->ID_MATERIAL }}]">
                                 </td>
                             </tr>
                         @endforeach
@@ -176,6 +176,26 @@
         });
     </script>
 
+    {{-- Verificar input autorizado --}}
+    <script>
+        // Función para verificar la cantidad autorizada
+        function verificarCantidadAutorizada(input) {
+            const stock = parseInt(input.getAttribute('max'));
+            const cantidadAutorizada = parseInt(input.value);
+
+            if (cantidadAutorizada > stock) {
+                input.value = stock; // Establece la cantidad al valor máximo (stock)
+            }
+        }
+
+        // Agrega un evento input a todos los elementos de cantidad autorizada
+        document.querySelectorAll('.cantidad-autorizada-input').forEach((input) => {
+            input.addEventListener('input', () => {
+                verificarCantidadAutorizada(input);
+            });
+        });
+    </script>
+
 
     {{-- PARA VERIFICAR BOTON PRESIONADO --}}
     <script>
@@ -187,7 +207,7 @@
     <script>
         function generateSummary(element) {
             let summary = '';
-            element.querySelectorAll('.cantidad-autorizada').forEach((input) => {
+            element.querySelectorAll('.cantidad-autorizada-input').forEach((input) => {
                 let cantidad = input.value;
                 if (parseInt(cantidad) > 0) {
                     let materialName = input.closest('tr').querySelector('.material-name').textContent;
@@ -198,7 +218,7 @@
         }
 
 
-        document.querySelectorAll('.cantidad-autorizada').forEach((input) => {
+        document.querySelectorAll('.cantidad-autorizada-input').forEach((input) => {
             input.addEventListener('input', () => {
                 generateSummary(input.closest('table'));
             });
