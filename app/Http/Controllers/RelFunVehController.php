@@ -124,12 +124,16 @@ class RelFunVehController extends Controller
             $conductor = $request->input('OCUPANTE_1');
             $data = $request->except('_token');
             $data['CONDUCTOR'] = $conductor;
-
+            //Armar la firma del usuario
+            $firmassss = auth()->user()->RUT . ' ' . auth()->user()->NOMBRES . ' ' . auth()->user()->APELLIDOS;
+            $data['FIRMA_ADMINISTRADOR'] = $firmassss;
+            //**Enviamos la DATA c/firma */
             RelFunVeh::create($data);
+            //**Mensaje de exito */
             session()->flash('success','La solicitud se ha enviado exitosamente');
         }catch(\Exception $e){
-            // session()->flash('error','Hubo un error al enviar la solicitud, vuelva a intentarlo mas tarde' . $e->getMessage());
-            session()->flash('error','Hubo un error al enviar la solicitud, vuelva a intentarlo mas tarde');
+            session()->flash('error','Hubo un error al enviar la solicitud, vuelva a intentarlo mas tarde' . $e->getMessage());
+            // session()->flash('error','Hubo un error al enviar la solicitud, vuelva a intentarlo mas tarde');
         }
         return redirect(route('solicitud.vehiculos.index'));
     }
@@ -321,7 +325,7 @@ class RelFunVehController extends Controller
 
         // Aplicar firmas según las reglas establecidas
         $firmasRealizadas += $this->realizarFirmaJefe($solicitud, $firmaUsuario);
-        $firmasRealizadas += $this->realizarFirmaAdministrador($solicitud, $firmaUsuario);
+        // $firmasRealizadas += $this->realizarFirmaAdministrador($solicitud, $firmaUsuario);
 
         // Comprobar si se realizó alguna firma
         if ($firmasRealizadas == 0) {
@@ -346,15 +350,15 @@ class RelFunVehController extends Controller
         return 0;
     }
 
-    private function realizarFirmaAdministrador($solicitud, $firmaUsuario)
-    {
-        if (auth()->user()->hasRole('ADMINISTRADOR') //Tiene el rol administrador
-            && $solicitud->FIRMA_ADMINISTRADOR == null) {
-            $solicitud->FIRMA_ADMINISTRADOR = $firmaUsuario;
-            return 1;
-        }
-        return 0;
-    }
+    // private function realizarFirmaAdministrador($solicitud, $firmaUsuario)
+    // {
+    //     if (auth()->user()->hasRole('ADMINISTRADOR') //Tiene el rol administrador
+    //         && $solicitud->FIRMA_ADMINISTRADOR == null) {
+    //         $solicitud->FIRMA_ADMINISTRADOR = $firmaUsuario;
+    //         return 1;
+    //     }
+    //     return 0;
+    // }
 
     private function verificarFirmasCompletas($solicitud)
     {

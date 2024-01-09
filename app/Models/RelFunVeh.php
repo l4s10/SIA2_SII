@@ -48,6 +48,9 @@ class RelFunVeh extends Model
         'MODIFICADO_POR_SOL_VEH',
         'OBSERV_SOL_VEH',
         'ID_TIPO_VEH',
+        'FIRMA_ADMINISTRADOR',
+        'FIRMA_CONDUCTOR',
+        'FIRMA_JEFE_ADMINISTRACION',
     ];
 
     //!! De momento no se estan usando estas (Revisar controlador STORE && UPDATE)
