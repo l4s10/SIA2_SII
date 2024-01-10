@@ -44,7 +44,6 @@
                     <!-- <th scope="col">ID</th> -->
                     <th scope="col">Usuario modificante</th>
                     <th scope="col">Tipo de movimiento</th>
-                    <th scope="col">Material</th>
                     <th scope="col">Stock previo</th>
                     <th scope="col">Stock nuevo</th>
                     <th scope="col">Detalle y/o Motivo</th>
@@ -57,9 +56,8 @@
                     <tr>
                         <td>{{$movimiento->modificante->NOMBRES.' '.$movimiento->modificante->APELLIDOS}}</td>
                         <td>{{$movimiento->TIPO_MOVIMIENTO}}</td>
-                        <td>{{$movimiento->material->NOMBRE_MATERIAL}}</td>
                         <td>{{$movimiento->STOCK_PREVIO}}</td>
-                        <td>{{$movimiento->STOCK_NUEVO}}</td>
+                        <td>{{$movimiento->STOCK_NUEVO + $movimiento->STOCK_PREVIO}}</td>
                         <td>{{$movimiento->DETALLE_MOVIMIENTO}}</td>
                         <td>
                             {{ $movimiento->FECHA_PROGRAMADA ? \Carbon\Carbon::parse($movimiento->FECHA_PROGRAMADA)->format('d/m/Y H:i') : 'Fecha no disponible' }}

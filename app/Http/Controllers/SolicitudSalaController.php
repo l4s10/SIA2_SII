@@ -59,7 +59,7 @@ class SolicitudSalaController extends Controller
             'DEPTO' => 'required|string|max:128|regex:/^[a-zA-Z\s]*$/',
             'EMAIL' => 'required|email|max:128',
             'ID_CATEGORIA_SALA' => 'required|exists:App\Models\CategoriaSala,ID_CATEGORIA_SALA',
-            'EQUIPO_SALA' => 'nullable|string|max:128|regex:/^[a-zA-Z0-9\s]*$/',
+            'EQUIPO_SALA' => 'nullable|string', //Equipo solicitado elimina regex porque falta coma
             'MOTIVO_SOL_SALA' => 'required|string|max:1000|regex:/^[a-zA-Z0-9\s]*$/',
             'CANT_PERSONAS_SOL_SALAS' => 'required|integer',
             'FECHA_SOL_SALA' => 'required|string|regex:/^[a-zA-Z0-9\s\-]*$/',
