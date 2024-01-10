@@ -251,19 +251,6 @@
         const validateInput = (input) => {
             const value = parseInt(input.value);
 
-            // Validación de rango (1 a 1.000.000)
-            if (value < 1 || value > 1000000) {
-                input.value = input.defaultValue; // Restaurar valor anterior
-
-                // Cambiar el mensaje de alerta
-                const swal = Swal.fire({
-                    icon: 'error',
-                    title: 'Error',
-                    text: 'El valor debe estar entre 1 KM y 1.000.000 KM',
-                    autoclose: 5000, // Cerrar automáticamente en 5 segundos
-                });
-            }
-
             // Validación de relación entre KMS_INICIAL y KMS_FINAL
             if (input === kmsInicialInput) {
                 const kmsFinal = parseInt(kmsFinalInput.value);
@@ -279,13 +266,25 @@
                 } else {
                     kmsInicialInput.max = value; // Actualizar valor máximo de KMS_INICIAL
                 }
+
+                // Validación de rango (1 a 1.000.000) solo para KMS_FINAL
+                if (input === kmsFinalInput && (value < 1 || value > 1000000)) {
+                    // Mostrar mensaje de alerta
+                    const swal = Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: 'El valor debe estar entre 1 KM y 1.000.000 KM',
+                        autoclose: 5000, // Cerrar automáticamente en 5 segundos
+                    });
+                }
             }
         };
 
         kmsInicialInput.addEventListener('input', () => validateInput(kmsInicialInput));
-        kmsFinalInput.addEventListener('input', () => validateInput(kmsFinalInput));
+        kmsFinalInput.addEventListener('change', () => validateInput(kmsFinalInput));
     </script>
-    <script>
+
+<script>
         $(function () {
              // Inicializar Flatpickr para el campo de fecha y hora de inicio
              flatpickr("#FECHA_SALIDA", {
@@ -361,6 +360,8 @@
                 locale: 'es',
                 maxDate: 'today', // Establecer la fecha máxima como hoy
                 minDate: new Date().fp_incr(-14), // Establecer la fecha mínima como hoy - 14 días
+                minTime: '07:00',
+                maxTime: '19:00',
                 showClearButton: true,
                 onReady: function(selectedDates, dateStr, instance) {
                     $('#clearButton').on('click', function() {
@@ -402,6 +403,12 @@
                     $(this).prop('disabled', false);
                 }
             }).trigger('change'); // Esto va a disparar el evento de cambio al cargar la página
+
+            // Validar rendición de kilómetros al partir y finalizar (coherencia entre rangos)
+            $('#KMS_INICIAL').on('input', function() {
+                let kmsInicial = $(this).val();
+                $('#KMS_FINAL').attr('min', kmsInicial);
+            });
         });
     </script>
 
