@@ -498,9 +498,10 @@ class RelFunVehController extends Controller
         }
 
         $fecha = Carbon::now()->format('d-m-Y_H-i');
-
+        $imagePath = public_path('img/logosii.jpg');
+              
         $pdf = new Dompdf();
-        $pdf->loadHtml(view('rel_fun_veh.hojaSalida', compact('solicitud', 'comuna_destino', 'solicitante','ocupante_1', 'ocupante_2', 'ocupante_3', 'ocupante_4', 'ocupante_5', 'ocupante_6', 'fecha','horasDiferencia'))->render());
+        $pdf->loadHtml(view('rel_fun_veh.hojaSalida', compact('solicitud', 'comuna_destino', 'solicitante','imagePath','ocupante_1', 'ocupante_2', 'ocupante_3', 'ocupante_4', 'ocupante_5', 'ocupante_6', 'fecha','horasDiferencia'))->render());
         $pdf->setPaper('A4', 'portrait');
 
         $pdf->render();

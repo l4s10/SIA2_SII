@@ -273,7 +273,9 @@ class MaterialController extends Controller
     {
         $materiales = Material::orderBy('ID_TIPO_MAT')->get();
         $fecha = Carbon::now()->setTimezone('America/Santiago')->format('d/m/Y H:i');
-        $html = view('materiales.pdf', compact('materiales','fecha'))->render();
+        $imagePath = public_path('img/logosii.jpg');
+        $imagePath2 = public_path('img/fondo_sii_intranet.jpg');
+        $html = view('materiales.pdf', compact('materiales', 'fecha', 'imagePath' , 'imagePath2'))->render();
 
         $dompdf = new Dompdf();
         $dompdf->loadHtml($html);

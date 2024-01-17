@@ -19,17 +19,26 @@
             border-collapse: collapse;
         }
         th, td {
-            border: 1px solid #dddddd;
+            border: 1px solid #0064a0;
             padding: 8px;
             text-align: left;
         }
         th {
-            background-color: #f2f2f2;
+            background-color: #0064a0;
+        }
+        thead {
+        color: #fff;
+        }
+        .background {
+        background-position: center;
+        background-image: url('data:image/jpg;base64,{!! base64_encode(file_get_contents($imagePath2)) !!}');
+        background-repeat: no-repeat;
         }
     </style>
 </head>
 <body>
     <div class="container">
+    <img src="data:image/jpg;base64, {!! base64_encode(file_get_contents($imagePath)) !!}" alt="Logotipo Sii" width="200px" height="100px">
         <h1>Reporte de Materiales</h1>
         <p style="text-align: center">Fecha y hora de generación del reporte: {{ $fecha }}</p>
         <table>
